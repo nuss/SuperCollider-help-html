@@ -1,0 +1,165 @@
+<html><head><title>KeyPlayerGui</title>
+<link rel='stylesheet' href='./scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./frontend.css' type='text/css' />
+<link rel='stylesheet' href='./custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./scdoc.js' type='text/javascript'></script>
+<script src='./docmap.js' type='text/javascript'></script>
+<script src='./prettify.js' type='text/javascript'></script>
+<script src='./lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='.';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider  (extension)</div>
+<div id='categories'><a href='./Browse.html#Libraries>JITLib'>Libraries>JITLib</a>, <a href='./Browse.html#Quarks>KeyPlayer'>Quarks>KeyPlayer</a></div>
+<h1>KeyPlayerGui</h1>
+<div id='summary'>a simple gui for KeyPlayer</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./Classes/KeyPlayer.html">KeyPlayer</a>, <a href="./Reference/KeyLoop">KeyLoop</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Class Variables'>Class Variables</a></li>
+<ul class='toc'><li class='toc3'><a href='#*colors'>colors</a> </li>
+<li class='toc3'><a href='#*keyboard'>keyboard</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*keyboardNoShift'>keyboardNoShift</a> </li>
+<li class='toc3'><a href='#*keyboardShift'>keyboardShift</a> </li>
+<li class='toc3'><a href='#*lineOffsets'>lineOffsets</a> </li>
+</ul><li class='toc2'><a href='#Class Methods'>Class Methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*gui'>gui</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Instance Variables'>Instance Variables</a></li>
+<ul class='toc'><li class='toc3'><a href='#-player'>player</a> </li>
+<li class='toc3'><a href='#-w'>w</a>  <a href='#-zone'>zone</a>  <a href='#-buttons'>buttons</a>  <a href='#-drags'>drags</a>  <a href='#-listview'>listview</a> </li>
+<li class='toc3'><a href='#-font'>font</a>  <a href='#-activeColor'>activeColor</a> </li>
+<li class='toc3'><a href='#-skipjack'>skipjack</a> </li>
+</ul><li class='toc2'><a href='#Instance Methods'>Instance Methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-front'>front</a> </li>
+<li class='toc3'><a href='#-makeWindow'>makeWindow</a>  <a href='#-makeButtons'>makeButtons</a>  <a href='#-makeDrags'>makeDrags</a>  <a href='#-makeListView'>makeListView</a>  <a href='#-makeKey'>makeKey</a> </li>
+<li class='toc3'><a href='#-updateAll'>updateAll</a>  <a href='#-updateDrags'>updateDrags</a>  <a href='#-updateButtons'>updateButtons</a>  <a href='#-runUpdate'>runUpdate</a>  <a href='#-stopUpdate'>stopUpdate</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>KeyPlayerGui provides a window interface to <a href="./Classes/KeyPlayer.html">KeyPlayer</a>, see examples there.
+<p>The keys that have associated actions are shown colored in KeyPlayerGui.
+<p><strong>Meta control commands available from alt-key shortcuts:</strong><ul>
+<li>alt-R toggles RECORDING<li>alt-P toggles KeyLoop PLAYBACK<li>alt-L toggles LOOPED on/off<li>alt-F FORKS a (non-looped) task - playOnce<li>alt-G GUI opens for the KeyLoop<li>alt-T TOP focus goes to top control that sets current KeyPlayer</ul>
+<pre class='code prettyprint lang-sc'>// simple random keyboard player
+(
+s.boot;
+s.latency = nil;    // make sure we respond quickly
+thisThread.randSeed = 2014;
+k = KeyPlayer(\rand);
+"qwertzuiopasdfghjklyxcvbnm".do { |char|
+    var note = (midinote: rrand(36, 96), dur: rrand(0.1));
+   k.putDown(char, { |char| char; note.play });
+};
+
+     // make k.rec a KeyLoop:
+k.makeLoop;
+g = KeyPlayerGui(k);
+)
+
+// second player shows up as well;
+KeyPlayer(\xs);</pre>
+
+<p><strong>Notes:</strong>
+<p>Several aspects of this class could be made more flexible: supporting different display sizes, keyboard layouts, and ways of switching between several KeyPlayers may be useful. (current the useList options gives one choice.
+<p>Dragging and dropping actions could also be supported; not sure how to do that consistently with keyUp actions, retriggering, putting things on shifted keys, etc.
+<p>Maybe alt-1..9,0 could go to one of top ten KeyPlayers on buttons.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Class Variables'>Class Variables</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*colors' href='./Overviews/Methods.html#colors'>colors</a> </h3>
+<div class='method'>
+<p>a list of colors used for the keys.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*keyboard' href='./Overviews/Methods.html#keyboard'>keyboard</a> </h3>
+<div class='method'>
+<p>the list of characters the physical keyboard shows. Default is a Macbook Pro with US Extended key caps.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initClass' href='./Overviews/Methods.html#initClass'>initClass</a> </h3>
+<div class='method'>
+<p></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*keyboardNoShift' href='./Overviews/Methods.html#keyboardNoShift'>keyboardNoShift</a> </h3>
+<div class='method'>
+<p>the list of characters that will be printed when typed.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*keyboardShift' href='./Overviews/Methods.html#keyboardShift'>keyboardShift</a> </h3>
+<div class='method'>
+<p>the list of characters that will be printed when typed while the keyboard shift key is pressed.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*lineOffsets' href='./Overviews/Methods.html#lineOffsets'>lineOffsets</a> </h3>
+<div class='method'>
+<p>a list of offsets used for keyboard line layout/geometry.</div><h3><a class='anchor' name='Class Methods'>Class Methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*gui' href='./Overviews/Methods.html#gui'>gui</a> </h3>
+<div class='method'>
+<p>Make a KeyPlayerGui for up to 10 KeyPlayers.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./Overviews/Methods.html#new'>new</a> </h3>
+<div class='method'>
+<p>make a new KeyPlayerGui for a keyplayer.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initClass' href='./Overviews/Methods.html#initClass'>initClass</a> </h3>
+<div class='method'>
+<p>...</div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Instance Variables'>Instance Variables</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-player' href='./Overviews/Methods.html#player'>player</a> </h3>
+<div class='method'>
+<p>the KeyPlayer displayed.
+<p><strong>GUI elements, visual aspects:</strong></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-w' href='./Overviews/Methods.html#w'>w</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-zone' href='./Overviews/Methods.html#zone'>zone</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-buttons' href='./Overviews/Methods.html#buttons'>buttons</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-drags' href='./Overviews/Methods.html#drags'>drags</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-listview' href='./Overviews/Methods.html#listview'>listview</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-font' href='./Overviews/Methods.html#font'>font</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-activeColor' href='./Overviews/Methods.html#activeColor'>activeColor</a> </h3>
+<div class='method'>
+<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-skipjack' href='./Overviews/Methods.html#skipjack'>skipjack</a> </h3>
+<div class='method'>
+<p></div><h3><a class='anchor' name='Instance Methods'>Instance Methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-front' href='./Overviews/Methods.html#front'>front</a> </h3>
+<div class='method'>
+<p><strong>GUI creation:</strong></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeWindow' href='./Overviews/Methods.html#makeWindow'>makeWindow</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeButtons' href='./Overviews/Methods.html#makeButtons'>makeButtons</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeDrags' href='./Overviews/Methods.html#makeDrags'>makeDrags</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeListView' href='./Overviews/Methods.html#makeListView'>makeListView</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeKey' href='./Overviews/Methods.html#makeKey'>makeKey</a> </h3>
+<div class='method'>
+<p><strong>GUI updating:</strong></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateAll' href='./Overviews/Methods.html#updateAll'>updateAll</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateDrags' href='./Overviews/Methods.html#updateDrags'>updateDrags</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateButtons' href='./Overviews/Methods.html#updateButtons'>updateButtons</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-runUpdate' href='./Overviews/Methods.html#runUpdate'>runUpdate</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-stopUpdate' href='./Overviews/Methods.html#stopUpdate'>stopUpdate</a> </h3>
+<div class='method'>
+<p></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>    // make two variants of KeyPlayerGui, 
+    // one with buttons for KeyPlayers
+g = KeyPlayerGui().moveTo(10, 450);
+
+    // the other with a listview for the players
+h = KeyPlayerGui(options: [\useList]);
+
+    // add some players
+"asdfg".do { |char| KeyPlayer(char.asSymbol) };
+"hjkl".do { |char| KeyPlayer(char.asSymbol) };
+
+    // put one in - also by clicking on its button
+g.object_(KeyPlayer(\f));
+
+    // put same one in listview - can be switched here by selecting 
+    // its name in the listview and typing Return key.    
+h.object_(g.object);
+
+    // put some key actions in current player, show up in both guis
+g.object.put($t, {"t!".postln });
+g.object.put($x, {"x".postln }, both: true);
+g.object.putUp($x, {"x up!".postln });
+g.object.putUp($x, {"x up!".postln }, both: true);
+
+g.object.putUp($y, {"y up only!".postln }, both: true);
+
+
+
+    // Try the meta control commands available from alt-key shortcuts:
+
+alt-R toggles RECORDING
+alt-P toggles KeyLoop PLAYBACK
+alt-L toggles LOOPED on/off
+alt-F FORKS a (non-looped) task - playOnce
+alt-G GUI opens for the KeyLoop
+alt-T TOP focus goes to top control that sets current KeyPlayer</pre>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/KeyPlayer/HelpSource/KeyPlayerGui.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/KeyPlayer/HelpSource/KeyPlayerGui.schelp</a><br>link::KeyPlayerGui::<br>sc version: 3.7alpha0</div></div></body></html>

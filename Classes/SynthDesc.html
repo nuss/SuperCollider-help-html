@@ -43,6 +43,7 @@
 <li class='toc3'><a href='#-inputs'>inputs</a> </li>
 <li class='toc3'><a href='#-hasGate'>hasGate</a> </li>
 <li class='toc3'><a href='#-canFreeSynth'>canFreeSynth</a> </li>
+<li class='toc3'><a href='#-outputData'>outputData</a> </li>
 <li class='toc3'><a href='#-msgFunc'>msgFunc</a> </li>
 <li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
@@ -56,7 +57,6 @@
 <li class='toc3'><a href='#-makeWindow'>makeWindow</a> </li>
 <li class='toc3'><a href='#-metadata'>metadata</a> </li>
 <li class='toc3'><a href='#-msgFuncKeepGate'>msgFuncKeepGate</a> </li>
-<li class='toc3'><a href='#-outputData'>outputData</a> </li>
 <li class='toc3'><a href='#-readSynthDef'>readSynthDef</a> </li>
 <li class='toc3'><a href='#-readSynthDef2'>readSynthDef2</a> </li>
 <li class='toc3'><a href='#-readUGenSpec'>readUGenSpec</a> </li>
@@ -138,6 +138,12 @@ SynthDef("test", { arg out, freq, xFade;
 <p>is true if the <a href="./../Classes/Synth.html">Synth</a> can free itself (via some means, usually a doneAction)<h4>Discussion:</h4>
 
 <p>This can be used to decide if to remove a Synth directly via free-message.<pre class='code prettyprint lang-sc'>SynthDescLib.global.at(\default).canFreeSynth;</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-outputData' href='./../Overviews/Methods.html#outputData'>outputData</a> </h3>
+<div class='method'>
+<p>Returns an array of events with information about any UGens that write to a bus (such as <a href="./../Classes/Out.html">Out</a> etc.). This includes the rate and number of channels of the UGen. If its first input is a control, also the corresponding control name is provided.<pre class='code prettyprint lang-sc'>a = SynthDef(\x, { |out, freq = 440| Out.ar(out, SinOsc.ar(freq)) }).add;
+a.desc.outputData;
+a = SynthDef(\x, { |out, freq = 440| Out.ar(out + 7, SinOsc.ar(freq)) }).add; // no controlName in this case
+a.desc.outputData;</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-msgFunc' href='./../Overviews/Methods.html#msgFunc'>msgFunc</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-msgFunc' href='./../Overviews/Methods.html#msgFunc'>msgFunc</a> = value</h3>
 <div class='method'>
@@ -164,7 +170,6 @@ SynthDef("test", { arg out, freq, xFade;
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-metadata' href='./../Overviews/Methods.html#metadata'>metadata</a> = value</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-msgFuncKeepGate' href='./../Overviews/Methods.html#msgFuncKeepGate'>msgFuncKeepGate</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-msgFuncKeepGate' href='./../Overviews/Methods.html#msgFuncKeepGate'>msgFuncKeepGate</a> = <span class='argstr'>bool: false</span></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-outputData' href='./../Overviews/Methods.html#outputData'>outputData</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-readSynthDef' href='./../Overviews/Methods.html#readSynthDef'>readSynthDef</a> (<span class='argstr'>stream</span>, <span class='argstr'>keepDef: false</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-readSynthDef2' href='./../Overviews/Methods.html#readSynthDef2'>readSynthDef2</a> (<span class='argstr'>stream</span>, <span class='argstr'>keepDef: false</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-readUGenSpec' href='./../Overviews/Methods.html#readUGenSpec'>readUGenSpec</a> (<span class='argstr'>stream</span>)</h3>

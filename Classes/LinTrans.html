@@ -1,0 +1,93 @@
+<html><head><title>LinTrans</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Math'>Math</a>, <a href='./../Browse.html#Quarks>VectorSpace'>Quarks>VectorSpace</a></div>
+<h1>LinTrans</h1>
+<div id='summary'>Linear transformation on a vector space</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/VectorSpace/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/VectorSpace/LinTrans.sc'>LinTrans.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Overviews/VectorSpace.html">VectorSpace</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*rotation2D'>rotation2D</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-matrix'>matrix</a> </li>
+<li class='toc3'><a href='#-*'>*</a> </li>
+<li class='toc3'><a href='#-+'>+</a> </li>
+<li class='toc3'><a href='#--'>-</a> </li>
+<li class='toc3'><a href='#-det'>det</a> </li>
+<li class='toc3'><a href='#-inverse'>inverse</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-value'>value</a> </li>
+</ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Linear transformations in R^N or C^N. Wraps the functionality of Matrix to be able to easitly multiply matrixes with vectors (classes inheriting from AbstractVector). A LinTrans holds a matrix that represents the linear transformation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>matrix</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>matrix<td class='argumentdesc'><pre class='code prettyprint lang-sc'>g = LinTrans(Matrix.with([[1,2],[2,3]]));</pre>
+</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*rotation2D' href='./../Overviews/Methods.html#rotation2D'>rotation2D</a> (<span class='argstr'>theta</span>)</h3>
+<div class='method'>
+<p>2D rotation linear transformation for angle theta.<pre class='code prettyprint lang-sc'>a = LinTrans.rotation2D(pi/2);
+a.value(RealVector[1,0])</pre>
+</div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-matrix' href='./../Overviews/Methods.html#matrix'>matrix</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-matrix' href='./../Overviews/Methods.html#matrix'>matrix</a> = value</h3>
+<div class='method'>
+<p>the matrix that represents the transformation.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-*' href='./../Overviews/Methods.html#*'>*</a> (<span class='argstr'>operand</span>)</h3>
+<div class='method'>
+<p>Linear transformation and scalar multiplication.<pre class='code prettyprint lang-sc'>a = LinTrans(Matrix.with([[1,2],[3,4]]));
+b = LinTrans(Matrix.with([[3,4],[5,6]]));
+
+(a*b).value(RealVector[5,6])
+
+a = LinTrans.rotation2D(pi/2);
+b = LinTrans.rotation2D(pi/2);
+
+(a*b).value(RealVector[1,0]) //rotate vector by pi</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-+' href='./../Overviews/Methods.html#+'>+</a> (<span class='argstr'>lintrans</span>)</h3>
+<div class='method'>
+<p>addition between linear transformations.<pre class='code prettyprint lang-sc'>a = LinTrans(Matrix.with([[1,2],[3,4]]));
+b = LinTrans(Matrix.with([[3,4],[5,6]]));
+
+(a+b).value(RealVector[5,6])</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='--' href='./../Overviews/Methods.html#-'>-</a> (<span class='argstr'>lintrans</span>)</h3>
+<div class='method'>
+<p>subtraciton between linear transformations.<pre class='code prettyprint lang-sc'>a = LinTrans(Matrix.with([[1,2],[3,4]]));
+b = LinTrans(Matrix.with([[3,4],[5,6]]));
+
+(a-b).value(RealVector[5,6])</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-det' href='./../Overviews/Methods.html#det'>det</a> </h3>
+<div class='method'>
+<p>determinant of the transformation.<pre class='code prettyprint lang-sc'>LinTrans(Matrix.with([[1,2],[2,3]])).det</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-inverse' href='./../Overviews/Methods.html#inverse'>inverse</a> </h3>
+<div class='method'>
+<p>inverse transformation.<pre class='code prettyprint lang-sc'>a = LinTrans(Matrix.with([[1,2],[2,3]]));
+b = a.inverse;
+(a*b).value(RealVector[1,2]) //a*b is identity</pre>
+
+<p></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a> (<span class='argstr'>vector</span>)</h3>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/VectorSpace/HelpSource/Classes/LinTrans.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/VectorSpace/HelpSource/Classes/LinTrans.schelp</a><br>link::Classes/LinTrans::<br>sc version: 3.7alpha0</div></div></body></html>

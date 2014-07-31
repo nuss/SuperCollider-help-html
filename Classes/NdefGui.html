@@ -14,7 +14,7 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES</div>
-<div id='categories'><a href='./../Browse.html#Libraries>JITLib>GUI'>Libraries>JITLib>GUI</a></div>
+<div id='categories'><a href='./../Browse.html#Libraries>JITLib>GUI'>Libraries>JITLib>GUI</a>, <a href='./../Browse.html#Live Coding'>Live Coding</a></div>
 <h1>NdefGui</h1>
 <div id='summary'>a gui for a NodeProxy or Ndef</div>
 </div>
@@ -61,7 +61,13 @@
 <p>NdefGui provides controls for handling and editing a <a href="./../Classes/NodeProxy.html">NodeProxy</a> or <a href="./../Classes/Ndef.html">Ndef</a>, and its monitors. NdefGui replaces <a href="./../Classes/NodeProxyEditor.html">NodeProxyEditor</a>. It provides:<ul>
 <li>sliders for numerical settings<li>mapping of kr proxies to parameters<li>optional controls for playing / monitoring</ul>
 
-<p>Both <a href="./../Classes/NodeProxy.html">NodeProxy</a> and <a href="./../Classes/Ndef.html">Ndef</a> implement a <strong>.gui</strong> message, which returns a NdefGui for that NodeProxy. Overview: <a href="./../Overviews/JITLib.html">JITLib</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>Both <a href="./../Classes/NodeProxy.html">NodeProxy</a> and <a href="./../Classes/Ndef.html">Ndef</a> implement a <strong>.gui</strong> message, which returns a NdefGui for that NodeProxy. Overview: <a href="./../Overviews/JITLib.html">JITLib</a>.<pre class='code prettyprint lang-sc'>(
+s.boot;
+Ndef(\a, { |freq=300, dens=20, amp=0.1, pan|
+    Pan2.ar(Ringz.ar(Dust.ar(dens, amp / (dens.max(1).sqrt)), freq, 0.2), pan)
+}).gui;
+)</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3><a class='anchor' name='Creation'>Creation</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>object</span>, <span class='argstr'>numItems: 4</span>, <span class='argstr'>parent</span>, <span class='argstr'>bounds</span>, <span class='argstr'>makeSkip: true</span>, <span class='argstr'>options</span>)</h3>
 <div class='method'>

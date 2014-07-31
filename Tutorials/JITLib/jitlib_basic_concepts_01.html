@@ -14,7 +14,7 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider TUTORIALS/JITLIB</div>
-<div id='categories'><a href='./../../Browse.html#Libraries>JITLib>Tutorials'>Libraries>JITLib>Tutorials</a></div>
+<div id='categories'><a href='./../../Browse.html#Libraries>JITLib>Tutorials'>Libraries>JITLib>Tutorials</a>, <a href='./../../Browse.html#Tutorials>JITLib'>Tutorials>JITLib</a></div>
 <h1>jitlib_basic_concepts_01</h1>
 <div id='summary'>some placeholders in supercollider</div>
 </div>
@@ -22,15 +22,16 @@
 <div id='related'>See also: <a href="./../../Overviews/JITLib.html">JITLib</a>, <a href="./../../Tutorials/JITLib/jitlib_basic_concepts_02.html">jitlib_basic_concepts_02</a></div>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#a) What is a proxy?'>a) What is a proxy?</a></li>
+<ul class='toc'><li class='toc1'><a href='#What is a proxy?'>What is a proxy?</a></li>
 <ul class='toc'><li class='toc2'><a href='#using a Ref as a proxy'>using a Ref as a proxy</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#using a Function as a proxy'>using a Function as a proxy</a></li>
-<ul class='toc'></ul></ul><li class='toc1'><a href='#b) NodeProxy'>b) NodeProxy</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#NodeProxy, ProxySpace, Ndef'>NodeProxy, ProxySpace, Ndef</a></li>
 <ul class='toc'></ul></ul></div>
-<p>this helpfile explains some basic concepts of interactive programming with supercollider and proxy space.<h2><a class='anchor' name='a) What is a proxy?'>a) What is a proxy?</a></h2>
+<p>This helpfile explains some basic concepts of interactive programming with supercollider and proxy space.<h2><a class='anchor' name='What is a proxy?'>What is a proxy?</a></h2>
 
 <p>A proxy is a place holder that is often used to operate on something that does not yet exist. For example, an <em>OutputProxy</em> is used to represent multiple outputs of a ugen, even if only one ugen is created eventually. Any object can have proxy behaviour (it may delegate function calls to different objects for example) but specially functions and references can be used as operands while they keep their referential quality.
-<p>see also: <a href="./../../Classes/OutputProxy.html">OutputProxy</a>, <a href="./../../Classes/Function.html">Function</a>, <a href="./../../Classes/Ref.html">Ref</a><h3><a class='anchor' name='using a Ref as a proxy'>using a Ref as a proxy</a></h3>
+<p>See also: <a href="./../../Classes/OutputProxy.html">OutputProxy</a>, <a href="./../../Classes/Function.html">Function</a>, <a href="./../../Classes/Ref.html">Ref</a>
+<p>Further reading: <a href="./../../Classes/NodeProxy.html">NodeProxy</a>, <a href="./../../Classes/ProxySpace.html">ProxySpace</a>, <a href="./../../Classes/Ndef.html">Ndef</a><h3><a class='anchor' name='using a Ref as a proxy'>using a Ref as a proxy</a></h3>
 <pre class='code prettyprint lang-sc'>// reference example
 
 // create a new Ref object
@@ -82,10 +83,9 @@ z = { y } + 10;    // this does not fail, instead it creates a new function, whi
 y = 34;
 z.value;</pre>
 
-<p>see also client side proxies like <a href="./../../Classes/Tdef.html">Tdef</a>, <a href="./../../Classes/Pdefn.html">Pdefn</a>, <a href="./../../Classes/Pdef.html">Pdef</a>, <a href="./../../Classes/Fdef.html">Fdef</a><h2><a class='anchor' name='b) NodeProxy'>b) NodeProxy</a></h2>
+<p>see also client side proxies like <a href="./../../Classes/Tdef.html">Tdef</a>, <a href="./../../Classes/Pdefn.html">Pdefn</a>, <a href="./../../Classes/Pdef.html">Pdef</a>, <a href="./../../Classes/Fdef.html">Fdef</a><h2><a class='anchor' name='NodeProxy, ProxySpace, Ndef'>NodeProxy, ProxySpace, Ndef</a></h2>
 
-<p>For interactive programming it can be useful to be able to use something before it is there - it makes evaluation order more flexible and allows to postpone decisions to a later moment. Some preparations have to be done usually - like above, a reference has to be created. In other situations this sort of preparation is not enough, for example if one wants to do maths with running processes on the server.
-<p>Audio output on the server has mainly two properties - a <em>calculation rate</em> (audio or control) and a certain <em>number of channels</em>. These are the main static properties of a node proxy, which cannot be changed while it is in use.<pre class='code prettyprint lang-sc'>// boot the server
+<p>For interactive programming it can be useful to be able to use something before it is there - it makes evaluation order more flexible and allows to postpone decisions to a later moment. Some preparations have to be done usually - like above, a reference has to be created. In other situations this sort of preparation is not enough, for example if one wants to apply mathematical operations on signals of running processes on the server.<div class='note'><span class='notelabel'>NOTE:</span> Wherever examples are given with Ndef, they apply to ProxySpace and NodeProxy: <code class='code prettyprint lang-sc'>Ndef(\x, 5);</code> is the same as: <code class='code prettyprint lang-sc'>~x = 5;</code> in ProxySpace, and <code class='code prettyprint lang-sc'>a = NodeProxy.new; a.source = 5;</code></div><pre class='code prettyprint lang-sc'>// boot the server
 s.boot;
 
 // two proxies on a server. calculation rate is audio rate, number of channels is 2
@@ -126,5 +126,14 @@ p.clear;
 // move out of the proxyspace.
 p.pop;</pre>
 
-<p>further readings: <a href="./../../Classes/NodeProxy.html">NodeProxy</a>, <a href="./../../Classes/ProxySpace.html">ProxySpace</a>, <a href="./../../Classes/Ndef.html">Ndef</a>
+<p>Another, very common way to access node proxies is <a href="./../../Classes/Ndef.html">Ndef</a> (this is the same as the above, just written with Ndef):<pre class='code prettyprint lang-sc'>Ndef(\z).play;
+
+Ndef(\z, Ndef(\y).sin * 0.2);
+
+Ndef(\y, { Saw.ar([300, 301], 4 * pi) });
+
+Ndef.clear;</pre>
+
+<p>The class Ndef uses <a href="./../../Classes/ProxySpace.html">ProxySpace</a> internally to store its place holders.
+<p>Further reading: <a href="./../../Classes/NodeProxy.html">NodeProxy</a>, <a href="./../../Classes/ProxySpace.html">ProxySpace</a>, <a href="./../../Classes/Ndef.html">Ndef</a>
 <p>next: <a href="./../../Tutorials/JITLib/jitlib_basic_concepts_02.html">jitlib_basic_concepts_02</a><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Tutorials/JITLib/jitlib_basic_concepts_01.schelp'>/usr/local/share/SuperCollider/HelpSource/Tutorials/JITLib/jitlib_basic_concepts_01.schelp</a><br>link::Tutorials/JITLib/jitlib_basic_concepts_01::<br>sc version: 3.7alpha0</div></div></body></html>

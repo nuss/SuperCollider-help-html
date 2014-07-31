@@ -19,15 +19,18 @@
 <div id='summary'>a level indicator GUI widget</div>
 </div>
 <div class='subheader'>
-<div id='filename'>Source: /usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/<a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/ViewRedirect.sc'>ViewRedirect.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/ViewRedirect.html">ViewRedirect</a> : <a href="../Classes/GuiRedirect.html">GuiRedirect</a> : <a href="../Classes/Object.html">Object</a></div>
-<div class='inheritance'>Implementing class: <a href="../Classes/QLevelIndicator.html">QLevelIndicator</a></div>
+<div id='filename'>Source: /usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/Base/<a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/Base/QLevelIndicator.sc'>QLevelIndicator.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/View.html">View</a> : <a href="../Classes/QObject.html">QObject</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/QLevelIndicator.html">QLevelIndicator</a></div>
 <div id='related'>See also: <a href="./../Classes/RangeSlider.html">RangeSlider</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*meterServer'>meterServer</a> </li>
+<li class='toc3'><a href='#*qtClass'>qtClass</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-value'>value</a> </li>
 <li class='toc3'><a href='#-warning'>warning</a> </li>
 <li class='toc3'><a href='#-critical'>critical</a> </li>
@@ -39,15 +42,19 @@
 <li class='toc3'><a href='#-drawsPeak'>drawsPeak</a> </li>
 <li class='toc3'><a href='#-peakLevel'>peakLevel</a> </li>
 <li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-background'>background</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>A level indicator view, suitable for use as a level or peak meter, etc.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*meterServer' href='./../Overviews/Methods.html#meterServer'>meterServer</a> (<span class='argstr'>server</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*qtClass' href='./../Overviews/Methods.html#qtClass'>qtClass</a> </h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a> = <span class='argstr'>val</span></h3>
-<div class='supmethod'>From implementing class</div>
 <div class='method'>
 <p>Get or set the current level of the view.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -55,69 +62,63 @@
 <p>A <a href="./../Classes/Float.html">Float</a> between 0 and 1.</table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>A <a href="./../Classes/Float.html">Float</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-warning' href='./../Overviews/Methods.html#warning'>warning</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-warning' href='./../Overviews/Methods.html#warning'>warning</a> = <span class='argstr'>val</span></h3>
-<div class='supmethod'>From implementing class</div>
 <div class='method'>
 <p>Set the warning threshold. Styles 0 and 2 (see <a href="#-style">-style</a>) implement a warning display. If <a href="#-critical">-critical</a> is &gt; warning the view will turn yellow if <a href="#-value">-value</a> is &gt; <code class='code prettyprint lang-sc'>val</code>. If critical is &lt;= warning the view will turn yellow if value is &lt;= to <code class='code prettyprint lang-sc'>val</code>. If <a href="#-drawsPeak">-drawsPeak</a> is true warning will be displayed based on <a href="#-peakLevel">-peakLevel</a> rather than value.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>val<td class='argumentdesc'>
 <p>A <a href="./../Classes/Float.html">Float</a>.
 <p><code class='code prettyprint lang-sc'>( w = Window.new.front; a = LevelIndicator(w, Rect(10, 10, 20, 160)); a.value = 0.5; ) a.warning = 0.6; a.critical = 0.9; a.value = 0.7;</code></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-critical' href='./../Overviews/Methods.html#critical'>critical</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-critical' href='./../Overviews/Methods.html#critical'>critical</a> = <span class='argstr'>val</span></h3>
-<div class='supmethod'>From implementing class</div>
 <div class='method'>
 <p>Set the warning threshold. Styles 0 and 2 (see <a href="#-style">-style</a>) implement a critical display. If critical is &gt; <a href="#-warning">-warning</a> the view will turn red if <a href="#-value">-value</a> is &gt; <code class='code prettyprint lang-sc'>val</code>. If critical is &lt;= warning the view will turn yellow if value is &lt;= to <code class='code prettyprint lang-sc'>val</code>. If <a href="#-drawsPeak">-drawsPeak</a> is true critical will be displayed based on <a href="#-peakLevel">-peakLevel</a> rather than value.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>val<td class='argumentdesc'>
 <p>A <a href="./../Classes/Float.html">Float</a>.
 <p><code class='code prettyprint lang-sc'>( w = Window.new.front; a = LevelIndicator(w, Rect(10, 10, 20, 160)); a.style = 2; a.numSteps = 10; a.value = 0.5; ) a.warning = 0.6; a.critical = 0.9; a.value = 1;</code></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-style' href='./../Overviews/Methods.html#style'>style</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-style' href='./../Overviews/Methods.html#style'>style</a> = <span class='argstr'>val</span></h3>
-<div class='supmethod'>From implementing class</div>
 <div class='method'><div class='note'><span class='notelabel'>NOTE:</span> Not yet implemented in Qt GUI</div>
 <p>Sets the style of the view.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>val<td class='argumentdesc'>
 <p>An <a href="./../Classes/Integer.html">Integer</a> from 0 to 3. 0 = colored bar; 1 = graduated black lines; 2 = LED style (see <a href="#-numSteps">-numSteps</a>); 3 = LED style with custom image. (See <a href="#-image">-image</a>.)
 <p><code class='code prettyprint lang-sc'>( w = Window.new.front; w.addFlowLayout; 4.do({|i|     a = LevelIndicator(w, Rect(0, 0, 20, 200));     a.style = i;     a.numSteps = 10;     a.value = 0.5; }); )</code></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-numSteps' href='./../Overviews/Methods.html#numSteps'>numSteps</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-numSteps' href='./../Overviews/Methods.html#numSteps'>numSteps</a> = <span class='argstr'>val</span></h3>
-<div class='supmethod'>From implementing class</div>
 <div class='method'>
 <p>The number of steps used in styles 2 and 3. (See <a href="#-style">-style</a>.)<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>val<td class='argumentdesc'>
 <p>An positive <a href="./../Classes/Integer.html">Integer</a>.
 <p><code class='code prettyprint lang-sc'>( w = Window.new.front; a = LevelIndicator(w, Rect(10, 10, 200, 20)); a.style = 2; a.value = 1; ) a.numSteps = 10; a.numSteps = 20;</code></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-image' href='./../Overviews/Methods.html#image'>image</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-image' href='./../Overviews/Methods.html#image'>image</a> = <span class='argstr'>image</span></h3>
-<div class='supmethod'>From implementing class</div>
 <div class='method'><div class='note'><span class='notelabel'>NOTE:</span> Not yet implemented in Qt GUI</div>
 <p>Sets the image used in style 3. See below for an example.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>image<td class='argumentdesc'>
 <p>An <a href="./../Classes/Image.html">Image</a>. The default image is the SC cube.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-numTicks' href='./../Overviews/Methods.html#numTicks'>numTicks</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-numTicks' href='./../Overviews/Methods.html#numTicks'>numTicks</a> = <span class='argstr'>number</span></h3>
-<div class='supmethod'>From implementing class</div>
 <div class='method'>
 <p>The number of ticks to display in the view's scale.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>number<td class='argumentdesc'>
 <p>An <a href="./../Classes/Integer.html">Integer</a> &gt;= 0.
 <p><code class='code prettyprint lang-sc'>( w = Window.new.front; w.view.background = Color.black; a = LevelIndicator(w, Rect(10, 10, 300, 30)); a.numTicks = 11; a.value = 0.5; )</code></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-numMajorTicks' href='./../Overviews/Methods.html#numMajorTicks'>numMajorTicks</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-numMajorTicks' href='./../Overviews/Methods.html#numMajorTicks'>numMajorTicks</a> = <span class='argstr'>number</span></h3>
-<div class='supmethod'>From implementing class</div>
 <div class='method'>
 <p>The number of ticks in the view's scale which will be large sized.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>number<td class='argumentdesc'>
 <p>An <a href="./../Classes/Integer.html">Integer</a> &gt;= 0.
 <p><code class='code prettyprint lang-sc'>( w = Window.new.front; w.view.background = Color.black; a = LevelIndicator(w, Rect(10, 10, 300, 30)); a.numTicks = 11; a.numMajorTicks = 3; a.value = 0.5; )</code></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-drawsPeak' href='./../Overviews/Methods.html#drawsPeak'>drawsPeak</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-drawsPeak' href='./../Overviews/Methods.html#drawsPeak'>drawsPeak</a> = <span class='argstr'>bool</span></h3>
-<div class='supmethod'>From implementing class</div>
 <div class='method'>
 <p>Determines whether the view draws a separate peak display. This can be useful for displaying both peak and RMS values. If drawsPeak is true <a href="#-warning">-warning</a> and <a href="#-critical">-critical</a> will be displayed based on <a href="#-peakLevel">-peakLevel</a> rather than value in <a href="#-style">styles</a> 0 and 2.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>bool<td class='argumentdesc'>
 <p>A <a href="./../Classes/Boolean.html">Boolean</a>. By default the peak is not drawn.
 <p><code class='code prettyprint lang-sc'>( w = Window.new.front; a = LevelIndicator(w, Rect(10, 10, 300, 30)); a.drawsPeak = true; a.style = 1; a.value = 0.5; a.peakLevel = 0.6; )</code></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-peakLevel' href='./../Overviews/Methods.html#peakLevel'>peakLevel</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-peakLevel' href='./../Overviews/Methods.html#peakLevel'>peakLevel</a> = <span class='argstr'>val</span></h3>
-<div class='supmethod'>From implementing class</div>
 <div class='method'>
 <p>Sets the level of the peak display. (See <a href="#-drawsPeak">-drawsPeak</a>.)<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>val<td class='argumentdesc'>
 <p>A <a href="./../Classes/Float.html">Float</a>.
 <p><code class='code prettyprint lang-sc'>( w = Window.new.front; a = LevelIndicator(w, Rect(10, 10, 20, 160)); a.drawsPeak = true; a.peakLevel = 0.6) )</code></table></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-background' href='./../Overviews/Methods.html#background'>background</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-background' href='./../Overviews/Methods.html#background'>background</a> = <span class='argstr'>color</span></h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
 <pre class='code prettyprint lang-sc'>s.boot;
 GUI.cocoa; // just to be sure
 

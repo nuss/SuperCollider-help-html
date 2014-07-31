@@ -1,0 +1,123 @@
+<html><head><title>Freesound2</title>
+<link rel='stylesheet' href='./scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./frontend.css' type='text/css' />
+<link rel='stylesheet' href='./custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./scdoc.js' type='text/javascript'></script>
+<script src='./docmap.js' type='text/javascript'></script>
+<script src='./prettify.js' type='text/javascript'></script>
+<script src='./lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='.';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider  (extension)</div>
+<div id='categories'><a href='./Browse.html#Uncategorized'>Uncategorized</a>, <a href='./Browse.html#Quarks>Freesound2'>Quarks>Freesound2</a></div>
+<h1>Freesound2</h1>
+<div id='summary'>API client for freesound.org</div>
+</div>
+<div class='subheader'>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Freesound.org is a collaborative database of sound samples licensed under Creative Commons, supported by the Music Technology Group at Universitat Pompeu Fabra (Barcelona). In its current implementation, Freesound.org provides a web API based on REST principles. The general documentation for the API can be found at <a href="http://www.freesound.org/docs/api/.">http://www.freesound.org/docs/api/.</a> This quark provides a client for accessing the Freesound API from within SuperCollider. For the moment, only the Sound resource is supported. Prospective users are requested to apply for an API key at <a href="http://www.freesound.org/api/apply/.">http://www.freesound.org/api/apply/.</a> Being a web API, this form expects you to fill information about a hypothetical web application, but there is no restriction for using the API for music creation or performance. For general discussion about the API, join the google group: <a href="http://groups.google.com/group/freesound-api.">http://groups.google.com/group/freesound-api.</a>
+<p>The API provides several response formats, but JSON is generally preferred. This quark provides a convenience wrapper around most of the functionality by requesting resources via curl, and mapping JSON responses to SC Dictionary objects.
+<p>NOTE: this version uses the old APIv1, which is still supported. It will be eventually updated to the newer APIv2. Here's the APIv1 documentation: <a href="http://www.freesound.org/docs/api/resources_apiv1.html#resources-apiv1">http://www.freesound.org/docs/api/resources_apiv1.html#resources-apiv1</a><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// The API key should be set before any request
+
+//Freesound2.api_key="&lt;your_api_key_here&gt;";
+
+Freesound2.api_key="048ca11bd6d343de9377d232ac67ee83";
+
+
+s = Server.internal.boot
+
+
+// text search
+
+// http://www.freesound.org/docs/api/resources_apiv1.html#sound-search-resource
+
+FS2Sound.search(q:"glitch",f:"type:wav",action:{|p|
+    ~snd = p[0]; // first result
+    ~snd.original_filename.postln;
+});
+
+// download
+~snd.retrieve("/tmp/",{
+    ~buf = Buffer.read(s,"/tmp/"++~snd["original_filename"]);
+        "done!".postln;
+});
+
+~buf.play;
+
+
+// metadata fields
+~snd.dict.keys;
+
+
+// note that you can access the fields directly
+~snd["id"]
+~snd["original_filename"];
+~snd["duration"];
+~snd["url"];
+~snd["preview-hq-mp3"];
+
+
+// download preview
+~preview = ~snd.retrievePreview("/tmp/",{
+        ~buf = Buffer.read(s,"/tmp/"++~snd["original_filename"]);
+        "done!".postln;
+});
+
+("/tmp/"++~preview).postln;
+
+// note: if your libsndfile version supports ogg, try format=ogg and load the resulting file
+
+// get sound by id
+// http://www.freesound.org/docs/api/resources_apiv1.html#sound-resource
+FS2Sound.getSound(31362,{|f|
+    ~snd = f;
+    ~snd.retrieve("/tmp/",{
+        ~snd["original_filename"].postln;
+        ~buf = Buffer.read(s,"/tmp/"++~snd["original_filename"]);
+        "done!".postln;
+
+    });
+});
+
+~buf.play;
+
+
+// get similar
+//http://www.freesound.org/docs/api/resources_apiv1.html#sound-similarity-resource
+~snd.getSimilar({|p| ~snd = p[1];})
+~snd["original_filename"].postln;
+
+
+// analysis
+//http://www.freesound.org/docs/api/resources_apiv1.html#sound-analysis-resource
+//http://www.freesound.org/docs/api/analysis_index.html
+
+~snd.getAnalysis("lowlevel",{|val|
+            val["pitch"]["mean"].postln;
+            val["pitch_instantaneous_confidence"]["mean"].postln;
+        },true)
+
+// content-based search:
+//http://www.freesound.org/docs/api/resources_apiv1.html#sound-content-based-search-resource
+FS2Sound.contentSearch(t:'.lowlevel.pitch.mean:600',f:'.lowlevel.pitch_instantaneous_confidence.mean:[0.8 TO 1]',action:{|pager|
+    ~snd = pager[0];
+    ~snd["original_filename"].postln;
+    ~snd.retrieve("/tmp/",{
+        ~buf = Buffer.read(s,"/tmp/"++~snd["original_filename"]);
+        "done!".postln;
+    });
+});
+
+~buf.play;</pre>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/Freesound2/HelpSource/Freesound2.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/Freesound2/HelpSource/Freesound2.schelp</a><br>link::Freesound2::<br>sc version: 3.7alpha0</div></div></body></html>

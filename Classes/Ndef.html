@@ -14,7 +14,7 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES</div>
-<div id='categories'><a href='./../Browse.html#Libraries>JITLib>NodeProxy'>Libraries>JITLib>NodeProxy</a></div>
+<div id='categories'><a href='./../Browse.html#Libraries>JITLib>NodeProxy'>Libraries>JITLib>NodeProxy</a>, <a href='./../Browse.html#Live Coding'>Live Coding</a></div>
 <h1>Ndef</h1>
 <div id='summary'>node proxy definition</div>
 </div>
@@ -71,15 +71,18 @@ Ndef.clear(3); // clear all after 3 seconds</pre>
 <h3><a class='anchor' name='Creation'>Creation</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>key</span>, <span class='argstr'>object</span>)</h3>
 <div class='method'>
-<p>Return a new node proxy and store it in a global ProxySpace under the key. If there is already an Ndef there, replace its object with the new one. The object can be any supported class, see <a href="./../Classes/NodeProxy.html">NodeProxy</a> help.<h4>Arguments:</h4>
+<p>Return a new node proxy and store it in a global ProxySpace under the key. If there is already an Ndef there, replace its object with the new one. The object can be any supported class, see <a href="./../Classes/NodeProxy.html#Supported sources">NodeProxy: Supported sources</a> help.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>the name of the proxy (usually a symbol). If only the key is given and no object, it returns the proxy object:<pre class='code prettyprint lang-sc'>Ndef(\x) // get the proxy</pre>
+
 <p>If key is an association, it is interpreted as <strong>key -&gt; server name</strong>. (order changed in SC3.3 !). If no name is given, it uses the default server that was default when Ndef was first called. (to change it, see <a href="#*defaultServer">*defaultServer</a>).<tr><td class='argumentname'>object<td class='argumentdesc'>
-<p>an object</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>key</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>offset: 0</span>)</h3>
+<p>an object<pre class='code prettyprint lang-sc'>Ndef(\x, { Dust.ar }); // returns the proxy and set the source object.</pre>
+</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>key</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>offset: 0</span>)</h3>
 <div class='method'>
-<p>equivalent to <code class='code prettyprint lang-sc'>*new(key).ar(numChannels, offset)</code> (see <a href="./../Classes/NodeProxy.html">NodeProxy</a> help for ar method)</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*kr' href='./../Overviews/Methods.html#kr'>kr</a> (<span class='argstr'>key</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>offset: 0</span>)</h3>
+<p>equivalent to <code class='code prettyprint lang-sc'>*new(key).ar(numChannels, offset)</code> (see <a href="./../Classes/BusPlug.html#ar">BusPlug: ar</a>)</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*kr' href='./../Overviews/Methods.html#kr'>kr</a> (<span class='argstr'>key</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>offset: 0</span>)</h3>
 <div class='method'>
-<p>equivalent to <code class='code prettyprint lang-sc'>*new(key).kr(numChannels, offset)</code> (see <a href="./../Classes/NodeProxy.html">NodeProxy</a> help for kr method)</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*clear' href='./../Overviews/Methods.html#clear'>clear</a> (<span class='argstr'>fadeTime</span>)</h3>
+<p>equivalent to <code class='code prettyprint lang-sc'>*new(key).kr(numChannels, offset)</code> (see <a href="./../Classes/BusPlug.html#kr">BusPlug: kr</a>)</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*clear' href='./../Overviews/Methods.html#clear'>clear</a> (<span class='argstr'>fadeTime</span>)</h3>
 <div class='method'>
 <p>clear all proxies</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultServer' href='./../Overviews/Methods.html#defaultServer'>defaultServer</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultServer' href='./../Overviews/Methods.html#defaultServer'>defaultServer</a> = value</h3>

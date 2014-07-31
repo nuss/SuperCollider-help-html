@@ -125,7 +125,7 @@
 <tr><td><strong>int</strong><td>one to receive notifications, zero to stop receiving them.</table>
 
 <p>If argument is one, server will remember your return address and send you notifications. if argument is zero, server will stop sending you notifications.<dl>
-<dt>Asynchronous.<dd>Replies to sender with <strong>/done</strong> when complete.</dl>
+<dt>Asynchronous.<dd>Replies to sender with <strong>/done /notify clientID</strong> when complete. If this client has registered for notifications before, this may be the same ID. Otherwise it will be a new one. Clients can use this ID in multi-client situations to avoid conflicts in node IDs, bus indices, buffer numbers, etc.</dl>
 <h3><a class='anchor' name='/status'>/status</a></h3>
 
 <p>Query the status. Replies to sender with the following message:<dl>
@@ -410,14 +410,14 @@
 <tr><td><strong>int</strong><td>buffer number<tr><td><strong>int</strong><td>number of frames<tr><td><strong>int</strong><td>number of channels (optional. default = 1 channel)<tr><td><strong>bytes</strong><td>an OSC message to execute upon completion. (optional)</table>
 
 <p>Allocates zero filled buffer to number of channels and samples.<dl>
-<dt>Asynchronous.<dd>Replies to sender with <strong>/done</strong> when complete.</dl>
+<dt>Asynchronous.<dd>Replies to sender with <strong>/done /b_alloc bufNum</strong> when complete.</dl>
 <h3><a class='anchor' name='/b_allocRead'>/b_allocRead</a></h3>
 
 <p>Allocate buffer space and read a sound file.<table>
 <tr><td><strong>int</strong><td>buffer number<tr><td><strong>string</strong><td>path name of a sound file.<tr><td><strong>int</strong><td>starting frame in file (optional. default = 0)<tr><td><strong>int</strong><td>number of frames to read (optional. default = 0, see below)<tr><td><strong>bytes</strong><td>an OSC message to execute upon completion. (optional)</table>
 
 <p>Allocates buffer to number of channels of file and number of samples requested, or fewer if sound file is smaller than requested. Reads sound file data from the given starting frame in the file. If the number of frames argument is less than or equal to zero, the entire file is read.<dl>
-<dt>Asynchronous.<dd>Replies to sender with <strong>/done</strong> when complete.</dl>
+<dt>Asynchronous.<dd>Replies to sender with <strong>/done /b_allocRead bufNum</strong> when complete.</dl>
 <h3><a class='anchor' name='/b_allocReadChannel'>/b_allocReadChannel</a></h3>
 
 <p>Allocate buffer space and read channels from a sound file.<table>
@@ -427,14 +427,14 @@
 <p><tr><td><strong>bytes</strong><td>an OSC message to execute upon completion. (optional)</table>
 
 <p>As b_allocRead, but reads individual channels into the allocated buffer in the order specified.<dl>
-<dt>Asynchronous.<dd>Replies to sender with <strong>/done</strong> when complete.</dl>
+<dt>Asynchronous.<dd>Replies to sender with <strong>/done /b_allocReadChannel bufNum</strong> when complete.</dl>
 <h3><a class='anchor' name='/b_read'>/b_read</a></h3>
 
 <p>Read sound file data into an existing buffer.<table>
 <tr><td><strong>int</strong><td>buffer number<tr><td><strong>string</strong><td>path name of a sound file.<tr><td><strong>int</strong><td>starting frame in file (optional. default = 0)<tr><td><strong>int</strong><td>number of frames to read (optional. default = -1, see below)<tr><td><strong>int</strong><td>starting frame in buffer (optional. default = 0)<tr><td><strong>int</strong><td>leave file open (optional. default = 0)<tr><td><strong>bytes</strong><td>an OSC message to execute upon completion. (optional)</table>
 
 <p>Reads sound file data from the given starting frame in the file and writes it to the given starting frame in the buffer. If number of frames is less than zero, the entire file is read. If reading a file to be used by <a href="./../Classes/DiskIn.html">DiskIn</a> ugen then you will want to set "leave file open" to one, otherwise set it to zero.<dl>
-<dt>Asynchronous.<dd>Replies to sender with <strong>/done</strong> when complete.</dl>
+<dt>Asynchronous.<dd>Replies to sender with <strong>/done /b_read bufNum</strong> when complete.</dl>
 <h3><a class='anchor' name='/b_readChannel'>/b_readChannel</a></h3>
 
 <p>Read sound file channel data into an existing buffer.<table>
@@ -444,7 +444,7 @@
 <p><tr><td><strong>bytes</strong><td>completion message</table>
 
 <p>As <strong>b_read</strong>, but reads individual channels in the order specified. The number of channels requested must match the number of channels in the buffer.<dl>
-<dt>Asynchronous.<dd>Replies to sender with <strong>/done</strong> when complete.</dl>
+<dt>Asynchronous.<dd>Replies to sender with <strong>/done /b_readChannel bufNum</strong> when complete.</dl>
 <h3><a class='anchor' name='/b_write'>/b_write</a></h3>
 
 <p>Write sound file data.<table>
@@ -454,21 +454,21 @@
 <dt>Header format is one of:<dd>"aiff", "next", "wav", "ircam"", "raw"<dt>Sample format is one of:<dd>"int8", "int16", "int24", "int32", "float", "double", "mulaw", "alaw"</dl>
 
 <p>Not all combinations of header format and sample format are possible. If number of frames is less than zero, all samples from the starting frame to the end of the buffer are written. If opening a file to be used by DiskOut ugen then you will want to set "leave file open" to one, otherwise set it to zero. If "leave file open" is set to one then the file is created, but no frames are written until the DiskOut ugen does so.<dl>
-<dt>Asynchronous.<dd>Replies to sender with <strong>/done</strong> when complete.</dl>
+<dt>Asynchronous.<dd>Replies to sender with <strong>/done /b_write bufNum</strong> when complete.</dl>
 <h3><a class='anchor' name='/b_free'>/b_free</a></h3>
 
 <p>Free buffer data.<table>
 <tr><td><strong>int</strong><td>buffer number<tr><td><strong>bytes</strong><td>an OSC message to execute upon completion. (optional)</table>
 
 <p>Frees buffer space allocated for this buffer.<dl>
-<dt>Asynchronous.<dd>Replies to sender with <strong>/done</strong> when complete.</dl>
+<dt>Asynchronous.<dd>Replies to sender with <strong>/done /b_free bufNum</strong> when complete.</dl>
 <h3><a class='anchor' name='/b_zero'>/b_zero</a></h3>
 
 <p>Zero sample data.<table>
 <tr><td><strong>int</strong><td>buffer number<tr><td><strong>bytes</strong><td>an OSC message to execute upon completion. (optional)</table>
 
 <p>Sets all samples in the buffer to zero.<dl>
-<dt>Asynchronous.<dd>Replies to sender with <strong>/done</strong> when complete.</dl>
+<dt>Asynchronous.<dd>Replies to sender with <strong>/done /b_zero bufNum</strong> when complete.</dl>
 <h3><a class='anchor' name='/b_set'>/b_set</a></h3>
 
 <p>Set sample value(s).<table>
@@ -496,14 +496,14 @@
 <tr><td><strong>int</strong><td>buffer number<tr><td><strong>string</strong><td>command name<tr><td><strong>...</strong><td>command arguments</table>
 
 <p>Plug-ins can define commands that operate on buffers. The arguments after the command name are defined by the command. The currently defined buffer fill commands are listed below in a separate section.<dl>
-<dt>Asynchronous.<dd>Replies to sender with <strong>/done</strong> when complete.</dl>
+<dt>Asynchronous.<dd>Replies to sender with <strong>/done /b_gen bufNum</strong> when complete.</dl>
 <h3><a class='anchor' name='/b_close'>/b_close</a></h3>
 
 <p>Close soundfile.<table>
 <tr><td><strong>int</strong><td>buffer number</table>
 
 <p>After using a buffer with <a href="./../Classes/DiskOut.html">DiskOut</a>, close the soundfile and write header information.<dl>
-<dt>Asynchronous.<dd>Replies to sender with <strong>/done</strong> when complete.</dl>
+<dt>Asynchronous.<dd>Replies to sender with <strong>/done /b_close bufNum</strong> when complete.</dl>
 <h3><a class='anchor' name='/b_query'>/b_query</a></h3>
 
 <p>Get buffer info.<table>
@@ -570,12 +570,12 @@
 <p>These messages are sent by the server in reponse to some commands.<h3><a class='anchor' name='/done'>/done</a></h3>
 
 <p>An asynchronous message has completed.<table>
-<tr><td><strong>string</strong><td>the name of the command</table>
+<tr><td><strong>string</strong><td>the name of the command<tr><td><strong>other</strong><td>(optional) some commands provide other information, for example a buffer index.</table>
 
 <p>Sent in response to all asynchronous commands. Sent only to the sender of the original message.<h3><a class='anchor' name='/fail'>/fail</a></h3>
 
 <p>An error occurred.<table>
-<tr><td><strong>string</strong><td>the name of the command<tr><td><strong>string</strong><td>the error message.</table>
+<tr><td><strong>string</strong><td>the name of the command<tr><td><strong>string</strong><td>the error message.<tr><td><strong>other</strong><td>(optional) some commands provide other information, for example a buffer index.</table>
 
 <p>There was a problem. Sent only to the sender of the original message.<h3><a class='anchor' name='/late'>/late</a></h3>
 
