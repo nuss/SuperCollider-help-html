@@ -1,0 +1,233 @@
+<html><head><title>KeyPlayer</title>
+<link rel='stylesheet' href='./scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./frontend.css' type='text/css' />
+<link rel='stylesheet' href='./custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./scdoc.js' type='text/javascript'></script>
+<script src='./docmap.js' type='text/javascript'></script>
+<script src='./prettify.js' type='text/javascript'></script>
+<script src='./lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='.';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider  (extension)</div>
+<div id='categories'><a href='./Browse.html#Undocumented classes'>Undocumented classes</a>, <a href='./Browse.html#Quarks>KeyPlayer'>Quarks>KeyPlayer</a></div>
+<h1>KeyPlayer</h1>
+<div id='summary'>a simple keyboard playing interface</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./Classes/KeyPlayerGui.html">KeyPlayerGui</a>, <a href="./Classes/KeyPlayerRec.html">KeyPlayerRec</a>, <a href="./Classes/KeyChain.html">KeyChain</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*all'>all</a> </li>
+<li class='toc3'><a href='#*at'>at</a> </li>
+<li class='toc3'><a href='#*verbose'>verbose</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*gui'>gui</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Instance Variables'>Instance Variables</a></li>
+<ul class='toc'><li class='toc3'><a href='#-key'>key</a> </li>
+<li class='toc3'><a href='#-actions'>actions</a>  <a href='#-upActions'>upActions</a>  <a href='#-bothActions'>bothActions</a> </li>
+<li class='toc3'><a href='#-pressed'>pressed</a> </li>
+<li class='toc3'><a href='#-put'>put</a>  <a href='#-putDown'>putDown</a>  <a href='#-putUp'>putUp</a>  <a href='#-putBoth'>putBoth</a>  <a href='#-putAll'>putAll</a> </li>
+<li class='toc3'><a href='#-gui'>gui</a> </li>
+<li class='toc3'><a href='#-keyDown'>keyDown</a>  <a href='#-keyUp'>keyUp</a> </li>
+<li class='toc3'><a href='#-removeAt'>removeAt</a> </li>
+<li class='toc3'><a href='#-isUp'>isUp</a>  <a href='#-isDown'>isDown</a> </li>
+<li class='toc3'><a href='#-makeRec'>makeRec</a> </li>
+<li class='toc3'><a href='#-rec'>rec</a> </li>
+<li class='toc3'><a href='#-saveDoc'>saveDoc</a> </li>
+</ul><li class='toc2'><a href='#Private methods'>Private methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-keyAction'>keyAction</a>  <a href='#-makeKeyAction'>makeKeyAction</a>  <a href='#-makeKeyUpAction'>makeKeyUpAction</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>KeyPlayer allows using the computer keyboard keys for executing functions when given keys are pressed or released (keyDown and keyUp).<pre class='code prettyprint lang-sc'>(
+k = KeyPlayer(\rd);
+"qwertzuiopasdfghjklyxcvbnm".do { |char|
+    var note = (midinote: rrand(36, 96), dur: rrand(0.1, 1.0));
+    k.put(char, { |char| char.postln; note.postln.play });
+};
+)
+    // make a big gui for it - see KeyPlayerGui.help
+g = KeyPlayerGui(k);
+
+
+    // or have KeyPlayer respond to a single button: 
+g.close;
+(
+w = Window("any window", Rect(0,500, 200, 50)).front;
+b = Button(w, Rect(10, 10, 180, 30)).states_([["I am KeyPlayer('rand')"]]);
+b.keyDownAction_({ |view, char, mod, uni| 
+    KeyPlayer(\rd).keyAction(char, mod, uni, which: \down);
+});
+b.keyUpAction_({ |view, char, mod, uni|
+    KeyPlayer(\rd).keyAction(char, mod, uni, which: \up);
+});
+)</pre>
+
+<p>How to link to this file, in quarks/KeyPlayer? <a href="./../KeyPlayerExample.scd">KeyPlayerExample.scd</a><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./Overviews/Methods.html#all'>all</a> </h3>
+<div class='method'>
+<p>Global dict for all KeyPlayers</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*at' href='./Overviews/Methods.html#at'>at</a> </h3>
+<div class='method'>
+<p>Look up KeyPlayers by name in KeyPlayer.all</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*verbose' href='./Overviews/Methods.html#verbose'>verbose</a> </h3>
+<div class='method'>
+<p>get or set verbose flag to posts debug messages. default = false.<pre class='code prettyprint lang-sc'>KeyPlayer.verbose_(true);
+    // debugging, posts:
+    // [KeyPlayer, char, modifiers, unicode, keycode]
+KeyPlayer.verbose_(false);</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./Overviews/Methods.html#new'>new</a> </h3>
+<div class='method'>
+<p>create a new KeyPlayer<pre class='code prettyprint lang-sc'>k = KeyPlayer(\k);        // create an instance
+KeyPlayer(\k) == k;        // same name accesses same instance
+KeyPlayer.at(\k) == k;  // just access to an existing instance</pre>
+
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>key under wich to store it<tr><td class='argumentname'>inDict<td class='argumentdesc'>
+<p>an optional dict of keyDown and keyUp functions - not well tested yet.<tr><td class='argumentname'>ignoreCase<td class='argumentdesc'>
+<p>a flag whether to ignore upper/lowercase letter distinction.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*gui' href='./Overviews/Methods.html#gui'>gui</a> </h3>
+<div class='method'>
+<p>make a global gui for up to ten KeyPlayers.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initClass' href='./Overviews/Methods.html#initClass'>initClass</a> </h3>
+<div class='method'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Instance Variables'>Instance Variables</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-key' href='./Overviews/Methods.html#key'>key</a> </h3>
+<div class='method'>
+<p>The KeyPlayer's name/key</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-actions' href='./Overviews/Methods.html#actions'>actions</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-upActions' href='./Overviews/Methods.html#upActions'>upActions</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bothActions' href='./Overviews/Methods.html#bothActions'>bothActions</a> </h3>
+<div class='method'>
+<p>dicts where the down and up actions kept.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pressed' href='./Overviews/Methods.html#pressed'>pressed</a> </h3>
+<div class='method'>
+<p>a dict with the currently pressed keys</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-put' href='./Overviews/Methods.html#put'>put</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-putDown' href='./Overviews/Methods.html#putDown'>putDown</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-putUp' href='./Overviews/Methods.html#putUp'>putUp</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-putBoth' href='./Overviews/Methods.html#putBoth'>putBoth</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-putAll' href='./Overviews/Methods.html#putAll'>putAll</a> </h3>
+<div class='method'>
+<p>set actions for keyDown and keyUp on given characters<pre class='code prettyprint lang-sc'>    // put in some functions
+k.put($a, { "A down!".postln });        // or equivalent:
+k.putDown($a, { "A down!".postln });
+k.actions;    // they are stored here by unicode numbers
+
+    // upActions are separate
+k.putUp($a, { "A up!".postln });
+k.upActions;
+
+    // both dictionaries are kept here:
+k.bothActions.postcs; "";
+
+    // you can put things in both:
+k.putBoth($a, { "A upOrDown!".postln });
+
+    // put in a dict at once
+k.putAll(($x: { "x!".postln }, $y: { "y not?".postln }), true, \down);
+
+    // avoid retriggering keyDowns: try holding the s-key down
+k.putDown($s, { "yo again".postln }, noRep: true);
+k.putUp($s, { "yo again".reverse.postln });
+    // retriggers by default
+k.putDown($s, { "yo again".postln });</pre>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>char<td class='argumentdesc'>
+<p>the char for which to put the action<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>the action<tr><td class='argumentname'>both<td class='argumentdesc'>
+<p>flag whether to distinguish upper/lower or to respond to both.<tr><td class='argumentname'>noRep<td class='argumentdesc'>
+<p>on keyDown, flag whether to swallow auto-repeated keystrokes.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-gui' href='./Overviews/Methods.html#gui'>gui</a> </h3>
+<div class='method'>
+<p>make its own gui for KeyPlayer<pre class='code prettyprint lang-sc'>g = k.gui;
+// now try typing the colored keys</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-keyDown' href='./Overviews/Methods.html#keyDown'>keyDown</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-keyUp' href='./Overviews/Methods.html#keyUp'>keyUp</a> </h3>
+<div class='method'>
+<p>evaluate keyActions by hand<pre class='code prettyprint lang-sc'>k.keyDown($a);
+k.keyUp($a);
+k.keyDown($a.asUnicode);
+k.keyUp($a.asUnicode);</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeAt' href='./Overviews/Methods.html#removeAt'>removeAt</a> </h3>
+<div class='method'>
+<p>remove actions from down or up dicts.<pre class='code prettyprint lang-sc'>k.removeAt($a);
+k.removeAt($a, \up);
+k.upActions;
+k.removeAt($a, \down);
+k.actions;</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isUp' href='./Overviews/Methods.html#isUp'>isUp</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-isDown' href='./Overviews/Methods.html#isDown'>isDown</a> </h3>
+<div class='method'>
+<p>check wether a char is currently down (pressed) or not.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeRec' href='./Overviews/Methods.html#makeRec'>makeRec</a> </h3>
+<div class='method'>
+<p>make an instance of KeyPlayerRec for the KeyPlayer</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rec' href='./Overviews/Methods.html#rec'>rec</a> </h3>
+<div class='method'>
+<p>get and set the KeyPlayerRec for the KeyPlayer</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-saveDoc' href='./Overviews/Methods.html#saveDoc'>saveDoc</a> </h3>
+<div class='method'>
+<p>post current actions as code into a Document. Works if all functions are closed.</div><h3><a class='anchor' name='Private methods'>Private methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-keyAction' href='./Overviews/Methods.html#keyAction'>keyAction</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeKeyAction' href='./Overviews/Methods.html#makeKeyAction'>makeKeyAction</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeKeyUpAction' href='./Overviews/Methods.html#makeKeyUpAction'>makeKeyUpAction</a> </h3>
+<div class='method'>
+<p></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>    // the random keyboard:
+(
+s.latency = nil;    // make sure we respond quickly
+thisThread.randSeed = 2008;
+"qwertzuiopasdfghjklyxcvbnm".do { |char|
+    var note = (midinote: rrand(36, 96), dur: rrand(0.1, 1.0));
+    KeyPlayer(\rand).put(char, { |char| char.postln; note.postln.play });
+};
+KeyPlayer.gui.front;
+)
+
+KeyPlayer(\rand).bothActions
+
+    // random keyboard, no retrig, hold until release with keyUp
+(
+q = q ? ();    // create a dict to keep things:
+q.notes = ();
+q.synths = ();
+thisThread.randSeed = 2008; // it is not that new
+
+"qwertzuiopasdfghjklyxcvbnm".do { |char|
+    q.notes.put(char, rrand(36, 96));
+
+    KeyPlayer(\hold).putDown(char, { |char|
+        char.post;
+        q.synths[char].release;
+        q.synths.put(char, Synth(\default, [\freq, q.notes[char].postln.midicps]));
+    }, noRep: true);
+
+    KeyPlayer(\hold).putUp(char.postln, { |char| q.synths.removeAt(char).release });
+};
+KeyPlayer.gui.front;
+)
+
+KeyPlayer(\px);
+// stop and resume a proxyspace:
+p = ProxySpace.push;
+KeyPlayer(\px).put($p, { p.do(_.pause) });
+KeyPlayer(\px).put($r, { p.do(_.resume) });
+
+    // David Cottle example IIRC
+~test = { SinOsc.ar(LFNoise0.kr([10, 15], 200, [300, 500])) * 0.2 };
+~test.play;
+
+    // re-send or rebuild the sound
+(
+~test = {
+    SinOsc.ar(
+        LFNoise0.kr([10, 15] * exprand(0.5, 4.0), 200, [300, 500])
+        * exprand(1.0, 4.0)
+    ) * XLine.kr(0.5, 0.005, exprand(0.1, 10), doneAction: 2);
+};
+KeyPlayer(\px).put($t, { ~test.send });
+KeyPlayer(\px).put($u, { ~test.rebuild });
+)</pre>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/KeyPlayer/HelpSource/KeyPlayer.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/KeyPlayer/HelpSource/KeyPlayer.schelp</a><br>link::KeyPlayer::<br>sc version: 3.7alpha0</div></div></body></html>

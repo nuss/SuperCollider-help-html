@@ -1,0 +1,111 @@
+<html><head><title>Phid</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES</div>
+<div id='categories'><a href='./../Browse.html#Streams-Patterns-Events>Patterns>User Input'>Streams-Patterns-Events>Patterns>User Input</a></div>
+<h1>Phid</h1>
+<div id='summary'>pattern that polls values from an OSX hid device</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /usr/local/share/SuperCollider/SCClassLibrary/Common/Streams/<a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Streams/ControlPatterns.sc'>ControlPatterns.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Pattern.html">Pattern</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/PhidKey.html">PhidKey</a>, <a href="./../Classes/PhidSlot.html">PhidSlot</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-element'>element</a> </li>
+<li class='toc3'><a href='#-embedInStream'>embedInStream</a> </li>
+<li class='toc3'><a href='#-locID'>locID</a> </li>
+<li class='toc3'><a href='#-repeats'>repeats</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+<div class='note'><span class='notelabel'>NOTE:</span> This class is OSX specific. Please use the cross platform versions (based on <a href="./../Classes/GeneralHID.html">GeneralHID</a>), <a href="./../Classes/PhidKey.html">PhidKey</a> or <a href="./../Classes/PhidSlot.html">PhidSlot</a>, instead.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>element</span>, <span class='argstr'>locID: 0</span>, <span class='argstr'>repeats: inf</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>element<td class='argumentdesc'>
+<p>one element of the interface of the device, like a button or an axis. Can be an index or, if the devicespec is present, also a symbol.<tr><td class='argumentname'>locID<td class='argumentdesc'>
+<p>the index of the device, defaults to 0 (first device).<tr><td class='argumentname'>repeats<td class='argumentdesc'>
+<p>number of values to return.</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-element' href='./../Overviews/Methods.html#element'>element</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-element' href='./../Overviews/Methods.html#element'>element</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-embedInStream' href='./../Overviews/Methods.html#embedInStream'>embedInStream</a> (<span class='argstr'>event</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-locID' href='./../Overviews/Methods.html#locID'>locID</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-locID' href='./../Overviews/Methods.html#locID'>locID</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-repeats' href='./../Overviews/Methods.html#repeats'>repeats</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-repeats' href='./../Overviews/Methods.html#repeats'>repeats</a> = value</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// while this is running, test your device
+(
+a = Phid(0,0);
+x = a.asStream;
+
+Routine({ loop({
+    x.next.postln;
+    0.2.wait;
+}) }).play;
+)
+
+// using devicespecs:
+// for example wingman. for other specs see HIDDeviceService
+(
+HIDDeviceService.deviceSpecs.put('WingMan Action Pad',
+    IdentityDictionary[
+        // buttons
+        \a -&gt; 0, \b-&gt; 1, \c-&gt; 2,
+        \x-&gt; 3, \y-&gt; 4, \z-&gt; 5,
+        \l-&gt; 6,            //front left
+        \r-&gt; 7,            //front right
+        \s-&gt; 8,
+        \mode-&gt; 9,
+        \xx-&gt; 10,        //analog controller x axis
+        \yy-&gt; 11,        //analog controller y axis
+        \slider-&gt; 12,
+        \hat-&gt; 13
+    ])
+)
+
+
+// then you can use the named key:
+(
+a = Phid(\x, 0, inf);
+x = a.asStream;
+
+Routine({ loop({
+    x.next.postln;
+    0.2.wait;
+}) }).play;
+)
+
+
+// 'musical' example:
+(
+    Pbind(
+        \freq, Pseq([Phid(\x,0,8),Phid(\y,0,8)],inf) * 500 + 200,
+        \dur, Phid(\slider) + 0.02,
+        \pan, Phid(\hat) * 2 - 1
+    ).play;
+)</pre>
+
+<p><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Phid.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Phid.schelp</a><br>link::Classes/Phid::<br>sc version: 3.7alpha0</div></div></body></html>

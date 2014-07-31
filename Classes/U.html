@@ -1,0 +1,670 @@
+<html><head><title>U</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#UnitLib'>UnitLib</a></div>
+<h1>U</h1>
+<div id='summary'>a basic element in Unit Lib</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Core/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Core/Unit.sc'>Unit.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/ObjectWithArgs.html">ObjectWithArgs</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/MassEditU.html">MassEditU</a>, <a href="../Classes/UMap.html">UMap</a>, <a href="../Classes/UX.html">UX</a></div>
+<div id='related'>See also: <a href="./../Classes/UChain.html">UChain</a>, <a href="./../Classes/Udef.html">Udef</a>, <a href="./../Classes/UScore.html">UScore</a>, <a href="./../Classes/Synth.html">Synth</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'><li class='toc2'><a href='#GUI'>GUI</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Synths'>Synths</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*defClass'>defClass</a> </li>
+<li class='toc3'><a href='#*formatArgs'>formatArgs</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*addUneditableCategory'>addUneditableCategory</a> </li>
+<li class='toc3'><a href='#*clear'>clear</a> </li>
+<li class='toc3'><a href='#*loadDef'>loadDef</a> </li>
+<li class='toc3'><a href='#*synthDict'>synthDict</a> </li>
+<li class='toc3'><a href='#*uneditableCategories'>uneditableCategories</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-disposeOnFree'>disposeOnFree</a> </li>
+<li class='toc3'><a href='#-preparedServers'>preparedServers</a> </li>
+<li class='toc3'><a href='#-env'>env</a> </li>
+<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-allKeys'>allKeys</a> </li>
+<li class='toc3'><a href='#-allValues'>allValues</a> </li>
+<li class='toc3'><a href='#-set'>set</a> </li>
+<li class='toc3'><a href='#-prSet'>prSet</a> </li>
+<li class='toc3'><a href='#-get'>get</a> </li>
+<li class='toc3'><a href='#-mapSet'>mapSet</a> </li>
+<li class='toc3'><a href='#-mapGet'>mapGet</a> </li>
+<li class='toc3'><a href='#-release'>release</a> </li>
+<li class='toc3'><a href='#-getArgsFor'>getArgsFor</a> </li>
+<li class='toc3'><a href='#-getIOKey'>getIOKey</a> </li>
+<li class='toc3'><a href='#-setAudioIn'>setAudioIn</a> </li>
+<li class='toc3'><a href='#-setControlIn'>setControlIn</a> </li>
+<li class='toc3'><a href='#-setAudioOut'>setAudioOut</a> </li>
+<li class='toc3'><a href='#-setControlOut'>setControlOut</a> </li>
+<li class='toc3'><a href='#-getAudioIn'>getAudioIn</a> </li>
+<li class='toc3'><a href='#-getControlIn'>getControlIn</a> </li>
+<li class='toc3'><a href='#-getAudioOut'>getAudioOut</a> </li>
+<li class='toc3'><a href='#-getControlOut'>getControlOut</a> </li>
+<li class='toc3'><a href='#-audioIns'>audioIns</a> </li>
+<li class='toc3'><a href='#-controlIns'>controlIns</a> </li>
+<li class='toc3'><a href='#-audioOuts'>audioOuts</a> </li>
+<li class='toc3'><a href='#-controlOuts'>controlOuts</a> </li>
+<li class='toc3'><a href='#-canFreeSynth'>canFreeSynth</a> </li>
+<li class='toc3'><a href='#-shouldPlayOn'>shouldPlayOn</a> </li>
+<li class='toc3'><a href='#-doesNotUnderstand'>doesNotUnderstand</a> </li>
+<li class='toc3'><a href='#-rate'>rate</a> </li>
+<li class='toc3'><a href='#-loop'>loop</a> </li>
+<li class='toc3'><a href='#-def'>def</a> </li>
+<li class='toc3'><a href='#-defName'>defName</a> </li>
+<li class='toc3'><a href='#-cutStart'>cutStart</a> </li>
+<li class='toc3'><a href='#-synths'>synths</a> </li>
+<li class='toc3'><a href='#-addSynth'>addSynth</a> </li>
+<li class='toc3'><a href='#-removeSynth'>removeSynth</a> </li>
+<li class='toc3'><a href='#-makeSynth'>makeSynth</a> </li>
+<li class='toc3'><a href='#-makeBundle'>makeBundle</a> </li>
+<li class='toc3'><a href='#-start'>start</a> </li>
+<li class='toc3'><a href='#-free'>free</a> </li>
+<li class='toc3'><a href='#-stop'>stop</a> </li>
+<li class='toc3'><a href='#-resetSynths'>resetSynths</a> </li>
+<li class='toc3'><a href='#-resetArgs'>resetArgs</a> </li>
+<li class='toc3'><a href='#-argSpecs'>argSpecs</a> </li>
+<li class='toc3'><a href='#-getSpec'>getSpec</a> </li>
+<li class='toc3'><a href='#-isPlaying'>isPlaying</a> </li>
+<li class='toc3'><a href='#-printOn'>printOn</a> </li>
+<li class='toc3'><a href='#-getInitArgs'>getInitArgs</a> </li>
+<li class='toc3'><a href='#-storeArgs'>storeArgs</a> </li>
+<li class='toc3'><a href='#-asUnit'>asUnit</a> </li>
+<li class='toc3'><a href='#-prSyncCollection'>prSyncCollection</a> </li>
+<li class='toc3'><a href='#-waitTime'>waitTime</a> </li>
+<li class='toc3'><a href='#-valuesToPrepare'>valuesToPrepare</a> </li>
+<li class='toc3'><a href='#-needsPrepare'>needsPrepare</a> </li>
+<li class='toc3'><a href='#-apxCPU'>apxCPU</a> </li>
+<li class='toc3'><a href='#-prepare'>prepare</a> </li>
+<li class='toc3'><a href='#-prepareAnd'>prepareAnd</a> </li>
+<li class='toc3'><a href='#-prepareAndStart'>prepareAndStart</a> </li>
+<li class='toc3'><a href='#-loadDefAndStart'>loadDefAndStart</a> </li>
+<li class='toc3'><a href='#-dispose'>dispose</a> </li>
+<li class='toc3'><a href='#-disposeArgsFor'>disposeArgsFor</a> </li>
+<li class='toc3'><a href='#-gui'>gui</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-addMod'>addMod</a> </li>
+<li class='toc3'><a href='#-argSpecsForDisplay'>argSpecsForDisplay</a> </li>
+<li class='toc3'><a href='#-argsForPrint'>argsForPrint</a> </li>
+<li class='toc3'><a href='#-canUseUMap'>canUseUMap</a> </li>
+<li class='toc3'><a href='#-checkDef'>checkDef</a> </li>
+<li class='toc3'><a href='#-connect'>connect</a> </li>
+<li class='toc3'><a href='#-disconnect'>disconnect</a> </li>
+<li class='toc3'><a href='#-disposeSynths'>disposeSynths</a> </li>
+<li class='toc3'><a href='#-dontStoreArgNames'>dontStoreArgNames</a> </li>
+<li class='toc3'><a href='#-getAllUMaps'>getAllUMaps</a> </li>
+<li class='toc3'><a href='#-getArgSpec'>getArgSpec</a> </li>
+<li class='toc3'><a href='#-getAudioMixOutLevel'>getAudioMixOutLevel</a> </li>
+<li class='toc3'><a href='#-getControlMixOutLevel'>getControlMixOutLevel</a> </li>
+<li class='toc3'><a href='#-getDefault'>getDefault</a> </li>
+<li class='toc3'><a href='#-getSpecMode'>getSpecMode</a> </li>
+<li class='toc3'><a href='#-getSynthArgs'>getSynthArgs</a> </li>
+<li class='toc3'><a href='#-getUMapBusNumChannels'>getUMapBusNumChannels</a> </li>
+<li class='toc3'><a href='#-getUMaps'>getUMaps</a> </li>
+<li class='toc3'><a href='#-guiCollapsed'>guiCollapsed</a> </li>
+<li class='toc3'><a href='#-increaseIOs'>increaseIOs</a> </li>
+<li class='toc3'><a href='#-insertUMap'>insertUMap</a> </li>
+<li class='toc3'><a href='#-mod'>mod</a> </li>
+<li class='toc3'><a href='#-modPerform'>modPerform</a> </li>
+<li class='toc3'><a href='#-name'>name</a> </li>
+<li class='toc3'><a href='#-numChannels'>numChannels</a> </li>
+<li class='toc3'><a href='#-parentChain'>parentChain</a> </li>
+<li class='toc3'><a href='#-removeUMap'>removeUMap</a> </li>
+<li class='toc3'><a href='#-reset'>reset</a> </li>
+<li class='toc3'><a href='#-setAudioMixOutLevel'>setAudioMixOutLevel</a> </li>
+<li class='toc3'><a href='#-setControlMixOutLevel'>setControlMixOutLevel</a> </li>
+<li class='toc3'><a href='#-setDur'>setDur</a> </li>
+<li class='toc3'><a href='#-setUMapBuses'>setUMapBuses</a> </li>
+<li class='toc3'><a href='#-synthsForUMap'>synthsForUMap</a> </li>
+<li class='toc3'><a href='#-uPrepareValue'>uPrepareValue</a> </li>
+<li class='toc3'><a href='#-uchainInit'>uchainInit</a> </li>
+<li class='toc3'><a href='#-umapPerform'>umapPerform</a> </li>
+<li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc3'><a href='#-valuesAsUnitArg'>valuesAsUnitArg</a> </li>
+<li class='toc3'><a href='#-valuesSetUnit'>valuesSetUnit</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>An U (short for "unit") represents a single audio or control process. U's are the basic building blocks of the <a href="./../Reference/Unit-Lib.html">Unit Library</a>. Units can be chained together in a <a href="./../Classes/UChain.html">UChain</a> to form a series of processes. Each unit can perform it's own little task, analogous to 'plugins' in popular commercial sequencers such as Logic and Pro Tools. Each unit is an instance of a <a href="./../Classes/Udef.html">Udef</a>, which defines what the unit does and what it's parameters are. There is a global library of Udefs, where each Udef is stored by name. An U is created by giving the name of the desired Udef:<pre class='code prettyprint lang-sc'>x = U(\sine); // creates a unit based on the \sine Udef (a system default)</pre>
+
+<p>The U in the example above gets the following parameters from its Udef: \freq, \amp. There are various ways to set these:<pre class='code prettyprint lang-sc'>x.set( \freq, 660 ); // set the \freq to 660
+x.get( \freq ); // request value
+
+x.freq = 550; // alternative way to set
+x.freq; // request value</pre>
+
+<p>This unit can be played individually via .prepareAndStart(s) and .stop. But it will not be audible. In's output is on private <a href="./../Classes/Bus.html">busses</a>. It can only be made audible when combined with an U from one of the 'io' Udefs, for example \output, in a UChain:<pre class='code prettyprint lang-sc'>x = U(\sine);
+c = UChain( x, U(\output) ); 
+
+c.prepareAndStart(s); // start the chain
+
+x.freq = 880; // changing a parameter
+c[0].freq = 330; // access the U via index
+
+c.release; // release (stop) the chain</pre>
+<h3><a class='anchor' name='GUI'>GUI</a></h3>
+
+<p>Units have extensive graphical editors. The gui below is of the UChain in the code example above.<div class='image'><img src='U-example1.png'/></div>
+
+<p>Each parameter can be edited via a dedicated gui element. Where most of these are sliders, there can also be different kinds of editors, all based on the information stored in the Udef. Changes in parameters will be instantly audible if the U is playing at that moment. Changes made when the U is not playing will be remembered and used when playing. Changing values via code or via other gui instances will change the value visually on this editor as well.<pre class='code prettyprint lang-sc'>c = UChain( U(\sine), U(\output) );
+c.gui; // this shows the same gui as the example picture</pre>
+
+<p>In the gui you can also change the Udef for a unit by dragging it from the <a href="./../Classes/UdefListView.html">defs window</a>.<div class='image'><img src='U-example2.png'/></div>
+
+<p>This basically does the same as <code class='code prettyprint lang-sc'>c[0].defName = \saw</code>, and it keeps all the corresponding parameter settings. The unit itself is not replaced, it is just based on a new Udef.<h3><a class='anchor' name='Synths'>Synths</a></h3>
+
+<p>U's are usually wrappers for <a href="./../Classes/Synth.html">Synths</a>. Each unit represents a single Synth in a processing chain. <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>def</span>, <span class='argstr'>args</span>, <span class='argstr'>mod</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>defName<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>args<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defClass' href='./../Overviews/Methods.html#defClass'>defClass</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*formatArgs' href='./../Overviews/Methods.html#formatArgs'>formatArgs</a> (<span class='argstr'>inArgs</span>, <span class='argstr'>server</span>, <span class='argstr'>startPos: 0</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>inArgs<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*addUneditableCategory' href='./../Overviews/Methods.html#addUneditableCategory'>addUneditableCategory</a> (<span class='argstr'>category</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*clear' href='./../Overviews/Methods.html#clear'>clear</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadDef' href='./../Overviews/Methods.html#loadDef'>loadDef</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadDef' href='./../Overviews/Methods.html#loadDef'>loadDef</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*synthDict' href='./../Overviews/Methods.html#synthDict'>synthDict</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*synthDict' href='./../Overviews/Methods.html#synthDict'>synthDict</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*uneditableCategories' href='./../Overviews/Methods.html#uneditableCategories'>uneditableCategories</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*uneditableCategories' href='./../Overviews/Methods.html#uneditableCategories'>uneditableCategories</a> = value</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disposeOnFree' href='./../Overviews/Methods.html#disposeOnFree'>disposeOnFree</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disposeOnFree' href='./../Overviews/Methods.html#disposeOnFree'>disposeOnFree</a> = value</h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-preparedServers' href='./../Overviews/Methods.html#preparedServers'>preparedServers</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-preparedServers' href='./../Overviews/Methods.html#preparedServers'>preparedServers</a> = value</h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-env' href='./../Overviews/Methods.html#env'>env</a>: METHOD NOT FOUND!</h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-init' href='./../Overviews/Methods.html#init'>init</a> (<span class='argstr'>in</span>, <span class='argstr'>inArgs</span>, <span class='argstr'>inMod</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>inName<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>inArgs<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-allKeys' href='./../Overviews/Methods.html#allKeys'>allKeys</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-allValues' href='./../Overviews/Methods.html#allValues'>allValues</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-set' href='./../Overviews/Methods.html#set'>set</a> ( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... args<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prSet' href='./../Overviews/Methods.html#prSet'>prSet</a> ( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... args<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-get' href='./../Overviews/Methods.html#get'>get</a> (<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-mapSet' href='./../Overviews/Methods.html#mapSet'>mapSet</a> ( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>(value)<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-mapGet' href='./../Overviews/Methods.html#mapGet'>mapGet</a> (<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-release' href='./../Overviews/Methods.html#release'>release</a> (<span class='argstr'>releaseTime</span>, <span class='argstr'>doneAction</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>releaseTime<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>doneAction<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getArgsFor' href='./../Overviews/Methods.html#getArgsFor'>getArgsFor</a> (<span class='argstr'>server</span>, <span class='argstr'>startPos: 0</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getIOKey' href='./../Overviews/Methods.html#getIOKey'>getIOKey</a> (<span class='argstr'>mode: 'in'</span>, <span class='argstr'>rate: 'audio'</span>, <span class='argstr'>id: 0</span>, <span class='argstr'>what: "bus"</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>mode<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>rate<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>id<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>what<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setAudioIn' href='./../Overviews/Methods.html#setAudioIn'>setAudioIn</a> (<span class='argstr'>id: 0</span>, <span class='argstr'>bus: 0</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>id<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>bus<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setControlIn' href='./../Overviews/Methods.html#setControlIn'>setControlIn</a> (<span class='argstr'>id: 0</span>, <span class='argstr'>bus: 0</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>id<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>bus<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setAudioOut' href='./../Overviews/Methods.html#setAudioOut'>setAudioOut</a> (<span class='argstr'>id: 0</span>, <span class='argstr'>bus: 0</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>id<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>bus<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setControlOut' href='./../Overviews/Methods.html#setControlOut'>setControlOut</a> (<span class='argstr'>id: 0</span>, <span class='argstr'>bus: 0</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>id<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>bus<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getAudioIn' href='./../Overviews/Methods.html#getAudioIn'>getAudioIn</a> (<span class='argstr'>id: 0</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>id<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getControlIn' href='./../Overviews/Methods.html#getControlIn'>getControlIn</a> (<span class='argstr'>id: 0</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>id<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getAudioOut' href='./../Overviews/Methods.html#getAudioOut'>getAudioOut</a> (<span class='argstr'>id: 0</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>id<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getControlOut' href='./../Overviews/Methods.html#getControlOut'>getControlOut</a> (<span class='argstr'>id: 0</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>id<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-audioIns' href='./../Overviews/Methods.html#audioIns'>audioIns</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-controlIns' href='./../Overviews/Methods.html#controlIns'>controlIns</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-audioOuts' href='./../Overviews/Methods.html#audioOuts'>audioOuts</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-controlOuts' href='./../Overviews/Methods.html#controlOuts'>controlOuts</a> (<span class='argstr'>unit</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>unit<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-canFreeSynth' href='./../Overviews/Methods.html#canFreeSynth'>canFreeSynth</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-shouldPlayOn' href='./../Overviews/Methods.html#shouldPlayOn'>shouldPlayOn</a> (<span class='argstr'>target</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>target<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-doesNotUnderstand' href='./../Overviews/Methods.html#doesNotUnderstand'>doesNotUnderstand</a> (<span class='argstr'>selector</span> <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>selector<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>... args<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rate' href='./../Overviews/Methods.html#rate'>rate</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-rate' href='./../Overviews/Methods.html#rate'>rate</a> = <span class='argstr'>new</span></h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>new<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-loop' href='./../Overviews/Methods.html#loop'>loop</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-loop' href='./../Overviews/Methods.html#loop'>loop</a> = <span class='argstr'>new</span></h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>new<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-def' href='./../Overviews/Methods.html#def'>def</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-def' href='./../Overviews/Methods.html#def'>def</a>_ (<span class='argstr'>newDef</span>, <span class='argstr'>keepArgs: true</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newDef<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>keepArgs<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-defName' href='./../Overviews/Methods.html#defName'>defName</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-defName' href='./../Overviews/Methods.html#defName'>defName</a>_ (<span class='argstr'>newDefName</span>, <span class='argstr'>keepArgs: true</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newName<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>keepArgs<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-cutStart' href='./../Overviews/Methods.html#cutStart'>cutStart</a> (<span class='argstr'>amount: 0</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>amount<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-synths' href='./../Overviews/Methods.html#synths'>synths</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-synths' href='./../Overviews/Methods.html#synths'>synths</a> = <span class='argstr'>synths</span></h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>synths<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addSynth' href='./../Overviews/Methods.html#addSynth'>addSynth</a> (<span class='argstr'>synth</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>synth<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeSynth' href='./../Overviews/Methods.html#removeSynth'>removeSynth</a> (<span class='argstr'>synth</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>synth<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeSynth' href='./../Overviews/Methods.html#makeSynth'>makeSynth</a> (<span class='argstr'>target</span>, <span class='argstr'>startPos: 0</span>, <span class='argstr'>synthAction</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>target<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>synthAction<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeBundle' href='./../Overviews/Methods.html#makeBundle'>makeBundle</a> (<span class='argstr'>targets</span>, <span class='argstr'>startPos: 0</span>, <span class='argstr'>synthAction</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>targets<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>synthAction<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-start' href='./../Overviews/Methods.html#start'>start</a> (<span class='argstr'>target</span>, <span class='argstr'>startPos: 0</span>, <span class='argstr'>latency</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>target<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>latency<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-free' href='./../Overviews/Methods.html#free'>free</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-stop' href='./../Overviews/Methods.html#stop'>stop</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-resetSynths' href='./../Overviews/Methods.html#resetSynths'>resetSynths</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-resetArgs' href='./../Overviews/Methods.html#resetArgs'>resetArgs</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-argSpecs' href='./../Overviews/Methods.html#argSpecs'>argSpecs</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getSpec' href='./../Overviews/Methods.html#getSpec'>getSpec</a> (<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isPlaying' href='./../Overviews/Methods.html#isPlaying'>isPlaying</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-printOn' href='./../Overviews/Methods.html#printOn'>printOn</a> (<span class='argstr'>stream</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>stream<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getInitArgs' href='./../Overviews/Methods.html#getInitArgs'>getInitArgs</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeArgs' href='./../Overviews/Methods.html#storeArgs'>storeArgs</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-asUnit' href='./../Overviews/Methods.html#asUnit'>asUnit</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prSyncCollection' href='./../Overviews/Methods.html#prSyncCollection'>prSyncCollection</a> (<span class='argstr'>targets</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>targets<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-waitTime' href='./../Overviews/Methods.html#waitTime'>waitTime</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-waitTime' href='./../Overviews/Methods.html#waitTime'>waitTime</a> = value</h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-valuesToPrepare' href='./../Overviews/Methods.html#valuesToPrepare'>valuesToPrepare</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-needsPrepare' href='./../Overviews/Methods.html#needsPrepare'>needsPrepare</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-apxCPU' href='./../Overviews/Methods.html#apxCPU'>apxCPU</a> (<span class='argstr'>target</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>target<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepare' href='./../Overviews/Methods.html#prepare'>prepare</a> (<span class='argstr'>target</span>, <span class='argstr'>startPos: 0</span>, <span class='argstr'>action</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>target<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepareAnd' href='./../Overviews/Methods.html#prepareAnd'>prepareAnd</a> (<span class='argstr'>target</span>, <span class='argstr'>action</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>target<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>loadDef<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>(action)<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepareAndStart' href='./../Overviews/Methods.html#prepareAndStart'>prepareAndStart</a> (<span class='argstr'>target</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>target<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>(loadDef)<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-loadDefAndStart' href='./../Overviews/Methods.html#loadDefAndStart'>loadDefAndStart</a> (<span class='argstr'>target</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>target<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-dispose' href='./../Overviews/Methods.html#dispose'>dispose</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-disposeArgsFor' href='./../Overviews/Methods.html#disposeArgsFor'>disposeArgsFor</a> (<span class='argstr'>server</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-gui' href='./../Overviews/Methods.html#gui'>gui</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/GUI/Core/UGUI.sc'>/home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/GUI/Core/UGUI.sc</a></div>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>parent<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>bounds<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addMod' href='./../Overviews/Methods.html#addMod'>addMod</a> (<span class='argstr'>newMod</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-argSpecsForDisplay' href='./../Overviews/Methods.html#argSpecsForDisplay'>argSpecsForDisplay</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-argsForPrint' href='./../Overviews/Methods.html#argsForPrint'>argsForPrint</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-canUseUMap' href='./../Overviews/Methods.html#canUseUMap'>canUseUMap</a> (<span class='argstr'>key</span>, <span class='argstr'>umapdef</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-checkDef' href='./../Overviews/Methods.html#checkDef'>checkDef</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connect' href='./../Overviews/Methods.html#connect'>connect</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disconnect' href='./../Overviews/Methods.html#disconnect'>disconnect</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disposeSynths' href='./../Overviews/Methods.html#disposeSynths'>disposeSynths</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-dontStoreArgNames' href='./../Overviews/Methods.html#dontStoreArgNames'>dontStoreArgNames</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getAllUMaps' href='./../Overviews/Methods.html#getAllUMaps'>getAllUMaps</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getArgSpec' href='./../Overviews/Methods.html#getArgSpec'>getArgSpec</a> (<span class='argstr'>key</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getAudioMixOutLevel' href='./../Overviews/Methods.html#getAudioMixOutLevel'>getAudioMixOutLevel</a> (<span class='argstr'>id: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getControlMixOutLevel' href='./../Overviews/Methods.html#getControlMixOutLevel'>getControlMixOutLevel</a> (<span class='argstr'>id: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getDefault' href='./../Overviews/Methods.html#getDefault'>getDefault</a> (<span class='argstr'>key</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getSpecMode' href='./../Overviews/Methods.html#getSpecMode'>getSpecMode</a> (<span class='argstr'>key</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getSynthArgs' href='./../Overviews/Methods.html#getSynthArgs'>getSynthArgs</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getUMapBusNumChannels' href='./../Overviews/Methods.html#getUMapBusNumChannels'>getUMapBusNumChannels</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getUMaps' href='./../Overviews/Methods.html#getUMaps'>getUMaps</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-guiCollapsed' href='./../Overviews/Methods.html#guiCollapsed'>guiCollapsed</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-guiCollapsed' href='./../Overviews/Methods.html#guiCollapsed'>guiCollapsed</a> = <span class='argstr'>bool: false</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-increaseIOs' href='./../Overviews/Methods.html#increaseIOs'>increaseIOs</a> (<span class='argstr'>amt: 1</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-insertUMap' href='./../Overviews/Methods.html#insertUMap'>insertUMap</a> (<span class='argstr'>key</span>, <span class='argstr'>umapdef</span>, <span class='argstr'>args</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-mod' href='./../Overviews/Methods.html#mod'>mod</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-mod' href='./../Overviews/Methods.html#mod'>mod</a> = <span class='argstr'>newMod</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-modPerform' href='./../Overviews/Methods.html#modPerform'>modPerform</a> (<span class='argstr'>what</span> <span class='argstr'>... args</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-numChannels' href='./../Overviews/Methods.html#numChannels'>numChannels</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-numChannels' href='./../Overviews/Methods.html#numChannels'>numChannels</a> = <span class='argstr'>new</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-parentChain' href='./../Overviews/Methods.html#parentChain'>parentChain</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-parentChain' href='./../Overviews/Methods.html#parentChain'>parentChain</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeUMap' href='./../Overviews/Methods.html#removeUMap'>removeUMap</a> (<span class='argstr'>key</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-reset' href='./../Overviews/Methods.html#reset'>reset</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setAudioMixOutLevel' href='./../Overviews/Methods.html#setAudioMixOutLevel'>setAudioMixOutLevel</a> (<span class='argstr'>id: 0</span>, <span class='argstr'>level: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setControlMixOutLevel' href='./../Overviews/Methods.html#setControlMixOutLevel'>setControlMixOutLevel</a> (<span class='argstr'>id: 0</span>, <span class='argstr'>level: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setDur' href='./../Overviews/Methods.html#setDur'>setDur</a> (<span class='argstr'>dur: inf</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setUMapBuses' href='./../Overviews/Methods.html#setUMapBuses'>setUMapBuses</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-synthsForUMap' href='./../Overviews/Methods.html#synthsForUMap'>synthsForUMap</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-uPrepareValue' href='./../Overviews/Methods.html#uPrepareValue'>uPrepareValue</a> (<span class='argstr'>target</span>, <span class='argstr'>startPos: 0</span>, <span class='argstr'>action</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Arg/FuncUMapDef.sc'>/home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Arg/FuncUMapDef.sc</a></div>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-uchainInit' href='./../Overviews/Methods.html#uchainInit'>uchainInit</a> (<span class='argstr'>chain</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-umapPerform' href='./../Overviews/Methods.html#umapPerform'>umapPerform</a> (<span class='argstr'>what</span> <span class='argstr'>... args</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a> = <span class='argstr'>new</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-valuesAsUnitArg' href='./../Overviews/Methods.html#valuesAsUnitArg'>valuesAsUnitArg</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-valuesSetUnit' href='./../Overviews/Methods.html#valuesSetUnit'>valuesSetUnit</a> </h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>(some example code)</pre>
+
+<p><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/HelpSource/Classes/U.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/HelpSource/Classes/U.schelp</a><br>link::Classes/U::<br>sc version: 3.7alpha0</div></div></body></html>

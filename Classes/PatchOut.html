@@ -1,0 +1,106 @@
+<html><head><title>PatchOut</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>crucial>internals'>Libraries>crucial>internals</a>, <a href='./../Browse.html#Quarks>cruciallib'>Quarks>cruciallib</a></div>
+<h1>PatchOut</h1>
+<div id='summary'>manages a Player's output when connecting to other Players</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/Players/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/Players/Patching.sc'>Patching.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/ControlPatchOut.html">ControlPatchOut</a>, <a href="../Classes/ScalarPatchOut.html">ScalarPatchOut</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*prNew'>prNew</a> </li>
+<li class='toc3'><a href='#*audio'>audio</a> </li>
+<li class='toc3'><a href='#*control'>control</a> </li>
+<li class='toc3'><a href='#*scalar'>scalar</a> </li>
+<li class='toc3'><a href='#*stream'>stream</a> </li>
+<li class='toc3'><a href='#*noncontrol'>noncontrol</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-source'>source</a> </li>
+<li class='toc3'><a href='#-group'>group</a> </li>
+<li class='toc3'><a href='#-bus'>bus</a> </li>
+<li class='toc3'><a href='#-connectedTo'>connectedTo</a> </li>
+<li class='toc3'><a href='#-patchOutsOfInputs'>patchOutsOfInputs</a> </li>
+<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-busses'>busses</a> </li>
+<li class='toc3'><a href='#-connectTo'>connectTo</a> </li>
+<li class='toc3'><a href='#-disconnect'>disconnect</a> </li>
+<li class='toc3'><a href='#-free'>free</a> </li>
+<li class='toc3'><a href='#-server'>server</a> </li>
+<li class='toc3'><a href='#-isPlaying'>isPlaying</a> </li>
+<li class='toc3'><a href='#-hasBus'>hasBus</a> </li>
+<li class='toc3'><a href='#-allocBus'>allocBus</a> </li>
+<li class='toc3'><a href='#-releaseBusses'>releaseBusses</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>These objects hold information about a Player's inputs and outputs. They are used to make connections to other Players, and to manage that connection and all subsequent repatching or disconnections.
+<p>This is the predecessor system to Mx, which has a better system and is not limited to just Players.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>source</span>, <span class='argstr'>group</span>, <span class='argstr'>bus</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>source<td class='argumentdesc'><tr><td class='argumentname'>group<td class='argumentdesc'><tr><td class='argumentname'>bus<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*prNew' href='./../Overviews/Methods.html#prNew'>prNew</a> (<span class='argstr'>source</span>, <span class='argstr'>group</span>, <span class='argstr'>bus</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>source<td class='argumentdesc'><tr><td class='argumentname'>group<td class='argumentdesc'><tr><td class='argumentname'>bus<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*audio' href='./../Overviews/Methods.html#audio'>audio</a> (<span class='argstr'>source</span>, <span class='argstr'>group</span>, <span class='argstr'>bus</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>source<td class='argumentdesc'><tr><td class='argumentname'>group<td class='argumentdesc'><tr><td class='argumentname'>bus<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*control' href='./../Overviews/Methods.html#control'>control</a> (<span class='argstr'>source</span>, <span class='argstr'>group</span>, <span class='argstr'>bus</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>source<td class='argumentdesc'><tr><td class='argumentname'>group<td class='argumentdesc'><tr><td class='argumentname'>bus<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*scalar' href='./../Overviews/Methods.html#scalar'>scalar</a> (<span class='argstr'>source</span>, <span class='argstr'>group</span>, <span class='argstr'>bus</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>source<td class='argumentdesc'><tr><td class='argumentname'>group<td class='argumentdesc'><tr><td class='argumentname'>bus<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*stream' href='./../Overviews/Methods.html#stream'>stream</a> (<span class='argstr'>source</span>, <span class='argstr'>group</span>, <span class='argstr'>bus</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>source<td class='argumentdesc'><tr><td class='argumentname'>group<td class='argumentdesc'><tr><td class='argumentname'>bus<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*noncontrol' href='./../Overviews/Methods.html#noncontrol'>noncontrol</a> (<span class='argstr'>source</span>, <span class='argstr'>group</span>, <span class='argstr'>bus</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>source<td class='argumentdesc'><tr><td class='argumentname'>group<td class='argumentdesc'><tr><td class='argumentname'>bus<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-source' href='./../Overviews/Methods.html#source'>source</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-source' href='./../Overviews/Methods.html#source'>source</a> = value</h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-group' href='./../Overviews/Methods.html#group'>group</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-group' href='./../Overviews/Methods.html#group'>group</a> = value</h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-bus' href='./../Overviews/Methods.html#bus'>bus</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bus' href='./../Overviews/Methods.html#bus'>bus</a> = <span class='argstr'>b</span></h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>b<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectedTo' href='./../Overviews/Methods.html#connectedTo'>connectedTo</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-patchOutsOfInputs' href='./../Overviews/Methods.html#patchOutsOfInputs'>patchOutsOfInputs</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-patchOutsOfInputs' href='./../Overviews/Methods.html#patchOutsOfInputs'>patchOutsOfInputs</a> = value</h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-init' href='./../Overviews/Methods.html#init'>init</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-busses' href='./../Overviews/Methods.html#busses'>busses</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectTo' href='./../Overviews/Methods.html#connectTo'>connectTo</a> (<span class='argstr'>patchIn</span>, <span class='argstr'>needsValueSetNow: true</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>patchIn<td class='argumentdesc'><tr><td class='argumentname'>needsValueSetNow<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-disconnect' href='./../Overviews/Methods.html#disconnect'>disconnect</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-free' href='./../Overviews/Methods.html#free'>free</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-server' href='./../Overviews/Methods.html#server'>server</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isPlaying' href='./../Overviews/Methods.html#isPlaying'>isPlaying</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-hasBus' href='./../Overviews/Methods.html#hasBus'>hasBus</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-allocBus' href='./../Overviews/Methods.html#allocBus'>allocBus</a> (<span class='argstr'>name</span>, <span class='argstr'>rate</span>, <span class='argstr'>numChannels</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'><tr><td class='argumentname'>rate<td class='argumentdesc'><tr><td class='argumentname'>numChannels<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-releaseBusses' href='./../Overviews/Methods.html#releaseBusses'>releaseBusses</a> </h3>
+<div class='method'></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Classes/PatchOut.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Classes/PatchOut.schelp</a><br>link::Classes/PatchOut::<br>sc version: 3.7alpha0</div></div></body></html>

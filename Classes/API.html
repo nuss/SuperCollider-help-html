@@ -1,0 +1,329 @@
+<html><head><title>API</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Networking'>Networking</a>, <a href='./../Browse.html#Quarks>API'>Quarks>API</a></div>
+<h1>API</h1>
+<div id='summary'>API framework for inter-application and network communication</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/API/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/API/API.sc'>API.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'><li class='toc2'><a href='#Defining APIs'>Defining APIs</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Backwards incompatibility'>Backwards incompatibility</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Calling'>Calling</a></li>
+<ul class='toc'><li class='toc3'><a href='#*async'>async</a> </li>
+<li class='toc3'><a href='#*sync'>sync</a> </li>
+<li class='toc3'><a href='#*call'>call</a> </li>
+</ul><li class='toc2'><a href='#Querying'>Querying</a></li>
+<ul class='toc'><li class='toc3'><a href='#*allPaths'>allPaths</a> </li>
+<li class='toc3'><a href='#*apis'>apis</a> </li>
+<li class='toc3'><a href='#*all'>all</a> </li>
+</ul><li class='toc2'><a href='#Loading'>Loading</a></li>
+<ul class='toc'><li class='toc3'><a href='#*loadAll'>loadAll</a> </li>
+<li class='toc3'><a href='#*load'>load</a> </li>
+</ul><li class='toc2'><a href='#OSC'>OSC</a></li>
+<ul class='toc'><li class='toc3'><a href='#*mountDuplexOSC'>mountDuplexOSC</a> </li>
+<li class='toc3'><a href='#*unmountDuplexOSC'>unmountDuplexOSC</a> </li>
+</ul><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*prNameFromPath'>prNameFromPath</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Defining'>Defining</a></li>
+<ul class='toc'><li class='toc3'><a href='#-add'>add</a> </li>
+<li class='toc3'><a href='#-addAll'>addAll</a> </li>
+<li class='toc3'><a href='#-exposeMethods'>exposeMethods</a> </li>
+<li class='toc3'><a href='#-exposeAllExcept'>exposeAllExcept</a> </li>
+</ul><li class='toc2'><a href='#Calling'>Calling</a></li>
+<ul class='toc'><li class='toc3'><a href='#-async'>async</a> </li>
+<li class='toc3'><a href='#-sync'>sync</a> </li>
+<li class='toc3'><a href='#-call'>call</a> </li>
+</ul><li class='toc2'><a href='#OSC'>OSC</a></li>
+<ul class='toc'><li class='toc3'><a href='#-mountOSC'>mountOSC</a> </li>
+<li class='toc3'><a href='#-unmountOSC'>unmountOSC</a> </li>
+</ul><li class='toc2'><a href='#Querying'>Querying</a></li>
+<ul class='toc'><li class='toc3'><a href='#-selectors'>selectors</a> </li>
+</ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-doesNotUnderstand'>doesNotUnderstand</a> </li>
+</ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>An API is a way to encapsulate all of the publically callable functions for a single application, composition, piece, class, service etc. in one universally accessible place.
+<p>Each API object has a name (eg. "server") and a dictionary of functions.
+<p>These can then be called:
+<p><strong>in SuperCollider code</strong><pre class='code prettyprint lang-sc'>API.async("server.boot", ["default"], {
+    // booted now
+    API.async("group.new", [], { arg groupID;
+        // use this group
+    })
+});</pre>
+
+<p><strong>over OSC (simple call of functions)</strong><pre class='code prettyprint lang-sc'>API("server").mountOSC;
+
+// send OSC message:
+// '/API/server/boot' "default"</pre>
+
+<p><strong>via the duplex OSC interface (call and response)</strong><pre class='code prettyprint lang-sc'>API.mountDuplexOSC;
+
+// send osc message:
+// '/API/call' "group.new"
+// reply will be sent back to the caller:
+// '/API/reply' 1001</pre>
+
+<p><strong>Using a client library like supercollider.js</strong><pre class='code prettyprint lang-sc'>// supercollider
+API.mountDuplexOSC;
+
+// start the webserver
+node api_server.js
+
+// point browser at http://localhost:4040
+
+// javascript in a browser or mobile device
+sc = new SCApi("localhost",4040);
+sc.call("server.boot", ["default"], function() {
+    sc.call("group.new", [], function(groupID){
+        // spawn synths into this group
+    });
+});</pre>
+
+<p>supercollider.js provides a Node.js based api_server through which you can easily communicate with SuperCollider from javascript either on the server (running under Node) or in a browser (communicating back to Node with websockets).
+<p>It uses socket.io which is loads of fun and should prove quite useful for installations and pieces that allow many people to interact using mobile phones over normal webrowsers.
+<p><a href="https://github.com/crucialfelix/supercolliderjs">https://github.com/crucialfelix/supercolliderjs</a><h3><a class='anchor' name='Defining APIs'>Defining APIs</a></h3>
+
+<p>Each Quark can provide a folder called apis/ containing API handler dictionaries.
+<p>Post all currently implemented API paths:<pre class='code prettyprint lang-sc'>API.loadAll.allPaths.do(_.postln);</pre>
+
+<p>You can easily write APIs for your own application just by putting a file containing a dictionary of handlers in:<pre class='code prettyprint lang-sc'>// {yourquark}/apis/{apiname}.api.scd
+(
+    hello: { arg reply;
+        reply.value("hello back")
+    },
+    lookup: { arg reply, query;
+        var result = ();
+        {
+            // let me think about it
+            // search lots of files for something to do with "query"
+            result['path'] = "some/path";
+            result['things'] = [1,2,3];
+            result['quantity'] = 4;
+            result['random'] = 1024.rand;
+            // the dictionary will be sent as JSON
+            // and available in the browser as a JavaScript object
+            reply.value( result );
+        }.fork
+    }
+);</pre>
+
+<p>Your quark is now on the internets.<pre class='code prettyprint lang-sc'>// javascript
+sc.call("apiname.lookup",["a query string"], function(result) {
+    console.log(result);
+    console.log(result.random);
+    result.things; // [1,2,3]
+});</pre>
+<h3><a class='anchor' name='Backwards incompatibility'>Backwards incompatibility</a></h3>
+
+<p>I know, I hate these.
+<p>API 2 always passes in a { arg reply; } callback function while API 1 just used the return value as the result.
+<p>API 1 was a bit more confusing to use though for the call and response stuff.
+<p>Your old APIs should you have any would take just a few minutes to add in the callback, or you can continue to use the old methods:<pre class='code prettyprint lang-sc'>oldCall
+*oldCall
+oldAddAll</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>name</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>apiname eg. "server" "synthdef" Convention is lowercase. It must match the case of the apis/apiname.api.scd file</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an API</div></div><h3><a class='anchor' name='Calling'>Calling</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*async' href='./../Overviews/Methods.html#async'>async</a> (<span class='argstr'>path</span>, <span class='argstr'>args</span>, <span class='argstr'>callback</span>, <span class='argstr'>onError</span>)</h3>
+<div class='method'>
+<p>Call API method receiving the results with a callback.<pre class='code prettyprint lang-sc'>API.async("apiname.method", [arg1, arg2, ...], { arg result;
+    // good news...
+}, { arg error;
+    // bad news...
+});</pre>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>"apiname.method"<tr><td class='argumentname'>args<td class='argumentdesc'>
+<p>array of arguments<tr><td class='argumentname'>callback<td class='argumentdesc'>
+<p>Callback that receives the result<tr><td class='argumentname'>onError<td class='argumentdesc'>
+<p>Optional onError handler. If not supplied than errors will be propagated.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>nothing, the result is returned to the callback</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*sync' href='./../Overviews/Methods.html#sync'>sync</a> (<span class='argstr'>path</span>, <span class='argstr'>args</span>, <span class='argstr'>onError</span>)</h3>
+<div class='method'>
+<p>Call API method, waiting the current thread if needed till the result is returned. You should be inside a Routine, { }.defer {}.fork or similiar<pre class='code prettyprint lang-sc'>result = API.sync("apiname.method", [arg1, arg2, ...]);</pre>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>"apiname.method"<tr><td class='argumentname'>args<td class='argumentdesc'>
+<p>array of arguments<tr><td class='argumentname'>onError<td class='argumentdesc'>
+<p>Optional onError handler. If not supplied than errors will be propagated.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the result</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*call' href='./../Overviews/Methods.html#call'>call</a> (<span class='argstr'>path</span> <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>Call API method, returning the result directly. The handler must not fork or defer. This is vaguely faster and can be used when you know there is no async.<pre class='code prettyprint lang-sc'>result = API.call("apiname.method"), [arg1,args2,...]);</pre>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>"apiname.method"<tr><td class='argumentname'> ... args<td class='argumentdesc'>
+<p>array of arguments</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>return value</div></div><h3><a class='anchor' name='Querying'>Querying</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allPaths' href='./../Overviews/Methods.html#allPaths'>allPaths</a> </h3>
+<div class='method'>
+<p>All available API paths in the form "apiname.method"<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>array of strings</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*apis' href='./../Overviews/Methods.html#apis'>apis</a> </h3>
+<div class='method'>
+<p>an array of the names of all available APIs from all /apis/ folders in all Quarks<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>array of strings</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a> </h3>
+<div class='method'>
+<p>Array of all loaded APIs as API objects<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>array of API objects</div></div><h3><a class='anchor' name='Loading'>Loading</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadAll' href='./../Overviews/Methods.html#loadAll'>loadAll</a> (<span class='argstr'>forceReload: true</span>)</h3>
+<div class='method'>
+<p>Load all APIs from apis/ folders in all quarks.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>forceReload<td class='argumentdesc'>
+<p>Force reload/reparse</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*load' href='./../Overviews/Methods.html#load'>load</a> (<span class='argstr'>name</span>)</h3>
+<div class='method'>
+<p>find and load an API from disk. throws an Error if not found or if failed to parse the file.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>apiname</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the API</div></div><h3><a class='anchor' name='OSC'>OSC</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*mountDuplexOSC' href='./../Overviews/Methods.html#mountDuplexOSC'>mountDuplexOSC</a> (<span class='argstr'>srcID</span>, <span class='argstr'>recvPort</span>)</h3>
+<div class='method'>
+<p>Registers OSC responders. supercollider.js uses this to communicate.
+<p>There is an unfinished python implementation in the python folder of this Quark. Any language that can speak OSC and JSON can use these endpoints.<pre class='code prettyprint lang-sc'>/API/call : client_id, request_id, fullpath ... args</pre>
+
+<p> client_id and request_id : are used to identify return messages  and are up to the implementation of the api consumer
+<p> client_id would usually be a specific web browser, program or other independent entity. supercollider.js uses the socket.io socket id hash
+<p> request_id would be a unique id for each request from that client.  supercollider.js increments a simple counter: 1,2,3 etc.
+<p> fullpath: apiname.methodKey  dot separated to make it clear that its not an OSC path
+<p>Replies:<pre class='code prettyprint lang-sc'>/API/reply : client_id, request_id, result</pre>
+
+<p> result is sent as a JSON string: "{result:result}"  so the api consumer needs to have a JSON library available.  JSON does not distinguish between Symbol and String so all values  are strings.  Result may be string, int, float, list, dictionary.  Date time not yet implemented.  All other objects will be sent as their compile string representation.
+<p> Possibly .asJSON could allow objects to support their own JSON representations. Or the constructor arguments / storeArgs could be used to form a JSON response.<pre class='code prettyprint lang-sc'>/API/not_found : client_id, request_id, fullpath</pre>
+<pre class='code prettyprint lang-sc'>/API/error : client_id, request_id, errorString</pre>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>addr<td class='argumentdesc'>
+<p>An optional NetAddr (basically an IP address), limiting connections to that specific address.<tr><td class='argumentname'>recvPort<td class='argumentdesc'>
+<p>Optional port to listen on, otherwise uses the language's default port NetAddr.langPort [57120]</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*unmountDuplexOSC' href='./../Overviews/Methods.html#unmountDuplexOSC'>unmountDuplexOSC</a> </h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this</div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*prNameFromPath' href='./../Overviews/Methods.html#prNameFromPath'>prNameFromPath</a> (<span class='argstr'>path</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Defining'>Defining</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-add' href='./../Overviews/Methods.html#add'>add</a> (<span class='argstr'>selector</span>, <span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>add a single handler<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>selector<td class='argumentdesc'>
+<p>handler name<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>handler function</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addAll' href='./../Overviews/Methods.html#addAll'>addAll</a> (<span class='argstr'>dict</span>)</h3>
+<div class='method'>
+<p>Add a dictionary of handlers to this API.<pre class='code prettyprint lang-sc'>d = (key: { arg reply; }, another: { arg reply; });
+api.addAll( d );</pre>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>dict<td class='argumentdesc'>
+<p>The dictionary or dictionary subclass. The example above uses an Event because the notation ( ) is simple to type.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-exposeMethods' href='./../Overviews/Methods.html#exposeMethods'>exposeMethods</a> (<span class='argstr'>obj</span>, <span class='argstr'>selectors</span>)</h3>
+<div class='method'>
+<p>Takes an object and turns it into an API by making each method on the object into a function of the same name.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>obj<td class='argumentdesc'>
+<p>the object<tr><td class='argumentname'>selectors<td class='argumentdesc'>
+<p>methods to turn into handlers</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-exposeAllExcept' href='./../Overviews/Methods.html#exposeAllExcept'>exposeAllExcept</a> (<span class='argstr'>obj</span>, <span class='argstr'>selectors: [  ]</span>)</h3>
+<div class='method'>
+<p>Takes an object and turns it into an API by making each method on the object into a function of the same name.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>obj<td class='argumentdesc'>
+<p>the object<tr><td class='argumentname'>selectors<td class='argumentdesc'>
+<p>selectors to NOT add to the API.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this</div></div><h3><a class='anchor' name='Calling'>Calling</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-async' href='./../Overviews/Methods.html#async'>async</a> (<span class='argstr'>selector</span>, <span class='argstr'>args</span>, <span class='argstr'>callback</span>, <span class='argstr'>onError</span>)</h3>
+<div class='method'>
+<p>see class method.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>selector<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>args<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>callback<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>onError<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(describe returnvalue here)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-sync' href='./../Overviews/Methods.html#sync'>sync</a> (<span class='argstr'>selector</span>, <span class='argstr'>args</span>, <span class='argstr'>onError</span>)</h3>
+<div class='method'>
+<p>see class method.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>selector<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>args<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>onError<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(describe returnvalue here)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-call' href='./../Overviews/Methods.html#call'>call</a> (<span class='argstr'>selector</span> <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>see class method.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>selector<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'> ... args<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(describe returnvalue here)</div></div><h3><a class='anchor' name='OSC'>OSC</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-mountOSC' href='./../Overviews/Methods.html#mountOSC'>mountOSC</a> (<span class='argstr'>baseCmdName</span>, <span class='argstr'>addr</span>)</h3>
+<div class='method'>
+<p>Register OSC Responders for each method in this API object.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>baseCmdName<td class='argumentdesc'>
+<p>The OSC root where the responders are installed: /baseCmdName/method By default /apiname/method<tr><td class='argumentname'>addr<td class='argumentdesc'>
+<p>Optional limit to a certain NetAddr</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-unmountOSC' href='./../Overviews/Methods.html#unmountOSC'>unmountOSC</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(describe returnvalue here)</div></div><h3><a class='anchor' name='Querying'>Querying</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-selectors' href='./../Overviews/Methods.html#selectors'>selectors</a> </h3>
+<div class='method'>
+<p>List of installed handler names.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>array of symbols</div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-doesNotUnderstand' href='./../Overviews/Methods.html#doesNotUnderstand'>doesNotUnderstand</a> (<span class='argstr'>selector</span> <span class='argstr'>... args</span>)</h3>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/API/HelpSource/Classes/API.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/API/HelpSource/Classes/API.schelp</a><br>link::Classes/API::<br>sc version: 3.7alpha0</div></div></body></html>

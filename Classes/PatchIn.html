@@ -1,0 +1,97 @@
+<html><head><title>PatchIn</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>crucial>internals'>Libraries>crucial>internals</a>, <a href='./../Browse.html#Quarks>cruciallib'>Quarks>cruciallib</a></div>
+<h1>PatchIn</h1>
+<div id='summary'>manages a Player's input when connecting to other Players</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/Players/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/Players/Patching.sc'>Patching.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/AudioPatchIn.html">AudioPatchIn</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*newByRate'>newByRate</a> </li>
+<li class='toc3'><a href='#*audio'>audio</a> </li>
+<li class='toc3'><a href='#*control'>control</a> </li>
+<li class='toc3'><a href='#*scalar'>scalar</a> </li>
+<li class='toc3'><a href='#*stream'>stream</a> </li>
+<li class='toc3'><a href='#*noncontrol'>noncontrol</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-nodeControl'>nodeControl</a> </li>
+<li class='toc3'><a href='#-connectedTo'>connectedTo</a> </li>
+<li class='toc3'><a href='#-server'>server</a> </li>
+<li class='toc3'><a href='#-group'>group</a> </li>
+<li class='toc3'><a href='#-disconnectFrom'>disconnectFrom</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>These objects hold information about a Player's inputs and outputs. They are used to make connections to other Players, and to manage that connection and all subsequent repatching or disconnections.
+<p>This is the predecessor system to Mx, which has a better system and is not limited to just Players.
+<p>These objects hold information about a Player's inputs and outputs. They are used to make connections to other Players, and to manage that connection and all subsequent repatching or disconnections.
+<p>PatchIn objects hold NodeControl objects that enable communication to one input of a Node (Synths and Groups), either for setting the value or mapping the input to read from a Bus.
+<p>PatchOut objects hold either Bus objects (for audio and control) or sources (for control and scalar). Bus objects hold the information about the Bus that the Player is playing onto. sources are client side objects that produce float values to send to the inputs of Nodes. Possible sources are gui objects like sliders or Patterns and other automatons. Anything that can respond to .value with a Float can be a source for a ScalarPatchOut.
+<p>aPatchIn.connectTo(aPatchOut) aPatchOut.connectTo(aPatchIn)  connect the input on the node to the output of the bus or source.
+<p>Both PatchIn and PatchOut remember who they are connectedTo. PatchOuts may be connected to multiple PatchIns.
+<p>play(patchIn)
+<p> server  plays on top group at head  group  plays at group of head  integer  default server, audio output number
+<p>they should be even gui-able, a drag drop
+<p>maybe even a player makes ins and outs when created
+<p>prepare(group)  sets the patchOut group, where it will be created
+<p>patchIn  also hold source ?, search for synth
+<p>examples:  drag output of player to some input  patchOut.connectTo(patchIn)  sets nodeControl if playing,  else when it plays it will get the value
+<p> if player is not playing anywhere else  if input is reading from something else  insert mixer
+<p> drag filter to player
+<p> if player is not playing anywhere else  node after  same buss for out  filter reads from that buss
+<p> this is a kind of player
+<p> if player is playing to another filter  remove other  node after  same buss for out  filter reads from that buss<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>nodeControl</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>nodeControl<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newByRate' href='./../Overviews/Methods.html#newByRate'>newByRate</a> (<span class='argstr'>rate</span>, <span class='argstr'>nodeControl</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rate<td class='argumentdesc'><tr><td class='argumentname'>nodeControl<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*audio' href='./../Overviews/Methods.html#audio'>audio</a> (<span class='argstr'>nodeControl</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>nodeControl<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*control' href='./../Overviews/Methods.html#control'>control</a> (<span class='argstr'>nodeControl</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>nodeControl<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*scalar' href='./../Overviews/Methods.html#scalar'>scalar</a> (<span class='argstr'>nodeControl</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>nodeControl<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*stream' href='./../Overviews/Methods.html#stream'>stream</a> (<span class='argstr'>nodeControl</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>nodeControl<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*noncontrol' href='./../Overviews/Methods.html#noncontrol'>noncontrol</a> (<span class='argstr'>nodeControl</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>nodeControl<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-nodeControl' href='./../Overviews/Methods.html#nodeControl'>nodeControl</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-nodeControl' href='./../Overviews/Methods.html#nodeControl'>nodeControl</a> = value</h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectedTo' href='./../Overviews/Methods.html#connectedTo'>connectedTo</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectedTo' href='./../Overviews/Methods.html#connectedTo'>connectedTo</a> = value</h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-server' href='./../Overviews/Methods.html#server'>server</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-group' href='./../Overviews/Methods.html#group'>group</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-disconnectFrom' href='./../Overviews/Methods.html#disconnectFrom'>disconnectFrom</a> (<span class='argstr'>patchOut</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>patchOut<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Classes/PatchIn.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Classes/PatchIn.schelp</a><br>link::Classes/PatchIn::<br>sc version: 3.7alpha0</div></div></body></html>

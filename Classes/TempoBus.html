@@ -1,0 +1,114 @@
+<html><head><title>TempoBus</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>crucial>Scheduling'>Libraries>crucial>Scheduling</a>, <a href='./../Browse.html#Quarks>cruciallib'>Quarks>cruciallib</a></div>
+<h1>TempoBus</h1>
+<div id='summary'>maintains a control Bus on the server with the current Tempo</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/Scheduling/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/Scheduling/TempoBus.sc'>TempoBus.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/Tempo.html">Tempo</a>, <a href="./../Classes/TempoClock.html">TempoClock</a>, <a href="./../Classes/TempoPlayer.html">TempoPlayer</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-tempo'>tempo</a> </li>
+<li class='toc3'><a href='#-releaseBus'>releaseBus</a> </li>
+<li class='toc3'><a href='#-asBus'>asBus</a> </li>
+<li class='toc3'><a href='#-index'>index</a> </li>
+<li class='toc3'><a href='#-server'>server</a> </li>
+<li class='toc3'><a href='#-prepareToBundle'>prepareToBundle</a> </li>
+<li class='toc3'><a href='#-addToSynthDef'>addToSynthDef</a> </li>
+<li class='toc3'><a href='#-synthArg'>synthArg</a> </li>
+<li class='toc3'><a href='#-rate'>rate</a> </li>
+<li class='toc3'><a href='#-instrArgFromControl'>instrArgFromControl</a> </li>
+<li class='toc3'><a href='#-free'>free</a> </li>
+<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-update'>update</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A Bus whose value is set by a Tempo. It can be used as a multiplier in any Synth on the Server that needs to know the Tempo. It is used by BeatClockPlayer. Any Inst/Patch that needs a tempo input should use a TempoPlayer.
+<p>There is one TempoBus per server, per tempo. After the first time it is created, the shared instance will be returned for any subsequent requests.<pre class='code prettyprint lang-sc'>(
+    a = TempoBus.new;
+    b = TempoBus.new;
+    a === b // they are the same object
+)</pre>
+<pre class='code prettyprint lang-sc'>(
+s = Server.local;
+t = TempoBus.new(s);
+
+t.index.postln;
+
+Tempo.bpm = 60;
+
+SynthDef("help-TempoBus",{ arg out=0,tempoBus;
+    var tempo,trig,amp;
+    tempo = In.kr(tempoBus);
+    trig = Impulse.kr(tempo);
+    amp = Decay2.kr(trig,0.01,0.1).clip2(1.0);
+    Out.ar(out,
+        amp * SinOsc.ar(300)
+    )
+}).play(s,[0,0,1,t.index]);
+
+
+Tempo.bpm = 40;
+
+Tempo.bpm = 100;
+
+Tempo.bpm = 666;
+
+Sheet({ arg f;
+    Tempo.default.gui(f); // move the slider, it works
+})
+
+)</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>server</span>, <span class='argstr'>tempo</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'><tr><td class='argumentname'>tempo<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tempo' href='./../Overviews/Methods.html#tempo'>tempo</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tempo' href='./../Overviews/Methods.html#tempo'>tempo</a> = value</h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-releaseBus' href='./../Overviews/Methods.html#releaseBus'>releaseBus</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-asBus' href='./../Overviews/Methods.html#asBus'>asBus</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-index' href='./../Overviews/Methods.html#index'>index</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-server' href='./../Overviews/Methods.html#server'>server</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepareToBundle' href='./../Overviews/Methods.html#prepareToBundle'>prepareToBundle</a> (<span class='argstr'>group</span>, <span class='argstr'>bundle</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>group<td class='argumentdesc'><tr><td class='argumentname'>bundle<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addToSynthDef' href='./../Overviews/Methods.html#addToSynthDef'>addToSynthDef</a> (<span class='argstr'>synthDef</span>, <span class='argstr'>name</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>synthDef<td class='argumentdesc'><tr><td class='argumentname'>name<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-synthArg' href='./../Overviews/Methods.html#synthArg'>synthArg</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rate' href='./../Overviews/Methods.html#rate'>rate</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-instrArgFromControl' href='./../Overviews/Methods.html#instrArgFromControl'>instrArgFromControl</a> (<span class='argstr'>control</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>control<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-free' href='./../Overviews/Methods.html#free'>free</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-init' href='./../Overviews/Methods.html#init'>init</a> (<span class='argstr'>server</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-update' href='./../Overviews/Methods.html#update'>update</a> (<span class='argstr'>changed</span>, <span class='argstr'>changer</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>changed<td class='argumentdesc'><tr><td class='argumentname'>changer<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Classes/TempoBus.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Classes/TempoBus.schelp</a><br>link::Classes/TempoBus::<br>sc version: 3.7alpha0</div></div></body></html>

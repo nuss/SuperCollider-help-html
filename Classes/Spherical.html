@@ -1,0 +1,184 @@
+<html><head><title>Spherical</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Math'>Math</a>, <a href='./../Browse.html#Quarks>MathLib'>Quarks>MathLib</a></div>
+<h1>Spherical</h1>
+<div id='summary'>Spherical coordinates</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/MathLib/classes/SpherCoords/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/MathLib/classes/SpherCoords/Spherical.sc'>Spherical.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Number.html">Number</a> : <a href="../Classes/Magnitude.html">Magnitude</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/Cartesian.html">Cartesian</a>, <a href="./../Classes/Polar.html">Polar</a>, <a href="./../Classes/Point.html">Point</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'><li class='toc2'><a href='#Credits'>Credits</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Accessing'>Accessing</a></li>
+<ul class='toc'><li class='toc3'><a href='#-rho'>rho</a> </li>
+<li class='toc3'><a href='#-theta'>theta</a> </li>
+<li class='toc3'><a href='#-phi'>phi</a> </li>
+</ul><li class='toc2'><a href='#Testing'>Testing</a></li>
+<ul class='toc'><li class='toc3'><a href='#-=='>==</a> </li>
+<li class='toc3'><a href='#-hash'>hash</a> </li>
+</ul><li class='toc2'><a href='#Math'>Math</a></li>
+<ul class='toc'><li class='toc3'><a href='#-+'>+</a>  <a href='#--'>-</a>  <a href='#-*'>*</a>  <a href='#-/'>/</a> </li>
+<li class='toc3'><a href='#-scale'>scale</a> </li>
+<li class='toc3'><a href='#-rotate'>rotate</a> </li>
+<li class='toc3'><a href='#-tilt'>tilt</a> </li>
+<li class='toc3'><a href='#-tumble'>tumble</a> </li>
+<li class='toc3'><a href='#-rotateXY'>rotateXY</a> </li>
+<li class='toc3'><a href='#-rotateYZ'>rotateYZ</a> </li>
+<li class='toc3'><a href='#-rotateXZ'>rotateXZ</a> </li>
+<li class='toc3'><a href='#-mirrorX'>mirrorX</a> </li>
+<li class='toc3'><a href='#-mirrorY'>mirrorY</a> </li>
+<li class='toc3'><a href='#-mirrorZ'>mirrorZ</a> </li>
+<li class='toc3'><a href='#-mirrorO'>mirrorO</a> </li>
+<li class='toc3'><a href='#-neg'>neg</a> </li>
+</ul><li class='toc2'><a href='#Conversion'>Conversion</a></li>
+<ul class='toc'><li class='toc3'><a href='#-magnitude'>magnitude</a> </li>
+<li class='toc3'><a href='#-angle'>angle</a> </li>
+<li class='toc3'><a href='#-phase'>phase</a> </li>
+<li class='toc3'><a href='#-angles'>angles</a> </li>
+<li class='toc3'><a href='#-phases'>phases</a> </li>
+<li class='toc3'><a href='#-x'>x</a> </li>
+<li class='toc3'><a href='#-y'>y</a> </li>
+<li class='toc3'><a href='#-z'>z</a> </li>
+<li class='toc3'><a href='#-real'>real</a> </li>
+<li class='toc3'><a href='#-imag'>imag</a> </li>
+<li class='toc3'><a href='#-asSpherical'>asSpherical</a> </li>
+<li class='toc3'><a href='#-asPolar'>asPolar</a> </li>
+<li class='toc3'><a href='#-asComplex'>asComplex</a> </li>
+<li class='toc3'><a href='#-asPoint'>asPoint</a> </li>
+<li class='toc3'><a href='#-asCartesian'>asCartesian</a> </li>
+</ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-performBinaryOpOnUGen'>performBinaryOpOnUGen</a> </li>
+</ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Represents spherical coordinates.<div class='note'><span class='notelabel'>NOTE:</span> Part of SpherCoords, a spherical and 3D cartesian coordinate support library.</div>
+<p><h3><a class='anchor' name='Credits'>Credits</a></h3>
+
+<p>Joseph Anderson, 2011 [j.anderson[at]ambisonictoolkit.net]<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>rho</span>, <span class='argstr'>theta</span>, <span class='argstr'>phi</span>)</h3>
+<div class='method'>
+<p>Create a new spherical coordinate with the given radius, rho, and angles in radians, theta and phi.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rho<td class='argumentdesc'>
+<p>radius<tr><td class='argumentname'>theta<td class='argumentdesc'>
+<p>azimuth angle<tr><td class='argumentname'>phi<td class='argumentdesc'>
+<p>elevation angle</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Accessing'>Accessing</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-rho' href='./../Overviews/Methods.html#rho'>rho</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-rho' href='./../Overviews/Methods.html#rho'>rho</a> = value</h3>
+<div class='method'>
+<p>Get or set the rho coordinate value.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-theta' href='./../Overviews/Methods.html#theta'>theta</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-theta' href='./../Overviews/Methods.html#theta'>theta</a> = value</h3>
+<div class='method'>
+<p>Get or set the theta coordinate value.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-phi' href='./../Overviews/Methods.html#phi'>phi</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-phi' href='./../Overviews/Methods.html#phi'>phi</a> = value</h3>
+<div class='method'>
+<p>Get or set the phi coordinate value.</div><h3><a class='anchor' name='Testing'>Testing</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-==' href='./../Overviews/Methods.html#=='>==</a> (<span class='argstr'>aSpherical</span>)</h3>
+<div class='method'>
+<p>Answers a Boolean whether the receiver equals the argument.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-hash' href='./../Overviews/Methods.html#hash'>hash</a> </h3>
+<div class='method'>
+<p>Returns a hash value for the receiver.</div><h3><a class='anchor' name='Math'>Math</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-+' href='./../Overviews/Methods.html#+'>+</a> (<span class='argstr'>aValue</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='--' href='./../Overviews/Methods.html#-'>-</a> (<span class='argstr'>aValue</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-*' href='./../Overviews/Methods.html#*'>*</a> (<span class='argstr'>aValue</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-/' href='./../Overviews/Methods.html#/'>/</a> (<span class='argstr'>aValue</span>)</h3>
+<div class='method'>
+<p>The math operations of addition, subtraction, multiplication and division are accomplished by first converting to cartesian coordinates, then answering to spherical coordinates.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-scale' href='./../Overviews/Methods.html#scale'>scale</a> (<span class='argstr'>scale</span>)</h3>
+<div class='method'>
+<p>Scale the radius by some value.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rotate' href='./../Overviews/Methods.html#rotate'>rotate</a> (<span class='argstr'>angle</span>)</h3>
+<div class='method'>
+<p>Rotation about the origin in the XY plane by the angle given in radians.<h4>Discussion:</h4>
+
+<p>Positive values rotate from +X towards +Y</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-tilt' href='./../Overviews/Methods.html#tilt'>tilt</a> (<span class='argstr'>angle</span>)</h3>
+<div class='method'>
+<p>Rotation about the origin in the YZ plane by the angle given in radians.<h4>Discussion:</h4>
+
+<p>Positive values rotate from +Y towards +Z</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-tumble' href='./../Overviews/Methods.html#tumble'>tumble</a> (<span class='argstr'>angle</span>)</h3>
+<div class='method'>
+<p>Rotation about the origin in the XZ plane by the angle given in radians.<h4>Discussion:</h4>
+
+<p>Positive values rotate from +X towards +Z</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rotateXY' href='./../Overviews/Methods.html#rotateXY'>rotateXY</a> (<span class='argstr'>angle</span>)</h3>
+<div class='method'>
+<p>Rotation about the origin in the XY plane by the angle given in radians.<h4>Discussion:</h4>
+
+<p>A synonym for rotate.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rotateYZ' href='./../Overviews/Methods.html#rotateYZ'>rotateYZ</a> (<span class='argstr'>angle</span>)</h3>
+<div class='method'>
+<p>Rotation about the origin in the YZ plane by the angle given in radians.<h4>Discussion:</h4>
+
+<p>A synonym for tilt.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rotateXZ' href='./../Overviews/Methods.html#rotateXZ'>rotateXZ</a> (<span class='argstr'>angle</span>)</h3>
+<div class='method'>
+<p>Rotation about the origin in the XZ plane by the angle given in radians.<h4>Discussion:</h4>
+
+<p>A synonym for tumble.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-mirrorX' href='./../Overviews/Methods.html#mirrorX'>mirrorX</a> </h3>
+<div class='method'>
+<p>Mirror x, reflecting across the YZ plane.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-mirrorY' href='./../Overviews/Methods.html#mirrorY'>mirrorY</a> </h3>
+<div class='method'>
+<p>Mirror y, reflecting across the XZ plane.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-mirrorZ' href='./../Overviews/Methods.html#mirrorZ'>mirrorZ</a> </h3>
+<div class='method'>
+<p>Mirror z, reflecting across the XY plane.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-mirrorO' href='./../Overviews/Methods.html#mirrorO'>mirrorO</a> </h3>
+<div class='method'>
+<p>Mirror across the origin.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-neg' href='./../Overviews/Methods.html#neg'>neg</a> </h3>
+<div class='method'>
+<p>Rotate theta by pi and negate phi.<h4>Discussion:</h4>
+
+<p>This operation is equivalent to negating rho, and is a synonym for mirrorO.</div><h3><a class='anchor' name='Conversion'>Conversion</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-magnitude' href='./../Overviews/Methods.html#magnitude'>magnitude</a> </h3>
+<div class='method'>
+<p>Answer the radius.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-angle' href='./../Overviews/Methods.html#angle'>angle</a> </h3>
+<div class='method'>
+<p>Answer the azimuth angle, theta, in radians.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-phase' href='./../Overviews/Methods.html#phase'>phase</a> </h3>
+<div class='method'>
+<p>Answer the azimuth angle, theta, in radians.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-angles' href='./../Overviews/Methods.html#angles'>angles</a> </h3>
+<div class='method'>
+<p>Answer the azimuth and elevation angles, theta and phi, in radians.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>[ theta, phi ]</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-phases' href='./../Overviews/Methods.html#phases'>phases</a> </h3>
+<div class='method'>
+<p>Answer the azimuth and elevation angles, theta and phi, in radians.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>[ theta, phi ]</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-x' href='./../Overviews/Methods.html#x'>x</a> </h3>
+<div class='method'>
+<p>Answer the cartesian coordinate x of the receiver.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-y' href='./../Overviews/Methods.html#y'>y</a> </h3>
+<div class='method'>
+<p>Answer the cartesian coordinate y of the receiver.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-z' href='./../Overviews/Methods.html#z'>z</a> </h3>
+<div class='method'>
+<p>Answer the cartesian coordinate z of the receiver.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-real' href='./../Overviews/Methods.html#real'>real</a> </h3>
+<div class='method'>
+<p>Answer the cartesian coordinate x of the receiver.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-imag' href='./../Overviews/Methods.html#imag'>imag</a> </h3>
+<div class='method'>
+<p>Answer the cartesian coordinate y of the receiver.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-asSpherical' href='./../Overviews/Methods.html#asSpherical'>asSpherical</a> </h3>
+<div class='method'>
+<p>Returns the receiver.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-asPolar' href='./../Overviews/Methods.html#asPolar'>asPolar</a> </h3>
+<div class='method'>
+<p>Convert to <a href="./../Classes/Polar.html">Polar</a>, discarding z.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-asComplex' href='./../Overviews/Methods.html#asComplex'>asComplex</a> </h3>
+<div class='method'>
+<p>Answers a <a href="./../Classes/Complex.html">Complex</a> with x as the real part and y as the imaginary part, discarding z.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-asPoint' href='./../Overviews/Methods.html#asPoint'>asPoint</a> </h3>
+<div class='method'>
+<p>Convert to <a href="./../Classes/Point.html">Point</a>, discarding z.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-asCartesian' href='./../Overviews/Methods.html#asCartesian'>asCartesian</a> </h3>
+<div class='method'>
+<p>Convert to <a href="./../Classes/Cartesian.html">Cartesian</a>.</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-performBinaryOpOnUGen' href='./../Overviews/Methods.html#performBinaryOpOnUGen'>performBinaryOpOnUGen</a> (<span class='argstr'>aSelector</span>, <span class='argstr'>aUGen</span>)</h3>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/MathLib/HelpSource/Classes/Spherical.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/MathLib/HelpSource/Classes/Spherical.schelp</a><br>link::Classes/Spherical::<br>sc version: 3.7alpha0</div></div></body></html>

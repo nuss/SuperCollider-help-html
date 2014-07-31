@@ -1,0 +1,745 @@
+<html><head><title>CVWidget</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#GUI'>GUI</a>, <a href='./../Browse.html#Conductor'>Conductor</a>, <a href='./../Browse.html#External Control>MIDI'>External Control>MIDI</a>, <a href='./../Browse.html#External Control>OSC'>External Control>OSC</a></div>
+<h1>CVWidget</h1>
+<div id='summary'>The abstract superclass for all CVWidgets</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/CVWidget.sc'>CVWidget.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/CVWidget2D.html">CVWidget2D</a>, <a href="../Classes/CVWidgetKnob.html">CVWidgetKnob</a>, <a href="../Classes/CVWidgetMS.html">CVWidgetMS</a></div>
+<div id='related'>See also: <a href="./../Classes/CVCenter.html">CVCenter</a>, <a href="./../Classes/CV.html">CV</a>, <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a>, <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>, <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a>, <a href="./../Classes/CV.html">CV</a>, <a href="./../Classes/CCResponder.html">CCResponder</a>, <a href="./../Classes/OSCresponderNode.html">OSCresponderNode</a>, <a href="./../Classes/ControlSpec.html">ControlSpec</a>, <a href="./../Classes/SimpleController.html">SimpleController</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*removeResponders'>removeResponders</a> </li>
+<li class='toc3'><a href='#*debug'>debug</a> </li>
+<li class='toc3'><a href='#*midiSources'>midiSources</a> </li>
+<li class='toc3'><a href='#*shortcuts'>shortcuts</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*globalOSCfeedbackPort'>globalOSCfeedbackPort</a> </li>
+<li class='toc3'><a href='#*multiSlotOSCcmds'>multiSlotOSCcmds</a> </li>
+<li class='toc3'><a href='#*oscFeedbackAddrs'>oscFeedbackAddrs</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-setup'>setup</a> </li>
+<li class='toc3'><a href='#-setMidiMode'>setMidiMode</a> </li>
+<li class='toc3'><a href='#-getMidiMode'>getMidiMode</a> </li>
+<li class='toc3'><a href='#-setMidiMean'>setMidiMean</a> </li>
+<li class='toc3'><a href='#-getMidiMean'>getMidiMean</a> </li>
+<li class='toc3'><a href='#-setSoftWithin'>setSoftWithin</a> </li>
+<li class='toc3'><a href='#-getSoftWithin'>getSoftWithin</a> </li>
+<li class='toc3'><a href='#-setCtrlButtonBank'>setCtrlButtonBank</a> </li>
+<li class='toc3'><a href='#-getCtrlButtonBank'>getCtrlButtonBank</a> </li>
+<li class='toc3'><a href='#-setMidiResolution'>setMidiResolution</a> </li>
+<li class='toc3'><a href='#-getMidiResolution'>getMidiResolution</a> </li>
+<li class='toc3'><a href='#-setCalibrate'>setCalibrate</a> </li>
+<li class='toc3'><a href='#-getCalibrate'>getCalibrate</a> </li>
+<li class='toc3'><a href='#-setSpec'>setSpec</a> </li>
+<li class='toc3'><a href='#-getSpec'>getSpec</a> </li>
+<li class='toc3'><a href='#-setOscMapping'>setOscMapping</a> </li>
+<li class='toc3'><a href='#-getOscMapping'>getOscMapping</a> </li>
+<li class='toc3'><a href='#-oscConnect'>oscConnect</a> </li>
+<li class='toc3'><a href='#-oscDisconnect'>oscDisconnect</a> </li>
+<li class='toc3'><a href='#-midiConnect'>midiConnect</a> </li>
+<li class='toc3'><a href='#-midiDisconnect'>midiDisconnect</a> </li>
+<li class='toc3'><a href='#-setOscInputConstraints'>setOscInputConstraints</a> </li>
+<li class='toc3'><a href='#-getOscInputConstraints'>getOscInputConstraints</a> </li>
+<li class='toc3'><a href='#-addAction'>addAction</a> </li>
+<li class='toc3'><a href='#-removeAction'>removeAction</a> </li>
+<li class='toc3'><a href='#-activateAction'>activateAction</a> </li>
+<li class='toc2'><a href='#Models and Controllers, internal bookkeeping'>Models and Controllers, internal bookkeeping</a></li>
+<ul class='toc'><li class='toc3'><a href='#-wdgtControllersAndModels'>wdgtControllersAndModels</a> </li>
+<li class='toc3'><a href='#-midiOscEnv'>midiOscEnv</a> </li>
+<li class='toc3'><a href='#-widgetCV'>widgetCV</a> </li>
+<li class='toc3'><a href='#-wdgtActions'>wdgtActions</a> </li>
+<li class='toc3'><a href='#-alwaysPositive'>alwaysPositive</a> </li>
+</ul><li class='toc2'><a href='#Extending the API'>Extending the API</a></li>
+<ul class='toc'><li class='toc3'><a href='#-extend'>extend</a> </li>
+<li class='toc3'><a href='#-reduce'>reduce</a> </li>
+<li class='toc3'><a href='#-synchKeys'>synchKeys</a> </li>
+</ul><li class='toc2'><a href='#GUI properties and methods'>GUI properties and methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-window'>window</a> </li>
+<li class='toc3'><a href='#-guiEnv'>guiEnv</a> </li>
+<li class='toc3'><a href='#-focusElements'>focusElements</a> </li>
+<li class='toc3'><a href='#-msSize'>msSize</a> </li>
+<li class='toc3'><a href='#-front'>front</a> </li>
+<li class='toc3'><a href='#-editor'>editor</a> </li>
+<li class='toc3'><a href='#-name'>name</a> </li>
+<li class='toc3'><a href='#-parent'>parent</a> </li>
+<li class='toc3'><a href='#-widgetBg'>widgetBg</a> </li>
+<li class='toc3'><a href='#-label'>label</a> </li>
+<li class='toc3'><a href='#-nameField'>nameField</a> </li>
+<li class='toc3'><a href='#-toggleComment'>toggleComment</a> </li>
+<li class='toc3'><a href='#-widgetXY'>widgetXY</a> </li>
+<li class='toc3'><a href='#-widgetProps'>widgetProps</a> </li>
+<li class='toc3'><a href='#-bounds'>bounds</a> </li>
+<li class='toc3'><a href='#-remove'>remove</a> </li>
+<li class='toc3'><a href='#-close'>close</a> </li>
+<li class='toc3'><a href='#-isClosed'>isClosed</a> </li>
+</ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-actionActive'>actionActive</a> </li>
+<li class='toc3'><a href='#-activeSliderB'>activeSliderB</a> </li>
+<li class='toc3'><a href='#-activeTextB'>activeTextB</a> </li>
+<li class='toc3'><a href='#-addOSCFeedback'>addOSCFeedback</a> </li>
+<li class='toc3'><a href='#-connectGUI'>connectGUI</a> </li>
+<li class='toc3'><a href='#-connectS'>connectS</a> </li>
+<li class='toc3'><a href='#-connectTF'>connectTF</a> </li>
+<li class='toc3'><a href='#-isCVCWidget'>isCVCWidget</a> </li>
+<li class='toc3'><a href='#-oscFeedbackPort'>oscFeedbackPort</a> </li>
+<li class='toc3'><a href='#-prInitSlidersTextConnection'>prInitSlidersTextConnection</a> </li>
+<li class='toc3'><a href='#-recordMultiSlotCmds'>recordMultiSlotCmds</a> </li>
+<li class='toc3'><a href='#-removeOSCFeedback'>removeOSCFeedback</a> </li>
+<li class='toc3'><a href='#-sendOSCFeedback'>sendOSCFeedback</a> </li>
+<li class='toc3'><a href='#-setOSCfeedback'>setOSCfeedback</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'><li class='toc2'><a href='#basic usage'>basic usage</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#reusable widgets'>reusable widgets</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Shortcuts'>Shortcuts</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>CVWidget is the abstract superclass of all CVWidgets (currently: <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a> and <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>). However, it implements a couple of useful methods that are common to all its subclasses.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*removeResponders' href='./../Overviews/Methods.html#removeResponders'>removeResponders</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*removeResponders' href='./../Overviews/Methods.html#removeResponders'>removeResponders</a> = value</h3>
+<div class='method'>
+<p>A <a href="./../Classes/Boolean.html">Boolean</a>, indicating whether MIDI- and OSC-responders shall be removed upon hitting Cmd/Ctrl-period. If it is set to <code class='code prettyprint lang-sc'>false</code> unreferenced ghost-responders are left that may be hard to remove.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code class='code prettyprint lang-sc'>this</code> (CVWidget)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*debug' href='./../Overviews/Methods.html#debug'>debug</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*debug' href='./../Overviews/Methods.html#debug'>debug</a> = value</h3>
+<div class='method'>
+<p>A <a href="./../Classes/Boolean.html">Boolean</a>, allowing (or disallowing) introspection of the internal working of a CVWidget. This is e.g. useful if the user wants to extend the widget's API. Whenever a the content of a model changes the corresponding controller gets triggered and executes its actions. So, if a message like
+<p><code class='code prettyprint lang-sc'>widget 'freq' (CVWidget2D) at slot 'lo' midiDisplay.model: `(( 'learn': L, 'src': source, 'chan': chan, 'ctrl': ctrl ))</code>
+<p>gets posted, it means the midiDisplay.controller has just executed its actions using the model's values.
+<p>Also see <a href="#Models and Controllers, internal bookkeeping">Models and Controllers, internal bookkeeping</a> and <a href="#Extending the API">Extending the API</a>.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code class='code prettyprint lang-sc'>this</code> (CVWidget)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*midiSources' href='./../Overviews/Methods.html#midiSources'>midiSources</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*midiSources' href='./../Overviews/Methods.html#midiSources'>midiSources</a> = value</h3>
+<div class='method'>
+<p>An <a href="./../Classes/Event.html">Event</a>, containing all currently registered <a href="./../Classes/MIDIEndPoint.html">MIDIEndPoint</a>s and their correspondant numeric IDs. The IDs can be used to identify a device when creating a MIDI-responder though this is usually not necessary as the inbuilt learn functionality will take care of this automatically.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*shortcuts' href='./../Overviews/Methods.html#shortcuts'>shortcuts</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*shortcuts' href='./../Overviews/Methods.html#shortcuts'>shortcuts</a> = value</h3>
+<div class='method'>
+<p>An <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> containing all currently defined shortcuts for any CVWidget. Though this is a getter/setter it is recomended to add/remove shortcuts via the GUI within the <a href="./../Classes/CVCenterPreferences.html">preferences-interface</a> (changes will become active after recompilation of the class-library) or the <a href="./../Classes/CVCenterShortcutsEditor.html">shortcuts-interface</a> (changes become active immediatly but get reset after recompilation of the class-library).<div class='note'><span class='notelabel'>NOTE:</span> For added shortcuts to become active the user will have to call <a href="./../Classes/KeyDownActions.html#*setShortcuts">KeyDownActions: *setShortcuts</a> on any currently existing CVWidget. This procedure will be handled automatically behind the scenes if a shortcut has been added via CVCenter's inbuilt shortcut-editor.</div>
+<p>See <a href="./../Classes/KeyDownActions.html">KeyDownActions</a> for more information about the internal structure of the <code class='code prettyprint lang-sc'>shortcuts</code> dictionary resp. the workings of shortcuts in general. Also have a look at the list of <a href="#Shortcuts">default shortcuts</a> that can be modified by the user at any time.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*globalOSCfeedbackPort' href='./../Overviews/Methods.html#globalOSCfeedbackPort'>globalOSCfeedbackPort</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*globalOSCfeedbackPort' href='./../Overviews/Methods.html#globalOSCfeedbackPort'>globalOSCfeedbackPort</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*multiSlotOSCcmds' href='./../Overviews/Methods.html#multiSlotOSCcmds'>multiSlotOSCcmds</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*oscFeedbackAddrs' href='./../Overviews/Methods.html#oscFeedbackAddrs'>oscFeedbackAddrs</a> </h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setup' href='./../Overviews/Methods.html#setup'>setup</a> </h3>
+<div class='method'>
+<p>The current widget-setup, returned as an <a href="./../Classes/Event.html">Event</a>. If the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> each key of the returned Event will be split in a <code class='code prettyprint lang-sc'>\lo</code> and a <code class='code prettyprint lang-sc'>\hi</code> value:<dl>
+<dt>midiMode<dd>as set by <a href="#-setMidiMode">-setMidiMode</a>. default: <code class='code prettyprint lang-sc'>0</code><dt>calibrate<dd>indicates whether OSC-calibration is active or not, set by <a href="#-setCalibrate">-setCalibrate</a>. default: <code class='code prettyprint lang-sc'>true</code><dt>ctrlButtonBank<dd>indicates whether the <code class='code prettyprint lang-sc'>ctrlButtonBank</code> parameter, reflecting a MIDI-device's bank-layout is set. This can be set with <a href="#-setCtrlButtonBank">-setCtrlButtonBank</a>. default: <code class='code prettyprint lang-sc'>nil</code><dt>midiMean<dd>if a MIDI-device is set to in-/decremental mode reps. <code class='code prettyprint lang-sc'>midiMode</code> is set to <code class='code prettyprint lang-sc'>1</code> this will be the mean output-value. Can be set with <a href="#-setMidiMean">-setMidiMean</a>. default: <code class='code prettyprint lang-sc'>64</code><dt>midiResolution<dd>if <code class='code prettyprint lang-sc'>midiMode</code> is set to <code class='code prettyprint lang-sc'>1</code> the step-size of each slider is determined by this parameter. Can be set with <a href="#-setMidiResolution">-setMidiResolution</a>. default: <code class='code prettyprint lang-sc'>1</code><dt>softWithin<dd>if <code class='code prettyprint lang-sc'>midiMode</code> is set to <code class='code prettyprint lang-sc'>0</code> this determines the tolerance at which a MIDI-slider will respond when moved. For a more detailed explanation see <a href="#-setSoftWithin">-setSoftWithin</a>. default: <code class='code prettyprint lang-sc'>0.1</code></dl>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setMidiMode' href='./../Overviews/Methods.html#setMidiMode'>setMidiMode</a> (<span class='argstr'>mode</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Different MIDI-devices may have different output modes: either values from 0-127 or an in-/decremental value (e.g. -1 or +1). These modes may be taken in account as follows:<table>
+<tr><td><code class='code prettyprint lang-sc'>0</code><td>the device outputs a values 0-127<tr><td><code class='code prettyprint lang-sc'>1</code><td>the device outputs in-/decremental values</table>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>mode<td class='argumentdesc'>
+<p>an <a href="./../Classes/Integer.html">Integer</a><tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getMidiMode' href='./../Overviews/Methods.html#getMidiMode'>getMidiMode</a> (<span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Get the current midiMode (0 or 1).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Integer.html">Integer</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setMidiMean' href='./../Overviews/Methods.html#setMidiMean'>setMidiMean</a> (<span class='argstr'>meanval</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Devices which output a in-/decremental may output a standard value + in-/decrement. <code class='code prettyprint lang-sc'>midiMean</code> gets automatically subtracted from this value, so in-/decrement remains. Applies only if midiMode is set to <code class='code prettyprint lang-sc'>1</code>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>meanval<td class='argumentdesc'>
+<p>an <a href="./../Classes/Integer.html">Integer</a>. default: <code class='code prettyprint lang-sc'>64</code><tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getMidiMean' href='./../Overviews/Methods.html#getMidiMean'>getMidiMean</a> (<span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Get the current midiMean value.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Integer.html">Integer</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setSoftWithin' href='./../Overviews/Methods.html#setSoftWithin'>setSoftWithin</a> (<span class='argstr'>threshold</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>If <code class='code prettyprint lang-sc'>midiMode</code> has been set to <code class='code prettyprint lang-sc'>0</code> moving a widget-slider will set the CV to a new value. However, if a MIDI-slider is connected to that widget, moving the MIDI-slider will set the CV's value immediatly to the value that is stored in the MIDI-slider i.e. a "jump" will happen. <code class='code prettyprint lang-sc'>softWithin</code> will ease this behavior by setting the CV's value only if the slider gets within <code class='code prettyprint lang-sc'>softWithin/2</code>. Applies only if midiMode is set to <code class='code prettyprint lang-sc'>0</code>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>threshold<td class='argumentdesc'>
+<p>a <a href="./../Classes/Float.html">Float</a> - default: <code class='code prettyprint lang-sc'>0.1</code>.<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getSoftWithin' href='./../Overviews/Methods.html#getSoftWithin'>getSoftWithin</a> (<span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Get the current softWithin value.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Float.html">Float</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setCtrlButtonBank' href='./../Overviews/Methods.html#setCtrlButtonBank'>setCtrlButtonBank</a> (<span class='argstr'>numSliders</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Some MIDI-devices provide several banks of sliders. I.e. a device may be equipped with 16 sliders and 4 banks that can be switched. So, slider 1 in bank 2 is slider nr. 17, slider 3 in bank 3 is slider nr. 35. By default these sliders would have to be addressed in a <a href="./../Classes/CCResponder.html">CCResponder</a> as 16 (slider 17) and 34 (slider 35) which makes it hard to immediately get the right slider from what is displayed within the GUI. <code class='code prettyprint lang-sc'>ctrlButtonBank</code> translates the hardware-layout in a way that makes it easy to see the slider's bank and number: slider 17 becomes 2:1 (bank 2,  nr. 1).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>numSliders<td class='argumentdesc'>
+<p>an <a href="./../Classes/Integer.html">Integer</a>, representing the number of sliders in one bank.<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getCtrlButtonBank' href='./../Overviews/Methods.html#getCtrlButtonBank'>getCtrlButtonBank</a> (<span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Get the current ctrlButtonBank value<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Integer.html">Integer</a>, representing the number of sliders in one bank.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setMidiResolution' href='./../Overviews/Methods.html#setMidiResolution'>setMidiResolution</a> (<span class='argstr'>resolution</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>If <code class='code prettyprint lang-sc'>midiMode</code> has been set to 1 (by calling <a href="#-setMidiMode">-setMidiMode</a>), this method allows to set the resolution (= stepsize) of the connected hardware MIDI-sliders.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>resolution<td class='argumentdesc'>
+<p>a <a href="./../Classes/Float.html">Float</a>, representing the stepsize:
+<p>lower values -&gt; higher resolution
+<p>higher values -&gt; lower resolution
+<p>default: <code class='code prettyprint lang-sc'>1</code><tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getMidiResolution' href='./../Overviews/Methods.html#getMidiResolution'>getMidiResolution</a> (<span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Get the current value midiResolution value.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Float.html">Float</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setCalibrate' href='./../Overviews/Methods.html#setCalibrate'>setCalibrate</a> (<span class='argstr'>bool</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Unlike MIDI the range of incoming OSC-values isn't 0-127 - it is unknown at the time of initialization of the OSC-responder. All CVWidgets have an inbuilt calibration mechanism that determines the range automatically. At initialization the range is set to [0.0001, 0.0001]. If the mechanism detects a value that is lower or higher than the values set at initialization it will set the constraints accordingly. This method allows to stop or start the calibration-process.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bool<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a>, indicating whether the calibration-process shall be started or stopped.<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getCalibrate' href='./../Overviews/Methods.html#getCalibrate'>getCalibrate</a> (<span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Get the current calibration-status<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setSpec' href='./../Overviews/Methods.html#setSpec'>setSpec</a> (<span class='argstr'>spec</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Every CVWidget wraps one or more <a href="./../Classes/CV.html">CV</a>s whose internal spec can be set with this method.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>spec<td class='argumentdesc'>
+<p>can either be:<ul>
+<li>a <a href="./../Classes/ControlSpec.html">ControlSpec</a><li>an <a href="./../Classes/Array.html">Array</a> that can be converted to a valid ControlSpec by calling <code class='code prettyprint lang-sc'>asSpec</code> on it<li>a <a href="./../Classes/Symbol.html">Symbol</a> representing the name of a valid ControlSpec (e.g. <code class='code prettyprint lang-sc'>\freq</code>)</ul>
+<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getSpec' href='./../Overviews/Methods.html#getSpec'>getSpec</a> (<span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Get the current spec of the widget's <a href="./../Classes/CV.html">CV</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/ControlSpec.html">ControlSpec</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setOscMapping' href='./../Overviews/Methods.html#setOscMapping'>setOscMapping</a> (<span class='argstr'>mapping</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Within an <a href="./../Classes/OSCresponder.html">OSCresponder</a>'s function values coming in are being mapped to the <a href="./../Classes/ControlSpec.html">ControlSpec</a>'s range, defined by its <code class='code prettyprint lang-sc'>minval</code> and <code class='code prettyprint lang-sc'>maxval</code>. Furthermore a spec may implement a non-linear <code class='code prettyprint lang-sc'>warp</code> for the transition from <code class='code prettyprint lang-sc'>minval</code> to <code class='code prettyprint lang-sc'>maxval</code>. Especially when work with accelerometers and orientation-sensors setting oscMapping to some non-linear mode will allow a much more fine-grained control.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>mapping<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> - can be:<ul>
+<li><code class='code prettyprint lang-sc'>\linlin</code> - linear to linear mapping<li><code class='code prettyprint lang-sc'>\linexp</code> - linear to exponential mapping<li><code class='code prettyprint lang-sc'>\explin</code> - exponential to linear mapping<li><code class='code prettyprint lang-sc'>\expexp</code> - exponential to exponential mapping</ul>
+<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getOscMapping' href='./../Overviews/Methods.html#getOscMapping'>getOscMapping</a> (<span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Get the current oscMapping-mode<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a>, indicating the oscMapping-mode</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscConnect' href='./../Overviews/Methods.html#oscConnect'>oscConnect</a> (<span class='argstr'>ip</span>, <span class='argstr'>port</span>, <span class='argstr'>name</span>, <span class='argstr'>oscMsgIndex: 1</span>, <span class='argstr'>slot</span>, <span class='argstr'>oscFeedbackPort</span>)</h3>
+<div class='method'>
+<p>Connect a widget to an OSC-device resp. a program that sends OSC-messages to SuperCollider<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>ip<td class='argumentdesc'>
+<p>optional - if set the <a href="./../Classes/OSCresponder.html">OSCresponder</a> will only listen to messages coming from that IP-address.<tr><td class='argumentname'>port<td class='argumentdesc'>
+<p>optional - if set the <a href="./../Classes/OSCresponder.html">OSCresponder</a> will only listen to messages coming from that port.<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a>\: The OSC-command-name to which the OSCresponder will listen. E.g. <code class='code prettyprint lang-sc'>'/touch/x'</code> or <code class='code prettyprint lang-sc'>'/accelerometer/x'</code>. Every widget has an inbuilt mechanism that allows the user to scan connected devices for possible command-names. This mechanism is implemented in the class <code class='code prettyprint lang-sc'>OSCCommands</code> which may not only be used in connection with CVWidgets. <code class='code prettyprint lang-sc'>OSCCommands</code> stores a list of devices and commands to disk so the user does not have to rescan every time (s)he restarts SC.<tr><td class='argumentname'>oscMsgIndex<td class='argumentdesc'>
+<p>messages you receive from an OSC-device/-program usually consist of the commend-name and one or more slots, containing numerical values. An orientation-sensor might e.g. send a message like the following:
+<p><code class='code prettyprint lang-sc'>[ '/orientation', 178, 67, 78 ]</code>
+<p>the first slot is the command-name and the subsequent slots are <code class='code prettyprint lang-sc'>x</code>, <code class='code prettyprint lang-sc'>y</code> and <code class='code prettyprint lang-sc'>z</code>. <code class='code prettyprint lang-sc'>oscMsgIndex</code> allows you to select which of those three values you want to use in your widget.<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscDisconnect' href='./../Overviews/Methods.html#oscDisconnect'>oscDisconnect</a> (<span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Disconnects the OSC-device/-application reps. removes the <a href="./../Classes/OSCresponder.html">OSCresponder</a><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-midiConnect' href='./../Overviews/Methods.html#midiConnect'>midiConnect</a> (<span class='argstr'>uid</span>, <span class='argstr'>chan</span>, <span class='argstr'>num</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Connect a widget to a MIDI-device utilizing a <a href="./../Classes/CCResponder.html">CCResponder</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>uid<td class='argumentdesc'>
+<p>optional - the ID under which the device gets registered in SuperCollider<tr><td class='argumentname'>chan<td class='argumentdesc'>
+<p>optional - the MIDI-channel to which the program will listen<tr><td class='argumentname'>num<td class='argumentdesc'>
+<p>optional - the controller-number to which the program will listen<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-midiDisconnect' href='./../Overviews/Methods.html#midiDisconnect'>midiDisconnect</a> (<span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Terminate a MIDi-connection reps. remove the <a href="./../Classes/CCResponder.html">CCResponder</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setOscInputConstraints' href='./../Overviews/Methods.html#setOscInputConstraints'>setOscInputConstraints</a> (<span class='argstr'>constraintsHiLo</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Any widget has a mechanism built in that is supposed to detect the constraints of the values coming in via OSC. However, you my set these constraints manually as well with this method.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>constraintsHiLo<td class='argumentdesc'>
+<p>a <a href="./../Classes/Point.html">Point</a> - e.g. <code class='code prettyprint lang-sc'>Point(-20, 20)</code> or <code class='code prettyprint lang-sc'>0@360</code><tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getOscInputConstraints' href='./../Overviews/Methods.html#getOscInputConstraints'>getOscInputConstraints</a> (<span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Get the current oscInputConstraints. This will return <code class='code prettyprint lang-sc'>nil</code> as the widget is not connected and the calibration-mechanism hasn't set any values.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code class='code prettyprint lang-sc'>nil</code> or an <a href="./../Classes/Event.html">Event</a> containing the constraints in the keys <code class='code prettyprint lang-sc'>\lo</code> and <code class='code prettyprint lang-sc'>\hi</code> (not related to the \lo and \hi keys in a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addAction' href='./../Overviews/Methods.html#addAction'>addAction</a> (<span class='argstr'>name</span>, <span class='argstr'>action</span>, <span class='argstr'>slot</span>, <span class='argstr'>active: true</span>)</h3>
+<div class='method'>
+<p>Add an action to the widget's <a href="./../Classes/CV.html">CV</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> or a <a href="./../Classes/String.html">String</a>, representing the name under which the action will be stored<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>a <code class='code prettyprint lang-sc'>Function</code> or a <a href="./../Classes/String.html">String</a> that compiles to one if <code class='code prettyprint lang-sc'>interpret</code> is called on it. If the function contains an argument the <a href="./../Classes/CV.html">CV</a> will be provided in this argument: <code class='code prettyprint lang-sc'>{ |cv| "the CV's current value is %\n".postf(cv.value) }</code><tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code><tr><td class='argumentname'>active<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a>, indicating whether the action shall become active immediatly</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeAction' href='./../Overviews/Methods.html#removeAction'>removeAction</a> (<span class='argstr'>name</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Remove an action given by its name<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> or a <a href="./../Classes/String.html">String</a>, representing the action's name<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-activateAction' href='./../Overviews/Methods.html#activateAction'>activateAction</a> (<span class='argstr'>name</span>, <span class='argstr'>activate: true</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Activate or deactivate a stored action<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> or a <a href="./../Classes/String.html">String</a>, representing the action's name<tr><td class='argumentname'>activate<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a>, indicating whether the action shall be activated or deactivated<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3><a class='anchor' name='Models and Controllers, internal bookkeeping'>Models and Controllers, internal bookkeeping</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-wdgtControllersAndModels' href='./../Overviews/Methods.html#wdgtControllersAndModels'>wdgtControllersAndModels</a> </h3>
+<div class='method'>
+<p>CVWidgets are designed in an MVC-architecture (MVC = "model - view - controller"). Any time a new CVWidget gets instantiated the models get initialized. Any time the model is changed the function in the regarding controller gets invoked.<div class='warning'><span class='warninglabel'>WARNING:</span> Do not try to change the models directly, e.g. by doing something like
+<p><code class='code prettyprint lang-sc'>myWidget.wdgtControllersAndModels.someModel = someValue</code>
+<p>Models are designed for internal bookkeeping and all methods within CVWidget are supposed to do the right thing with them.</div>
+<p>All models and controllers are stored within the wdgtControllersAndModels instance-var. If the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> wdgtControllersAndModels will be split up in a <code class='code prettyprint lang-sc'>\lo</code> and a <code class='code prettyprint lang-sc'>\hi</code> slot, each containing the following models ( <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a> simply keeps them under wdgtControllersAndModels):<dl>
+<dt>calibrate<dd>the current calibration-state as set with <a href="#-setCalibrate">-setCalibrate</a> - either <code class='code prettyprint lang-sc'>Ref(true)</code> (default at initialization) or <code class='code prettyprint lang-sc'>Ref(false)</code>.<dt>cvSpec<dd>the <a href="./../Classes/CV.html">CV</a>'s current spec as set at initialization or with <code class='code prettyprint lang-sc'>setSpec</code> - a <a href="./../Classes/Ref.html">Ref</a> to a <a href="./../Classes/ControlSpec.html">ControlSpec</a>.<dt>oscInputRange<dd>the current input-range, set by the widget's input mechanism with <code class='code prettyprint lang-sc'>setInputRange</code> - default at initialization: <code class='code prettyprint lang-sc'>Ref([0.0001, 0.0001])</code>.<dt>oscConnection<dd>the current OSC-connection (if present): <code class='code prettyprint lang-sc'>Ref([&lt;IP-address&gt;, &lt;port&gt;, &lt;command-name&gt;, &lt;message-index&gt;])</code>. If no connection is present it will be <code class='code prettyprint lang-sc'>Ref(false)</code>.<dt>oscDisplay<dd>stores all OSC-related visual properties of a widget and its editor. A <a href="./../Classes/Ref.html">Ref</a> to an <a href="./../Classes/Event.html">Event</a>, containing the following slots:<ul>
+<li><strong>but</strong>: the state of the OSC-button ("edit OSC")<li><strong>ipField</strong>: the IP-field under the OSC-tab of the editor (see <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a>)<li><strong>portField</strong>: the port-field under the OSC-tab of the editor (see <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a>)<li><strong>nameField</strong>: the field for the OSC-command-name under the OSC-tab of the editor (see <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a>)<li><strong>index</strong>: the field for the message-index under the OSC-tab of the editor (see <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a>)<li><strong>connectorButVal</strong>: the value of the connect-button under the OSC-tab of the editor connectorButVal (see <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a>)<li><strong>editEnabled</strong>: if a connection is established editor-fields will be made uneditable and this slot is set to <code class='code prettyprint lang-sc'>false</code></ul>
+
+<p><dt>midiConnection<dd>the currentMIDI-connection (if present): <code class='code prettyprint lang-sc'>Ref((src\: &lt;val&gt;, chan\: &lt;val&gt;, num\: &lt;val&gt;))</code>. If no connection is present this will be: <code class='code prettyprint lang-sc'>Ref(nil)</code>.<dt>midiDisplay<dd>stores all MIDI-related visual properties of a widget and its editor. A <a href="./../Classes/Ref.html">Ref</a> to an <a href="./../Classes/Event.html">Event</a>, containing the following slots:<ul>
+<li><strong>learn</strong>: the current state of the 'learn'-button of the widget and the 'learn'-button under the MIDI-tab of the editor<li><strong>src</strong>: the current string of the 'src'-field of the widget and the 'src'-field under the MIDI-tab of the editor (the ID under which the device gets registered in SC)<li><strong>chan</strong>: the current string of the 'chan'-field of the widget and the 'chan'-field under the MIDI-tab of the editor (the MIDI-channel)<li><strong>ctrl</strong>: the current string of the 'ctrl'-field of the widget and the 'ctrl'-field under the MIDI-tab of the editor (the controller-number of the device)</ul>
+
+<p><dt>midiOptions<dd>the current MIDI-setup, analogue to <a href="#-setup">-setup</a>:<ul>
+<li><strong>midiMode</strong>: the current <code class='code prettyprint lang-sc'>midiMode</code> - see also <a href="#-setMidiMode">-setMidiMode</a><li><strong>midiMean</strong>: the current <code class='code prettyprint lang-sc'>midiMean</code> - see also <a href="#-setMidiMean">-setMidiMean</a><li><strong>ctrlButtonBank</strong>: the current value for <code class='code prettyprint lang-sc'>ctrlButtonBank</code> - see also <a href="#-setCtrlButtonBank">-setCtrlButtonBank</a><li><strong>midiResolution</strong>: the current <code class='code prettyprint lang-sc'>midiResolution</code> - see also <a href="#-setMidiResolution">-setMidiResolution</a><li><strong>softWithin</strong>: the current value for <code class='code prettyprint lang-sc'>softWithin</code> - see also <a href="#-setSoftWithin">-setSoftWithin</a></ul>
+
+<p><dt>mapConstrainterLo<dd>a <a href="./../Classes/CV.html">CV</a>, containing the spec <code class='code prettyprint lang-sc'>[-inf, inf].asSpec</code> and <code class='code prettyprint lang-sc'>oscInputRange.model.value[0]</code> as value<dt>mapConstrainterHi<dd>a <a href="./../Classes/CV.html">CV</a>, containing the spec <code class='code prettyprint lang-sc'>[-inf, inf].asSpec</code> and <code class='code prettyprint lang-sc'>oscInputRange.model.value[1]</code> as value<dt>actions<dd>a <a href="./../Classes/Ref.html">Ref</a> to an <a href="./../Classes/Event.html">Event</a>: <code class='code prettyprint lang-sc'>Ref((numActions\: &lt;val&gt;, activeActions\: &lt;val&gt;))</code>. This model reflects the number of actions resp. active actions as displayed in the 'actions'-button of the widget.</dl>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-midiOscEnv' href='./../Overviews/Methods.html#midiOscEnv'>midiOscEnv</a> </h3>
+<div class='method'>
+<p>Get the current MIDI-/OSC-environment of the widget. If the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> calling this method will return an <a href="./../Classes/Event.html">Event</a> containing the environments in 2 slots: <code class='code prettyprint lang-sc'>\lo</code> and <code class='code prettyprint lang-sc'>\hi</code>, else the environment will be returned:<dl>
+<dt>oscMapping<dd>input- to output-mapping of the values coming from the <a href="./../Classes/OSCresponder.html">OSCresponder</a>\: either <code class='code prettyprint lang-sc'>\linlin</code>, <code class='code prettyprint lang-sc'>\linexp</code>, <code class='code prettyprint lang-sc'>\explin</code> or <code class='code prettyprint lang-sc'>\expexp</code> (see also: <a href="#-setOscMapping">-setOscMapping</a>). By default the entry will be <code class='code prettyprint lang-sc'>\linlin</code>.<dt>oscMsgIndex<dd>if an <a href="./../Classes/OSCresponder.html">OSCresponder</a> is present this will reflect the index of the message at which the values are received (see also: <a href="#-oscConnect">-oscConnect</a>).<dt>calibConstraints<dd>if an <a href="./../Classes/OSCresponder.html">OSCresponder</a> is present this will reflect the current constraints for values coming in via OSC. Usually the constraints are set automatically by the widget's internal calibration-mechanism. However, you may set them manually by <a href="#-setOscInputConstraints">-setOscInputConstraints</a> or deactivate the calibration-mechanism by <a href="#-setCalibrate">-setCalibrate</a>.<dt>oscResponder<dd>if an if an <a href="./../Classes/OSCresponder.html">OSCresponder</a> is present it will be stored under this slot.<dt>midiResponder<dd>if a <a href="./../Classes/CCResponder.html">CCResponder</a> is present it will stored under this slot.</dl>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-widgetCV' href='./../Overviews/Methods.html#widgetCV'>widgetCV</a> </h3>
+<div class='method'>
+<p>The widget's <a href="./../Classes/CV.html">CV</a>. If the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> an <a href="./../Classes/Event.html">Event</a>, containing to slots <code class='code prettyprint lang-sc'>\lo</code> and <code class='code prettyprint lang-sc'>\hi</code> is returned.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>either a <a href="./../Classes/CV.html">CV</a> ( <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a>) or an <a href="./../Classes/Event.html">Event</a> ( <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-wdgtActions' href='./../Overviews/Methods.html#wdgtActions'>wdgtActions</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-wdgtActions' href='./../Overviews/Methods.html#wdgtActions'>wdgtActions</a> = value</h3>
+<div class='method'>
+<p>All actions (active and inactive) specified for the given widget.<div class='warning'><span class='warninglabel'>WARNING:</span> Though this has to be a setter/getter for some reason. <strong>Do not attempt to set an action like</strong> <code class='code prettyprint lang-sc'>myWidget.wdgtActions_(some action)</code>. Rather use <a href="#-addAction">-addAction</a>, <a href="#-removeAction">-removeAction</a> resp. <a href="#-activateAction">-activateAction</a></div><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Event.html">Event</a>, containing active and inactive actions of a widget.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-alwaysPositive' href='./../Overviews/Methods.html#alwaysPositive'>alwaysPositive</a> </h3>
+<div class='method'>
+<p>If <code class='code prettyprint lang-sc'>\explin</code> or <code class='code prettyprint lang-sc'>\expexp</code> has been chosen for input to output mapping with <a href="#-setOscMapping">-setOscMapping</a> both constraints of the input-range have to be same-signed - otherwise the operation would produce <code class='code prettyprint lang-sc'>NaN</code>s. <code class='code prettyprint lang-sc'>alwaysPositive</code> will be calculated automatically, so the user shouldn't have to worry about it.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3><a class='anchor' name='Extending the API'>Extending the API</a></h3>
+<div class='warning'><span class='warninglabel'>WARNING:</span> The following features are experimental and one should study the internal workings of CVWidget closely before using them - especially the structure of controllers and models: <a href="#-wdgtControllersAndModels">-wdgtControllersAndModels</a>.</div>
+<p>Within a CVWidget the functionality of most of its methods is implemented within a MVC-paradigm (<strong>m</strong>odel-<strong>v</strong>iew-<strong>c</strong>ontroller) which means that rather than executing an action within a method directly the method updates a model (an object keeping some data) and triggers the controller via a 'changed'-message (non-working example-code):
+<p><code class='code prettyprint lang-sc'>myModel.value_(someValue).changed(\key)</code>
+<p>When the 'changed'-message is sent the controller will execute its action. By default there is only one key specified: <code class='code prettyprint lang-sc'>\default</code> (see <a href="#-synchKeys">-synchKeys</a>). However, it is possible to extend the functionality of a controller with one or more custom <code class='code prettyprint lang-sc'>key/function</code> pairs which means one can sync custom-guis and its elements to a given CVWidget (e.g. a button in some GUI cannot only connect MIDI or OSC but can also immediatly reflect the current connection-status). Have a look at the examples-section for a simple example. Extending the API in the suggested way should keep the CVWidget-functionality unobstrusive!<pre class='code prettyprint lang-sc'>// create a widget
+~knob = CVWidgetKnob(bounds: Rect(490, 0, 80, 210)).front;
+
+// create a window that displays properties of OSC-connections in ~knob
+(
+~win = Window("model", Rect(100, 100, 400, 40)).front;
+~responderDisplay = StaticText(~win, Rect(7, 7, ~win.bounds.width-14, ~win.bounds.height-14))
+.background_(Color.white)
+.font_(Font("Andale Mono", 10));
+)
+
+
+// a simple monitor displaying changed models
+/*
+   models used in CVWidget are:
+   calibrate, cvSpec, oscInputRange,
+   oscConnection, oscDisplay
+   midiConnection, midiDisplay
+   midiOptions, actions
+
+   have a look at the section 'wdgtControllersAndModels'
+   for more information
+*/
+
+/*
+   not to be used with CVWidget:-extend:
+   mapConstrainterLo, mapConstrainterHi
+*/
+
+// the function within extend will be put in any possible controller
+// thus whenever one of them is triggered something will be displayed
+
+(
+~knob.extend(\mySync, { |theChanger, what, more|
+    // have a look at what's being passed into the models
+    ~responderDisplay.string_(" model changed:"+theChanger.value);
+})
+)
+
+// remove the previously added functionality
+// the window is no longer synched with the CVWidget
+
+~knob.reduce(\mySync);
+~win.close;</pre>
+
+<p>A slightly more practical (but also more complex) example: Edit an OSC-connection.<pre class='code prettyprint lang-sc'>(
+var flow, staticTextFont, textFieldFont, buttonFont;
+
+// create a widget
+~knob = CVWidgetKnob(bounds: Rect(490, 0, 80, 210)).front;
+
+// another window with a button that shall get synched to the widget
+staticTextFont = Font("Arial", 12);
+textFieldFont = Font("Andala Mono", 12);
+buttonFont = Font("Arial", 14, true);
+
+// the window and its elements
+~win = Window("connect OSC", Rect(50, 100, 400, 100));
+
+~win.view.decorator = flow = FlowLayout(~win.view.bounds, 7@7, 2@2);
+
+StaticText(~win.view, 120@20).string_("IP-address").font_(staticTextFont);
+StaticText(~win.view, 50@20).string_("port").font_(staticTextFont);
+StaticText(~win.view, 170@20).string_("command-name").font_(staticTextFont);
+StaticText(~win.view, flow.indentedRemaining.width@20).string_("slot").font_(staticTextFont);
+
+flow.nextLine;
+
+~ip = TextField(~win.view, 120@20).font_(textFieldFont).string_("192.168.1.23");
+~port = NumberBox(~win.view, 50@20).font_(textFieldFont).value_(11111);
+~cmd = TextField(~win.view, 170@20).font_(textFieldFont).string_("/my/osc/command/name");
+~slot = NumberBox(~win.view, flow.indentedRemaining.width@20).font_(textFieldFont).value_(1).clipLo_(1);
+
+flow.nextLine;
+
+// a button that lets the user connect OSC
+~connect = Button(~win.view, flow.indentedRemaining.width@flow.indentedRemaining.height)
+.states_([
+    ["connect OSC", Color.white, Color.blue],
+    ["", Color.white, Color.red]
+])
+.font_(buttonFont)
+.action_({ |b|
+    switch(b.value,
+        1, { ~knob.oscConnect(~ip.string, ~port.value, ~cmd.string, ~slot.value) },
+        0, { ~knob.oscDisconnect }
+    )
+});
+~win.front;
+
+// extend the widget's controller
+// we only need the controller 'oscConnection
+~knob.extend(\oscConnectSync, { |theChanger, what, more|
+    // on calling ~knob.oscConnect theChanger.value will contain an array with 4 slots:
+    // the IP-address, port, the command-name, the message-slot
+    // on calling ~knob.oscDisconnect theChanger.value will only contain 'false'
+    if(theChanger.value.size == 4, {
+        theChanger.value.postln;
+        ~connect.states_([
+            ~connect.states[0],
+            ["connected: %, %, %, %".format(*theChanger.value), ~connect.states[1][1], ~connect.states[1][2]]
+        ]).value_(1)
+    }, {
+        ~connect.states_([
+            ["re-connect OSC", ~connect.states[0][1], ~connect.states[0][2]],
+            ~connect.states[1]
+        ]).value_(0)
+    })
+}, \oscConnection)
+)
+
+// the user may also establish connect/disconnect programmatically
+// ~knob as well as the custom window ~win should reflect changes immediately
+~knob.oscConnect("192.168.1.23", 11111, "/my/osc/command/name", 1);
+~knob.oscDisconnect;
+
+// clean up
+~knob.reduce(\oscConnectSync);
+[~knob, ~win].do(_.close);</pre>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-extend' href='./../Overviews/Methods.html#extend'>extend</a> (<span class='argstr'>key</span>, <span class='argstr'>func</span> <span class='argstr'>... controllers</span>)</h3>
+<div class='method'>
+<p>adds a custom function to one or all of the widget's internal <a href="./../Classes/SimpleController.html">SimpleController</a>s. These can also keep references to user-defined GUIs resp. their elements, thus allowing the user to synch his/her GUIs with CVWidgets.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> or a <a href="./../Classes/String.html">String</a> - mandatory, used internally by the widget's <a href="./../Classes/SimpleController.html">SimpleController</a>s<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>a <a href="./../Classes/Function.html">Function</a> - mandatory. A custom function, extending the widget's resp. your custom GUI's functionality. The user may pass the content of the model, the key and more to the function if they are stated as arguments at the beginning of the function. See the <a href="./../Classes/SimpleController.html">SimpleController</a>-helpfile for more info.<tr><td class='argumentname'>... controllers<td class='argumentdesc'>
+<p>Controllers, given as <a href="./../Classes/Symbol.html">Symbol</a>s or <a href="./../Classes/String.html">String</a>s. A CVWidget contains several models and controllers, contained in <a href="#-wdgtControllersAndModels">-wdgtControllersAndModels</a>. If no specific controllers are given the function will be added to <strong>all</strong> controllers within <a href="#-wdgtControllersAndModels">-wdgtControllersAndModels</a>. If one or more specific controllers are provided the function will only be added to these controllers which might make calculations a bit cheaper. However, if the user provides a specific controller (s)he should know under which circumstances the given controller is being triggered in order to get the desired result.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-reduce' href='./../Overviews/Methods.html#reduce'>reduce</a> (<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>removes user-defined functions that have been added to the widget's inbuilt <a href="./../Classes/SimpleController.html">SimpleController</a>s.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> or a <a href="./../Classes/String.html">String</a> - indicating which function shall be removed. Will not touch the default functionality of a CVWidget. If no key is given all functions added by the user will be removed.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-synchKeys' href='./../Overviews/Methods.html#synchKeys'>synchKeys</a> </h3>
+<div class='method'>
+<p>an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Symbol.html">Symbol</a>s, keeping the keys over which a <a href="./../Classes/SimpleController.html">SimpleController</a> within a CVWidget will iterate. By default it is <code class='code prettyprint lang-sc'>[ \default ]</code>. The user should not alter this directly as adding and removing keys is handled within <a href="#-extend">-extend</a> resp. <a href="#-reduce">-reduce</a>.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Symbol.html">Symbol</a>s</div></div><h3><a class='anchor' name='GUI properties and methods'>GUI properties and methods</a></h3>
+
+<p>optional - CVWidget implements a few GUI-elements that are common to <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a> as well as <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>. Descriptions of the rest of the elements can be found in the documentation for the regarding classes.<h3 class='imethodname'><span class='methprefix'>-</span><a name='-window' href='./../Overviews/Methods.html#window'>window</a> </h3>
+<div class='method'>
+<p>The window containing the widget<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Window.html">Window</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-guiEnv' href='./../Overviews/Methods.html#guiEnv'>guiEnv</a> </h3>
+<div class='method'>
+<p>An <a href="./../Classes/Event.html">Event</a> containing certain elements of the GUI.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-focusElements' href='./../Overviews/Methods.html#focusElements'>focusElements</a> </h3>
+<div class='method'>
+<p>CVWidgets cannot gain focus themselves. However, their elements (buttons, slider, textfields etc.) can. <code class='code prettyprint lang-sc'>focusElements</code> returns a collection of elements which, when focused (indicated by the green border), function as the widget's shortcut transmitters.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Array.html">Array</a> of GUI elements</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-msSize' href='./../Overviews/Methods.html#msSize'>msSize</a> </h3>
+<div class='method'>
+<p>Though this is an instance var defined in CVWidget it applies to CVWidgetMS only: It returns the snumber of slots of the multi-slider of a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a>.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Integer.html">Integer</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-front' href='./../Overviews/Methods.html#front'>front</a> </h3>
+<div class='method'>
+<p>Sends the widget's window to front.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-editor' href='./../Overviews/Methods.html#editor'>editor</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-editor' href='./../Overviews/Methods.html#editor'>editor</a> = value</h3>
+<div class='method'>
+<p>Every widget has one or more editors that will open in a new window ( <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a> 1 editor, <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> 2 editors - <code class='code prettyprint lang-sc'>\lo</code> and <code class='code prettyprint lang-sc'>\hi</code>). This method returns a reference to them.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a> or an <a href="./../Classes/Event.html">Event</a>, containing a reference two 2 or more <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a>s</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a> </h3>
+<div class='method'>
+<p>Get the name of a widget. This corresponds with the key under which the widget's CV(s) is/are stored in <a href="./../Classes/CVCenter.html#*all">CVCenter: *all</a>.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-parent' href='./../Overviews/Methods.html#parent'>parent</a> </h3>
+<div class='method'>
+<p>Get the parent view of a CVWidget<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Window.html">Window</a> or a <a href="./../CLasses/View">View</a> resp. a subclass of it</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-widgetBg' href='./../Overviews/Methods.html#widgetBg'>widgetBg</a> </h3>
+<div class='method'>
+<p>A <a href="./../Classes/CompositeView.html">CompositeView</a> upon which all other elements of the GUI will be placed<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/CompositeView.html">CompositeView</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-label' href='./../Overviews/Methods.html#label'>label</a> </h3>
+<div class='method'>
+<p>A button, containing the name of the widget. When clicked the widget will switch to a <a href="./../Classes/TextView.html">TextView</a> that can be used to write down notices.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Button.html">Button</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-nameField' href='./../Overviews/Methods.html#nameField'>nameField</a> </h3>
+<div class='method'>
+<p>A <a href="./../Classes/TextView.html">TextView</a> that can be used to write down notices.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/TextView.html">TextView</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-toggleComment' href='./../Overviews/Methods.html#toggleComment'>toggleComment</a> (<span class='argstr'>visible</span>)</h3>
+<div class='method'>
+<p>Toggles between <code class='code prettyprint lang-sc'>nameField</code> and the regular widget-appearance.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>visible<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-widgetXY' href='./../Overviews/Methods.html#widgetXY'>widgetXY</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-widgetXY' href='./../Overviews/Methods.html#widgetXY'>widgetXY</a> = <span class='argstr'>point</span></h3>
+<div class='method'>
+<p>Sets/gets the XY-position of a widget within its parent window.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>point<td class='argumentdesc'>
+<p>a <a href="./../Classes/Point.html">Point</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Point.html">Point</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-widgetProps' href='./../Overviews/Methods.html#widgetProps'>widgetProps</a> </h3>
+<div class='method'>
+<p>Returns the width/height of a widget as <a href="./../Classes/Point.html">Point</a>.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Point.html">Point</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-bounds' href='./../Overviews/Methods.html#bounds'>bounds</a> </h3>
+<div class='method'>
+<p>Returns the bounds of a widget as <a href="./../Classes/Rect.html">Rect</a>.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Rect.html">Rect</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-remove' href='./../Overviews/Methods.html#remove'>remove</a> </h3>
+<div class='method'>
+<p>Removes all GUI-elements (buttons, text-fields, sliders etc.) from a widget.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-close' href='./../Overviews/Methods.html#close'>close</a> </h3>
+<div class='method'>
+<p>If the widget is part of the CVCenter-GUI all its elements will be removed, otherwise close the widget.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the receiver</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isClosed' href='./../Overviews/Methods.html#isClosed'>isClosed</a> </h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code class='code prettyprint lang-sc'>true</code> if the widget has been closed, otherwise <code class='code prettyprint lang-sc'>false</code></div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-actionActive' href='./../Overviews/Methods.html#actionActive'>actionActive</a> (<span class='argstr'>actionName</span>, <span class='argstr'>slot</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-activeSliderB' href='./../Overviews/Methods.html#activeSliderB'>activeSliderB</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-activeTextB' href='./../Overviews/Methods.html#activeTextB'>activeTextB</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addOSCFeedback' href='./../Overviews/Methods.html#addOSCFeedback'>addOSCFeedback</a> (<span class='argstr'>cmd</span>, <span class='argstr'>cmdSlot</span>, <span class='argstr'>ip</span>, <span class='argstr'>port</span>, <span class='argstr'>slot</span>, <span class='argstr'>oscFeedbackPort</span>, <span class='argstr'>what</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectGUI' href='./../Overviews/Methods.html#connectGUI'>connectGUI</a> (<span class='argstr'>connectSlider: true</span>, <span class='argstr'>connectTextField: true</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectS' href='./../Overviews/Methods.html#connectS'>connectS</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectTF' href='./../Overviews/Methods.html#connectTF'>connectTF</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-isCVCWidget' href='./../Overviews/Methods.html#isCVCWidget'>isCVCWidget</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscFeedbackPort' href='./../Overviews/Methods.html#oscFeedbackPort'>oscFeedbackPort</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscFeedbackPort' href='./../Overviews/Methods.html#oscFeedbackPort'>oscFeedbackPort</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prInitSlidersTextConnection' href='./../Overviews/Methods.html#prInitSlidersTextConnection'>prInitSlidersTextConnection</a> (<span class='argstr'>wcm</span>, <span class='argstr'>guiEnv</span>, <span class='argstr'>midiOscEnv</span>, <span class='argstr'>argWidgetCV</span>, <span class='argstr'>thisCalib</span>, <span class='argstr'>slot</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-recordMultiSlotCmds' href='./../Overviews/Methods.html#recordMultiSlotCmds'>recordMultiSlotCmds</a> (<span class='argstr'>cvSlot</span>, <span class='argstr'>cmdSlot</span>, <span class='argstr'>sentFromIP</span>, <span class='argstr'>msg</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeOSCFeedback' href='./../Overviews/Methods.html#removeOSCFeedback'>removeOSCFeedback</a> (<span class='argstr'>slot</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendOSCFeedback' href='./../Overviews/Methods.html#sendOSCFeedback'>sendOSCFeedback</a> (<span class='argstr'>cmd</span>, <span class='argstr'>cmdSlot</span>, <span class='argstr'>cvSlot</span>, <span class='argstr'>port</span>, <span class='argstr'>what</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setOSCfeedback' href='./../Overviews/Methods.html#setOSCfeedback'>setOSCfeedback</a> (<span class='argstr'>cv</span>, <span class='argstr'>cmd</span>, <span class='argstr'>port</span>, <span class='argstr'>slot</span>)</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<h3><a class='anchor' name='basic usage'>basic usage</a></h3>
+<pre class='code prettyprint lang-sc'>// create a CVWidget2D
+~twoDee = CVWidget2D.new.front;
+// and a multi-slider widget
+~ms = CVWidgetMS(numSliders: 5).front;
+
+// define an action to be executed when the knob is turned
+~twoDee.addAction(\post, { |cv| "current value[lo]: %\n".postf(cv.value) }, \lo);
+~twoDee.addAction(\post, { |cv| "current value[hi]: %\n".postf(cv.value) }, \hi);
+~ms.addAction(\post, { |cv| "~ms current value: %\n".postf(cv.value) });
+
+// some noise
+(
+Server.default.waitForBoot{
+    ~noise = { |freq=#[1, 3, 4, 7, 11 ], trigFreq=10, freqMod=0|
+        var trig, seq, freqvar;
+        trig = Impulse.kr(trigFreq);
+        seq = Drand([Dseq(freq, 1), Drand((1..4).collect(Array.geom(5, _, 3)), 8)], 2000);
+        freqvar = Demand.kr(trig, 0, seq * 100);
+        Splay.ar(SinOsc.ar(freqvar + [0,0.7]).scaleneg(freqMod)).tanh;
+    }.play
+}
+)
+
+// add an action to ~ms that sets freq dynamically
+~ms.addAction(\setFreq, { |cv| ~noise.setn(\freq, cv.value) });
+
+// change ~ms' spec
+// move the sliders to hear the difference
+// between various specs
+~ms.setSpec(\lofreq);
+~ms.setSpec(\widefreq);
+~ms.setSpec(\freq);
+
+// add another action to set trigFreq in ~noise
+~twoDee.addAction(\trigFreq, { |cv| ~noise.set(\trigFreq, cv.value) }, \lo);
+
+// change the widget's spec to something nore suitable
+// a linear ControlSpec, reaching from 10 to 30
+~twoDee.setSpec(#[10, 30], \lo);
+
+// add another action to set freqMod in ~noise
+~twoDee.addAction(\trigFreq, { |cv| ~noise.set(\freqMod, cv.value) }, \hi);
+
+// change the widget's spec to something nore suitable
+// a spec can be set as the spec's name which automatically gets converted
+// to a ControlSpec if a spec under that name exists - see the ControlSpec helpfile
+~twoDee.setSpec(\pan, \hi);
+
+// deactivate posting values to the post-window
+// the action can be reactivated at any time with the same
+// method-call, providing true as its parameter
+~twoDee.activateAction(\post, false, \lo);
+~twoDee.activateAction(\post, false, \hi);
+~ms.activateAction(\post, false);
+
+~noise.release;
+[~twoDee, ~ms].do(_.close;</pre>
+<h3><a class='anchor' name='reusable widgets'>reusable widgets</a></h3>
+
+<p>By default windows created in SC lack the ability to be opened again once they're closed (even evaluating the variable under which the window has been created will still return the window). The following section describes a workaround in CVWidget (resp. <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a> and <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>) that enables the user to keep a widget's responders and open and close it as many times as the user needs to ( <strong>open</strong> is implemented in <a href="./../Classes/CVWidgetKnob.html#-open">CVWidgetKnob</a> and <a href="./../Classes/CVWidget2D.html#-open">CVWidget2D</a>).<pre class='code prettyprint lang-sc'>// create some widgets
+// if a widget is made 'persistent' its OSC-/MIDI-responders
+// will not be removed when the widget gets closed
+~knob = CVWidgetKnob(bounds: Rect(100, 100, 80, 210), persistent: true).front;
+~twoDee = CVWidget2D(bounds: Rect(180, 100, 140, 210), persistent: true).front;
+~ms = CVWidgetMS(bounds: Rect(320, 100, 140, 210), persistant: true).front;
+
+// make some noise
+(
+Server.default.waitForBoot{ ~noise = {
+    Splay.ar(
+        SinOsc.ar(\freq.kr(Array.fib(5, 5, 3)*20), \phase.kr([0, 0]), mul: \amp.kr)
+    )
+}.play }
+);
+
+// set various properties of the widgets
+(
+~ms.msSize.do({ |i|
+    ~ms.setMidiMode(1, i).setCtrlButtonBank(16, i)
+});
+~ms.addAction(\setFreq, { |cv| ~noise.set(\freq, cv.value) });
+)
+
+~knob.setMidiMode(1).setCtrlButtonBank(16).addAction(\setAmp, { |cv| ~noise.set(\amp, cv.value) });
+
+#[lo, hi].do({ |hilo| ~twoDee.setSpec(\phase, hilo).setMidiMode(1, hilo).setCtrlButtonBank(16, hilo) });
+~twoDee.addAction(\phaseIt, { |cv| ~noise.setn(\phase, [cv.value, ~twoDee.widgetCV.hi.value]) }, \lo);
+~twoDee.addAction(\phaseIt, { |cv| ~noise.setn(\phase, [~twoDee.widgetCV.lo.value, cv.value]) }, \hi);
+
+// close the widgets and open them again
+// note: rather than simply opening them you should re-assign while opening them
+// as the open-method always returns a new widget but it will keep properties,
+// actions, responders etc. of the old one
+~knob = ~knob.open;
+~twoDee = ~twoDee.open;
+~ms = ~ms.open;</pre>
+<h2><a class='anchor' name='Shortcuts'>Shortcuts</a></h2>
+
+<p>When CVWidgets get created within CVCenter GUI a number of shortcuts apply after a widget has gained focus (i.e. rather than the widget itself one of its GUI-elements gained focus which will be indicated by a green border around the regarding element).<div class='note'><span class='notelabel'>NOTE:</span> All shortcuts are configurable by the user. Handling shortcuts is basically handled by a class named <a href="./../Classes/KeyDownActions.html">KeyDownActions</a>. They can be altered (actions as well as the action-triggering key-combinations), removed or new shortcuts can be added. This can be done manually by editing <a href="#*shortcuts">*shortcuts</a> (not recommended) or using the <a href="./../Classes/KeyDownActionsEditor.html">KeyDownActionsEditor</a> in the <a href="./../Classes/CVCenterPreferences.html">preferences-interface</a> (persistent) or editing short-term shortcuts in the <a href="./../Classes/CVCenterShortcutsEditor.html">shortcuts-editor</a> (shortcuts will be valid until next recompilation of the class-library). However, this is still an experimental feature. Especially in detached tabs shortcuts may not work as expected</div>
+<p><dl>
+<dt>alt arrow right<dd>Select next widget in alphabetical order<dt>alt arrow left<dd>Select previous widget in alphabetical order<dt>s<dd>Open the CVWidgetEitor of the focused widget and focus its Specs-tab<dt>m<dd>Open the CVWidgetEitor of the focused widget and focus its MIDI-tab<dt>o<dd>Open the CVWidgetEitor of the focused widget and focus its OSC-tab<dt>a<dd>Open the CVWidgetEitor of the focused widget and focus its Actions-tab<dt>c<dd>Start or stop OSC calibration<dt>r<dd>Reset and restart OSC calibration<dt>esc<dd>Move focus from the currently focused widget back to the containing view in the CVCenter GUI</dl>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/CVWidget.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/CVWidget.schelp</a><br>link::Classes/CVWidget::<br>sc version: 3.7alpha0</div></div></body></html>

@@ -1,0 +1,85 @@
+<html><head><title>GroupedPlayerMixer</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>crucial>Players'>Libraries>crucial>Players</a>, <a href='./../Browse.html#Quarks>cruciallib'>Quarks>cruciallib</a></div>
+<h1>GroupedPlayerMixer</h1>
+<div id='summary'>Mixes multiple players together, clumping them under Groups</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/Players/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/Players/PlayerMixer.sc'>PlayerMixer.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/PlayerMixer.html">PlayerMixer</a> : <a href="../Classes/AbstractPlayer.html">AbstractPlayer</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/PlayerMixer.html">PlayerMixer</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-gpminit'>gpminit</a> </li>
+<li class='toc3'><a href='#-makeResourcesToBundle'>makeResourcesToBundle</a> </li>
+<li class='toc3'><a href='#-prepareChildrenToBundle'>prepareChildrenToBundle</a> </li>
+<li class='toc3'><a href='#-subGroups'>subGroups</a> </li>
+<li class='toc3'><a href='#-freeResourcesToBundle'>freeResourcesToBundle</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A very useful tool to mix multiple players together while clumping them into separate Groups to ensure correct Node order.
+<p>Like PlayerMixer, this mixes the outputs of multiple players. but this class also puts each player into its own group node.
+<p>This is an example usage copied from an application. You cannot run it. TODO: normal example<pre class='code prettyprint lang-sc'>(
+    GroupedPlayerMixer(
+            total // original
+        ,
+        // these 3 go into a group together
+        Array.fill(3,{ arg i;
+            Patch("Channel",[
+                total.busses[i],// IrNumberEditors
+                total.vols[i],// KrNumberEditors
+                total.djLPFs[i], // KrNumberEditors
+                total.djHPFs[i], // KrNumberEditors
+
+                // sending to efx
+                total.send1Levels[i],
+                total.send2Levels[i],
+                total.sendBusIndices[0],
+                total.sendBusIndices[1]
+            ])
+        }),
+        [ // efx in a group after the sound and sends
+            efx1 = PlayerPool( this.efx( total.sendBusIndices[0] ) ),
+            efx2 = PlayerPool( this.efx( total.sendBusIndices[1] ) )
+        ]
+    )</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> ( <span class='argstr'>... players</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... players<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-gpminit' href='./../Overviews/Methods.html#gpminit'>gpminit</a> (<span class='argstr'>pls</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>pls<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeResourcesToBundle' href='./../Overviews/Methods.html#makeResourcesToBundle'>makeResourcesToBundle</a> (<span class='argstr'>bundle</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bundle<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepareChildrenToBundle' href='./../Overviews/Methods.html#prepareChildrenToBundle'>prepareChildrenToBundle</a> (<span class='argstr'>bundle</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bundle<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-subGroups' href='./../Overviews/Methods.html#subGroups'>subGroups</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-freeResourcesToBundle' href='./../Overviews/Methods.html#freeResourcesToBundle'>freeResourcesToBundle</a> (<span class='argstr'>bundle</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bundle<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Classes/GroupedPlayerMixer.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Classes/GroupedPlayerMixer.schelp</a><br>link::Classes/GroupedPlayerMixer::<br>sc version: 3.7alpha0</div></div></body></html>

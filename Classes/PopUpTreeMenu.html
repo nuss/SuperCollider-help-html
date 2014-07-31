@@ -1,0 +1,202 @@
+<html><head><title>PopUpTreeMenu</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#GUI'>GUI</a>, <a href='./../Browse.html#Quarks>PopUpTreeMenu'>Quarks>PopUpTreeMenu</a></div>
+<h1>PopUpTreeMenu</h1>
+<div id='summary'>hierarchical PopUp menu</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/PopUpTreeMenu/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/PopUpTreeMenu/PopUpTreeMenu.sc'>PopUpTreeMenu.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/SCViewHolder.html">SCViewHolder</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/PopUpMenu.html">PopUpMenu</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'><li class='toc2'><a href='#known problems / todo'>known problems / todo</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-tree'>tree</a> </li>
+<li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc3'><a href='#-currentLeaf'>currentLeaf</a> </li>
+<li class='toc3'><a href='#-action'>action</a> </li>
+<li class='toc3'><a href='#-openAction'>openAction</a> </li>
+<li class='toc3'><a href='#-closeAction'>closeAction</a> </li>
+<li class='toc3'><a href='#-sortFunc'>sortFunc</a> </li>
+<li class='toc3'><a href='#-currentPath'>currentPath</a> </li>
+<li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc3'><a href='#-valueAction'>valueAction</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-bounds'>bounds</a> </li>
+<li class='toc3'><a href='#-font'>font</a> </li>
+<li class='toc3'><a href='#-hiliteColor'>hiliteColor</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+<h3><a class='anchor' name='known problems / todo'>known problems / todo</a></h3>
+<ul>
+<li>The tree must must follow the structure described below. Later it might be possible to use e.g. <code class='code prettyprint lang-sc'>Help.tree</code><li>Screen width and height are not respected. Menus with many entries may be cut off at the borders.<li>Click once and menu should stay open so one can browse without keeping the mouse pressed. This is difficult due to mouseOverAction bug - it does not fire when already clicked somewhere else.<li>SwingOSC: scroll handles appear. difficult to solve - something with font size calculation.</ul>
+<div class='note'><span class='notelabel'>NOTE:</span> This quark now requires sc version 3.3.1 or newer.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tree' href='./../Overviews/Methods.html#tree'>tree</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tree' href='./../Overviews/Methods.html#tree'>tree</a> = value</h3>
+<div class='method'>
+<p>Dictionary of dictionaries. Branches terminate if they have an empty dictionary as a value (= leaf). Everything have to be symbols.<pre class='code prettyprint lang-sc'>( 'symbol1': (), 'symbol2': () )        //same level
+( 'symbol': ( 'symbol': () ) )            //nested
+( '1' : ('11': () ), '2.2': ('22': () ) )    //numbers also have to be symbols</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a> = <span class='argstr'>path</span></h3>
+<div class='method'>
+<p>Array of symbols pointing to the last selected node. <code class='code prettyprint lang-sc'>nil</code> if nothing selected.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-currentLeaf' href='./../Overviews/Methods.html#currentLeaf'>currentLeaf</a> </h3>
+<div class='method'>
+<p>Array of symbols pointing to current selection (leaves only). Empty if nothing selected. See <a href="#-currentPath">-currentPath</a> for reporting both nodes and leaves.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-action' href='./../Overviews/Methods.html#action'>action</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-action' href='./../Overviews/Methods.html#action'>action</a> = value</h3>
+<div class='method'>
+<p>Function that gets evaluated when some leaf is selected. Arguments passed: this, value</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-openAction' href='./../Overviews/Methods.html#openAction'>openAction</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-openAction' href='./../Overviews/Methods.html#openAction'>openAction</a> = value</h3>
+<div class='method'>
+<p>Function that gets evaluated when the popup menu is clicked. Arguments passed: this, mouseX, mouseY. This can be used to automatically populate the tree to keep it in sync with files in a folder. See <a href="#Examples">Examples</a> below.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-closeAction' href='./../Overviews/Methods.html#closeAction'>closeAction</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-closeAction' href='./../Overviews/Methods.html#closeAction'>closeAction</a> = value</h3>
+<div class='method'>
+<p>Function that gets evaluated when the popup menu closes. Arguments passed: this, mouseX, mouseY.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-sortFunc' href='./../Overviews/Methods.html#sortFunc'>sortFunc</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sortFunc' href='./../Overviews/Methods.html#sortFunc'>sortFunc</a> = value</h3>
+<div class='method'>
+<p>Sorts the dictionary in other ways than in the default alphabetic order.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-currentPath' href='./../Overviews/Methods.html#currentPath'>currentPath</a> </h3>
+<div class='method'>
+<p>Array of symbols pointing to current selection. Array is empty if nothing selected.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a> = <span class='argstr'>path</span></h3>
+<div class='method'>
+<p>Set the value.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>Should be an array of symbols.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-valueAction' href='./../Overviews/Methods.html#valueAction'>valueAction</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-valueAction' href='./../Overviews/Methods.html#valueAction'>valueAction</a> = <span class='argstr'>path</span></h3>
+<div class='method'>
+<p>Set the value and evaluate the action.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>Should be an array of symbols.</table></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bounds' href='./../Overviews/Methods.html#bounds'>bounds</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bounds' href='./../Overviews/Methods.html#bounds'>bounds</a> = <span class='argstr'>argRect</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-font' href='./../Overviews/Methods.html#font'>font</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-font' href='./../Overviews/Methods.html#font'>font</a> = <span class='argstr'>argFont</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-hiliteColor' href='./../Overviews/Methods.html#hiliteColor'>hiliteColor</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-hiliteColor' href='./../Overviews/Methods.html#hiliteColor'>hiliteColor</a> = value</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>//--simple example
+(
+var w= Window("popuptreemenu - simple", Rect(200, 400, 300, 100)).front;
+a= PopUpTreeMenu.new(w, Rect(50, 30, 100, 20))
+    .tree_(
+        (
+            'a drum': (),
+            'bass': (
+                'funky': (),
+                'unhip': (
+                    'umpahTuba': (),
+                    'umpahUpright': ()
+                )
+            ),
+            'melo': ()
+        )
+    );
+a.action_{|view, val| ("selected:"+val).postln};
+)
+a.value_(['bass', 'funky'])
+a.value_(['melo'])
+a.valueAction_(['bass', 'unhip', 'umpahTuba'])
+
+
+//--polling state of the menu in use - example also show custom color/font settings
+(
+var w= Window("popuptreemenu - state", Rect(400, 400, 300, 100)).front;
+a= PopUpTreeMenu.new(w, Rect(10, 20, 200, 34))
+    .tree_(('aaa': (), 'bbb': (), 'ccc': ('123': (), '456': (), '789': ('hier': ()))))
+    .font_(Font("Arial", 24))
+    .background_(Color.red(1))
+    .hiliteColor_(Color.red(0.75))
+    .stringColor_(Color.red(0.5));
+Routine({while({w.isClosed.not}, {
+    ("path:"++a.currentPath).post;
+    (" leaf:"++a.currentLeaf).post;
+    (" value:"++a.value).postln;
+    0.4.wait;
+})}).play(AppClock);
+)
+//--changing position and font while active
+a.value_(['aaa'])
+a.bounds_(Rect(30, 30, 100, 20));
+a.font_(Font("Geneva", 10));
+a.refresh
+a.value;
+a.sortFunc= {|a, b| a&gt;b}
+a.sortFunc= nil            //the default
+//cmd period to stop
+
+
+//--scanning a folder each time menu is pressed.
+//--slightly inefficient but keeps menu/folder in sync
+(
+var root= "~/Music".standardizePath;    //edit this!
+var w= Window("popuptreemenu - scan", Rect(200, 400, 300, 100)).front;
+var buildTreeFunc;
+a= PopUpTreeMenu.new(w, Rect(10, 20, 200, 20)).items_([root.basename]);
+buildTreeFunc= {|path|
+    var deepPathMatch, syms, tree;
+    var dir= path.dirname;
+    deepPathMatch= {|pn|
+        var arr= [];
+        pn.pathMatch.do{|x|
+            if(x.last.isPathSeparator, {
+                arr= arr++deepPathMatch.value(PathName(x++"*"));
+            }, {
+                arr= arr++PathName(x);
+            })
+        };
+        arr
+    };
+    syms= deepPathMatch.value(PathName(path)).collect{|x|
+        var pathNoRoot= x.fullPath.copyToEnd(root.size);
+        pathNoRoot.split($/).collect{|y| y.asSymbol}
+    };
+    tree= ();
+    syms.do{|x|
+        var parent= tree;
+        x.do{|y, i|
+            var node= parent[y];
+            if(node.isNil, {
+                parent.put(y, ());
+                parent= parent[y];
+            }, {
+                parent= node;
+            });
+        };
+    };
+    tree;
+};
+a.openAction_{|view, x, y|
+    ("rebuilding tree of"+root).postln;
+    view.tree= buildTreeFunc.value(root); //build and replace tree
+};
+a.closeAction_{|view, x, y| "closing".postln};
+a.action_{|view, val| ("selected:"+root++val.join($/)).postln};
+)</pre>
+
+<p><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/PopUpTreeMenu/HelpSource/Classes/PopUpTreeMenu.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/PopUpTreeMenu/HelpSource/Classes/PopUpTreeMenu.schelp</a><br>link::Classes/PopUpTreeMenu::<br>sc version: 3.7alpha0</div></div></body></html>

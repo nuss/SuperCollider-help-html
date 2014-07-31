@@ -1,0 +1,59 @@
+<html><head><title>Probalistic Noise UGens</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider GUIDES (extension)</div>
+<div id='categories'><a href='./../Browse.html#UGens>Generators>Stochastic'>UGens>Generators>Stochastic</a></div>
+<h1>Probalistic Noise UGens</h1>
+<div id='summary'>some notes on probalistic noise ugens (BhobUGens)</div>
+</div>
+<div class='subheader'>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#LFBrownNoise0.kr(freq, dev, mul, add)... (also LFBrownNoise1, LFBrownNoise2)'>LFBrownNoise0.kr(freq, dev, mul, add)... (also LFBrownNoise1, LFBrownNoise2)</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#TBetaRand.kr(lo, hi, prob1, prob2, trig)...'>TBetaRand.kr(lo, hi, prob1, prob2, trig)...</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#TBrownRand.kr(lo, hi, dev, trig)...'>TBrownRand.kr(lo, hi, dev, trig)...</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#TGaussRand.kr(lo, hi, trig)...'>TGaussRand.kr(lo, hi, trig)...</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#GaussTrig.kr(freq, dev)...'>GaussTrig.kr(freq, dev)...</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='LFBrownNoise0.kr(freq, dev, mul, add)... (also LFBrownNoise1, LFBrownNoise2)'>LFBrownNoise0.kr(freq, dev, mul, add)... (also LFBrownNoise1, LFBrownNoise2)</a></h2>
+
+<p>0 &lt; dev &lt;= 2. higher values mean bigger steps.<h2><a class='anchor' name='TBetaRand.kr(lo, hi, prob1, prob2, trig)...'>TBetaRand.kr(lo, hi, prob1, prob2, trig)...</a></h2>
+
+<p>prob1 &lt; prob2 means lo is more likely. and vice versa. prob1 &amp; prob2 &lt; 1 leans towards lo and hi values. prob1 &amp; prob2 = 1 is linear random. &gt; 1 tends towards guassian distribution.<h2><a class='anchor' name='TBrownRand.kr(lo, hi, dev, trig)...'>TBrownRand.kr(lo, hi, dev, trig)...</a></h2>
+
+<p>0 &lt; dev &lt;= 2. higher values mean bigger steps.<h2><a class='anchor' name='TGaussRand.kr(lo, hi, trig)...'>TGaussRand.kr(lo, hi, trig)...</a></h2>
+
+<p>gaussian distribution between lo and hi.<h2><a class='anchor' name='GaussTrig.kr(freq, dev)...'>GaussTrig.kr(freq, dev)...</a></h2>
+
+<p>emits a trigger around freq. 0.0 &lt;= dev &lt; 1. 0.0 is like Impulse, higher values introduce more randomness.<pre class='code prettyprint lang-sc'>(
+{ Pan2.ar(
+    SinOsc.ar(
+        Lag.ar(
+            LinExp.ar(
+                TBrownRand.ar(0, 1, 1.0, Dust.ar(8)),
+                0, 1,
+                120, 6000
+            ),
+            0.02
+        ),
+        mul: LFBrownNoise2.kr(6, 1.0, 0.4, 0.5)
+    ).squared *
+        Decay2.kr(GaussTrig.kr(8.0, 0.2), 0.02, 0.2),
+    Lag.kr(
+        TBetaRand.kr(-1.0, 1.0, Line.kr(4, 0.1, 5), Line.kr(2, 0.1, 5), Impulse.kr(8.0)),     0.2)
+    )
+}.play
+)</pre>
+
+<p><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/BhobUGens/HelpSource/Guides/ProbalisticNoiseUGens.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/BhobUGens/HelpSource/Guides/ProbalisticNoiseUGens.schelp</a><br>link::Guides/ProbalisticNoiseUGens::<br>sc version: 3.7alpha0</div></div></body></html>

@@ -1,0 +1,183 @@
+<html><head><title>CocoaDocument</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES</div>
+<div id='categories'><a href='./../Browse.html#Platform>OSX'>Platform>OSX</a></div>
+<h1>CocoaDocument</h1>
+<div id='summary'>implements Document functionality</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Location: <b>NOT INSTALLED!</b></div>
+<div id='related'>See also: <a href="./../Classes/Document.html">Document</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*wikiBrowse'>wikiBrowse</a> </li>
+<li class='toc3'><a href='#*wikiDir'>wikiDir</a> </li>
+<li class='toc3'><a href='#*postColor'>postColor</a> </li>
+<li class='toc3'><a href='#*setTheme'>setTheme</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-balanceParens'>balanceParens</a> </li>
+<li class='toc3'><a href='#-background'>background</a> </li>
+<li class='toc3'><a href='#-stringColor'>stringColor</a> </li>
+<li class='toc3'><a href='#-selectedBackground'>selectedBackground</a> </li>
+<li class='toc3'><a href='#-syntaxColorize'>syntaxColorize</a> </li>
+<li class='toc3'><a href='#-makeWikiPage'>makeWikiPage</a> </li>
+<li class='toc3'><a href='#-openWikiPage'>openWikiPage</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>CocoaDocument implements <a href="./../Classes/Document.html">Document</a> functionality for the SuperCollider user interface on Mac OSX.
+<p>You could instantiate it e.g. by running <code class='code prettyprint lang-sc'>CocoaDocument.new</code> but in order to write platform-independent code you should not do this - simply call <code class='code prettyprint lang-sc'>Document.new</code> and this instantiates the correct class for your system.
+<p>For examples and method descriptions see <a href="./../Classes/Document.html">Document</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*wikiBrowse' href='./../Overviews/Methods.html#wikiBrowse'>wikiBrowse</a> </h3>
+<div class='method'>
+<p>If set to <code class='code prettyprint lang-sc'>true</code>, underlining text will create a wiki link.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>value<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/Boolean.html">Boolean</a>. Default value is <code class='code prettyprint lang-sc'>true</code>.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*wikiDir' href='./../Overviews/Methods.html#wikiDir'>wikiDir</a> </h3>
+<div class='method'>
+<p>Get/set the default wiki directory. The default is dependent on <a href="./../Classes/Document.html#implementationClass">Document: implementationClass</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>The file system path to the directory. An instance of <a href="./../Classes/String.html">String</a>.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*postColor' href='./../Overviews/Methods.html#postColor'>postColor</a> </h3>
+<div class='method'>
+<p>Get / set the listeners pen color.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/Color.html">Color</a>.</table><h4>Discussion:</h4>
+<pre class='code prettyprint lang-sc'>CocoaDocument.postColor; // returns current post color
+CocoaDocument.postColor_(Color.red);
+CocoaDocument.postColor_(Color.green);
+CocoaDocument.postColor_(Color.blue);
+CocoaDocument.postColor_(Color.black);
+(
+r = Routine({
+    10.do({
+        Document.postColor_(Color.rand);
+        "There is no blue without yellow and without orange.".postln;
+        0.5.rand.yield;
+    });
+    CocoaDocument.postColor_(Color.black);
+});
+)
+
+r.play;
+r.stop;</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*setTheme' href='./../Overviews/Methods.html#setTheme'>setTheme</a> </h3>
+<div class='method'>
+<p>Sets the theme for syntax colorization.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>themeName<td class='argumentdesc'>
+<p>A <a href="./../Classes/Symbol.html">Symbol</a>, defining the name of the theme that you've put into <code class='code prettyprint lang-sc'>Document.themes</code>.</table><h4>Discussion:</h4>
+
+<p>The Document class has a preset theme called <code class='code prettyprint lang-sc'>'default'</code>, which is set as follows (default SC colors):<pre class='code prettyprint lang-sc'>themes = (
+    default: (
+        classColor: Color(0, 0, 0.75, 1),
+        textColor: Color(0, 0, 0, 1),
+        stringColor: Color(0.375, 0.375, 0.375, 1),
+        commentColor: Color(0.75, 0, 0, 1),
+        symbolColor: Color(0, 0.45, 0, 1),
+        numberColor: Color(0, 0, 0, 1)
+    )
+);</pre>
+
+<p>If you want to have your own themes for syntax colorization, you need to put your color set into <code class='code prettyprint lang-sc'>CocoaDocument.themes</code> first (preferably in startup.rtf file) and call <code class='code prettyprint lang-sc'>setTheme</code> by giving it the name of the theme you've added to "themes" earlier:<pre class='code prettyprint lang-sc'>//putting a custom color theme into Document.themes
+CocoaDocument.themes.put
+(\myTheme,
+    (
+        classColor: Color.new255(53, 74, 187),
+        textColor: Color.new255(0, 0, 0),
+        stringColor: Color.new255(96, 129, 158),
+        commentColor: Color.new255(206, 27, 28),
+        symbolColor: Color.new255(57, 154, 20),
+        numberColor: Color.new255(157, 80, 65)
+    )
+);
+
+//and then calling setTheme with the name:
+CocoaDocument.setTheme('myTheme');
+//to see the current theme:
+CocoaDocument.theme;</pre>
+
+<p>You can switch to the default theme anytime by calling:<pre class='code prettyprint lang-sc'>CocoaDocument.setTheme('default');</pre>
+
+<p>Next time you invoke syntaxColorize, the color theme set by setTheme will be used for syntax colorization. If you want to change the background color for the document window and selected text, in order to make them fit with your syntax colorization theme, see the help for the <a href="./../Classes/CocoaDocument.html#background">CocoaDocument: background</a> and <a href="./../Classes/CocoaDocument.html#selectedBackground">CocoaDocument: selectedBackground</a> methods for Document.</div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-balanceParens' href='./../Overviews/Methods.html#balanceParens'>balanceParens</a> </h3>
+<div class='method'>
+<p>Starting from the current selection, increase the selection until matching parentheses are selected.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>level<td class='argumentdesc'>
+<p>Do this as many times to find ever wider brackets. Set to <code class='code prettyprint lang-sc'>inf</code> for outmost.</table><h4>Discussion:</h4>
+<pre class='code prettyprint lang-sc'>((((
+CocoaDocument.current.balanceParens(1);
+CocoaDocument.current.balanceParens(3);
+CocoaDocument.current.balanceParens(inf);
+))))</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-background' href='./../Overviews/Methods.html#background'>background</a> </h3>
+<div class='method'>
+<p>Get / set the the Document's background color.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>color<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/Color.html">Color</a>.</table><h4>Discussion:</h4>
+<pre class='code prettyprint lang-sc'>(
+a = Document("background", "'hardly see anything");
+a.background_(Color.blue(alpha:0.8)); // notice that alpha controls the window transparency
+)</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-stringColor' href='./../Overviews/Methods.html#stringColor'>stringColor</a> </h3>
+<div class='method'>
+<p>Gets or sets the string color of a specific range of already printed text. Default is the whole document. To set the listener text color for posting, see: <a href="./../Classes/Document.html#postColor">Document: postColor</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>color<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/Color.html">Color</a>.<tr><td class='argumentname'>rangeStart<td class='argumentdesc'>
+<p>An <a href="./../Classes/Integer.html">Integer</a>. Default is -1.<tr><td class='argumentname'>rangeSize<td class='argumentdesc'>
+<p>An <a href="./../Classes/Integer.html">Integer</a>. Default value is 0</table><h4>Discussion:</h4>
+<pre class='code prettyprint lang-sc'>// Select the following code in parentheses and execute it
+(
+Document.current.stringColor_(Color.rand(0.2, 0.8),
+    Document.current.selectedRangeLocation + 13,
+    16);
+)
+// Watch me change color</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-selectedBackground' href='./../Overviews/Methods.html#selectedBackground'>selectedBackground</a> </h3>
+<div class='method'>
+<p>Gets or sets the document's background color for selected text. Applies to the whole document instance.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>color<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/Color.html">Color</a>.</table><h4>Discussion:</h4>
+<pre class='code prettyprint lang-sc'>Document.current.selectedBackground; // returns default color
+(
+w = Document.new("Test", "Here is a selected text...");
+w.selectedBackground_(Color.new255(120, 180, 110));
+w.selectRange(10, 13);
+)</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-syntaxColorize' href='./../Overviews/Methods.html#syntaxColorize'>syntaxColorize</a> </h3>
+<div class='method'>
+<p>Syntax colorize a document.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeWikiPage' href='./../Overviews/Methods.html#makeWikiPage'>makeWikiPage</a> </h3>
+<div class='method'>
+<p>Creates a wiki page.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>wikiWord<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/String.html">String</a>. The name of the document.<tr><td class='argumentname'>extension<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/String.html">String</a>. The file extension.<tr><td class='argumentname'>directory<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/String.html">String</a>. The directory in which to save the page.</table><h4>Discussion:</h4>
+<pre class='code prettyprint lang-sc'>Document.current.makeWikiPage("test1");</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-openWikiPage' href='./../Overviews/Methods.html#openWikiPage'>openWikiPage</a> </h3>
+<div class='method'>
+<p>Opens/creates a wiki page out of the currently selected text.</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/CocoaDocument.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/CocoaDocument.schelp</a><br>link::Classes/CocoaDocument::<br>sc version: 3.7alpha0</div></div></body></html>

@@ -1,0 +1,123 @@
+<html><head><title>Patch magic tricks</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider GUIDES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>crucial>Instr'>Libraries>crucial>Instr</a>, <a href='./../Browse.html#Quarks>cruciallib'>Quarks>cruciallib</a></div>
+<h1>Patch magic tricks</h1>
+<div id='summary'>Extra capabilities for client-server communication</div>
+</div>
+<div class='subheader'>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#onTrig'>onTrig</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Buffers'>Buffers</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Tempo'>Tempo</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Players inside Players'>Players inside Players</a></li>
+<ul class='toc'></ul></ul></div>
+<p>Because the Patch manages the creation of the SynthDef and also manages the Synth that is created at the time of play, it is possible to do some tricks that make client-server communication a bit easier.
+<p>Keep in mind that when the sc lang code that is inside a SynthDef or an Instr is run when the the SynthDef or InstrSynthDef is compiled. Its compiled into bytecode that is then sent to the server but then when the synth itself runs there is no sc language. There are no functions or 'if' statements.
+<p>So once you have that concept clear in your head, here's how to violate it.<h2><a class='anchor' name='onTrig'>onTrig</a></h2>
+<pre class='code prettyprint lang-sc'>UGen:onTrig(function,value)
+
+    trigger.onTrig({ |time,value|
+        "did trig".postln
+    })</pre>
+
+<p>On receiving a trigger (a non-positive to positive transition) evaluate the function IN THE CLIENT LANGUAGE. A value may also be passed in which will be polled and passed to the function.<pre class='code prettyprint lang-sc'>(
+Patch({ |freq=200|
+    var out;
+
+    out = LFSaw.ar(freq);
+
+    (Dust.kr(0.3)).onTrig({ |time,value|
+        ["dusty",time,value].postln
+    },out); // this value will be polled anytime the trig goes
+
+    out * 0.1
+
+}).play
+
+)
+
+(
+p = Patch({ |freq=200|
+
+    (freq &gt;= 300).onTrig({
+        "GREATER !".postln
+    });
+
+    LFSaw.ar(freq) * 0.1
+});
+
+p.play
+
+)
+
+p.freq.value = 400
+
+p.freq.value = 200
+
+
+
+(
+
+p = Patch({ |freq=200|
+
+    var lfo;
+    lfo = LFSaw.kr(0.2);
+    Dust.kr(2.0).onTrig({ |time,value|
+        [time,value].postln
+    },lfo);
+
+    LFSaw.ar(freq)
+});
+
+p.play
+
+)</pre>
+
+<p>You could also spawn more synths.
+<p>What is happening is that a ClientOnTrigResponder is added to the InstrSynthDef's stepchildren. When a Patch plays it also plays its children (the inputs to the patch) and its stepchildren. The ClientOnTrigResponder adds an OSCpathResponder when the synth starts and removes it when the synth stops.<h2><a class='anchor' name='Buffers'>Buffers</a></h2>
+
+<p>Samples and BufferProxies can insert kr rate beat calculation UGens into the InstrSynthDef
+<p>see <a href="./../Classes/Sample.html">Sample</a><h2><a class='anchor' name='Tempo'>Tempo</a></h2>
+
+<p>Tempo.kr will insert a UGen with the current Tempo<h2><a class='anchor' name='Players inside Players'>Players inside Players</a></h2>
+
+<p>Experimental, but can be fun.<pre class='code prettyprint lang-sc'>(
+var player;
+player = Patch({ Saw.ar });
+
+Patch({
+
+    RLPF.ar( player.ar, 400 )
+
+}).play
+)</pre>
+
+<p>The player inside the instr registers itself as a dependent, is prepared and spawned at the same time as the player and inserts an In.ar into the SynthDef to play its output.<pre class='code prettyprint lang-sc'>    sfp = SFP("path/to/soundfile");
+    Instr('no-can-do',{ arg sfp,amp=1.0;
+        sfp.ar * amp
+    });</pre>
+
+<p>The SFP (soundfile player) will require a buffer, a bus, and various stages of preparation.
+<p>The better approach is still to use Patch which will manage the preparation process in a more clear fashion.<pre class='code prettyprint lang-sc'>    Instr("can-do",{ arg input,amp=1.0;
+      input * amp
+    });
+
+    Patch("can-do",[
+        SFP("path/to/soundfile")
+    ])</pre>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Guides/Patch-client-server-magic.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Guides/Patch-client-server-magic.schelp</a><br>link::Guides/Patch-client-server-magic::<br>sc version: 3.7alpha0</div></div></body></html>

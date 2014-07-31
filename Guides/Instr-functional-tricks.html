@@ -1,0 +1,62 @@
+<html><head><title>Instr Functional Tricks</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider GUIDES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>crucial>Instr'>Libraries>crucial>Instr</a>, <a href='./../Browse.html#Quarks>cruciallib'>Quarks>cruciallib</a></div>
+<h1>Instr Functional Tricks</h1>
+<div id='summary'>Partial application and function composition with Instr</div>
+</div>
+<div class='subheader'>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#Function Composition'>Function Composition</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Partial Application'>Partial Application</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Subroutines'>Subroutines</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='Function Composition'>Function Composition</a></h2>
+
+<p>In mathematics, function composition is the application of one function to the results of another. For instance, the functions f: X → Y and g: Y → Z can be composed by computing the output of g when it has an argument of f(x) instead of x.<pre class='code prettyprint lang-sc'>(
+Instr(\saw, { arg freq=200,amp=0.5;
+    LFSaw.ar(freq,0.0, amp);
+});
+    
+Instr(\rlpf, { arg in,freq=200,rq=0.1;
+    RLPF.ar(in, freq, rq);
+});
+    
+
+i = Instr("saw") &lt;&gt;&gt; Instr("rlpf");
+
+i.gui
+)</pre>
+
+<p>This connects the output of the Saw to the first input of the RLPF. It makes a compound Instr with all arguments combined, except for the RLPF "in" which is already satisfied.
+<p>See <a href="./../Classes/CompositeInstr.html">CompositeInstr</a> to connect to inputs other than the first.<h2><a class='anchor' name='Partial Application'>Partial Application</a></h2>
+
+<p>In computer science, partial application (or partial function application) refers to the process of fixing a number of arguments to a function, producing another function of smaller arity.
+<p>A partially applied Instr produces a PappliedInstr that references the Instr (by name) and which arguments are satisfied. A PappliedInstr is usable as any normal Instr but it has fewer arguments than the original.
+<p>See <a href="./../Classes/PappliedInstr.html">PappliedInstr</a><h2><a class='anchor' name='Subroutines'>Subroutines</a></h2>
+
+<p>Instr can also be used as subroutines.<pre class='code prettyprint lang-sc'>Instr(\saw, { arg freq=200,amp=0.5;
+    LFSaw.ar(freq,0.0, amp);
+});
+    
+Instr(\rlpf, { arg freq=200,ffreq=400,rq=0.1;
+    var saw;
+    saw = Instr(\saw).ar(freq)
+    RLPF.ar(in, ffreq, rq);
+});
+
+Patch(\rlpf).gui</pre>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Guides/Instr-functional-tricks.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Guides/Instr-functional-tricks.schelp</a><br>link::Guides/Instr-functional-tricks::<br>sc version: 3.7alpha0</div></div></body></html>

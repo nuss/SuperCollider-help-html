@@ -1,0 +1,103 @@
+<html><head><title>ArrayBuffer</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>crucial>Buffers'>Libraries>crucial>Buffers</a>, <a href='./../Browse.html#Quarks>cruciallib'>Quarks>cruciallib</a></div>
+<h1>ArrayBuffer</h1>
+<div id='summary'>given an array, will allocate and fill a Buffer for use in Patch etc</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/Sample/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/Sample/Sample.sc'>Sample.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/BufferProxy.html">BufferProxy</a> : <a href="../Classes/Object.html">Object</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-array'>array</a> </li>
+<li class='toc3'><a href='#-storeArgs'>storeArgs</a> </li>
+<li class='toc3'><a href='#-prepareToBundle'>prepareToBundle</a> </li>
+<li class='toc3'><a href='#-makePatchOut'>makePatchOut</a> </li>
+<li class='toc3'><a href='#-put'>put</a> </li>
+<li class='toc3'><a href='#-at'>at</a> </li>
+<li class='toc3'><a href='#-zero'>zero</a> </li>
+<li class='toc3'><a href='#-setArrayToBundle'>setArrayToBundle</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Passes an array into a Patch for use in UGens which need an array supplied as a buffer index. If saved as a compile string to disk, saves the array with it.<pre class='code prettyprint lang-sc'>(
+// modal space - jmc
+// mouse x controls discrete pitch in dorian mode
+
+Patch({ arg scale;
+
+    var mix;
+
+    mix =
+
+    // lead tone
+    SinOsc.ar(
+        (
+            DegreeToKey.kr(
+                scale.bufnumIr,
+                MouseX.kr(0,15),        // mouse indexes into scale
+                12,                    // 12 notes per octave
+                1,                    // mul = 1
+                72                    // offset by 72 notes
+            )
+            + LFNoise1.kr([3,3], 0.04)    // add some low freq stereo detuning
+        ).midicps,                        // convert midi notes to hertz
+        0,
+        0.1)
+
+    // drone 5ths
+    + RLPF.ar(LFPulse.ar([48,55].midicps, 0.15),
+        SinOsc.kr(0.1, 0, 10, 72).midicps, 0.1, 0.1);
+
+    // add some 70's euro-space-rock echo
+    CombN.ar(mix, 0.31, 0.31, 2, 1, mix)
+},[
+    ArrayBuffer(FloatArray[0, 2, 3, 5, 7, 9, 10])
+]).gui
+
+)</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>array</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>array<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-array' href='./../Overviews/Methods.html#array'>array</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-array' href='./../Overviews/Methods.html#array'>array</a> = <span class='argstr'>a</span></h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>a<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeArgs' href='./../Overviews/Methods.html#storeArgs'>storeArgs</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepareToBundle' href='./../Overviews/Methods.html#prepareToBundle'>prepareToBundle</a> (<span class='argstr'>group</span>, <span class='argstr'>bundle</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>group<td class='argumentdesc'><tr><td class='argumentname'>bundle<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makePatchOut' href='./../Overviews/Methods.html#makePatchOut'>makePatchOut</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-put' href='./../Overviews/Methods.html#put'>put</a> (<span class='argstr'>i</span>, <span class='argstr'>v</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>i<td class='argumentdesc'><tr><td class='argumentname'>v<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-at' href='./../Overviews/Methods.html#at'>at</a> (<span class='argstr'>i</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>i<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-zero' href='./../Overviews/Methods.html#zero'>zero</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setArrayToBundle' href='./../Overviews/Methods.html#setArrayToBundle'>setArrayToBundle</a> (<span class='argstr'>a</span>, <span class='argstr'>b</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>a<td class='argumentdesc'><tr><td class='argumentname'>b<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Classes/ArrayBuffer.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Classes/ArrayBuffer.schelp</a><br>link::Classes/ArrayBuffer::<br>sc version: 3.7alpha0</div></div></body></html>

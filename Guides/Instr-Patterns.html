@@ -1,0 +1,66 @@
+<html><head><title>Instr Patterns</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider GUIDES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>crucial>Instr'>Libraries>crucial>Instr</a>, <a href='./../Browse.html#Quarks>cruciallib'>Quarks>cruciallib</a></div>
+<h1>Instr Patterns</h1>
+<div id='summary'>Using Instr in Patterns</div>
+</div>
+<div class='subheader'>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#Patterns'>Patterns</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Creating a single Event and spawning it'>Creating a single Event and spawning it</a></li>
+<ul class='toc'><li class='toc3'><a href='#.spawnEvent'>spawnEvent</a> </li>
+</ul></ul></div><h2><a class='anchor' name='Patterns'>Patterns</a></h2>
+
+<p>Just as for SynthDef, an Instr supports .add which will compile a SynthDef and add it to the SynthDescLib that the Pattern system uses.
+<p>But when using the Event \type \instr it will also just figure it out.
+<p>So you can actually keep your Instr in separate files and there is no need to load or .add
+<p>There might be a delay while it loads, so it would be safest to preload your Instr ( use Instr.loadAll )<pre class='code prettyprint lang-sc'>(
+    Instr("minimoog.two",{ arg freq=440,int1=5,int2 = -5,width1=0.1,width2=0.1,width3=0.1,
+            ffreqInterval=0,rq=0.4;
+        var p;
+
+        p=Pulse.ar([ freq  * int1.midiratio, freq, freq * int2.midiratio],
+                [ width1,width2,width3],0.3);
+
+        RLPF.ar(Mix(p),freq * ffreqInterval.midiratio,rq)
+            * EnvGen.kr(Env.perc,doneAction: 2)
+
+    });
+
+    Pbind(
+        \type, \instr,
+        \instr, "minimoog.two",
+        // note is converted to freq by things in NotePlayer
+        \note,Prand([10,20,30],inf),
+        // args are passed into the function
+        \int1, Prand([-3,0,7,11,13],inf),
+        \dur, 0.5
+    ).play
+)</pre>
+
+<p>Note that it IS possible to dynamically change the SynthDef architecture using Instr. If the architecture differs than it will compile the new one and send it.<h2><a class='anchor' name='Creating a single Event and spawning it'>Creating a single Event and spawning it</a></h2>
+<pre class='code prettyprint lang-sc'>Instr("minimoog.two").spawnEvent( (freq: 100) )</pre>
+<h3 class='imethodname'><span class='methprefix'>&nbsp;</span><a name='.spawnEvent' href='./../Overviews/Methods.html#spawnEvent'>spawnEvent</a> </h3>
+<div class='method'>
+<p>This will take an Event and set it to type='instr' and set the \instr name. It will then play the event.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>event<td class='argumentdesc'>
+<p>proto event which it will spawn. The keys in the Event are used to satisfy args of the Instr</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this
+<p>see also <a href="./../Classes/InstrGateSpawner.html">InstrGateSpawner</a> and <a href="./../Classes/InstrSpawner.html">InstrSpawner</a></div></div><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Guides/Instr-Patterns.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Guides/Instr-Patterns.schelp</a><br>link::Guides/Instr-Patterns::<br>sc version: 3.7alpha0</div></div></body></html>

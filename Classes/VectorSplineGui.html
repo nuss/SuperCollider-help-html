@@ -1,0 +1,203 @@
+<html><head><title>VectorSplineGui</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Splines>GuiClasses'>Splines>GuiClasses</a>, <a href='./../Browse.html#Quarks>splines'>Quarks>splines</a></div>
+<h1>VectorSplineGui</h1>
+<div id='summary'>Editor for viewing splines that consist of vectorized data at positions along the x domain</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/VectorSplineGui.sc'>VectorSplineGui.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/AbstractSplineGui.html">AbstractSplineGui</a> : <a href="../Classes/ObjectGui.html">ObjectGui</a> : <a href="../Classes/SCViewHolder.html">SCViewHolder</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/LinearSpline.html">LinearSpline</a>, <a href="./../Classes/SplineGui.html">SplineGui</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-focused'>focused</a> </li>
+<li class='toc3'><a href='#-specs'>specs</a> </li>
+<li class='toc2'><a href='#Implementation methods'>Implementation methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-splineGuis'>splineGuis</a> </li>
+<li class='toc3'><a href='#-guiBody'>guiBody</a> </li>
+<li class='toc3'><a href='#-refresh'>refresh</a> </li>
+<li class='toc3'><a href='#-update'>update</a> </li>
+<li class='toc3'><a href='#-didMovePoint'>didMovePoint</a> </li>
+<li class='toc3'><a href='#-didCreatePoint'>didCreatePoint</a> </li>
+<li class='toc3'><a href='#-didCreateControlPoint'>didCreateControlPoint</a> </li>
+<li class='toc3'><a href='#-didDeletePoint'>didDeletePoint</a> </li>
+<li class='toc3'><a href='#-didDeleteControlPoint'>didDeleteControlPoint</a> </li>
+<li class='toc3'><a href='#-updateSplineGuis'>updateSplineGuis</a> </li>
+<li class='toc3'><a href='#-makeSplineGuis'>makeSplineGuis</a> </li>
+<li class='toc3'><a href='#-viewDidClose'>viewDidClose</a> </li>
+</ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-setDomainSpec'>setDomainSpec</a> </li>
+<li class='toc3'><a href='#-setZoom'>setZoom</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Vectorizing data is a common machine learning technique  where many parameters are stored as dimensions of a vector.
+<p> A vector-spline is my own neologism meaning a (time) series of such vectors where the first dimension is interpreted as x and the other dimensions are the data.
+<p> Most commonly the first dimension (x) is time, but it can also be an ordered series of states or presets. The distance along x could refer to anything.
+<p> The spline can be used to interpolate between those states or to sequence changes between states.
+<p> Note that the distance along the spline is u, but this distance varies depending on the values in each dimension of the point. So u cannot be time as it would vary as you varied the data in the point. It can be used for similarity, though there are much better ways to compare vectorized data.
+<p> So this gui shows each dimension overlaid and allows switching between dimensions and editing them one at a time.
+<p> For its implementation it uses an array of 2D splines, one for each dimension (except the first).<pre class='code prettyprint lang-sc'>(
+l = LinearSpline({ { 4.0.rand } ! 6 } ! 12);
+v = VectorSplineGui(l).gui(nil,1000@1000);
+
+v.focused = 1;
+v.focused = 2;
+)</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-focused' href='./../Overviews/Methods.html#focused'>focused</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-focused' href='./../Overviews/Methods.html#focused'>focused</a> = <span class='argstr'>di</span></h3>
+<div class='method'>
+<p>Switches the currently focused data dimension. Indexing starts with the first data dimension, not the 0th (time) dimension. So focused = 0 focuses spline dimension 1.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>di<td class='argumentdesc'>
+<p>Integer</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Integer</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-specs' href='./../Overviews/Methods.html#specs'>specs</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-specs' href='./../Overviews/Methods.html#specs'>specs</a> = value</h3>
+<div class='method'>
+<p>Optionally get or set specs for each dimension. By default each dimension guesses its specs based on the data. You may also set a single spec in a array, eg: [\unipolar.asSpec] which will be used for all<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>array of ControlSpec</div></div><h3><a class='anchor' name='Implementation methods'>Implementation methods</a></h3>
+
+<p>These methods are essentially private and just documented here in case you are interested in how its implemented.<h3 class='imethodname'><span class='methprefix'>-</span><a name='-splineGuis' href='./../Overviews/Methods.html#splineGuis'>splineGuis</a> </h3>
+<div class='method'>
+<p>Accesses the internal spline guis<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-guiBody' href='./../Overviews/Methods.html#guiBody'>guiBody</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>)</h3>
+<div class='method'>
+<p>This is called by .gui(layout,bounds) and should not be called directly.<pre class='code prettyprint lang-sc'>(
+w = Window.new.front;
+l = LinearSpline({ { 4.0.rand } ! 6 } ! 12);
+v = VectorSplineGui(l).gui(w,Rect(10,10,200,50));
+)</pre>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>parent<td class='argumentdesc'>
+<p>parent view, window or FlowView<tr><td class='argumentname'>bounds<td class='argumentdesc'>
+<p>Rect</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-refresh' href='./../Overviews/Methods.html#refresh'>refresh</a> </h3>
+<div class='method'>
+<p>Refresh the view<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-update' href='./../Overviews/Methods.html#update'>update</a> (<span class='argstr'>spline</span>, <span class='argstr'>wot</span>, <span class='argstr'>i</span>)</h3>
+<div class='method'>
+<p>The implementatation creates multiple splines with multiple spline guis and uses the dependency system to watch for messages sent by .changed . The currently focused sub spline for a single dimension will be .changed by its gui, and that causes update message to be sent to dependents. The VectorSplineGui is a dependant of each of theh sub-splines.
+<p>Changes to that spline's x/y are then passed on to the model (a multi-dimensional spline).
+<p>The expected messages are:  \didCreatePoint,  \didCreateControlPoint,  \didDeletePoint,  \didDeleteControlPoint,  \didMovePoint<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>spline<td class='argumentdesc'>
+<p>The sub-spline or possibly the model<tr><td class='argumentname'>wot<td class='argumentdesc'>
+<p>By convention the SplineGui are sending symbols to message what was changed.<tr><td class='argumentname'>i<td class='argumentdesc'>
+<p>By convention this is the point index</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-didMovePoint' href='./../Overviews/Methods.html#didMovePoint'>didMovePoint</a> (<span class='argstr'>xySpline</span>, <span class='argstr'>dim</span>, <span class='argstr'>i</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>xySpline<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>dim<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>i<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-didCreatePoint' href='./../Overviews/Methods.html#didCreatePoint'>didCreatePoint</a> (<span class='argstr'>xySpline</span>, <span class='argstr'>dim</span>, <span class='argstr'>i</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>xySpline<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>dim<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>i<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-didCreateControlPoint' href='./../Overviews/Methods.html#didCreateControlPoint'>didCreateControlPoint</a> (<span class='argstr'>xySpline</span>, <span class='argstr'>dim</span>, <span class='argstr'>i</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>xySpline<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>dim<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>i<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-didDeletePoint' href='./../Overviews/Methods.html#didDeletePoint'>didDeletePoint</a> (<span class='argstr'>xySpline</span>, <span class='argstr'>dim</span>, <span class='argstr'>i</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>xySpline<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>dim<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>i<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-didDeleteControlPoint' href='./../Overviews/Methods.html#didDeleteControlPoint'>didDeleteControlPoint</a> (<span class='argstr'>xySpline</span>, <span class='argstr'>dim</span>, <span class='argstr'>i</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>xySpline<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>dim<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>i<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateSplineGuis' href='./../Overviews/Methods.html#updateSplineGuis'>updateSplineGuis</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeSplineGuis' href='./../Overviews/Methods.html#makeSplineGuis'>makeSplineGuis</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-viewDidClose' href='./../Overviews/Methods.html#viewDidClose'>viewDidClose</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setDomainSpec' href='./../Overviews/Methods.html#setDomainSpec'>setDomainSpec</a> (<span class='argstr'>dsp</span>, <span class='argstr'>setGridLines: true</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setZoom' href='./../Overviews/Methods.html#setZoom'>setZoom</a> (<span class='argstr'>argFromX</span>, <span class='argstr'>argToX</span>)</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>(
+d = Array.fill(32,{ arg i;
+        // time       5-dims of rand data
+        [i * 0.25] ++ Array.fill(5,{ (32.rand + 32).midicps })
+    });
+l = LinearSpline(d);
+v = VectorSplineGui(l);
+v.specs = Array.fill(5,\freq.asSpec);
+
+w = Window("spliiine",Rect(0,0,1000,400));
+w.front;
+v.gui(w,Rect(0,0,800,200));
+
+PopUpMenu(w).items_( (1..(l.numDimensions-1)) ).action_({ arg pum; v.focused = pum.value })
+)</pre>
+
+<p>Note about SplineGuis: holding down shift-control while move will constrict movement to vertical. hold down control to constrict movement to horizontal.
+<p>Double click to create a new point.
+<p>As with all ObjectGui subclasses you can set a different model to the view and it will update itself completely.<pre class='code prettyprint lang-sc'>(
+l = LinearSpline({ { 4.0.rand } ! 6 } ! 12);
+v = VectorSplineGui(l).gui(nil,1000@1000);
+
+// causes a full update
+m = LinearSpline({ { 4.0.rand } ! 6 } ! 12);
+v.model = m;
+)</pre>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/HelpSource/Classes/VectorSplineGui.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/HelpSource/Classes/VectorSplineGui.schelp</a><br>link::Classes/VectorSplineGui::<br>sc version: 3.7alpha0</div></div></body></html>

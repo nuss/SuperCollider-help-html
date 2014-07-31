@@ -1,0 +1,68 @@
+<html><head><title>Enveloper2</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#UGens>Envelopes'>UGens>Envelopes</a>, <a href='./../Browse.html#Libraries>crucial>UGens'>Libraries>crucial>UGens</a>, <a href='./../Browse.html#Quarks>cruciallib'>Quarks>cruciallib</a></div>
+<h1>Enveloper2</h1>
+<div id='summary'>audio function plays continously but is gated by an envelope</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/UncoupledUsefulThings/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/UncoupledUsefulThings/AudioHelpers.sc'>AudioHelpers.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/Env.html">Env</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*ar'>ar</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>gate the audio input with an Envelope;<pre class='code prettyprint lang-sc'>(
+
+b = Bus.control(Server.local);
+{
+    var p,qnty=4,gate;
+    gate = In.kr(b);
+    p = Mix.arFill(qnty.asInteger,{ arg i;
+            SinOsc.ar(440 + rrand(1,5))
+        }) * qnty.reciprocal;
+
+    Enveloper2.ar(p,gate,Env.adsr)
+}.play;
+
+)
+
+
+// On
+b.value = 1.0;
+
+// Off
+b.value = 0.0;
+
+b.value = 0.2;
+
+b.value = 0.0;
+
+b.free;</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>audio</span>, <span class='argstr'>gate</span>, <span class='argstr'>env</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>audio<td class='argumentdesc'><tr><td class='argumentname'>gate<td class='argumentdesc'><tr><td class='argumentname'>env<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Classes/Enveloper2.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Classes/Enveloper2.schelp</a><br>link::Classes/Enveloper2::<br>sc version: 3.7alpha0</div></div></body></html>

@@ -1,0 +1,233 @@
+<html><head><title>BezierSpline</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Splines'>Splines</a>, <a href='./../Browse.html#Envelopes>Splines'>Envelopes>Splines</a>, <a href='./../Browse.html#Quarks>splines'>Quarks>splines</a></div>
+<h1>BezierSpline</h1>
+<div id='summary'>A Bézier spline is a series of Bézier curves joined end to end where the last point of one curve coincides with the starting point of the next curve.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/Spline.sc'>Spline.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/LinearSpline.html">LinearSpline</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/LinearSpline.html">LinearSpline</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*fromPoints'>fromPoints</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-interpolate'>interpolate</a> </li>
+<li class='toc3'><a href='#-createPoint'>createPoint</a> </li>
+<li class='toc3'><a href='#-createControlPoint'>createControlPoint</a> </li>
+<li class='toc3'><a href='#-controlPoints'>controlPoints</a> </li>
+<li class='toc3'><a href='#-deletePoint'>deletePoint</a> </li>
+<li class='toc3'><a href='#-deleteControlPoint'>deleteControlPoint</a> </li>
+<li class='toc3'><a href='#-isLinear'>isLinear</a> </li>
+<li class='toc3'><a href='#-++'>++</a> </li>
+<li class='toc3'><a href='#-guiClass'>guiClass</a> </li>
+<li class='toc3'><a href='#-linear'>linear</a> </li>
+<li class='toc3'><a href='#-quadratic'>quadratic</a> </li>
+<li class='toc3'><a href='#-cubic'>cubic</a> </li>
+<li class='toc3'><a href='#-ntic'>ntic</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-add'>add</a> </li>
+<li class='toc3'><a href='#-setControlPoint'>setControlPoint</a> </li>
+<li class='toc3'><a href='#-sliceDimensions'>sliceDimensions</a> </li>
+<li class='toc3'><a href='#-spliceDimensions'>spliceDimensions</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>The Bézier curves lie between each point on the spline and have an array of 0 or more control points that express the curvature.
+<p>Like other spline classes, the points may be of 2 or more more dimensions. Control points should be of the same dimensional order as the points. The BezierSplineGui can only edit in 2D.
+<p>The number of control points determines the order of that segment:<ul>
+<li>0 : linear<li>1 : quadratic<li>2 : cubic<li>...<li>N : ntic</ul>
+<pre class='code prettyprint lang-sc'>(
+b = BezierSpline(
+    [ 0, 0 ],
+        [  ],
+    [ 1, 1 ],
+        [ [ 1.56875, 0.3125 ] ],
+    [ 2, 2 ],
+        [ [ 2.23125, 0.54166666666667 ], [ 2.78125, 0.6875 ] ],
+    [ 3, 3 ],
+        [ [ 3.0375, 4.6875 ], [ 3.475, 1.3958333333333 ], [ 3.4875, 5.125 ] ],
+    [ 4, 4 ],
+        [ [ 4.2875, 1.875 ], [ 4.76875, 1.0208333333333 ], [ 4.38125, 4.3333333333333 ], [ 4.69375, 5.5416666666667 ] ],
+    [ 5, 5 ],
+    false);
+
+b.gui(nil,1000@300);
+)</pre>
+
+<p>Methods that return a point will return an array [x,y], not a Point object as that class is limited to 2 dimensions. Methods that take a point as setter may be either an array or a Point object that will be converted to a point array.
+<p>The gui allows fairly intuitive display and editing of points and control points.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> ( <span class='argstr'>... things</span>)</h3>
+<div class='method'>
+<p>Points alternate with arrays of controlPoints. If no args are supplied then a simple linear spline (2 points, no control points) is created.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... things<td class='argumentdesc'><pre class='code prettyprint lang-sc'>BezierSpline(
+    point,
+      controlPoints,
+    point2,
+      controlPoints2,
+    ...
+    pointN,
+      controlPointsN,
+
+    isClosed
+)</pre>
+
+<p>isClosed (boolean): if the spline loops back to the first point
+<p>Example:<pre class='code prettyprint lang-sc'> BezierSpline(
+        0@0,
+            [0.2@0.4],
+        1@1,
+            [],
+        false
+ );</pre>
+</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a BezierSpline</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fromPoints' href='./../Overviews/Methods.html#fromPoints'>fromPoints</a> (<span class='argstr'>points</span>, <span class='argstr'>controlPoints</span>, <span class='argstr'>isClosed: false</span>)</h3>
+<div class='method'>
+<p>An alternate constructor<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>points<td class='argumentdesc'>
+<p>The points for each segment.<tr><td class='argumentname'>controlPoints<td class='argumentdesc'>
+<p>Optional, defaulting to no controlPoints. An array of controlPoints arrays, one controlPoint array for each segment. It is of size one less than the number of points, as each controlPoint array is inbetween each point. controlPoint arrays may have 0 or more controlPoints. controlPoints should be of the same dimensional order as the points.<tr><td class='argumentname'>isClosed<td class='argumentdesc'>
+<p>if the spline loops back to the first point</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a BezierSpline</div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-interpolate' href='./../Overviews/Methods.html#interpolate'>interpolate</a> (<span class='argstr'>divisions: 128</span>)</h3>
+<div class='method'>
+<p>Interpolate points along the spline path. Note they are not evenly spaced along the whole path, but interpolate per segment. For a more common usage see bilinearInterpolate<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>divisions<td class='argumentdesc'>
+<p>number of divisions per segment</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>returns an array of points of size: (divisions * num segments)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-createPoint' href='./../Overviews/Methods.html#createPoint'>createPoint</a> (<span class='argstr'>p</span>, <span class='argstr'>i</span>)</h3>
+<div class='method'>
+<p>create and insert a new point p at index i. It will also create and insert a corresponding controlPoint array, which will be initially empty (linear).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>p<td class='argumentdesc'>
+<p>the point as either an array or a Point object<tr><td class='argumentname'>i<td class='argumentdesc'>
+<p>the index to insert it at</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-createControlPoint' href='./../Overviews/Methods.html#createControlPoint'>createControlPoint</a> (<span class='argstr'>p</span>, <span class='argstr'>pointi</span>, <span class='argstr'>cpi</span>)</h3>
+<div class='method'>
+<p>create a new controlPoint for a segment<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>p<td class='argumentdesc'>
+<p>the controlPoint as an array or a Point object<tr><td class='argumentname'>pointi<td class='argumentdesc'>
+<p>the segment number to insert it at<tr><td class='argumentname'>cpi<td class='argumentdesc'>
+<p>the controlPoint index to insert it at</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>[pointi, last index of controlPoints] this is intended for the gui class which usually is what calls createControlPoint</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-controlPoints' href='./../Overviews/Methods.html#controlPoints'>controlPoints</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-controlPoints' href='./../Overviews/Methods.html#controlPoints'>controlPoints</a> = value</h3>
+<div class='method'>
+<p>set the controlPoints, which is an array of arrays of control points.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-deletePoint' href='./../Overviews/Methods.html#deletePoint'>deletePoint</a> (<span class='argstr'>i</span>)</h3>
+<div class='method'>
+<p>remove a point and its corresponding controlPoints<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>i<td class='argumentdesc'>
+<p>index of point to remove</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-deleteControlPoint' href='./../Overviews/Methods.html#deleteControlPoint'>deleteControlPoint</a> (<span class='argstr'>pointi</span>, <span class='argstr'>i</span>)</h3>
+<div class='method'>
+<p>delete a specific control point from a segment's control point list<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>pointi<td class='argumentdesc'>
+<p>segment index<tr><td class='argumentname'>i<td class='argumentdesc'>
+<p>control point index</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isLinear' href='./../Overviews/Methods.html#isLinear'>isLinear</a> </h3>
+<div class='method'>
+<p>answers if the BezierSpline is only a single segment with no control points and thus a simple linear function<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>boolean</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-++' href='./../Overviews/Methods.html#++'>++</a> (<span class='argstr'>thou</span>)</h3>
+<div class='method'>
+<p>concatenate another BezierSpline<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>thou<td class='argumentdesc'>
+<p>the other spline</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a new BezierSpline</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-guiClass' href='./../Overviews/Methods.html#guiClass'>guiClass</a> </h3>
+<div class='method'>
+<p>specifies the ObjectGui subclass which builds the GUI for editing the spline<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>ObjectGui subclass</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-linear' href='./../Overviews/Methods.html#linear'>linear</a> (<span class='argstr'>t</span>, <span class='argstr'>p1</span>, <span class='argstr'>p2</span>, <span class='argstr'>cps</span>)</h3>
+<div class='method'>
+<p>used internally to interpolate between 2 points when there are no control points for the segment<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>t<td class='argumentdesc'>
+<p>0..1 position between p1 and p2<tr><td class='argumentname'>p1<td class='argumentdesc'>
+<p>point 1<tr><td class='argumentname'>p2<td class='argumentdesc'>
+<p>point 2<tr><td class='argumentname'>cps<td class='argumentdesc'>
+<p>control points, in this case not used since its a linear interpolation</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a point</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-quadratic' href='./../Overviews/Methods.html#quadratic'>quadratic</a> (<span class='argstr'>t</span>, <span class='argstr'>p1</span>, <span class='argstr'>p2</span>, <span class='argstr'>cps</span>)</h3>
+<div class='method'>
+<p>used internally to quadratically interpolate between two points with 1 control point between them<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>t<td class='argumentdesc'>
+<p>0..1 position between p1 and p2<tr><td class='argumentname'>p1<td class='argumentdesc'>
+<p>point 1<tr><td class='argumentname'>p2<td class='argumentdesc'>
+<p>point 2<tr><td class='argumentname'>cps<td class='argumentdesc'>
+<p>control points, in this case an array of one controlPoint</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a point</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-cubic' href='./../Overviews/Methods.html#cubic'>cubic</a> (<span class='argstr'>t</span>, <span class='argstr'>p1</span>, <span class='argstr'>p2</span>, <span class='argstr'>cps</span>)</h3>
+<div class='method'>
+<p>used internally to cubically interpolate between two points with 2 control points between them</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-ntic' href='./../Overviews/Methods.html#ntic'>ntic</a> (<span class='argstr'>t</span>, <span class='argstr'>p1</span>, <span class='argstr'>p2</span>, <span class='argstr'>cps</span>)</h3>
+<div class='method'>
+<p>used internally to cubically interpolate between two points with 3 or more control points between them</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-add' href='./../Overviews/Methods.html#add'>add</a> (<span class='argstr'>p</span>, <span class='argstr'>cp</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setControlPoint' href='./../Overviews/Methods.html#setControlPoint'>setControlPoint</a> (<span class='argstr'>i</span>, <span class='argstr'>di</span>, <span class='argstr'>val</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sliceDimensions' href='./../Overviews/Methods.html#sliceDimensions'>sliceDimensions</a> (<span class='argstr'>dims</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-spliceDimensions' href='./../Overviews/Methods.html#spliceDimensions'>spliceDimensions</a> (<span class='argstr'>dims</span>, <span class='argstr'>other</span>)</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>(
+b = BezierSpline(
+        0@0,
+          [],
+        1@1,
+          [],
+        false
+    );
+
+b.gui
+)</pre>
+
+<p>Click a knot to select that segment. Double click to create a point after the selected segment. Control-double click to create a control point within the selected segment.
+<p>The Spline's compile string saves the current state:<pre class='code prettyprint lang-sc'>b.asCompileString</pre>
+<pre class='code prettyprint lang-sc'>(
+b = BezierSpline(
+        0@0,
+          [0.2@0.4],
+        1@1,
+          [],
+        false
+    );
+
+b.gui
+)</pre>
+<pre class='code prettyprint lang-sc'>(
+b = BezierSpline(
+        0@0,
+          [ 0.2@0.4, 0.5@0.9  ],
+        1@1,
+          [],
+        false
+    );
+
+b.gui(nil,1000@300);
+)</pre>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/HelpSource/Classes/BezierSpline.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/HelpSource/Classes/BezierSpline.schelp</a><br>link::Classes/BezierSpline::<br>sc version: 3.7alpha0</div></div></body></html>

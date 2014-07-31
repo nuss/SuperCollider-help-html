@@ -1,0 +1,536 @@
+<html><head><title>ScaledUserViewContainer</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<h1>ScaledUserViewContainer</h1>
+<div id='summary'>(Undocumented class)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/wslib/wslib-classes/GUI/ScaledUserView/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/wslib/wslib-classes/GUI/ScaledUserView/ScaledUserViewWindow.sc'>ScaledUserViewWindow.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*defaultBounds'>defaultBounds</a> </li>
+<li class='toc3'><a href='#*defaultFromBounds'>defaultFromBounds</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-bounds'>bounds</a> </li>
+<li class='toc3'><a href='#-composite'>composite</a> </li>
+<li class='toc3'><a href='#-doesNotUnderstand'>doesNotUnderstand</a> </li>
+<li class='toc3'><a href='#-drawHook'>drawHook</a> </li>
+<li class='toc3'><a href='#-front'>front</a> </li>
+<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-keepRatio'>keepRatio</a> </li>
+<li class='toc3'><a href='#-maxZoom'>maxZoom</a> </li>
+<li class='toc3'><a href='#-minZoom'>minZoom</a> </li>
+<li class='toc3'><a href='#-move'>move</a> </li>
+<li class='toc3'><a href='#-moveH'>moveH</a> </li>
+<li class='toc3'><a href='#-moveHEnabled'>moveHEnabled</a> </li>
+<li class='toc3'><a href='#-movePixels'>movePixels</a> </li>
+<li class='toc3'><a href='#-moveSliders'>moveSliders</a> </li>
+<li class='toc3'><a href='#-moveV'>moveV</a> </li>
+<li class='toc3'><a href='#-moveVEnabled'>moveVEnabled</a> </li>
+<li class='toc3'><a href='#-onClose'>onClose</a> </li>
+<li class='toc3'><a href='#-refresh'>refresh</a> </li>
+<li class='toc3'><a href='#-remove'>remove</a> </li>
+<li class='toc3'><a href='#-resize'>resize</a> </li>
+<li class='toc3'><a href='#-scale'>scale</a> </li>
+<li class='toc3'><a href='#-scaleH'>scaleH</a> </li>
+<li class='toc3'><a href='#-scaleHEnabled'>scaleHEnabled</a> </li>
+<li class='toc3'><a href='#-scaleSliderLength'>scaleSliderLength</a> </li>
+<li class='toc3'><a href='#-scaleSliders'>scaleSliders</a> </li>
+<li class='toc3'><a href='#-scaleV'>scaleV</a> </li>
+<li class='toc3'><a href='#-scaleVEnabled'>scaleVEnabled</a> </li>
+<li class='toc3'><a href='#-setMoveSliderWidths'>setMoveSliderWidths</a> </li>
+<li class='toc3'><a href='#-sliderBackColor'>sliderBackColor</a> </li>
+<li class='toc3'><a href='#-sliderKnobColor'>sliderKnobColor</a> </li>
+<li class='toc3'><a href='#-sliderSpacing'>sliderSpacing</a> </li>
+<li class='toc3'><a href='#-sliderWidth'>sliderWidth</a> </li>
+<li class='toc3'><a href='#-updateSliderBounds'>updateSliderBounds</a> </li>
+<li class='toc3'><a href='#-updateSliders'>updateSliders</a> </li>
+<li class='toc3'><a href='#-userView'>userView</a> </li>
+<li class='toc3'><a href='#-viewOffset'>viewOffset</a> </li>
+<li class='toc3'><a href='#-viewRect'>viewRect</a> </li>
+<li class='toc3'><a href='#-window'>window</a> </li>
+<li class='toc3'><a href='#-zoomCurve'>zoomCurve</a> </li>
+</ul></ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultBounds' href='./../Overviews/Methods.html#defaultBounds'>defaultBounds</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultBounds' href='./../Overviews/Methods.html#defaultBounds'>defaultBounds</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultFromBounds' href='./../Overviews/Methods.html#defaultFromBounds'>defaultFromBounds</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultFromBounds' href='./../Overviews/Methods.html#defaultFromBounds'>defaultFromBounds</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>, <span class='argstr'>fromBounds</span>, <span class='argstr'>viewOffset</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bounds' href='./../Overviews/Methods.html#bounds'>bounds</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bounds' href='./../Overviews/Methods.html#bounds'>bounds</a> = <span class='argstr'>newBounds</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-composite' href='./../Overviews/Methods.html#composite'>composite</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-doesNotUnderstand' href='./../Overviews/Methods.html#doesNotUnderstand'>doesNotUnderstand</a> (<span class='argstr'>selector</span> <span class='argstr'>... args</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-drawHook' href='./../Overviews/Methods.html#drawHook'>drawHook</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-drawHook' href='./../Overviews/Methods.html#drawHook'>drawHook</a> = <span class='argstr'>func</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-front' href='./../Overviews/Methods.html#front'>front</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-init' href='./../Overviews/Methods.html#init'>init</a> (<span class='argstr'>inParent</span>, <span class='argstr'>inBounds</span>, <span class='argstr'>inFromBounds</span>, <span class='argstr'>inResize</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-keepRatio' href='./../Overviews/Methods.html#keepRatio'>keepRatio</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-keepRatio' href='./../Overviews/Methods.html#keepRatio'>keepRatio</a> = <span class='argstr'>bool: false</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-maxZoom' href='./../Overviews/Methods.html#maxZoom'>maxZoom</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-maxZoom' href='./../Overviews/Methods.html#maxZoom'>maxZoom</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-minZoom' href='./../Overviews/Methods.html#minZoom'>minZoom</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-minZoom' href='./../Overviews/Methods.html#minZoom'>minZoom</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-move' href='./../Overviews/Methods.html#move'>move</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-move' href='./../Overviews/Methods.html#move'>move</a>_ (<span class='argstr'>newMoveArray</span>, <span class='argstr'>refreshFlag</span>, <span class='argstr'>updateFlag</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveH' href='./../Overviews/Methods.html#moveH'>moveH</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveH' href='./../Overviews/Methods.html#moveH'>moveH</a>_ (<span class='argstr'>newMoveH</span>, <span class='argstr'>refreshFlag</span>, <span class='argstr'>updateFlag</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveHEnabled' href='./../Overviews/Methods.html#moveHEnabled'>moveHEnabled</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveHEnabled' href='./../Overviews/Methods.html#moveHEnabled'>moveHEnabled</a> = <span class='argstr'>bool</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-movePixels' href='./../Overviews/Methods.html#movePixels'>movePixels</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-movePixels' href='./../Overviews/Methods.html#movePixels'>movePixels</a>_ (<span class='argstr'>newPixelsArray</span>, <span class='argstr'>limit</span>, <span class='argstr'>refreshFlag</span>, <span class='argstr'>updateFlag</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveSliders' href='./../Overviews/Methods.html#moveSliders'>moveSliders</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveV' href='./../Overviews/Methods.html#moveV'>moveV</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveV' href='./../Overviews/Methods.html#moveV'>moveV</a>_ (<span class='argstr'>newMoveV</span>, <span class='argstr'>refreshFlag</span>, <span class='argstr'>updateFlag</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveVEnabled' href='./../Overviews/Methods.html#moveVEnabled'>moveVEnabled</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveVEnabled' href='./../Overviews/Methods.html#moveVEnabled'>moveVEnabled</a> = <span class='argstr'>bool</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-onClose' href='./../Overviews/Methods.html#onClose'>onClose</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-onClose' href='./../Overviews/Methods.html#onClose'>onClose</a> = <span class='argstr'>func</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-refresh' href='./../Overviews/Methods.html#refresh'>refresh</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-remove' href='./../Overviews/Methods.html#remove'>remove</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-resize' href='./../Overviews/Methods.html#resize'>resize</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-resize' href='./../Overviews/Methods.html#resize'>resize</a> = <span class='argstr'>val</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scale' href='./../Overviews/Methods.html#scale'>scale</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-scale' href='./../Overviews/Methods.html#scale'>scale</a>_ (<span class='argstr'>newScaleArray</span>, <span class='argstr'>refreshFlag</span>, <span class='argstr'>updateFlag</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scaleH' href='./../Overviews/Methods.html#scaleH'>scaleH</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-scaleH' href='./../Overviews/Methods.html#scaleH'>scaleH</a>_ (<span class='argstr'>newScaleH</span>, <span class='argstr'>refreshFlag</span>, <span class='argstr'>updateFlag</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scaleHEnabled' href='./../Overviews/Methods.html#scaleHEnabled'>scaleHEnabled</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scaleHEnabled' href='./../Overviews/Methods.html#scaleHEnabled'>scaleHEnabled</a> = <span class='argstr'>bool</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scaleSliderLength' href='./../Overviews/Methods.html#scaleSliderLength'>scaleSliderLength</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scaleSliderLength' href='./../Overviews/Methods.html#scaleSliderLength'>scaleSliderLength</a> = <span class='argstr'>length: 52</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scaleSliders' href='./../Overviews/Methods.html#scaleSliders'>scaleSliders</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scaleV' href='./../Overviews/Methods.html#scaleV'>scaleV</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-scaleV' href='./../Overviews/Methods.html#scaleV'>scaleV</a>_ (<span class='argstr'>newScaleV</span>, <span class='argstr'>refreshFlag</span>, <span class='argstr'>updateFlag</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scaleVEnabled' href='./../Overviews/Methods.html#scaleVEnabled'>scaleVEnabled</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scaleVEnabled' href='./../Overviews/Methods.html#scaleVEnabled'>scaleVEnabled</a> = <span class='argstr'>bool</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setMoveSliderWidths' href='./../Overviews/Methods.html#setMoveSliderWidths'>setMoveSliderWidths</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sliderBackColor' href='./../Overviews/Methods.html#sliderBackColor'>sliderBackColor</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sliderBackColor' href='./../Overviews/Methods.html#sliderBackColor'>sliderBackColor</a> = <span class='argstr'>color</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sliderKnobColor' href='./../Overviews/Methods.html#sliderKnobColor'>sliderKnobColor</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sliderKnobColor' href='./../Overviews/Methods.html#sliderKnobColor'>sliderKnobColor</a> = <span class='argstr'>color</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sliderSpacing' href='./../Overviews/Methods.html#sliderSpacing'>sliderSpacing</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sliderSpacing' href='./../Overviews/Methods.html#sliderSpacing'>sliderSpacing</a> = <span class='argstr'>spacing: 2</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sliderWidth' href='./../Overviews/Methods.html#sliderWidth'>sliderWidth</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sliderWidth' href='./../Overviews/Methods.html#sliderWidth'>sliderWidth</a> = <span class='argstr'>width: 12</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateSliderBounds' href='./../Overviews/Methods.html#updateSliderBounds'>updateSliderBounds</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateSliders' href='./../Overviews/Methods.html#updateSliders'>updateSliders</a> (<span class='argstr'>scaleFlag: true</span>, <span class='argstr'>moveFlag: true</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-userView' href='./../Overviews/Methods.html#userView'>userView</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-viewOffset' href='./../Overviews/Methods.html#viewOffset'>viewOffset</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-viewRect' href='./../Overviews/Methods.html#viewRect'>viewRect</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-viewRect' href='./../Overviews/Methods.html#viewRect'>viewRect</a>_ (<span class='argstr'>rect</span>, <span class='argstr'>refreshFlag</span>, <span class='argstr'>updateFlag</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-window' href='./../Overviews/Methods.html#window'>window</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-zoomCurve' href='./../Overviews/Methods.html#zoomCurve'>zoomCurve</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-zoomCurve' href='./../Overviews/Methods.html#zoomCurve'>zoomCurve</a> = value</h3>
+<h2><a class='anchor' name='Help template'>Help template</a></h2>
+
+<p>Copy and paste the text below and save to HelpSource/Classes/ScaledUserViewContainer.schelp<pre class='code prettyprint lang-sc'>TITLE:: ScaledUserViewContainer
+summary:: (put short description here)
+categories:: Undocumented classes
+related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+
+DESCRIPTION::
+(put long description here)
+
+
+CLASSMETHODS::
+
+METHOD:: initClass
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: new
+(describe method here)
+
+ARGUMENT:: parent
+(describe argument here)
+
+ARGUMENT:: bounds
+(describe argument here)
+
+ARGUMENT:: fromBounds
+(describe argument here)
+
+ARGUMENT:: viewOffset
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: defaultBounds
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: defaultFromBounds
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+
+INSTANCEMETHODS::
+
+METHOD:: composite
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: sliderWidth
+(describe method here)
+
+ARGUMENT:: width
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: updateSliderBounds
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: viewRect
+(describe method here)
+
+ARGUMENT:: rect
+(describe argument here)
+
+ARGUMENT:: refreshFlag
+(describe argument here)
+
+ARGUMENT:: updateFlag
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: moveV
+(describe method here)
+
+ARGUMENT:: newMoveV
+(describe argument here)
+
+ARGUMENT:: refreshFlag
+(describe argument here)
+
+ARGUMENT:: updateFlag
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: keepRatio
+(describe method here)
+
+ARGUMENT:: bool
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setMoveSliderWidths
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: userView
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: minZoom
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: sliderKnobColor
+(describe method here)
+
+ARGUMENT:: color
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: window
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: scaleH
+(describe method here)
+
+ARGUMENT:: newScaleH
+(describe argument here)
+
+ARGUMENT:: refreshFlag
+(describe argument here)
+
+ARGUMENT:: updateFlag
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: moveSliders
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: doesNotUnderstand
+(describe method here)
+
+ARGUMENT:: selector
+(describe argument here)
+
+ARGUMENT::  ... args
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: bounds
+(describe method here)
+
+ARGUMENT:: newBounds
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: zoomCurve
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: moveH
+(describe method here)
+
+ARGUMENT:: newMoveH
+(describe argument here)
+
+ARGUMENT:: refreshFlag
+(describe argument here)
+
+ARGUMENT:: updateFlag
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: drawHook
+(describe method here)
+
+ARGUMENT:: func
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: maxZoom
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: scaleHEnabled
+(describe method here)
+
+ARGUMENT:: bool
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: sliderSpacing
+(describe method here)
+
+ARGUMENT:: spacing
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: remove
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: sliderBackColor
+(describe method here)
+
+ARGUMENT:: color
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: scaleSliderLength
+(describe method here)
+
+ARGUMENT:: length
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: scaleSliders
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: front
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: moveHEnabled
+(describe method here)
+
+ARGUMENT:: bool
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: moveVEnabled
+(describe method here)
+
+ARGUMENT:: bool
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: updateSliders
+(describe method here)
+
+ARGUMENT:: scaleFlag
+(describe argument here)
+
+ARGUMENT:: moveFlag
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: resize
+(describe method here)
+
+ARGUMENT:: val
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: scaleV
+(describe method here)
+
+ARGUMENT:: newScaleV
+(describe argument here)
+
+ARGUMENT:: refreshFlag
+(describe argument here)
+
+ARGUMENT:: updateFlag
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: scale
+(describe method here)
+
+ARGUMENT:: newScaleArray
+(describe argument here)
+
+ARGUMENT:: refreshFlag
+(describe argument here)
+
+ARGUMENT:: updateFlag
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: movePixels
+(describe method here)
+
+ARGUMENT:: newPixelsArray
+(describe argument here)
+
+ARGUMENT:: limit
+(describe argument here)
+
+ARGUMENT:: refreshFlag
+(describe argument here)
+
+ARGUMENT:: updateFlag
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: init
+(describe method here)
+
+ARGUMENT:: inParent
+(describe argument here)
+
+ARGUMENT:: inBounds
+(describe argument here)
+
+ARGUMENT:: inFromBounds
+(describe argument here)
+
+ARGUMENT:: inResize
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: viewOffset
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: move
+(describe method here)
+
+ARGUMENT:: newMoveArray
+(describe argument here)
+
+ARGUMENT:: refreshFlag
+(describe argument here)
+
+ARGUMENT:: updateFlag
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: refresh
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: onClose
+(describe method here)
+
+ARGUMENT:: func
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: scaleVEnabled
+(describe method here)
+
+ARGUMENT:: bool
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+
+EXAMPLES::
+
+code::
+(some example code)
+::
+</pre>
+<div class='doclink'>link::Classes/ScaledUserViewContainer::<br>sc version: 3.7alpha0</div></div></body></html>

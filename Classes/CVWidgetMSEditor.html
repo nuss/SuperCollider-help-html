@@ -1,0 +1,180 @@
+<html><head><title>CVWidgetMSEditor</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#GUI'>GUI</a>, <a href='./../Browse.html#Conductor'>Conductor</a>, <a href='./../Browse.html#External Control>MIDI'>External Control>MIDI</a>, <a href='./../Browse.html#External Control>OSC'>External Control>OSC</a></div>
+<h1>CVWidgetMSEditor</h1>
+<div id='summary'>a GUI for editing widgets and their parameters: specs, MIDI, OSC, actions...</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/CVWidgetMSEditor.sc'>CVWidgetMSEditor.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/AbstractCVWidgetEditor.html">AbstractCVWidgetEditor</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/AbstractCVWidgetEditor.html">AbstractCVWidgetEditor</a>, <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a>, <a href="./../Classes/CVCenter.html">CVCenter</a>, <a href="./../Classes/CV.html">CV</a>, <a href="./../Classes/CVWidget.html">CVWidget</a>, <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a>, <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>, <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a>, <a href="./../Classes/CCResponder.html">CCResponder</a>, <a href="./../Classes/OSCresponderNode.html">OSCresponderNode</a>, <a href="./../Classes/SimpleController.html">SimpleController</a>, <a href="./../Classes/ControlSpec.html">ControlSpec</a>, <a href="./../Classes/OSCCommands.html">OSCCommands</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Common GUI properties and methods'>Common GUI properties and methods</a></li>
+<li class='toc2'><a href='#The "MIDI"-tab'>The "MIDI"-tab</a></li>
+<ul class='toc'><li class='toc3'><a href='#-midiTabs'>midiTabs</a> </li>
+<li class='toc3'><a href='#-msMidiIndexStartField'>msMidiIndexStartField</a> </li>
+<li class='toc3'><a href='#-midiEditGroups'>midiEditGroups</a> </li>
+<li class='toc3'><a href='#-extMidiCtrlArrayField'>extMidiCtrlArrayField</a> </li>
+<li class='toc3'><a href='#-midiConnectorBut'>midiConnectorBut</a> </li>
+<li class='toc3'><a href='#-midiDisconnectorBut'>midiDisconnectorBut</a> </li>
+</ul><li class='toc2'><a href='#Batch-connecting external MIDI hardware'>Batch-connecting external MIDI hardware</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#The "OSC"-tab'>The "OSC"-tab</a></li>
+<ul class='toc'><li class='toc3'><a href='#-oscTabs'>oscTabs</a> </li>
+<li class='toc3'><a href='#-extOscCtrlArrayField'>extOscCtrlArrayField</a> </li>
+<li class='toc3'><a href='#-intStartIndexField'>intStartIndexField</a> </li>
+<li class='toc3'><a href='#-oscDisconnectorBut'>oscDisconnectorBut</a> </li>
+<li class='toc3'><a href='#-oscEditBtns'>oscEditBtns</a> </li>
+<li class='toc3'><a href='#-oscCalibBtns'>oscCalibBtns</a> </li>
+</ul><li class='toc2'><a href='#Batch-connecting external OSC-controllers'>Batch-connecting external OSC-controllers</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#The "Spec"-tab'>The "Spec"-tab</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#The "Actions"-tab'>The "Actions"-tab</a></li>
+<ul class='toc'><li class='toc3'><a href='#-close'>close</a> </li>
+</ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A special editor for <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a>: As this widget allows connecting to an arbitrary number of control-slots at once this editor is designed to allow the user to make batch-connections as well as it provides the possibility to edit each slot individually. MIDI and OSC tabs within the interface are divided into an area that allows batch editing and an area that comprehends links to <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a>s for each slot. Each slot can be connected to an external OSC- or MIDI-controller individually.<div class='note'><span class='notelabel'>NOTE:</span> <ul>
+<li>Since CVWidgetMSEditor and <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a> share a number of properties these are implemented within their superclass <a href="./../Classes/AbstractCVWidgetEditor.html">AbstractCVWidgetEditor</a>.<li>CVWidgetMSEditor is not supposed to be used directly. Rather editors should always be instantiated from within the widget it belongs to.</ul>
+</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>widget</span>, <span class='argstr'>tab</span>)</h3>
+<div class='method'>
+<p>Open a new editor for <code class='code prettyprint lang-sc'>widget</code><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>widget<td class='argumentdesc'>
+<p>the widget-object: must be a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a>.<tr><td class='argumentname'>tab<td class='argumentdesc'>
+<p>an <a href="./../Classes/Integer.html">Integer</a>, specifying which tab of the editor shall be focused upon opening the editor. Each editor contains 4 tabs ( see also <a href="./../Classes/TabbedView2.html">TabbedView2</a>): "Spec", "MIDI", "OSC" and "Actions", each addressed by an integer value from <code class='code prettyprint lang-sc'>0</code> to <code class='code prettyprint lang-sc'>3</code></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <code class='code prettyprint lang-sc'>CVWidgetMSEditor</code></div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Common GUI properties and methods'>Common GUI properties and methods</a></h3>
+<h3><a class='anchor' name='The "MIDI"-tab'>The "MIDI"-tab</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-midiTabs' href='./../Overviews/Methods.html#midiTabs'>midiTabs</a> </h3>
+<div class='method'>
+<p>Every editor provides the possibility to either batch-edit or edit MIDI-connections individually. For convenience these 2 possibilities are represented within 2 tabs:<ol>
+<li>a tab for editing batch-connections.<li>a tab for editing individual MIDI-connections for each slot in the widget's multi-slider.</ol>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/TabbedView2.html">TabbedView2</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-msMidiIndexStartField' href='./../Overviews/Methods.html#msMidiIndexStartField'>msMidiIndexStartField</a> </h3>
+<div class='method'>
+<p>A <a href="./../Classes/NumberBox.html">NumberBox</a> in the batch-editing tab, allowing the user to define at which slider of the widget's multi-slider a batch-connection shall begin (indexing starts at <code class='code prettyprint lang-sc'>0</code>)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/NumberBox.html">NumberBox</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-midiEditGroups' href='./../Overviews/Methods.html#midiEditGroups'>midiEditGroups</a> </h3>
+<div class='method'>
+<p>A <a href="./../Classes/List.html">List</a> of <a href="./../Classes/CVMidiEditGroup.html">CVMidiEditGroup</a>s in the tab representing the individual sliders. Each of the <a href="./../Classes/CVMidiEditGroup.html">CVMidiEditGroup</a>s provides an interface to one of the widget's sliders within the multi-slider.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/List.html">List</a> of <a href="./../Classes/CVMidiEditGroup.html">CVMidiEditGroup</a>s</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-extMidiCtrlArrayField' href='./../Overviews/Methods.html#extMidiCtrlArrayField'>extMidiCtrlArrayField</a> </h3>
+<div class='method'>
+<p>A <a href="./../Classes/TextField.html">TextField</a> within the batch-editing tab that can be used to enter an <a href="./../Classes/Array.html">Array</a> of (external hardware) sliders. <h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/TextField.html">TextField</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-midiConnectorBut' href='./../Overviews/Methods.html#midiConnectorBut'>midiConnectorBut</a> </h3>
+<div class='method'>
+<p>The <a href="./../Classes/Button.html">Button</a> within the batch-editing tab that creates the MIDI-respopnders and hence finishes a batch-connection.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Button.html">Button</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-midiDisconnectorBut' href='./../Overviews/Methods.html#midiDisconnectorBut'>midiDisconnectorBut</a> </h3>
+<div class='method'>
+<p>The <a href="./../Classes/Button.html">Button</a> within the batch-editing tab that removes all MIDI-responders connected to the parent widget.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Button.html">Button</a></div></div><h3><a class='anchor' name='Batch-connecting external MIDI hardware'>Batch-connecting external MIDI hardware</a></h3>
+
+<p>CVWidgetMSEditor allows connecting more than one MIDI-controller in one go:<div class='image'><img src='midi_batch_connect.png'/></div>
+
+<p>The numbered fields in the above screenshot provide the following:<ol>
+<li><strong>MIDI init-button</strong> (<a href="./../Classes/AbstractCVWidgetEditor.html#-midiInitBut">AbstractCVWidgetEditor: -midiInitBut</a>) - after MIDI has successfully been initialized the originally red button will turn green and the<li><strong>MIDI-source</strong> (<a href="./../Classes/AbstractCVWidgetEditor.html#-midiSourceSelect">AbstractCVWidgetEditor: -midiSourceSelect</a>) - a dropdown-menu that will let the user select among possible MIDI-sources<li><strong>MIDI-source field</strong> (<a href="./../Classes/AbstractCVWidgetEditor.html#-midiSrcField">AbstractCVWidgetEditor: -midiSrcField</a>) - when a MIDI-source has been selected its numeric ID will be filled into this field. I.e. any connection made within the batch of connection will listen to this particular device. However, this is <em>optional</em> - if no device has been selected responders will listen to any available device.<li><strong>MIDI-channel</strong> (<a href="./../Classes/AbstractCVWidgetEditor.html#-midiChanField">AbstractCVWidgetEditor: -midiChanField</a>) - another optional field. If no value is set responders will listen on any channel.<li><strong>multi-slider offset index</strong> (<a href="#-msMidiIndexStartField">-msMidiIndexStartField</a>) - the index of the slider in the multi-slider at which the batch-connection should begin. This affects the multi-slider in the widget only, <strong>not</strong> the external hardware.<li><strong>array of external controllers to be connected</strong> (<a href="#-extMidiCtrlArrayField">-extMidiCtrlArrayField</a>) - within this array the external controller numbers get set. That can be a successive range of values (e.g. <code class='code prettyprint lang-sc'>(0..8)</code>) or even concetenated arrays (e.g. <code class='code prettyprint lang-sc'>(0..3)++[5, 6, 8, 9]</code>).</ol>
+
+<p>Behind the scenes a batch-connection is accomplished by an algorithm like the following:<pre class='code prettyprint lang-sc'>&lt;array of ctrl.-nrs.&gt;.do({ |ctrlNum, sl|
+    &lt;widget&gt;.midiConnect(&lt;MIDI device ID&gt;, &lt;MIDI channel&gt;, ctrlNum, sl+&lt;multi-slider offset index&gt;)
+})</pre>
+
+<p>The above code should guarantee that not only controllers get connected to successive sliders but also an offset is possible.
+<p>For further reference: <a href="./../Classes/CVWidget.html#-midiConnect">CVWidget: -midiConnect</a><h3><a class='anchor' name='The "OSC"-tab'>The "OSC"-tab</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscTabs' href='./../Overviews/Methods.html#oscTabs'>oscTabs</a> </h3>
+<div class='method'>
+<p>Like the MIDI-tab the OSC-tab is organized in 2 tabs:<ol>
+<li>a tab for editing batch-connections.<li>a tab containing editable MIDI-connections for each slot in the widget's multi-slider.</ol>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/TabbedView2.html">TabbedView2</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-extOscCtrlArrayField' href='./../Overviews/Methods.html#extOscCtrlArrayField'>extOscCtrlArrayField</a> </h3>
+<div class='method'>
+<p>A <a href="./../Classes/TextField.html">TextField</a> within the batch-editing tab that allows the input of values that shall supplement the placeholders <code class='code prettyprint lang-sc'>%</code> in the command-name field or message-slot field. (see explanation below in section "Batch-connecting external OSC-controllers")<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/TextField.html">TextField</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-intStartIndexField' href='./../Overviews/Methods.html#intStartIndexField'>intStartIndexField</a> </h3>
+<div class='method'>
+<p>A <a href="./../Classes/NumberBox.html">NumberBox</a> within the batch-editing tab that allows the user to set the index at which batch-connecting the sliders within the widget's multi-slider should start (<code class='code prettyprint lang-sc'>0</code> would be the first slider within the multi-slider).<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/NumberBox.html">NumberBox</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscDisconnectorBut' href='./../Overviews/Methods.html#oscDisconnectorBut'>oscDisconnectorBut</a> </h3>
+<div class='method'>
+<p>A <a href="./../Classes/Button.html">Button</a> in the batch-editing tab that immediatly removes all OSC-responders within the widget.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Button.html">Button</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscEditBtns' href='./../Overviews/Methods.html#oscEditBtns'>oscEditBtns</a> </h3>
+<div class='method'>
+<p>A <a href="./../Classes/List.html">List</a> of <a href="./../Classes/Button.html">Button</a>s within the tab for editing individual OSC-connections. Each button displays the current state of the slider it belongs to, and clicking the button opens another editor, allowing to edit all MIDI- and OSC-properties of the parent slider.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/List.html">List</a> of <a href="./../Classes/Button.html">Button</a>s</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscCalibBtns' href='./../Overviews/Methods.html#oscCalibBtns'>oscCalibBtns</a> </h3>
+<div class='method'>
+<p>A <a href="./../Classes/List.html">List</a> of <a href="./../Classes/Button.html">Button</a>s within the tab for editing individual OSC-connections. Each button (displayed in red or green in the bottom, right corner of the OSC edit-button) allows to quickly activate or deactivate OSC-calibration for the parent slider. (See also: <a href="./../Classes/CVWidget.html#-oscCalibrate">CVWidget: -oscCalibrate</a>).<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/List.html">List</a> of <a href="./../Classes/Button.html">Button</a>s</div></div><h3><a class='anchor' name='Batch-connecting external OSC-controllers'>Batch-connecting external OSC-controllers</a></h3>
+
+<p>Like MIDI CVWidgetMSEditor allows to connect more than one OSC-controller in one go:<div class='image'><img src='osc_batch_connect.png'/></div>
+
+<p>The numbered fields in the above screenshot provide the following:<ol>
+<li><strong>IP-address selection</strong> (<a href="./../Classes/AbstractCVWidgetEditor.html#-deviceDropDown">AbstractCVWidgetEditor: -deviceDropDown</a>) - if sclang is receiving OSC the IP-addresses from which the messages are being sent will be listed here. Selecting one of them will restrict the OSC-responder to listen to that address only.<li><strong>restrict OSC to a specific port</strong> (<a href="./../Classes/AbstractCVWidgetEditor.html#-portRestrictor">AbstractCVWidgetEditor: -portRestrictor</a>) - if this option is selected an OSC-responder will not listen to the specified IP-address only, it will also restrict listening to the port from which the regarding app/device sends the messages. However, it's probably sufficiant to restrict to an IP-address only.<li><strong>command-list menu</strong> (<a href="./../Classes/AbstractCVWidgetEditor.html#-cmdListMenu">AbstractCVWidgetEditor: -cmdListMenu</a>) - if an IP-address has been set command-names that have arrived from that IP-address will be listed here. Selecting one of them will insert the command-name in the <strong>command-name field</strong> (7).<li><strong>device-list menu</strong> (<a href="./../Classes/AbstractCVWidgetEditor.html#-deviceListMenu">AbstractCVWidgetEditor: -deviceListMenu</a>) - another option to select from a set of predefined commands is selecting a device (can e.g. be an OSC-controller on a mobile phone) which will fill up the <strong>command-list menu</strong> with commands belonging to that device/app. However, one has to first <em>record</em> commands coming from the app/device - see (5).<li><strong>record OSC-commands</strong> - this button will open the OSC-commands dialog (<a href="./../Classes/OSCCommands.html#-makeWindow">OSCCommands: -makeWindow</a>) and start scanning incoming OSC for command-names. These command-names can then be stored to disk under a unique, user-defined device-name (e.g. "TouchOSC layout 16") that will appear in the <strong>device-list menu</strong>. For more information see the <a href="./../Classes/OSCCommands.html">OSCCommands</a> helpfile.<li><strong>external OSC-controller numbers</strong> (<a href="./../-extOscCtrlArrayField">-extOscCtrlArrayField</a>) - an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Integer.html">Integer</a>s which will be used as supplements for the placeholders used in either the <strong>command-name field</strong> (7) or the <strong>message-slot field</strong> (9). Basically OSC-responders for the given numbers will be created sequentially, using one number for one responder. Hence, the size of the array determines how many responders are going to created. See the OSC batch-connection examples below for a better understanding what's happening behind the scenes.<li><strong>command-name field</strong> (<a href="./../Classes/AbstractCVWidgetEditor.html#-nameField">AbstractCVWidgetEditor: -nameField</a>)- either enter a command-name manually or select one from the <strong>command-list menu</strong> (3) which will be inserted automatically. Optionally a placeholder <code class='code prettyprint lang-sc'>%</code> may be used which is going to be replaced by a number from the <strong>external OSC-controller numbers</strong> (6): e.g. <code class='code prettyprint lang-sc'>/my/cmd/name/%</code> used on an array <code class='code prettyprint lang-sc'>[1, 2, 3]</code> will create 3 OSC-responders for the following command-names: <code class='code prettyprint lang-sc'>/my/cmd/name/1, /my/cmd/name/2, /my/cmd/name/3</code>. See the OSC batch-connection examples below for a better understanding what's happening behind the scenes.<li><strong>multi-slider start offset</strong> (<a href="#-intStartIndexField">-intStartIndexField</a>) - the index of <em>the first slider in the widget's multi-slider</em> that's supposed to get connected (numbering of sliders starts with <code class='code prettyprint lang-sc'>0</code>). Analog to MIDI batch-connections this field allows an offset in connecting sliders of the multislider.<li><strong>the message-slot of of the incoming OSC message</strong> (<a href="./../Classes/AbstractCVWidgetEditor.html#-indexField">AbstractCVWidgetEditor: -indexField</a>) - OSC messages are seen as arrays by sclang: slot <code class='code prettyprint lang-sc'>0</code> will contain the command-name and an arbitrary number of successive slots may contain arbitrary data. E.g. an OSC controller may transmit data from a multi-slider like the following:<pre class='code prettyprint lang-sc'>['/multislider', &lt;value slider 1&gt;, &lt;value slider 2&gt;,..., &lt;value slider n&gt;]</pre>
+
+<p>A multi-dimensional OSC-message like this may be addessed in batch-connections by the placeholder <code class='code prettyprint lang-sc'>%</code>. Opposite to the possibility of using a number of different OSC command-names - as described in (7) - the command-name here is fixed but successive slots are addresses. Hence, the values in <strong>external OSC-controller numbers</strong> (6) will represent the slots within the OSC-message (starting at <code class='code prettyprint lang-sc'>1</code>). See the OSC batch-connection examples below for a better understanding what's happening behind the scenes.</ol>
+
+<p>As already mentioned there are 2 different scenarios in which batch-connecting a CVWidgetMS may makes sense:<ol>
+<li>a number of OSC commands which differ in one number: <code class='code prettyprint lang-sc'>'/name/1', '/name/2', '/name/3',..., '/name/n'</code> - these may belong e.g. to a multi-slider on a mobile based controller and there's exactly one value sent in slot <code class='code prettyprint lang-sc'>1</code> of the OSC-message. The underlying connection mechanism would be the following:<pre class='code prettyprint lang-sc'>(1..n).do({ arg num, i; 
+    &lt;widget&gt;.oscConnect(
+        ip: &lt;IP-address&gt;, 
+        port: &lt;port&gt;, 
+        name: "/name/%".format(num), 
+        oscMsgIndex: 1, 
+        slot: i+&lt;slider offset index&gt;
+    )
+});</pre>
+
+<p><li>all values of from e.g. a multi-slider in mobile bsed controller are sent within 1 message <code class='code prettyprint lang-sc'>'/name'</code> within its slots <code class='code prettyprint lang-sc'>1</code> to <code class='code prettyprint lang-sc'>n</code>:<pre class='code prettyprint lang-sc'>(1..n).do({ arg num, i; 
+    &lt;widget&gt;.oscConnect(
+        ip: &lt;IP-address&gt;, 
+        port: &lt;port&gt;, 
+        name: "/name", 
+        oscMsgIndex: "%".format(num), 
+        slot: i+&lt;slider offset index&gt;
+    )
+})</pre>
+</ol>
+
+<p>For further reference also have a look at <a href="./../Classes/CVWidget.html#-oscConnect">CVWidget: -oscConnect</a><h3><a class='anchor' name='The "Spec"-tab'>The "Spec"-tab</a></h3>
+
+<p>This is the place to edit the parent widget's <a href="./../Classes/ControlSpec.html">ControlSpec</a> (resp. the ControlSpec of the <a href="./../Classes/CV.html">CV</a> wrapped by the widget). In the textfield (<a href="./../Classes/AbstractCVWidgetEditor.html#-specField">AbstractCVWidgetEditor: -specField</a>) you may either edit the current spec or enter a new one. This can be done by either entering a full ControlSpec-definition (e.g. <code class='code prettyprint lang-sc'>ControlSpec(10, 100, \exp)</code>) or an <a href="./../Classes/Array.html">Array</a> that will automatically be expanded to a ControlSpec (e.g. #[10, 100, \exp]) or a <a href="./../Classes/Symbol.html">Symbol</a> symbolising an existing ControlSpec (e.g. <code class='code prettyprint lang-sc'>\freq</code>).<div class='note'><span class='notelabel'>NOTE:</span> If a <em>one-dimensional</em> ControlSpec gets provided (as argued in the previous sentence) the ControlSpec will automatically expand to the size of the widget's multi-slider (see also: <a href="./../Classes/CVWidget.html#-msSize">CVWidget: -msSize</a>). I.e. if the multi-slider incorporates 5 sliders a spec like <pre class='code prettyprint lang-sc'>ControlSpec(10, 100, \exp)</pre>
+
+<p>  will become <pre class='code prettyprint lang-sc'>ControlSpec([10, 10, 10, 10, 10], [100, 100, 100, 100, 100], \exp, [0.0, 0.0, 0.0, 0.0, 0.0], [0, 0, 0, 0, 0])</pre>
+</div>
+<p>In the drop-down menu below the textfield you may select any of the listed ControlSpecs. If it's a one-dimensional ControlSpec the same mechanism as in the textfield will apply. Also expanded ControlSpecs will be listed under a name that reflects the specs size - e.g. <code class='code prettyprint lang-sc'>\freq</code> expanded to size 7 will be listed as <code class='code prettyprint lang-sc'>'freq_7'</code> <h3><a class='anchor' name='The "Actions"-tab'>The "Actions"-tab</a></h3>
+
+<p>Even though a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> may have many sliders it has only one <a href="./../Classes/CV.html">CV</a>. As a consequence all actions apply to all sliders (unlike in a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> which incorporates 2 CVs). However, a CVWidget2D may still have an arbitrary number of actions assigned to it. Remember that the value of the CV will be an <a href="./../Classes/Array.html">Array</a> of values rather than a single value. E.g. an action setting a control of a running synth will rather user a <code class='code prettyprint lang-sc'>setn</code> than <code class='code prettyprint lang-sc'>set</code>:<pre class='code prettyprint lang-sc'>// example action
+{ |cv| mySynth.setn(\freq, cv.value) }</pre>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-close' href='./../Overviews/Methods.html#close'>close</a> </h3>
+<div class='method'>
+<p>Close the editor.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this (a <code class='code prettyprint lang-sc'>CVWidgetMSEditor</code>)</div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/CVWidgetMSEditor.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/CVWidgetMSEditor.schelp</a><br>link::Classes/CVWidgetMSEditor::<br>sc version: 3.7alpha0</div></div></body></html>

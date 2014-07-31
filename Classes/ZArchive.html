@@ -1,0 +1,547 @@
+<html><head><title>ZArchive</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Files'>Files</a>, <a href='./../Browse.html#Quarks>ZArchive'>Quarks>ZArchive</a></div>
+<h1>ZArchive</h1>
+<div id='summary'>Compressed binary file format for saving large datasets and SuperCollider objects</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/ZArchive/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/ZArchive/ZArchive.sc'>ZArchive.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/File.html">File</a> : <a href="../Classes/UnixFILE.html">UnixFILE</a> : <a href="../Classes/IOStream.html">IOStream</a> : <a href="../Classes/Stream.html">Stream</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/File.html">File</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*write'>write</a> </li>
+<li class='toc3'><a href='#*read'>read</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-path'>path</a> </li>
+<li class='toc3'><a href='#-writeItem'>writeItem</a> </li>
+<li class='toc3'><a href='#-writeClose'>writeClose</a> </li>
+<li class='toc3'><a href='#-readItem'>readItem</a> </li>
+<li class='toc3'><a href='#-asZArchive'>asZArchive</a> </li>
+<li class='toc3'><a href='#-version'>version</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-check'>check</a> </li>
+<li class='toc3'><a href='#-getStringCache'>getStringCache</a> </li>
+<li class='toc3'><a href='#-initStringCache'>initStringCache</a> </li>
+<li class='toc3'><a href='#-readLargeString'>readLargeString</a> </li>
+<li class='toc3'><a href='#-readString'>readString</a> </li>
+<li class='toc3'><a href='#-rescindItem'>rescindItem</a> </li>
+<li class='toc3'><a href='#-saveCount'>saveCount</a> </li>
+<li class='toc3'><a href='#-writeLargeString'>writeLargeString</a> </li>
+<li class='toc3'><a href='#-writeString'>writeString</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A compressed binary safe archive format. Supports very large file sizes and is fairly fast.
+<p>Compresses strings and symbols using a string lookup table.  (limit: 65536 different strings/symbols)
+<p>Compresses repeated values  (limit: 4294967296 consecutive repeated items)
+<p>The text archive written by Object.writeArchive will store an object and restore all of its internal variables. However, it will break with large file sizes because it actually writes compilable code and there is a fairly small size limit to that.
+<p>The binary archives written by Object.writeBinaryArchive will break if the instance variables change in any of the classes you have archived.
+<p>Binary archives loaded after the instance variables in the class has changed will corrupt the memory of SC and cause bleeding havoc.
+<p>This class can save large datasets without these drawbacks.
+<p>You manually write items to the archive and then should read from the archive in the exact same order you wrote in. With each item a type code is written followed by the data and possibly a repeat count if there was a repetition.
+<p>The best way is to write only one item on the top level: a Dictionary. Name each of your top level variables (eg. "title","patterns","songSequence"). The dictionary will be saved with all of its contents regardless of size.
+<p>This allows you to easily change your file format since you are not dependent on the top level order of variables, and to add or remove variables from your format without the risk of breaking previous files.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*write' href='./../Overviews/Methods.html#write'>write</a> (<span class='argstr'>pathName</span>)</h3>
+<div class='method'>
+<p>open an archive for writing<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>pathName<td class='argumentdesc'>
+<p>path that the file will be written to</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a ZArchive</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*read' href='./../Overviews/Methods.html#read'>read</a> (<span class='argstr'>pathName</span>)</h3>
+<div class='method'>
+<p>open an archive for reading<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>pathName<td class='argumentdesc'>
+<p>path to read. as a setter this is private</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a ZArchive</div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-path' href='./../Overviews/Methods.html#path'>path</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-path' href='./../Overviews/Methods.html#path'>path</a> = value</h3>
+<div class='method'>
+<p>path that the file is writing to or was loaded from<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the path</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-writeItem' href='./../Overviews/Methods.html#writeItem'>writeItem</a> (<span class='argstr'>thing</span>, <span class='argstr'>extraArgs</span>)</h3>
+<div class='method'>
+<p>write an object to the archive  this will write a character specifying the class type of the object and then will write the object  in the smallest possible format.   Floats, Integers, Strings, Symbols, SequenceableCollections and Dictionaries all have   support to write to the archive.  eg. a Float writes a float to the file.  In compile string file formats a Float would lose accuracy, here it saves and loads with full accuracy.  Strings and Symbols write using a string table, so your 10000 Events with \degree in every single one of them will only need to save the word "degree" once.  All other objects will be saved asCompileString.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>thing<td class='argumentdesc'>
+<p>the thing you are saving<tr><td class='argumentname'>extraArgs<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-writeClose' href='./../Overviews/Methods.html#writeClose'>writeClose</a> </h3>
+<div class='method'>
+<p> finish the write session and close the file.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-readItem' href='./../Overviews/Methods.html#readItem'>readItem</a> (<span class='argstr'>assertClass</span>)</h3>
+<div class='method'>
+<p>read an item from the file and return it<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>assertClass<td class='argumentdesc'>
+<p>  assertClass is optional.  if supplied it will type check the item that is read   and throw an error if the item is of a different class.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the object read from the archive</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-asZArchive' href='./../Overviews/Methods.html#asZArchive'>asZArchive</a> </h3>
+<div class='method'>
+<p>see zArchiveSupport.sc This message converts the receiver to a valid ZArchive. since this is already a ZArchive then asZArchive returns this itself. this method would convert a string to a ZArchive by opening that path<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-version' href='./../Overviews/Methods.html#version'>version</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-version' href='./../Overviews/Methods.html#version'>version</a> = value</h3>
+<div class='method'>
+<p>Version is variable that can be used to store a file format version number. It is not referenced in the ZArchive class at all, it is not saved or loaded. Its just there for your convience. OK, for my convience. But to use it you could write version as the first object into the archive and then read it when you open it and set the opened ZArchive to this version number. Then objects that read the archive can consult the version number and use to switch their expectations about which variables will come in which order. It is better to use a Dictionary as the top level item and then just detect keys/values.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>version number</div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-check' href='./../Overviews/Methods.html#check'>check</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getStringCache' href='./../Overviews/Methods.html#getStringCache'>getStringCache</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-initStringCache' href='./../Overviews/Methods.html#initStringCache'>initStringCache</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-readLargeString' href='./../Overviews/Methods.html#readLargeString'>readLargeString</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-readString' href='./../Overviews/Methods.html#readString'>readString</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-rescindItem' href='./../Overviews/Methods.html#rescindItem'>rescindItem</a> (<span class='argstr'>item</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-saveCount' href='./../Overviews/Methods.html#saveCount'>saveCount</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-writeLargeString' href='./../Overviews/Methods.html#writeLargeString'>writeLargeString</a> (<span class='argstr'>string</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-writeString' href='./../Overviews/Methods.html#writeString'>writeString</a> (<span class='argstr'>string</span>)</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>(
+
+a = ZArchive.write("archiveTest");
+
+a.writeItem(1.0.rand);
+a.writeItem([1,2,3,4,5].choose);
+a.writeItem("hello");
+a.writeItem(
+    Event.make({
+        ~a = \a;
+        ~b = \b;
+    })
+);
+a.writeItem([1,2,3,4,5]);
+a.writeItem( Ref(4.0) );
+a.writeItem([
+    Event[
+        ('time' -&gt; 149.797), ('delta' -&gt; 0.453), ('m' -&gt; [ 'setVolAt', 0, 0.415356 ])
+    ],
+    Event[ 
+        ('time' -&gt; 150.25), ('delta' -&gt; 0.478), ('m' -&gt; [ 'setVolAt', 0, 0.37382 ])
+    ],
+    Event[ 
+        ('time' -&gt; 150.728), ('delta' -&gt; 0.428), ('m' -&gt; [ 'setVolAt', 0, 0.336438 ])
+    ]
+]);
+a.writeItem([
+    IdentityDictionary[
+        \a -&gt; "b",
+        "b" -&gt; \c
+    ]
+]); 
+a.writeClose;
+
+)
+
+
+(
+b =  ZArchive.read("archiveTest");
+b.readItem.postln;
+b.readItem.postln;
+b.readItem.postln;
+b.readItem.postln;
+b.readItem.postln;
+b.readItem.postln;
+b.readItem.postln;
+b.readItem.postln;
+
+
+b.close;
+
+)
+
+
+
+This is a good example of useful compression. Identical Events would get repeat markers. Strings and symbols are reduced to a single byte using the lookup table.
+(
+
+a = ZArchive.write("archiveTest");
+
+a.writeItem(5);
+a.writeItem( [ Event[ 
+    ('time' -&gt; 0), ('delta' -&gt; 7.68278), ('m' -&gt; [ 'state_', Environment[ 
+    ('efxpath' -&gt; ":Patches:justefx:4subtleDisturb er"), ('mixes' -&gt; [ 0, 0.328532, 1, 0 ]), ('subject' -&gt; Environment[ 
+    ('subject' -&gt; Environment[ 
+    ('paths' -&gt; [ ":Patches:splash:chewy", ":Patches:twisters:wahfunk", ":Patches:riddims:slowrollzghet", nil ]), ('amps' -&gt; [ 0.177931, 0.42807, 0.219667, 0.7 ])
+    ]), ('filterObjects' -&gt; [ nil, nil, nil, nil ])
+    ])
+    ] ])
+    ], Event[ 
+    ('time' -&gt; 7.68278), ('delta' -&gt; 2.0898), ('m' -&gt; [ 'selectByPath', 2, ":Patches:riddims:geekslut" ])
+    ], Event[ 
+    ('time' -&gt; 9.77257), ('delta' -&gt; 0.41796), ('m' -&gt; [ 'setVolAt', 2, 0.197701 ])
+    ], Event[ 
+    ('time' -&gt; 10.1905), ('delta' -&gt; 0.39474), ('m' -&gt; [ 'setVolAt', 2, 0.177931 ])
+    ], Event[ 
+    ('time' -&gt; 10.5853), ('delta' -&gt; 0.39474), ('m' -&gt; [ 'setVolAt', 2, 0.160138 ])
+    ], Event[ 
+    ('time' -&gt; 10.98), ('delta' -&gt; 0.32508), ('m' -&gt; [ 'setVolAt', 2, 0.144124 ])
+    ], Event[ 
+    ('time' -&gt; 11.3051), ('delta' -&gt; 8.75393), ('m' -&gt; [ 'setVolAt', 2, 0.129711 ])
+    ], Event[ 
+    ('time' -&gt; 20.059), ('delta' -&gt; 8.96291), ('m' -&gt; [ 'selectByPath', 2, ":Patches:riddims2:jRunnin" ])
+    ], Event[ 
+    ('time' -&gt; 29.0219), ('delta' -&gt; 0.39474), ('m' -&gt; [ 'setVolAt', 2, 0.142683 ])
+    ], Event[ 
+    ('time' -&gt; 29.4167), ('delta' -&gt; 5.61923), ('m' -&gt; [ 'setVolAt', 2, 0.156951 ])
+    ], 
+    Event[ 
+    ('time' -&gt; 35.0359), ('delta' -&gt; 0.41796), ('m' -&gt; [ 'setVolAt', 2, 0.172646 ])
+    ], Event[ 
+    ('time' -&gt; 35.4539), ('delta' -&gt; 2.71674), ('m' -&gt; [ 'setVolAt', 2, 0.18991 ])
+    ], Event[ 
+    ('time' -&gt; 38.1706), ('delta' -&gt; 1.36998), ('m' -&gt; [ 'setMixOnVoice', 2, 1 ])
+    ], Event[ 
+    ('time' -&gt; 39.5406), ('delta' -&gt; 0.3483), ('m' -&gt; [ 'setMixOnVoice', 2, 0.85 ])
+    ], Event[ 
+    ('time' -&gt; 39.8889), ('delta' -&gt; 0.41796), ('m' -&gt; [ 'setMixOnVoice', 2, 0.722501 ])
+    ], Event[ 
+    ('time' -&gt; 40.3068), ('delta' -&gt; 0.37152), ('m' -&gt; [ 'setMixOnVoice', 2, 0.614126 ])
+    ], Event[ 
+    ('time' -&gt; 40.6784), ('delta' -&gt; 1.161), ('m' -&gt; [ 'setMixOnVoice', 2, 0.522007 ])
+    ], Event[ 
+    ('time' -&gt; 41.8394), ('delta' -&gt; 2.85606), ('m' -&gt; [ 'setMixOnVoice', 1, 1 ])
+    ], Event[ 
+    ('time' -&gt; 44.6954), ('delta' -&gt; 1.7415), ('m' -&gt; [ 'setMixOnVoice', 1, 1 ])
+    ], Event[ 
+    ('time' -&gt; 46.4369), ('delta' -&gt; 2.85606), ('m' -&gt; [ 'wakeEffectByPath', ":Patches:justefx:pitchCasStereoSprd" ])
+    ], 
+    Event[ 
+    ('time' -&gt; 49.293), ('delta' -&gt; 0.41796), ('m' -&gt; [ 'setMixOnVoice', 1, 0.85 ])
+    ], Event[ 
+    ('time' -&gt; 49.7109), ('delta' -&gt; 0.696599), ('m' -&gt; [ 'setMixOnVoice', 1, 0.7225 ])
+    ], Event[ 
+    ('time' -&gt; 50.4075), ('delta' -&gt; 0.39474), ('m' -&gt; [ 'setVolAt', 1, 0.385263 ])
+    ], Event[ 
+    ('time' -&gt; 50.8023), ('delta' -&gt; 0.44118), ('m' -&gt; [ 'setVolAt', 1, 0.346736 ])
+    ], Event[ 
+    ('time' -&gt; 51.2435), ('delta' -&gt; 11.4707), ('m' -&gt; [ 'setVolAt', 1, 0.312063 ])
+    ], Event[ 
+    ('time' -&gt; 62.7141), ('delta' -&gt; 1.46286), ('m' -&gt; [ 'selectByPath', 0, ":Patches:clouds:newjetengine" ])
+    ], Event[ 
+    ('time' -&gt; 64.177), ('delta' -&gt; 0.673379), ('m' -&gt; [ 'setVolAt', 0, 0.160138 ])
+    ], Event[ 
+    ('time' -&gt; 64.8504), ('delta' -&gt; 0.51084), ('m' -&gt; [ 'setVolAt', 0, 0.144124 ])
+    ], Event[ 
+    ('time' -&gt; 65.3612), ('delta' -&gt; 0.39474), ('m' -&gt; [ 'setVolAt', 0, 0.129711 ])
+    ], Event[ 
+    ('time' -&gt; 65.7559), ('delta' -&gt; 8.89325), ('m' -&gt; [ 'setVolAt', 0, 0.11674 ])
+    ], 
+    Event[ 
+    ('time' -&gt; 74.6492), ('delta' -&gt; 4.50468), ('m' -&gt; [ 'setVolAt', 0, 0.128414 ])
+    ], Event[ 
+    ('time' -&gt; 79.1539), ('delta' -&gt; 1.92726), ('m' -&gt; [ 'selectByPath', 0, ":Patches:clouds:screamspac" ])
+    ], Event[ 
+    ('time' -&gt; 81.0811), ('delta' -&gt; 10.449), ('m' -&gt; [ 'setVolAt', 0, 0.115573 ])
+    ], Event[ 
+    ('time' -&gt; 91.5301), ('delta' -&gt; 9.84527), ('m' -&gt; [ 'sleepVoice', 0 ])
+    ], Event[ 
+    ('time' -&gt; 101.375), ('delta' -&gt; 0.3483), ('m' -&gt; [ 'setVolAt', 2, 0.208902 ])
+    ], Event[ 
+    ('time' -&gt; 101.724), ('delta' -&gt; 0.39474), ('m' -&gt; [ 'setVolAt', 2, 0.229792 ])
+    ], Event[ 
+    ('time' -&gt; 102.118), ('delta' -&gt; 2.06658), ('m' -&gt; [ 'setVolAt', 2, 0.252771 ])
+    ], Event[ 
+    ('time' -&gt; 104.185), ('delta' -&gt; 0.32508), ('m' -&gt; [ 'setMixOnVoice', 2, 0.443706 ])
+    ], Event[ 
+    ('time' -&gt; 104.51), ('delta' -&gt; 0.39474), ('m' -&gt; [ 'setMixOnVoice', 2, 0.377151 ])
+    ], Event[ 
+    ('time' -&gt; 104.905), ('delta' -&gt; 2.322), ('m' -&gt; [ 'setMixOnVoice', 2, 0.320578 ])
+    ], 
+    Event[ 
+    ('time' -&gt; 107.227), ('delta' -&gt; 1.161), ('m' -&gt; [ 'setMixOnVoice', 2, 0.272492 ])
+    ], Event[ 
+    ('time' -&gt; 108.388), ('delta' -&gt; 1.95048), ('m' -&gt; [ 'setMixOnVoice', 2, 1 ])
+    ], Event[ 
+    ('time' -&gt; 110.338), ('delta' -&gt; 0.41796), ('m' -&gt; [ 'setMixOnVoice', 1, 0.614125 ])
+    ], Event[ 
+    ('time' -&gt; 110.756), ('delta' -&gt; 0.928799), ('m' -&gt; [ 'setMixOnVoice', 1, 0.73695 ])
+    ], Event[ 
+    ('time' -&gt; 111.685), ('delta' -&gt; 10.1471), ('m' -&gt; [ 'setMixOnVoice', 1, 1 ])
+    ], Event[ 
+    ('time' -&gt; 121.832), ('delta' -&gt; 1.71828), ('m' -&gt; [ 'setVolAt', 1, 0.280856 ])
+    ], Event[ 
+    ('time' -&gt; 123.55), ('delta' -&gt; 2.0898), ('m' -&gt; [ 'setVolAt', 1, 0.252771 ])
+    ], Event[ 
+    ('time' -&gt; 125.64), ('delta' -&gt; 6.13007), ('m' -&gt; [ 'setVolAt', 1, 0.227494 ])
+    ], Event[ 
+    ('time' -&gt; 131.77), ('delta' -&gt; 1.99692), ('m' -&gt; [ 'selectByPath', 2, ":Patches:plusefx:musiqueConcrete" ])
+    ], Event[ 
+    ('time' -&gt; 133.767), ('delta' -&gt; 0.37152), ('m' -&gt; [ 'setMixOnVoice', 2, 1 ])
+    ], 
+    Event[ 
+    ('time' -&gt; 134.139), ('delta' -&gt; 0.37152), ('m' -&gt; [ 'setMixOnVoice', 2, 0.85 ])
+    ], Event[ 
+    ('time' -&gt; 134.51), ('delta' -&gt; 0.37152), ('m' -&gt; [ 'setMixOnVoice', 2, 0.722501 ])
+    ], Event[ 
+    ('time' -&gt; 134.882), ('delta' -&gt; 0.37152), ('m' -&gt; [ 'setMixOnVoice', 2, 0.614126 ])
+    ], Event[ 
+    ('time' -&gt; 135.253), ('delta' -&gt; 0.41796), ('m' -&gt; [ 'setMixOnVoice', 2, 0.522007 ])
+    ], Event[ 
+    ('time' -&gt; 135.671), ('delta' -&gt; 0.30186), ('m' -&gt; [ 'setMixOnVoice', 2, 0.443706 ])
+    ], Event[ 
+    ('time' -&gt; 135.973), ('delta' -&gt; 0.3483), ('m' -&gt; [ 'setMixOnVoice', 2, 0.377152 ])
+    ], Event[ 
+    ('time' -&gt; 136.321), ('delta' -&gt; 0.3483), ('m' -&gt; [ 'setMixOnVoice', 2, 0.32058 ])
+    ], Event[ 
+    ('time' -&gt; 136.67), ('delta' -&gt; 0.3483), ('m' -&gt; [ 'setMixOnVoice', 2, 0.272493 ])
+    ], Event[ 
+    ('time' -&gt; 137.018), ('delta' -&gt; 0.37152), ('m' -&gt; [ 'setMixOnVoice', 2, 0.231619 ])
+    ], Event[ 
+    ('time' -&gt; 137.39), ('delta' -&gt; 0.37152), ('m' -&gt; [ 'setMixOnVoice', 2, 0.196877 ])
+    ], 
+    Event[ 
+    ('time' -&gt; 137.761), ('delta' -&gt; 0.39474), ('m' -&gt; [ 'setMixOnVoice', 2, 0.167345 ])
+    ], Event[ 
+    ('time' -&gt; 138.156), ('delta' -&gt; 0.39474), ('m' -&gt; [ 'setMixOnVoice', 2, 0.142243 ])
+    ], Event[ 
+    ('time' -&gt; 138.551), ('delta' -&gt; 1.8576), ('m' -&gt; [ 'setMixOnVoice', 2, 0.120907 ])
+    ], Event[ 
+    ('time' -&gt; 140.408), ('delta' -&gt; 0.3483), ('m' -&gt; [ 'setVolAt', 2, 0.278048 ])
+    ], Event[ 
+    ('time' -&gt; 140.756), ('delta' -&gt; 0.32508), ('m' -&gt; [ 'setVolAt', 2, 0.305853 ])
+    ], Event[ 
+    ('time' -&gt; 141.082), ('delta' -&gt; 0.37152), ('m' -&gt; [ 'setVolAt', 2, 0.336438 ])
+    ], Event[ 
+    ('time' -&gt; 141.453), ('delta' -&gt; 0.3483), ('m' -&gt; [ 'setVolAt', 2, 0.370082 ])
+    ], Event[ 
+    ('time' -&gt; 141.801), ('delta' -&gt; 0.37152), ('m' -&gt; [ 'setVolAt', 2, 0.40709 ])
+    ], Event[ 
+    ('time' -&gt; 142.173), ('delta' -&gt; 2.73996), ('m' -&gt; [ 'setVolAt', 2, 0.447799 ])
+    ], Event[ 
+    ('time' -&gt; 144.913), ('delta' -&gt; 60.5577), ('m' -&gt; [ 'setVolAt', 2, 0.492579 ])
+    ], 
+    Event[ 
+    ('time' -&gt; 205.471), ('delta' -&gt; 1.48608), ('m' -&gt; [ 'setVolAt', 2, 0.541837 ])
+    ], Event[ 
+    ('time' -&gt; 206.957), ('delta' -&gt; 1.90404), ('m' -&gt; [ 'setVolAt', 2, 0.59602 ])
+    ], Event[ 
+    ('time' -&gt; 208.861), ('delta' -&gt; 0.39474), ('m' -&gt; [ 'setMixOnVoice', 1, 1 ])
+    ], Event[ 
+    ('time' -&gt; 209.255), ('delta' -&gt; 0.37152), ('m' -&gt; [ 'setMixOnVoice', 1, 0.85 ])
+    ], Event[ 
+    ('time' -&gt; 209.627), ('delta' -&gt; 0.37152), ('m' -&gt; [ 'setMixOnVoice', 1, 0.7225 ])
+    ], Event[ 
+    ('time' -&gt; 209.998), ('delta' -&gt; 1.20744), ('m' -&gt; [ 'setMixOnVoice', 1, 0.614126 ])
+    ], Event[ 
+    ('time' -&gt; 211.206), ('delta' -&gt; 0.41796), ('m' -&gt; [ 'setMixOnVoice', 1, 0.522007 ])
+    ], Event[ 
+    ('time' -&gt; 211.624), ('delta' -&gt; 0.719819), ('m' -&gt; [ 'setMixOnVoice', 1, 0.443706 ])
+    ], Event[ 
+    ('time' -&gt; 212.344), ('delta' -&gt; 0.39474), ('m' -&gt; [ 'setMixOnVoice', 1, 0.37715 ])
+    ], Event[ 
+    ('time' -&gt; 212.738), ('delta' -&gt; 0.32508), ('m' -&gt; [ 'setMixOnVoice', 1, 0.320578 ])
+    ], 
+    Event[ 
+    ('time' -&gt; 213.063), ('delta' -&gt; 0.32508), ('m' -&gt; [ 'setMixOnVoice', 1, 0.272492 ])
+    ], Event[ 
+    ('time' -&gt; 213.389), ('delta' -&gt; 0.3483), ('m' -&gt; [ 'setMixOnVoice', 1, 0.231618 ])
+    ], Event[ 
+    ('time' -&gt; 213.737), ('delta' -&gt; 0.39474), ('m' -&gt; [ 'setVolAt', 1, 0.204744 ])
+    ], Event[ 
+    ('time' -&gt; 214.132), ('delta' -&gt; 0.37152), ('m' -&gt; [ 'setVolAt', 1, 0.18427 ])
+    ], Event[ 
+    ('time' -&gt; 214.503), ('delta' -&gt; 0.32508), ('m' -&gt; [ 'setVolAt', 1, 0.165843 ])
+    ], Event[ 
+    ('time' -&gt; 214.828), ('delta' -&gt; 0.3483), ('m' -&gt; [ 'setVolAt', 1, 0.149259 ])
+    ], Event[ 
+    ('time' -&gt; 215.176), ('delta' -&gt; 0.37152), ('m' -&gt; [ 'setVolAt', 1, 0.134333 ])
+    ], Event[ 
+    ('time' -&gt; 215.548), ('delta' -&gt; 0.44118), ('m' -&gt; [ 'setVolAt', 1, 0.1209 ])
+    ], Event[ 
+    ('time' -&gt; 215.989), ('delta' -&gt; 1.92726), ('m' -&gt; [ 'setVolAt', 1, 0.10881 ])
+    ], Event[ 
+    ('time' -&gt; 217.916), ('m' -&gt; [ 'setVolAt', 1, 0.0979286 ])
+    ]] );
+
+a.writeClose;
+
+)
+(
+b =  ZArchive.read("archiveTest");
+b.readItem.postln;
+b.readItem.postln;
+
+b.close;
+
+)
+
+Repetition compression
+identical values or objects that repeat are compressed.
+(
+a = ZArchive.write("archiveTest");
+
+a.writeItem( [ 
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    2,2,2,2,2,2,2,2,2,2,
+    2,2,2,2,2,2,2,2,2,2,
+    2,2,2,2,2,2,2,2,2,2,
+    2,2,2,2,2,2,2,2,2,2,
+    2,2,2,2,2,2,2,2,2,2,
+    2,2,2,2,2,2,2,2,2,2
+    ]);
+
+a.writeClose;
+
+)
+this is about 42 bytes.
+
+Identical objects get reconstituted as equal but independant objects.
+ 
+
+(
+b = ZArchive.read("archiveTest");
+b.readItem.postln;
+b.close;
+)
+
+
+(
+
+a = ZArchive.write("archiveTest");
+
+a.writeItem(nil);
+a.writeItem("word");
+a.writeClose;
+
+)
+
+
+(
+b =  ZArchive.read("archiveTest");
+b.readItem.postln;
+b.readItem.postln;
+// one more
+b.readItem.postln;
+
+
+b.close;
+
+)
+
+
+asZArchive
+relative to your Document directory
+(
+a = "archiveTest".asZArchive;
+
+
+a.writeItem(1.0.rand);
+a.writeItem([1,2,3,4,5].choose);
+a.writeItem("hello");
+a.writeItem(
+    Event.make({
+        ~a = \a;
+        ~b = \b;
+    })
+);
+a.writeItem([1,2,3,4,5]);
+a.writeItem( Ref(4.0) );
+a.writeItem([
+    Event[
+        ('time' -&gt; 149.797), ('delta' -&gt; 0.453), ('m' -&gt; [ 'setVolAt', 0, 0.415356 ])
+    ],
+    Event[ 
+        ('time' -&gt; 150.25), ('delta' -&gt; 0.478), ('m' -&gt; [ 'setVolAt', 0, 0.37382 ])
+    ],
+    Event[ 
+        ('time' -&gt; 150.728), ('delta' -&gt; 0.428), ('m' -&gt; [ 'setVolAt', 0, 0.336438 ])
+    ]
+]);
+a.writeItem([
+    IdentityDictionary[
+        \a -&gt; "b",
+        "b" -&gt; \c
+    ]
+]); 
+a.writeClose;
+
+)</pre>
+
+<p>If your class already supports saving as a compile string, then it will simply save itself as a compile string without problem. If its data intensive (like a sequencer that records real time gesture information) then you can implement methods to read and write efficient and reversible data formats.
+<p>Adding support for your custom class:<pre class='code prettyprint lang-sc'>SomeClass {
+    var columns,name, beat, beatsPerBar;
+    
+    writeZArchive { arg akv;
+        // turn a path into an archive if needed
+        akv = akv.asZArchive;
+        
+        akv.writeItem(columns.size);
+        // lets say that in this case the column objects have their own writeZArchive support
+        columns.do({|c| c.writeZArchive(akv) });
+        
+        akv.writeItem(name);
+        akv.writeItem(beats);
+        akv.writeItem(beatsPerBar);
+    }
+    readZArchive { arg akv;
+        columns = Array.fill( akv.readItem(Integer) ,{ arg i;
+            // call the custom column object's readZArchive
+            // this is a read constructor that reads from the stream
+            // makes a Tracker object and returns it
+            Tracker.readZArchive(akv) 
+        });
+
+        name = akv.readItem;
+        beats = akv.readItem(Float);
+        beatsPerBar = akv.readItem(Float);
+    }
+}</pre>
+
+<p><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/ZArchive/HelpSource/Classes/ZArchive.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/ZArchive/HelpSource/Classes/ZArchive.schelp</a><br>link::Classes/ZArchive::<br>sc version: 3.7alpha0</div></div></body></html>

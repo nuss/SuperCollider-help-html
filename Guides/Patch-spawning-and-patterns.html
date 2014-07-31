@@ -1,0 +1,68 @@
+<html><head><title>Patch spawning and patterns</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider GUIDES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>crucial>Instr'>Libraries>crucial>Instr</a>, <a href='./../Browse.html#Quarks>cruciallib'>Quarks>cruciallib</a></div>
+<h1>Patch spawning and patterns</h1>
+<div id='summary'>creating Patches for grains or Patterns</div>
+</div>
+<div class='subheader'>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#Spawning grains'>Spawning grains</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Events'>Events</a></li>
+<ul class='toc'></ul></ul></div>
+<p>see also <a href="./../Classes/InstrSpawner.html">InstrSpawner</a><h2><a class='anchor' name='Spawning grains'>Spawning grains</a></h2>
+<pre class='code prettyprint lang-sc'>(
+
+a = Patch({
+    SinOsc.ar(800,0.0)
+});
+
+
+c = Bus.audio;
+a.play(bus: c);
+// a is now playing on bus c, which we can't hear
+
+// patch b will listen to buss c and play one enveloped grain
+b = Patch({ arg tone;
+    var gate;
+    gate = Trig1.kr(1.0,0.25);
+    tone = In.ar(tone,1);
+    tone * EnvGen.kr(Env([0,1,0],[0.05,0.05],\welch,1),gate,doneAction: 2)
+},[
+    c.index
+]);
+
+b.prepareForPlay(s);
+
+// play one grain
+b.spawn(atTime: 0.1);
+
+// play 100 grains
+Routine({
+    1.0.wait;
+    100.do({
+        b.spawn(atTime: 0.1);
+        0.25.wait
+    })
+}).play(SystemClock)
+
+)</pre>
+
+<p>Note that there is a Patch method .respawn which is different.<h2><a class='anchor' name='Events'>Events</a></h2>
+
+<p>Patch-asEvent will create a <a href="./../Classes/Event.html">Event</a> that can be .play(ed) or used in an Event stream
+<p>see also <a href="./../Classes/InstrEventListPlayer">InstrEventListPlayer</a><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Guides/Patch-spawning-and-patterns.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Guides/Patch-spawning-and-patterns.schelp</a><br>link::Guides/Patch-spawning-and-patterns::<br>sc version: 3.7alpha0</div></div></body></html>

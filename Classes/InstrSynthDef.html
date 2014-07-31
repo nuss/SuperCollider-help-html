@@ -1,0 +1,161 @@
+<html><head><title>InstrSynthDef</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>crucial>Instr'>Libraries>crucial>Instr</a>, <a href='./../Browse.html#Quarks>cruciallib'>Quarks>cruciallib</a></div>
+<h1>InstrSynthDef</h1>
+<div id='summary'>Extends SynthDef enabling the extra capabilities of Instr with Patch</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/Instr/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/Instr/InstrSynthDef.sc'>InstrSynthDef.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/SynthDef.html">SynthDef</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Guides/Instr-SynthDefs.html">Instr SynthDefs</a>, <a href="./../Classes/Instr.html">Instr</a>, <a href="./../Classes/SynthDef.html">SynthDef</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*build'>build</a> </li>
+<li class='toc3'><a href='#*makeDefName'>makeDefName</a> </li>
+<li class='toc3'><a href='#*hashEncode'>hashEncode</a> </li>
+<li class='toc3'><a href='#*cacheAt'>cacheAt</a> </li>
+<li class='toc3'><a href='#*cachePut'>cachePut</a> </li>
+<li class='toc3'><a href='#*loadDefFileToBundle'>loadDefFileToBundle</a> </li>
+<li class='toc3'><a href='#*watchServer'>watchServer</a> </li>
+<li class='toc3'><a href='#*clearCache'>clearCache</a> </li>
+<li class='toc3'><a href='#*loadCacheFromDir'>loadCacheFromDir</a> </li>
+<li class='toc3'><a href='#*cacheRemoveAt'>cacheRemoveAt</a> </li>
+<li class='toc3'><a href='#*freeDef'>freeDef</a> </li>
+<li class='toc3'><a href='#*freeAll'>freeAll</a> </li>
+<li class='toc3'><a href='#*buildSynthDef'>buildSynthDef</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-longName'>longName</a> </li>
+<li class='toc3'><a href='#-instrName'>instrName</a> </li>
+<li class='toc3'><a href='#-tempTempoKr'>tempTempoKr</a> </li>
+<li class='toc3'><a href='#-rate'>rate</a> </li>
+<li class='toc3'><a href='#-numChannels'>numChannels</a> </li>
+<li class='toc3'><a href='#-build'>build</a> </li>
+<li class='toc3'><a href='#-buildUgenGraph'>buildUgenGraph</a> </li>
+<li class='toc3'><a href='#-addInstrOnlyArg'>addInstrOnlyArg</a> </li>
+<li class='toc3'><a href='#-addSecretIr'>addSecretIr</a> </li>
+<li class='toc3'><a href='#-addSecretKr'>addSecretKr</a> </li>
+<li class='toc3'><a href='#-playerIn'>playerIn</a> </li>
+<li class='toc3'><a href='#-secretObjects'>secretObjects</a> </li>
+<li class='toc3'><a href='#-secretDefArgs'>secretDefArgs</a> </li>
+<li class='toc3'><a href='#-buildControlsWithObjects'>buildControlsWithObjects</a> </li>
+<li class='toc3'><a href='#-checkInputs'>checkInputs</a> </li>
+<li class='toc3'><a href='#-finishBuild'>finishBuild</a> </li>
+<li class='toc3'><a href='#-instr'>instr</a> </li>
+<li class='toc3'><a href='#-buildErrorString'>buildErrorString</a> </li>
+<li class='toc3'><a href='#-tempoKr'>tempoKr</a> </li>
+<li class='toc3'><a href='#-onTrig'>onTrig</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#How it works'>How it works</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A standard SynthDef creates a synth on the server that has control inputs for each function argument on the synth def function.
+<p>An InstrSynthDef will build a different synth def depending on what objects were passed into it. Some of the inputs (and some of the synth def function's arguments) will not result in control inputs on the synth at all.
+<p>To use Patch, you don't need to know or understand the following, but if you are trying to write arcane input or player objects, then this will be of interest.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> </h3>
+<div class='method'></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*build' href='./../Overviews/Methods.html#build'>build</a> (<span class='argstr'>instr</span>, <span class='argstr'>args</span>, <span class='argstr'>outClass: 'Out'</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>instr<td class='argumentdesc'><tr><td class='argumentname'>args<td class='argumentdesc'><tr><td class='argumentname'>outClass<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*makeDefName' href='./../Overviews/Methods.html#makeDefName'>makeDefName</a> (<span class='argstr'>instr</span>, <span class='argstr'>args</span>, <span class='argstr'>outClass: 'Out'</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>instr<td class='argumentdesc'><tr><td class='argumentname'>args<td class='argumentdesc'><tr><td class='argumentname'>outClass<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*hashEncode' href='./../Overviews/Methods.html#hashEncode'>hashEncode</a> (<span class='argstr'>object</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>object<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*cacheAt' href='./../Overviews/Methods.html#cacheAt'>cacheAt</a> (<span class='argstr'>defName</span>, <span class='argstr'>server</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>defName<td class='argumentdesc'><tr><td class='argumentname'>server<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*cachePut' href='./../Overviews/Methods.html#cachePut'>cachePut</a> (<span class='argstr'>def</span>, <span class='argstr'>server</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>def<td class='argumentdesc'><tr><td class='argumentname'>server<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadDefFileToBundle' href='./../Overviews/Methods.html#loadDefFileToBundle'>loadDefFileToBundle</a> (<span class='argstr'>def</span>, <span class='argstr'>bundle</span>, <span class='argstr'>server</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>def<td class='argumentdesc'><tr><td class='argumentname'>bundle<td class='argumentdesc'><tr><td class='argumentname'>server<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*watchServer' href='./../Overviews/Methods.html#watchServer'>watchServer</a> (<span class='argstr'>server</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*clearCache' href='./../Overviews/Methods.html#clearCache'>clearCache</a> (<span class='argstr'>server</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadCacheFromDir' href='./../Overviews/Methods.html#loadCacheFromDir'>loadCacheFromDir</a> (<span class='argstr'>server</span>, <span class='argstr'>dir</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'><tr><td class='argumentname'>dir<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*cacheRemoveAt' href='./../Overviews/Methods.html#cacheRemoveAt'>cacheRemoveAt</a> (<span class='argstr'>defName</span>, <span class='argstr'>server</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>defName<td class='argumentdesc'><tr><td class='argumentname'>server<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*freeDef' href='./../Overviews/Methods.html#freeDef'>freeDef</a> (<span class='argstr'>defName</span>, <span class='argstr'>server</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>defName<td class='argumentdesc'><tr><td class='argumentname'>server<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*freeAll' href='./../Overviews/Methods.html#freeAll'>freeAll</a> (<span class='argstr'>server</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*buildSynthDef' href='./../Overviews/Methods.html#buildSynthDef'>buildSynthDef</a> </h3>
+<div class='method'></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-longName' href='./../Overviews/Methods.html#longName'>longName</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-instrName' href='./../Overviews/Methods.html#instrName'>instrName</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-tempTempoKr' href='./../Overviews/Methods.html#tempTempoKr'>tempTempoKr</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tempTempoKr' href='./../Overviews/Methods.html#tempTempoKr'>tempTempoKr</a> = value</h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rate' href='./../Overviews/Methods.html#rate'>rate</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-numChannels' href='./../Overviews/Methods.html#numChannels'>numChannels</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-build' href='./../Overviews/Methods.html#build'>build</a> (<span class='argstr'>instr</span>, <span class='argstr'>args</span>, <span class='argstr'>outClass: 'Out'</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>instr<td class='argumentdesc'><tr><td class='argumentname'>args<td class='argumentdesc'><tr><td class='argumentname'>outClass<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-buildUgenGraph' href='./../Overviews/Methods.html#buildUgenGraph'>buildUgenGraph</a> (<span class='argstr'>argInstr</span>, <span class='argstr'>args</span>, <span class='argstr'>outClass</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>argInstr<td class='argumentdesc'><tr><td class='argumentname'>args<td class='argumentdesc'><tr><td class='argumentname'>outClass<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addInstrOnlyArg' href='./../Overviews/Methods.html#addInstrOnlyArg'>addInstrOnlyArg</a> (<span class='argstr'>name</span>, <span class='argstr'>value</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'><tr><td class='argumentname'>value<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addSecretIr' href='./../Overviews/Methods.html#addSecretIr'>addSecretIr</a> (<span class='argstr'>object</span>, <span class='argstr'>initialValue</span>, <span class='argstr'>selector</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>object<td class='argumentdesc'><tr><td class='argumentname'>initialValue<td class='argumentdesc'><tr><td class='argumentname'>selector<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addSecretKr' href='./../Overviews/Methods.html#addSecretKr'>addSecretKr</a> (<span class='argstr'>object</span>, <span class='argstr'>initialValue</span>, <span class='argstr'>selector</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>object<td class='argumentdesc'><tr><td class='argumentname'>initialValue<td class='argumentdesc'><tr><td class='argumentname'>selector<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-playerIn' href='./../Overviews/Methods.html#playerIn'>playerIn</a> (<span class='argstr'>object</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>object<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-secretObjects' href='./../Overviews/Methods.html#secretObjects'>secretObjects</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-secretDefArgs' href='./../Overviews/Methods.html#secretDefArgs'>secretDefArgs</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-buildControlsWithObjects' href='./../Overviews/Methods.html#buildControlsWithObjects'>buildControlsWithObjects</a> (<span class='argstr'>instr</span>, <span class='argstr'>objects</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>instr<td class='argumentdesc'><tr><td class='argumentname'>objects<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-checkInputs' href='./../Overviews/Methods.html#checkInputs'>checkInputs</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-finishBuild' href='./../Overviews/Methods.html#finishBuild'>finishBuild</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-instr' href='./../Overviews/Methods.html#instr'>instr</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-buildErrorString' href='./../Overviews/Methods.html#buildErrorString'>buildErrorString</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-tempoKr' href='./../Overviews/Methods.html#tempoKr'>tempoKr</a> (<span class='argstr'>object</span>, <span class='argstr'>selector</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>object<td class='argumentdesc'><tr><td class='argumentname'>selector<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-onTrig' href='./../Overviews/Methods.html#onTrig'>onTrig</a> (<span class='argstr'>trig</span>, <span class='argstr'>func</span>, <span class='argstr'>value: 0</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>trig<td class='argumentdesc'><tr><td class='argumentname'>func<td class='argumentdesc'><tr><td class='argumentname'>value<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='How it works'>How it works</a></h2>
+<pre class='code prettyprint lang-sc'>InstrSynthDef.build( instr, objects, outClass )</pre>
+<ul>
+<li>each object is asked to initForSynthDef(synthDef,argIndex)  BufferProxy classes use the argument index to build a unique key  so they dont conflict with other BufferProxies.  all other classes need do nothing.<li>each object is asked to addToSynthDef(synthDef,argName)  depending on the objects rate it asks the synthDef to<ul>
+<li>addKr(argName,value,lag)<li>addIr(argName,value)<li>addInstrOnlyArg(argName,value)</ul>
+
+<p> the object may choose which initial value to pass. if a Player does not yet  know its bus assignment, it can safely pass a 0 as it will be asked what bus  it is playing on when the actual synth is being started.  objects such as Env or Float or Array will pass themselves as an instrOnly arg,  thus fixing them in the synthDef  objects such as Sample can be used in the course of the ugenGraph evaluation  to add 'secret' additional inputs. (see below)<li>the synthDef builds Control objects from the kr and ir inputs.<li>each object is asked to return an instrArgFromControl(control,argIndex)<ul>
+<li>Players return In.ar(control, this.numChannels) or In.kr  the control is a kr OutputProxy that indicates the bus that input  should listen to.<li>KrNumberEditors return either the raw control or wrap it in a Lag<li>Stream2Trig returns an InTrig.kr(control,1)<li>Object returns itself —  so a Sample or an Env is passed into the instr function, and in  fact the control it was passed is nil since it would have used  addInstrOnlyArg</ul>
+<li>the instr function is valued with those objects.  during the course of the ugenFunc evaluation,  BufferProxy objects (Sample etc.) may request to addSecretIr or addSecretKr  arguments. this is to request additional inputs to the synth that do not  have arguments in the instr function. thus a Sample can pass itself to the  instr function as an object, and then request a synth input that will be used  to get the bufnum dynamically passed in when the synth actually plays.
+<p> this can also be used to request a tempo bus input (not yet implemented)<li>the Out.ar and a kr control of the name \out are added bassed on the rate and numChannels  of the result of the ugenFunc.<li>the unique synthDef name is calculated. the name should represent the instr name  and the fixed inputs that were used to evaluate it. any Patch that uses the  same fixed inputs (SimpleNumbers) should be able to share the synthDef,  and all the variable inputs should be of compatible rate and numChannels.</ul>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Classes/InstrSynthDef.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/cruciallib/HelpSource/Classes/InstrSynthDef.schelp</a><br>link::Classes/InstrSynthDef::<br>sc version: 3.7alpha0</div></div></body></html>

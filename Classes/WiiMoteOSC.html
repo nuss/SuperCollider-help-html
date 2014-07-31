@@ -1,0 +1,476 @@
+<html><head><title>WiiMoteOSC</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<h1>WiiMoteOSC</h1>
+<div id='summary'>(Undocumented class)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/wiiosc/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/wiiosc/WiiMoteOSC.sc'>WiiMoteOSC.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*all'>all</a> </li>
+<li class='toc3'><a href='#*appaddr'>appaddr</a> </li>
+<li class='toc3'><a href='#*clearResponders'>clearResponders</a> </li>
+<li class='toc3'><a href='#*discover'>discover</a> </li>
+<li class='toc3'><a href='#*eventLoopIsRunning'>eventLoopIsRunning</a> </li>
+<li class='toc3'><a href='#*info'>info</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*makeResponders'>makeResponders</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*path'>path</a> </li>
+<li class='toc3'><a href='#*responders'>responders</a> </li>
+<li class='toc3'><a href='#*start'>start</a> </li>
+<li class='toc3'><a href='#*stop'>stop</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-action'>action</a> </li>
+<li class='toc3'><a href='#-actionSpec'>actionSpec</a> </li>
+<li class='toc3'><a href='#-address'>address</a> </li>
+<li class='toc3'><a href='#-at'>at</a> </li>
+<li class='toc3'><a href='#-battery'>battery</a> </li>
+<li class='toc3'><a href='#-calibration'>calibration</a> </li>
+<li class='toc3'><a href='#-classic_analog'>classic_analog</a> </li>
+<li class='toc3'><a href='#-classic_buttons'>classic_buttons</a> </li>
+<li class='toc3'><a href='#-classic_stick1'>classic_stick1</a> </li>
+<li class='toc3'><a href='#-classic_stick2'>classic_stick2</a> </li>
+<li class='toc3'><a href='#-closeAction'>closeAction</a> </li>
+<li class='toc3'><a href='#-connectAction'>connectAction</a> </li>
+<li class='toc3'><a href='#-deviceSpec'>deviceSpec</a> </li>
+<li class='toc3'><a href='#-disconnectAction'>disconnectAction</a> </li>
+<li class='toc3'><a href='#-dumpEvents'>dumpEvents</a> </li>
+<li class='toc3'><a href='#-enable'>enable</a> </li>
+<li class='toc3'><a href='#-enableButtons'>enableButtons</a> </li>
+<li class='toc3'><a href='#-enableExtension'>enableExtension</a> </li>
+<li class='toc3'><a href='#-enableIR'>enableIR</a> </li>
+<li class='toc3'><a href='#-enableMotion'>enableMotion</a> </li>
+<li class='toc3'><a href='#-enableReport'>enableReport</a> </li>
+<li class='toc3'><a href='#-extension'>extension</a> </li>
+<li class='toc3'><a href='#-getLEDState'>getLEDState</a> </li>
+<li class='toc3'><a href='#-id'>id</a> </li>
+<li class='toc3'><a href='#-nunchuk_buttons'>nunchuk_buttons</a> </li>
+<li class='toc3'><a href='#-nunchuk_motion'>nunchuk_motion</a> </li>
+<li class='toc3'><a href='#-nunchuk_stick'>nunchuk_stick</a> </li>
+<li class='toc3'><a href='#-prInit'>prInit</a> </li>
+<li class='toc3'><a href='#-remote_buttons'>remote_buttons</a> </li>
+<li class='toc3'><a href='#-remote_ir'>remote_ir</a> </li>
+<li class='toc3'><a href='#-remote_led'>remote_led</a> </li>
+<li class='toc3'><a href='#-remote_motion'>remote_motion</a> </li>
+<li class='toc3'><a href='#-removeAction'>removeAction</a> </li>
+<li class='toc3'><a href='#-rumble'>rumble</a> </li>
+<li class='toc3'><a href='#-setAction'>setAction</a> </li>
+<li class='toc3'><a href='#-setLEDState'>setLEDState</a> </li>
+<li class='toc3'><a href='#-spec'>spec</a> </li>
+</ul></ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*appaddr' href='./../Overviews/Methods.html#appaddr'>appaddr</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*clearResponders' href='./../Overviews/Methods.html#clearResponders'>clearResponders</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*discover' href='./../Overviews/Methods.html#discover'>discover</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*eventLoopIsRunning' href='./../Overviews/Methods.html#eventLoopIsRunning'>eventLoopIsRunning</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*info' href='./../Overviews/Methods.html#info'>info</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*makeResponders' href='./../Overviews/Methods.html#makeResponders'>makeResponders</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>i</span>, <span class='argstr'>addr</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*path' href='./../Overviews/Methods.html#path'>path</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*path' href='./../Overviews/Methods.html#path'>path</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*responders' href='./../Overviews/Methods.html#responders'>responders</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*start' href='./../Overviews/Methods.html#start'>start</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*stop' href='./../Overviews/Methods.html#stop'>stop</a> </h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-action' href='./../Overviews/Methods.html#action'>action</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-action' href='./../Overviews/Methods.html#action'>action</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-actionSpec' href='./../Overviews/Methods.html#actionSpec'>actionSpec</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-address' href='./../Overviews/Methods.html#address'>address</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-at' href='./../Overviews/Methods.html#at'>at</a> (<span class='argstr'>controlName</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-battery' href='./../Overviews/Methods.html#battery'>battery</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-battery' href='./../Overviews/Methods.html#battery'>battery</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-calibration' href='./../Overviews/Methods.html#calibration'>calibration</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-classic_analog' href='./../Overviews/Methods.html#classic_analog'>classic_analog</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-classic_buttons' href='./../Overviews/Methods.html#classic_buttons'>classic_buttons</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-classic_stick1' href='./../Overviews/Methods.html#classic_stick1'>classic_stick1</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-classic_stick2' href='./../Overviews/Methods.html#classic_stick2'>classic_stick2</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-closeAction' href='./../Overviews/Methods.html#closeAction'>closeAction</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-closeAction' href='./../Overviews/Methods.html#closeAction'>closeAction</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectAction' href='./../Overviews/Methods.html#connectAction'>connectAction</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectAction' href='./../Overviews/Methods.html#connectAction'>connectAction</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-deviceSpec' href='./../Overviews/Methods.html#deviceSpec'>deviceSpec</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disconnectAction' href='./../Overviews/Methods.html#disconnectAction'>disconnectAction</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disconnectAction' href='./../Overviews/Methods.html#disconnectAction'>disconnectAction</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-dumpEvents' href='./../Overviews/Methods.html#dumpEvents'>dumpEvents</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-dumpEvents' href='./../Overviews/Methods.html#dumpEvents'>dumpEvents</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-enable' href='./../Overviews/Methods.html#enable'>enable</a> (<span class='argstr'>onoff</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-enableButtons' href='./../Overviews/Methods.html#enableButtons'>enableButtons</a> (<span class='argstr'>onoff</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-enableExtension' href='./../Overviews/Methods.html#enableExtension'>enableExtension</a> (<span class='argstr'>onoff</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-enableIR' href='./../Overviews/Methods.html#enableIR'>enableIR</a> (<span class='argstr'>onoff</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-enableMotion' href='./../Overviews/Methods.html#enableMotion'>enableMotion</a> (<span class='argstr'>onoff</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-enableReport' href='./../Overviews/Methods.html#enableReport'>enableReport</a> (<span class='argstr'>onoff</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-extension' href='./../Overviews/Methods.html#extension'>extension</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-extension' href='./../Overviews/Methods.html#extension'>extension</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getLEDState' href='./../Overviews/Methods.html#getLEDState'>getLEDState</a> (<span class='argstr'>id</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-id' href='./../Overviews/Methods.html#id'>id</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-nunchuk_buttons' href='./../Overviews/Methods.html#nunchuk_buttons'>nunchuk_buttons</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-nunchuk_motion' href='./../Overviews/Methods.html#nunchuk_motion'>nunchuk_motion</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-nunchuk_stick' href='./../Overviews/Methods.html#nunchuk_stick'>nunchuk_stick</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prInit' href='./../Overviews/Methods.html#prInit'>prInit</a> (<span class='argstr'>i</span>, <span class='argstr'>addr</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-remote_buttons' href='./../Overviews/Methods.html#remote_buttons'>remote_buttons</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-remote_ir' href='./../Overviews/Methods.html#remote_ir'>remote_ir</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-remote_led' href='./../Overviews/Methods.html#remote_led'>remote_led</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-remote_motion' href='./../Overviews/Methods.html#remote_motion'>remote_motion</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeAction' href='./../Overviews/Methods.html#removeAction'>removeAction</a> (<span class='argstr'>key</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-rumble' href='./../Overviews/Methods.html#rumble'>rumble</a> (<span class='argstr'>onoff</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setAction' href='./../Overviews/Methods.html#setAction'>setAction</a> (<span class='argstr'>key</span>, <span class='argstr'>keyAction</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setLEDState' href='./../Overviews/Methods.html#setLEDState'>setLEDState</a> (<span class='argstr'>lid</span>, <span class='argstr'>state</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-spec' href='./../Overviews/Methods.html#spec'>spec</a> </h3>
+<h2><a class='anchor' name='Help template'>Help template</a></h2>
+
+<p>Copy and paste the text below and save to HelpSource/Classes/WiiMoteOSC.schelp<pre class='code prettyprint lang-sc'>TITLE:: WiiMoteOSC
+summary:: (put short description here)
+categories:: Undocumented classes
+related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+
+DESCRIPTION::
+(put long description here)
+
+
+CLASSMETHODS::
+
+METHOD:: makeResponders
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: eventLoopIsRunning
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: initClass
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: new
+(describe method here)
+
+ARGUMENT:: i
+(describe argument here)
+
+ARGUMENT:: addr
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: all
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: discover
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: info
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: path
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: appaddr
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: clearResponders
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: start
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: responders
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: stop
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+
+INSTANCEMETHODS::
+
+METHOD:: deviceSpec
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: remote_motion
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: remote_buttons
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: classic_stick1
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: enableMotion
+(describe method here)
+
+ARGUMENT:: onoff
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: classic_buttons
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: at
+(describe method here)
+
+ARGUMENT:: controlName
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prInit
+(describe method here)
+
+ARGUMENT:: i
+(describe argument here)
+
+ARGUMENT:: addr
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: remote_ir
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: address
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: battery
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: classic_analog
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: classic_stick2
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: getLEDState
+(describe method here)
+
+ARGUMENT:: id
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: enable
+(describe method here)
+
+ARGUMENT:: onoff
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setAction
+(describe method here)
+
+ARGUMENT:: key
+(describe argument here)
+
+ARGUMENT:: keyAction
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: extension
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: enableIR
+(describe method here)
+
+ARGUMENT:: onoff
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setLEDState
+(describe method here)
+
+ARGUMENT:: lid
+(describe argument here)
+
+ARGUMENT:: state
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: enableExtension
+(describe method here)
+
+ARGUMENT:: onoff
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: spec
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: nunchuk_motion
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: enableButtons
+(describe method here)
+
+ARGUMENT:: onoff
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: dumpEvents
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: nunchuk_buttons
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: action
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: calibration
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: enableReport
+(describe method here)
+
+ARGUMENT:: onoff
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: actionSpec
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: id
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: connectAction
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: removeAction
+(describe method here)
+
+ARGUMENT:: key
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: rumble
+(describe method here)
+
+ARGUMENT:: onoff
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: remote_led
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: disconnectAction
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: nunchuk_stick
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: closeAction
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+
+EXAMPLES::
+
+code::
+(some example code)
+::
+</pre>
+<div class='doclink'>link::Classes/WiiMoteOSC::<br>sc version: 3.7alpha0</div></div></body></html>

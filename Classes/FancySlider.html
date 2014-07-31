@@ -1,0 +1,132 @@
+<html><head><title>FancySlider</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#GUI>Views'>GUI>Views</a>, <a href='./../Browse.html#Quarks>FancySlider'>Quarks>FancySlider</a></div>
+<h1>FancySlider</h1>
+<div id='summary'>An efficient Slider which substitutes a user view for a slider</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/FancySlider/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/FancySlider/FancySlider.sc'>FancySlider.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/SCViewHolder.html">SCViewHolder</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/Slider.html">Slider</a>, <a href="./../Classes/EZFancySlider.html">EZFancySlider</a>, <a href="./../Classes/EZSlider.html">EZSlider</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-drawFunc'>drawFunc</a> </li>
+<li class='toc3'><a href='#-sliderColor'>sliderColor</a> </li>
+<li class='toc3'><a href='#-knobColor'>knobColor</a> </li>
+<li class='toc3'><a href='#-frameColor'>frameColor</a> </li>
+<li class='toc3'><a href='#-thumbSize'>thumbSize</a> </li>
+<li class='toc3'><a href='#-step'>step</a> </li>
+<li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc3'><a href='#-valueAction'>valueAction</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This should respond just like a slider. See the documentation for Slider. You can also customize the colors of the slider, and you can even customize the draw function. See drawFunc below. EZFancySlider will wrap a FancySlider just like EZSlider does with a Slider.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>)</h3>
+<div class='method'></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-drawFunc' href='./../Overviews/Methods.html#drawFunc'>drawFunc</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-drawFunc' href='./../Overviews/Methods.html#drawFunc'>drawFunc</a> = value</h3>
+<div class='method'>
+<p>A user definable function for drawing the widget. You can also add a Function in order to enhance the existing function:<pre class='code prettyprint lang-sc'>(
+w=Window.new.front;
+v = FancySlider(w, Rect (20,90,300,20)).action_{"test".postln};
+
+v.drawFunc=v.drawFunc.addFunc({arg uview; 
+    var value_string = v.value.round(0.01).asString;
+    var string_x;
+    Pen.font = Font("Helvetica",11);
+    string_x= (v.value*300).clip(4, 300-26);
+    Pen.color = Color.white.alpha_(0.7);
+    Pen.addRect(Rect(string_x-1,1,26,12));
+    Pen.fill;
+    Pen.color = Color.black;
+    Pen.stringAtPoint(value_string,Point(string_x,0));
+    Pen.stroke;
+    
+});
+v.value_(0.4);
+)</pre>
+
+<p>The amount by which the value will changed when -increment or -decrement is called, or when related keys are pressed.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-sliderColor' href='./../Overviews/Methods.html#sliderColor'>sliderColor</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sliderColor' href='./../Overviews/Methods.html#sliderColor'>sliderColor</a> = value</h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-knobColor' href='./../Overviews/Methods.html#knobColor'>knobColor</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-knobColor' href='./../Overviews/Methods.html#knobColor'>knobColor</a> = value</h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-frameColor' href='./../Overviews/Methods.html#frameColor'>frameColor</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-frameColor' href='./../Overviews/Methods.html#frameColor'>frameColor</a> = value</h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-thumbSize' href='./../Overviews/Methods.html#thumbSize'>thumbSize</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-thumbSize' href='./../Overviews/Methods.html#thumbSize'>thumbSize</a> = value</h3>
+<div class='method'>
+<p> The size of the handle - its width or height, depending on <a href="#-orientation">-orientation</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>(arg1)<td class='argumentdesc'>
+<p> An Integer amount of pixels.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-step' href='./../Overviews/Methods.html#step'>step</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-step' href='./../Overviews/Methods.html#step'>step</a> = value</h3>
+<div class='method'>
+<p> The amount by which the value will changed when <a href="#-increment">-increment</a> or <a href="#-decrement">-decrement</a> is called, or when related keys are pressed.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>(arg1)<td class='argumentdesc'>
+<p> A Float.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p> Numerical value between 0 and 1, represented by the handle position within the groove.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p> A Float.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-valueAction' href='./../Overviews/Methods.html#valueAction'>valueAction</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-valueAction' href='./../Overviews/Methods.html#valueAction'>valueAction</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p> Sets <a href="#-value">-value</a> and triggeres <a href="#-action">-action</a>.</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>(
+// Show the slider value in a NumberBox
+    w = Window.new.front;
+    c = NumberBox(w, Rect(20, 20, 150, 20));
+    a = FancySlider(w, Rect(20, 60, 150, 20))
+      .action_({
+        c.value_(a.value)
+        });
+    a.action.value;
+)
+
+(
+// Customize the drawing function:
+w=Window.new.front;
+20.do{arg i; var v;
+
+v = FancySlider(w, Rect (0,i*20,400,20)).action_{"test".postln};
+
+v.drawFunc=v.drawFunc.addFunc({arg uview; 
+    var value_string = v.value.round(0.01).asString;
+    var string_x;
+    Pen.font = Font("Helvetica",11);
+    string_x= (v.value*400).clip(4, 400-26);
+    Pen.color = Color.white.alpha_(0.7);
+    Pen.addRect(Rect(string_x-1,1,26,12));
+    Pen.fill;
+    Pen.color = Color.black;
+    Pen.stringAtPoint(value_string,Point(string_x,0));
+    Pen.stroke;
+    
+});
+v.valueAction_(1.0.rand);
+}
+)</pre>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/FancySlider/HelpSource/Classes/FancySlider.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/FancySlider/HelpSource/Classes/FancySlider.schelp</a><br>link::Classes/FancySlider::<br>sc version: 3.7alpha0</div></div></body></html>

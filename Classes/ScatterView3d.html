@@ -1,0 +1,211 @@
+<html><head><title>ScatterView3d</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#GUI>Accessories'>GUI>Accessories</a>, <a href='./../Browse.html#Quarks>MathLib'>Quarks>MathLib</a></div>
+<h1>ScatterView3d</h1>
+<div id='summary'>Plot a collection of points in 3D</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/MathLib/classes/gui/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/MathLib/classes/gui/ScatterView.sc'>ScatterView.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Reference/plot.html">plot</a>, <a href="./../Classes/Matrix.html">Matrix</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-init3d'>init3d</a> </li>
+<li class='toc3'><a href='#-data'>data</a> </li>
+<li class='toc3'><a href='#-refresh'>refresh</a> </li>
+<li class='toc3'><a href='#-rotX'>rotX</a> </li>
+<li class='toc3'><a href='#-rotY'>rotY</a> </li>
+<li class='toc3'><a href='#-rotZ'>rotZ</a> </li>
+<li class='toc3'><a href='#-rot'>rot</a> </li>
+<li class='toc3'><a href='#-drawMethod'>drawMethod</a> </li>
+<li class='toc3'><a href='#-symbolSize'>symbolSize</a> </li>
+<li class='toc3'><a href='#-symbolColor'>symbolColor</a> </li>
+<li class='toc3'><a href='#-isHighlight'>isHighlight</a> </li>
+<li class='toc3'><a href='#-highlightItem'>highlightItem</a> </li>
+<li class='toc3'><a href='#-highlightRange'>highlightRange</a> </li>
+<li class='toc3'><a href='#-highlightColor'>highlightColor</a> </li>
+<li class='toc3'><a href='#-highlightSize'>highlightSize</a> </li>
+<li class='toc3'><a href='#-background'>background</a> </li>
+<li class='toc3'><a href='#-resize'>resize</a> </li>
+<li class='toc3'><a href='#-pr_project'>pr_project</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Plot a collection of points in 3D<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>, <span class='argstr'>data</span>, <span class='argstr'>specX</span>, <span class='argstr'>specY</span>, <span class='argstr'>specZ</span>, <span class='argstr'>rotX: 0</span>, <span class='argstr'>rotY: 0</span>, <span class='argstr'>rotZ: 0</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>parent<td class='argumentdesc'>
+<p>Parent view or window<tr><td class='argumentname'>bounds<td class='argumentdesc'>
+<p>Bounds<tr><td class='argumentname'>data<td class='argumentdesc'>
+<p>An array of [[x1,y1,z1], [x1,y1,z2], ...[xn,yN,zN]]<tr><td class='argumentname'>specX<td class='argumentdesc'>
+<p>ControlSpec with min/max of the plotted range of dimension X<tr><td class='argumentname'>specY<td class='argumentdesc'>
+<p>ControlSpec with min/max of the plotted range of dimension Y<tr><td class='argumentname'>specZ<td class='argumentdesc'>
+<p>ControlSpec with min/max of the plotted range of dimension Z<tr><td class='argumentname'>rotX<td class='argumentdesc'>
+<p>Initial X rotation in radians<tr><td class='argumentname'>rotY<td class='argumentdesc'>
+<p>Initial Y rotation in radians<tr><td class='argumentname'>rotZ<td class='argumentdesc'>
+<p>Initial Z rotation in radians</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-init3d' href='./../Overviews/Methods.html#init3d'>init3d</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>, <span class='argstr'>data</span>, <span class='argstr'>argspecX</span>, <span class='argstr'>argspecY</span>, <span class='argstr'>argspecZ</span>, <span class='argstr'>argrotX</span>, <span class='argstr'>argrotY</span>, <span class='argstr'>argrotZ</span>)</h3>
+<div class='method'>
+<p>private init</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-data' href='./../Overviews/Methods.html#data'>data</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-data' href='./../Overviews/Methods.html#data'>data</a> = <span class='argstr'>data</span></h3>
+<div class='method'>
+<p>Get or set data array.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>data<td class='argumentdesc'>
+<p>An array of [[x1,y1,z1], [x1,y1,z2], ...[xn,yN,zN]]</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-refresh' href='./../Overviews/Methods.html#refresh'>refresh</a> </h3>
+<div class='method'>
+<p>Refresh the view. You will need to call this after making any changes to data or settings.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rotX' href='./../Overviews/Methods.html#rotX'>rotX</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rotX' href='./../Overviews/Methods.html#rotX'>rotX</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>Rotate<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>radians</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rotY' href='./../Overviews/Methods.html#rotY'>rotY</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rotY' href='./../Overviews/Methods.html#rotY'>rotY</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>Rotate<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>radians</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rotZ' href='./../Overviews/Methods.html#rotZ'>rotZ</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rotZ' href='./../Overviews/Methods.html#rotZ'>rotZ</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>Rotate<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>radians</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rot' href='./../Overviews/Methods.html#rot'>rot</a> (<span class='argstr'>rX</span>, <span class='argstr'>rY</span>, <span class='argstr'>rZ</span>)</h3>
+<div class='method'>
+<p>Rotate<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rX<td class='argumentdesc'>
+<p>radians<tr><td class='argumentname'>rY<td class='argumentdesc'>
+<p>radians<tr><td class='argumentname'>rZ<td class='argumentdesc'>
+<p>radians</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-drawMethod' href='./../Overviews/Methods.html#drawMethod'>drawMethod</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-drawMethod' href='./../Overviews/Methods.html#drawMethod'>drawMethod</a> = <span class='argstr'>method</span></h3>
+<div class='method'>
+<p>Set the shape that will be drawn for each point.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>method<td class='argumentdesc'>
+<p>One of: [\fillRect, \fillOval, \strokeOval, \strokeRect]</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-symbolSize' href='./../Overviews/Methods.html#symbolSize'>symbolSize</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-symbolSize' href='./../Overviews/Methods.html#symbolSize'>symbolSize</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>Size in pixels of the shape plotted for each point<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>pixels</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-symbolColor' href='./../Overviews/Methods.html#symbolColor'>symbolColor</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-symbolColor' href='./../Overviews/Methods.html#symbolColor'>symbolColor</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>Color of the shape plotted for each point<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>Color</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isHighlight' href='./../Overviews/Methods.html#isHighlight'>isHighlight</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isHighlight' href='./../Overviews/Methods.html#isHighlight'>isHighlight</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>Set highlighting mode which adds a crosshair at the selected point or points<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>Boolean</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Boolean</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-highlightItem' href='./../Overviews/Methods.html#highlightItem'>highlightItem</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-highlightItem' href='./../Overviews/Methods.html#highlightItem'>highlightItem</a> = <span class='argstr'>item</span></h3>
+<div class='method'>
+<p>Highlight a point<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>item<td class='argumentdesc'>
+<p>Integer index in data array</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-highlightRange' href='./../Overviews/Methods.html#highlightRange'>highlightRange</a> (<span class='argstr'>start</span>, <span class='argstr'>end</span>)</h3>
+<div class='method'>
+<p>Highlight multiple points<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>start<td class='argumentdesc'>
+<p>Integer index in data array<tr><td class='argumentname'>end<td class='argumentdesc'>
+<p>Integer index in data array</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-highlightColor' href='./../Overviews/Methods.html#highlightColor'>highlightColor</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-highlightColor' href='./../Overviews/Methods.html#highlightColor'>highlightColor</a> = <span class='argstr'>color</span></h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>color<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-highlightSize' href='./../Overviews/Methods.html#highlightSize'>highlightSize</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-highlightSize' href='./../Overviews/Methods.html#highlightSize'>highlightSize</a> = <span class='argstr'>size</span></h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>size<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-background' href='./../Overviews/Methods.html#background'>background</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-background' href='./../Overviews/Methods.html#background'>background</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-resize' href='./../Overviews/Methods.html#resize'>resize</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-resize' href='./../Overviews/Methods.html#resize'>resize</a> = <span class='argstr'>resize</span></h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>resize<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pr_project' href='./../Overviews/Methods.html#pr_project'>pr_project</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>(
+var data;
+data = {{2.0.rand2}!3}!150;
+w = Window.new("3D Scatterplot", Rect(40,40, 500, 500)).front;
+a = ScatterView3d(w, Rect(10,10, 450, 450), data, [-2, 2].asSpec);
+a.drawMethod = \fillRect;
+a.symbolSize = 3;
+a.symbolColor = Color.blue;
+a.background = Color.black;
+
+// Y Slider
+Slider(w, Rect(10, 470, 450, 10)).action_{|me|
+    a.rotY = me.value * 2pi;
+    w.refresh;
+};
+// X Slider
+Slider(w, Rect(470, 10, 10, 450)).action_{|me|
+    a.rotX = me.value * 2pi;
+    w.refresh;
+};
+// Z Slider
+Slider(w, Rect(490, 10, 10, 450)).action_{|me|
+    a.rotZ = me.value * 2pi;
+    w.refresh;
+};
+)
+
+a.isHighlight = true;
+a.highlightColor = Color.green;
+a.highlightSize = 10@10;
+(
+a.highlightItem = 150.rand;
+w.refresh;
+)</pre>
+
+<p><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/MathLib/HelpSource/Classes/ScatterView3d.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/MathLib/HelpSource/Classes/ScatterView3d.schelp</a><br>link::Classes/ScatterView3d::<br>sc version: 3.7alpha0</div></div></body></html>

@@ -1,0 +1,196 @@
+<html><head><title>SplineGui</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Splines>GuiClasses'>Splines>GuiClasses</a>, <a href='./../Browse.html#Quarks>splines'>Quarks>splines</a></div>
+<h1>SplineGui</h1>
+<div id='summary'>2 dimensional spline GUI and editor</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/SplineGui.sc'>SplineGui.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/AbstractSplineGui.html">AbstractSplineGui</a> : <a href="../Classes/ObjectGui.html">ObjectGui</a> : <a href="../Classes/SCViewHolder.html">SCViewHolder</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/BSplineGui.html">BSplineGui</a>, <a href="../Classes/BezierSplineGui.html">BezierSplineGui</a>, <a href="../Classes/SplineMapperGui.html">SplineMapperGui</a></div>
+<div id='related'>See also: <a href="./../Classes/LinearSpline.html">LinearSpline</a>, <a href="./../Classes/BSplineGui.html">BSplineGui</a>, <a href="./../Classes/BezierSplineGui.html">BezierSplineGui</a>, <a href="./../Classes/VectorSplineGui.html">VectorSplineGui</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'><li class='toc2'><a href='#Interface'>Interface</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-gui'>gui</a> </li>
+<li class='toc3'><a href='#-spec'>spec</a> </li>
+<li class='toc3'><a href='#-domainSpec'>domainSpec</a> </li>
+<li class='toc3'><a href='#-density'>density</a> </li>
+<li class='toc3'><a href='#-gridLines'>gridLines</a> </li>
+<li class='toc3'><a href='#-onSelect'>onSelect</a> </li>
+<li class='toc3'><a href='#-setDomainSpec'>setDomainSpec</a> </li>
+<li class='toc3'><a href='#-setZoom'>setZoom</a> </li>
+<li class='toc3'><a href='#-select'>select</a> </li>
+<li class='toc3'><a href='#-background'>background</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-createPoint'>createPoint</a> </li>
+<li class='toc3'><a href='#-detectPointIndex'>detectPointIndex</a> </li>
+<li class='toc3'><a href='#-didResize'>didResize</a> </li>
+<li class='toc3'><a href='#-drawControlPoints'>drawControlPoints</a> </li>
+<li class='toc3'><a href='#-focusColor'>focusColor</a> </li>
+<li class='toc3'><a href='#-guessDomainSpec'>guessDomainSpec</a> </li>
+<li class='toc3'><a href='#-guessSpec'>guessSpec</a> </li>
+<li class='toc3'><a href='#-guiBody'>guiBody</a> </li>
+<li class='toc3'><a href='#-keyDownAction'>keyDownAction</a> </li>
+<li class='toc3'><a href='#-makeMouseActions'>makeMouseActions</a> </li>
+<li class='toc3'><a href='#-map'>map</a> </li>
+<li class='toc3'><a href='#-prDistanceToLine'>prDistanceToLine</a> </li>
+<li class='toc3'><a href='#-rawMapX'>rawMapX</a> </li>
+<li class='toc3'><a href='#-refresh'>refresh</a> </li>
+<li class='toc3'><a href='#-unmap'>unmap</a> </li>
+<li class='toc3'><a href='#-update'>update</a> </li>
+<li class='toc3'><a href='#-writeName'>writeName</a> </li>
+</ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>GUI class for viewing and editing a <a href="./../Classes/LinearSpline.html">LinearSpline</a> and the parent class for the other Spline GUI classes.
+<p>Splines with more dimension than 2 will display only the first 2 dimensions. See <a href="./../Classes/VectorSplineGui.html">VectorSplineGui</a> for editing multi-dimensional splines.
+<p>A spline gui may be placed on a window or composite view just like any other gui, but it may also be placed onto a <a href="./../Classes/UserView.html">UserView</a> so it can be integrated with other more complex UserView based applications.
+<p>The interpolation is currently done during the drawFunc which isn't the most efficient way to do it and the interpolation method shows some errors around sharp corners.
+<p>A SplineInterpolator class is planned that will cache results and can implement a more accurate fit to the data. This class will also be useful for using interpolations in sequencing and for updating server side buffers.<h3><a class='anchor' name='Interface'>Interface</a></h3>
+<pre class='code prettyprint lang-sc'>(
+l = LinearSpline({ { 4.0.rand } ! 2 } ! 9);
+l.gui
+)</pre>
+
+<p>Double click to create a new point. Click a point to select it, hit delete to delete it.
+<p>Hold down shift-control while moving a point to limit movements to the vertical axis. Hold down control to limit it to the horizontal.
+<p>Bezier Splines have control points — hold down ALT while clicking to create or edit those.
+<p>BSplines have an order control. At the moment this is on top of the UserView.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-gui' href='./../Overviews/Methods.html#gui'>gui</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>, <span class='argstr'>argSpec</span>, <span class='argstr'>argDomainSpec</span>, <span class='argstr'>userView</span>)</h3>
+<div class='method'>
+<p>See also examples below.<pre class='code prettyprint lang-sc'>(
+d = Array.fill(32,{ arg i;
+        // time       5-dims of rand data
+        [i * 0.25] ++ Array.fill(5,{ (32.rand + 32).midicps })
+    });
+l = LinearSpline(d);
+
+// simplest way. the Spline class will know its gui class
+// and will create one (a SplineGui), create a window and add a UserView with auto resize
+l.gui;
+
+// place it on a window
+w = Window.new.front;
+l.gui(w,Rect(0,0,500,200),[10,2000,\exp],[0,48]);
+
+// place it on a UserView
+w = Window.new.front;
+u = UserView(w,Rect(0,0,500,200));
+u.drawFunc = {
+    Pen.stringAtPoint("Custom View",120@30,Font.sansSerif(20));
+};
+// it adds itself to the drawFunc
+g = l.gui(nil,Rect(0,0,500,200),[10,2000,\exp],[0,48],u);
+// and returns the SplineGui
+
+// alternate way to  call it: make the SplineGui and THEN gui that
+w = Window.new.front;
+g = SplineGui(l);
+l.gui(w,Rect(0,0,500,200),[10,2000,\exp],[0,48]);
+
+)</pre>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>parent<td class='argumentdesc'>
+<p> nil, Window, composite view, <a href="./../Classes/FlowView.html">FlowView</a><tr><td class='argumentname'>bounds<td class='argumentdesc'>
+<p> nil or <a href="./../Classes/Rect.html">Rect</a><tr><td class='argumentname'>argSpec<td class='argumentdesc'>
+<p> optional spec<tr><td class='argumentname'>argDomainSpec<td class='argumentdesc'>
+<p> optional spec, see below<tr><td class='argumentname'>userView<td class='argumentdesc'>
+<p> optional UserView to place the SplineGui upon.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this (a SplineGui)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-spec' href='./../Overviews/Methods.html#spec'>spec</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-spec' href='./../Overviews/Methods.html#spec'>spec</a> = <span class='argstr'>sp</span></h3>
+<div class='method'>
+<p> Get or set the spec of the vertical dimension. By default it will guess the spec.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>spec<td class='argumentdesc'>
+<p> ControlSpec</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>ControlSpec</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-domainSpec' href='./../Overviews/Methods.html#domainSpec'>domainSpec</a> </h3>
+<div class='method'>
+<p> Get or set the spec of the horizontal dimension. By default it will guess this and does a good job. Note that if the spec has a custom GridLines set then this will be used for drawing Grid lines on the plot. A time based GridLines class is planned which will draw beats/bars and smpte time.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>ControlSpec</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-density' href='./../Overviews/Methods.html#density'>density</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-density' href='./../Overviews/Methods.html#density'>density</a> = value</h3>
+<div class='method'>
+<p> Lines between the spline's points are drawn using an interpolation of the spline. This is the density per spline segment. Default is 256 which will cause some errors in drawing around sharp corners. Densities of 1024 will be more accurate but make the response fairly slow.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>integer</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-gridLines' href='./../Overviews/Methods.html#gridLines'>gridLines</a> </h3>
+<div class='method'>
+<p> access the DrawGrid object which has two GridLines for each of the domains.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p><a href="./../Classes/DrawGrid.html">DrawGrid</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-onSelect' href='./../Overviews/Methods.html#onSelect'>onSelect</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-onSelect' href='./../Overviews/Methods.html#onSelect'>onSelect</a> = value</h3>
+<div class='method'>
+<p> A handler evaluated when you select a point. arg: selected index, splinegui<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>function</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setDomainSpec' href='./../Overviews/Methods.html#setDomainSpec'>setDomainSpec</a> (<span class='argstr'>dsp</span>, <span class='argstr'>setGridLines: true</span>)</h3>
+<div class='method'>
+<p> (describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>dsp<td class='argumentdesc'>
+<p> (describe argument here)<tr><td class='argumentname'>setGridLines<td class='argumentdesc'>
+<p> (describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><a href="./../Classes/ControlSpec.html">ControlSpec</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setZoom' href='./../Overviews/Methods.html#setZoom'>setZoom</a> (<span class='argstr'>argFromX</span>, <span class='argstr'>argToX</span>)</h3>
+<div class='method'>
+<p> Zoom along the horizontal domain to a subset of the entire spline.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>argFromX<td class='argumentdesc'>
+<p> X value at the left edge<tr><td class='argumentname'>argToX<td class='argumentdesc'>
+<p> X value at the right edge</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-select' href='./../Overviews/Methods.html#select'>select</a> (<span class='argstr'>i</span>)</h3>
+<div class='method'>
+<p> Clicking on a point selects it. This programmatically selects a point.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>i<td class='argumentdesc'>
+<p> integer index or nil to deselect.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>integer or nil</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-background' href='./../Overviews/Methods.html#background'>background</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-background' href='./../Overviews/Methods.html#background'>background</a> = <span class='argstr'>c</span></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/ObjectGui.html'>ObjectGui</a></div>
+<div class='method'>
+<p> Get or set the background of the UserView<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>color<td class='argumentdesc'></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><a href="./../Classes/Color.html">Color</a></div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-createPoint' href='./../Overviews/Methods.html#createPoint'>createPoint</a> (<span class='argstr'>p</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-detectPointIndex' href='./../Overviews/Methods.html#detectPointIndex'>detectPointIndex</a> (<span class='argstr'>p</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-didResize' href='./../Overviews/Methods.html#didResize'>didResize</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-drawControlPoints' href='./../Overviews/Methods.html#drawControlPoints'>drawControlPoints</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-focusColor' href='./../Overviews/Methods.html#focusColor'>focusColor</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-focusColor' href='./../Overviews/Methods.html#focusColor'>focusColor</a> = <span class='argstr'>c</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-guessDomainSpec' href='./../Overviews/Methods.html#guessDomainSpec'>guessDomainSpec</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-guessSpec' href='./../Overviews/Methods.html#guessSpec'>guessSpec</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-guiBody' href='./../Overviews/Methods.html#guiBody'>guiBody</a> (<span class='argstr'>layout</span>, <span class='argstr'>bounds</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-keyDownAction' href='./../Overviews/Methods.html#keyDownAction'>keyDownAction</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-keyDownAction' href='./../Overviews/Methods.html#keyDownAction'>keyDownAction</a> = <span class='argstr'>f</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeMouseActions' href='./../Overviews/Methods.html#makeMouseActions'>makeMouseActions</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-map' href='./../Overviews/Methods.html#map'>map</a> (<span class='argstr'>p</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prDistanceToLine' href='./../Overviews/Methods.html#prDistanceToLine'>prDistanceToLine</a> (<span class='argstr'>click</span>, <span class='argstr'>prev</span>, <span class='argstr'>next</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-rawMapX' href='./../Overviews/Methods.html#rawMapX'>rawMapX</a> (<span class='argstr'>x</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-refresh' href='./../Overviews/Methods.html#refresh'>refresh</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-unmap' href='./../Overviews/Methods.html#unmap'>unmap</a> (<span class='argstr'>point</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-update' href='./../Overviews/Methods.html#update'>update</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-writeName' href='./../Overviews/Methods.html#writeName'>writeName</a> </h3>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/HelpSource/Classes/SplineGui.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/HelpSource/Classes/SplineGui.schelp</a><br>link::Classes/SplineGui::<br>sc version: 3.7alpha0</div></div></body></html>

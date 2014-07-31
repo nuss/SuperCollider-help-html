@@ -1,0 +1,183 @@
+<html><head><title>LinearSpline</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Splines'>Splines</a>, <a href='./../Browse.html#Envelopes>Splines'>Envelopes>Splines</a>, <a href='./../Browse.html#Quarks>splines'>Quarks>splines</a></div>
+<h1>LinearSpline</h1>
+<div id='summary'>A simple linearly interpolated spline passing through a series of points.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/Spline.sc'>Spline.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/BSpline.html">BSpline</a>, <a href="../Classes/BezierSpline.html">BezierSpline</a></div>
+<div id='related'>See also: <a href="./../Classes/BezierSpline.html">BezierSpline</a>, <a href="./../Classes/BSpline.html">BSpline</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-interpolate'>interpolate</a> </li>
+<li class='toc3'><a href='#-bilinearInterpolate'>bilinearInterpolate</a> </li>
+<li class='toc3'><a href='#-createPoint'>createPoint</a> </li>
+<li class='toc3'><a href='#-deletePoint'>deletePoint</a> </li>
+<li class='toc3'><a href='#-points'>points</a> </li>
+<li class='toc3'><a href='#-isClosed'>isClosed</a> </li>
+<li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc3'><a href='#-numDimensions'>numDimensions</a> </li>
+<li class='toc3'><a href='#-xypoints'>xypoints</a> </li>
+<li class='toc3'><a href='#-minMaxVal'>minMaxVal</a> </li>
+<li class='toc3'><a href='#-normalizeDim'>normalizeDim</a> </li>
+<li class='toc3'><a href='#-++'>++</a> </li>
+<li class='toc3'><a href='#-guiClass'>guiClass</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-add'>add</a> </li>
+<li class='toc3'><a href='#-interpolateValues'>interpolateValues</a> </li>
+<li class='toc3'><a href='#-setPoint'>setPoint</a> </li>
+<li class='toc3'><a href='#-simplifyStoreArgs'>simplifyStoreArgs</a> </li>
+<li class='toc3'><a href='#-sliceDimensions'>sliceDimensions</a> </li>
+<li class='toc3'><a href='#-spliceDimensions'>spliceDimensions</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A spline is defined by a series of points. These points may be of 2 or more dimensions. 2 dimensional splines may be displayed and edited using a gui. A LinearSpline interpolates between points using straight lines with no curvature.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>points</span>, <span class='argstr'>isClosed: false</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>points<td class='argumentdesc'>
+<p>An array of points supplied as either Point objects or simple arrays. Points may have unlimited dimensions, though all points in a spline need to have the same number of dimensions.<tr><td class='argumentname'>isClosed [boolean]<td class='argumentdesc'>
+<p>If the spline's last point loops around to its first point.</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-interpolate' href='./../Overviews/Methods.html#interpolate'>interpolate</a> (<span class='argstr'>divisions: 128</span>)</h3>
+<div class='method'>
+<p>Interpolate points along the spline path. Note they are not evenly spaced along the whole path, but interpolate per segment. For a more common usage see bilinearInterpolate<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>divisions<td class='argumentdesc'>
+<p>number of divisions per segment</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>returns an array of points of size: (divisions * num segments)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-bilinearInterpolate' href='./../Overviews/Methods.html#bilinearInterpolate'>bilinearInterpolate</a> (<span class='argstr'>divisions</span>, <span class='argstr'>domain: 0</span>, <span class='argstr'>fillEnds: true</span>)</h3>
+<div class='method'>
+<p>While the interpolate method returns points spaced evenly along each segment of the spline, bilinearInterpolate returns points spaced evenly along one dimension. So if a spline is considered to be Y value varying over time as X, then bilinearInterpolate will return points along even time increments for use in buffers, routines that automate changing levels and for mapping function lookup tables.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>divisions<td class='argumentdesc'>
+<p>Number of points desired in the interpolated array<tr><td class='argumentname'>domain<td class='argumentdesc'>
+<p>The dimension number of the evenly spaced interpolation. Default is 0, which in the gui is seen as the X/horizontal dimension.<tr><td class='argumentname'>fillEnds<td class='argumentdesc'>
+<p>The interpolation will start at X value 0 and end at the last point. But your first point may not be at X=0. If fillEnds is true then the start of the interpolated array will be the first point repeated until the first point is reached.<pre class='code prettyprint lang-sc'>(
+b = BSpline([ [ 0.42695473251029, 2.275 ], [ 1, 1 ], [ 2.5102880658436, 3.1 ], [ 4, 4 ] ]);
+b.gui;
+
+// to use X as time we need y values spaced in even X units
+d = b.bilinearInterpolate(512);
+
+d.plot2;
+)</pre>
+</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an array of points, size=divisions
+<p>The bend in the road
+<p>If X is time, then time must of course march ever onwards.
+<p>If a spline point is to the left of a previous spline point then the spline path has travelled backwards in time<pre class='code prettyprint lang-sc'>(
+b = BSpline([ [ 0, 2.5 ], [ 2.9044117647059, 1.225 ], [ 2.5275735294118, 2.8946875 ], [ 5.5836397058824, 4.58734375 ] ]);
+
+b.gui;
+
+b.bilinearInterpolate(512).plot2
+)</pre>
+
+<p>So you can see that the interpolation which progresses always forward in time is bounded in the X dimension until the spline resumes travelling forward in the X direction.
+<p>Even if a point does not lie to the left of its left neighbor with certain curvature settings (in subclasses that have curvature):<pre class='code prettyprint lang-sc'>(
+b = BSpline([ [ 0, 2.5 ], [ 2.9044117647059, 1.225 ], [ 3.1479779411765, 2.55125 ], [ 5.5836397058824, 4.58734375 ] ], 3.0);
+
+b.gui;
+
+b.bilinearInterpolate(512).plot2
+)</pre>
+
+<p>then mapping along the X dimension can only yield one value for Y. That is always the first encountered value. This is to stop you from going back in time to kill your Grandfather.
+<p>In 3D this would be visibility: if the road curves to the left of the mountain, you cannot see it until it comes back out. In 3D rendering the area behind the curve would not be visible.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-createPoint' href='./../Overviews/Methods.html#createPoint'>createPoint</a> (<span class='argstr'>p</span>, <span class='argstr'>i</span>)</h3>
+<div class='method'>
+<p>Create a new point, inserting it in the points array.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>p<td class='argumentdesc'>
+<p>The point, either as a Point object or as an array.<tr><td class='argumentname'>i<td class='argumentdesc'>
+<p>The point index to insert the point at. Note that the subsequent points are moved along the spline's point array but their values are not changed.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-deletePoint' href='./../Overviews/Methods.html#deletePoint'>deletePoint</a> (<span class='argstr'>i</span>)</h3>
+<div class='method'>
+<p>delete a point<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>i<td class='argumentdesc'>
+<p>index of the point to delete</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-points' href='./../Overviews/Methods.html#points'>points</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-points' href='./../Overviews/Methods.html#points'>points</a> = value</h3>
+<div class='method'>
+<p>get/set the points array</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isClosed' href='./../Overviews/Methods.html#isClosed'>isClosed</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-isClosed' href='./../Overviews/Methods.html#isClosed'>isClosed</a> = value</h3>
+<div class='method'>
+<p>get/set if the spline's last point loops around to its first point.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>boolean
+<p>A closed loop:<pre class='code prettyprint lang-sc'>LinearSpline( [ 0@0, 1@2.5,3@3],true).gui</pre>
+</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a> (<span class='argstr'>u</span>)</h3>
+<div class='method'>
+<p>Where value is a float index into the points array, interpolate a new point between points. This is used by the other interpolation methods.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>u<td class='argumentdesc'>
+<p>Float index into the points array</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a point array</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-numDimensions' href='./../Overviews/Methods.html#numDimensions'>numDimensions</a> </h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the number of dimensions of the first point, assuming that all other points have the same dimensionality</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-xypoints' href='./../Overviews/Methods.html#xypoints'>xypoints</a> </h3>
+<div class='method'>
+<p>For use by the gui, this returns the point array as Point objects, discarding any higher dimensions.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-minMaxVal' href='./../Overviews/Methods.html#minMaxVal'>minMaxVal</a> (<span class='argstr'>dim</span>)</h3>
+<div class='method'>
+<p>returns the min and max val of all points in the given dimension. Note that with subclasses that have curvature the min max returns only the points' min and max and does not account for curvature that may result in values above or below that in the final interpolation.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>dim<td class='argumentdesc'>
+<p>The dimension</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>[minVal,maxVal]</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-normalizeDim' href='./../Overviews/Methods.html#normalizeDim'>normalizeDim</a> (<span class='argstr'>dim</span>, <span class='argstr'>min: 0</span>, <span class='argstr'>max: 1</span>)</h3>
+<div class='method'>
+<p>Scale and normalize the points in that dimension to the requested min/max values. This moves the points, but note that subclasses which have curvature may result in values in teh interpolated spline that exceed min/max.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>dim<td class='argumentdesc'>
+<p>The dimension<tr><td class='argumentname'>min<td class='argumentdesc'>
+<p>min value<tr><td class='argumentname'>max<td class='argumentdesc'>
+<p>max value</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the normalization is in place, returns the same Spline object</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-++' href='./../Overviews/Methods.html#++'>++</a> (<span class='argstr'>thou</span>)</h3>
+<div class='method'>
+<p>concatenate another LinearSpline<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>thou<td class='argumentdesc'>
+<p>the other spline</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a new LinearSpline</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-guiClass' href='./../Overviews/Methods.html#guiClass'>guiClass</a> </h3>
+<div class='method'>
+<p>specifies the ObjectGui subclass which builds the GUI for editing the spline<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>ObjectGui subclass</div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-add' href='./../Overviews/Methods.html#add'>add</a> (<span class='argstr'>p</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-interpolateValues' href='./../Overviews/Methods.html#interpolateValues'>interpolateValues</a> (<span class='argstr'>domainValues</span>, <span class='argstr'>domain: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setPoint' href='./../Overviews/Methods.html#setPoint'>setPoint</a> (<span class='argstr'>i</span>, <span class='argstr'>di</span>, <span class='argstr'>val</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-simplifyStoreArgs' href='./../Overviews/Methods.html#simplifyStoreArgs'>simplifyStoreArgs</a> (<span class='argstr'>args</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sliceDimensions' href='./../Overviews/Methods.html#sliceDimensions'>sliceDimensions</a> (<span class='argstr'>dims</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-spliceDimensions' href='./../Overviews/Methods.html#spliceDimensions'>spliceDimensions</a> (<span class='argstr'>dims</span>, <span class='argstr'>other</span>)</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>(some example code)</pre>
+
+<p><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/HelpSource/Classes/LinearSpline.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/splines/HelpSource/Classes/LinearSpline.schelp</a><br>link::Classes/LinearSpline::<br>sc version: 3.7alpha0</div></div></body></html>
