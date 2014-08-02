@@ -45,6 +45,11 @@
 </ul><li class='toc2'><a href='#CV connections using SimpleControllers'>CV connections using SimpleControllers</a></li>
 <ul class='toc'><li class='toc3'><a href='#-action'>action</a> </li>
 </ul><li class='toc2'><a href='#GUI connections'>GUI connections</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Server connections'>Server connections</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Summary of Node related connection methods'>Summary of Node related connection methods</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Reading and writing CVs in functions and patterns'>Reading and writing CVs in functions and patterns</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#CVs and external input'>CVs and external input</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#more undocumented methods'>more undocumented methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-put'>put</a> </li>
 <li class='toc3'><a href='#-asInput'>asInput</a> </li>
 <li class='toc3'><a href='#-db'>db</a> </li>
@@ -196,8 +201,7 @@ MultiSliderView-connect(aCV)    // for CVs with multiple values
 PopupMenu-connect(aCV)    // for SVs, displays SV-items
 ListView-connect(aCV)    // for SVs</pre>
 
-<p>One CV can be connected to many views but each view is connected to only one CV. When a CV's value changes, it is relayed to all of its dependants including the source of the the change. That way, the GUI accurately reflects the new value of the CV. See the behavior of 'b' in the following example.
-<p><em>The following example provides a generic graphic interface to two CVs. Subsequent examples depend on that window, so leave it open until you are finished working through the help file. (The interpreter variables 'a' and 'b' contain the CVs used by the examples, so they should be left unaltered.)</em><pre class='code prettyprint lang-sc'>(
+<p>One CV can be connected to many views but each view is connected to only one CV. When a CV's value changes, it is relayed to all of its dependants including the source of the the change. That way, the GUI accurately reflects the new value of the CV. See the behavior of 'b' in the following example.<div class='note'><span class='notelabel'>NOTE:</span> The following example provides a generic graphic interface to two CVs. Subsequent examples depend on that window, so leave it open until you are finished working through the help file. (The interpreter variables 'a' and 'b' contain the CVs used by the examples, so they should be left unaltered.)</div><pre class='code prettyprint lang-sc'>(
 // create a couple of CVs
 a = CV(\freq);
 b = CV.new.sp(-10,-100,20, 10);
@@ -237,6 +241,138 @@ m = MultiSliderView(x, f.innerBounds.width@f.innerBounds.height);
 c.connect(m);
 c.action_({ |cv| "the value of c is now %\n".postf(cv.value) });
 )</pre>
+<h3><a class='anchor' name='Server connections'>Server connections</a></h3>
+
+<p>OSC commands (i.e., <code class='code prettyprint lang-sc'>/n_set</code>,  <code class='code prettyprint lang-sc'>/s_new</code>) specify initial values of parameters as a flat <a href="./../Classes/Array.html">Array</a> of pairs consisting of a name and its initial value:<pre class='code prettyprint lang-sc'>[frequency: 440, amplitude: 1, ...]</pre>
+
+<p>"Extended argument arrays" allow CVs to be used in place of the initial value. This is the standard syntax for establishing connections between CVs and a server. In an extended argument array, the CV's value can be altered before being sent, multiple CV's can determine the value to be sent, and the value to be sent can be determined by a function (here <code class='code prettyprint lang-sc'>freq</code> is just meant as an example key):<table>
+<tr><td><strong>value</strong><td>[freq: 440]<tr><td><strong>CV</strong><td>[freq: aCV]<tr><td><strong>altered CV</strong><td>[freq: [aCV, aCV.midicps]]<tr><td><strong>combination</strong><td>[freq: [[aCV, bCV], aCV.midicps + bCV]]<tr><td><strong>function</strong><td><code class='code prettyprint lang-sc'>[freq: [aCV, { aCV.midicps.value + 33.rand }]</code></table>
+
+<p>For example, the method <a href="./../Classes/Synth.html#*controls">Synth: *controls</a> is identical to <a href="./../Classes/Synth.html#*new">Synth: *new</a> except the <code class='code prettyprint lang-sc'>args</code> parameter is extended:<pre class='code prettyprint lang-sc'>// basic CV connection
+(
+Synth.controls("default", [
+    freq: a
+]);
+)
+
+// modified CV connection
+(
+Synth.controls("default", [
+    amp: [b, b.dbamp],
+    freq: a
+]);
+)
+
+// multiple modified connection
+(
+Synth.controls("default", [
+    freq: [
+        [a,b], a + b
+    ],
+    amp: [
+        [a,b], (a.cpsmidi.neg/4 + b).dbamp
+    ]
+]);
+)</pre>
+
+<p>In the previous two examples, the modifying expression is actually a combination of <a href="./../Classes/Stream.html">Stream</a>s altered with <a href="./../Overviews/Operators.html#Binary Operators">binary</a> and <a href="./../Overviews/Operators.html#Unary Operators">unary operators</a>. This is concise, but in some cases, it may be necessary to use a <a href="./../Classes/Function.html">Function</a> to define the modification.<div class='note'><span class='notelabel'>NOTE:</span> Within a function definition it is necessary to explicitly extract the value of the CV using a <a href="./../Classes/CV.html#-value">value</a> message.</div><pre class='code prettyprint lang-sc'>// a Function modifying the CV connection
+(
+Synth.controls("default", [
+    freq: [b, {
+        var index;
+        (index = b.value + 100 /12 ).asInteger;
+        [100,200,300,400,500, 600].mirror.at(index)
+    }],
+    amp: [
+        [a,b], { (a.value.cpsmidi.neg/4 + b.value).dbamp }
+    ]
+])
+)</pre>
+<h3><a class='anchor' name='Summary of Node related connection methods'>Summary of Node related connection methods</a></h3>
+<dl>
+<dt>Array<dd><a href="./../Classes/Array.html#-connectToNode">Array: -connectToNode</a>: the receiver is a flat array of name/value pairs
+<p><a href="./../Classes/Array.html#-connectToBuffer">Array: -connectToBuffer</a>: the receiver is an array of CVs
+<p><a href="./../Classes/Array.html#-connectToBus">Array: -connectToBus</a>: the receiver is an array of CVs.<dt>Node<dd><a href="./../Classes/Node.html#-setControls">Node: -setControls</a>: connects CVs to named controls<dt>NodeProxy<dd><a href="./../Classes/NodeProxy.html#-setControls">NodeProxy: -setControls</a>: connects CVs to named controls<pre class='code prettyprint lang-sc'>(
+c = CV.new.sp(-20, -100, 120);
+p = NodeProxy.audio(s, 2);
+p.play; //play to hardware output, return a group with synths
+p.setControls([f: a, c: [b, { \freq.asSpec.map(b.input)}]]);
+b.input_(0.5);
+p.source = { arg f=400, c = 400; PMOsc.ar(f , c, 4, 0, 0.1) };
+)</pre>
+
+<p><dt>Synth<dd><a href="./../Classes/Synth.html#*controls">Synth: *controls</a>: the same as <a href="./../Classes/Synth.html#*new">Synth: *new</a> but allows CVs to be used in the args array<dt>Bus<dd><a href="./../Classes/Bus.html#*controls">Bus: *controls</a>:<pre class='code prettyprint lang-sc'>(
+c = { arg f = 400,  a = -20, pan = 0; Pan2.ar(SinOsc.ar(f, 0, a.dbamp), pan) }.play;
+d = Bus.controls([a, b], s);
+[a, b].connectToBus(d.server, d.index);
+Routine({
+    // need to make sure the synth has been created...
+    s.sync;
+    c.map(\f, d.index, \a, d.index + 1);
+}).play;
+)</pre>
+
+<p><a href="./../Classes/Bus.html#-setControls">Bus: -setControls</a>: connects CVs to consecutive buses<pre class='code prettyprint lang-sc'>(
+c = { arg f = 400, a = -20, pan = 0; Pan2.ar(SinOsc.ar(f, 0, a.dbamp), pan) }.play;
+d = Bus.control(s, 3);
+d.setControls([a, b]);
+[a, b].connectToBus(d.server, d.index);
+Routine({
+    // need to make sure the synth has been created...
+    s.sync;
+    c.map(\f, d.index, \a, d.index + 1);
+}).play;
+)</pre>
+</dl>
+<h3><a class='anchor' name='Reading and writing CVs in functions and patterns'>Reading and writing CVs in functions and patterns</a></h3>
+<dl>
+<dt>Tasks<dd>Within a <a href="./../Classes/Function.html">Function</a>, CVs are accessed using <a href="#-value">value</a> and <a href="#-input">value</a> and altered using <a href="#-value">value_</a> and <a href="#-input">input_</a>.<pre class='code prettyprint lang-sc'>(
+Task({
+    10.do({
+        // print the value scaled to the range [0, 1]
+        a.input.post; " ".post;
+        // print the actual value
+        a.value.postln;
+        // select a new value at random
+        a.input_(1.0.rand);
+        // the weighting of values will conform to the warp
+        // with \exp, values fall uniformly in each octave
+        wait(0.1);
+    })
+}).play(AppClock)
+)</pre>
+
+<p><dt>Patterns<dd>Within a pattern definition, a CV can directly substitute for a <a href="./../Classes/Pattern.html">Pattern</a>:<pre class='code prettyprint lang-sc'>(
+SynthDescLib.global.read;
+Pbind(
+    \instrument, \default,
+    \freq, a,
+    \db, b,
+    \dur, 0.2
+).play(quant: 0);
+)</pre>
+
+<p><a href="./../Classes/Pfunc.html">Pfunc</a> can be used to change the CV from within a Pattern:<pre class='code prettyprint lang-sc'>(
+SynthDescLib.global.read;
+Pbind(
+    \instrument, \default,
+    \freq, Pwhite(100, 1000).round(100),
+    \placeholder, Pfunc({ arg ev; a.value_(ev.at(\freq)) }),
+    \db, b,
+    \dur, 0.2
+).play;
+)</pre>
+</dl>
+<h3><a class='anchor' name='CVs and external input'>CVs and external input</a></h3>
+
+<p>The <a href="#-input">input_(in)</a> method makes it easy to connect a CV to any control source:<pre class='code prettyprint lang-sc'>// MIDI
+(
+MIDIClient.init;
+MIDIIn.connect(0, 0);
+MIDIIn.control = { arg src, chan, num, val;    a.input_(val/127) }
+)</pre>
+
+<p>The methods <a href="#-input">input and input_</a> are also used by <a href="./../Classes/CVPreset.html">CVPreset</a> to allow interpolations between settings that follow warp of the CV's <a href="./../Classes/ControlSpec.html">ControlSpec</a>.<h3><a class='anchor' name='more undocumented methods'>more undocumented methods</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-put' href='./../Overviews/Methods.html#put'>put</a> (<span class='argstr'>index</span>, <span class='argstr'>val</span>)</h3>
 <div class='method'>
 <p>(describe method here)<h4>Arguments:</h4>

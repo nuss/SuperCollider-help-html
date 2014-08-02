@@ -103,7 +103,8 @@
 <li class='toc3'><a href='#-wakeUp'>wakeUp</a> </li>
 </ul><li class='toc2'><a href='#GUI'>GUI</a></li>
 <ul class='toc'><li class='toc3'><a href='#-edit'>edit</a> </li>
-</ul><li class='toc2'><a href='#Extensions by CVCenter'>Extensions by CVCenter</a></li>
+</ul><li class='toc3'><a href='#-setControls'>setControls</a> </li>
+<li class='toc2'><a href='#Extensions by CVCenter'>Extensions by CVCenter</a></li>
 <ul class='toc'><li class='toc3'><a href='#-cvcGui'>cvcGui</a> </li>
 </ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
@@ -169,7 +170,6 @@
 <li class='toc3'><a href='#-servStr'>servStr</a> </li>
 <li class='toc3'><a href='#-serverQuit'>serverQuit</a> </li>
 <li class='toc3'><a href='#-setBus'>setBus</a> </li>
-<li class='toc3'><a href='#-setControls'>setControls</a> </li>
 <li class='toc3'><a href='#-setGroup'>setGroup</a> </li>
 <li class='toc3'><a href='#-setNodeMap'>setNodeMap</a> </li>
 <li class='toc3'><a href='#-shouldAddObject'>shouldAddObject</a> </li>
@@ -525,7 +525,21 @@ a.source = { |freq = 440, rate = 2|
     SinOsc.ar(freq * [1, 1.625]) * SinOsc.kr(rate).max(0) * 0.2
 }
 );</pre>
-</div><h3><a class='anchor' name='Extensions by CVCenter'>Extensions by CVCenter</a></h3>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setControls' href='./../Overviews/Methods.html#setControls'>setControls</a> (<span class='argstr'>args</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc</a></div>
+<div class='method'>
+<p>Connects <a href="./../Classes/CV.html">CV</a>s to named controls.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>args<td class='argumentdesc'>
+<p>an <a href="./../Classes/Array.html">Array</a> of key/value pairs where keys represent the control-names and the values the CVs that are supposed to set values of the controls<pre class='code prettyprint lang-sc'>(
+c = CV.new.sp(-20, -100, 120);
+p = NodeProxy.audio(s, 2);
+p.play; //play to hardware output, return a group with synths
+p.setControls([f: a, c: [b, { \freq.asSpec.map(b.input)}]]);
+b.input_(0.5);
+p.source = { arg f=400, c = 400; PMOsc.ar(f , c, 4, 0, 0.1) };
+)</pre>
+</table></div><h3><a class='anchor' name='Extensions by CVCenter'>Extensions by CVCenter</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-cvcGui' href='./../Overviews/Methods.html#cvcGui'>cvcGui</a> (<span class='argstr'>displayDialog: true</span>, <span class='argstr'>prefix</span>, <span class='argstr'>pairs2D</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extObject.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extObject.sc</a></div>
 <div class='method'>
@@ -620,8 +634,6 @@ a.source = { |freq = 440, rate = 2|
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/JITLib/ProxySpace/extStoreOn.sc'>/usr/local/share/SuperCollider/SCClassLibrary/JITLib/ProxySpace/extStoreOn.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-serverQuit' href='./../Overviews/Methods.html#serverQuit'>serverQuit</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-setBus' href='./../Overviews/Methods.html#setBus'>setBus</a> (<span class='argstr'>argBus</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setControls' href='./../Overviews/Methods.html#setControls'>setControls</a> (<span class='argstr'>args</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-setGroup' href='./../Overviews/Methods.html#setGroup'>setGroup</a> (<span class='argstr'>args</span>, <span class='argstr'>useLatency: false</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-setNodeMap' href='./../Overviews/Methods.html#setNodeMap'>setNodeMap</a> (<span class='argstr'>map</span>, <span class='argstr'>xfade: true</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-shouldAddObject' href='./../Overviews/Methods.html#shouldAddObject'>shouldAddObject</a> (<span class='argstr'>obj</span>)</h3>

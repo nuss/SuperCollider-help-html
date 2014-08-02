@@ -102,6 +102,9 @@
 <li class='toc3'><a href='#-asCompileString'>asCompileString</a> </li>
 <li class='toc3'><a href='#-isValidUGenInput'>isValidUGenInput</a> </li>
 <li class='toc3'><a href='#-asRawOSC'>asRawOSC</a> </li>
+<li class='toc3'><a href='#-connectToNode'>connectToNode</a> </li>
+<li class='toc3'><a href='#-connectToBuffer'>connectToBuffer</a> </li>
+<li class='toc3'><a href='#-connectToBus'>connectToBus</a> </li>
 <li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-allSplineIntControls'>allSplineIntControls</a> </li>
@@ -129,9 +132,6 @@
 <li class='toc3'><a href='#-buildForProxy'>buildForProxy</a> </li>
 <li class='toc3'><a href='#-buildUnlabeledCVConnections'>buildUnlabeledCVConnections</a> </li>
 <li class='toc3'><a href='#-connect'>connect</a> </li>
-<li class='toc3'><a href='#-connectToBuffer'>connectToBuffer</a> </li>
-<li class='toc3'><a href='#-connectToBus'>connectToBus</a> </li>
-<li class='toc3'><a href='#-connectToNode'>connectToNode</a> </li>
 <li class='toc3'><a href='#-cpsname'>cpsname</a> </li>
 <li class='toc3'><a href='#-cvCenterBuildCVConnections'>cvCenterBuildCVConnections</a> </li>
 <li class='toc3'><a href='#-cvWidgetConnect'>cvWidgetConnect</a> </li>
@@ -627,7 +627,28 @@ x.free</pre>
 <p>Returns true. Arrays are valid UGen inputs.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-asRawOSC' href='./../Overviews/Methods.html#asRawOSC'>asRawOSC</a> </h3>
 <div class='method'>
 <p>Returns the OSC measse as an Int8Array. Receiver must be a bundle.<pre class='code prettyprint lang-sc'>[0.1, [\s_new, \default, -1, 1, 1, \freq, 1961]].asRawOSC;</pre>
-</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectToNode' href='./../Overviews/Methods.html#connectToNode'>connectToNode</a> (<span class='argstr'>server</span>, <span class='argstr'>nodeID</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc</a></div>
+<div class='method'>
+<p>The receiver is a flat array of name/value pairs. See <a href="./../Classes/CV.html#Server connections">CV: Server connections</a> for some applicabable examples.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>an instance of <a href="./../Classes/Server.html">Server</a> (i.e. the server on which the <a href="./../Classes/Synth.html">Synth</a> is playing)<tr><td class='argumentname'>nodeID<td class='argumentdesc'>
+<p>an <a href="./../Classes/Integer.html">Integer</a>, representing the nodeID of a <a href="./../Classes/Synth.html">Synth</a> instance</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectToBuffer' href='./../Overviews/Methods.html#connectToBuffer'>connectToBuffer</a> (<span class='argstr'>server</span>, <span class='argstr'>bufferNumber</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc</a></div>
+<div class='method'>
+<p>The receiver is an array of <a href="./../Classes/CVs">CVs</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>an instance of <a href="./../Classes/Server.html">Server</a> (i.e. the server on which the <a href="./../Classes/Buffer.html">Buffer</a> has been initialized)<tr><td class='argumentname'>bufferNumber<td class='argumentdesc'>
+<p>the buffer number of corresponding server-side buffer, returned by calling <a href="./../Classes/Buffer.html#-bufnum">bufnum</a> on its language-side representation.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectToBus' href='./../Overviews/Methods.html#connectToBus'>connectToBus</a> (<span class='argstr'>server</span>, <span class='argstr'>busIndex</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc</a></div>
+<div class='method'>
+<p>The receiver is an array of <a href="./../Classes/CV.html">CV</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>an instance of <a href="./../Classes/Server.html">Server</a> (i.e. the server on which the <a href="./../Classes/Bus.html">Bus</a> has been initialized)<tr><td class='argumentname'>busIndex<td class='argumentdesc'>
+<p>the bus index of the corresponding <a href="./../Classes/Bus.html">Bus</a>, either returned by calling <a href="./../Classes/Bus.html#-index">index</a> on the language-side representation of the bus or the language-side representation of the bus itself</table></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-allSplineIntControls' href='./../Overviews/Methods.html#allSplineIntControls'>allSplineIntControls</a> (<span class='argstr'>amt</span>, <span class='argstr'>clipMode: 'wrap'</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/wslib/wslib-classes/Main Features/Interpolation/extArray-interpolation.sc'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/wslib/wslib-classes/Main Features/Interpolation/extArray-interpolation.sc</a></div>
@@ -674,12 +695,6 @@ x.free</pre>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-buildUnlabeledCVConnections' href='./../Overviews/Methods.html#buildUnlabeledCVConnections'>buildUnlabeledCVConnections</a> (<span class='argstr'>connectFunc</span>, <span class='argstr'>disconnectFunc</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-connect' href='./../Overviews/Methods.html#connect'>connect</a> (<span class='argstr'>view</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc</a></div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectToBuffer' href='./../Overviews/Methods.html#connectToBuffer'>connectToBuffer</a> (<span class='argstr'>server</span>, <span class='argstr'>bufferNumber</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc</a></div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectToBus' href='./../Overviews/Methods.html#connectToBus'>connectToBus</a> (<span class='argstr'>server</span>, <span class='argstr'>busIndex</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc</a></div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectToNode' href='./../Overviews/Methods.html#connectToNode'>connectToNode</a> (<span class='argstr'>server</span>, <span class='argstr'>nodeID</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-cpsname' href='./../Overviews/Methods.html#cpsname'>cpsname</a> (<span class='argstr'>sign</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
