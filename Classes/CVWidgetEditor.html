@@ -1,0 +1,87 @@
+<html><head><title>CVWidgetEditor</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#GUI'>GUI</a>, <a href='./../Browse.html#Conductor'>Conductor</a>, <a href='./../Browse.html#External Control>MIDI'>External Control>MIDI</a>, <a href='./../Browse.html#External Control>OSC'>External Control>OSC</a></div>
+<h1>CVWidgetEditor</h1>
+<div id='summary'>a GUI for editing widgets and their parameters: specs, MIDI, OSC, actions...</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/CVWidgetEditor.sc'>CVWidgetEditor.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/AbstractCVWidgetEditor.html">AbstractCVWidgetEditor</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/AbstractCVWidgetEditor.html">AbstractCVWidgetEditor</a>, <a href="./../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a>, <a href="./../Classes/CVCenter.html">CVCenter</a>, <a href="./../Classes/CV.html">CV</a>, <a href="./../Classes/CVWidget.html">CVWidget</a>, <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a>, <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>, <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a>, <a href="./../Classes/CCResponder.html">CCResponder</a>, <a href="./../Classes/OSCresponderNode.html">OSCresponderNode</a>, <a href="./../Classes/SimpleController.html">SimpleController</a>, <a href="./../Classes/ControlSpec.html">ControlSpec</a>, <a href="./../Classes/OSCCommands.html">OSCCommands</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Common GUI properties and methods'>Common GUI properties and methods</a></li>
+<li class='toc2'><a href='#The "Spec"-tab'>The "Spec"-tab</a></li>
+<li class='toc2'><a href='#The "MIDI"-tab'>The "MIDI"-tab</a></li>
+<li class='toc2'><a href='#The "OSC"-tab'>The "OSC"-tab</a></li>
+<li class='toc2'><a href='#The "Actions"-tab'>The "Actions"-tab</a></li>
+<ul class='toc'><li class='toc3'><a href='#-specConstraintsText'>specConstraintsText</a> </li>
+<li class='toc3'><a href='#-calibNumBoxes'>calibNumBoxes</a> </li>
+<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-close'>close</a> </li>
+</ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>The interface defined within <a href="./../Classes/CVWidget.html">CVWidget</a> resp. its subclasses <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a>, <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> and <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> defines a number of methods which can be triggered via their GUI. However these GUIs don't offer enough space to display all options a widget incorporates. Therefore each widget has an inbuilt editor which is defined within CVWidgetEditor.<div class='note'><span class='notelabel'>NOTE:</span> <ul>
+<li>Since CVWidgetEditor and <a href="./../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a> share a number of properties these are implemented within their superclass <a href="./../Classes/AbstractCVWidgetEditor.html">AbstractCVWidgetEditor</a>.<li>CVWidgetEditor is not supposed to be used directly. Rather editors should always be instantiated from within the widget it belongs to.</ul>
+</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>widget</span>, <span class='argstr'>tab</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Opens a new editor for <code class='code prettyprint lang-sc'>widget</code><div class='note'><span class='notelabel'>NOTE:</span> If widget is a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> the tabs "Spec" and "Actions" will be missing as those properties can be edited in the widget's <a href="./../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a>.</div><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>widget<td class='argumentdesc'>
+<p>the widget-object: either a <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a>, a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a>.<tr><td class='argumentname'>tab<td class='argumentdesc'>
+<p>an <a href="./../Classes/Integer.html">Integer</a>, specifying which tab of the editor shall be focused opening the editor. Each editor contains 4 tabs ( see also <a href="./../Classes/TabbedView2.html">TabbedView2</a>): "Specs", "MIDI", "OSC" and "Actions", each addressed by an integer value from <code class='code prettyprint lang-sc'>0</code> to <code class='code prettyprint lang-sc'>3</code><tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> this parameter is necessary to reflect the widget's slot for which the editor will be created.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <code class='code prettyprint lang-sc'>CVWidgetEditor</code></div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Common GUI properties and methods'>Common GUI properties and methods</a></h3>
+<h3><a class='anchor' name='The "Spec"-tab'>The "Spec"-tab</a></h3>
+<h3><a class='anchor' name='The "MIDI"-tab'>The "MIDI"-tab</a></h3>
+<h3><a class='anchor' name='The "OSC"-tab'>The "OSC"-tab</a></h3>
+<h3><a class='anchor' name='The "Actions"-tab'>The "Actions"-tab</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-specConstraintsText' href='./../Overviews/Methods.html#specConstraintsText'>specConstraintsText</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(describe returnvalue here)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-calibNumBoxes' href='./../Overviews/Methods.html#calibNumBoxes'>calibNumBoxes</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(describe returnvalue here)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-init' href='./../Overviews/Methods.html#init'>init</a> (<span class='argstr'>widget</span>, <span class='argstr'>tab</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>widget<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>tab<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(describe returnvalue here)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-close' href='./../Overviews/Methods.html#close'>close</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(describe returnvalue here)</div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>(some example code)</pre>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/CVWidgetEditor.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/CVWidgetEditor.schelp</a><br>link::Classes/CVWidgetEditor::<br>sc version: 3.7alpha0</div></div></body></html>
