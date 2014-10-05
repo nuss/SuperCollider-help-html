@@ -1,0 +1,68 @@
+<html><head><title>FDPlateDesc</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Physical Modelling'>Physical Modelling</a>, <a href='./../Browse.html#Sound Synthesis'>Sound Synthesis</a></div>
+<h1>FDPlateDesc</h1>
+<div id='summary'>describes the physical properties of a linear membrane with stiffness and loss</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/PMLib/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/PMLib/FDPlateDesc.sc'>FDPlateDesc.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/FDObjectBase.html">FDObjectBase</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/FDObjNetwork.html">FDObjNetwork</a>, <a href="./../Classes/FDStringDesc.html">FDStringDesc</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*validBoundaryConds'>validBoundaryConds</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-pythonString'>pythonString</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p><code class='code prettyprint lang-sc'>FDPlateDesc</code> is a description of a stiff, linear membrane with loss. If <code class='code prettyprint lang-sc'>gamma</code> is zero the object represent the description of a thin, linear plate with loss instead.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>gamma: 200</span>, <span class='argstr'>kappa: 1</span>, <span class='argstr'>b1: 0</span>, <span class='argstr'>b2: 0</span>, <span class='argstr'>boundaryCond: 'allSidesSimplySupported'</span>, <span class='argstr'>epsilon: 1</span>, <span class='argstr'>nu: 1</span>)</h3>
+<div class='method'>
+<p>Create a new instance of <code class='code prettyprint lang-sc'>FDPlateDesc</code>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>gamma<td class='argumentdesc'>
+<p>A <a href="./../Classes/SimpleNumber.html">SimpleNumber</a> denoting the spatially scaled wavespeed.<div class='warning'><span class='warninglabel'>WARNING:</span> Note that it is generally not adviced to use very small, non-zero values for <code class='code prettyprint lang-sc'>gamma</code> as the smaller the value for <code class='code prettyprint lang-sc'>gamma</code>, the larger the number of modes will be. As a consequence, the calculation time might increase significantly and in the worst case either Python or SuperCollider will choke on the amount of data it needs to process resulting in no modal data at all. A zero value for <code class='code prettyprint lang-sc'>gamma</code> is perfectly fine though, provided that <code class='code prettyprint lang-sc'>kappa</code> is non-zero and relatively large (e.g. <code class='code prettyprint lang-sc'>kappa &gt; 10</code>).</div><tr><td class='argumentname'>kappa<td class='argumentdesc'>
+<p>A <a href="./../Classes/SimpleNumber.html">SimpleNumber</a> denoting a spatially scaled stiffness parameter.<tr><td class='argumentname'>b1<td class='argumentdesc'>
+<p>A <a href="./../Classes/SimpleNumber.html">SimpleNumber</a> denoting a frequency independent damping constant.<tr><td class='argumentname'>b2<td class='argumentdesc'>
+<p>A <a href="./../Classes/SimpleNumber.html">SimpleNumber</a> denoting a frequency dependent damping constant.<tr><td class='argumentname'>boundaryCond<td class='argumentdesc'>
+<p>A <a href="./../Classes/Symbol.html">Symbol</a> denoting a valid 2D boundary condition.<tr><td class='argumentname'>epsilon<td class='argumentdesc'>
+<p>A <a href="./../Classes/SimpleNumber.html">SimpleNumber</a> denoting the aspect ratio: <code class='code prettyprint lang-sc'>Lx/Ly</code> of the rectangular domain.<tr><td class='argumentname'>nu<td class='argumentdesc'>
+<p>A <a href="./../Classes/SimpleNumber.html">SimpleNumber</a> denoting free boundary condition parameter (<strong>IGNORE FOR NOW</strong>).</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A new instance of <code class='code prettyprint lang-sc'>FDPlateDesc</code>.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*validBoundaryConds' href='./../Overviews/Methods.html#validBoundaryConds'>validBoundaryConds</a> </h3>
+<div class='method'>
+<p>Get an overview of all valid 2D boundary condition combinations.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An immutable <a href="./../Classes/Array.html">Array</a> of valid 2D boundary conditions.</div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-pythonString' href='./../Overviews/Methods.html#pythonString'>pythonString</a> </h3>
+<div class='method'>
+<p>Generate a string which can be intepretated as a valid Python object.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <a href="./../Classes/String.html">String</a> representing an equivalent Python object.</div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// create a new instance of FDPlateDesc with given physical parameters and print the corresponding python object as a string
+(
+var plateDesc = FDPlateDesc(200,50,0.698698,0.001515,\allSidesClamped);
+plateDesc.pythonString
+)</pre>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/PMLib/HelpSource/Classes/FDPlateDesc.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/PMLib/HelpSource/Classes/FDPlateDesc.schelp</a><br>link::Classes/FDPlateDesc::<br>sc version: 3.7alpha0</div></div></body></html>
