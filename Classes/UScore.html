@@ -1,0 +1,721 @@
+<html><head><title>UScore</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#UnitLib'>UnitLib</a></div>
+<h1>UScore</h1>
+<div id='summary'>A timeline for events</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Session/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Session/UScore.sc'>UScore.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/UEvent.html">UEvent</a> : <a href="../Classes/UArchivable.html">UArchivable</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../CClasses/U">U</a>, <a href="./../Classes/UChain.html">UChain</a>, <a href="./../Classes/USession.html">USession</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*activeScores'>activeScores</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*current'>current</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*openWFS'>openWFS</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*fromPattern'>fromPattern</a> </li>
+<li class='toc3'><a href='#*open'>open</a> </li>
+<li class='toc3'><a href='#*openFunc'>openFunc</a> </li>
+<li class='toc3'><a href='#*openMultiple'>openMultiple</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-events'>events</a> </li>
+<li class='toc3'><a href='#-name'>name</a> </li>
+<li class='toc3'><a href='#-loop'>loop</a> </li>
+<li class='toc3'><a href='#-playState'>playState</a> </li>
+<li class='toc3'><a href='#-updatePos'>updatePos</a> </li>
+<li class='toc3'><a href='#-playTask'>playTask</a> </li>
+<li class='toc3'><a href='#-updatePosTask'>updatePosTask</a> </li>
+<li class='toc3'><a href='#-startedAt'>startedAt</a> </li>
+<li class='toc3'><a href='#-pausedAt'>pausedAt</a> </li>
+<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-isPlaying'>isPlaying</a> </li>
+<li class='toc3'><a href='#-isPaused'>isPaused</a> </li>
+<li class='toc3'><a href='#-isPreparing'>isPreparing</a> </li>
+<li class='toc3'><a href='#-isPrepared'>isPrepared</a> </li>
+<li class='toc3'><a href='#-isStopped'>isStopped</a> </li>
+<li class='toc3'><a href='#-duplicate'>duplicate</a> </li>
+<li class='toc3'><a href='#-makeView'>makeView</a> </li>
+<li class='toc3'><a href='#-isFolder'>isFolder</a> </li>
+<li class='toc3'><a href='#-at'>at</a> </li>
+<li class='toc3'><a href='#-collect'>collect</a> </li>
+<li class='toc3'><a href='#-do'>do</a> </li>
+<li class='toc3'><a href='#-first'>first</a> </li>
+<li class='toc3'><a href='#-last'>last</a> </li>
+<li class='toc3'><a href='#-add'>add</a> </li>
+<li class='toc3'><a href='#-<|'>&lt;|</a> </li>
+<li class='toc3'><a href='#-<<'>&lt;&lt;</a> </li>
+<li class='toc3'><a href='#-size'>size</a> </li>
+<li class='toc3'><a href='#-allEvents'>allEvents</a> </li>
+<li class='toc3'><a href='#-getAllUChains'>getAllUChains</a> </li>
+<li class='toc3'><a href='#-startTimes'>startTimes</a> </li>
+<li class='toc3'><a href='#-durations'>durations</a> </li>
+<li class='toc3'><a href='#-duration'>duration</a> </li>
+<li class='toc3'><a href='#-dur'>dur</a> </li>
+<li class='toc3'><a href='#-finiteDuration'>finiteDuration</a> </li>
+<li class='toc3'><a href='#-isFinite'>isFinite</a> </li>
+<li class='toc3'><a href='#-eventSustain'>eventSustain</a> </li>
+<li class='toc3'><a href='#-release'>release</a> </li>
+<li class='toc3'><a href='#-canFreeSynth'>canFreeSynth</a> </li>
+<li class='toc3'><a href='#-cutStart'>cutStart</a> </li>
+<li class='toc3'><a href='#-cutEnd'>cutEnd</a> </li>
+<li class='toc3'><a href='#-waitTime'>waitTime</a> </li>
+<li class='toc3'><a href='#-fromTrack'>fromTrack</a> </li>
+<li class='toc3'><a href='#-sort'>sort</a> </li>
+<li class='toc3'><a href='#-findEmptyTrack'>findEmptyTrack</a> </li>
+<li class='toc3'><a href='#-findEmptyRegion'>findEmptyRegion</a> </li>
+<li class='toc3'><a href='#-checkIfInEmptyTrack'>checkIfInEmptyTrack</a> </li>
+<li class='toc3'><a href='#-moveEventToEmptyTrack'>moveEventToEmptyTrack</a> </li>
+<li class='toc3'><a href='#-addEventToEmptyTrack'>addEventToEmptyTrack</a> </li>
+<li class='toc3'><a href='#-addEventsToEmptyRegion'>addEventsToEmptyRegion</a> </li>
+<li class='toc3'><a href='#-findCompletelyEmptyTrack'>findCompletelyEmptyTrack</a> </li>
+<li class='toc3'><a href='#-addEventToCompletelyEmptyTrack'>addEventToCompletelyEmptyTrack</a> </li>
+<li class='toc3'><a href='#-cleanOverlaps'>cleanOverlaps</a> </li>
+<li class='toc3'><a href='#-eventsThatWillPlay'>eventsThatWillPlay</a> </li>
+<li class='toc3'><a href='#-eventsToPrepareNow'>eventsToPrepareNow</a> </li>
+<li class='toc3'><a href='#-arrayForPlayTask'>arrayForPlayTask</a> </li>
+<li class='toc3'><a href='#-prepare'>prepare</a> </li>
+<li class='toc3'><a href='#-start'>start</a> </li>
+<li class='toc3'><a href='#-prepareAndStart'>prepareAndStart</a> </li>
+<li class='toc3'><a href='#-prepareWaitAndStart'>prepareWaitAndStart</a> </li>
+<li class='toc3'><a href='#-prStart'>prStart</a> </li>
+<li class='toc3'><a href='#-prStartTasks'>prStartTasks</a> </li>
+<li class='toc3'><a href='#-stopScore'>stopScore</a> </li>
+<li class='toc3'><a href='#-stopChains'>stopChains</a> </li>
+<li class='toc3'><a href='#-stop'>stop</a> </li>
+<li class='toc3'><a href='#-pause'>pause</a> </li>
+<li class='toc3'><a href='#-prSubScoreResume'>prSubScoreResume</a> </li>
+<li class='toc3'><a href='#-resume'>resume</a> </li>
+<li class='toc3'><a href='#-cmdPeriod'>cmdPeriod</a> </li>
+<li class='toc3'><a href='#-pos'>pos</a> </li>
+<li class='toc3'><a href='#-gui'>gui</a> </li>
+<li class='toc3'><a href='#-printOn'>printOn</a> </li>
+<li class='toc3'><a href='#-getInitArgs'>getInitArgs</a> </li>
+<li class='toc3'><a href='#-storeArgs'>storeArgs</a> </li>
+<li class='toc3'><a href='#-onSaveAction'>onSaveAction</a> </li>
+<li class='toc3'><a href='#-sessionGUI'>sessionGUI</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-allUChains'>allUChains</a> </li>
+<li class='toc3'><a href='#-collectOSCBundleFuncs'>collectOSCBundleFuncs</a> </li>
+<li class='toc3'><a href='#-collectOSCBundles'>collectOSCBundles</a> </li>
+<li class='toc3'><a href='#-connect'>connect</a> </li>
+<li class='toc3'><a href='#-copySeries'>copySeries</a> </li>
+<li class='toc3'><a href='#-deepClearTags'>deepClearTags</a> </li>
+<li class='toc3'><a href='#-disconnect'>disconnect</a> </li>
+<li class='toc3'><a href='#-displayDuration'>displayDuration</a> </li>
+<li class='toc3'><a href='#-dispose'>dispose</a> </li>
+<li class='toc3'><a href='#-fromPattern'>fromPattern</a> </li>
+<li class='toc3'><a href='#-indexOf'>indexOf</a> </li>
+<li class='toc3'><a href='#-jumpTo'>jumpTo</a> </li>
+<li class='toc3'><a href='#-markerPositions'>markerPositions</a> </li>
+<li class='toc3'><a href='#-prRecheckSoloMutes'>prRecheckSoloMutes</a> </li>
+<li class='toc3'><a href='#-prSMSet'>prSMSet</a> </li>
+<li class='toc3'><a href='#-prSetHardMutes'>prSetHardMutes</a> </li>
+<li class='toc3'><a href='#-readTextArchiveAction'>readTextArchiveAction</a> </li>
+<li class='toc3'><a href='#-releaseSelf'>releaseSelf</a> </li>
+<li class='toc3'><a href='#-removeEmptyTracks'>removeEmptyTracks</a> </li>
+<li class='toc3'><a href='#-softMute'>softMute</a> </li>
+<li class='toc3'><a href='#-softMuted'>softMuted</a> </li>
+<li class='toc3'><a href='#-solo'>solo</a> </li>
+<li class='toc3'><a href='#-soloed'>soloed</a> </li>
+<li class='toc3'><a href='#-startBeats'>startBeats</a> </li>
+<li class='toc3'><a href='#-storeModifiersOn'>storeModifiersOn</a> </li>
+<li class='toc3'><a href='#-storeName'>storeName</a> </li>
+<li class='toc3'><a href='#-storeParamsOn'>storeParamsOn</a> </li>
+<li class='toc3'><a href='#-tempoMap'>tempoMap</a> </li>
+<li class='toc3'><a href='#-textArchiveFileExtension'>textArchiveFileExtension</a> </li>
+<li class='toc3'><a href='#-toNextMarker'>toNextMarker</a> </li>
+<li class='toc3'><a href='#-toPrevMarker'>toPrevMarker</a> </li>
+<li class='toc3'><a href='#-togglePlayback'>togglePlayback</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>(put long description here)<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*activeScores' href='./../Overviews/Methods.html#activeScores'>activeScores</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*activeScores' href='./../Overviews/Methods.html#activeScores'>activeScores</a> = value</h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*current' href='./../Overviews/Methods.html#current'>current</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> ( <span class='argstr'>... events</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*openWFS' href='./../Overviews/Methods.html#openWFS'>openWFS</a>: METHOD NOT FOUND!</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fromPattern' href='./../Overviews/Methods.html#fromPattern'>fromPattern</a> (<span class='argstr'>pattern</span>, <span class='argstr'>proto</span>, <span class='argstr'>startTime: 0</span>, <span class='argstr'>maxEvents: 200</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Misc/extUChain-patternsupport.sc'>/home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Misc/extUChain-patternsupport.sc</a></div>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*open' href='./../Overviews/Methods.html#open'>open</a> (<span class='argstr'>path</span>, <span class='argstr'>action</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*openFunc' href='./../Overviews/Methods.html#openFunc'>openFunc</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*openFunc' href='./../Overviews/Methods.html#openFunc'>openFunc</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*openMultiple' href='./../Overviews/Methods.html#openMultiple'>openMultiple</a> (<span class='argstr'>paths</span>, <span class='argstr'>action</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-events' href='./../Overviews/Methods.html#events'>events</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-events' href='./../Overviews/Methods.html#events'>events</a> = <span class='argstr'>evs</span></h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a> = <span class='argstr'>x</span></h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>x<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-loop' href='./../Overviews/Methods.html#loop'>loop</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-loop' href='./../Overviews/Methods.html#loop'>loop</a> = <span class='argstr'>bool</span></h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-playState' href='./../Overviews/Methods.html#playState'>playState</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-playState' href='./../Overviews/Methods.html#playState'>playState</a>_ (<span class='argstr'>newState</span>, <span class='argstr'>changed: true</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newState<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>changed<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-updatePos' href='./../Overviews/Methods.html#updatePos'>updatePos</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-updatePos' href='./../Overviews/Methods.html#updatePos'>updatePos</a> = <span class='argstr'>x</span></h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>x<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-playTask' href='./../Overviews/Methods.html#playTask'>playTask</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-updatePosTask' href='./../Overviews/Methods.html#updatePosTask'>updatePosTask</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-startedAt' href='./../Overviews/Methods.html#startedAt'>startedAt</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pausedAt' href='./../Overviews/Methods.html#pausedAt'>pausedAt</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-init' href='./../Overviews/Methods.html#init'>init</a> (<span class='argstr'>args</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>args<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isPlaying' href='./../Overviews/Methods.html#isPlaying'>isPlaying</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isPaused' href='./../Overviews/Methods.html#isPaused'>isPaused</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isPreparing' href='./../Overviews/Methods.html#isPreparing'>isPreparing</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isPrepared' href='./../Overviews/Methods.html#isPrepared'>isPrepared</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isStopped' href='./../Overviews/Methods.html#isStopped'>isStopped</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-duplicate' href='./../Overviews/Methods.html#duplicate'>duplicate</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeView' href='./../Overviews/Methods.html#makeView'>makeView</a> (<span class='argstr'>i</span>, <span class='argstr'>minWidth</span>, <span class='argstr'>maxWidth</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>i<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>maxWidth<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isFolder' href='./../Overviews/Methods.html#isFolder'>isFolder</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-at' href='./../Overviews/Methods.html#at'>at</a> ( <span class='argstr'>... path</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>index<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-collect' href='./../Overviews/Methods.html#collect'>collect</a> (<span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-do' href='./../Overviews/Methods.html#do'>do</a> (<span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-first' href='./../Overviews/Methods.html#first'>first</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-last' href='./../Overviews/Methods.html#last'>last</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-add' href='./../Overviews/Methods.html#add'>add</a> (<span class='argstr'>newEvents</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newEvents<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-<|' href='./../Overviews/Methods.html#&lt;|'>&lt;|</a> (<span class='argstr'>newEvents</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newEvents<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-<<' href='./../Overviews/Methods.html#&lt;&lt;'>&lt;&lt;</a> (<span class='argstr'>score</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>score<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-size' href='./../Overviews/Methods.html#size'>size</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-allEvents' href='./../Overviews/Methods.html#allEvents'>allEvents</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getAllUChains' href='./../Overviews/Methods.html#getAllUChains'>getAllUChains</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-startTimes' href='./../Overviews/Methods.html#startTimes'>startTimes</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-startTimes' href='./../Overviews/Methods.html#startTimes'>startTimes</a> = <span class='argstr'>times</span></h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-durations' href='./../Overviews/Methods.html#durations'>durations</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-duration' href='./../Overviews/Methods.html#duration'>duration</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-duration' href='./../Overviews/Methods.html#duration'>duration</a> = </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-dur' href='./../Overviews/Methods.html#dur'>dur</a> </h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/UEvent.html'>UEvent</a></div>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-finiteDuration' href='./../Overviews/Methods.html#finiteDuration'>finiteDuration</a> (<span class='argstr'>addInf: 10</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isFinite' href='./../Overviews/Methods.html#isFinite'>isFinite</a> </h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/UEvent.html'>UEvent</a></div>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-eventSustain' href='./../Overviews/Methods.html#eventSustain'>eventSustain</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-release' href='./../Overviews/Methods.html#release'>release</a> (<span class='argstr'>time</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-canFreeSynth' href='./../Overviews/Methods.html#canFreeSynth'>canFreeSynth</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-cutStart' href='./../Overviews/Methods.html#cutStart'>cutStart</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-cutEnd' href='./../Overviews/Methods.html#cutEnd'>cutEnd</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-waitTime' href='./../Overviews/Methods.html#waitTime'>waitTime</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-fromTrack' href='./../Overviews/Methods.html#fromTrack'>fromTrack</a> (<span class='argstr'>track: 0</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>track<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-sort' href='./../Overviews/Methods.html#sort'>sort</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-findEmptyTrack' href='./../Overviews/Methods.html#findEmptyTrack'>findEmptyTrack</a> (<span class='argstr'>startTime: 0</span>, <span class='argstr'>endTime: inf</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>startTime<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>endTime<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-findEmptyRegion' href='./../Overviews/Methods.html#findEmptyRegion'>findEmptyRegion</a> (<span class='argstr'>startTime</span>, <span class='argstr'>endTime</span>, <span class='argstr'>startTrack</span>, <span class='argstr'>endTrack</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>startTime<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>endTime<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startTrack<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>endTrack<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-checkIfInEmptyTrack' href='./../Overviews/Methods.html#checkIfInEmptyTrack'>checkIfInEmptyTrack</a> (<span class='argstr'>evt</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>evt<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveEventToEmptyTrack' href='./../Overviews/Methods.html#moveEventToEmptyTrack'>moveEventToEmptyTrack</a> (<span class='argstr'>evt</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>evt<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addEventToEmptyTrack' href='./../Overviews/Methods.html#addEventToEmptyTrack'>addEventToEmptyTrack</a> (<span class='argstr'>evt</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>evt<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addEventsToEmptyRegion' href='./../Overviews/Methods.html#addEventsToEmptyRegion'>addEventsToEmptyRegion</a> (<span class='argstr'>events</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-findCompletelyEmptyTrack' href='./../Overviews/Methods.html#findCompletelyEmptyTrack'>findCompletelyEmptyTrack</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addEventToCompletelyEmptyTrack' href='./../Overviews/Methods.html#addEventToCompletelyEmptyTrack'>addEventToCompletelyEmptyTrack</a> (<span class='argstr'>evt</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>evt<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-cleanOverlaps' href='./../Overviews/Methods.html#cleanOverlaps'>cleanOverlaps</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-eventsThatWillPlay' href='./../Overviews/Methods.html#eventsThatWillPlay'>eventsThatWillPlay</a> (<span class='argstr'>startPos</span>, <span class='argstr'>startEventsActiveAtStartPos: true</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startEventsActiveAtStartPos<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-eventsToPrepareNow' href='./../Overviews/Methods.html#eventsToPrepareNow'>eventsToPrepareNow</a> (<span class='argstr'>startPos: 0</span>, <span class='argstr'>loop: false</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>loop<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-arrayForPlayTask' href='./../Overviews/Methods.html#arrayForPlayTask'>arrayForPlayTask</a> (<span class='argstr'>startPos: 0</span>, <span class='argstr'>assumePrepared: false</span>, <span class='argstr'>startEventsActiveAtStartPos: true</span>, <span class='argstr'>loop: false</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>assumePrepared<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startEventsActiveAtStartPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>loop<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepare' href='./../Overviews/Methods.html#prepare'>prepare</a> (<span class='argstr'>targets</span>, <span class='argstr'>startPos: 0</span>, <span class='argstr'>action</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>targets<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-start' href='./../Overviews/Methods.html#start'>start</a> (<span class='argstr'>targets</span>, <span class='argstr'>startPos: 0</span>, <span class='argstr'>updatePosition: true</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>targets<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>updatePosition<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepareAndStart' href='./../Overviews/Methods.html#prepareAndStart'>prepareAndStart</a> (<span class='argstr'>targets</span>, <span class='argstr'>startPos: 0</span>, <span class='argstr'>updatePosition: true</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>targets<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>updatePosition<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepareWaitAndStart' href='./../Overviews/Methods.html#prepareWaitAndStart'>prepareWaitAndStart</a> (<span class='argstr'>targets</span>, <span class='argstr'>startPos: 0</span>, <span class='argstr'>updatePosition: true</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>targets<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>updatePosition<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prStart' href='./../Overviews/Methods.html#prStart'>prStart</a> (<span class='argstr'>targets</span>, <span class='argstr'>startPos: 0</span>, <span class='argstr'>assumePrepared: false</span>, <span class='argstr'>callStopFirst: true</span>, <span class='argstr'>updatePosition: true</span>, <span class='argstr'>startEventsActiveAtStartPos: true</span>, <span class='argstr'>loop: false</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>targets<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>assumePrepared<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>callStopFirst<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>updatePosition<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startEventsActiveAtStartPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>loop<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prStartTasks' href='./../Overviews/Methods.html#prStartTasks'>prStartTasks</a> (<span class='argstr'>targets</span>, <span class='argstr'>startPos: 0</span>, <span class='argstr'>assumePrepared: false</span>, <span class='argstr'>updatePosition: true</span>, <span class='argstr'>startEventsActiveAtStartPos: true</span>, <span class='argstr'>loop: false</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>targets<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>assumePrepared<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>updatePosition<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>startEventsActiveAtStartPos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>loop<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-stopScore' href='./../Overviews/Methods.html#stopScore'>stopScore</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-stopChains' href='./../Overviews/Methods.html#stopChains'>stopChains</a> (<span class='argstr'>releaseTime</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>releaseTime<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-stop' href='./../Overviews/Methods.html#stop'>stop</a> (<span class='argstr'>releaseTime</span>, <span class='argstr'>changed: true</span>, <span class='argstr'>dispose: true</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>releaseTime<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>changed<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pause' href='./../Overviews/Methods.html#pause'>pause</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prSubScoreResume' href='./../Overviews/Methods.html#prSubScoreResume'>prSubScoreResume</a> (<span class='argstr'>targets</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>targets<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-resume' href='./../Overviews/Methods.html#resume'>resume</a> (<span class='argstr'>targets</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>targets<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-cmdPeriod' href='./../Overviews/Methods.html#cmdPeriod'>cmdPeriod</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pos' href='./../Overviews/Methods.html#pos'>pos</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-pos' href='./../Overviews/Methods.html#pos'>pos</a> = <span class='argstr'>x</span></h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>x<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-gui' href='./../Overviews/Methods.html#gui'>gui</a> (<span class='argstr'>bounds</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/GUI/Session/UScoreEditorGUI.sc'>/home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/GUI/Session/UScoreEditorGUI.sc</a></div>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-printOn' href='./../Overviews/Methods.html#printOn'>printOn</a> (<span class='argstr'>stream</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>stream<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getInitArgs' href='./../Overviews/Methods.html#getInitArgs'>getInitArgs</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeArgs' href='./../Overviews/Methods.html#storeArgs'>storeArgs</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-onSaveAction' href='./../Overviews/Methods.html#onSaveAction'>onSaveAction</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-sessionGUI' href='./../Overviews/Methods.html#sessionGUI'>sessionGUI</a> (<span class='argstr'>view</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/GUI/Session/USessionGUI.sc'>/home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/GUI/Session/USessionGUI.sc</a></div>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>view<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-allUChains' href='./../Overviews/Methods.html#allUChains'>allUChains</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-collectOSCBundleFuncs' href='./../Overviews/Methods.html#collectOSCBundleFuncs'>collectOSCBundleFuncs</a> (<span class='argstr'>server</span>, <span class='argstr'>startOffset: 0</span>, <span class='argstr'>infdur: 60</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-collectOSCBundles' href='./../Overviews/Methods.html#collectOSCBundles'>collectOSCBundles</a> (<span class='argstr'>server</span>, <span class='argstr'>startOffset: 0</span>, <span class='argstr'>infdur: 60</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connect' href='./../Overviews/Methods.html#connect'>connect</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-copySeries' href='./../Overviews/Methods.html#copySeries'>copySeries</a> (<span class='argstr'>first</span>, <span class='argstr'>second</span>, <span class='argstr'>last</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-deepClearTags' href='./../Overviews/Methods.html#deepClearTags'>deepClearTags</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disconnect' href='./../Overviews/Methods.html#disconnect'>disconnect</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-displayDuration' href='./../Overviews/Methods.html#displayDuration'>displayDuration</a> (<span class='argstr'>margin: 10</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-dispose' href='./../Overviews/Methods.html#dispose'>dispose</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-fromPattern' href='./../Overviews/Methods.html#fromPattern'>fromPattern</a> (<span class='argstr'>pattern</span>, <span class='argstr'>proto</span>, <span class='argstr'>startTime: 0</span>, <span class='argstr'>maxEvents: 200</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Misc/extUChain-patternsupport.sc'>/home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Misc/extUChain-patternsupport.sc</a></div>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-indexOf' href='./../Overviews/Methods.html#indexOf'>indexOf</a> (<span class='argstr'>obj</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-jumpTo' href='./../Overviews/Methods.html#jumpTo'>jumpTo</a> (<span class='argstr'>pos: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-markerPositions' href='./../Overviews/Methods.html#markerPositions'>markerPositions</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prRecheckSoloMutes' href='./../Overviews/Methods.html#prRecheckSoloMutes'>prRecheckSoloMutes</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prSMSet' href='./../Overviews/Methods.html#prSMSet'>prSMSet</a> (<span class='argstr'>event</span>, <span class='argstr'>array</span>, <span class='argstr'>bool</span>, <span class='argstr'>setArray</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prSetHardMutes' href='./../Overviews/Methods.html#prSetHardMutes'>prSetHardMutes</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-readTextArchiveAction' href='./../Overviews/Methods.html#readTextArchiveAction'>readTextArchiveAction</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-releaseSelf' href='./../Overviews/Methods.html#releaseSelf'>releaseSelf</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-releaseSelf' href='./../Overviews/Methods.html#releaseSelf'>releaseSelf</a> = </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeEmptyTracks' href='./../Overviews/Methods.html#removeEmptyTracks'>removeEmptyTracks</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-softMute' href='./../Overviews/Methods.html#softMute'>softMute</a> (<span class='argstr'>event</span>, <span class='argstr'>bool</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-softMuted' href='./../Overviews/Methods.html#softMuted'>softMuted</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-solo' href='./../Overviews/Methods.html#solo'>solo</a> (<span class='argstr'>event</span>, <span class='argstr'>bool</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-soloed' href='./../Overviews/Methods.html#soloed'>soloed</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-startBeats' href='./../Overviews/Methods.html#startBeats'>startBeats</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-startBeats' href='./../Overviews/Methods.html#startBeats'>startBeats</a> = <span class='argstr'>beats</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeModifiersOn' href='./../Overviews/Methods.html#storeModifiersOn'>storeModifiersOn</a> (<span class='argstr'>stream</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeName' href='./../Overviews/Methods.html#storeName'>storeName</a> (<span class='argstr'>stream</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeParamsOn' href='./../Overviews/Methods.html#storeParamsOn'>storeParamsOn</a> (<span class='argstr'>stream</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tempoMap' href='./../Overviews/Methods.html#tempoMap'>tempoMap</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tempoMap' href='./../Overviews/Methods.html#tempoMap'>tempoMap</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-textArchiveFileExtension' href='./../Overviews/Methods.html#textArchiveFileExtension'>textArchiveFileExtension</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-toNextMarker' href='./../Overviews/Methods.html#toNextMarker'>toNextMarker</a> (<span class='argstr'>includeEnd: true</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-toPrevMarker' href='./../Overviews/Methods.html#toPrevMarker'>toPrevMarker</a> (<span class='argstr'>includeStart: true</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-togglePlayback' href='./../Overviews/Methods.html#togglePlayback'>togglePlayback</a> (<span class='argstr'>targets</span>)</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>(
+z = UScore(
+    *12.collect({ |i|
+        var evt;
+        evt = BufSndFile("sounds/a11wlk01-44_1.aiff", 
+                rate: (i-6).midiratio, loop: [true,false].wrapAt(i) ).makeUChain
+                .releaseSelf_(true).startTime_(i/2).track_(i).fadeOut_(1).fadeIn_(1);
+        
+        if( evt.duration == inf ) {
+            evt.duration = 8; // looped events stopped by UScore
+        };
+        evt;
+    })
+);
+x = UScoreEditor(z);
+y = UScoreEditorGUI(x);
+)
+
+(
+z = UScore(
+    *12.collect({ |i|
+        var evt;
+        evt = UChain(i/2,i,rrand(3.0,10.0),false,\sine, \output).fadeOut_(1).fadeIn_(1);
+        evt.units[0].set(\freq,rrand(200.0,600.0) );
+        evt;
+    })
+);
+x = UScoreEditor(z);
+y = UScoreEditorGUI(x);
+)
+
+
+z.prepare( s, 0, { "done".postln } );
+z.start( s, 0, true );
+
+z.pause; // looped events keep playing
+z.resume;
+
+z.stop;
+
+z.start( s, 0, false ); // takes extra wait time for preparing events (depends on content)
+
+z.pos; // returns current position (keeps increasing if not stopped</pre>
+
+<p><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/HelpSource/Classes/UScore.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/HelpSource/Classes/UScore.schelp</a><br>link::Classes/UScore::<br>sc version: 3.7alpha0</div></div></body></html>

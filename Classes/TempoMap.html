@@ -1,0 +1,646 @@
+<html><head><title>TempoMap</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<h1>TempoMap</h1>
+<div id='summary'>(Undocumented class)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Misc/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Misc/TempoMap.sc'>TempoMap.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*beatsToSeconds'>beatsToSeconds</a> </li>
+<li class='toc3'><a href='#*default'>default</a> </li>
+<li class='toc3'><a href='#*defaultBarMap'>defaultBarMap</a> </li>
+<li class='toc3'><a href='#*fromObject'>fromObject</a> </li>
+<li class='toc3'><a href='#*fromPreset'>fromPreset</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*presetManager'>presetManager</a> </li>
+<li class='toc3'><a href='#*presets'>presets</a> </li>
+<li class='toc3'><a href='#*secondsToBeats'>secondsToBeats</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-=='>==</a> </li>
+<li class='toc3'><a href='#-barAtTime'>barAtTime</a> </li>
+<li class='toc3'><a href='#-barLines'>barLines</a> </li>
+<li class='toc3'><a href='#-barMap'>barMap</a> </li>
+<li class='toc3'><a href='#-beatAtTime'>beatAtTime</a> </li>
+<li class='toc3'><a href='#-bpmAtBeat'>bpmAtBeat</a> </li>
+<li class='toc3'><a href='#-bpmAtTime'>bpmAtTime</a> </li>
+<li class='toc3'><a href='#-bpmToTempo'>bpmToTempo</a> </li>
+<li class='toc3'><a href='#-bpmsBetween'>bpmsBetween</a> </li>
+<li class='toc3'><a href='#-deleteDuplicates'>deleteDuplicates</a> </li>
+<li class='toc3'><a href='#-divisionLines'>divisionLines</a> </li>
+<li class='toc3'><a href='#-doesNotUnderstand'>doesNotUnderstand</a> </li>
+<li class='toc3'><a href='#-duplicate'>duplicate</a> </li>
+<li class='toc3'><a href='#-events'>events</a> </li>
+<li class='toc3'><a href='#-fromObject'>fromObject</a> </li>
+<li class='toc3'><a href='#-fromPreset'>fromPreset</a> </li>
+<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-prIndexAtBeat'>prIndexAtBeat</a> </li>
+<li class='toc3'><a href='#-prIndexAtTime'>prIndexAtTime</a> </li>
+<li class='toc3'><a href='#-prUpdateBeats'>prUpdateBeats</a> </li>
+<li class='toc3'><a href='#-prUpdateTimes'>prUpdateTimes</a> </li>
+<li class='toc3'><a href='#-put'>put</a> </li>
+<li class='toc3'><a href='#-setBPMAtBar'>setBPMAtBar</a> </li>
+<li class='toc3'><a href='#-setBPMAtBeat'>setBPMAtBeat</a> </li>
+<li class='toc3'><a href='#-setBPMAtTime'>setBPMAtTime</a> </li>
+<li class='toc3'><a href='#-setSignatureAtTime'>setSignatureAtTime</a> </li>
+<li class='toc3'><a href='#-setTempoAtBar'>setTempoAtBar</a> </li>
+<li class='toc3'><a href='#-setTempoAtBeat'>setTempoAtBeat</a> </li>
+<li class='toc3'><a href='#-setTempoAtTime'>setTempoAtTime</a> </li>
+<li class='toc3'><a href='#-signatureAtTime'>signatureAtTime</a> </li>
+<li class='toc3'><a href='#-signaturesBetween'>signaturesBetween</a> </li>
+<li class='toc3'><a href='#-size'>size</a> </li>
+<li class='toc3'><a href='#-storeArgs'>storeArgs</a> </li>
+<li class='toc3'><a href='#-storeModifiersOn'>storeModifiersOn</a> </li>
+<li class='toc3'><a href='#-tempoAtBeat'>tempoAtBeat</a> </li>
+<li class='toc3'><a href='#-tempoAtTime'>tempoAtTime</a> </li>
+<li class='toc3'><a href='#-tempoToBPM'>tempoToBPM</a> </li>
+<li class='toc3'><a href='#-timeAtBar'>timeAtBar</a> </li>
+<li class='toc3'><a href='#-timeAtBeat'>timeAtBeat</a> </li>
+<li class='toc3'><a href='#-timeMoveWithSnap'>timeMoveWithSnap</a> </li>
+<li class='toc3'><a href='#-useBar'>useBar</a> </li>
+<li class='toc3'><a href='#-useBeat'>useBeat</a> </li>
+</ul></ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*beatsToSeconds' href='./../Overviews/Methods.html#beatsToSeconds'>beatsToSeconds</a> (<span class='argstr'>beat: 0</span>, <span class='argstr'>tempo: 1</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*default' href='./../Overviews/Methods.html#default'>default</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*default' href='./../Overviews/Methods.html#default'>default</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultBarMap' href='./../Overviews/Methods.html#defaultBarMap'>defaultBarMap</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultBarMap' href='./../Overviews/Methods.html#defaultBarMap'>defaultBarMap</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fromObject' href='./../Overviews/Methods.html#fromObject'>fromObject</a> (<span class='argstr'>obj</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fromPreset' href='./../Overviews/Methods.html#fromPreset'>fromPreset</a> (<span class='argstr'>name</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>tempo: 1</span>, <span class='argstr'>beat: 0</span> <span class='argstr'>... argPairs</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*presetManager' href='./../Overviews/Methods.html#presetManager'>presetManager</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*presetManager' href='./../Overviews/Methods.html#presetManager'>presetManager</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*presets' href='./../Overviews/Methods.html#presets'>presets</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*secondsToBeats' href='./../Overviews/Methods.html#secondsToBeats'>secondsToBeats</a> (<span class='argstr'>time: 0</span>, <span class='argstr'>tempo: 1</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-==' href='./../Overviews/Methods.html#=='>==</a> (<span class='argstr'>that</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-barAtTime' href='./../Overviews/Methods.html#barAtTime'>barAtTime</a> (<span class='argstr'>time: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-barLines' href='./../Overviews/Methods.html#barLines'>barLines</a> (<span class='argstr'>startTime: 0</span>, <span class='argstr'>endTime</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-barMap' href='./../Overviews/Methods.html#barMap'>barMap</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-barMap' href='./../Overviews/Methods.html#barMap'>barMap</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-beatAtTime' href='./../Overviews/Methods.html#beatAtTime'>beatAtTime</a> (<span class='argstr'>time: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bpmAtBeat' href='./../Overviews/Methods.html#bpmAtBeat'>bpmAtBeat</a> (<span class='argstr'>beat: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bpmAtTime' href='./../Overviews/Methods.html#bpmAtTime'>bpmAtTime</a> (<span class='argstr'>time: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bpmToTempo' href='./../Overviews/Methods.html#bpmToTempo'>bpmToTempo</a> (<span class='argstr'>bpm: 60</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bpmsBetween' href='./../Overviews/Methods.html#bpmsBetween'>bpmsBetween</a> (<span class='argstr'>startTime: 0</span>, <span class='argstr'>endTime: inf</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-deleteDuplicates' href='./../Overviews/Methods.html#deleteDuplicates'>deleteDuplicates</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-divisionLines' href='./../Overviews/Methods.html#divisionLines'>divisionLines</a> (<span class='argstr'>startTime: 0</span>, <span class='argstr'>endTime</span>, <span class='argstr'>div: 1</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-doesNotUnderstand' href='./../Overviews/Methods.html#doesNotUnderstand'>doesNotUnderstand</a> (<span class='argstr'>selector</span> <span class='argstr'>... args</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-duplicate' href='./../Overviews/Methods.html#duplicate'>duplicate</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-events' href='./../Overviews/Methods.html#events'>events</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-events' href='./../Overviews/Methods.html#events'>events</a> = <span class='argstr'>evts</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-fromObject' href='./../Overviews/Methods.html#fromObject'>fromObject</a> (<span class='argstr'>obj</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-fromPreset' href='./../Overviews/Methods.html#fromPreset'>fromPreset</a> (<span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-init' href='./../Overviews/Methods.html#init'>init</a> ( <span class='argstr'>... args</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prIndexAtBeat' href='./../Overviews/Methods.html#prIndexAtBeat'>prIndexAtBeat</a> (<span class='argstr'>beat: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prIndexAtTime' href='./../Overviews/Methods.html#prIndexAtTime'>prIndexAtTime</a> (<span class='argstr'>time: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prUpdateBeats' href='./../Overviews/Methods.html#prUpdateBeats'>prUpdateBeats</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prUpdateTimes' href='./../Overviews/Methods.html#prUpdateTimes'>prUpdateTimes</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-put' href='./../Overviews/Methods.html#put'>put</a> ( <span class='argstr'>... args</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setBPMAtBar' href='./../Overviews/Methods.html#setBPMAtBar'>setBPMAtBar</a> (<span class='argstr'>bpm: 60</span>, <span class='argstr'>bar: 1</span>, <span class='argstr'>division: 0</span>, <span class='argstr'>add: false</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setBPMAtBeat' href='./../Overviews/Methods.html#setBPMAtBeat'>setBPMAtBeat</a> (<span class='argstr'>bpm: 60</span>, <span class='argstr'>beat: 0</span>, <span class='argstr'>add: false</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setBPMAtTime' href='./../Overviews/Methods.html#setBPMAtTime'>setBPMAtTime</a> (<span class='argstr'>bpm: 60</span>, <span class='argstr'>time: 0</span>, <span class='argstr'>add: false</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setSignatureAtTime' href='./../Overviews/Methods.html#setSignatureAtTime'>setSignatureAtTime</a> (<span class='argstr'>signature</span>, <span class='argstr'>time: 0</span>, <span class='argstr'>addNew: false</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setTempoAtBar' href='./../Overviews/Methods.html#setTempoAtBar'>setTempoAtBar</a> (<span class='argstr'>tempo: 1</span>, <span class='argstr'>bar: 1</span>, <span class='argstr'>division: 0</span>, <span class='argstr'>add: false</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setTempoAtBeat' href='./../Overviews/Methods.html#setTempoAtBeat'>setTempoAtBeat</a> (<span class='argstr'>tempo: 1</span>, <span class='argstr'>beat: 0</span>, <span class='argstr'>add: false</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setTempoAtTime' href='./../Overviews/Methods.html#setTempoAtTime'>setTempoAtTime</a> (<span class='argstr'>tempo: 1</span>, <span class='argstr'>time: 0</span>, <span class='argstr'>add: false</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-signatureAtTime' href='./../Overviews/Methods.html#signatureAtTime'>signatureAtTime</a> (<span class='argstr'>time: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-signaturesBetween' href='./../Overviews/Methods.html#signaturesBetween'>signaturesBetween</a> (<span class='argstr'>startTime: 0</span>, <span class='argstr'>endTime: inf</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-size' href='./../Overviews/Methods.html#size'>size</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeArgs' href='./../Overviews/Methods.html#storeArgs'>storeArgs</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeModifiersOn' href='./../Overviews/Methods.html#storeModifiersOn'>storeModifiersOn</a> (<span class='argstr'>stream</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tempoAtBeat' href='./../Overviews/Methods.html#tempoAtBeat'>tempoAtBeat</a> (<span class='argstr'>beat: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tempoAtTime' href='./../Overviews/Methods.html#tempoAtTime'>tempoAtTime</a> (<span class='argstr'>time: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tempoToBPM' href='./../Overviews/Methods.html#tempoToBPM'>tempoToBPM</a> (<span class='argstr'>tempo: 1</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-timeAtBar' href='./../Overviews/Methods.html#timeAtBar'>timeAtBar</a> (<span class='argstr'>bar: 1</span>, <span class='argstr'>division: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-timeAtBeat' href='./../Overviews/Methods.html#timeAtBeat'>timeAtBeat</a> (<span class='argstr'>beat: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-timeMoveWithSnap' href='./../Overviews/Methods.html#timeMoveWithSnap'>timeMoveWithSnap</a> (<span class='argstr'>time: 0</span>, <span class='argstr'>delta: 1</span>, <span class='argstr'>snap: 0.25</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-useBar' href='./../Overviews/Methods.html#useBar'>useBar</a> (<span class='argstr'>time: 0</span>, <span class='argstr'>func</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-useBeat' href='./../Overviews/Methods.html#useBeat'>useBeat</a> (<span class='argstr'>time: 0</span>, <span class='argstr'>func</span>)</h3>
+<h2><a class='anchor' name='Help template'>Help template</a></h2>
+
+<p>Copy and paste the text below and save to HelpSource/Classes/TempoMap.schelp<pre class='code prettyprint lang-sc'>TITLE:: TempoMap
+summary:: (put short description here)
+categories:: Undocumented classes
+related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+
+DESCRIPTION::
+(put long description here)
+
+
+CLASSMETHODS::
+
+METHOD:: defaultBarMap
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: secondsToBeats
+(describe method here)
+
+ARGUMENT:: time
+(describe argument here)
+
+ARGUMENT:: tempo
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: fromPreset
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: fromObject
+(describe method here)
+
+ARGUMENT:: obj
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: beatsToSeconds
+(describe method here)
+
+ARGUMENT:: beat
+(describe argument here)
+
+ARGUMENT:: tempo
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: presetManager
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: new
+(describe method here)
+
+ARGUMENT:: tempo
+(describe argument here)
+
+ARGUMENT:: beat
+(describe argument here)
+
+ARGUMENT::  ... argPairs
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: presets
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: default
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: initClass
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+
+INSTANCEMETHODS::
+
+METHOD:: put
+(describe method here)
+
+ARGUMENT::  ... args
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: storeArgs
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: bpmToTempo
+(describe method here)
+
+ARGUMENT:: bpm
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: tempoToBPM
+(describe method here)
+
+ARGUMENT:: tempo
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: timeAtBeat
+(describe method here)
+
+ARGUMENT:: beat
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setBPMAtTime
+(describe method here)
+
+ARGUMENT:: bpm
+(describe argument here)
+
+ARGUMENT:: time
+(describe argument here)
+
+ARGUMENT:: add
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: duplicate
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: ==
+(describe method here)
+
+ARGUMENT:: that
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: events
+(describe method here)
+
+ARGUMENT:: evts
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: fromObject
+(describe method here)
+
+ARGUMENT:: obj
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prIndexAtBeat
+(describe method here)
+
+ARGUMENT:: beat
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setTempoAtTime
+(describe method here)
+
+ARGUMENT:: tempo
+(describe argument here)
+
+ARGUMENT:: time
+(describe argument here)
+
+ARGUMENT:: add
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setBPMAtBar
+(describe method here)
+
+ARGUMENT:: bpm
+(describe argument here)
+
+ARGUMENT:: bar
+(describe argument here)
+
+ARGUMENT:: division
+(describe argument here)
+
+ARGUMENT:: add
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setTempoAtBar
+(describe method here)
+
+ARGUMENT:: tempo
+(describe argument here)
+
+ARGUMENT:: bar
+(describe argument here)
+
+ARGUMENT:: division
+(describe argument here)
+
+ARGUMENT:: add
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: timeMoveWithSnap
+(describe method here)
+
+ARGUMENT:: time
+(describe argument here)
+
+ARGUMENT:: delta
+(describe argument here)
+
+ARGUMENT:: snap
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: deleteDuplicates
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: barLines
+(describe method here)
+
+ARGUMENT:: startTime
+(describe argument here)
+
+ARGUMENT:: endTime
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setBPMAtBeat
+(describe method here)
+
+ARGUMENT:: bpm
+(describe argument here)
+
+ARGUMENT:: beat
+(describe argument here)
+
+ARGUMENT:: add
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: storeModifiersOn
+(describe method here)
+
+ARGUMENT:: stream
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: useBar
+(describe method here)
+
+ARGUMENT:: time
+(describe argument here)
+
+ARGUMENT:: func
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prUpdateBeats
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: signatureAtTime
+(describe method here)
+
+ARGUMENT:: time
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: bpmAtBeat
+(describe method here)
+
+ARGUMENT:: beat
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: divisionLines
+(describe method here)
+
+ARGUMENT:: startTime
+(describe argument here)
+
+ARGUMENT:: endTime
+(describe argument here)
+
+ARGUMENT:: div
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: bpmAtTime
+(describe method here)
+
+ARGUMENT:: time
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: size
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: useBeat
+(describe method here)
+
+ARGUMENT:: time
+(describe argument here)
+
+ARGUMENT:: func
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: signaturesBetween
+(describe method here)
+
+ARGUMENT:: startTime
+(describe argument here)
+
+ARGUMENT:: endTime
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: barAtTime
+(describe method here)
+
+ARGUMENT:: time
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prIndexAtTime
+(describe method here)
+
+ARGUMENT:: time
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setSignatureAtTime
+(describe method here)
+
+ARGUMENT:: signature
+(describe argument here)
+
+ARGUMENT:: time
+(describe argument here)
+
+ARGUMENT:: addNew
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: barMap
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: tempoAtTime
+(describe method here)
+
+ARGUMENT:: time
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: doesNotUnderstand
+(describe method here)
+
+ARGUMENT:: selector
+(describe argument here)
+
+ARGUMENT::  ... args
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: beatAtTime
+(describe method here)
+
+ARGUMENT:: time
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: timeAtBar
+(describe method here)
+
+ARGUMENT:: bar
+(describe argument here)
+
+ARGUMENT:: division
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setTempoAtBeat
+(describe method here)
+
+ARGUMENT:: tempo
+(describe argument here)
+
+ARGUMENT:: beat
+(describe argument here)
+
+ARGUMENT:: add
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: fromPreset
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: tempoAtBeat
+(describe method here)
+
+ARGUMENT:: beat
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: bpmsBetween
+(describe method here)
+
+ARGUMENT:: startTime
+(describe argument here)
+
+ARGUMENT:: endTime
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prUpdateTimes
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: init
+(describe method here)
+
+ARGUMENT::  ... args
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+
+EXAMPLES::
+
+code::
+(some example code)
+::
+</pre>
+<div class='doclink'>link::Classes/TempoMap::<br>sc version: 3.7alpha0</div></div></body></html>

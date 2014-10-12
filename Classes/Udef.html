@@ -1,0 +1,887 @@
+<html><head><title>Udef</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<h1>Udef</h1>
+<div id='summary'>(Undocumented class)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Core/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Core/Unit.sc'>Unit.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/GenericDef.html">GenericDef</a> : <a href="../Classes/UArchivable.html">UArchivable</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/FreeUdef.html">FreeUdef</a>, <a href="../Classes/HiddenUdef.html">HiddenUdef</a>, <a href="../Classes/LocalUdef.html">LocalUdef</a>, <a href="../Classes/MultiChannelSubUdef.html">MultiChannelSubUdef</a>, <a href="../Classes/MultiUdef.html">MultiUdef</a>, <a href="../Classes/UMapDef.html">UMapDef</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*addBuildSpec'>addBuildSpec</a> </li>
+<li class='toc3'><a href='#*all'>all</a> </li>
+<li class='toc3'><a href='#*basicNew'>basicNew</a> </li>
+<li class='toc3'><a href='#*buildArgSpecs'>buildArgSpecs</a> </li>
+<li class='toc3'><a href='#*buildUdef'>buildUdef</a> </li>
+<li class='toc3'><a href='#*callByName'>callByName</a> </li>
+<li class='toc3'><a href='#*defsFolders'>defsFolders</a> </li>
+<li class='toc3'><a href='#*find'>find</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*loadOnInit'>loadOnInit</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*numChannels'>numChannels</a> </li>
+<li class='toc3'><a href='#*open'>open</a> </li>
+<li class='toc3'><a href='#*prefix'>prefix</a> </li>
+<li class='toc3'><a href='#*userDefsFolder'>userDefsFolder</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-apxCPU'>apxCPU</a> </li>
+<li class='toc3'><a href='#-argNamesFor'>argNamesFor</a> </li>
+<li class='toc3'><a href='#-argSpecModes'>argSpecModes</a> </li>
+<li class='toc3'><a href='#-asArgsArray'>asArgsArray</a> </li>
+<li class='toc3'><a href='#-asUdef'>asUdef</a> </li>
+<li class='toc3'><a href='#-asUnit'>asUnit</a> </li>
+<li class='toc3'><a href='#-audioInName'>audioInName</a> </li>
+<li class='toc3'><a href='#-audioIns'>audioIns</a> </li>
+<li class='toc3'><a href='#-audioOutName'>audioOutName</a> </li>
+<li class='toc3'><a href='#-audioOuts'>audioOuts</a> </li>
+<li class='toc3'><a href='#-canFreeSynth'>canFreeSynth</a> </li>
+<li class='toc3'><a href='#-canUseUMap'>canUseUMap</a> </li>
+<li class='toc3'><a href='#-category'>category</a> </li>
+<li class='toc3'><a href='#-controlInName'>controlInName</a> </li>
+<li class='toc3'><a href='#-controlIns'>controlIns</a> </li>
+<li class='toc3'><a href='#-controlOutName'>controlOutName</a> </li>
+<li class='toc3'><a href='#-controlOuts'>controlOuts</a> </li>
+<li class='toc3'><a href='#-createSynth'>createSynth</a> </li>
+<li class='toc3'><a href='#-extraPrefix'>extraPrefix</a> </li>
+<li class='toc3'><a href='#-func'>func</a> </li>
+<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-initArgs'>initArgs</a> </li>
+<li class='toc3'><a href='#-ioNames'>ioNames</a> </li>
+<li class='toc3'><a href='#-isUdef'>isUdef</a> </li>
+<li class='toc3'><a href='#-load'>load</a> </li>
+<li class='toc3'><a href='#-loadSynthDef'>loadSynthDef</a> </li>
+<li class='toc3'><a href='#-makeSynth'>makeSynth</a> </li>
+<li class='toc3'><a href='#-nameFunc'>nameFunc</a> </li>
+<li class='toc3'><a href='#-needsPrepare'>needsPrepare</a> </li>
+<li class='toc3'><a href='#-numChannels'>numChannels</a> </li>
+<li class='toc3'><a href='#-prGenerateSynthDefName'>prGenerateSynthDefName</a> </li>
+<li class='toc3'><a href='#-prGetIOKey'>prGetIOKey</a> </li>
+<li class='toc3'><a href='#-prGetIOName'>prGetIOName</a> </li>
+<li class='toc3'><a href='#-prIOids'>prIOids</a> </li>
+<li class='toc3'><a href='#-prIOspecs'>prIOspecs</a> </li>
+<li class='toc3'><a href='#-prSetIOName'>prSetIOName</a> </li>
+<li class='toc3'><a href='#-prSetMultiIOName'>prSetMultiIOName</a> </li>
+<li class='toc3'><a href='#-prSetSynth'>prSetSynth</a> </li>
+<li class='toc3'><a href='#-prSetSynthNormal'>prSetSynthNormal</a> </li>
+<li class='toc3'><a href='#-prSetSynthSync'>prSetSynthSync</a> </li>
+<li class='toc3'><a href='#-prepare'>prepare</a> </li>
+<li class='toc3'><a href='#-prepareArgsFunc'>prepareArgsFunc</a> </li>
+<li class='toc3'><a href='#-printOn'>printOn</a> </li>
+<li class='toc3'><a href='#-send'>send</a> </li>
+<li class='toc3'><a href='#-sendSynthDef'>sendSynthDef</a> </li>
+<li class='toc3'><a href='#-setAudioInName'>setAudioInName</a> </li>
+<li class='toc3'><a href='#-setAudioOutName'>setAudioOutName</a> </li>
+<li class='toc3'><a href='#-setControlInName'>setControlInName</a> </li>
+<li class='toc3'><a href='#-setControlOutName'>setControlOutName</a> </li>
+<li class='toc3'><a href='#-setSpec'>setSpec</a> </li>
+<li class='toc3'><a href='#-setSpecMode'>setSpecMode</a> </li>
+<li class='toc3'><a href='#-setSynth'>setSynth</a> </li>
+<li class='toc3'><a href='#-shouldPlayOn'>shouldPlayOn</a> </li>
+<li class='toc3'><a href='#-shouldPlayOnFunc'>shouldPlayOnFunc</a> </li>
+<li class='toc3'><a href='#-showOnCollapse'>showOnCollapse</a> </li>
+<li class='toc3'><a href='#-stop'>stop</a> </li>
+<li class='toc3'><a href='#-storeOn'>storeOn</a> </li>
+<li class='toc3'><a href='#-synthDef'>synthDef</a> </li>
+<li class='toc3'><a href='#-synthDefName'>synthDefName</a> </li>
+<li class='toc3'><a href='#-synthsForUMap'>synthsForUMap</a> </li>
+<li class='toc3'><a href='#-uchainInitFunc'>uchainInitFunc</a> </li>
+<li class='toc3'><a href='#-writeDefFile'>writeDefFile</a> </li>
+</ul></ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*addBuildSpec' href='./../Overviews/Methods.html#addBuildSpec'>addBuildSpec</a> (<span class='argstr'>argSpec</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*basicNew' href='./../Overviews/Methods.html#basicNew'>basicNew</a> (<span class='argstr'>name</span>, <span class='argstr'>args</span>, <span class='argstr'>category</span>, <span class='argstr'>addToAll: true</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*buildArgSpecs' href='./../Overviews/Methods.html#buildArgSpecs'>buildArgSpecs</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*buildArgSpecs' href='./../Overviews/Methods.html#buildArgSpecs'>buildArgSpecs</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*buildUdef' href='./../Overviews/Methods.html#buildUdef'>buildUdef</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*buildUdef' href='./../Overviews/Methods.html#buildUdef'>buildUdef</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*callByName' href='./../Overviews/Methods.html#callByName'>callByName</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defsFolders' href='./../Overviews/Methods.html#defsFolders'>defsFolders</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defsFolders' href='./../Overviews/Methods.html#defsFolders'>defsFolders</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*find' href='./../Overviews/Methods.html#find'>find</a> (<span class='argstr'>string</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadOnInit' href='./../Overviews/Methods.html#loadOnInit'>loadOnInit</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadOnInit' href='./../Overviews/Methods.html#loadOnInit'>loadOnInit</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>name</span>, <span class='argstr'>func</span>, <span class='argstr'>args</span>, <span class='argstr'>category</span>, <span class='argstr'>addToAll: true</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*numChannels' href='./../Overviews/Methods.html#numChannels'>numChannels</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*open' href='./../Overviews/Methods.html#open'>open</a> (<span class='argstr'>symbol</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*prefix' href='./../Overviews/Methods.html#prefix'>prefix</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*userDefsFolder' href='./../Overviews/Methods.html#userDefsFolder'>userDefsFolder</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*userDefsFolder' href='./../Overviews/Methods.html#userDefsFolder'>userDefsFolder</a> = value</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-apxCPU' href='./../Overviews/Methods.html#apxCPU'>apxCPU</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-apxCPU' href='./../Overviews/Methods.html#apxCPU'>apxCPU</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-argNamesFor' href='./../Overviews/Methods.html#argNamesFor'>argNamesFor</a> (<span class='argstr'>unit</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-argSpecModes' href='./../Overviews/Methods.html#argSpecModes'>argSpecModes</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-asArgsArray' href='./../Overviews/Methods.html#asArgsArray'>asArgsArray</a> (<span class='argstr'>argPairs</span>, <span class='argstr'>unit</span>, <span class='argstr'>constrain: true</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-asUdef' href='./../Overviews/Methods.html#asUdef'>asUdef</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-asUnit' href='./../Overviews/Methods.html#asUnit'>asUnit</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-audioInName' href='./../Overviews/Methods.html#audioInName'>audioInName</a> (<span class='argstr'>index: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-audioIns' href='./../Overviews/Methods.html#audioIns'>audioIns</a> (<span class='argstr'>unit</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-audioOutName' href='./../Overviews/Methods.html#audioOutName'>audioOutName</a> (<span class='argstr'>index: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-audioOuts' href='./../Overviews/Methods.html#audioOuts'>audioOuts</a> (<span class='argstr'>unit</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-canFreeSynth' href='./../Overviews/Methods.html#canFreeSynth'>canFreeSynth</a> (<span class='argstr'>unit</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-canUseUMap' href='./../Overviews/Methods.html#canUseUMap'>canUseUMap</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-canUseUMap' href='./../Overviews/Methods.html#canUseUMap'>canUseUMap</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-category' href='./../Overviews/Methods.html#category'>category</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-category' href='./../Overviews/Methods.html#category'>category</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-controlInName' href='./../Overviews/Methods.html#controlInName'>controlInName</a> (<span class='argstr'>index: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-controlIns' href='./../Overviews/Methods.html#controlIns'>controlIns</a> (<span class='argstr'>unit</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-controlOutName' href='./../Overviews/Methods.html#controlOutName'>controlOutName</a> (<span class='argstr'>index: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-controlOuts' href='./../Overviews/Methods.html#controlOuts'>controlOuts</a> (<span class='argstr'>unit</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-createSynth' href='./../Overviews/Methods.html#createSynth'>createSynth</a> (<span class='argstr'>unit</span>, <span class='argstr'>target</span>, <span class='argstr'>startPos: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-extraPrefix' href='./../Overviews/Methods.html#extraPrefix'>extraPrefix</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-extraPrefix' href='./../Overviews/Methods.html#extraPrefix'>extraPrefix</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-func' href='./../Overviews/Methods.html#func'>func</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-func' href='./../Overviews/Methods.html#func'>func</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-init' href='./../Overviews/Methods.html#init'>init</a> (<span class='argstr'>inFunc</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-initArgs' href='./../Overviews/Methods.html#initArgs'>initArgs</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-ioNames' href='./../Overviews/Methods.html#ioNames'>ioNames</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-ioNames' href='./../Overviews/Methods.html#ioNames'>ioNames</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-isUdef' href='./../Overviews/Methods.html#isUdef'>isUdef</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-load' href='./../Overviews/Methods.html#load'>load</a> (<span class='argstr'>server</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-loadSynthDef' href='./../Overviews/Methods.html#loadSynthDef'>loadSynthDef</a> (<span class='argstr'>server</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeSynth' href='./../Overviews/Methods.html#makeSynth'>makeSynth</a> (<span class='argstr'>unit</span>, <span class='argstr'>target</span>, <span class='argstr'>startPos: 0</span>, <span class='argstr'>synthAction</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-nameFunc' href='./../Overviews/Methods.html#nameFunc'>nameFunc</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-nameFunc' href='./../Overviews/Methods.html#nameFunc'>nameFunc</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-needsPrepare' href='./../Overviews/Methods.html#needsPrepare'>needsPrepare</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-numChannels' href='./../Overviews/Methods.html#numChannels'>numChannels</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-numChannels' href='./../Overviews/Methods.html#numChannels'>numChannels</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prGenerateSynthDefName' href='./../Overviews/Methods.html#prGenerateSynthDefName'>prGenerateSynthDefName</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prGetIOKey' href='./../Overviews/Methods.html#prGetIOKey'>prGetIOKey</a> (<span class='argstr'>mode: 'in'</span>, <span class='argstr'>rate: 'audio'</span> <span class='argstr'>... extra</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prGetIOName' href='./../Overviews/Methods.html#prGetIOName'>prGetIOName</a> (<span class='argstr'>mode: 'in'</span>, <span class='argstr'>rate: 'audio'</span>, <span class='argstr'>index: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prIOids' href='./../Overviews/Methods.html#prIOids'>prIOids</a> (<span class='argstr'>mode: 'in'</span>, <span class='argstr'>rate: 'audio'</span>, <span class='argstr'>unit</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prIOspecs' href='./../Overviews/Methods.html#prIOspecs'>prIOspecs</a> (<span class='argstr'>mode: 'in'</span>, <span class='argstr'>rate: 'audio'</span>, <span class='argstr'>key</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prSetIOName' href='./../Overviews/Methods.html#prSetIOName'>prSetIOName</a> (<span class='argstr'>mode: 'in'</span>, <span class='argstr'>rate: 'audio'</span>, <span class='argstr'>index: 0</span>, <span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prSetMultiIOName' href='./../Overviews/Methods.html#prSetMultiIOName'>prSetMultiIOName</a> (<span class='argstr'>mode</span>, <span class='argstr'>rate</span>, <span class='argstr'>index</span>, <span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prSetSynth' href='./../Overviews/Methods.html#prSetSynth'>prSetSynth</a> (<span class='argstr'>synths</span> <span class='argstr'>... keyValuePairs</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prSetSynthNormal' href='./../Overviews/Methods.html#prSetSynthNormal'>prSetSynthNormal</a> (<span class='argstr'>synth</span> <span class='argstr'>... keyValuePairs</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prSetSynthSync' href='./../Overviews/Methods.html#prSetSynthSync'>prSetSynthSync</a> (<span class='argstr'>synth</span> <span class='argstr'>... keyValuePairs</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepare' href='./../Overviews/Methods.html#prepare'>prepare</a> (<span class='argstr'>servers</span>, <span class='argstr'>unit</span>, <span class='argstr'>action</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepareArgsFunc' href='./../Overviews/Methods.html#prepareArgsFunc'>prepareArgsFunc</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepareArgsFunc' href='./../Overviews/Methods.html#prepareArgsFunc'>prepareArgsFunc</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-printOn' href='./../Overviews/Methods.html#printOn'>printOn</a> (<span class='argstr'>stream</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-send' href='./../Overviews/Methods.html#send'>send</a> (<span class='argstr'>server</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendSynthDef' href='./../Overviews/Methods.html#sendSynthDef'>sendSynthDef</a> (<span class='argstr'>server</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setAudioInName' href='./../Overviews/Methods.html#setAudioInName'>setAudioInName</a> (<span class='argstr'>index</span>, <span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setAudioOutName' href='./../Overviews/Methods.html#setAudioOutName'>setAudioOutName</a> (<span class='argstr'>index</span>, <span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setControlInName' href='./../Overviews/Methods.html#setControlInName'>setControlInName</a> (<span class='argstr'>index</span>, <span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setControlOutName' href='./../Overviews/Methods.html#setControlOutName'>setControlOutName</a> (<span class='argstr'>index</span>, <span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setSpec' href='./../Overviews/Methods.html#setSpec'>setSpec</a> (<span class='argstr'>name</span>, <span class='argstr'>spec</span>, <span class='argstr'>mode</span>, <span class='argstr'>constrainDefault: true</span>, <span class='argstr'>private</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setSpecMode' href='./../Overviews/Methods.html#setSpecMode'>setSpecMode</a> ( <span class='argstr'>... pairs</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setSynth' href='./../Overviews/Methods.html#setSynth'>setSynth</a> (<span class='argstr'>unit</span> <span class='argstr'>... keyValuePairs</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-shouldPlayOn' href='./../Overviews/Methods.html#shouldPlayOn'>shouldPlayOn</a> (<span class='argstr'>unit</span>, <span class='argstr'>server</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-shouldPlayOnFunc' href='./../Overviews/Methods.html#shouldPlayOnFunc'>shouldPlayOnFunc</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-shouldPlayOnFunc' href='./../Overviews/Methods.html#shouldPlayOnFunc'>shouldPlayOnFunc</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-showOnCollapse' href='./../Overviews/Methods.html#showOnCollapse'>showOnCollapse</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-showOnCollapse' href='./../Overviews/Methods.html#showOnCollapse'>showOnCollapse</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-stop' href='./../Overviews/Methods.html#stop'>stop</a> (<span class='argstr'>unit</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeOn' href='./../Overviews/Methods.html#storeOn'>storeOn</a> (<span class='argstr'>stream</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-synthDef' href='./../Overviews/Methods.html#synthDef'>synthDef</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-synthDef' href='./../Overviews/Methods.html#synthDef'>synthDef</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-synthDefName' href='./../Overviews/Methods.html#synthDefName'>synthDefName</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-synthsForUMap' href='./../Overviews/Methods.html#synthsForUMap'>synthsForUMap</a> (<span class='argstr'>unit</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-uchainInitFunc' href='./../Overviews/Methods.html#uchainInitFunc'>uchainInitFunc</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-uchainInitFunc' href='./../Overviews/Methods.html#uchainInitFunc'>uchainInitFunc</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-writeDefFile' href='./../Overviews/Methods.html#writeDefFile'>writeDefFile</a> </h3>
+<h2><a class='anchor' name='Help template'>Help template</a></h2>
+
+<p>Copy and paste the text below and save to HelpSource/Classes/Udef.schelp<pre class='code prettyprint lang-sc'>TITLE:: Udef
+summary:: (put short description here)
+categories:: Undocumented classes
+related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+
+DESCRIPTION::
+(put long description here)
+
+
+CLASSMETHODS::
+
+METHOD:: buildArgSpecs
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prefix
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: addBuildSpec
+(describe method here)
+
+ARGUMENT:: argSpec
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: initClass
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: callByName
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: defsFolders
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: new
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+ARGUMENT:: func
+(describe argument here)
+
+ARGUMENT:: args
+(describe argument here)
+
+ARGUMENT:: category
+(describe argument here)
+
+ARGUMENT:: addToAll
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: userDefsFolder
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: basicNew
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+ARGUMENT:: args
+(describe argument here)
+
+ARGUMENT:: category
+(describe argument here)
+
+ARGUMENT:: addToAll
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: loadOnInit
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: all
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: find
+(describe method here)
+
+ARGUMENT:: string
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: buildUdef
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: numChannels
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: open
+(describe method here)
+
+ARGUMENT:: symbol
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+
+INSTANCEMETHODS::
+
+METHOD:: uchainInitFunc
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: synthDefName
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: audioIns
+(describe method here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: asUdef
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prSetMultiIOName
+(describe method here)
+
+ARGUMENT:: mode
+(describe argument here)
+
+ARGUMENT:: rate
+(describe argument here)
+
+ARGUMENT:: index
+(describe argument here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: send
+(describe method here)
+
+ARGUMENT:: server
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: shouldPlayOn
+(describe method here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+ARGUMENT:: server
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: load
+(describe method here)
+
+ARGUMENT:: server
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: storeOn
+(describe method here)
+
+ARGUMENT:: stream
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prGetIOName
+(describe method here)
+
+ARGUMENT:: mode
+(describe argument here)
+
+ARGUMENT:: rate
+(describe argument here)
+
+ARGUMENT:: index
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: numChannels
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: apxCPU
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setSpecMode
+(describe method here)
+
+ARGUMENT::  ... pairs
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setSynth
+(describe method here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+ARGUMENT::  ... keyValuePairs
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: createSynth
+(describe method here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+ARGUMENT:: target
+(describe argument here)
+
+ARGUMENT:: startPos
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: synthDef
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setAudioOutName
+(describe method here)
+
+ARGUMENT:: index
+(describe argument here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prSetSynthSync
+(describe method here)
+
+ARGUMENT:: synth
+(describe argument here)
+
+ARGUMENT::  ... keyValuePairs
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prIOspecs
+(describe method here)
+
+ARGUMENT:: mode
+(describe argument here)
+
+ARGUMENT:: rate
+(describe argument here)
+
+ARGUMENT:: key
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: ioNames
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: extraPrefix
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prIOids
+(describe method here)
+
+ARGUMENT:: mode
+(describe argument here)
+
+ARGUMENT:: rate
+(describe argument here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prSetIOName
+(describe method here)
+
+ARGUMENT:: mode
+(describe argument here)
+
+ARGUMENT:: rate
+(describe argument here)
+
+ARGUMENT:: index
+(describe argument here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: showOnCollapse
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: nameFunc
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prSetSynth
+(describe method here)
+
+ARGUMENT:: synths
+(describe argument here)
+
+ARGUMENT::  ... keyValuePairs
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: audioOuts
+(describe method here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: canUseUMap
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prSetSynthNormal
+(describe method here)
+
+ARGUMENT:: synth
+(describe argument here)
+
+ARGUMENT::  ... keyValuePairs
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: audioOutName
+(describe method here)
+
+ARGUMENT:: index
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: func
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setAudioInName
+(describe method here)
+
+ARGUMENT:: index
+(describe argument here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: synthsForUMap
+(describe method here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setControlInName
+(describe method here)
+
+ARGUMENT:: index
+(describe argument here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prepareArgsFunc
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: initArgs
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: sendSynthDef
+(describe method here)
+
+ARGUMENT:: server
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: argSpecModes
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: category
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: printOn
+(describe method here)
+
+ARGUMENT:: stream
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prGenerateSynthDefName
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: loadSynthDef
+(describe method here)
+
+ARGUMENT:: server
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: controlOutName
+(describe method here)
+
+ARGUMENT:: index
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: controlInName
+(describe method here)
+
+ARGUMENT:: index
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: asArgsArray
+(describe method here)
+
+ARGUMENT:: argPairs
+(describe argument here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+ARGUMENT:: constrain
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: argNamesFor
+(describe method here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: canFreeSynth
+(describe method here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: stop
+(describe method here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: isUdef
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: makeSynth
+(describe method here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+ARGUMENT:: target
+(describe argument here)
+
+ARGUMENT:: startPos
+(describe argument here)
+
+ARGUMENT:: synthAction
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: controlOuts
+(describe method here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setSpec
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+ARGUMENT:: spec
+(describe argument here)
+
+ARGUMENT:: mode
+(describe argument here)
+
+ARGUMENT:: constrainDefault
+(describe argument here)
+
+ARGUMENT:: private
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: asUnit
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prGetIOKey
+(describe method here)
+
+ARGUMENT:: mode
+(describe argument here)
+
+ARGUMENT:: rate
+(describe argument here)
+
+ARGUMENT::  ... extra
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: shouldPlayOnFunc
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prepare
+(describe method here)
+
+ARGUMENT:: servers
+(describe argument here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+ARGUMENT:: action
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: writeDefFile
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: controlIns
+(describe method here)
+
+ARGUMENT:: unit
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: needsPrepare
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: audioInName
+(describe method here)
+
+ARGUMENT:: index
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setControlOutName
+(describe method here)
+
+ARGUMENT:: index
+(describe argument here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: init
+(describe method here)
+
+ARGUMENT:: inFunc
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+
+EXAMPLES::
+
+code::
+(some example code)
+::
+</pre>
+<div class='doclink'>link::Classes/Udef::<br>sc version: 3.7alpha0</div></div></body></html>

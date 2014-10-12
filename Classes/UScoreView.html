@@ -1,0 +1,503 @@
+<html><head><title>UScoreView</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<h1>UScoreView</h1>
+<div id='summary'>(Undocumented class)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/GUI/Session/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/GUI/Session/UScoreView.sc'>UScoreView.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*current'>current</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-addCurrentScoreControllers'>addCurrentScoreControllers</a> </li>
+<li class='toc3'><a href='#-addTrack'>addTrack</a> </li>
+<li class='toc3'><a href='#-addtoScoreList'>addtoScoreList</a> </li>
+<li class='toc3'><a href='#-baseEditor'>baseEditor</a> </li>
+<li class='toc3'><a href='#-bounds'>bounds</a> </li>
+<li class='toc3'><a href='#-calcNumTracks'>calcNumTracks</a> </li>
+<li class='toc3'><a href='#-changeTrackSelected'>changeTrackSelected</a> </li>
+<li class='toc3'><a href='#-currentEditor'>currentEditor</a> </li>
+<li class='toc3'><a href='#-currentScore'>currentScore</a> </li>
+<li class='toc3'><a href='#-currentScoreEditorController'>currentScoreEditorController</a> </li>
+<li class='toc3'><a href='#-deleteSelected'>deleteSelected</a> </li>
+<li class='toc3'><a href='#-disableSelected'>disableSelected</a> </li>
+<li class='toc3'><a href='#-duplicateSelected'>duplicateSelected</a> </li>
+<li class='toc3'><a href='#-editSelected'>editSelected</a> </li>
+<li class='toc3'><a href='#-enableSelected'>enableSelected</a> </li>
+<li class='toc3'><a href='#-eventControllers'>eventControllers</a> </li>
+<li class='toc3'><a href='#-followPos'>followPos</a> </li>
+<li class='toc3'><a href='#-goToHigherScore'>goToHigherScore</a> </li>
+<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-isInnerScore'>isInnerScore</a> </li>
+<li class='toc3'><a href='#-mainComposite'>mainComposite</a> </li>
+<li class='toc3'><a href='#-makeEventControllers'>makeEventControllers</a> </li>
+<li class='toc3'><a href='#-makeScoreListView'>makeScoreListView</a> </li>
+<li class='toc3'><a href='#-makeScoreView'>makeScoreView</a> </li>
+<li class='toc3'><a href='#-makeView'>makeView</a> </li>
+<li class='toc3'><a href='#-minTracks'>minTracks</a> </li>
+<li class='toc3'><a href='#-moveSelected'>moveSelected</a> </li>
+<li class='toc3'><a href='#-moveSelectedBeats'>moveSelectedBeats</a> </li>
+<li class='toc3'><a href='#-numTracks'>numTracks</a> </li>
+<li class='toc3'><a href='#-openSelectedSubScoreInNewWindow'>openSelectedSubScoreInNewWindow</a> </li>
+<li class='toc3'><a href='#-parent'>parent</a> </li>
+<li class='toc3'><a href='#-prUpdate'>prUpdate</a> </li>
+<li class='toc3'><a href='#-refresh'>refresh</a> </li>
+<li class='toc3'><a href='#-remake'>remake</a> </li>
+<li class='toc3'><a href='#-remove'>remove</a> </li>
+<li class='toc3'><a href='#-removeUnusedTracks'>removeUnusedTracks</a> </li>
+<li class='toc3'><a href='#-scoreController'>scoreController</a> </li>
+<li class='toc3'><a href='#-scoreEditorsList'>scoreEditorsList</a> </li>
+<li class='toc3'><a href='#-scoreList'>scoreList</a> </li>
+<li class='toc3'><a href='#-scoreListView'>scoreListView</a> </li>
+<li class='toc3'><a href='#-scoreView'>scoreView</a> </li>
+<li class='toc3'><a href='#-selectAll'>selectAll</a> </li>
+<li class='toc3'><a href='#-selectSimilar'>selectSimilar</a> </li>
+<li class='toc3'><a href='#-selectedEvents'>selectedEvents</a> </li>
+<li class='toc3'><a href='#-selectedEventsOrAll'>selectedEventsOrAll</a> </li>
+<li class='toc3'><a href='#-showTempoMap'>showTempoMap</a> </li>
+<li class='toc3'><a href='#-snapActive'>snapActive</a> </li>
+<li class='toc3'><a href='#-snapH'>snapH</a> </li>
+<li class='toc3'><a href='#-soloEnableSelected'>soloEnableSelected</a> </li>
+<li class='toc3'><a href='#-tempoMapControllers'>tempoMapControllers</a> </li>
+<li class='toc3'><a href='#-update'>update</a> </li>
+<li class='toc3'><a href='#-updateInterval'>updateInterval</a> </li>
+<li class='toc3'><a href='#-updateTask'>updateTask</a> </li>
+<li class='toc3'><a href='#-usessionMouseEventsManager'>usessionMouseEventsManager</a> </li>
+</ul></ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*current' href='./../Overviews/Methods.html#current'>current</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>, <span class='argstr'>scoreEditor</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addCurrentScoreControllers' href='./../Overviews/Methods.html#addCurrentScoreControllers'>addCurrentScoreControllers</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addTrack' href='./../Overviews/Methods.html#addTrack'>addTrack</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addtoScoreList' href='./../Overviews/Methods.html#addtoScoreList'>addtoScoreList</a> (<span class='argstr'>score</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-baseEditor' href='./../Overviews/Methods.html#baseEditor'>baseEditor</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bounds' href='./../Overviews/Methods.html#bounds'>bounds</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-calcNumTracks' href='./../Overviews/Methods.html#calcNumTracks'>calcNumTracks</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-changeTrackSelected' href='./../Overviews/Methods.html#changeTrackSelected'>changeTrackSelected</a> (<span class='argstr'>amt: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-currentEditor' href='./../Overviews/Methods.html#currentEditor'>currentEditor</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-currentScore' href='./../Overviews/Methods.html#currentScore'>currentScore</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-currentScoreEditorController' href='./../Overviews/Methods.html#currentScoreEditorController'>currentScoreEditorController</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-deleteSelected' href='./../Overviews/Methods.html#deleteSelected'>deleteSelected</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disableSelected' href='./../Overviews/Methods.html#disableSelected'>disableSelected</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-duplicateSelected' href='./../Overviews/Methods.html#duplicateSelected'>duplicateSelected</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-editSelected' href='./../Overviews/Methods.html#editSelected'>editSelected</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-enableSelected' href='./../Overviews/Methods.html#enableSelected'>enableSelected</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-eventControllers' href='./../Overviews/Methods.html#eventControllers'>eventControllers</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-followPos' href='./../Overviews/Methods.html#followPos'>followPos</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-followPos' href='./../Overviews/Methods.html#followPos'>followPos</a> = <span class='argstr'>bool: false</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-goToHigherScore' href='./../Overviews/Methods.html#goToHigherScore'>goToHigherScore</a> (<span class='argstr'>i</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-init' href='./../Overviews/Methods.html#init'>init</a> (<span class='argstr'>scoreEditor</span>, <span class='argstr'>inParent</span>, <span class='argstr'>inBounds</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-isInnerScore' href='./../Overviews/Methods.html#isInnerScore'>isInnerScore</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-mainComposite' href='./../Overviews/Methods.html#mainComposite'>mainComposite</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeEventControllers' href='./../Overviews/Methods.html#makeEventControllers'>makeEventControllers</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeScoreListView' href='./../Overviews/Methods.html#makeScoreListView'>makeScoreListView</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeScoreView' href='./../Overviews/Methods.html#makeScoreView'>makeScoreView</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeView' href='./../Overviews/Methods.html#makeView'>makeView</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-minTracks' href='./../Overviews/Methods.html#minTracks'>minTracks</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-minTracks' href='./../Overviews/Methods.html#minTracks'>minTracks</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveSelected' href='./../Overviews/Methods.html#moveSelected'>moveSelected</a> (<span class='argstr'>amt: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveSelectedBeats' href='./../Overviews/Methods.html#moveSelectedBeats'>moveSelectedBeats</a> (<span class='argstr'>amt: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-numTracks' href='./../Overviews/Methods.html#numTracks'>numTracks</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-numTracks' href='./../Overviews/Methods.html#numTracks'>numTracks</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-openSelectedSubScoreInNewWindow' href='./../Overviews/Methods.html#openSelectedSubScoreInNewWindow'>openSelectedSubScoreInNewWindow</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-parent' href='./../Overviews/Methods.html#parent'>parent</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prUpdate' href='./../Overviews/Methods.html#prUpdate'>prUpdate</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-refresh' href='./../Overviews/Methods.html#refresh'>refresh</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-remake' href='./../Overviews/Methods.html#remake'>remake</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-remove' href='./../Overviews/Methods.html#remove'>remove</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeUnusedTracks' href='./../Overviews/Methods.html#removeUnusedTracks'>removeUnusedTracks</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scoreController' href='./../Overviews/Methods.html#scoreController'>scoreController</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scoreEditorsList' href='./../Overviews/Methods.html#scoreEditorsList'>scoreEditorsList</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scoreList' href='./../Overviews/Methods.html#scoreList'>scoreList</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scoreList' href='./../Overviews/Methods.html#scoreList'>scoreList</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scoreListView' href='./../Overviews/Methods.html#scoreListView'>scoreListView</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scoreView' href='./../Overviews/Methods.html#scoreView'>scoreView</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-selectAll' href='./../Overviews/Methods.html#selectAll'>selectAll</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-selectSimilar' href='./../Overviews/Methods.html#selectSimilar'>selectSimilar</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-selectedEvents' href='./../Overviews/Methods.html#selectedEvents'>selectedEvents</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-selectedEventsOrAll' href='./../Overviews/Methods.html#selectedEventsOrAll'>selectedEventsOrAll</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-showTempoMap' href='./../Overviews/Methods.html#showTempoMap'>showTempoMap</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-showTempoMap' href='./../Overviews/Methods.html#showTempoMap'>showTempoMap</a> = <span class='argstr'>bool</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-snapActive' href='./../Overviews/Methods.html#snapActive'>snapActive</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-snapActive' href='./../Overviews/Methods.html#snapActive'>snapActive</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-snapH' href='./../Overviews/Methods.html#snapH'>snapH</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-snapH' href='./../Overviews/Methods.html#snapH'>snapH</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-soloEnableSelected' href='./../Overviews/Methods.html#soloEnableSelected'>soloEnableSelected</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tempoMapControllers' href='./../Overviews/Methods.html#tempoMapControllers'>tempoMapControllers</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-update' href='./../Overviews/Methods.html#update'>update</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateInterval' href='./../Overviews/Methods.html#updateInterval'>updateInterval</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateInterval' href='./../Overviews/Methods.html#updateInterval'>updateInterval</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateTask' href='./../Overviews/Methods.html#updateTask'>updateTask</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-usessionMouseEventsManager' href='./../Overviews/Methods.html#usessionMouseEventsManager'>usessionMouseEventsManager</a> </h3>
+<h2><a class='anchor' name='Help template'>Help template</a></h2>
+
+<p>Copy and paste the text below and save to HelpSource/Classes/UScoreView.schelp<pre class='code prettyprint lang-sc'>TITLE:: UScoreView
+summary:: (put short description here)
+categories:: Undocumented classes
+related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+
+DESCRIPTION::
+(put long description here)
+
+
+CLASSMETHODS::
+
+METHOD:: current
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: new
+(describe method here)
+
+ARGUMENT:: parent
+(describe argument here)
+
+ARGUMENT:: bounds
+(describe argument here)
+
+ARGUMENT:: scoreEditor
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+
+INSTANCEMETHODS::
+
+METHOD:: update
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: selectSimilar
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: bounds
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: selectedEventsOrAll
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: addTrack
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: addCurrentScoreControllers
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prUpdate
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: enableSelected
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: init
+(describe method here)
+
+ARGUMENT:: scoreEditor
+(describe argument here)
+
+ARGUMENT:: inParent
+(describe argument here)
+
+ARGUMENT:: inBounds
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: soloEnableSelected
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: mainComposite
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: makeScoreListView
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: eventControllers
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: makeEventControllers
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: scoreList
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: editSelected
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: disableSelected
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: followPos
+(describe method here)
+
+ARGUMENT:: bool
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: remove
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: selectAll
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: makeScoreView
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: snapActive
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: moveSelected
+(describe method here)
+
+ARGUMENT:: amt
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: openSelectedSubScoreInNewWindow
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: tempoMapControllers
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: addtoScoreList
+(describe method here)
+
+ARGUMENT:: score
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: minTracks
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: goToHigherScore
+(describe method here)
+
+ARGUMENT:: i
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: changeTrackSelected
+(describe method here)
+
+ARGUMENT:: amt
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: parent
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: removeUnusedTracks
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: calcNumTracks
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: remake
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: makeView
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: usessionMouseEventsManager
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: refresh
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: scoreController
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: isInnerScore
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: selectedEvents
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: currentScoreEditorController
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: scoreEditorsList
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: showTempoMap
+(describe method here)
+
+ARGUMENT:: bool
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: currentEditor
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: currentScore
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: duplicateSelected
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: moveSelectedBeats
+(describe method here)
+
+ARGUMENT:: amt
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: snapH
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: scoreListView
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: updateTask
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: deleteSelected
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: numTracks
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: updateInterval
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: scoreView
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: baseEditor
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+
+EXAMPLES::
+
+code::
+(some example code)
+::
+</pre>
+<div class='doclink'>link::Classes/UScoreView::<br>sc version: 3.7alpha0</div></div></body></html>

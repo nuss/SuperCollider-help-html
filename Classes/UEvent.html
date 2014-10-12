@@ -1,0 +1,555 @@
+<html><head><title>UEvent</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<h1>UEvent</h1>
+<div id='summary'>(Undocumented class)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Session/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Session/UEvent.sc'>UEvent.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/UArchivable.html">UArchivable</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/UChain.html">UChain</a>, <a href="../Classes/UChainGroup.html">UChainGroup</a>, <a href="../Classes/UMarker.html">UMarker</a>, <a href="../Classes/UModDict.html">UModDict</a>, <a href="../Classes/UScore.html">UScore</a>, <a href="../Classes/UScoreList.html">UScoreList</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*nrtMode'>nrtMode</a> </li>
+<li class='toc3'><a href='#*renderMaxTime'>renderMaxTime</a> </li>
+<li class='toc3'><a href='#*renderNumChannels'>renderNumChannels</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-<='>&lt;=</a> </li>
+<li class='toc3'><a href='#-=='>==</a> </li>
+<li class='toc3'><a href='#-asScore'>asScore</a> </li>
+<li class='toc3'><a href='#-clearTags'>clearTags</a> </li>
+<li class='toc3'><a href='#-collectOSCBundleFuncs'>collectOSCBundleFuncs</a> </li>
+<li class='toc3'><a href='#-collectOSCBundles'>collectOSCBundles</a> </li>
+<li class='toc3'><a href='#-connect'>connect</a> </li>
+<li class='toc3'><a href='#-deepClearTags'>deepClearTags</a> </li>
+<li class='toc3'><a href='#-disable'>disable</a> </li>
+<li class='toc3'><a href='#-disableOSC'>disableOSC</a> </li>
+<li class='toc3'><a href='#-disabled'>disabled</a> </li>
+<li class='toc3'><a href='#-disconnect'>disconnect</a> </li>
+<li class='toc3'><a href='#-displayColor'>displayColor</a> </li>
+<li class='toc3'><a href='#-dur'>dur</a> </li>
+<li class='toc3'><a href='#-duration'>duration</a> </li>
+<li class='toc3'><a href='#-enable'>enable</a> </li>
+<li class='toc3'><a href='#-enableOSC'>enableOSC</a> </li>
+<li class='toc3'><a href='#-endTime'>endTime</a> </li>
+<li class='toc3'><a href='#-eventEndTime'>eventEndTime</a> </li>
+<li class='toc3'><a href='#-finiteDuration'>finiteDuration</a> </li>
+<li class='toc3'><a href='#-getTypeColor'>getTypeColor</a> </li>
+<li class='toc3'><a href='#-hideInGUI'>hideInGUI</a> </li>
+<li class='toc3'><a href='#-isFinite'>isFinite</a> </li>
+<li class='toc3'><a href='#-isFolder'>isFolder</a> </li>
+<li class='toc3'><a href='#-isPausable'>isPausable</a> </li>
+<li class='toc3'><a href='#-listOSCMessages'>listOSCMessages</a> </li>
+<li class='toc3'><a href='#-lockStartTime'>lockStartTime</a> </li>
+<li class='toc3'><a href='#-makeView'>makeView</a> </li>
+<li class='toc3'><a href='#-oscSetter'>oscSetter</a> </li>
+<li class='toc3'><a href='#-play'>play</a> </li>
+<li class='toc3'><a href='#-prepareTime'>prepareTime</a> </li>
+<li class='toc3'><a href='#-releaseSelf'>releaseSelf</a> </li>
+<li class='toc3'><a href='#-removeTag'>removeTag</a> </li>
+<li class='toc3'><a href='#-render'>render</a> </li>
+<li class='toc3'><a href='#-renderNumChannels'>renderNumChannels</a> </li>
+<li class='toc3'><a href='#-score'>score</a> </li>
+<li class='toc3'><a href='#-setTag'>setTag</a> </li>
+<li class='toc3'><a href='#-startTime'>startTime</a> </li>
+<li class='toc3'><a href='#-storeDisabledStateOn'>storeDisabledStateOn</a> </li>
+<li class='toc3'><a href='#-storeDisplayColor'>storeDisplayColor</a> </li>
+<li class='toc3'><a href='#-storeModifiersOn'>storeModifiersOn</a> </li>
+<li class='toc3'><a href='#-storeTags'>storeTags</a> </li>
+<li class='toc3'><a href='#-tags'>tags</a> </li>
+<li class='toc3'><a href='#-toggleDisable'>toggleDisable</a> </li>
+<li class='toc3'><a href='#-toggleLockStartTime'>toggleLockStartTime</a> </li>
+<li class='toc3'><a href='#-track'>track</a> </li>
+<li class='toc3'><a href='#-useNRT'>useNRT</a> </li>
+<li class='toc3'><a href='#-waitTime'>waitTime</a> </li>
+<li class='toc3'><a href='#-writeAudioFile'>writeAudioFile</a> </li>
+</ul></ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*nrtMode' href='./../Overviews/Methods.html#nrtMode'>nrtMode</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*nrtMode' href='./../Overviews/Methods.html#nrtMode'>nrtMode</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*renderMaxTime' href='./../Overviews/Methods.html#renderMaxTime'>renderMaxTime</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*renderMaxTime' href='./../Overviews/Methods.html#renderMaxTime'>renderMaxTime</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*renderNumChannels' href='./../Overviews/Methods.html#renderNumChannels'>renderNumChannels</a><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*renderNumChannels' href='./../Overviews/Methods.html#renderNumChannels'>renderNumChannels</a> = value</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-<=' href='./../Overviews/Methods.html#&lt;='>&lt;=</a> (<span class='argstr'>that</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-==' href='./../Overviews/Methods.html#=='>==</a> (<span class='argstr'>that</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-asScore' href='./../Overviews/Methods.html#asScore'>asScore</a> (<span class='argstr'>duration</span>, <span class='argstr'>timeOffset: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-clearTags' href='./../Overviews/Methods.html#clearTags'>clearTags</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-collectOSCBundleFuncs' href='./../Overviews/Methods.html#collectOSCBundleFuncs'>collectOSCBundleFuncs</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-collectOSCBundles' href='./../Overviews/Methods.html#collectOSCBundles'>collectOSCBundles</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connect' href='./../Overviews/Methods.html#connect'>connect</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-deepClearTags' href='./../Overviews/Methods.html#deepClearTags'>deepClearTags</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disable' href='./../Overviews/Methods.html#disable'>disable</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disableOSC' href='./../Overviews/Methods.html#disableOSC'>disableOSC</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disabled' href='./../Overviews/Methods.html#disabled'>disabled</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disabled' href='./../Overviews/Methods.html#disabled'>disabled</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disconnect' href='./../Overviews/Methods.html#disconnect'>disconnect</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-displayColor' href='./../Overviews/Methods.html#displayColor'>displayColor</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-displayColor' href='./../Overviews/Methods.html#displayColor'>displayColor</a> = <span class='argstr'>color</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-dur' href='./../Overviews/Methods.html#dur'>dur</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-duration' href='./../Overviews/Methods.html#duration'>duration</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-duration' href='./../Overviews/Methods.html#duration'>duration</a> = </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-enable' href='./../Overviews/Methods.html#enable'>enable</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-enableOSC' href='./../Overviews/Methods.html#enableOSC'>enableOSC</a> (<span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-endTime' href='./../Overviews/Methods.html#endTime'>endTime</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-eventEndTime' href='./../Overviews/Methods.html#eventEndTime'>eventEndTime</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-finiteDuration' href='./../Overviews/Methods.html#finiteDuration'>finiteDuration</a> (<span class='argstr'>addInf: 10</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getTypeColor' href='./../Overviews/Methods.html#getTypeColor'>getTypeColor</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-hideInGUI' href='./../Overviews/Methods.html#hideInGUI'>hideInGUI</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-hideInGUI' href='./../Overviews/Methods.html#hideInGUI'>hideInGUI</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-isFinite' href='./../Overviews/Methods.html#isFinite'>isFinite</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-isFolder' href='./../Overviews/Methods.html#isFolder'>isFolder</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-isPausable' href='./../Overviews/Methods.html#isPausable'>isPausable</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isPausable' href='./../Overviews/Methods.html#isPausable'>isPausable</a> = </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-listOSCMessages' href='./../Overviews/Methods.html#listOSCMessages'>listOSCMessages</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-lockStartTime' href='./../Overviews/Methods.html#lockStartTime'>lockStartTime</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-lockStartTime' href='./../Overviews/Methods.html#lockStartTime'>lockStartTime</a> = <span class='argstr'>bool: false</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeView' href='./../Overviews/Methods.html#makeView'>makeView</a> (<span class='argstr'>i: 0</span>, <span class='argstr'>minWidth</span>, <span class='argstr'>maxWidth</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscSetter' href='./../Overviews/Methods.html#oscSetter'>oscSetter</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscSetter' href='./../Overviews/Methods.html#oscSetter'>oscSetter</a>_ (<span class='argstr'>newOSCsetter</span>, <span class='argstr'>removeOld: true</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-play' href='./../Overviews/Methods.html#play'>play</a> (<span class='argstr'>server</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepareTime' href='./../Overviews/Methods.html#prepareTime'>prepareTime</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-releaseSelf' href='./../Overviews/Methods.html#releaseSelf'>releaseSelf</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeTag' href='./../Overviews/Methods.html#removeTag'>removeTag</a> (<span class='argstr'>tag</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-render' href='./../Overviews/Methods.html#render'>render</a> (<span class='argstr'>path</span>, <span class='argstr'>maxTime: 60</span>, <span class='argstr'>sampleRate: 44100</span>, <span class='argstr'>headerFormat: "AIFF"</span>, <span class='argstr'>sampleFormat: "int24"</span>, <span class='argstr'>options</span>, <span class='argstr'>inputFilePath</span>, <span class='argstr'>action</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-renderNumChannels' href='./../Overviews/Methods.html#renderNumChannels'>renderNumChannels</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-score' href='./../Overviews/Methods.html#score'>score</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-score' href='./../Overviews/Methods.html#score'>score</a> = </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setTag' href='./../Overviews/Methods.html#setTag'>setTag</a> (<span class='argstr'>tag</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-startTime' href='./../Overviews/Methods.html#startTime'>startTime</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-startTime' href='./../Overviews/Methods.html#startTime'>startTime</a> = <span class='argstr'>newTime</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeDisabledStateOn' href='./../Overviews/Methods.html#storeDisabledStateOn'>storeDisabledStateOn</a> (<span class='argstr'>stream</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeDisplayColor' href='./../Overviews/Methods.html#storeDisplayColor'>storeDisplayColor</a> (<span class='argstr'>stream</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeModifiersOn' href='./../Overviews/Methods.html#storeModifiersOn'>storeModifiersOn</a> (<span class='argstr'>stream</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeTags' href='./../Overviews/Methods.html#storeTags'>storeTags</a> (<span class='argstr'>stream</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tags' href='./../Overviews/Methods.html#tags'>tags</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tags' href='./../Overviews/Methods.html#tags'>tags</a> = <span class='argstr'>tags</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-toggleDisable' href='./../Overviews/Methods.html#toggleDisable'>toggleDisable</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-toggleLockStartTime' href='./../Overviews/Methods.html#toggleLockStartTime'>toggleLockStartTime</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-track' href='./../Overviews/Methods.html#track'>track</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-track' href='./../Overviews/Methods.html#track'>track</a> = <span class='argstr'>newTrack: 0</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-useNRT' href='./../Overviews/Methods.html#useNRT'>useNRT</a> (<span class='argstr'>func</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-waitTime' href='./../Overviews/Methods.html#waitTime'>waitTime</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-writeAudioFile' href='./../Overviews/Methods.html#writeAudioFile'>writeAudioFile</a> (<span class='argstr'>path</span>, <span class='argstr'>maxTime</span>, <span class='argstr'>action</span>, <span class='argstr'>headerFormat: "AIFF"</span>, <span class='argstr'>sampleFormat: "int24"</span>, <span class='argstr'>numChannels</span>)</h3>
+<h2><a class='anchor' name='Help template'>Help template</a></h2>
+
+<p>Copy and paste the text below and save to HelpSource/Classes/UEvent.schelp<pre class='code prettyprint lang-sc'>TITLE:: UEvent
+summary:: (put short description here)
+categories:: Undocumented classes
+related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+
+DESCRIPTION::
+(put long description here)
+
+
+CLASSMETHODS::
+
+METHOD:: nrtMode
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: renderNumChannels
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: renderMaxTime
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+
+INSTANCEMETHODS::
+
+METHOD:: isPausable
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: tags
+(describe method here)
+
+ARGUMENT:: tags
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: releaseSelf
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: removeTag
+(describe method here)
+
+ARGUMENT:: tag
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: enable
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: disabled
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: storeDisplayColor
+(describe method here)
+
+ARGUMENT:: stream
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: toggleDisable
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: listOSCMessages
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: dur
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: writeAudioFile
+(describe method here)
+
+ARGUMENT:: path
+(describe argument here)
+
+ARGUMENT:: maxTime
+(describe argument here)
+
+ARGUMENT:: action
+(describe argument here)
+
+ARGUMENT:: headerFormat
+(describe argument here)
+
+ARGUMENT:: sampleFormat
+(describe argument here)
+
+ARGUMENT:: numChannels
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: play
+(describe method here)
+
+ARGUMENT:: server
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: storeDisabledStateOn
+(describe method here)
+
+ARGUMENT:: stream
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: clearTags
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: collectOSCBundles
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: render
+(describe method here)
+
+ARGUMENT:: path
+(describe argument here)
+
+ARGUMENT:: maxTime
+(describe argument here)
+
+ARGUMENT:: sampleRate
+(describe argument here)
+
+ARGUMENT:: headerFormat
+(describe argument here)
+
+ARGUMENT:: sampleFormat
+(describe argument here)
+
+ARGUMENT:: options
+(describe argument here)
+
+ARGUMENT:: inputFilePath
+(describe argument here)
+
+ARGUMENT:: action
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: displayColor
+(describe method here)
+
+ARGUMENT:: color
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: endTime
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: connect
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: oscSetter
+(describe method here)
+
+ARGUMENT:: newOSCsetter
+(describe argument here)
+
+ARGUMENT:: removeOld
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: storeTags
+(describe method here)
+
+ARGUMENT:: stream
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: hideInGUI
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: asScore
+(describe method here)
+
+ARGUMENT:: duration
+(describe argument here)
+
+ARGUMENT:: timeOffset
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: duration
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: ==
+(describe method here)
+
+ARGUMENT:: that
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: eventEndTime
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: makeView
+(describe method here)
+
+ARGUMENT:: i
+(describe argument here)
+
+ARGUMENT:: minWidth
+(describe argument here)
+
+ARGUMENT:: maxWidth
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: enableOSC
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: getTypeColor
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setTag
+(describe method here)
+
+ARGUMENT:: tag
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: &lt;=
+(describe method here)
+
+ARGUMENT:: that
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: storeModifiersOn
+(describe method here)
+
+ARGUMENT:: stream
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: isFolder
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: track
+(describe method here)
+
+ARGUMENT:: newTrack
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: startTime
+(describe method here)
+
+ARGUMENT:: newTime
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: disconnect
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: isFinite
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: finiteDuration
+(describe method here)
+
+ARGUMENT:: addInf
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: disable
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: toggleLockStartTime
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: deepClearTags
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: lockStartTime
+(describe method here)
+
+ARGUMENT:: bool
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: useNRT
+(describe method here)
+
+ARGUMENT:: func
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: renderNumChannels
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: waitTime
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prepareTime
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: score
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: disableOSC
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: collectOSCBundleFuncs
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+
+EXAMPLES::
+
+code::
+(some example code)
+::
+</pre>
+<div class='doclink'>link::Classes/UEvent::<br>sc version: 3.7alpha0</div></div></body></html>

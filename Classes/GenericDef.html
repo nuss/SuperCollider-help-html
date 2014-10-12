@@ -1,0 +1,490 @@
+<html><head><title>GenericDef</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<h1>GenericDef</h1>
+<div id='summary'>(Undocumented class)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Core/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Core/GenericDef.sc'>GenericDef.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/UArchivable.html">UArchivable</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/UModDef.html">UModDef</a>, <a href="../Classes/Udef.html">Udef</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*all'>all</a> </li>
+<li class='toc3'><a href='#*allDefsFolders'>allDefsFolders</a> </li>
+<li class='toc3'><a href='#*allNames'>allNames</a> </li>
+<li class='toc3'><a href='#*cleanDefName'>cleanDefName</a> </li>
+<li class='toc3'><a href='#*createDefFilePath'>createDefFilePath</a> </li>
+<li class='toc3'><a href='#*createUserDefFilePath'>createUserDefFilePath</a> </li>
+<li class='toc3'><a href='#*defsFolders'>defsFolders</a> </li>
+<li class='toc3'><a href='#*existsCaseSensitive'>existsCaseSensitive</a> </li>
+<li class='toc3'><a href='#*findDefFilePath'>findDefFilePath</a> </li>
+<li class='toc3'><a href='#*findRelativeFilePath'>findRelativeFilePath</a> </li>
+<li class='toc3'><a href='#*fromName'>fromName</a> </li>
+<li class='toc3'><a href='#*getFromFile'>getFromFile</a> </li>
+<li class='toc3'><a href='#*getNamesFromDefaultDirectory'>getNamesFromDefaultDirectory</a> </li>
+<li class='toc3'><a href='#*loadAllFromDefaultDirectory'>loadAllFromDefaultDirectory</a> </li>
+<li class='toc3'><a href='#*loadOnceFromDefaultDirectory'>loadOnceFromDefaultDirectory</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*userDefsFolder'>userDefsFolder</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-addArgSpec'>addArgSpec</a> </li>
+<li class='toc3'><a href='#-addToAll'>addToAll</a> </li>
+<li class='toc3'><a href='#-archiveAsCompileString'>archiveAsCompileString</a> </li>
+<li class='toc3'><a href='#-argNames'>argNames</a> </li>
+<li class='toc3'><a href='#-argSpecs'>argSpecs</a> </li>
+<li class='toc3'><a href='#-args'>args</a> </li>
+<li class='toc3'><a href='#-asArgsArray'>asArgsArray</a> </li>
+<li class='toc3'><a href='#-constrain'>constrain</a> </li>
+<li class='toc3'><a href='#-filePath'>filePath</a> </li>
+<li class='toc3'><a href='#-getArgIndex'>getArgIndex</a> </li>
+<li class='toc3'><a href='#-getArgSpec'>getArgSpec</a> </li>
+<li class='toc3'><a href='#-getDefault'>getDefault</a> </li>
+<li class='toc3'><a href='#-getSpec'>getSpec</a> </li>
+<li class='toc3'><a href='#-initArgSpecs'>initArgSpecs</a> </li>
+<li class='toc3'><a href='#-keys'>keys</a> </li>
+<li class='toc3'><a href='#-name'>name</a> </li>
+<li class='toc3'><a href='#-openDefFile'>openDefFile</a> </li>
+<li class='toc3'><a href='#-prConstrain'>prConstrain</a> </li>
+<li class='toc3'><a href='#-prName'>prName</a> </li>
+<li class='toc3'><a href='#-removeArgSpec'>removeArgSpec</a> </li>
+<li class='toc3'><a href='#-setArgSpec'>setArgSpec</a> </li>
+<li class='toc3'><a href='#-setDefault'>setDefault</a> </li>
+<li class='toc3'><a href='#-setSpec'>setSpec</a> </li>
+<li class='toc3'><a href='#-specs'>specs</a> </li>
+<li class='toc3'><a href='#-values'>values</a> </li>
+<li class='toc3'><a href='#-write'>write</a> </li>
+</ul></ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allDefsFolders' href='./../Overviews/Methods.html#allDefsFolders'>allDefsFolders</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allNames' href='./../Overviews/Methods.html#allNames'>allNames</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*cleanDefName' href='./../Overviews/Methods.html#cleanDefName'>cleanDefName</a> (<span class='argstr'>name</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*createDefFilePath' href='./../Overviews/Methods.html#createDefFilePath'>createDefFilePath</a> (<span class='argstr'>folder</span>, <span class='argstr'>defName</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*createUserDefFilePath' href='./../Overviews/Methods.html#createUserDefFilePath'>createUserDefFilePath</a> (<span class='argstr'>defName</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defsFolders' href='./../Overviews/Methods.html#defsFolders'>defsFolders</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defsFolders' href='./../Overviews/Methods.html#defsFolders'>defsFolders</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*existsCaseSensitive' href='./../Overviews/Methods.html#existsCaseSensitive'>existsCaseSensitive</a> (<span class='argstr'>path</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*findDefFilePath' href='./../Overviews/Methods.html#findDefFilePath'>findDefFilePath</a> (<span class='argstr'>name</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*findRelativeFilePath' href='./../Overviews/Methods.html#findRelativeFilePath'>findRelativeFilePath</a> (<span class='argstr'>name</span>, <span class='argstr'>levels: 4</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fromName' href='./../Overviews/Methods.html#fromName'>fromName</a> (<span class='argstr'>name</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*getFromFile' href='./../Overviews/Methods.html#getFromFile'>getFromFile</a> (<span class='argstr'>name</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*getNamesFromDefaultDirectory' href='./../Overviews/Methods.html#getNamesFromDefaultDirectory'>getNamesFromDefaultDirectory</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadAllFromDefaultDirectory' href='./../Overviews/Methods.html#loadAllFromDefaultDirectory'>loadAllFromDefaultDirectory</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadOnceFromDefaultDirectory' href='./../Overviews/Methods.html#loadOnceFromDefaultDirectory'>loadOnceFromDefaultDirectory</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>name</span>, <span class='argstr'>args</span>, <span class='argstr'>addToAll: true</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*userDefsFolder' href='./../Overviews/Methods.html#userDefsFolder'>userDefsFolder</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*userDefsFolder' href='./../Overviews/Methods.html#userDefsFolder'>userDefsFolder</a> = value</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addArgSpec' href='./../Overviews/Methods.html#addArgSpec'>addArgSpec</a> (<span class='argstr'>argSpec</span>, <span class='argstr'>replaceIfExists: false</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addToAll' href='./../Overviews/Methods.html#addToAll'>addToAll</a> (<span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-archiveAsCompileString' href='./../Overviews/Methods.html#archiveAsCompileString'>archiveAsCompileString</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-argNames' href='./../Overviews/Methods.html#argNames'>argNames</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-argSpecs' href='./../Overviews/Methods.html#argSpecs'>argSpecs</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-argSpecs' href='./../Overviews/Methods.html#argSpecs'>argSpecs</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-args' href='./../Overviews/Methods.html#args'>args</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-asArgsArray' href='./../Overviews/Methods.html#asArgsArray'>asArgsArray</a> (<span class='argstr'>argPairs</span>, <span class='argstr'>constrain: true</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-constrain' href='./../Overviews/Methods.html#constrain'>constrain</a> ( <span class='argstr'>... nameValuePairs</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-filePath' href='./../Overviews/Methods.html#filePath'>filePath</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-filePath' href='./../Overviews/Methods.html#filePath'>filePath</a> = <span class='argstr'>fp</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getArgIndex' href='./../Overviews/Methods.html#getArgIndex'>getArgIndex</a> (<span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getArgSpec' href='./../Overviews/Methods.html#getArgSpec'>getArgSpec</a> (<span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getDefault' href='./../Overviews/Methods.html#getDefault'>getDefault</a> (<span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getSpec' href='./../Overviews/Methods.html#getSpec'>getSpec</a> (<span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-initArgSpecs' href='./../Overviews/Methods.html#initArgSpecs'>initArgSpecs</a> (<span class='argstr'>args</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-keys' href='./../Overviews/Methods.html#keys'>keys</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a> = <span class='argstr'>name</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-openDefFile' href='./../Overviews/Methods.html#openDefFile'>openDefFile</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prConstrain' href='./../Overviews/Methods.html#prConstrain'>prConstrain</a> (<span class='argstr'>name</span>, <span class='argstr'>value</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prName' href='./../Overviews/Methods.html#prName'>prName</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prName' href='./../Overviews/Methods.html#prName'>prName</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeArgSpec' href='./../Overviews/Methods.html#removeArgSpec'>removeArgSpec</a> (<span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setArgSpec' href='./../Overviews/Methods.html#setArgSpec'>setArgSpec</a> (<span class='argstr'>argSpec</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setDefault' href='./../Overviews/Methods.html#setDefault'>setDefault</a> (<span class='argstr'>name</span>, <span class='argstr'>default</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setSpec' href='./../Overviews/Methods.html#setSpec'>setSpec</a> (<span class='argstr'>name</span>, <span class='argstr'>spec</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-specs' href='./../Overviews/Methods.html#specs'>specs</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-values' href='./../Overviews/Methods.html#values'>values</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-write' href='./../Overviews/Methods.html#write'>write</a> (<span class='argstr'>path</span>, <span class='argstr'>overwrite: false</span>, <span class='argstr'>ask: true</span>, <span class='argstr'>successAction</span>, <span class='argstr'>cancelAction</span>)</h3>
+<h2><a class='anchor' name='Help template'>Help template</a></h2>
+
+<p>Copy and paste the text below and save to HelpSource/Classes/GenericDef.schelp<pre class='code prettyprint lang-sc'>TITLE:: GenericDef
+summary:: (put short description here)
+categories:: Undocumented classes
+related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+
+DESCRIPTION::
+(put long description here)
+
+
+CLASSMETHODS::
+
+METHOD:: getNamesFromDefaultDirectory
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: findDefFilePath
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: allDefsFolders
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: findRelativeFilePath
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+ARGUMENT:: levels
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: createUserDefFilePath
+(describe method here)
+
+ARGUMENT:: defName
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: createDefFilePath
+(describe method here)
+
+ARGUMENT:: folder
+(describe argument here)
+
+ARGUMENT:: defName
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: loadAllFromDefaultDirectory
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: fromName
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: new
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+ARGUMENT:: args
+(describe argument here)
+
+ARGUMENT:: addToAll
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: getFromFile
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: loadOnceFromDefaultDirectory
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: allNames
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: all
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: defsFolders
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: existsCaseSensitive
+(describe method here)
+
+ARGUMENT:: path
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: userDefsFolder
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: cleanDefName
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+
+INSTANCEMETHODS::
+
+METHOD:: keys
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: asArgsArray
+(describe method here)
+
+ARGUMENT:: argPairs
+(describe argument here)
+
+ARGUMENT:: constrain
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: getArgIndex
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: addArgSpec
+(describe method here)
+
+ARGUMENT:: argSpec
+(describe argument here)
+
+ARGUMENT:: replaceIfExists
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: addToAll
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: write
+(describe method here)
+
+ARGUMENT:: path
+(describe argument here)
+
+ARGUMENT:: overwrite
+(describe argument here)
+
+ARGUMENT:: ask
+(describe argument here)
+
+ARGUMENT:: successAction
+(describe argument here)
+
+ARGUMENT:: cancelAction
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setDefault
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+ARGUMENT:: default
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: args
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: filePath
+(describe method here)
+
+ARGUMENT:: fp
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: openDefFile
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: initArgSpecs
+(describe method here)
+
+ARGUMENT:: args
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: name
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: getSpec
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prName
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: archiveAsCompileString
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prConstrain
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+ARGUMENT:: value
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: removeArgSpec
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setSpec
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+ARGUMENT:: spec
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: specs
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: argNames
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: getDefault
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: getArgSpec
+(describe method here)
+
+ARGUMENT:: name
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: values
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setArgSpec
+(describe method here)
+
+ARGUMENT:: argSpec
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: argSpecs
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: constrain
+(describe method here)
+
+ARGUMENT::  ... nameValuePairs
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+
+EXAMPLES::
+
+code::
+(some example code)
+::
+</pre>
+<div class='doclink'>link::Classes/GenericDef::<br>sc version: 3.7alpha0</div></div></body></html>

@@ -1,0 +1,311 @@
+<html><head><title>UScoreEditor</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#UnitLib'>UnitLib</a></div>
+<h1>UScoreEditor</h1>
+<div id='summary'>(put short description here)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Session/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/Classes/Session/UScoreEditor.sc'>UScoreEditor.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../CClasses/U">U</a>, <a href="./../Classes/UChain.html">UChain</a>, <a href="./../Classes/USession.html">USession</a>, <a href="./../Classes/UScoreEditor.html">UScoreEditor</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*clipboard'>clipboard</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*current'>current</a> </li>
+<li class='toc3'><a href='#*copy'>copy</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*enableUndo'>enableUndo</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-score'>score</a> </li>
+<li class='toc3'><a href='#-undoStates'>undoStates</a> </li>
+<li class='toc3'><a href='#-redoStates'>redoStates</a> </li>
+<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-events'>events</a> </li>
+<li class='toc3'><a href='#-changeScore'>changeScore</a> </li>
+<li class='toc3'><a href='#-paste'>paste</a> </li>
+<li class='toc3'><a href='#-pasteAtCurrentPos'>pasteAtCurrentPos</a> </li>
+<li class='toc3'><a href='#-storeUndoState'>storeUndoState</a> </li>
+<li class='toc3'><a href='#-undo'>undo</a> </li>
+<li class='toc3'><a href='#-redo'>redo</a> </li>
+<li class='toc3'><a href='#-<|'>&lt;|</a> </li>
+<li class='toc3'><a href='#-addEvent'>addEvent</a> </li>
+<li class='toc3'><a href='#-duplicateEvents'>duplicateEvents</a> </li>
+<li class='toc3'><a href='#-deleteEvents'>deleteEvents</a> </li>
+<li class='toc3'><a href='#-muteEvents'>muteEvents</a> </li>
+<li class='toc3'><a href='#-unmuteEvents'>unmuteEvents</a> </li>
+<li class='toc3'><a href='#-toggleDisableEvents'>toggleDisableEvents</a> </li>
+<li class='toc3'><a href='#-unmuteAll'>unmuteAll</a> </li>
+<li class='toc3'><a href='#-soloEvents'>soloEvents</a> </li>
+<li class='toc3'><a href='#-folderFromEvents'>folderFromEvents</a> </li>
+<li class='toc3'><a href='#-unpackSelectedFolders'>unpackSelectedFolders</a> </li>
+<li class='toc3'><a href='#-cutEventsStart'>cutEventsStart</a> </li>
+<li class='toc3'><a href='#-cutEventsEnd'>cutEventsEnd</a> </li>
+<li class='toc3'><a href='#-splitEvents'>splitEvents</a> </li>
+<li class='toc3'><a href='#-trimEventsStartAtPos'>trimEventsStartAtPos</a> </li>
+<li class='toc3'><a href='#-trimEventsEndAtPos'>trimEventsEndAtPos</a> </li>
+<li class='toc3'><a href='#-splitEventsAtPos'>splitEventsAtPos</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-addMarker'>addMarker</a> </li>
+<li class='toc3'><a href='#-changeEventsTrack'>changeEventsTrack</a> </li>
+<li class='toc3'><a href='#-clearUndo'>clearUndo</a> </li>
+<li class='toc3'><a href='#-disableEvents'>disableEvents</a> </li>
+<li class='toc3'><a href='#-enableAll'>enableAll</a> </li>
+<li class='toc3'><a href='#-enableEvents'>enableEvents</a> </li>
+<li class='toc3'><a href='#-moveEvents'>moveEvents</a> </li>
+<li class='toc3'><a href='#-moveEventsBeats'>moveEventsBeats</a> </li>
+<li class='toc3'><a href='#-quantizeEvents'>quantizeEvents</a> </li>
+<li class='toc3'><a href='#-quantizePos'>quantizePos</a> </li>
+<li class='toc3'><a href='#-redoSize'>redoSize</a> </li>
+<li class='toc3'><a href='#-soloEnableEvents'>soloEnableEvents</a> </li>
+<li class='toc3'><a href='#-toggleLockEvents'>toggleLockEvents</a> </li>
+<li class='toc3'><a href='#-undoPos'>undoPos</a> </li>
+<li class='toc3'><a href='#-undoSize'>undoSize</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>(put long description here)<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*clipboard' href='./../Overviews/Methods.html#clipboard'>clipboard</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>score</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>score<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*current' href='./../Overviews/Methods.html#current'>current</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*copy' href='./../Overviews/Methods.html#copy'>copy</a> (<span class='argstr'>events</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*enableUndo' href='./../Overviews/Methods.html#enableUndo'>enableUndo</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*enableUndo' href='./../Overviews/Methods.html#enableUndo'>enableUndo</a> = value</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-score' href='./../Overviews/Methods.html#score'>score</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-undoStates' href='./../Overviews/Methods.html#undoStates'>undoStates</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-redoStates' href='./../Overviews/Methods.html#redoStates'>redoStates</a>: METHOD NOT FOUND!</h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-init' href='./../Overviews/Methods.html#init'>init</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-events' href='./../Overviews/Methods.html#events'>events</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-events' href='./../Overviews/Methods.html#events'>events</a> = <span class='argstr'>events</span></h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-changeScore' href='./../Overviews/Methods.html#changeScore'>changeScore</a> (<span class='argstr'>action</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-paste' href='./../Overviews/Methods.html#paste'>paste</a> (<span class='argstr'>pos</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>pos<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pasteAtCurrentPos' href='./../Overviews/Methods.html#pasteAtCurrentPos'>pasteAtCurrentPos</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeUndoState' href='./../Overviews/Methods.html#storeUndoState'>storeUndoState</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-undo' href='./../Overviews/Methods.html#undo'>undo</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-redo' href='./../Overviews/Methods.html#redo'>redo</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-<|' href='./../Overviews/Methods.html#&lt;|'>&lt;|</a> (<span class='argstr'>events</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addEvent' href='./../Overviews/Methods.html#addEvent'>addEvent</a> </h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-duplicateEvents' href='./../Overviews/Methods.html#duplicateEvents'>duplicateEvents</a> (<span class='argstr'>events</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-deleteEvents' href='./../Overviews/Methods.html#deleteEvents'>deleteEvents</a> (<span class='argstr'>events</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-muteEvents' href='./../Overviews/Methods.html#muteEvents'>muteEvents</a>: METHOD NOT FOUND!</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-unmuteEvents' href='./../Overviews/Methods.html#unmuteEvents'>unmuteEvents</a>: METHOD NOT FOUND!</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-toggleDisableEvents' href='./../Overviews/Methods.html#toggleDisableEvents'>toggleDisableEvents</a> (<span class='argstr'>events</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-unmuteAll' href='./../Overviews/Methods.html#unmuteAll'>unmuteAll</a>: METHOD NOT FOUND!</h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-soloEvents' href='./../Overviews/Methods.html#soloEvents'>soloEvents</a>: METHOD NOT FOUND!</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-folderFromEvents' href='./../Overviews/Methods.html#folderFromEvents'>folderFromEvents</a> (<span class='argstr'>events</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-unpackSelectedFolders' href='./../Overviews/Methods.html#unpackSelectedFolders'>unpackSelectedFolders</a> (<span class='argstr'>events</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-cutEventsStart' href='./../Overviews/Methods.html#cutEventsStart'>cutEventsStart</a> (<span class='argstr'>events</span>, <span class='argstr'>pos</span>, <span class='argstr'>isFolder: false</span>, <span class='argstr'>removeFadeIn: true</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>pos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>isFolder<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>removeFadeIn<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-cutEventsEnd' href='./../Overviews/Methods.html#cutEventsEnd'>cutEventsEnd</a> (<span class='argstr'>events</span>, <span class='argstr'>pos</span>, <span class='argstr'>isFolder: false</span>, <span class='argstr'>removeFadeOut: false</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>pos<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>isFolder<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>removeFadeOut<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-splitEvents' href='./../Overviews/Methods.html#splitEvents'>splitEvents</a> (<span class='argstr'>events</span>, <span class='argstr'>pos</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)<tr><td class='argumentname'>pos<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-trimEventsStartAtPos' href='./../Overviews/Methods.html#trimEventsStartAtPos'>trimEventsStartAtPos</a> (<span class='argstr'>events</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-trimEventsEndAtPos' href='./../Overviews/Methods.html#trimEventsEndAtPos'>trimEventsEndAtPos</a> (<span class='argstr'>events</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-splitEventsAtPos' href='./../Overviews/Methods.html#splitEventsAtPos'>splitEventsAtPos</a> (<span class='argstr'>events</span>)</h3>
+<div class='method'>
+<p>(describe method here)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>events<td class='argumentdesc'>
+<p>(describe argument here)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(returnvalue)</div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addMarker' href='./../Overviews/Methods.html#addMarker'>addMarker</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-changeEventsTrack' href='./../Overviews/Methods.html#changeEventsTrack'>changeEventsTrack</a> (<span class='argstr'>events</span>, <span class='argstr'>amount: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-clearUndo' href='./../Overviews/Methods.html#clearUndo'>clearUndo</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disableEvents' href='./../Overviews/Methods.html#disableEvents'>disableEvents</a> (<span class='argstr'>events</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-enableAll' href='./../Overviews/Methods.html#enableAll'>enableAll</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-enableEvents' href='./../Overviews/Methods.html#enableEvents'>enableEvents</a> (<span class='argstr'>events</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveEvents' href='./../Overviews/Methods.html#moveEvents'>moveEvents</a> (<span class='argstr'>events</span>, <span class='argstr'>amount: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveEventsBeats' href='./../Overviews/Methods.html#moveEventsBeats'>moveEventsBeats</a> (<span class='argstr'>events</span>, <span class='argstr'>amount: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-quantizeEvents' href='./../Overviews/Methods.html#quantizeEvents'>quantizeEvents</a> (<span class='argstr'>events</span>, <span class='argstr'>amount: 0</span>, <span class='argstr'>useTempoMap: false</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-quantizePos' href='./../Overviews/Methods.html#quantizePos'>quantizePos</a> (<span class='argstr'>amount: 0</span>, <span class='argstr'>useTempoMap: false</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-redoSize' href='./../Overviews/Methods.html#redoSize'>redoSize</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-soloEnableEvents' href='./../Overviews/Methods.html#soloEnableEvents'>soloEnableEvents</a> (<span class='argstr'>events</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-toggleLockEvents' href='./../Overviews/Methods.html#toggleLockEvents'>toggleLockEvents</a> (<span class='argstr'>events</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-undoPos' href='./../Overviews/Methods.html#undoPos'>undoPos</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-undoSize' href='./../Overviews/Methods.html#undoSize'>undoSize</a> </h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>(some example code)</pre>
+
+<p><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/HelpSource/Classes/UScoreEditor.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/Unit-Lib/HelpSource/Classes/UScoreEditor.schelp</a><br>link::Classes/UScoreEditor::<br>sc version: 3.7alpha0</div></div></body></html>

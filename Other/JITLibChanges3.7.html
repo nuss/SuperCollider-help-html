@@ -51,7 +51,7 @@
 <li>controls are now set at synth creation time, not in an extra set message. This means that i-rate controls can be set in the nodemap.<li>send and spawn extraArgs now override any existing nodeMap settings for each synth<li>when setting the source of a node proxy to a number or an array of numbers, the bus is set by a precompiled synth def, which is much more efficient and consistent than build ing one. This means the source can be now set to a number/array librally at higher rates (e.g. Ndef(\x, [100, 200])).<li>For implementation reasons, it is now not possible anymore to add up numbers in a single node proxy. One slot will overwrite the next. E.g. <code class='code prettyprint lang-sc'>Ndef(\x)[0] = 100; Ndef(\x)[1] = 200;</code> the output will be 200 and not (as ist used to be) 300.<li>play (Monitor) can now map from any number of channels to any number of channels<li>play and playN (Monitor) previously passed arguments are kept and can be partially overridden by new ones (the message clear removes them).<li>nodeProxy.value(n) (e.g. <code class='code prettyprint lang-sc'>SinOsc.ar(Ndef(\x)</code>) will keep the rate the proxy already has).<li>using <code class='code prettyprint lang-sc'>x.ar(n)</code> and <code class='code prettyprint lang-sc'>x.kr(n)</code> will automatically expand when <code class='code prettyprint lang-sc'>n</code> is nil. It remains fixed if n is given.<li><code class='code prettyprint lang-sc'>nodeProxy.ar(n)</code> / <code class='code prettyprint lang-sc'>nodeProxy.kr(n)</code> if no <code class='code prettyprint lang-sc'>n</code> is given, they will now always return an array, <code class='code prettyprint lang-sc'>nodeProxy.value(x)</code> returns an array, if no input is given. This is for general consistency: a few ugens expect an array as an input, and as the numChannels of a proxy can change now, this has to be specified. In order to have a UGen and not an array, use <code class='code prettyprint lang-sc'>nodeProxy.ar(1)</code>, or <code class='code prettyprint lang-sc'>nodeProxy.kr(1)</code>, respectively.<li>unlike it was before, <code class='code prettyprint lang-sc'>x.ar(n, offset)</code> will now wrap around the avaliable proxy bus channels. There is a third argument (wrap), when set to false, it will clip instead<li>a third argument, clip, was added to ar/kr: <code class='code prettyprint lang-sc'>x.ar(n, offset, clip)</code>. When set to \wrap it will extend the output size of the existing channels by wrapping (the default is \wrap). Set it to \clip if you want to keep it in range by repeating the last value.<li>InBus is more flexible and logical in terms of multichannel expansion now and has a helpfile</ul>
 <h3><a class='anchor' name='New functionality'>New functionality</a></h3>
 <ul>
-<li>the message <a href="./../Classes/NodeProxy.html#-mold">NodeProxy: -mold</a> allows you to change the number of channels and rate of the proxy at runtime. The proxy's children are automatically remapped, both source and monitor will crossfade between the respective states.<li>Note that when rebuilding children, the timing (clock, quant and fadeTime) of the parent is used for all others. If you need different time bases of related proxies, mold dosn't keep their timing. Set the molded proxy's quant to a smallest common multiple of the two quants in this case.<li>You can now use NodeMap directly as arguments in Synth objects.<li>NodeProxy can be used as argument in a Synth directly, it will either return its bus index or by asMap its bus mapping argument. Note that when reshaping is allowed, the synth won't update automatically. You can register a dependency on \bus.</ul>
+<li>the message <a href="./../Classes/NodeProxy.html#-mold">NodeProxy: -mold</a> allows you to change the number of channels and rate of the proxy at runtime. The proxy's children are automatically remapped, both source and monitor will crossfade between the respective states.<li>Note that when rebuilding children, the timing (clock, quant and fadeTime) of the parent is used for all others. If you need different time bases of related proxies, mold dosn't keep their timing. Set the molded proxy's quant to a smallest common multiple of the two quants in this case.<li>You can now use NodeMap directly as arguments in Synth objects.<li>NodeProxy can be used as argument in a Synth directly, it will either return its bus index or by asMap its bus mapping argument. Note that when reshaping is allowed, the synth won't update automatically. You can register a dependency on \bus.<li>node proxies and pattern proxies can be copied now: this will copy the hidden internal state to make the copy independent, but will keep the reference to the source object. In NodeProxy, the rendered SynthDef is cached, which makes the copy efficient. A ProxySpace or LazyEnvir can be copied and then modified independently.</ul>
 <h3><a class='anchor' name='node proxy elastic behaviour setting:'>node proxy elastic behaviour setting:</a></h3>
 <ul>
 <li>NodeProxy is now able to reshape according to its source. When doing so, it recursively updates all other node proxies that depend on it. Both source and monitor will crossfade between the respective states.<li>reshaping can be set on three levels: (a) global default, (b) for a ProxySpace, (c) for an individual NodeProxy/BusPlug.<li>by default, reshaping is nil (no automatic reshaping). Apart from this, currently, there is \elastic: both shrink and grow and change rate, and \expanding: only grow, but also adjust rate.</ul>
@@ -1070,6 +1070,41 @@ Ndef(\x).kr(2);
 Ndef(\x, { Dust2.kr(Line.kr(0, 200, 10)) });
 
 
+// copying
+
+a = NodeProxy(s);
+a.set(\gg, 910);
+a.source = 6;
+b = a.copy;
+a.bus !== b.bus;
+a.nodeMap.at(\gg) == b.nodeMap.at(\gg);
+a.source == b.source;
+b.source = 10;
+a.source != b.source;
+a.nodeMap.at(\gg) == b.nodeMap.at(\gg);
+b.set(\gg, 723);
+a.nodeMap.at(\gg) != b.nodeMap.at(\gg);
+
+p = ProxySpace(s);
+p.use { ~x = 891; ~y = 71; ~x.set(\freq, 661) };
+q = p.copy;
+f = { |x, func| x.envir.keys.as(Array).sort.collect { |key| func.(x.envir.at(key)) } };
+f.(p, { |proxy| proxy.source }) == f.(q, { |proxy| proxy.source });
+f.(p, { |proxy| proxy.nodeMap.at(\freq) }) == f.(q, { |proxy| proxy.nodeMap.at(\freq) });
+f.(p, { |proxy| proxy.objects }) != f.(q, { |proxy| proxy.objects });
+p.use { ~x.set(\freq, 0) };
+f.(p, { |proxy| proxy.nodeMap.at(\freq) }) != f.(q, { |proxy| proxy.nodeMap.at(\freq) });
+p.use { ~x = -100 };
+f.(p, { |proxy| proxy.source }) == f.(q, { |proxy| proxy.source });
+
+Ndef(\x).set(\freq, 900);
+Ndef(\x, 7);
+a = Ndef(\y);
+Ndef(\x).copy(\y);
+Ndef(\y) === a;
+Ndef(\y).nodeMap.at(\freq) == 900;
+Ndef(\y).source == 7;
+
 
 // various objects
 Ndef.clear;
@@ -1463,5 +1498,46 @@ fork { 15.do { Pdef(\foo, Pmono(\default, \dur, 1/8, \degree, Pseq([5,4,3,2,1],i
 
 
 Tdef(\x, { loop { 1.wait; "wesew".postln } }).play;
-Tdef(\x, { loop { 0.1.wait; "wesew".postln } }).play;</pre>
+Tdef(\x, { loop { 0.1.wait; "wesew".postln } }).play;
+
+// testing copy
+
+// pattern proxy
+a = PatternProxy({ |envir| Pseq([1, 2, 3], inf) + envir[\x] }).set(\x, 0);
+b = a.copy;
+f = { |x| x.asStream.nextN(8).postln };
+
+f.(a) == f.(b);
+a.set(\x, 16);
+f.(a) != f.(b);
+
+a = PatternProxy({ |envir| Pseq([1, 2, 3], inf) + envir[\x] }).set(\x, 0);
+b = a.copy;
+f.(a) == f.(b);
+a.source = Pseq([1, 2, 3, 4], inf);
+f.(a) != f.(b);
+b.source = Pseq([1, 2, 3, 4], inf);
+f.(a) == f.(b);
+
+Pdefn(\a, { |envir| Pseq([1, 2, 3], inf) + envir[\x] }).set(\x, 0);
+Pdefn(\a).copy(\b);
+f = { |x| Pdefn(x).asStream.nextN(8).postln };
+f.(\a) == f.(\b);
+Pdefn(\a).set(\x, 16);
+f.(\a) != f.(\b);
+
+// event pattern proxy
+a = EventPatternProxy({ Pbind(\note, Pseq([1, 2, 3], inf)) }).set(\x, 0);
+b = a.copy;
+f = { |x| Pevent(x).asStream.nextN(8).postln };
+f.(a) == f.(b);
+a.set(\x, 16);
+f.(a) != f.(b);
+
+b = a.copy;
+f.(a) == f.(b);
+a.source = Pbind(\note, 7);
+f.(a) != f.(b);
+b.source = Pbind(\note, 7);
+f.(a) == f.(b);</pre>
 <div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Other/JITLibChanges3.7.schelp'>/usr/local/share/SuperCollider/HelpSource/Other/JITLibChanges3.7.schelp</a><br>link::Other/JITLibChanges3.7::<br>sc version: 3.7alpha0</div></div></body></html>
