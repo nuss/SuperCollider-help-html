@@ -37,8 +37,11 @@
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-server'>server</a> </li>
 <li class='toc3'><a href='#-clear'>clear</a> </li>
+<li class='toc2'><a href='#Making copies'>Making copies</a></li>
+<ul class='toc'><li class='toc3'><a href='#-copy'>copy</a> </li>
+<li class='toc3'><a href='#-copyState'>copyState</a> </li>
 <li class='toc3'><a href='#-reshaping'>reshaping</a> </li>
-<li class='toc2'><a href='#In UGen graphs and Patterns'>In UGen graphs and Patterns</a></li>
+</ul><li class='toc2'><a href='#In UGen graphs and Patterns'>In UGen graphs and Patterns</a></li>
 <ul class='toc'><li class='toc3'><a href='#-ar'>ar</a>  <a href='#-kr'>kr</a> </li>
 <li class='toc3'><a href='#-asUGenInput'>asUGenInput</a> </li>
 <li class='toc3'><a href='#-embedInStream'>embedInStream</a> </li>
@@ -67,8 +70,6 @@
 <li class='toc3'><a href='#-composeBinaryOp'>composeBinaryOp</a> </li>
 <li class='toc3'><a href='#-composeNAryOp'>composeNAryOp</a> </li>
 <li class='toc3'><a href='#-composeUnaryOp'>composeUnaryOp</a> </li>
-<li class='toc3'><a href='#-copy'>copy</a> </li>
-<li class='toc3'><a href='#-copyState'>copyState</a> </li>
 <li class='toc3'><a href='#-fadeTime'>fadeTime</a> </li>
 <li class='toc3'><a href='#-fixedBus'>fixedBus</a> </li>
 <li class='toc3'><a href='#-freeBus'>freeBus</a> </li>
@@ -121,7 +122,15 @@ a = BusPlug.for(z);
 <div class='method'>
 <p>Return the server that the BusPlug runs on.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-clear' href='./../Overviews/Methods.html#clear'>clear</a> </h3>
 <div class='method'>
-<p>Free the bus, end the monitor</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-reshaping' href='./../Overviews/Methods.html#reshaping'>reshaping</a></h3>
+<p>Free the bus, end the monitor</div><h3><a class='anchor' name='Making copies'>Making copies</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-copy' href='./../Overviews/Methods.html#copy'>copy</a> </h3>
+<div class='method'>
+<p>copies the hidden internal state to make the new BusPlug independent of the old, running on a new <a href="./../Classes/Bus.html">Bus</a>. By design, the <a href="./../Classes/Monitor.html">Monitor</a> is copied, but is not running (use play to start it in the same configuration). If needed, you can also copy the <a href="./../Classes/Monitor.html">Monitor</a> only (see: <a href="./../Classes/NodeProxy.html#copy">NodeProxy: copy</a>).</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-copyState' href='./../Overviews/Methods.html#copyState'>copyState</a> (<span class='argstr'>proxy</span>)</h3>
+<div class='method'>
+<p>Copy the internal settings of one proxy into another. Old state is cleared, the bus is freed.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>proxy<td class='argumentdesc'>
+<p>The object whose internal state is being copied.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-reshaping' href='./../Overviews/Methods.html#reshaping'>reshaping</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-reshaping' href='./../Overviews/Methods.html#reshaping'>reshaping</a> = value</h3>
 <div class='method'>
 <p>Determines how to behave when <a href="#initBus">initBus</a> is called. Current options:<ul>
@@ -213,8 +222,6 @@ x.next(()); // returns map arguments for the audio rate bus</pre>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-composeBinaryOp' href='./../Overviews/Methods.html#composeBinaryOp'>composeBinaryOp</a> (<span class='argstr'>aSelector</span>, <span class='argstr'>something</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-composeNAryOp' href='./../Overviews/Methods.html#composeNAryOp'>composeNAryOp</a> (<span class='argstr'>aSelector</span>, <span class='argstr'>anArgList</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-composeUnaryOp' href='./../Overviews/Methods.html#composeUnaryOp'>composeUnaryOp</a> (<span class='argstr'>aSelector</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-copy' href='./../Overviews/Methods.html#copy'>copy</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-copyState' href='./../Overviews/Methods.html#copyState'>copyState</a> (<span class='argstr'>proxy</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-fadeTime' href='./../Overviews/Methods.html#fadeTime'>fadeTime</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-fixedBus' href='./../Overviews/Methods.html#fixedBus'>fixedBus</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-freeBus' href='./../Overviews/Methods.html#freeBus'>freeBus</a> </h3>

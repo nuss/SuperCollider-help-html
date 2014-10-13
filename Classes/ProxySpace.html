@@ -54,10 +54,12 @@
 </ul><li class='toc2'><a href='#Setting the sources'>Setting the sources</a></li>
 <ul class='toc'><li class='toc3'><a href='#-put'>put</a> </li>
 <li class='toc3'><a href='#-at'>at</a> </li>
-</ul><li class='toc2'><a href='#"garbage collecting"'>"garbage collecting"</a></li>
+</ul><li class='toc2'><a href='#garbage collecting'>garbage collecting</a></li>
 <ul class='toc'><li class='toc3'><a href='#-clean'>clean</a> </li>
 <li class='toc3'><a href='#-reduce'>reduce</a> </li>
-</ul><li class='toc2'><a href='#Coding'>Coding</a></li>
+</ul><li class='toc2'><a href='#making copies'>making copies</a></li>
+<ul class='toc'><li class='toc3'><a href='#-copy'>copy</a> </li>
+</ul><li class='toc2'><a href='#Writing code'>Writing code</a></li>
 <ul class='toc'><li class='toc3'><a href='#-document'>document</a> </li>
 </ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
@@ -65,7 +67,6 @@
 <li class='toc3'><a href='#-arProxyNames'>arProxyNames</a> </li>
 <li class='toc3'><a href='#-asCode'>asCode</a> </li>
 <li class='toc3'><a href='#-awake'>awake</a> </li>
-<li class='toc3'><a href='#-copy'>copy</a> </li>
 <li class='toc3'><a href='#-copyState'>copyState</a> </li>
 <li class='toc3'><a href='#-doFunctionPerform'>doFunctionPerform</a> </li>
 <li class='toc3'><a href='#-doOnServerBoot'>doOnServerBoot</a> </li>
@@ -184,12 +185,29 @@ b.clear(3);</pre>
 <p>Gets the NodeProxy at <strong>key</strong> (if none exists, returns a new one) and sets its source to <strong>obj</strong>. For how this works, see also <a href="./../Classes/LazyEnvir.html">LazyEnvir</a> and <a href="./../Classes/NodeProxy.html">NodeProxy</a>.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-at' href='./../Overviews/Methods.html#at'>at</a> (<span class='argstr'>key</span>)</h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/LazyEnvir.html'>LazyEnvir</a></div>
 <div class='method'>
-<p>Return the proxy source object at that key.</div><h3><a class='anchor' name='"garbage collecting"'>"garbage collecting"</a></h3>
+<p>Return the proxy source object at that key.</div><h3><a class='anchor' name='garbage collecting'>garbage collecting</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-clean' href='./../Overviews/Methods.html#clean'>clean</a> (<span class='argstr'>excluding</span>)</h3>
 <div class='method'>
 <p>free and remove all proxies that are not needed in order to play the ones passed in with 'exclude'. if none are passed in, all proxies that are monitoring (with the .play message) are kept as well as their parents etc.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-reduce' href='./../Overviews/Methods.html#reduce'>reduce</a> (<span class='argstr'>excluding</span>, <span class='argstr'>method: 'end'</span>)</h3>
 <div class='method'>
-<p>free all proxies that are not needed in order to play the ones passed in with 'to'. if none are passed in, all proxies that are monitored (with the play message) are kept as well as their parents etc.</div><h3><a class='anchor' name='Coding'>Coding</a></h3>
+<p>free all proxies that are not needed in order to play the ones passed in with 'to'. if none are passed in, all proxies that are monitored (with the play message) are kept as well as their parents etc.</div><h3><a class='anchor' name='making copies'>making copies</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-copy' href='./../Overviews/Methods.html#copy'>copy</a> </h3>
+<div class='method'>
+<p>Copies the environment into a new one, with each proxy being copied as well (See: <a href="./../Classes/NodeProxy.html#-copy">NodeProxy: -copy</a>). Also the instance variables that determine the ProxySpace behaviour are included, such as server, fadeTime, quant, reshaping (this happens in the <code class='code prettyprint lang-sc'>copyState</code> method).<pre class='code prettyprint lang-sc'>p = ProxySpace.push(s.boot);
+p.reshaping = \elastic;
+~out.play;
+~out = { Blip.ar(~freq, ~numharm) };
+~freq = 70;
+~numharm = { MouseX.kr(2, 100, 1) };
+
+q = p.copy; p.pop; q.push;
+
+q.reshaping.postln; // also elastic
+~out.play;
+~freq = { MouseY.kr(2, 1000, 1) * [1, 1.2] };
+
+p.end; q.end;</pre>
+</div><h3><a class='anchor' name='Writing code'>Writing code</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-document' href='./../Overviews/Methods.html#document'>document</a> (<span class='argstr'>keys</span>, <span class='argstr'>onlyAudibleOutput: false</span>, <span class='argstr'>includeSettings: true</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/JITLib/ProxySpace/extStoreOn.sc'>/usr/local/share/SuperCollider/SCClassLibrary/JITLib/ProxySpace/extStoreOn.sc</a></div>
 <div class='method'>
@@ -206,7 +224,6 @@ b.clear(3);</pre>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/JITLib/ProxySpace/extStoreOn.sc'>/usr/local/share/SuperCollider/SCClassLibrary/JITLib/ProxySpace/extStoreOn.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-awake' href='./../Overviews/Methods.html#awake'>awake</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-awake' href='./../Overviews/Methods.html#awake'>awake</a> = <span class='argstr'>flag</span></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-copy' href='./../Overviews/Methods.html#copy'>copy</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-copyState' href='./../Overviews/Methods.html#copyState'>copyState</a> (<span class='argstr'>proxySpace</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-doFunctionPerform' href='./../Overviews/Methods.html#doFunctionPerform'>doFunctionPerform</a> (<span class='argstr'>selector</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-doOnServerBoot' href='./../Overviews/Methods.html#doOnServerBoot'>doOnServerBoot</a> (<span class='argstr'>server</span>)</h3>

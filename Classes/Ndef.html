@@ -45,7 +45,9 @@
 <li class='toc3'><a href='#-proxyspace'>proxyspace</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'><li class='toc2'><a href='#Simple audio routing with the <<> operator'>Simple audio routing with the &lt;&lt;&gt; operator</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Recursion'>Recursion</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Making Copies'>Making Copies</a></li>
+<ul class='toc'><li class='toc3'><a href='#.copy'>copy</a> </li>
+</ul><li class='toc2'><a href='#Recursion'>Recursion</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Using different servers'>Using different servers</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#GUI'>GUI</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Using Associations'>Using Associations</a></li>
@@ -145,7 +147,16 @@ Ndef(\sound) &lt;&lt;&gt;.in2 Ndef(\c);
 Ndef(\a) &lt;&lt;&gt;.phase Ndef(\sound);
 Ndef(\a) &lt;&lt;&gt;.phase nil;    // unmap
 Ndef.clear(3);        // fade out and clear all Ndefs</pre>
-<h3><a class='anchor' name='Recursion'>Recursion</a></h3>
+<h3><a class='anchor' name='Making Copies'>Making Copies</a></h3>
+<h3 class='imethodname'><span class='methprefix'>&nbsp;</span><a name='.copy' href='./../Overviews/Methods.html#copy'>copy</a> </h3>
+<div class='method'>
+<p>Because an Ndef is a unique instance for a given key, it can be copied only by supplying a new key. See also: <a href="./../Classes/NodeProxy.html#-copy">NodeProxy: -copy</a>.<pre class='code prettyprint lang-sc'>Ndef(\x, { SinOsc.ar(Rand(500, 900)) * 0.1 }).play;
+Ndef(\x).copy(\y);
+Ndef(\y).play;</pre>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newKey<td class='argumentdesc'>
+<p>A valid new key, usually a <a href="./../CLasses/Symbol">Symbol</a></table></div><h3><a class='anchor' name='Recursion'>Recursion</a></h3>
 
 <p>Ndefs can be used recursively. A structure like the following works:<pre class='code prettyprint lang-sc'>Ndef(\sound, { SinOsc.ar([600, 635], Ndef.ar(\sound), LFNoise1.kr(2).max(0) * 0.2) });
 Ndef(\sound).play;
