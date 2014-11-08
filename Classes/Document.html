@@ -113,14 +113,16 @@
 <li class='toc3'><a href='#-hash'>hash</a> </li>
 <li class='toc3'><a href='#-initFromIDE'>initFromIDE</a> </li>
 <li class='toc3'><a href='#-insertText'>insertText</a> </li>
-<li class='toc3'><a href='#-insertTextRange'>insertTextRange</a> </li>
 <li class='toc3'><a href='#-keyDown'>keyDown</a> </li>
 <li class='toc3'><a href='#-keyUp'>keyUp</a> </li>
 <li class='toc3'><a href='#-mouseDown'>mouseDown</a> </li>
 <li class='toc3'><a href='#-mouseUp'>mouseUp</a> </li>
+<li class='toc3'><a href='#-prGetSelectionRange'>prGetSelectionRange</a> </li>
+<li class='toc3'><a href='#-prGetSelectionStart'>prGetSelectionStart</a> </li>
 <li class='toc3'><a href='#-prGetTextFromMirror'>prGetTextFromMirror</a> </li>
 <li class='toc3'><a href='#-prReadTextFromFile'>prReadTextFromFile</a> </li>
 <li class='toc3'><a href='#-prSetEdited'>prSetEdited</a> </li>
+<li class='toc3'><a href='#-prSetSelectionMirror'>prSetSelectionMirror</a> </li>
 <li class='toc3'><a href='#-prSetText'>prSetText</a> </li>
 <li class='toc3'><a href='#-prSetTextMirror'>prSetTextMirror</a> </li>
 <li class='toc3'><a href='#-quuid'>quuid</a> </li>
@@ -299,7 +301,7 @@ Document.standardizePath("Patches/newfoots/fastRuckAndTuck")
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/deprecated/3.7/deprecated-3.7.sc'>/usr/local/share/SuperCollider/SCClassLibrary/deprecated/3.7/deprecated-3.7.sc</a></div>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*syncDocs' href='./../Overviews/Methods.html#syncDocs'>syncDocs</a> (<span class='argstr'>docInfo</span>)</h3>
 <div class='supmethod'>From implementing class</div>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*syncFromIDE' href='./../Overviews/Methods.html#syncFromIDE'>syncFromIDE</a> (<span class='argstr'>quuid</span>, <span class='argstr'>title</span>, <span class='argstr'>chars</span>, <span class='argstr'>isEdited</span>, <span class='argstr'>path</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*syncFromIDE' href='./../Overviews/Methods.html#syncFromIDE'>syncFromIDE</a> (<span class='argstr'>quuid</span>, <span class='argstr'>title</span>, <span class='argstr'>chars</span>, <span class='argstr'>isEdited</span>, <span class='argstr'>path</span>, <span class='argstr'>selStart</span>, <span class='argstr'>selSize</span>)</h3>
 <div class='supmethod'>From implementing class</div>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*theme' href='./../Overviews/Methods.html#theme'>theme</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*theme' href='./../Overviews/Methods.html#theme'>theme</a> =  <span class='argstr'>... args</span></h3>
@@ -334,7 +336,7 @@ Document.standardizePath("Patches/newfoots/fastRuckAndTuck")
 <p>An instance of Document.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>Document.current == Document.listener; // presumaably returns false</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-editable' href='./../Overviews/Methods.html#editable'>editable</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-editable' href='./../Overviews/Methods.html#editable'>editable</a> = <span class='argstr'>abool: true</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-editable' href='./../Overviews/Methods.html#editable'>editable</a> = <span class='argstr'>bool: true</span></h3>
 <div class='supmethod'>From implementing class</div>
 <div class='method'>
 <p>Get / set the the document is editable.<h4>Arguments:</h4>
@@ -658,11 +660,9 @@ Document.current.font_(Font("Impact", 14),
 <div class='supmethod'>From implementing class</div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-hash' href='./../Overviews/Methods.html#hash'>hash</a> </h3>
 <div class='supmethod'>From implementing class</div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-initFromIDE' href='./../Overviews/Methods.html#initFromIDE'>initFromIDE</a> (<span class='argstr'>id</span>, <span class='argstr'>argtitle</span>, <span class='argstr'>argstring</span>, <span class='argstr'>argisEdited</span>, <span class='argstr'>argPath</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-initFromIDE' href='./../Overviews/Methods.html#initFromIDE'>initFromIDE</a> (<span class='argstr'>id</span>, <span class='argstr'>argtitle</span>, <span class='argstr'>argstring</span>, <span class='argstr'>argisEdited</span>, <span class='argstr'>argPath</span>, <span class='argstr'>selStart</span>, <span class='argstr'>selSize</span>)</h3>
 <div class='supmethod'>From implementing class</div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-insertText' href='./../Overviews/Methods.html#insertText'>insertText</a> (<span class='argstr'>string</span>, <span class='argstr'>index: 0</span>)</h3>
-<div class='supmethod'>From implementing class</div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-insertTextRange' href='./../Overviews/Methods.html#insertTextRange'>insertTextRange</a> (<span class='argstr'>string</span>, <span class='argstr'>rangestart</span>, <span class='argstr'>rangesize</span>)</h3>
 <div class='supmethod'>From implementing class</div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-keyDown' href='./../Overviews/Methods.html#keyDown'>keyDown</a> (<span class='argstr'>modifiers</span>, <span class='argstr'>unicode</span>, <span class='argstr'>keycode</span>, <span class='argstr'>key</span>)</h3>
 <div class='supmethod'>From implementing class</div>
@@ -672,11 +672,17 @@ Document.current.font_(Font("Impact", 14),
 <div class='supmethod'>From implementing class</div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-mouseUp' href='./../Overviews/Methods.html#mouseUp'>mouseUp</a> (<span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>modifiers</span>, <span class='argstr'>buttonNumber</span>)</h3>
 <div class='supmethod'>From implementing class</div>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prGetSelectionRange' href='./../Overviews/Methods.html#prGetSelectionRange'>prGetSelectionRange</a> (<span class='argstr'>id</span>)</h3>
+<div class='supmethod'>From implementing class</div>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prGetSelectionStart' href='./../Overviews/Methods.html#prGetSelectionStart'>prGetSelectionStart</a> (<span class='argstr'>id</span>)</h3>
+<div class='supmethod'>From implementing class</div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-prGetTextFromMirror' href='./../Overviews/Methods.html#prGetTextFromMirror'>prGetTextFromMirror</a> (<span class='argstr'>id</span>, <span class='argstr'>start: 0</span>, <span class='argstr'>range: -1</span>)</h3>
 <div class='supmethod'>From implementing class</div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-prReadTextFromFile' href='./../Overviews/Methods.html#prReadTextFromFile'>prReadTextFromFile</a> (<span class='argstr'>path</span>)</h3>
 <div class='supmethod'>From implementing class</div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-prSetEdited' href='./../Overviews/Methods.html#prSetEdited'>prSetEdited</a> (<span class='argstr'>flag</span>)</h3>
+<div class='supmethod'>From implementing class</div>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prSetSelectionMirror' href='./../Overviews/Methods.html#prSetSelectionMirror'>prSetSelectionMirror</a> (<span class='argstr'>quuid</span>, <span class='argstr'>start</span>, <span class='argstr'>size</span>)</h3>
 <div class='supmethod'>From implementing class</div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-prSetText' href='./../Overviews/Methods.html#prSetText'>prSetText</a> (<span class='argstr'>text</span>, <span class='argstr'>action</span>, <span class='argstr'>start: 0</span>, <span class='argstr'>range: -1</span>)</h3>
 <div class='supmethod'>From implementing class</div>
