@@ -32,8 +32,8 @@
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>A beat histogram is formed using a perceptual onset detection frontend, then leaky integrators for each of 100 periodicities. On the ensuing histogram, statistics are taken. <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*kr' href='./../Overviews/Methods.html#kr'>kr</a> (<span class='argstr'>fft</span>)</h3>
+<p>A beat histogram is formed using a perceptual onset detection frontend, then leaky integrators for each of 100 periodicities. On the ensuing histogram, statistics are taken.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*kr' href='./../Overviews/Methods.html#kr'>kr</a> (<span class='argstr'>fft</span>, <span class='argstr'>leak: 0.995</span>, <span class='argstr'>numpreviousbeats: 4</span>)</h3>
 <div class='method'>
 <p>Operate feature extraction at control rate<h4>Arguments:</h4>
 <table class='arguments'>
@@ -41,7 +41,9 @@
 <p>Output of FFT UGen</table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>[0] entropy of beat histogram
-<p>[1] ratio of the largest to the second largest entries in the beat histogram</div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<p>[1] ratio of the largest to the second largest entries in the beat histogram
+<p>[2] diversity (Simpson's D measure) of beat histogram
+<p>[3] metricity (consistency of high energy histogram entries to integer multiples or divisors of strongest entry)</div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
@@ -53,13 +55,13 @@
     //var source = SoundIn.ar;
 
     var source = PlayBuf.ar(1,b,loop:1);
-    
+
     var analysis =
     BeatStatistics.kr(FFT(LocalBuf(1024),source));
 
     analysis.poll(100);
 
     source
-}.play; 
+}.play;
 )</pre>
 <div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/SCMIRUGens/HelpSource/Classes/BeatStatistics.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/SCMIRUGens/HelpSource/Classes/BeatStatistics.schelp</a><br>link::Classes/BeatStatistics::<br>sc version: 3.7alpha0</div></div></body></html>

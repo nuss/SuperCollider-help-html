@@ -1,0 +1,46 @@
+<html><head><title>Colliding</title>
+<link rel='stylesheet' href='./scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./frontend.css' type='text/css' />
+<link rel='stylesheet' href='./custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./scdoc.js' type='text/javascript'></script>
+<script src='./docmap.js' type='text/javascript'></script>
+<script src='./prettify.js' type='text/javascript'></script>
+<script src='./lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='.';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider  (extension)</div>
+<div id='categories'><a href='./Browse.html#Frontends'>Frontends</a>, <a href='./Browse.html#Quarks>Colliding'>Quarks>Colliding</a></div>
+<h1>Colliding</h1>
+<div id='summary'>Simplified environment for learning and live coding</div>
+</div>
+<div class='subheader'>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#motivation'>motivation</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#basic operation'>basic operation</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#qwerty'>qwerty</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#buffers'>buffers</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#project management'>project management</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='motivation'>motivation</a></h2>
+
+<p>Supercollider is an incredibly powerful environment, but sometimes a more constrained interface can be useful. Colliding is a simplified environment for learning and playing with SuperCollider, it tries to avoid one of the major sources of confusion for beginners: aynchronous operations happening between language and server. Many of these are implemented through a graphical interface. This simplicity is also useful for live situations, so that the live coder can focus on sound generation. Colliding is currently focused on building synthdefs, although an experimental "advanced" mode allows any playable code to be run via NodeProxy. Other restrictions include: there is only one Server (internal), and up to 8 tabs and 8 buffers can be used. <h2><a class='anchor' name='basic operation'>basic operation</a></h2>
+
+<p>To start colliding, create an instance in the SuperCollider IDE:<pre class='code prettyprint lang-sc'>Colliding.new // basic
+Colliding.new(1) // "advanced" mode
+Colliding.new(0,"&lt;freesound_key&gt;") // basic with freesound</pre>
+
+<p>In order to use Freesound, an API key is required. Obtain one here: <a href="http://www.freesound.org/api/apply/">http://www.freesound.org/api/apply/</a>
+<p>A tab is created using the "+" button. Each tab contains the code to create a synth definition. To play a synth with that code, press "▸" or cmd/ctrl-return. Press "■" cmd/ctrl-backspace to stop it. To compile the code without playing, press "✓". In basic mode, the code you write in each tab is the same that you would write in a synth definition, but some arguments are defined for you.<h2><a class='anchor' name='qwerty'>qwerty</a></h2>
+
+<p>An isomorphic qwerty keyboard can be used in basic mode to control synths with the computer keyboard. This is open with "⌨". Be aware that clicking on the widget keys does nothing, only the physical keys work. Note that when using the keyboard you are expected to trigger synths with an envelope, otherwise your synth will keep playing forever. The keyboard and the slider of each tab provide some predefined arguments:<ul>
+<li>freq and key are controlled by the keyboard. <li>amp is controlled by the big slider at the right of each tab.<li>gate is the trigger sent when a key is pressed, used to trigger envelopes.</ul>
+<h2><a class='anchor' name='buffers'>buffers</a></h2>
+
+<p>Up to 8 buffers can be managed via graphical interface, using the buttons at the right. Each button corresponds to the buffer number. For each buffer you can load an audio file, download a sound from freesound.org or allocate a buffer. Short buffers can also converted to wavetable for using with wavetable oscillators, but use this only if you know what you are doing.<h2><a class='anchor' name='project management'>project management</a></h2>
+
+<p>Colliding includes some primitive project management functionality. Each project is composed of a bunch of .cld files, which are just text files with the content of each tab, and an audio folder for sound files. Each folder in the audio folder corresponds to one of the 8 buffers. Click "⇊" to create the project or to save its current state. Click "⇈" to open a project by selecting any of its .cld files. Note that once a project is open, you can't open another one. This is a provisional safeguard to avoid mixing or overwriting projects. Similarly, you can't open projects if you have text in any tab.<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/Colliding/HelpSource/Colliding.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/Colliding/HelpSource/Colliding.schelp</a><br>link::Colliding::<br>sc version: 3.7alpha0</div></div></body></html>

@@ -34,7 +34,8 @@
 <li class='toc3'><a href='#*defaultServer'>defaultServer</a> </li>
 <li class='toc3'><a href='#*all'>all</a> </li>
 <li class='toc3'><a href='#*dictFor'>dictFor</a> </li>
-</ul><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc2'><a href='#Setting default parameters'>Setting default parameters</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
 <li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*gui'>gui</a> </li>
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
@@ -44,7 +45,9 @@
 <li class='toc3'><a href='#-key'>key</a> </li>
 <li class='toc3'><a href='#-proxyspace'>proxyspace</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'><li class='toc2'><a href='#Simple audio routing with the <<> operator'>Simple audio routing with the &lt;&lt;&gt; operator</a></li>
+<ul class='toc'><li class='toc2'><a href='#using Ndef inside other Ndefs'>using Ndef inside other Ndefs</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#setting and mapping parameters'>setting and mapping parameters</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Simple audio routing with the <<> operator'>Simple audio routing with the &lt;&lt;&gt; operator</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Making Copies'>Making Copies</a></li>
 <ul class='toc'><li class='toc3'><a href='#.copy'>copy</a> </li>
 </ul><li class='toc2'><a href='#Recursion'>Recursion</a></li>
@@ -97,7 +100,12 @@ Ndef.clear(3); // clear all after 3 seconds</pre>
 </div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*dictFor' href='./../Overviews/Methods.html#dictFor'>dictFor</a> (<span class='argstr'>server</span>)</h3>
 <div class='method'>
 <p>Return the proxyspace for a given server.<pre class='code prettyprint lang-sc'>Ndef.dictFor(s);</pre>
-</div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+</div><h3><a class='anchor' name='Setting default parameters'>Setting default parameters</a></h3>
+
+<p>Behind every Ndef there is one single instance of <a href="./../Classes/ProxySpace.html">ProxySpace</a> per server used (usually just the one for the default server). This ProxySpace keeps default values for the proxies that can be set. This can be done by:<pre class='code prettyprint lang-sc'>// set default quant
+Ndef(\x).proxyspace.quant = 1.0;</pre>
+
+<p>The other values that can be set in such a way are: <code class='code prettyprint lang-sc'>clock, fadeTime, quant, reshaping, awake</code>.<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*gui' href='./../Overviews/Methods.html#gui'>gui</a> (<span class='argstr'>server</span>, <span class='argstr'>numItems</span>, <span class='argstr'>bounds</span>, <span class='argstr'>preset</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/JITLib/GUI/extJITgui.sc'>/usr/local/share/SuperCollider/SCClassLibrary/JITLib/GUI/extJITgui.sc</a></div>
@@ -124,6 +132,20 @@ Ndef(\sound, { arg freq; SinOsc.ar([600, 635] + freq, 0, SinOsc.kr(2 * 3).max(0)
 Ndef(\lfo, { LFNoise1.kr(300, 400, 800) });
 
 Ndef.clear; //clear all Ndefs</pre>
+<h3><a class='anchor' name='using Ndef inside other Ndefs'>using Ndef inside other Ndefs</a></h3>
+<pre class='code prettyprint lang-sc'>Ndef(\lfo2, { LFNoise1.kr(LFNoise1.kr(0.1).exprange(1, 300) ! 2, 400, 800) });
+Ndef(\sound, { Blip.ar(Ndef.kr(\lfo2), 30) * 0.2 }).play;
+
+Ndef(\lfo2, { [MouseX.kr(10, 300, 1), MouseY.kr(10, 300, 1)] });</pre>
+<h3><a class='anchor' name='setting and mapping parameters'>setting and mapping parameters</a></h3>
+<pre class='code prettyprint lang-sc'>Ndef(\sound, { |freq = 56, numHarm = 10| Blip.ar(freq, numHarm, 30) * 0.2 }).play;
+Ndef(\sound).set(\freq, 15);
+Ndef(\sound).set(\freq, 15, \numHarm, 100);
+
+Ndef(\lfo, { LFNoise2.kr(2).exprange(10, 200) });
+Ndef(\sound).map(\numHarm, Ndef(\lfo));
+Ndef(\sound).set(\numHarm, nil); // unmap.
+Ndef(\sound).stop;</pre>
 <h3><a class='anchor' name='Simple audio routing with the <<> operator'>Simple audio routing with the &lt;&lt;&gt; operator</a></h3>
 <pre class='code prettyprint lang-sc'>(
 Ndef(\sound, {
