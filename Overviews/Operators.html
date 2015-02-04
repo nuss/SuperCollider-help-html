@@ -308,7 +308,18 @@ OSCFunc({ "triggered".postln; Synth.new("help-EnvGen") },'/tr', s.addr);
 <p>Not equal.</div><h3><a class='anchor' name='Other'>Other</a></h3>
 <h3 class='imethodname'><span class='methprefix'>&nbsp;</span><a name='.<!' href='./../Overviews/Methods.html#&lt;!'>&lt;!</a> </h3>
 <div class='method'>
-<p>Return first argument.</div><h3 class='imethodname'><span class='methprefix'>&nbsp;</span><a name='.min' href='./../Overviews/Methods.html#min'>min</a> </h3>
+<p>Return first argument.<pre class='code prettyprint lang-sc'>// this is useful when two ugens need to be called, but only one of their outputs is needed
+(
+{
+    var a, b, c;
+    a = Dseq([1, 2, 3, 4], inf).dpoll("a");
+    b = Dseq([1955, 1952, 1823, 1452], inf).dpoll("b");
+    c = (a &lt;! b).dpoll("------&gt; a &lt;! b = "); // c only
+    Duty.kr(0.4, 0, c);
+    0.0
+}.play
+)</pre>
+</div><h3 class='imethodname'><span class='methprefix'>&nbsp;</span><a name='.min' href='./../Overviews/Methods.html#min'>min</a> </h3>
 <div class='method'>
 <p>Minimum.<h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>{ // distorts and envelopes z
