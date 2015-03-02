@@ -1,0 +1,716 @@
+<html><head><title>GNUPlot</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<h1>GNUPlot</h1>
+<div id='summary'>(Undocumented class)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/downloaded-quarks/LinuxExternal/GNUPlot/<a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/LinuxExternal/GNUPlot/GNUPlot.sc'>GNUPlot.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*bootDefault'>bootDefault</a> </li>
+<li class='toc3'><a href='#*default'>default</a> </li>
+<li class='toc3'><a href='#*envarray'>envarray</a> </li>
+<li class='toc3'><a href='#*folder'>folder</a> </li>
+<li class='toc3'><a href='#*gnuplotpath'>gnuplotpath</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*initCode'>initCode</a> </li>
+<li class='toc3'><a href='#*makeBackupFolder'>makeBackupFolder</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*pathToXLauncher'>pathToXLauncher</a> </li>
+<li class='toc3'><a href='#*plot'>plot</a> </li>
+<li class='toc3'><a href='#*plotd'>plotd</a> </li>
+<li class='toc3'><a href='#*plotdHisto'>plotdHisto</a> </li>
+<li class='toc3'><a href='#*plotenv'>plotenv</a> </li>
+<li class='toc3'><a href='#*pr_tmpname'>pr_tmpname</a> </li>
+<li class='toc3'><a href='#*pr_writeTempData1'>pr_writeTempData1</a> </li>
+<li class='toc3'><a href='#*pr_writeTempData2'>pr_writeTempData2</a> </li>
+<li class='toc3'><a href='#*pr_writeTempData3'>pr_writeTempData3</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-autoscaleX'>autoscaleX</a> </li>
+<li class='toc3'><a href='#-autoscaleY'>autoscaleY</a> </li>
+<li class='toc3'><a href='#-autoscaleZ'>autoscaleZ</a> </li>
+<li class='toc3'><a href='#-boxplot'>boxplot</a> </li>
+<li class='toc3'><a href='#-createTempFile'>createTempFile</a> </li>
+<li class='toc3'><a href='#-errorbar'>errorbar</a> </li>
+<li class='toc3'><a href='#-hisdata'>hisdata</a> </li>
+<li class='toc3'><a href='#-histoMax'>histoMax</a> </li>
+<li class='toc3'><a href='#-histoMin'>histoMin</a> </li>
+<li class='toc3'><a href='#-histoSteps'>histoSteps</a> </li>
+<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-lastdata'>lastdata</a> </li>
+<li class='toc3'><a href='#-monitor'>monitor</a> </li>
+<li class='toc3'><a href='#-monitorHisto'>monitorHisto</a> </li>
+<li class='toc3'><a href='#-monitorReset'>monitorReset</a> </li>
+<li class='toc3'><a href='#-multiplot'>multiplot</a> </li>
+<li class='toc3'><a href='#-plot'>plot</a> </li>
+<li class='toc3'><a href='#-plot3'>plot3</a> </li>
+<li class='toc3'><a href='#-plotd'>plotd</a> </li>
+<li class='toc3'><a href='#-plotdHisto'>plotdHisto</a> </li>
+<li class='toc3'><a href='#-pr_tmpname'>pr_tmpname</a> </li>
+<li class='toc3'><a href='#-putCommand'>putCommand</a> </li>
+<li class='toc3'><a href='#-putTestCommand'>putTestCommand</a> </li>
+<li class='toc3'><a href='#-replot'>replot</a> </li>
+<li class='toc3'><a href='#-scatter'>scatter</a> </li>
+<li class='toc3'><a href='#-sendCmd'>sendCmd</a> </li>
+<li class='toc3'><a href='#-setView'>setView</a> </li>
+<li class='toc3'><a href='#-setXrange'>setXrange</a> </li>
+<li class='toc3'><a href='#-setYrange'>setYrange</a> </li>
+<li class='toc3'><a href='#-setZrange'>setZrange</a> </li>
+<li class='toc3'><a href='#-start'>start</a> </li>
+<li class='toc3'><a href='#-startMonitor'>startMonitor</a> </li>
+<li class='toc3'><a href='#-stop'>stop</a> </li>
+<li class='toc3'><a href='#-stopMonitor'>stopMonitor</a> </li>
+<li class='toc3'><a href='#-surf3'>surf3</a> </li>
+<li class='toc3'><a href='#-write'>write</a> </li>
+</ul></ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*bootDefault' href='./../Overviews/Methods.html#bootDefault'>bootDefault</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*default' href='./../Overviews/Methods.html#default'>default</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*default' href='./../Overviews/Methods.html#default'>default</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*envarray' href='./../Overviews/Methods.html#envarray'>envarray</a> (<span class='argstr'>env</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*folder' href='./../Overviews/Methods.html#folder'>folder</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*folder' href='./../Overviews/Methods.html#folder'>folder</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*gnuplotpath' href='./../Overviews/Methods.html#gnuplotpath'>gnuplotpath</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*gnuplotpath' href='./../Overviews/Methods.html#gnuplotpath'>gnuplotpath</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initCode' href='./../Overviews/Methods.html#initCode'>initCode</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initCode' href='./../Overviews/Methods.html#initCode'>initCode</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*makeBackupFolder' href='./../Overviews/Methods.html#makeBackupFolder'>makeBackupFolder</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*pathToXLauncher' href='./../Overviews/Methods.html#pathToXLauncher'>pathToXLauncher</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*plot' href='./../Overviews/Methods.html#plot'>plot</a> (<span class='argstr'>data</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*plotd' href='./../Overviews/Methods.html#plotd'>plotd</a> (<span class='argstr'>data</span>, <span class='argstr'>ns: 1</span>, <span class='argstr'>label: ""</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*plotdHisto' href='./../Overviews/Methods.html#plotdHisto'>plotdHisto</a> (<span class='argstr'>data</span>, <span class='argstr'>ns: 1</span>, <span class='argstr'>label: ""</span>, <span class='argstr'>verb: true</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*plotenv' href='./../Overviews/Methods.html#plotenv'>plotenv</a> (<span class='argstr'>env</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*pr_tmpname' href='./../Overviews/Methods.html#pr_tmpname'>pr_tmpname</a> (<span class='argstr'>postfix: ""</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*pr_writeTempData1' href='./../Overviews/Methods.html#pr_writeTempData1'>pr_writeTempData1</a> (<span class='argstr'>data</span>, <span class='argstr'>delims</span>, <span class='argstr'>tmpname</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*pr_writeTempData2' href='./../Overviews/Methods.html#pr_writeTempData2'>pr_writeTempData2</a> (<span class='argstr'>data</span>, <span class='argstr'>delims</span>, <span class='argstr'>tmpname</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*pr_writeTempData3' href='./../Overviews/Methods.html#pr_writeTempData3'>pr_writeTempData3</a> (<span class='argstr'>data</span>, <span class='argstr'>delims</span>, <span class='argstr'>tmpname</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-autoscaleX' href='./../Overviews/Methods.html#autoscaleX'>autoscaleX</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-autoscaleY' href='./../Overviews/Methods.html#autoscaleY'>autoscaleY</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-autoscaleZ' href='./../Overviews/Methods.html#autoscaleZ'>autoscaleZ</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-boxplot' href='./../Overviews/Methods.html#boxplot'>boxplot</a> (<span class='argstr'>data</span>, <span class='argstr'>label: ""</span>, <span class='argstr'>title</span>, <span class='argstr'>grplabels</span>, <span class='argstr'>summaryfunc</span>, <span class='argstr'>extracmds</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-createTempFile' href='./../Overviews/Methods.html#createTempFile'>createTempFile</a> (<span class='argstr'>data</span>, <span class='argstr'>ns: 1</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-errorbar' href='./../Overviews/Methods.html#errorbar'>errorbar</a> (<span class='argstr'>data</span>, <span class='argstr'>errors</span>, <span class='argstr'>label: ""</span>, <span class='argstr'>title</span>, <span class='argstr'>grplabels</span>, <span class='argstr'>drawlines: true</span>, <span class='argstr'>extracmds</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-hisdata' href='./../Overviews/Methods.html#hisdata'>hisdata</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-histoMax' href='./../Overviews/Methods.html#histoMax'>histoMax</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-histoMax' href='./../Overviews/Methods.html#histoMax'>histoMax</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-histoMin' href='./../Overviews/Methods.html#histoMin'>histoMin</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-histoMin' href='./../Overviews/Methods.html#histoMin'>histoMin</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-histoSteps' href='./../Overviews/Methods.html#histoSteps'>histoSteps</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-histoSteps' href='./../Overviews/Methods.html#histoSteps'>histoSteps</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-init' href='./../Overviews/Methods.html#init'>init</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-lastdata' href='./../Overviews/Methods.html#lastdata'>lastdata</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-monitor' href='./../Overviews/Methods.html#monitor'>monitor</a> (<span class='argstr'>updateF</span>, <span class='argstr'>dt</span>, <span class='argstr'>length</span>, <span class='argstr'>ns: 1</span>, <span class='argstr'>skip: 1</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-monitorHisto' href='./../Overviews/Methods.html#monitorHisto'>monitorHisto</a> (<span class='argstr'>updateF</span>, <span class='argstr'>dt</span>, <span class='argstr'>length</span>, <span class='argstr'>ns: 1</span>, <span class='argstr'>skip: 1</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-monitorReset' href='./../Overviews/Methods.html#monitorReset'>monitorReset</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-multiplot' href='./../Overviews/Methods.html#multiplot'>multiplot</a> (<span class='argstr'>onoff: true</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-plot' href='./../Overviews/Methods.html#plot'>plot</a> (<span class='argstr'>data</span>, <span class='argstr'>ns: 1</span>, <span class='argstr'>label: ""</span>, <span class='argstr'>title</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-plot3' href='./../Overviews/Methods.html#plot3'>plot3</a> (<span class='argstr'>data</span>, <span class='argstr'>label: ""</span>, <span class='argstr'>title</span>, <span class='argstr'>style: "lines"</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-plotd' href='./../Overviews/Methods.html#plotd'>plotd</a> (<span class='argstr'>data</span>, <span class='argstr'>ns: 1</span>, <span class='argstr'>label: ""</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-plotdHisto' href='./../Overviews/Methods.html#plotdHisto'>plotdHisto</a> (<span class='argstr'>data</span>, <span class='argstr'>ns: 1</span>, <span class='argstr'>label: ""</span>, <span class='argstr'>verb: true</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-pr_tmpname' href='./../Overviews/Methods.html#pr_tmpname'>pr_tmpname</a> (<span class='argstr'>postfix: ""</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-putCommand' href='./../Overviews/Methods.html#putCommand'>putCommand</a> (<span class='argstr'>command</span>, <span class='argstr'>tmpname</span>, <span class='argstr'>label: ""</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-putTestCommand' href='./../Overviews/Methods.html#putTestCommand'>putTestCommand</a> (<span class='argstr'>command</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-replot' href='./../Overviews/Methods.html#replot'>replot</a> (<span class='argstr'>data</span>, <span class='argstr'>ns: 1</span>, <span class='argstr'>label: ""</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scatter' href='./../Overviews/Methods.html#scatter'>scatter</a> (<span class='argstr'>data</span>, <span class='argstr'>label: ""</span>, <span class='argstr'>title</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendCmd' href='./../Overviews/Methods.html#sendCmd'>sendCmd</a> (<span class='argstr'>str</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setView' href='./../Overviews/Methods.html#setView'>setView</a> ( <span class='argstr'>... vals</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setXrange' href='./../Overviews/Methods.html#setXrange'>setXrange</a> (<span class='argstr'>min</span>, <span class='argstr'>max</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setYrange' href='./../Overviews/Methods.html#setYrange'>setYrange</a> (<span class='argstr'>min</span>, <span class='argstr'>max</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setZrange' href='./../Overviews/Methods.html#setZrange'>setZrange</a> (<span class='argstr'>min</span>, <span class='argstr'>max</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-start' href='./../Overviews/Methods.html#start'>start</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-startMonitor' href='./../Overviews/Methods.html#startMonitor'>startMonitor</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-stop' href='./../Overviews/Methods.html#stop'>stop</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-stopMonitor' href='./../Overviews/Methods.html#stopMonitor'>stopMonitor</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-surf3' href='./../Overviews/Methods.html#surf3'>surf3</a> (<span class='argstr'>data</span>, <span class='argstr'>label: ""</span>, <span class='argstr'>hidden3d: true</span>, <span class='argstr'>pm3d: false</span>, <span class='argstr'>title</span>, <span class='argstr'>extracmds</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-write' href='./../Overviews/Methods.html#write'>write</a> (<span class='argstr'>path</span>, <span class='argstr'>term: "pdf"</span>, <span class='argstr'>termopts: "fsize 10"</span>)</h3>
+<h2><a class='anchor' name='Help template'>Help template</a></h2>
+
+<p>Copy and paste the text below and save to HelpSource/Classes/GNUPlot.schelp<pre class='code prettyprint lang-sc'>TITLE:: GNUPlot
+summary:: (put short description here)
+categories:: Undocumented classes
+related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+
+DESCRIPTION::
+(put long description here)
+
+
+CLASSMETHODS::
+
+METHOD:: initClass
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: makeBackupFolder
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: pr_tmpname
+(describe method here)
+
+ARGUMENT:: postfix
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: gnuplotpath
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: bootDefault
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: plot
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: pr_writeTempData3
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: delims
+(describe argument here)
+
+ARGUMENT:: tmpname
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: pathToXLauncher
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: envarray
+(describe method here)
+
+ARGUMENT:: env
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: plotenv
+(describe method here)
+
+ARGUMENT:: env
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: initCode
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: plotd
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: ns
+(describe argument here)
+
+ARGUMENT:: label
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: pr_writeTempData1
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: delims
+(describe argument here)
+
+ARGUMENT:: tmpname
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: folder
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: default
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: new
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: pr_writeTempData2
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: delims
+(describe argument here)
+
+ARGUMENT:: tmpname
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: plotdHisto
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: ns
+(describe argument here)
+
+ARGUMENT:: label
+(describe argument here)
+
+ARGUMENT:: verb
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+
+INSTANCEMETHODS::
+
+METHOD:: pr_tmpname
+(describe method here)
+
+ARGUMENT:: postfix
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: plot
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: ns
+(describe argument here)
+
+ARGUMENT:: label
+(describe argument here)
+
+ARGUMENT:: title
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: putCommand
+(describe method here)
+
+ARGUMENT:: command
+(describe argument here)
+
+ARGUMENT:: tmpname
+(describe argument here)
+
+ARGUMENT:: label
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: monitorHisto
+(describe method here)
+
+ARGUMENT:: updateF
+(describe argument here)
+
+ARGUMENT:: dt
+(describe argument here)
+
+ARGUMENT:: length
+(describe argument here)
+
+ARGUMENT:: ns
+(describe argument here)
+
+ARGUMENT:: skip
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setView
+(describe method here)
+
+ARGUMENT::  ... vals
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: hisdata
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: write
+(describe method here)
+
+ARGUMENT:: path
+(describe argument here)
+
+ARGUMENT:: term
+(describe argument here)
+
+ARGUMENT:: termopts
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: putTestCommand
+(describe method here)
+
+ARGUMENT:: command
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: stopMonitor
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: plotd
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: ns
+(describe argument here)
+
+ARGUMENT:: label
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: scatter
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: label
+(describe argument here)
+
+ARGUMENT:: title
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: surf3
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: label
+(describe argument here)
+
+ARGUMENT:: hidden3d
+(describe argument here)
+
+ARGUMENT:: pm3d
+(describe argument here)
+
+ARGUMENT:: title
+(describe argument here)
+
+ARGUMENT:: extracmds
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: init
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: autoscaleZ
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: monitor
+(describe method here)
+
+ARGUMENT:: updateF
+(describe argument here)
+
+ARGUMENT:: dt
+(describe argument here)
+
+ARGUMENT:: length
+(describe argument here)
+
+ARGUMENT:: ns
+(describe argument here)
+
+ARGUMENT:: skip
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setXrange
+(describe method here)
+
+ARGUMENT:: min
+(describe argument here)
+
+ARGUMENT:: max
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setZrange
+(describe method here)
+
+ARGUMENT:: min
+(describe argument here)
+
+ARGUMENT:: max
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: startMonitor
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: boxplot
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: label
+(describe argument here)
+
+ARGUMENT:: title
+(describe argument here)
+
+ARGUMENT:: grplabels
+(describe argument here)
+
+ARGUMENT:: summaryfunc
+(describe argument here)
+
+ARGUMENT:: extracmds
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: setYrange
+(describe method here)
+
+ARGUMENT:: min
+(describe argument here)
+
+ARGUMENT:: max
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: lastdata
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: histoSteps
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: errorbar
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: errors
+(describe argument here)
+
+ARGUMENT:: label
+(describe argument here)
+
+ARGUMENT:: title
+(describe argument here)
+
+ARGUMENT:: grplabels
+(describe argument here)
+
+ARGUMENT:: drawlines
+(describe argument here)
+
+ARGUMENT:: extracmds
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: createTempFile
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: ns
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: histoMax
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: plot3
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: label
+(describe argument here)
+
+ARGUMENT:: title
+(describe argument here)
+
+ARGUMENT:: style
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: autoscaleX
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: histoMin
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: replot
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: ns
+(describe argument here)
+
+ARGUMENT:: label
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: monitorReset
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: plotdHisto
+(describe method here)
+
+ARGUMENT:: data
+(describe argument here)
+
+ARGUMENT:: ns
+(describe argument here)
+
+ARGUMENT:: label
+(describe argument here)
+
+ARGUMENT:: verb
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: stop
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: start
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: sendCmd
+(describe method here)
+
+ARGUMENT:: str
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: multiplot
+(describe method here)
+
+ARGUMENT:: onoff
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: autoscaleY
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+
+EXAMPLES::
+
+code::
+(some example code)
+::
+</pre>
+<div class='doclink'>link::Classes/GNUPlot::<br>sc version: 3.7alpha0</div></div></body></html>

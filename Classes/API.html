@@ -14,12 +14,12 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Networking'>Networking</a>, <a href='./../Browse.html#Quarks>API'>Quarks>API</a></div>
+<div id='categories'><a href='./../Browse.html#Networking'>Networking</a></div>
 <h1>API</h1>
 <div id='summary'>API framework for inter-application and network communication</div>
 </div>
 <div class='subheader'>
-<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/Extensions/quarks/API/<a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/API/API.sc'>API.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/downloaded-quarks/API/<a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/API/API.sc'>API.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -43,7 +43,10 @@
 <li class='toc3'><a href='#*unmountDuplexOSC'>unmountDuplexOSC</a> </li>
 </ul><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
 <li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#*prNameFromPath'>prNameFromPath</a> </li>
+<ul class='toc'><li class='toc3'><a href='#*atPath'>atPath</a> </li>
+<li class='toc3'><a href='#*findHandler'>findHandler</a> </li>
+<li class='toc3'><a href='#*maxMsgSize'>maxMsgSize</a> </li>
+<li class='toc3'><a href='#*prNameFromPath'>prNameFromPath</a> </li>
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Defining'>Defining</a></li>
 <ul class='toc'><li class='toc3'><a href='#-add'>add</a> </li>
@@ -77,7 +80,7 @@
 <p><strong>over OSC (simple call of functions)</strong><pre class='code prettyprint lang-sc'>API("server").mountOSC;
 
 // send OSC message:
-// '/API/server/boot' "default"</pre>
+// '/server/boot' "default"</pre>
 
 <p><strong>via the duplex OSC interface (call and response)</strong><pre class='code prettyprint lang-sc'>API.mountDuplexOSC;
 
@@ -89,7 +92,7 @@
 <p><strong>Using a client library like supercollider.js</strong><pre class='code prettyprint lang-sc'>// supercollider
 API.mountDuplexOSC;
 
-// start the webserver
+// start the web and websocket server
 node api_server.js
 
 // point browser at http://localhost:4040
@@ -141,7 +144,7 @@ sc.call("apiname.lookup",["a query string"], function(result) {
 <p>I know, I hate these.
 <p>API 2 always passes in a { arg reply; } callback function while API 1 just used the return value as the result.
 <p>API 1 was a bit more confusing to use though for the call and response stuff.
-<p>Your old APIs should you have any would take just a few minutes to add in the callback, or you can continue to use the old methods:<pre class='code prettyprint lang-sc'>oldCall
+<p>Your old APIs, should you have any, would take just a few minutes to add in the callback, or you can continue to use the old methods:<pre class='code prettyprint lang-sc'>oldCall
 *oldCall
 oldAddAll</pre>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
@@ -150,7 +153,7 @@ oldAddAll</pre>
 <p><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>name<td class='argumentdesc'>
-<p>apiname eg. "server" "synthdef" Convention is lowercase. It must match the case of the apis/apiname.api.scd file</table><h4>Returns:</h4>
+<p>apiname eg. "server" "synthdef" Convention is lowercase. It must match the case of the apis/{apiname}.api.scd file</table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>an API</div></div><h3><a class='anchor' name='Calling'>Calling</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*async' href='./../Overviews/Methods.html#async'>async</a> (<span class='argstr'>path</span>, <span class='argstr'>args</span>, <span class='argstr'>callback</span>, <span class='argstr'>onError</span>)</h3>
@@ -241,6 +244,10 @@ oldAddAll</pre>
 <div class='returnvalue'>
 <p>this</div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*atPath' href='./../Overviews/Methods.html#atPath'>atPath</a> (<span class='argstr'>path</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*findHandler' href='./../Overviews/Methods.html#findHandler'>findHandler</a> (<span class='argstr'>path</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*maxMsgSize' href='./../Overviews/Methods.html#maxMsgSize'>maxMsgSize</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*maxMsgSize' href='./../Overviews/Methods.html#maxMsgSize'>maxMsgSize</a> = value</h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*prNameFromPath' href='./../Overviews/Methods.html#prNameFromPath'>prNameFromPath</a> (<span class='argstr'>path</span>)</h3>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Defining'>Defining</a></h3>
@@ -326,4 +333,4 @@ api.addAll( d );</pre>
 <p>array of symbols</div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-doesNotUnderstand' href='./../Overviews/Methods.html#doesNotUnderstand'>doesNotUnderstand</a> (<span class='argstr'>selector</span> <span class='argstr'>... args</span>)</h3>
-<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/quarks/API/HelpSource/Classes/API.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/quarks/API/HelpSource/Classes/API.schelp</a><br>link::Classes/API::<br>sc version: 3.7alpha0</div></div></body></html>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/API/HelpSource/Classes/API.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/API/HelpSource/Classes/API.schelp</a><br>link::Classes/API::<br>sc version: 3.7alpha0</div></div></body></html>
