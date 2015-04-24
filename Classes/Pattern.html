@@ -37,7 +37,9 @@
 <li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*instVarsForGui'>instVarsForGui</a> </li>
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-play'>play</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-asStream'>asStream</a> </li>
+<li class='toc3'><a href='#-embedInStream'>embedInStream</a> </li>
+<li class='toc3'><a href='#-play'>play</a> </li>
 <li class='toc3'><a href='#-record'>record</a> </li>
 <li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
@@ -47,7 +49,6 @@
 <li class='toc3'><a href='#-addToSynthDef'>addToSynthDef</a> </li>
 <li class='toc3'><a href='#-asEventStreamPlayer'>asEventStreamPlayer</a> </li>
 <li class='toc3'><a href='#-asScore'>asScore</a> </li>
-<li class='toc3'><a href='#-asStream'>asStream</a> </li>
 <li class='toc3'><a href='#-buildForProxy'>buildForProxy</a> </li>
 <li class='toc3'><a href='#-clump'>clump</a> </li>
 <li class='toc3'><a href='#-collect'>collect</a> </li>
@@ -60,7 +61,6 @@
 <li class='toc3'><a href='#-differentiate'>differentiate</a> </li>
 <li class='toc3'><a href='#-do'>do</a> </li>
 <li class='toc3'><a href='#-drop'>drop</a> </li>
-<li class='toc3'><a href='#-embedInStream'>embedInStream</a> </li>
 <li class='toc3'><a href='#-fin'>fin</a> </li>
 <li class='toc3'><a href='#-finDur'>finDur</a> </li>
 <li class='toc3'><a href='#-flatten'>flatten</a> </li>
@@ -154,9 +154,28 @@ p.stop;    // DOES stop because p is the EventStreamPlayer</pre>
 <h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*instVarsForGui' href='./../Overviews/Methods.html#instVarsForGui'>instVarsForGui</a> </h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/cruciallib/Gui/gui.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/cruciallib/Gui/gui.sc</a></div>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Gui/gui.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Gui/gui.sc</a></div>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-play' href='./../Overviews/Methods.html#play'>play</a> (<span class='argstr'>clock</span>, <span class='argstr'>protoEvent</span>, <span class='argstr'>quant</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-asStream' href='./../Overviews/Methods.html#asStream'>asStream</a> </h3>
+<div class='method'>
+<p>Return a <a href="./../Classes/Stream.html">Stream</a> from this pattern. One pattern can be used to produce any number of independent streams.<pre class='code prettyprint lang-sc'>a = Pgeom(1, Pwhite(1.01, 1.2), inf);
+b = a.asStream; c = a.asStream;
+
+b.next;
+b.next;
+b.next;
+
+c.next; // c is independent from b
+c.next;</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-embedInStream' href='./../Overviews/Methods.html#embedInStream'>embedInStream</a> (<span class='argstr'>inval</span>)</h3>
+<div class='method'>
+<p>Given a <a href="./../Classes/Stream.html">Stream</a> like e.g. <a href="./../Classes/Routine.html">Routine</a>, yield all values from this pattern before continuing. One pattern can be used to produce values for any number of independent streams.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>inval<td class='argumentdesc'>
+<p>The inval is passed into all substreams and can be used to control how they behave from the outside.<pre class='code prettyprint lang-sc'>a = Pgeom(1, Pwhite(1.01, 1.2), 5);
+r = Routine { 2.yield; 3.yield; a.embedInStream; 7.yield; };
+r.nextN(12); // the next 12 values from r</pre>
+</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-play' href='./../Overviews/Methods.html#play'>play</a> (<span class='argstr'>clock</span>, <span class='argstr'>protoEvent</span>, <span class='argstr'>quant</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
 <table class='arguments'>
@@ -183,11 +202,10 @@ p.stop;    // DOES stop because p is the EventStreamPlayer</pre>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-<>' href='./../Overviews/Methods.html#&lt;&gt;'>&lt;&gt;</a> (<span class='argstr'>aPattern</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-addDur' href='./../Overviews/Methods.html#addDur'>addDur</a> (<span class='argstr'>x</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-addToSynthDef' href='./../Overviews/Methods.html#addToSynthDef'>addToSynthDef</a> (<span class='argstr'>synthDef</span>, <span class='argstr'>name</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/cruciallib/Players/instrSupport.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/cruciallib/Players/instrSupport.sc</a></div>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Players/instrSupport.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Players/instrSupport.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-asEventStreamPlayer' href='./../Overviews/Methods.html#asEventStreamPlayer'>asEventStreamPlayer</a> (<span class='argstr'>protoEvent</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-asScore' href='./../Overviews/Methods.html#asScore'>asScore</a> (<span class='argstr'>duration: 1</span>, <span class='argstr'>timeOffset: 0</span>, <span class='argstr'>protoEvent</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Control/asScore/asScore.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Control/asScore/asScore.sc</a></div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-asStream' href='./../Overviews/Methods.html#asStream'>asStream</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-buildForProxy' href='./../Overviews/Methods.html#buildForProxy'>buildForProxy</a> (<span class='argstr'>proxy</span>, <span class='argstr'>channelOffset: 0</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/JITLib/ProxySpace/wrapForNodeProxy.sc'>/usr/local/share/SuperCollider/SCClassLibrary/JITLib/ProxySpace/wrapForNodeProxy.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-clump' href='./../Overviews/Methods.html#clump'>clump</a> (<span class='argstr'>n</span>)</h3>
@@ -201,13 +219,12 @@ p.stop;    // DOES stop because p is the EventStreamPlayer</pre>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-differentiate' href='./../Overviews/Methods.html#differentiate'>differentiate</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-do' href='./../Overviews/Methods.html#do'>do</a> (<span class='argstr'>function</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-drop' href='./../Overviews/Methods.html#drop'>drop</a> (<span class='argstr'>n</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-embedInStream' href='./../Overviews/Methods.html#embedInStream'>embedInStream</a> (<span class='argstr'>inval</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-fin' href='./../Overviews/Methods.html#fin'>fin</a> (<span class='argstr'>n</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-finDur' href='./../Overviews/Methods.html#finDur'>finDur</a> (<span class='argstr'>dur</span>, <span class='argstr'>tolerance: 0.001</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-flatten' href='./../Overviews/Methods.html#flatten'>flatten</a> (<span class='argstr'>n: 1</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-gtranspose' href='./../Overviews/Methods.html#gtranspose'>gtranspose</a> (<span class='argstr'>n</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-instrArgFromControl' href='./../Overviews/Methods.html#instrArgFromControl'>instrArgFromControl</a> (<span class='argstr'>control</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/cruciallib/Players/instrSupport.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/cruciallib/Players/instrSupport.sc</a></div>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Players/instrSupport.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Players/instrSupport.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-integrate' href='./../Overviews/Methods.html#integrate'>integrate</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-iter' href='./../Overviews/Methods.html#iter'>iter</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-keep' href='./../Overviews/Methods.html#keep'>keep</a> (<span class='argstr'>n</span>)</h3>
@@ -219,7 +236,7 @@ p.stop;    // DOES stop because p is the EventStreamPlayer</pre>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-proxyControlClass' href='./../Overviews/Methods.html#proxyControlClass'>proxyControlClass</a> </h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/JITLib/ProxySpace/wrapForNodeProxy.sc'>/usr/local/share/SuperCollider/SCClassLibrary/JITLib/ProxySpace/wrapForNodeProxy.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-rate' href='./../Overviews/Methods.html#rate'>rate</a> </h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/cruciallib/Players/instrSupport.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/cruciallib/Players/instrSupport.sc</a></div>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Players/instrSupport.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Players/instrSupport.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-reject' href='./../Overviews/Methods.html#reject'>reject</a> (<span class='argstr'>function</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-repeat' href='./../Overviews/Methods.html#repeat'>repeat</a> (<span class='argstr'>n: inf</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-reverseComposeBinaryOp' href='./../Overviews/Methods.html#reverseComposeBinaryOp'>reverseComposeBinaryOp</a> (<span class='argstr'>operator</span>, <span class='argstr'>pattern</span>, <span class='argstr'>adverb</span>)</h3>
@@ -231,7 +248,7 @@ p.stop;    // DOES stop because p is the EventStreamPlayer</pre>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-stretch' href='./../Overviews/Methods.html#stretch'>stretch</a> (<span class='argstr'>x</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-stutter' href='./../Overviews/Methods.html#stutter'>stutter</a> (<span class='argstr'>n</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-synthArg' href='./../Overviews/Methods.html#synthArg'>synthArg</a> </h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/cruciallib/Players/instrSupport.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/cruciallib/Players/instrSupport.sc</a></div>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Players/instrSupport.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Players/instrSupport.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-trace' href='./../Overviews/Methods.html#trace'>trace</a> (<span class='argstr'>key</span>, <span class='argstr'>printStream</span>, <span class='argstr'>prefix: ""</span>)</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 

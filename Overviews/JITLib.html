@@ -16,13 +16,14 @@
 <div id='label'>SuperCollider OVERVIEWS</div>
 <div id='categories'><a href='./../Browse.html#Libraries>JITLib'>Libraries>JITLib</a>, <a href='./../Browse.html#Tutorials>JITLib'>Tutorials>JITLib</a>, <a href='./../Browse.html#Live Coding'>Live Coding</a></div>
 <h1>JITLib</h1>
-<div id='summary'>An overview of the Just In Time library</div>
+<div id='summary'>An overview of the Just In Time programming library</div>
 </div>
 <div class='subheader'>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#Introduction'>Introduction</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Tutorial: Interactive Programming with SuperCollider and jitlib'>Tutorial: Interactive Programming with SuperCollider and jitlib</a></li>
+<ul class='toc'><li class='toc2'><a href='#Overview'>Overview</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Tutorial: Interactive Programming with SuperCollider and jitlib'>Tutorial: Interactive Programming with SuperCollider and jitlib</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Overview of the different classes and techniques'>Overview of the different classes and techniques</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Tutorials'>Tutorials</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Networking'>Networking</a></li>
@@ -31,11 +32,13 @@
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='Introduction'>Introduction</a></h2>
 
 <p><em>"Passenger to taxtidriver: take me to number 37. I'll give you the street name when we are there."</em><a class='footnote anchor' name='footnote_org_1' href='#footnote_1'><sup>1</sup></a> 
-<p>Disclaimer: there is no time, really; punctuality is your personal responsibility though.
-<p><em>Just in time programming</em> (or: <em>conversational programming, live coding</em><a class='footnote anchor' name='footnote_org_2' href='#footnote_2'><sup>2</sup></a> <em>, on-the fly-programming, interactive programming</em>) is a paradigm that includes the programming activity itself in the program's operation. This means a program is not taken as a tool that is made first, then to be productive, but a dynamic construction process of description and conversation - writing code thus becoming a closer part of musical or experimental practice. SuperCollider, being a dynamic programming language, provides several possibilities for modification of a running program - this library attempts to extend, simplify and develop them, mainly by providing abstract placeholders <strong>(proxies)</strong> that can be modified and used in calculations while playing. There is some specific networking classes which are made to simplify the distribution of live coding activity.
-<p>JITLib simplifies and unifies some orthogonal aspects of SuperCollider.  It consists of a number of <strong>placeholders</strong> (server side and client side) and <strong>schemes of access</strong><a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a> . These two aspects of space corresponding to <em>inclusion</em> and <em>reference</em>, depend on their context - here the placeholders are like roles which have a certain behaviour and can be fulfilled by certain objects. It is useful to be aware of the three aspects of such a placeholder: a certain set of elements can be their <strong>source</strong>, they can be used in a set of <strong>contexts</strong> and have a default source, if none is given.
+<p>Disclaimer: there is no time, really; punctuality, however, is your personal responsibility.
+<p><em>Just in time programming</em> (or: <em>conversational programming, live coding</em><a class='footnote anchor' name='footnote_org_2' href='#footnote_2'><sup>2</sup></a> <em>, on-the fly-programming, interactive programming</em>) is a paradigm that includes the programming activity in the program's operation. Here, a program is not taken as a tool that is made first to be productive later, but instead as a dynamic construction process of description and conversation. Writing code becomes an integral part of musical or experimental practice.
+<p> Being a dynamic programming language, SuperCollider provides several possibilities for modification of a running program - this library extends, unifies and develops them, mainly by providing abstract placeholders, called <em>proxies</em>, which can be used in calculations and modified at runtime.<h3><a class='anchor' name='Overview'>Overview</a></h3>
+
+<p> JITLib consists of a number of <strong>placeholders</strong> (server side and client side <em>proxies</em>) and <strong>schemes of access</strong><a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a> . These two aspects of space corresponding to <em>inclusion</em> and <em>reference</em>, depend on their context - here the placeholders are like roles which have a certain behaviour and can be fulfilled by certain objects. It is useful to be aware of the three aspects of such a placeholder: a certain set of elements can be their <strong>source</strong>, they can be used in a set of <strong>contexts</strong> and have a default source, if none is given.
 <p>Frequently used classes:  <a href="./../Classes/Tdef.html">Tdef</a> (for tasks), <a href="./../Classes/ProxySpace.html">ProxySpace</a>, <a href="./../Classes/NodeProxy.html">NodeProxy</a> and <a href="./../Classes/Ndef.html">Ndef</a> (for synths), <a href="./../Classes/Pdef.html">Pdef</a> and <a href="./../Classes/Pdefn.html">Pdefn</a> (for patterns).
-<p>For additional functionality, see also <strong>JITLib extensions Quark</strong>. To install it, evaluate:<pre class='code prettyprint lang-sc'>"JITLib extensions".include;</pre>
+<p>For additional functionality, see also <strong>JITLib extensions Quark</strong>. To install it, run the following:<pre class='code prettyprint lang-sc'>"JITLib extensions".include;</pre>
 
 <p>For some recent changes, see: <a href="./../Other/JITLibChanges3.7.html">JITLib Changes in 3.7</a><h2><a class='anchor' name='Tutorial: Interactive Programming with SuperCollider and jitlib'>Tutorial: Interactive Programming with SuperCollider and jitlib</a></h2>
 
@@ -45,19 +48,19 @@
 </dl>
 <h2><a class='anchor' name='Overview of the different classes and techniques'>Overview of the different classes and techniques</a></h2>
 <ul>
-<li>One way or style of access is the <strong>'def'</strong> classes (Pdef, Ndef etc.). It binds a symbol to an object in a specific way:<pre class='code prettyprint lang-sc'>Pdef(\name)        //returns the proxy</pre>
+<li><strong>Defs</strong>: One way or style of access is the def-classes (Pdef, Ndef etc.). It binds a symbol to an object in a specific way:<pre class='code prettyprint lang-sc'>Pdef(\name)        //returns the proxy</pre>
 
 <p><pre class='code prettyprint lang-sc'>Pdef(\name, object)    //sets the source and returns the proxy</pre>
 
 <p>the rest of the behaviour depends on its use.
 <p>client side: <a href="./../Classes/Pdef.html">Pdef</a>, <a href="./../Classes/Pdefn.html">Pdefn</a>, <a href="./../Classes/Tdef.html">Tdef</a>, <a href="./../Classes/Pbindef.html">Pbindef</a>, <a href="./../Classes/Psym.html">Psym</a>, <a href="./../Classes/Pnsym.html">Pnsym</a>, <a href="./../Classes/Fdef.html">Fdef</a>
-<p>server side: <a href="./../Classes/Ndef.html">Ndef</a><li>Another way, for server side NodeProxies, is an <strong>environment</strong> that returns placeholders on demand:<pre class='code prettyprint lang-sc'>ProxySpace.push</pre>
+<p>server side: <a href="./../Classes/Ndef.html">Ndef</a><li><strong>Environments</strong>: Another way, for server side NodeProxies, is an environment that returns placeholders on demand:<pre class='code prettyprint lang-sc'>ProxySpace.push</pre>
 
 <p><pre class='code prettyprint lang-sc'>~out = { ...}</pre>
 
-<p>helpfile: <a href="./../Classes/ProxySpace.html">ProxySpace</a> for the use together with other environments, see <a href="./../Tutorials/JITLib/jitlib_basic_concepts_02.html">jitlib_basic_concepts_02</a><li>There is also direct access <strong>without using the access schemes</strong> : NodeProxy, TaskProxy etc. provide it. Internally the former use these as base classes.
-<p>client side: <a href="./../Classes/PatternProxy.html">PatternProxy</a>, <a href="./../Classes/EventPatternProxy.html">EventPatternProxy</a>, <a href="./../Classes/TaskProxy.html">TaskProxy</a>, <a href="./../Classes/PbindProxy.html">PbindProxy</a>, <a href="./../Classes/Pdict.html">Pdict</a>
-<p>server side: <a href="./../Classes/NodeProxy.html">NodeProxy</a><li>To record all textual changes, <a href="./../Classes/History.html">History</a> is provides navigation and a memory of code.<li>For playing back on multichannel systems, <a href="./../Classes/Monitor.html">Monitor</a> (used internally) has a <a href="./../Reference/playN.html">playN</a> method.<li>GUI classes: overviews and mixers: <a href="./../Classes/ProxyMixer.html">ProxyMixer</a>, <a href="./../Classes/TdefAllGui.html">TdefAllGui</a>, <a href="./../Classes/PdefAllGui.html">PdefAllGui</a>, <a href="./../Classes/NdefMixer.html">NdefMixer</a>
+<p>helpfile: <a href="./../Classes/ProxySpace.html">ProxySpace</a> for the use together with other environments, see <a href="./../Tutorials/JITLib/jitlib_basic_concepts_02.html">jitlib_basic_concepts_02</a><li><strong>Lower Level Proxies</strong>: There is also direct access <em>without using the access schemes</em> : NodeProxy, TaskProxy etc. provide it. Internally the former use these as base classes.
+<p>language side: <a href="./../Classes/PatternProxy.html">PatternProxy</a>, <a href="./../Classes/EventPatternProxy.html">EventPatternProxy</a>, <a href="./../Classes/TaskProxy.html">TaskProxy</a>, <a href="./../Classes/PbindProxy.html">PbindProxy</a>, <a href="./../Classes/Pdict.html">Pdict</a>
+<p>server side: <a href="./../Classes/NodeProxy.html">NodeProxy</a><li><strong>History</strong>: To record all textual changes, <a href="./../Classes/History.html">History</a> is provides navigation and a memory of code.<li><strong>Multichannel systems</strong>:, <a href="./../Classes/Monitor.html">Monitor</a> (used internally) has a <a href="./../Reference/playN.html">playN</a> method.<li><strong>GUI</strong>: overviews and mixers: <a href="./../Classes/ProxyMixer.html">ProxyMixer</a>, <a href="./../Classes/TdefAllGui.html">TdefAllGui</a>, <a href="./../Classes/PdefAllGui.html">PdefAllGui</a>, <a href="./../Classes/NdefMixer.html">NdefMixer</a>
 <p>(for separate use: <a href="./../Classes/TdefGui.html">TdefGui</a>, <a href="./../Classes/PdefGui.html">PdefGui</a>, <a href="./../Classes/MonitorGui.html">MonitorGui</a>, <a href="./../Classes/NdefGui.html">NdefGui</a>, <a href="./../Classes/NdefParamGui.html">NdefParamGui</a>)</ul>
 <h2><a class='anchor' name='Tutorials'>Tutorials</a></h2>
 <dl>
@@ -72,9 +75,9 @@
 <dt><a href="./../Classes/BusPlug.html">BusPlug</a><dd>(listener on a bus)<dt><a href="./../Classes/SkipJack.html">SkipJack</a><dd>(a task that keeps awake across cmd-period)<dt><a href="./../Classes/LazyEnvir.html">LazyEnvir</a><dd>(and environment that returns proxies)<dt><a href="./../Classes/EnvironmentRedirect.html">EnvironmentRedirect</a><dd>(abstract superclass for redirecting environments)<dt><a href="./../Classes/EnvGate.html">EnvGate</a><dd>(singleton fade envelope)<dt><a href="./../Reference/NodeProxy_roles.html">NodeProxy roles</a><dd>(adverbial syntax for NodeProxy sources)</dl>
 <h2><a class='anchor' name='Feedback'>Feedback</a></h2>
 
-<p>for suggestions / comments contact me Julian Rohrhuber, rohrhuber@uni-hamburg.de.
-<p>History and GUI classes are written by Alberto de Campo.
+<p>for suggestions / comments contact me Julian Rohrhuber, julian.rohrhuber@musikundmedien.net
+<p>History and GUI classes written by Alberto de Campo.
 <p>Thanks a lot for all the feedback and ideas!
 <p>_____________________________________________________________
-<p>The research for this project is funded by: German Research Foundation (DFG) and the Future Funds of Styria, Austria.<div class='footnotes'>
+<p>The research for this project was funded by: German Research Foundation (DFG) and the Future Funds of Styria, Austria.<div class='footnotes'>
 <a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - An austrian math teacher's joke</div><a class='anchor' name='footnote_2'/><div class='footnote'>[<a href='#footnote_org_2'>2</a>] - For Live Coding see: <a href="http://toplap.org">http://toplap.org</a></div><a class='anchor' name='footnote_3'/><div class='footnote'>[<a href='#footnote_org_3'>3</a>] - They have in common that they treat assignment as a method. In such a way, they are an extension of the assignment implementation in Smalltalk-72, which makes "=" a message sent to the recieving object.</div></div><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Overviews/JITLib.schelp'>/usr/local/share/SuperCollider/HelpSource/Overviews/JITLib.schelp</a><br>link::Overviews/JITLib::<br>sc version: 3.7alpha0</div></div></body></html>

@@ -60,6 +60,8 @@
 <li class='toc3'><a href='#-detectIndex'>detectIndex</a> </li>
 <li class='toc3'><a href='#-inject'>inject</a> </li>
 <li class='toc3'><a href='#-injectr'>injectr</a> </li>
+<li class='toc3'><a href='#-collectInPlace'>collectInPlace</a> </li>
+<li class='toc3'><a href='#-collectCopy'>collectCopy</a> </li>
 <li class='toc3'><a href='#-any'>any</a> </li>
 <li class='toc3'><a href='#-every'>every</a> </li>
 <li class='toc3'><a href='#-count'>count</a> </li>
@@ -275,7 +277,8 @@ y.atAll([0, 2]);</pre>
 <p>Answer whether all items in aCollection are contained in the receiver.<pre class='code prettyprint lang-sc'>List[1, 2, 3, 4].includesAll(List[4, 5]);</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-matchItem' href='./../Overviews/Methods.html#matchItem'>matchItem</a> (<span class='argstr'>item</span>)</h3>
 <div class='method'>
-<p>Returns <a href="./../Classes/True.html">True</a> if this includes the <strong>item</strong>.</div><h3><a class='anchor' name='Iteration'>Iteration</a></h3>
+<p>Returns <a href="./../Classes/True.html">True</a> if this includes the <strong>item</strong>.
+<p>See also <a href="./../Reference/matchItem.html">matchItem</a>.</div><h3><a class='anchor' name='Iteration'>Iteration</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-do' href='./../Overviews/Methods.html#do'>do</a> </h3>
 <div class='method'>
 <p>Evaluates <strong>function</strong> for each item in the collection. The function is passed two arguments, the item and an integer index.<pre class='code prettyprint lang-sc'>List[1, 2, 3, 4].do({ arg item, i; item.postln });</pre>
@@ -313,6 +316,22 @@ y.atAll([0, 2]);</pre>
 <p>In functional programming, the operation known as a right fold. inject takes an initial value and a function and combines the elements of the collection by applying the function to the accumulated value and an element from the collection starting from the last element in the collection. The <strong>function</strong> takes two arguments and returns the new value. The accumulated value is initialzed to <strong>initialValue</strong>.<pre class='code prettyprint lang-sc'>[1,2,3,4,5].injectr([], _++_); // [ 5, 4, 3, 2, 1 ]
 
 [1,2,3,4,5].inject([], _++_); // [ 1, 2, 3, 4, 5 ]</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-collectInPlace' href='./../Overviews/Methods.html#collectInPlace'>collectInPlace</a> (<span class='argstr'>function</span>)</h3>
+<div class='method'>
+<p>Iterate over the collection and replace each item with a new one, returned by the function. This can be useful when one wants to aviod creating a new array in memory. In most cases, it is better to use <a href="#-collect">-collect</a>.<pre class='code prettyprint lang-sc'>a = [1, 5, 3, 4];
+a.collectInPlace { |x| 2 ** x };
+a; // changed
+
+// compare:
+a = [1, 5, 3, 4];
+a.collect { |x| 2 ** x };
+a; // remains unchanged</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-collectCopy' href='./../Overviews/Methods.html#collectCopy'>collectCopy</a> (<span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>Like <a href="#-collect">-collect</a>, but the collection is copied before iteration. This is recommended wherever the function may change the collection itself.<pre class='code prettyprint lang-sc'>a = [1, 5, 2, 3, 4];
+b = a.collectCopy { |x| if(x.even) { a.remove(x); "removed" } { x }  };
+a;
+b;</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-any' href='./../Overviews/Methods.html#any'>any</a> (<span class='argstr'>function</span>)</h3>
 <div class='method'>
 <p>Answer whether <strong>function</strong> answers <a href="./../Classes/True.html">True</a> for any item in the receiver. The function is passed two arguments, the item and an integer index.<pre class='code prettyprint lang-sc'>List[1, 2, 3, 4].any({ arg item, i; item.even });</pre>

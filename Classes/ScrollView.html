@@ -61,7 +61,7 @@
 
 <p>The view places the children onto a <em>canvas</em>, which may then be scrolled. The child views' position is always relative to the canvas, and thus not affected by scrolling.
 <p>The size of the canvas is always equal to the collective bounds of the children, and automatically adjusts when they are added, moved, resized and removed. If you wish to set it to a particular size, you could do so by first placing e.g. a <a href="./../Classes/CompositeView.html">CompositeView</a> (or another container) of desired size, and then placing all the other views into that container.
-<p>Exceptionally though, in <strong>Qt GUI</strong> you can <strong>replace the canvas</strong> with any other view (e.g. simply with <a href="./../Classes/View.html">View</a>), which allows you to install a <a href="./../Classes/Layout.html">layout</a> on it. In that case, the canvas will fill the whole visible area of the ScrollView, if the layout contents allow so, or a larger area, if the layout contents demand so. Effectively, the <strong>contents will resize</strong> together with the ScrollView, unless their size constraints prevent that, and if <a href="#-autohidesScrollers">-autohidesScrollers</a> is <code class='code prettyprint lang-sc'>true</code>, a scrollbar will only be shown if the contents can not be resized small enough in the scrollbar's direction. See <a href="#-canvas">-canvas</a> for further explanation.<h3><a class='anchor' name='Restrictions'>Restrictions</a></h3>
+<p>Exceptionally though, you can <strong>replace the canvas</strong> with any other view (e.g. simply with <a href="./../Classes/View.html">View</a>), which allows you to install a <a href="./../Classes/Layout.html">layout</a> on it. In that case, the canvas will fill the whole visible area of the ScrollView, if the layout contents allow so, or a larger area, if the layout contents demand so. Effectively, the <strong>contents will resize</strong> together with the ScrollView, unless their size constraints prevent that, and if <a href="#-autohidesScrollers">-autohidesScrollers</a> is <code class='code prettyprint lang-sc'>true</code>, a scrollbar will only be shown if the contents can not be resized small enough in the scrollbar's direction. See <a href="#-canvas">-canvas</a> for further explanation.<h3><a class='anchor' name='Restrictions'>Restrictions</a></h3>
 <div class='note'><span class='notelabel'>NOTE:</span> <ul>
 <li>The <a href="./../Classes/View.html#-resize">View: -resize</a> mode of the children is ignored.<li>One should not use a decorator such as FlowLayout directly on a ScrollView, only on a container view placed within it.</ul>
 </div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
@@ -73,7 +73,7 @@
 <h3><a class='anchor' name='Geometry'>Geometry</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-canvas' href='./../Overviews/Methods.html#canvas'>canvas</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-canvas' href='./../Overviews/Methods.html#canvas'>canvas</a> = <span class='argstr'>view</span></h3>
-<div class='method'><div class='note'><span class='notelabel'>NOTE:</span> Only in Qt GUI</div>
+<div class='method'>
 <p> Returns the current canvas that carries the child views, or replaces it with another.
 <p> By default, the canvas is a subclass of QObject, and hence does not allow the type of manipulations that views do. However, it can only be replaced with a subclass of View, which greatly extends the possibilities, including the use of layouts on the canvas.
 <p> The new canvas will always resize with the ScrollView, as far its size constraints allow. A plain <a href="./../Classes/View.html">View</a> which completely disregards its children will be freely resizable, and hence the scrolling will never be possible, since the scrollbars are activated according to the size of the canvas. To prevent this, you can either place explicit size constraints on it using <a href="./../Classes/View.html#-minSize">View: -minSize</a> and similar, or you can install a layout on it, which will forward to it the size constraints of the children.
@@ -108,7 +108,6 @@
 <p> Sets or gets whether the view has the vertical scrollbar. If this is <code class='code prettyprint lang-sc'>true</code>, the scrollbar may still be hidden if <a href="#-autohidesScrollers">-autohidesScrollers</a> allows so; however, if this it <code class='code prettyprint lang-sc'>false</code> the scrollbar will never be shown.
 <p> Defaults to <strong>true</strong>.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-autoScrolls' href='./../Overviews/Methods.html#autoScrolls'>autoScrolls</a>: METHOD NOT FOUND!</h3>
 <div class='method'>
-<p><div class='note'><span class='notelabel'>NOTE:</span> Not implemented yet in Qt GUI</div>
 <p> Sets or gets whether the view scrolls automatically when you drag on a child view past the edge of visible bounds.
 <p> Defaults to <strong>true</strong>.</div><h3><a class='anchor' name='Appearance'>Appearance</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-hasBorder' href='./../Overviews/Methods.html#hasBorder'>hasBorder</a></h3>
@@ -128,7 +127,7 @@
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-initScrollView' href='./../Overviews/Methods.html#initScrollView'>initScrollView</a> </h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 <h3><a class='anchor' name='Layout management on the canvas'>Layout management on the canvas</a></h3>
-<div class='note'><span class='notelabel'>NOTE:</span> Only works with Qt GUI</div>
+
 <p>By replacing the canvas of the ScrollView with a View, and installing a layout on it, the contents will expand to the edge of the ScrollView, and only exceed the edge if necessary.<pre class='code prettyprint lang-sc'>(
 var scroll = ScrollView(bounds:Rect(0,0,300,300).center_(Window.availableBounds.center));
 var canvas = View();

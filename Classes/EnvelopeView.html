@@ -90,13 +90,13 @@
 <p>You can make the view display an <a href="./../Classes/Env.html">Env</a> using <a href="#-setEnv">-setEnv</a>. Note however that the view will work on a copy of the data of the Env object, therefore moving the nodes through the view will have no effect on the Env.
 <p>You can also define nodes with arrays of x and y values using <a href="#-value">-value</a>, and the connections using <a href="#-connect">-connect</a>.<h3><a class='anchor' name='Appearance'>Appearance</a></h3>
 
-<p>In <strong>Qt GUI</strong>, the view supports two <strong>display styles</strong>: the default one draws nodes as small dots, with labels next to them, while another style draws nodes as rounded rectangles with labels drawn inside. See <a href="#-style">-style</a>.
+<p>The view supports two <strong>display styles</strong>: the default one draws nodes as small dots, with labels next to them, while another style draws nodes as rounded rectangles with labels drawn inside. See <a href="#-style">-style</a>.
 <p>A <strong>label</strong> for each of the nodes can be set using <a href="#-strings">-strings</a> and <a href="#-setString">-setString</a>.<h3><a class='anchor' name='Interaction'>Interaction</a></h3>
 
 <p>Nodes can be selected and moved using mouse. Shift-clicking a node will add it to the selection.
-<p>You can also move selected nodes and change selection using keyboard. In <strong>Qt</strong>, pressing the arrow keys will move selected nodes (as long as <a href="#-step">-step</a> is larger than 0). Pressing the left or right arrow keys while holding down Alt will select previous or next node, and holding down Shift will extend selection to the left or to the right. Other GUI kits may differ.
-<p>In <strong>Qt</strong>, <a href="#-keepHorizontalOrder">-keepHorizontalOrder</a> allows you to enforce the order of nodes in horizontal direction to match their index order. In that case, node movement to the left and to the right will be restricted by the positions of their immediate neighbours. This is especially useful when EnvelopeView is used to display an <a href="./../Classes/Env.html">Env</a>.
-<p>In <strong>Qt</strong>, <a href="#-elasticSelection">-elasticSelection</a> determines whether moving multiple nodes will be blocked altogether if any of the nodes meet an obstacle (the view bounds or a neighbour node), or only those individual nodes will be blocked.
+<p>You can also move selected nodes and change selection using keyboard. Pressing the arrow keys will move selected nodes (as long as <a href="#-step">-step</a> is larger than 0). Pressing the left or right arrow keys while holding down Alt will select previous or next node, and holding down Shift will extend selection to the left or to the right. Other GUI kits may differ.
+<p><a href="#-keepHorizontalOrder">-keepHorizontalOrder</a> allows you to enforce the order of nodes in horizontal direction to match their index order. In that case, node movement to the left and to the right will be restricted by the positions of their immediate neighbours. This is especially useful when EnvelopeView is used to display an <a href="./../Classes/Env.html">Env</a>.
+<p><a href="#-elasticSelection">-elasticSelection</a> determines whether moving multiple nodes will be blocked altogether if any of the nodes meet an obstacle (the view bounds or a neighbour node), or only those individual nodes will be blocked.
 <p>Node selection can also be changed programmatically using <a href="#-index">-index</a>, <a href="#-selectIndex">-selectIndex</a>, and <a href="#-deselectIndex">-deselectIndex</a>. The <a href="#-index">current</a> node can be moved programmatically using <a href="#-x">-x</a> and <a href="#-y">-y</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
@@ -183,11 +183,11 @@
 <tr><td class='argumentname'>source<td class='argumentdesc'>
 <p> An Integer - the index of the node to become one end of all the new connections.<tr><td class='argumentname'>targets<td class='argumentdesc'>
 <p> An Array of Integers - indexes of nodes, each to become the second end to a new connection created.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-selection' href='./../Overviews/Methods.html#selection'>selection</a> </h3>
-<div class='method'><div class='note'><span class='notelabel'>NOTE:</span> Only in Qt GUI</div>
+<div class='method'>
 <p> Returns an array of indexes of all selected nodes.</div><h3><a class='anchor' name='Appearance'>Appearance</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-style' href='./../Overviews/Methods.html#style'>style</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-style' href='./../Overviews/Methods.html#style'>style</a> = <span class='argstr'>style</span></h3>
-<div class='method'><div class='note'><span class='notelabel'>NOTE:</span> Only available in Qt GUI</div>
+<div class='method'>
 <p> One of the following drawing styles:<ul>
 <li><strong>'dots'</strong> - nodes are drawn as small dots within a larger circle indicating the area of mouse sensitivity. Labels are drawn next to the dots (see <a href="#-setString">-setString</a>). This style always draws nodes with <em>equal width and height</em>, and will use the smaller of the node's sizes, if different (it never draws ellipses).<li><strong>'rects'</strong> - nodes are drawn as rounded rectangles. Labels are drawn within the bounds of the rectangles.</ul>
 <div class='note'><span class='notelabel'>NOTE:</span> For compatibility with existing code, calling any of <a href="#-thumbWidth">-thumbWidth</a>, <a href="#-thumbHeight">-thumbHeight</a>, <a href="#-setThumbWidth">-setThumbWidth</a>, or <a href="#-setThumbHeight">-setThumbHeight</a> will automatically switch style to <strong>'rects'</strong>. You can still set a different style afterwards.</div><h4>Arguments:</h4>
@@ -262,9 +262,7 @@
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-index' href='./../Overviews/Methods.html#index'>index</a> = <span class='argstr'>index</span></h3>
 <div class='method'>
 <p> The index of the <em>current</em> node, i.e. the node affected by <a href="#-x">-x</a> and <a href="#-y">-y</a> methods.
-<p> In <strong>Qt</strong>, this is the selected node with lowest index, or -1 if no selection.
-<p> In <strong>Cocoa</strong>, this is the last node selected, or -1 if no selection.
-<p> In <strong>SwingOSC</strong>, this is the last node clicked, regardless of selection.<h4>Arguments:</h4>
+<p> This is the selected node with lowest index, or -1 if no selection.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>index<td class='argumentdesc'>
 <p> An Integer.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-lastIndex' href='./../Overviews/Methods.html#lastIndex'>lastIndex</a> </h3>
@@ -299,14 +297,14 @@
 <tr><td class='argumentname'>aFloat<td class='argumentdesc'>
 <p> A Float.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-keepHorizontalOrder' href='./../Overviews/Methods.html#keepHorizontalOrder'>keepHorizontalOrder</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-keepHorizontalOrder' href='./../Overviews/Methods.html#keepHorizontalOrder'>keepHorizontalOrder</a> = <span class='argstr'>bool</span></h3>
-<div class='method'><div class='note'><span class='notelabel'>NOTE:</span> Only available in <strong>Qt GUI</strong></div>
+<div class='method'>
 <p> Whether the position of nodes on the horizontal axis shall be restricted by their immediate neighbours (in order of their index).
 <p> Setting this to <code class='code prettyprint lang-sc'>true</code> will immediately modify the positions of existing nodes to match the order.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>bool<td class='argumentdesc'>
 <p> A Boolean.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-elasticSelection' href='./../Overviews/Methods.html#elasticSelection'>elasticSelection</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-elasticSelection' href='./../Overviews/Methods.html#elasticSelection'>elasticSelection</a> = <span class='argstr'>bool</span></h3>
-<div class='method'><div class='note'><span class='notelabel'>NOTE:</span> Only available in <strong>Qt GUI</strong></div>
+<div class='method'>
 <p> Whether the relative positions of nodes within the selection can change when the selection is moved using mouse or keyboard, in order to adapt to obstacles (the view bounds or, in case <a href="#-keepHorizontalOrder">-keepHorizontalOrder</a> is <code class='code prettyprint lang-sc'>true</code>, a neighbour node).
 <p> If this is <code class='code prettyprint lang-sc'>false</code>, movement of multiple nodes will be blocked altogether when an obstacles is met, otherwise only the individual nodes will be blocked at their obstacles.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -323,7 +321,7 @@
 <div class='supmethod'>From superclass: <a href='./../Classes/View.html'>View</a></div>
 <div class='method'>
 <p> Implements the default behavior on key presses.
-<p> In Qt, the default behavior is defined in the C++ implementation of the view instead of this method. See <a href="./../Classes/View.html#Key and mouse event processing">View: Key and mouse event processing</a> for explanation of how to override the behavior.</div><h3><a class='anchor' name='Drag and drop'>Drag and drop</a></h3>
+<p> The default behavior is defined in the C++ implementation of the view instead of this method. See <a href="./../Classes/View.html#Key and mouse event processing">View: Key and mouse event processing</a> for explanation of how to override the behavior.</div><h3><a class='anchor' name='Drag and drop'>Drag and drop</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-defaultGetDrag' href='./../Overviews/Methods.html#defaultGetDrag'>defaultGetDrag</a> </h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>

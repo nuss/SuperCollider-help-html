@@ -61,7 +61,7 @@
 <ul class='toc'></ul><li class='toc2'><a href='#b) playing EventPatternProxy'>b) playing EventPatternProxy</a></li>
 <ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>Keeps a reference to a stream that can be replaced while playing. Multiple streams are thus handled without creating dependancies.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>Keeps a reference to a stream that can be replaced while in use.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>source</span>)</h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/PatternProxy.html'>PatternProxy</a></div>
 <div class='method'>
@@ -100,7 +100,18 @@
 <p>set arguments in the default event. If there is none, it is created and the pattern is rebuilt.</div><h3><a class='anchor' name='a) using as stream reference'>a) using as stream reference</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-embedInStream' href='./../Overviews/Methods.html#embedInStream'>embedInStream</a> (<span class='argstr'>inval</span>, <span class='argstr'>embed: true</span>, <span class='argstr'>default</span>)</h3>
 <div class='method'>
-<p>just like any pattern, embeds itself in stream</div><h3><a class='anchor' name='b) using as EventStreamPlayer'>b) using as EventStreamPlayer</a></h3>
+<p>Given a <a href="./../Classes/Stream.html">Stream</a> like e.g. <a href="./../Classes/Routine.html">Routine</a>, yield all values from the pattern in the proxy before continuing. One pattern proxy can be used to produce values for any number of independent streams.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>inval<td class='argumentdesc'>
+<p>The inval is an <a href="./../Classes/Event.html">Event</a> and is passed into all substreams. It can be used to control how they behave from the outside.<tr><td class='argumentname'>embed<td class='argumentdesc'>
+<p>See <a href="./../Classes/Object.html#-streamArg">Object: -streamArg</a> for explanation.<tr><td class='argumentname'>default<td class='argumentdesc'>
+<p>Replacement for <code class='code prettyprint lang-sc'>nil</code> outputs of the source pattern. One use case is <a href="#-endless">-endless</a>.<pre class='code prettyprint lang-sc'>a = EventPatternProxy.new;
+a.source = Pbind(\freq, Pgeom(100, Pwhite(1.01, 1.2), 4));
+r = Routine { |inval| loop { a.embedInStream(inval) }; };
+r.nextN(12, ()); // the next 12 values from r
+a.source = Pbind(\freq, Pgeom([100, 200], Pwhite(1.01, 1.2), 4));// replace the source
+r.nextN(12, ()); // the next 12 values from r</pre>
+</table></div><h3><a class='anchor' name='b) using as EventStreamPlayer'>b) using as EventStreamPlayer</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-play' href='./../Overviews/Methods.html#play'>play</a> (<span class='argstr'>argClock</span>, <span class='argstr'>protoEvent</span>, <span class='argstr'>quant</span>, <span class='argstr'>doReset: false</span>)</h3>
 <div class='method'>
 <p>starts the EventPatternProxy and creates a player. if you want to play multiple instances, use <a href="#-fork">-fork</a>.<h4>Arguments:</h4>

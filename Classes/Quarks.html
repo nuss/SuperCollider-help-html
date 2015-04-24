@@ -50,13 +50,15 @@
 <li class='toc3'><a href='#*asAbsolutePath'>asAbsolutePath</a> </li>
 <li class='toc3'><a href='#*quarkNameAsLocalPath'>quarkNameAsLocalPath</a> </li>
 <li class='toc3'><a href='#*at'>at</a> </li>
-<li class='toc3'><a href='#*prReadFile'>prReadFile</a> </li>
+<li class='toc3'><a href='#*prReadDirectoryFile'>prReadDirectoryFile</a> </li>
 <li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
 <li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*additionalFolders'>additionalFolders</a> </li>
 <li class='toc3'><a href='#*asRelativePath'>asRelativePath</a> </li>
+<li class='toc3'><a href='#*checkForUpdates'>checkForUpdates</a> </li>
 <li class='toc3'><a href='#*isPath'>isPath</a> </li>
 <li class='toc3'><a href='#*pathIsInstalled'>pathIsInstalled</a> </li>
+<li class='toc3'><a href='#*prFetchDirectory'>prFetchDirectory</a> </li>
 <li class='toc3'><a href='#*uninstallQuark'>uninstallQuark</a> </li>
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
@@ -72,7 +74,7 @@
 <table class='arguments'>
 <tr><td class='argumentname'>name<td class='argumentdesc'>
 <p>Name of a quark that is listed in the directory, or the url of a git repository or the path (absolute or relative to current working directory) of a folder to install.<tr><td class='argumentname'>refspec<td class='argumentdesc'>
-<p>Git refspec: "tags/1.0.0" | "shaabcdef1234567890" | "HEAD" | nil (default)</table><h4>Returns:</h4>
+<p>Optional git refspec. By default it will install the latest version. Optionally you can specify a tag: "tags/1.0.0" A sha commit: "15e6ea822a18d06b286c3f10918f83b8d797d939" "HEAD" nil (default)</table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>this</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*installQuark' href='./../Overviews/Methods.html#installQuark'>installQuark</a> (<span class='argstr'>quark</span>)</h3>
 <div class='method'>
@@ -141,10 +143,10 @@
 <div class='returnvalue'>
 <p>path</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fetchDirectory' href='./../Overviews/Methods.html#fetchDirectory'>fetchDirectory</a> (<span class='argstr'>force: true</span>)</h3>
 <div class='method'>
-<p>Private. Fetches the directory.txt file, caches it locally for 4 hours. Stores in downloaded-quarks<h4>Arguments:</h4>
+<p>Private. Fetches the directory listing into downloaded-quarks/quarks If a local copy already exists and it is not a git repo then this is used instead.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>force<td class='argumentdesc'>
-<p>(Boolean) Force download of file, ignoring any cached version.</table><h4>Returns:</h4>
+<p>(Boolean) Force fetch. By default it is fetched once per session. Recompile the class library to fetch it again, or call Quarks.fetchDirectory(true) to force it.</table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>this</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*classesInPackage' href='./../Overviews/Methods.html#classesInPackage'>classesInPackage</a> (<span class='argstr'>packageName</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Quarks/packages.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Quarks/packages.sc</a></div>
@@ -205,19 +207,21 @@
 <table class='arguments'>
 <tr><td class='argumentname'>name<td class='argumentdesc'></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>Quark</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*prReadFile' href='./../Overviews/Methods.html#prReadFile'>prReadFile</a> (<span class='argstr'>fetch</span>, <span class='argstr'>dirCachePath</span>)</h3>
+<p>Quark</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*prReadDirectoryFile' href='./../Overviews/Methods.html#prReadDirectoryFile'>prReadDirectoryFile</a> (<span class='argstr'>dirTxtPath</span>)</h3>
 <div class='method'>
 <p>private<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>fetch<td class='argumentdesc'><tr><td class='argumentname'>dirCachePath<td class='argumentdesc'></table><h4>Returns:</h4>
+<tr><td class='argumentname'>fetch<td class='argumentdesc'><tr><td class='argumentname'>(dirCachePath)<td class='argumentdesc'></table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>this</div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*additionalFolders' href='./../Overviews/Methods.html#additionalFolders'>additionalFolders</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*additionalFolders' href='./../Overviews/Methods.html#additionalFolders'>additionalFolders</a> = value</h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*asRelativePath' href='./../Overviews/Methods.html#asRelativePath'>asRelativePath</a> (<span class='argstr'>path</span>, <span class='argstr'>relativeToDir</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*checkForUpdates' href='./../Overviews/Methods.html#checkForUpdates'>checkForUpdates</a> </h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*isPath' href='./../Overviews/Methods.html#isPath'>isPath</a> (<span class='argstr'>string</span>)</h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*pathIsInstalled' href='./../Overviews/Methods.html#pathIsInstalled'>pathIsInstalled</a> (<span class='argstr'>path</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*prFetchDirectory' href='./../Overviews/Methods.html#prFetchDirectory'>prFetchDirectory</a> </h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*uninstallQuark' href='./../Overviews/Methods.html#uninstallQuark'>uninstallQuark</a> (<span class='argstr'>quark</span>)</h3>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
