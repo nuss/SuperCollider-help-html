@@ -31,7 +31,11 @@
 <li class='toc3'><a href='#*midiSources'>midiSources</a> </li>
 <li class='toc3'><a href='#*shortcuts'>shortcuts</a> </li>
 <li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*globalOSCfeedbackPort'>globalOSCfeedbackPort</a> </li>
+<li class='toc3'><a href='#*multiSlotOSCcmds'>multiSlotOSCcmds</a> </li>
+<li class='toc3'><a href='#*oscFeedbackAddrs'>oscFeedbackAddrs</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-setup'>setup</a> </li>
 <li class='toc3'><a href='#-setMidiMode'>setMidiMode</a> </li>
 <li class='toc3'><a href='#-getMidiMode'>getMidiMode</a> </li>
@@ -89,14 +93,19 @@
 <li class='toc3'><a href='#-isClosed'>isClosed</a> </li>
 </ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-activeSliderB'>activeSliderB</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-actionActive'>actionActive</a> </li>
+<li class='toc3'><a href='#-activeSliderB'>activeSliderB</a> </li>
 <li class='toc3'><a href='#-activeTextB'>activeTextB</a> </li>
+<li class='toc3'><a href='#-addOSCFeedback'>addOSCFeedback</a> </li>
 <li class='toc3'><a href='#-connectGUI'>connectGUI</a> </li>
 <li class='toc3'><a href='#-connectS'>connectS</a> </li>
 <li class='toc3'><a href='#-connectTF'>connectTF</a> </li>
 <li class='toc3'><a href='#-isCVCWidget'>isCVCWidget</a> </li>
-<li class='toc3'><a href='#-oscReplyPort'>oscReplyPort</a> </li>
+<li class='toc3'><a href='#-oscFeedbackPort'>oscFeedbackPort</a> </li>
 <li class='toc3'><a href='#-prInitSlidersTextConnection'>prInitSlidersTextConnection</a> </li>
+<li class='toc3'><a href='#-recordMultiSlotCmds'>recordMultiSlotCmds</a> </li>
+<li class='toc3'><a href='#-removeOSCFeedback'>removeOSCFeedback</a> </li>
+<li class='toc3'><a href='#-sendOSCFeedback'>sendOSCFeedback</a> </li>
 <li class='toc3'><a href='#-setOSCfeedback'>setOSCfeedback</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'><li class='toc2'><a href='#basic usage'>basic usage</a></li>
@@ -130,7 +139,12 @@
 <p>See <a href="./../Classes/KeyDownActions.html">KeyDownActions</a> for more information about the internal structure of the <code class='code prettyprint lang-sc'>shortcuts</code> dictionary resp. the workings of shortcuts in general. Also have a look at the list of <a href="#Shortcuts">default shortcuts</a> that can be modified by the user at any time.<h4>Returns:</h4>
 <div class='returnvalue'>
 <p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*globalOSCfeedbackPort' href='./../Overviews/Methods.html#globalOSCfeedbackPort'>globalOSCfeedbackPort</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*globalOSCfeedbackPort' href='./../Overviews/Methods.html#globalOSCfeedbackPort'>globalOSCfeedbackPort</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*multiSlotOSCcmds' href='./../Overviews/Methods.html#multiSlotOSCcmds'>multiSlotOSCcmds</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*oscFeedbackAddrs' href='./../Overviews/Methods.html#oscFeedbackAddrs'>oscFeedbackAddrs</a> </h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-setup' href='./../Overviews/Methods.html#setup'>setup</a> </h3>
 <div class='method'>
 <p>The current widget-setup, returned as an <a href="./../Classes/Event.html">Event</a>. If the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> each key of the returned Event will be split in a <code class='code prettyprint lang-sc'>\lo</code> and a <code class='code prettyprint lang-sc'>\hi</code> value:<dl>
@@ -266,7 +280,7 @@
 <tr><td class='argumentname'>slot<td class='argumentdesc'>
 <p>only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> or a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> - either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code> (CVWidget2D) or an integer index (CVWidgetMS)</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a <a href="./../Classes/Symbol.html">Symbol</a>, indicating the oscMapping-mode</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscConnect' href='./../Overviews/Methods.html#oscConnect'>oscConnect</a> (<span class='argstr'>ip</span>, <span class='argstr'>port</span>, <span class='argstr'>name</span>, <span class='argstr'>oscMsgIndex: 1</span>, <span class='argstr'>slot</span>)</h3>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a>, indicating the oscMapping-mode</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscConnect' href='./../Overviews/Methods.html#oscConnect'>oscConnect</a> (<span class='argstr'>ip</span>, <span class='argstr'>port</span>, <span class='argstr'>name</span>, <span class='argstr'>oscMsgIndex: 1</span>, <span class='argstr'>slot</span>, <span class='argstr'>oscFeedbackPort</span>)</h3>
 <div class='method'>
 <p>Connect a widget to an OSC-device resp. a program that sends OSC-messages to SuperCollider<h4>Arguments:</h4>
 <table class='arguments'>
@@ -610,15 +624,20 @@ flow.nextLine;
 <div class='returnvalue'>
 <p><code class='code prettyprint lang-sc'>true</code> if the widget has been closed, otherwise <code class='code prettyprint lang-sc'>false</code></div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-actionActive' href='./../Overviews/Methods.html#actionActive'>actionActive</a> (<span class='argstr'>actionName</span>, <span class='argstr'>slot</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-activeSliderB' href='./../Overviews/Methods.html#activeSliderB'>activeSliderB</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-activeTextB' href='./../Overviews/Methods.html#activeTextB'>activeTextB</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addOSCFeedback' href='./../Overviews/Methods.html#addOSCFeedback'>addOSCFeedback</a> (<span class='argstr'>cmd</span>, <span class='argstr'>cmdSlot</span>, <span class='argstr'>ip</span>, <span class='argstr'>port</span>, <span class='argstr'>slot</span>, <span class='argstr'>oscFeedbackPort</span>, <span class='argstr'>what</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectGUI' href='./../Overviews/Methods.html#connectGUI'>connectGUI</a> (<span class='argstr'>connectSlider: true</span>, <span class='argstr'>connectTextField: true</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectS' href='./../Overviews/Methods.html#connectS'>connectS</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectTF' href='./../Overviews/Methods.html#connectTF'>connectTF</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-isCVCWidget' href='./../Overviews/Methods.html#isCVCWidget'>isCVCWidget</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscReplyPort' href='./../Overviews/Methods.html#oscReplyPort'>oscReplyPort</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscReplyPort' href='./../Overviews/Methods.html#oscReplyPort'>oscReplyPort</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscFeedbackPort' href='./../Overviews/Methods.html#oscFeedbackPort'>oscFeedbackPort</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-oscFeedbackPort' href='./../Overviews/Methods.html#oscFeedbackPort'>oscFeedbackPort</a> = value</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-prInitSlidersTextConnection' href='./../Overviews/Methods.html#prInitSlidersTextConnection'>prInitSlidersTextConnection</a> (<span class='argstr'>wcm</span>, <span class='argstr'>guiEnv</span>, <span class='argstr'>midiOscEnv</span>, <span class='argstr'>argWidgetCV</span>, <span class='argstr'>thisCalib</span>, <span class='argstr'>slot</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-recordMultiSlotCmds' href='./../Overviews/Methods.html#recordMultiSlotCmds'>recordMultiSlotCmds</a> (<span class='argstr'>cvSlot</span>, <span class='argstr'>cmdSlot</span>, <span class='argstr'>sentFromIP</span>, <span class='argstr'>msg</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeOSCFeedback' href='./../Overviews/Methods.html#removeOSCFeedback'>removeOSCFeedback</a> (<span class='argstr'>slot</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendOSCFeedback' href='./../Overviews/Methods.html#sendOSCFeedback'>sendOSCFeedback</a> (<span class='argstr'>cmd</span>, <span class='argstr'>cmdSlot</span>, <span class='argstr'>cvSlot</span>, <span class='argstr'>port</span>, <span class='argstr'>what</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-setOSCfeedback' href='./../Overviews/Methods.html#setOSCfeedback'>setOSCfeedback</a> (<span class='argstr'>cv</span>, <span class='argstr'>cmd</span>, <span class='argstr'>port</span>, <span class='argstr'>slot</span>)</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 <h3><a class='anchor' name='basic usage'>basic usage</a></h3>
