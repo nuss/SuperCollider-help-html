@@ -1,0 +1,189 @@
+<html><head><title>SoundFileAnalysis</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Non-Realtime'>Non-Realtime</a></div>
+<h1>SoundFileAnalysis</h1>
+<div id='summary'>A simple system for non realtime soundfile analysis</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/downloaded-quarks/SoundFileAnalysis:/Classes/<a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/SoundFileAnalysis:/Classes/SoundFileAnalysis.sc'>SoundFileAnalysis.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*verbose'>verbose</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*initAnalysisMethods'>initAnalysisMethods</a> </li>
+<li class='toc3'><a href='#*basicAnalysisMethods'>basicAnalysisMethods</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-add'>add</a> </li>
+<li class='toc3'><a href='#-analysisMethods'>analysisMethods</a> </li>
+<li class='toc3'><a href='#-analyzeFile'>analyzeFile</a> </li>
+<li class='toc3'><a href='#-analyzeAll'>analyzeAll</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-prAddAnalysisToScore'>prAddAnalysisToScore</a> </li>
+<li class='toc3'><a href='#-prReadAnalysisFiles'>prReadAnalysisFiles</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Tests'>Tests</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*verbose' href='./../Overviews/Methods.html#verbose'>verbose</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*verbose' href='./../Overviews/Methods.html#verbose'>verbose</a> = value</h3>
+<div class='method'>
+<p>Post what's going on (default: false).</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> </h3>
+<div class='method'>
+<p>Return a new <a href="./../Classes/SoundFileAnalysis.html">SoundFileAnalysis</a> Object</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initAnalysisMethods' href='./../Overviews/Methods.html#initAnalysisMethods'>initAnalysisMethods</a> </h3>
+<div class='method'>
+<p>Return a function with a dictionary of basic analasys methods:</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*basicAnalysisMethods' href='./../Overviews/Methods.html#basicAnalysisMethods'>basicAnalysisMethods</a> </h3>
+<div class='method'>
+<p>A dictionary with the tree keys: \trig, \average, \direct<dl>
+<dt>trig<dd>Write a value on receiveing a trigger<dt>average<dd>Average all values in the file<dt>direct<dd>Write a value on each frame</dl>
+</div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-add' href='./../Overviews/Methods.html#add'>add</a> (<span class='argstr'>name</span>, <span class='argstr'>type</span>, <span class='argstr'>ugenFunc</span>)</h3>
+<div class='method'>
+<p>Add a new analysis method<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>Name for the method (a <a href="./../Classes/Symbol.html">Symbol</a>)<tr><td class='argumentname'>type<td class='argumentdesc'>
+<p>One of currently three types:<dl>
+<dt>trig<dd>Write one or more values on receiveing a trigger<dt>direct<dd>Write a value on each frame<dt>average<dd>Average all values in the file</dl>
+<tr><td class='argumentname'>ugenFunc<td class='argumentdesc'>
+<p>A function that returns a UGen graph. It takes the sound signal and the soundfile object as arguments.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-analysisMethods' href='./../Overviews/Methods.html#analysisMethods'>analysisMethods</a> </h3>
+<div class='method'>
+<p>Returns a dictionary of functions of currently defined methods.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-analyzeFile' href='./../Overviews/Methods.html#analyzeFile'>analyzeFile</a> (<span class='argstr'>path</span>, <span class='argstr'>start: 0</span>, <span class='argstr'>duration</span>, <span class='argstr'>which</span>, <span class='argstr'>callback</span>, <span class='argstr'>maxDataPoints: 1000</span>)</h3>
+<div class='method'>
+<p>Analyze a sound file, using the defined analysis methods. This method returns an <a href="./../Classes/Event.html">Event</a> with the following information:<dl>
+<dt>~fileName, ~path, ~fileNumChannels<dd>path and sound file information<dt>~analysisStart, ~analysisDuration<dd>What part of the file was analyzed<dt>~dataDimensions<dd>The results, each resulting from an analysis method (an <a href="./../Classes/Event.html">Event</a>)<dt>~dataTable<dd>The above results ordered as a multidimensional array</dl>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>Path to the soundfile<tr><td class='argumentname'>start<td class='argumentdesc'>
+<p>Start frame index for analysis<tr><td class='argumentname'>duration<td class='argumentdesc'>
+<p>Analysis duration in seconds<tr><td class='argumentname'>which<td class='argumentdesc'>
+<p>Which methods to use (an array of names as symbols). If none is given, use all.<tr><td class='argumentname'>callback<td class='argumentdesc'>
+<p>A function that is called when analysis is completed. It takes the result (an event) as argument.<tr><td class='argumentname'>maxDataPoints<td class='argumentdesc'>
+<p>A limit on the number of points added to the data.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-analyzeAll' href='./../Overviews/Methods.html#analyzeAll'>analyzeAll</a> (<span class='argstr'>paths</span>, <span class='argstr'>start: 0</span>, <span class='argstr'>duration</span>, <span class='argstr'>which</span>, <span class='argstr'>callback</span>, <span class='argstr'>maxDataPoints</span>)</h3>
+<div class='method'>
+<p>Analyze all files given, returning a <a href="./../Classes/List.html">List</a> of <a href="./../Classes/Event.html">Event</a>s.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>paths<td class='argumentdesc'>
+<p>A list of paths</table></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prAddAnalysisToScore' href='./../Overviews/Methods.html#prAddAnalysisToScore'>prAddAnalysisToScore</a> (<span class='argstr'>score</span>, <span class='argstr'>which</span>, <span class='argstr'>server</span>, <span class='argstr'>analysisDuration</span>, <span class='argstr'>soundFile</span>, <span class='argstr'>maxDataPoints: 1000</span>, <span class='argstr'>start</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prReadAnalysisFiles' href='./../Overviews/Methods.html#prReadAnalysisFiles'>prReadAnalysisFiles</a> (<span class='argstr'>result</span>, <span class='argstr'>paths</span>, <span class='argstr'>which</span>, <span class='argstr'>maxDataPoints: 1000</span>)</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>s.boot;
+
+// record a sound into a buffer
+b = Buffer.alloc(s, s.sampleRate * 3, 1, bufnum: 1000);
+
+(
+SynthDef(\record, {|out|
+    var in, rec;
+    in = RLPF.ar(LFSaw.ar(300 * SinOsc.kr(0.4).range(0.5, 5)), Line.kr(12000, 100, 3));
+    rec = RecordBuf.ar(in, b.bufnum, loop: 0, doneAction: 2);
+    Out.ar(out, in);
+};
+).add
+)
+
+Synth(\record);
+
+// write the file to analyze later
+b.write("~/soundFileAnalysisExample.aiff".standardizePath,"aiff", "int24");
+
+b.play; // maybe check if something is there
+
+// initialize analysis
+(
+a = SoundFileAnalysis.new;
+
+a.add(\centroid, \trig, {|sig|
+    var fft = FFT(LocalBuf(2048, 1), sig);
+    var x = SpecCentroid.kr(fft);
+    [Impulse.kr(5), x]
+});
+a.add(\crest, \average, {|sig, soundfile| Crest.kr(sig, soundfile.numFrames) });
+a.add(\amplitude, \direct, {|sig| Amplitude.kr(sig); });
+)
+
+// analyze the sound
+
+x = a.analyzeFile("~/soundFileAnalysisExample.aiff".standardizePath, duration: 3, maxDataPoints: 3000, callback: {"done!".postln;});
+
+// look at the data
+x[\centroid].postcs;
+x[\crest].postcs;
+x[\amplitude].postcs;
+
+
+// BONUS: how to tweak the analysis methods
+(
+Ndef(\centroid, {
+    var sig = RLPF.ar( LFSaw.ar(300 * SinOsc.kr(0.4).range(0.5, 5)), Line.kr(12000, 300, 3));
+    var fft = FFT(LocalBuf(2048, 1), sig);
+    var x = SpecCentroid.kr(fft);
+    x.poll(10);
+    sig;
+}).play;
+)</pre>
+<h2><a class='anchor' name='Tests'>Tests</a></h2>
+<pre class='code prettyprint lang-sc'>(
+a = SoundFileAnalysis.new;
+
+a.add(\onsets, \trig, { |sig|
+    var fft = FFT(LocalBuf(512, 1), sig);
+    Onsets.kr(fft)
+});
+a.add(\fftcrest, \average, { |sig|
+    FFTCrest.kr(FFT(LocalBuf(2048, 1), sig))
+});
+
+a.add(\slope, \average, { |sig|
+    FFTSlope.kr(FFT(LocalBuf(2048, 1), sig))
+});
+a.add(\amplitude, \average, { |sig|
+    Amplitude.kr(sig)
+});
+
+a.add(\test, \trig, { |sig|
+    [Impulse.kr(2), 1, 2, 3]
+});
+
+a.add(\test2, \direct, { |sig|
+    //DC.kr([10, 20, 30])
+    Phasor.kr(0, 1, 1, inf);
+});
+
+a.add(\test3, \direct, { |sig|
+    Phasor.ar(0, [10, 1], 1, inf);
+});
+);
+
+// analyze single files
+x = a.analyzeFile(Platform.resourceDir +/+ "sounds/a11wlk01.wav", callback: { "analysis completed".postln }, maxDataPoints: 6000);
+x.postcs;"";
+x[\test];
+x[\test2].cs;
+x[\test3].cs;
+x[\test].as(Array).shape
+x[\crest];
+x[\onsets];</pre>
+
+<p><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/SoundFileAnalysis:/HelpSource/Classes/SoundFileAnalysis.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/SoundFileAnalysis:/HelpSource/Classes/SoundFileAnalysis.schelp</a><br>link::Classes/SoundFileAnalysis::<br>sc version: 3.7alpha0</div></div></body></html>

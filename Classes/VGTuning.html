@@ -1,0 +1,441 @@
+<html><head><title>VGTuning</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<h1>VGTuning</h1>
+<div id='summary'>(Undocumented class)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/downloaded-quarks/GamelanSynthesis/Classes/<a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/GamelanSynthesis/Classes/VGTuning.sc'>VGTuning.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*allNeutralNames'>allNeutralNames</a> </li>
+<li class='toc3'><a href='#*allPelogNames'>allPelogNames</a> </li>
+<li class='toc3'><a href='#*allSlendroNames'>allSlendroNames</a> </li>
+<li class='toc3'><a href='#*allSonatorNames'>allSonatorNames</a> </li>
+<li class='toc3'><a href='#*balanceFilename'>balanceFilename</a> </li>
+<li class='toc3'><a href='#*busKeys'>busKeys</a> </li>
+<li class='toc3'><a href='#*checkSonatorsAndData'>checkSonatorsAndData</a> </li>
+<li class='toc3'><a href='#*ensembleBusKeys'>ensembleBusKeys</a> </li>
+<li class='toc3'><a href='#*free'>free</a> </li>
+<li class='toc3'><a href='#*freeMulTrees'>freeMulTrees</a> </li>
+<li class='toc3'><a href='#*getPartialNumbers'>getPartialNumbers</a> </li>
+<li class='toc3'><a href='#*init'>init</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*instGroupings'>instGroupings</a> </li>
+<li class='toc3'><a href='#*laras'>laras</a> </li>
+<li class='toc3'><a href='#*loadSonatorNames'>loadSonatorNames</a> </li>
+<li class='toc3'><a href='#*loadSynthData'>loadSynthData</a> </li>
+<li class='toc3'><a href='#*mulTrees'>mulTrees</a> </li>
+<li class='toc3'><a href='#*neutral'>neutral</a> </li>
+<li class='toc3'><a href='#*pelog'>pelog</a> </li>
+<li class='toc3'><a href='#*pelogPrefix'>pelogPrefix</a> </li>
+<li class='toc3'><a href='#*prepMulTrees'>prepMulTrees</a> </li>
+<li class='toc3'><a href='#*prepRefs'>prepRefs</a> </li>
+<li class='toc3'><a href='#*prepTunings'>prepTunings</a> </li>
+<li class='toc3'><a href='#*readBalanceInfo'>readBalanceInfo</a> </li>
+<li class='toc3'><a href='#*retuneDegree'>retuneDegree</a> </li>
+<li class='toc3'><a href='#*retuneInst'>retuneInst</a> </li>
+<li class='toc3'><a href='#*retuneLaras'>retuneLaras</a> </li>
+<li class='toc3'><a href='#*retuneNote'>retuneNote</a> </li>
+<li class='toc3'><a href='#*retunePartial'>retunePartial</a> </li>
+<li class='toc3'><a href='#*sampSetPrefix'>sampSetPrefix</a> </li>
+<li class='toc3'><a href='#*scalesForPrefixes'>scalesForPrefixes</a> </li>
+<li class='toc3'><a href='#*server'>server</a> </li>
+<li class='toc3'><a href='#*slendro'>slendro</a> </li>
+<li class='toc3'><a href='#*slendroPrefix'>slendroPrefix</a> </li>
+<li class='toc3'><a href='#*sonatorListFilename'>sonatorListFilename</a> </li>
+<li class='toc3'><a href='#*synthDataDir'>synthDataDir</a> </li>
+<li class='toc3'><a href='#*synthDataFilename'>synthDataFilename</a> </li>
+<li class='toc3'><a href='#*synthDataFixFunc'>synthDataFixFunc</a> </li>
+<li class='toc3'><a href='#*synthDataFixFuncFilename'>synthDataFixFuncFilename</a> </li>
+<li class='toc3'><a href='#*tunings'>tunings</a> </li>
+<li class='toc3'><a href='#*verbose'>verbose</a> </li>
+<li class='toc3'><a href='#*vggDir'>vggDir</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allNeutralNames' href='./../Overviews/Methods.html#allNeutralNames'>allNeutralNames</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allPelogNames' href='./../Overviews/Methods.html#allPelogNames'>allPelogNames</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allSlendroNames' href='./../Overviews/Methods.html#allSlendroNames'>allSlendroNames</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allSonatorNames' href='./../Overviews/Methods.html#allSonatorNames'>allSonatorNames</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*balanceFilename' href='./../Overviews/Methods.html#balanceFilename'>balanceFilename</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*balanceFilename' href='./../Overviews/Methods.html#balanceFilename'>balanceFilename</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*busKeys' href='./../Overviews/Methods.html#busKeys'>busKeys</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*checkSonatorsAndData' href='./../Overviews/Methods.html#checkSonatorsAndData'>checkSonatorsAndData</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ensembleBusKeys' href='./../Overviews/Methods.html#ensembleBusKeys'>ensembleBusKeys</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*free' href='./../Overviews/Methods.html#free'>free</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*freeMulTrees' href='./../Overviews/Methods.html#freeMulTrees'>freeMulTrees</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*getPartialNumbers' href='./../Overviews/Methods.html#getPartialNumbers'>getPartialNumbers</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*init' href='./../Overviews/Methods.html#init'>init</a> (<span class='argstr'>argServer</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*instGroupings' href='./../Overviews/Methods.html#instGroupings'>instGroupings</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*laras' href='./../Overviews/Methods.html#laras'>laras</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*laras' href='./../Overviews/Methods.html#laras'>laras</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadSonatorNames' href='./../Overviews/Methods.html#loadSonatorNames'>loadSonatorNames</a> (<span class='argstr'>path</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadSynthData' href='./../Overviews/Methods.html#loadSynthData'>loadSynthData</a> (<span class='argstr'>path</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*mulTrees' href='./../Overviews/Methods.html#mulTrees'>mulTrees</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*neutral' href='./../Overviews/Methods.html#neutral'>neutral</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*pelog' href='./../Overviews/Methods.html#pelog'>pelog</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*pelogPrefix' href='./../Overviews/Methods.html#pelogPrefix'>pelogPrefix</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*prepMulTrees' href='./../Overviews/Methods.html#prepMulTrees'>prepMulTrees</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*prepRefs' href='./../Overviews/Methods.html#prepRefs'>prepRefs</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*prepTunings' href='./../Overviews/Methods.html#prepTunings'>prepTunings</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*readBalanceInfo' href='./../Overviews/Methods.html#readBalanceInfo'>readBalanceInfo</a> (<span class='argstr'>path</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*retuneDegree' href='./../Overviews/Methods.html#retuneDegree'>retuneDegree</a> (<span class='argstr'>laras</span>, <span class='argstr'>degree</span>, <span class='argstr'>val: 1</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/GamelanSynthesis/Classes/extRetune.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/GamelanSynthesis/Classes/extRetune.sc</a></div>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*retuneInst' href='./../Overviews/Methods.html#retuneInst'>retuneInst</a> (<span class='argstr'>laras</span>, <span class='argstr'>inst</span>, <span class='argstr'>val: 1</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/GamelanSynthesis/Classes/extRetune.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/GamelanSynthesis/Classes/extRetune.sc</a></div>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*retuneLaras' href='./../Overviews/Methods.html#retuneLaras'>retuneLaras</a> (<span class='argstr'>laras</span>, <span class='argstr'>val: 1</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/GamelanSynthesis/Classes/extRetune.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/GamelanSynthesis/Classes/extRetune.sc</a></div>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*retuneNote' href='./../Overviews/Methods.html#retuneNote'>retuneNote</a> (<span class='argstr'>laras</span>, <span class='argstr'>inst</span>, <span class='argstr'>note</span>, <span class='argstr'>val: 1</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/GamelanSynthesis/Classes/extRetune.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/GamelanSynthesis/Classes/extRetune.sc</a></div>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*retunePartial' href='./../Overviews/Methods.html#retunePartial'>retunePartial</a> (<span class='argstr'>laras</span>, <span class='argstr'>inst</span>, <span class='argstr'>note</span>, <span class='argstr'>partial</span>, <span class='argstr'>val: 1</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/GamelanSynthesis/Classes/extRetune.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/GamelanSynthesis/Classes/extRetune.sc</a></div>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*sampSetPrefix' href='./../Overviews/Methods.html#sampSetPrefix'>sampSetPrefix</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*sampSetPrefix' href='./../Overviews/Methods.html#sampSetPrefix'>sampSetPrefix</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*scalesForPrefixes' href='./../Overviews/Methods.html#scalesForPrefixes'>scalesForPrefixes</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*server' href='./../Overviews/Methods.html#server'>server</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*slendro' href='./../Overviews/Methods.html#slendro'>slendro</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*slendroPrefix' href='./../Overviews/Methods.html#slendroPrefix'>slendroPrefix</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*sonatorListFilename' href='./../Overviews/Methods.html#sonatorListFilename'>sonatorListFilename</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*sonatorListFilename' href='./../Overviews/Methods.html#sonatorListFilename'>sonatorListFilename</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*synthDataDir' href='./../Overviews/Methods.html#synthDataDir'>synthDataDir</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*synthDataDir' href='./../Overviews/Methods.html#synthDataDir'>synthDataDir</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*synthDataFilename' href='./../Overviews/Methods.html#synthDataFilename'>synthDataFilename</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*synthDataFilename' href='./../Overviews/Methods.html#synthDataFilename'>synthDataFilename</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*synthDataFixFunc' href='./../Overviews/Methods.html#synthDataFixFunc'>synthDataFixFunc</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*synthDataFixFunc' href='./../Overviews/Methods.html#synthDataFixFunc'>synthDataFixFunc</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*synthDataFixFuncFilename' href='./../Overviews/Methods.html#synthDataFixFuncFilename'>synthDataFixFuncFilename</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*synthDataFixFuncFilename' href='./../Overviews/Methods.html#synthDataFixFuncFilename'>synthDataFixFuncFilename</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*tunings' href='./../Overviews/Methods.html#tunings'>tunings</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*verbose' href='./../Overviews/Methods.html#verbose'>verbose</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*verbose' href='./../Overviews/Methods.html#verbose'>verbose</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*vggDir' href='./../Overviews/Methods.html#vggDir'>vggDir</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*vggDir' href='./../Overviews/Methods.html#vggDir'>vggDir</a> = value</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='Help template'>Help template</a></h2>
+
+<p>Copy and paste the text below and save to HelpSource/Classes/VGTuning.schelp<pre class='code prettyprint lang-sc'>TITLE:: VGTuning
+summary:: (put short description here)
+categories:: Undocumented classes
+related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+
+DESCRIPTION::
+(put long description here)
+
+
+CLASSMETHODS::
+
+METHOD:: instGroupings
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: synthDataFixFuncFilename
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: laras
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: allSonatorNames
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: retuneNote
+(describe method here)
+
+ARGUMENT:: laras
+(describe argument here)
+
+ARGUMENT:: inst
+(describe argument here)
+
+ARGUMENT:: note
+(describe argument here)
+
+ARGUMENT:: val
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: retunePartial
+(describe method here)
+
+ARGUMENT:: laras
+(describe argument here)
+
+ARGUMENT:: inst
+(describe argument here)
+
+ARGUMENT:: note
+(describe argument here)
+
+ARGUMENT:: partial
+(describe argument here)
+
+ARGUMENT:: val
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: scalesForPrefixes
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: getPartialNumbers
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: checkSonatorsAndData
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: mulTrees
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: server
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: neutral
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: synthDataFixFunc
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: initClass
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: free
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: allNeutralNames
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prepTunings
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: retuneInst
+(describe method here)
+
+ARGUMENT:: laras
+(describe argument here)
+
+ARGUMENT:: inst
+(describe argument here)
+
+ARGUMENT:: val
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: vggDir
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: pelog
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: ensembleBusKeys
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: freeMulTrees
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: init
+(describe method here)
+
+ARGUMENT:: argServer
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prepMulTrees
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: allSlendroNames
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: synthDataFilename
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: retuneDegree
+(describe method here)
+
+ARGUMENT:: laras
+(describe argument here)
+
+ARGUMENT:: degree
+(describe argument here)
+
+ARGUMENT:: val
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: loadSonatorNames
+(describe method here)
+
+ARGUMENT:: path
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: loadSynthData
+(describe method here)
+
+ARGUMENT:: path
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: verbose
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: synthDataDir
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: slendroPrefix
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: sonatorListFilename
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: allPelogNames
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: prepRefs
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: pelogPrefix
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: tunings
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: readBalanceInfo
+(describe method here)
+
+ARGUMENT:: path
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: busKeys
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: sampSetPrefix
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: slendro
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: balanceFilename
+(describe method here)
+
+returns:: (describe returnvalue here)
+
+METHOD:: retuneLaras
+(describe method here)
+
+ARGUMENT:: laras
+(describe argument here)
+
+ARGUMENT:: val
+(describe argument here)
+
+returns:: (describe returnvalue here)
+
+
+INSTANCEMETHODS::
+
+
+EXAMPLES::
+
+code::
+(some example code)
+::
+</pre>
+<div class='doclink'>link::Classes/VGTuning::<br>sc version: 3.7alpha0</div></div></body></html>
