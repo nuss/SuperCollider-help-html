@@ -1,0 +1,451 @@
+<html><head><title>Param tutorial</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider TUTORIALS (extension)</div>
+<div id='categories'><a href='./../Browse.html#Control'>Control</a>, <a href='./../Browse.html#GUI'>GUI</a>, <a href='./../Browse.html#MIDI'>MIDI</a></div>
+<h1>Param tutorial</h1>
+<div id='summary'>Control parameters with GUI and MIDI</div>
+</div>
+<div class='subheader'>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#Create a Param'>Create a Param</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Controlling with a GUI'>Controlling with a GUI</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Controlling with MIDI'>Controlling with MIDI</a></li>
+<ul class='toc'><li class='toc2'><a href='#Block mode'>Block mode</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Mapping a MIDI control to a GUI object'>Mapping a MIDI control to a GUI object</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Grouping Params: ParamGroup'>Grouping Params: ParamGroup</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#ParamGroupDef'>ParamGroupDef</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Morphing'>Morphing</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Working with patterns'>Working with patterns</a></li>
+<ul class='toc'><li class='toc2'><a href='#Pattern and Pdef pitfals'>Pattern and Pdef pitfals</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Overriding'>Overriding</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Static parameters'>Static parameters</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Other parameters types'>Other parameters types</a></li>
+<ul class='toc'><li class='toc2'><a href='#Working with arrays'>Working with arrays</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Accessing individual values of the array'>Accessing individual values of the array</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Working with envelopes'>Working with envelopes</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Accessing individual values of the envelope'>Accessing individual values of the envelope</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Default specs'>Default specs</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Other controlled objects'>Other controlled objects</a></li>
+<ul class='toc'><li class='toc2'><a href='#Volume'>Volume</a></li>
+<ul class='toc'></ul></ul></ul></div>
+<p>The goal of this quark is to ease the controlling of sounds objects parameters (Ndef, Pdef, etc) using GUI and MIDI. To this purpose, there is a class named Param which act as a reference to the parameter of the sound object you want to control.<h2><a class='anchor' name='Create a Param'>Create a Param</a></h2>
+
+<p>First, define a sound object you want to control:<pre class='code prettyprint lang-sc'>(
+Ndef(\ndef_scalar, { arg freq=200, pan=0, amp=0.1;
+    var sig;
+    sig = SinOsc.ar(freq);
+    sig = Pan2.ar(sig, pan, amp);
+}).play;
+);</pre>
+
+<p>Then create a Param which point the frequency argument of this Ndef, associated with the \freq spec. The first argument is the object to be controlled and the second is the name of the argument you want to control. The third argument is a spec, it's optional and if you don't give a spec, Param will search the spec in the controlled object. The spec is used to convert the values from the midi controller which goes from 0 to 127 to the specified range, here with freq, 20 to 20000.<pre class='code prettyprint lang-sc'>~p = Param(Ndef(\ndef_scalar), \freq, \freq.asSpec);</pre>
+
+<p>now ~p can be used as a wrapper to set the \freq argument of the Ndef:<pre class='code prettyprint lang-sc'>~p.set(300); // Equivalent of Ndef(\ndef_scalar).set(\freq, 300)</pre>
+
+<p>You can also set the normalized value, which goes from 0 to 1, this value will be mapped to the real value using the spec<pre class='code prettyprint lang-sc'>~p.normSet(0.3)</pre>
+
+<p>to see what is the current value, use .get:<pre class='code prettyprint lang-sc'>~p.get;
+~p.normGet; // exists also in normalized form</pre>
+
+<p>Note that Param is stateless since the value is stored in the pointed object, you are not required to hold it in a variable, you can always recreate it when needed:<pre class='code prettyprint lang-sc'>Param(Ndef(\ndef_scalar), \freq, \freq).set(400);
+Param(Ndef(\ndef_scalar), \freq, \freq).get; // the value is 400, even if we recreated the Param object</pre>
+<h2><a class='anchor' name='Controlling with a GUI'>Controlling with a GUI</a></h2>
+
+<p>Now, you want to control this parameter using a GUI slider, you can use the method mapParam to map a Param into a GUI object. This will automatically add an action to the slider which set the parameter when you move the slider, and a SimpleController which watch when the parameter change and update the slider.<pre class='code prettyprint lang-sc'>~p = Param(Ndef(\ndef_scalar), \freq, \freq.asSpec);
+
+(
+    var slider, win;
+    win = Window.new;
+
+    slider = Slider.new;
+    slider.mapParam(~p); // map the param ~p to the slider
+
+    win.layout = HLayout(slider);
+    win.front;
+)</pre>
+
+<p>There are some convenient methods for creating the GUI object for you:<pre class='code prettyprint lang-sc'>(
+    var slider, win;
+    win = Window.new;
+    slider = ~p.asSlider; // create and map the slider for you
+    win.layout = HLayout(slider);
+    win.front;
+)</pre>
+
+<p>see also ".asKnob" for a Knob, or ".asView" which choose the GUI object for you automatically (because the Param may be an array or an enveloppe)
+<p>There is also a default GUI for quickly editing a Param:<pre class='code prettyprint lang-sc'>~p.edit;</pre>
+
+<p>If you call mapParam on a StaticText, it will show the value of the parameter. There is also ~p.asStaticText. If you call mapParamLabel on a StaticText, it will show the name of the parameter. There is also ~p.asStaticTextLabel.<pre class='code prettyprint lang-sc'>(
+    var slider, win;
+    win = Window.new;
+    win.layout = VLayout(
+        ~p.asStaticTextLabel,
+        ~p.asKnob,
+        ~p.asStaticText,
+        ~p.asTextField,
+    );
+    win.front;
+)</pre>
+<h2><a class='anchor' name='Controlling with MIDI'>Controlling with MIDI</a></h2>
+
+<p>If you want to control the parameter using a MIDI controller, you can use the class MIDIMap. this will create automatically a MIDI responder which update the parameter when receiving MIDI messages.<pre class='code prettyprint lang-sc'>~p = Param(Ndef(\ndef_scalar), \freq, \freq.asSpec);
+
+MIDIMap([13], ~p); // map the param to the MIDI CC number 13</pre>
+
+<p>The format of the array is : [msgNum, chan, msgType, srcID], this is the same arguments than MIDIFunc or MIDIdef, if you don't provide value for chan or srcID or set it to nil, the responder will listen to all channel or srcID. The default msgType is \control (cc);
+<p>if you run the same code with another Param, the old MIDI responder is freed and the new take its place. MIDIMap([13], Param(Ndef(\ndef_scalar), \pan));
+<p>You can free it with:<pre class='code prettyprint lang-sc'>MIDIMap.free([13])</pre>
+
+<p>Note: if you map [13] then map [13,0], MIDIMap don't know they point to the same knob so both mapping will exists at the same time which is probably not what you want.
+<p>It's more convenient to use symbol instead of typing the MIDI number everytime. You can define them once in your startup file:<pre class='code prettyprint lang-sc'>MIDIMap.define(0, // 0 is the channel, you can also use [channel, device_id]
+    [
+        \k1, 13, // now the \k1 mean the cc number 13, channel 0
+        \k2, 14, // knob2
+        \b1, \note -&gt; 41 // for message of type \noteOn with number 41
+        \b2, \note -&gt; 42 // for message of type \noteOn with number 42
+    ]
+);</pre>
+
+<p>You can then use it like this:<pre class='code prettyprint lang-sc'>MIDIMap(\k1, Param(Ndef(\ndef_scalar), \pan));</pre>
+
+<p>MIDIMap can also take a function in argument to run arbitrary code. If \b1 is some button on your controller, you can use it to remap your knobs. Here pushing first button map \freq and \pan on the two knobs, pushing second button map \amp and \detune on the two knobs.<pre class='code prettyprint lang-sc'>MIDIMap(\b1, {
+    MIDIMap(\k1, Param(Ndef(\ndef_scalar, \freq));
+    MIDIMap(\k1, Param(Ndef(\ndef_scalar, \pan));
+});
+MIDIMap(\b2, {
+    MIDIMap(\k1, Param(Ndef(\ndef_scalar, \amp));
+    MIDIMap(\k1, Param(Ndef(\ndef_scalar, \detune)); // \detune don't exists in the Ndef, it's just for the example 
+});</pre>
+
+<p>Remove a MIDI mapping:<pre class='code prettyprint lang-sc'>MIDIMap.free(\k1)</pre>
+<h3><a class='anchor' name='Block mode'>Block mode</a></h3>
+
+<p>If your MIDI knob position doesn't match the current value of your parameter (because you changed it by the GUI for example), there will be a sudden jump to the new value when you move your MIDI knob. To avoid this problem, there is a special mode which will block MIDI messages if they are not close to the current value. To activate it, set defaultBlockmode to \block.<pre class='code prettyprint lang-sc'>MIDIMap.defaultBlockmode = true;</pre>
+
+<p>Disable:<pre class='code prettyprint lang-sc'>MIDIMap.defaultBlockmode = false;</pre>
+
+<p>You can also set it when creating a MIDI mapping with the third argument:<pre class='code prettyprint lang-sc'>MIDIMap(\k1, Param(Ndef(\ndef_scalar), \pan), true);</pre>
+
+<p>Return to default mode:<pre class='code prettyprint lang-sc'>MIDIMap(\k1, Param(Ndef(\ndef_scalar), \pan));</pre>
+<h3><a class='anchor' name='Mapping a MIDI control to a GUI object'>Mapping a MIDI control to a GUI object</a></h3>
+
+<p>Sometime, you want to have a GUI representing each knob of your MIDI controller so you know which MIDI knob control which parameter and see their currrent value. You can do this using MIDIMap.mapView:<pre class='code prettyprint lang-sc'>(
+    var knob, val, label, win;
+    win = Window.new;
+
+    knob = Knob.new;
+    val = StaticText.new;
+    label = StaticText.new;
+    MIDIMap.mapStaticTextLabel(\k1, label);
+    MIDIMap.mapView(\k1, knob);
+    MIDIMap.mapView(\k1, val);
+
+    win.layout = VLayout(
+        label,
+        knob,
+        val,
+    );
+    win.alwaysOnTop = true;
+    win.front;
+)</pre>
+
+<p>Now if you map a Param to a this MIDI control, MIDIMap automatically update the GUI to reflect the currently mapped Param:<pre class='code prettyprint lang-sc'>MIDIMap(\k1, Param(Ndef(\ndef_scalar), \freq)); // first map \freq
+
+MIDIMap(\k1, Param(Ndef(\ndef_scalar), \pan)); // now change it to \pan</pre>
+<h2><a class='anchor' name='Grouping Params: ParamGroup'>Grouping Params: ParamGroup</a></h2>
+
+<p>ParamGroup is just a list of Param's, the main interest is saving and loading presets.<pre class='code prettyprint lang-sc'>(
+~pg = ParamGroup([
+    Param(Ndef(\ndef_scalar), \freq),
+    [Ndef(\ndef_scalar), \pan], // if you put an array, it's converted to a Param automatically
+    [Ndef(\ndef_scalar), \amp],
+]);
+)</pre>
+
+<p>There is some useful methods defined for ParamGroup. You can edit them, ParamGroup build automatically a GUI for you:<pre class='code prettyprint lang-sc'>~pg.edit;</pre>
+
+<p>You can save presets<pre class='code prettyprint lang-sc'>~pg.save(\mypreset1);</pre>
+
+<p>And load them:<pre class='code prettyprint lang-sc'>~pg.load(\mypreset1);</pre>
+
+<p>A preset is just a list of values, you can see it with:<pre class='code prettyprint lang-sc'>~pg.getPreset(\mypreset1)</pre>
+
+<p>Or see the whole list of presets (which is just a dictionnary)<pre class='code prettyprint lang-sc'>~pg.presets</pre>
+
+<p>You can also erase a preset:<pre class='code prettyprint lang-sc'>~pg.erase(\mypreset1);</pre>
+
+<p>Or get the values of the current Param's in the group (this are the values saved when you call .save(\presetname))<pre class='code prettyprint lang-sc'>~pg.valuesList;</pre>
+<h2><a class='anchor' name='ParamGroupDef'>ParamGroupDef</a></h2>
+
+<p>The presets are saved inside the ParamGroup object, so if you lose the reference to the ParamGroup, you lose your presets.
+<p>You can avoid that by defining a key to access your group with ParamGroupDef:<pre class='code prettyprint lang-sc'>(
+ParamGroupDef(\mygroup, [
+    [Ndef(\ndef_scalar), \freq],
+    [Ndef(\ndef_scalar), \pan], 
+    [Ndef(\ndef_scalar), \amp],
+]);
+)</pre>
+
+<p>Now you can retrieve your group with:<pre class='code prettyprint lang-sc'>ParamGroupDef(\mygroup)</pre>
+
+<p>There is an additional benefit: when saving a preset, it's automatically saved on your hard drive using Archive. So you can reload a preset even after restarting Supercollider<pre class='code prettyprint lang-sc'>ParamGroupDef(\mygroup).save(\mypreset1); // save it
+ParamGroupDef(\mygroup).load(\mypreset1); // load it later</pre>
+<h2><a class='anchor' name='Morphing'>Morphing</a></h2>
+
+<p>You can morph your presets using ParamMorpher, it take a ParamGroup and a list of preset to morph from<pre class='code prettyprint lang-sc'>~pg = ParamGroup([
+    [Ndef(\ndef_scalar), \freq],
+    [Ndef(\ndef_scalar), \pan], 
+    [Ndef(\ndef_scalar), \amp],
+]);
+
+// first lets define some presets 
+~pg.edit // change the values before saving each new preset else morphing is useless
+~pg.save(\preset1);
+~pg.save(\preset2);
+~pg.save(\preset3);
+
+~m = ParamMorpher( ~pg,
+    [
+        \preset1,
+        \preset2,
+        \preset3,
+    ]
+);</pre>
+
+<p>There is 3 presets, so the value to set range from 0 to 2, 0 is the first preset (\mypreset1), 1 the second and 2 the third. 0.5 is the morphing between preset 0 and preset 1<pre class='code prettyprint lang-sc'>~m.set(1); 
+~m.set(1.5); 
+~m.edit; // morph between presets using the default GUI
+
+~m.normSet(0.3) // or just use normSet to set the value ranging from 0 to 1, whatever the number of preset is in the ParamMorpher</pre>
+
+<p>~m is like a Param, you can control it in your GUI or MIDI controller<pre class='code prettyprint lang-sc'>(
+    var slider, win;
+    win = Window.new;
+    slider = Slider.new;
+    win.layout = HLayout(slider);
+    slider.mapParam(~m); // map the morpher ~m to the slider
+    win.front;
+)
+
+MIDIMap(\k1, ~m); // map it to the MIDI knob \k1</pre>
+
+<p>If your group is a ParamGroupDef, you can just use its name<pre class='code prettyprint lang-sc'>(
+~pgd = ParamGroupDef(\mygroup, [
+    [Ndef(\ndef_scalar), \freq],
+    [Ndef(\ndef_scalar), \pan], 
+    [Ndef(\ndef_scalar), \amp],
+]);
+
+~m = ParamMorpher(\mygroup,
+    [
+        \preset1,
+        \preset2,
+        \preset3,
+    ]
+);
+)
+
+// you must redefine the presets because this is another ParamGroup, but for simplicity, let's just copy the presets of the previous group
+ParamGroupDef(\mygroup).presets = ~pg.presets;
+
+ParamGroupDef(\mygroup).edit; // same as ~pgd.edit
+~m.edit;</pre>
+
+<p>Just like ParamGroupDef, there is a ParamMorpherDef:<pre class='code prettyprint lang-sc'>(
+ParamMorpherDef(\mymorpher, \mygroup, [
+        \preset1,
+        \preset2,
+        \preset3,
+]);
+)
+
+ParamMorpherDef(\mymorpher).normSet(0.3);
+ParamMorpherDef(\mymorpher).edit;</pre>
+<h2><a class='anchor' name='Working with patterns'>Working with patterns</a></h2>
+
+<p>First define some synthdef and a Pdef controlling it<pre class='code prettyprint lang-sc'>(
+SynthDef(\synthdef_scalar, { arg out=0, amp=0.1, gate=1, pan=0, freq=200;
+    var sig;
+    sig = SinOsc.ar(freq);
+    sig = sig * EnvGen.ar(Env.adsr(0.01,0.1,0.8,0.1),gate,doneAction:2);
+    sig = Pan2.ar(sig, pan, amp);
+    Out.ar(out, sig);
+}).add;
+
+Pdef(\pdef_scalar, Pbind(
+    \instrument, \synthdef_scalar,
+    \degree, Pseq([0],inf),
+    \dur, 1,
+    \amp, 0.1
+)).play;
+);</pre>
+
+<p>Working with Pdef is the same than working with Ndef, the method explained above are still accessible<pre class='code prettyprint lang-sc'>~p = Param(Pdef(\pdef_scalar), \freq, \freq); // define a Param pointing to a Pdef parameter
+
+~p.set(300); // work like any Param</pre>
+
+<p>Internally, this is the equivalent of running<pre class='code prettyprint lang-sc'>Pdef(\pdef_scalar).set(\freq, 300)</pre>
+<h3><a class='anchor' name='Pattern and Pdef pitfals'>Pattern and Pdef pitfals</a></h3>
+
+<p>There is two thing to know when using Pdef, which are not related to Param<h3><a class='anchor' name='Overriding'>Overriding</a></h3>
+
+<p>If the key is already defined in the pattern, in this example \amp, then it will override any value you set manually<pre class='code prettyprint lang-sc'>Pdef(\pdef_scalar).set(\amp, 0.4); // do nothing because amp is already defined to 0.1 in your pattern</pre>
+
+<p>The correct way is using an empty Pdef and chaining it to your pattern:<pre class='code prettyprint lang-sc'>Pdef(\my_pattern,
+    Pdef(\pdef_scalar, Pbind()) // don't forget to initialize it to and empty Pbind or else the pattern will stop immediatly
+    &lt;&gt;  // chaining
+    Pbind( // now you can provide your custom pattern
+        \instrument, \synthdef_scalar,
+        \degree, Pseq([0],inf),
+        \dur, 1,
+        \amp, 0.1
+    )
+).play;
+
+Pdef(\pdef_scalar).set(\amp, 0.4); // now this work
+Param(Pdef(\pdef_scalar), \amp).set(0.4) // Param equivalent
+
+Pdef(\pdef_scalar).unset(\amp); // go back to defined amp in your pattern: 0.1</pre>
+<h3><a class='anchor' name='Static parameters'>Static parameters</a></h3>
+
+<p>You should have noticed that when you set an argument of the Pdef, the value change is not heard directly on running synth nodes, instead, when a a new note is played, it pick the current value of the parameter and remains fixed for the duration of the node.<pre class='code prettyprint lang-sc'>~p.edit; // change value when playing</pre>
+
+<p>If you want to change to be immediate, you can put a Bus in your Pdef parameter, then set the bus to the desired value.
+<p>Param try to ease this by providing a method to switch between desired behavior:<pre class='code prettyprint lang-sc'>Pdef(\pdef_scalar).setBusMode(\freq); // now freq is in bus mode
+
+~p.set(250); // now the change is immediate
+
+Pdef(\pdef_scalar).get(\freq); // you can see that \freq is a bus now
+
+~p.get; // but Param handle it transparently
+
+Pdef(\pdef_scalar).setBusMode(\freq, false); // disable bus mode
+
+~p.set(350); // change wait the next node</pre>
+<h2><a class='anchor' name='Other parameters types'>Other parameters types</a></h2>
+
+<p>Working with scalar values in SC is relatively easy even without Param, but using arrays or envelopes is more complicated. First there is no Spec equivalent for arrays or envelopes, so I created two new spec classes: XArraySpec and XEnvSpec
+<p>Then you must know than when setting Pdef arrays or envelopes, contrary to Ndef, you must enclose it in bracket or else, Pbind will multi-channel-expand it to multple synth nodes. Param handle it transparently for you.
+<p>Finally the EnvelopeView is not really suited for setting an enveloppe because there is .setEnv but no .getEnv and .setEnv always scale the envelope to fit the view. I created XEnvelopeView to overcome theses problems<h3><a class='anchor' name='Working with arrays'>Working with arrays</a></h3>
+
+<p>To define an array argument in a SynthDef or Ndef, you must use the syntax \argname.kr( default_value ) where default_value is an array. Note that the array is fixed size, don't try to set a bigger array or there will be undefined behavior<pre class='code prettyprint lang-sc'>(
+Ndef(\ndef_array, { arg pan=0, amp=0.1;
+    var sig;
+    sig = SinOsc.ar(\freqtab.kr(100!3));  // 100!3 is equivalent of [100,100,100], so an array of three values
+    sig = Pan2.ar(sig, pan, amp).mean;
+}).play;
+);</pre>
+
+<p>To specify the spec of the argument, use XArraySpec. XArraySpec take an array of specs as argument, here, three \freq.asSpec (asSpec is called automatically).<pre class='code prettyprint lang-sc'>~p = Param(Ndef(\ndef_array), \freqtab, XArraySpec(\freq!3)); // define a Param pointing to the array
+
+~p.set([120,150,780]); // set the values of the array
+~p.get;
+~p.normSet([0.6,0.7,0.4]); // same methods as other Param</pre>
+
+<p>The .edit method or .asView method create a MultiSliderView instead of a Knob because it's an array<pre class='code prettyprint lang-sc'>~p.edit;</pre>
+<h3><a class='anchor' name='Accessing individual values of the array'>Accessing individual values of the array</a></h3>
+
+<p>On your MIDI controller, you just have knobs or sliders, so there must be a way to specify you want to control this particular slot of the array with this particular MIDI knob. You can do this using the syntax : argument_name -&gt; array_index<pre class='code prettyprint lang-sc'>~mp = Param(Ndef(\ndef_array), \freqtab -&gt; 1, \freq); // control the second slot of the array
+~mp.set(500);
+~mp.edit
+
+MIDIMap(\k1, ~mp); // map the knob \k1 to the second slot of the array;</pre>
+
+<p>You can also get access to an array slot with "at" method:<pre class='code prettyprint lang-sc'>~p = Param(Ndef(\ndef_array), \freqtab, XArraySpec(\freq!3)); // define a Param pointing to the array
+~p.at(0); // this is the Param for the array slot 0, equivalent to Param(Ndef(\ndef_array), \freqtab -&gt; 0, \freq);</pre>
+<h3><a class='anchor' name='Working with envelopes'>Working with envelopes</a></h3>
+
+<p>Internally, an envelope is just an array with a special format, the syntax is the same as for array, but with an envelope in the default value instead of an array<pre class='code prettyprint lang-sc'>(
+Ndef(\ndef_env, { arg pan=0, amp=0.1;
+    var sig;
+    sig = SinOsc.ar( 
+        EnvGen.ar( 
+            \freqenv.kr(Env([150,550,250,1000],[0.1,0.8,0.3])), // here is the env argument with default envelope
+            Impulse.kr(1/2),
+            doneAction:0
+        )
+    );
+    sig = Pan2.ar(sig, pan, amp);
+}).play;
+);
+
+Ndef(\ndef_env).get(\freqenv); // here you see that this is just an array</pre>
+
+<p>I've added a conveniant method for converting it back to an envelope:<pre class='code prettyprint lang-sc'>Ndef(\ndef_env).get(\freqenv).asEnv;
+Ndef(\ndef_env).get(\freqenv).asEnv.asCompileString; // use asCompileString to see the content of the envelope</pre>
+
+<p>Now let's define a Param pointing to this Ndef envelope argument. We specify the spec using XEnvSpec, the arguments are:<pre class='code prettyprint lang-sc'>XEnvSpec( array_of_levels_specs, array_of_times_specs)</pre>
+
+<p>It's important to tell XEnvSpec the size of the envelope, because, as arrays, the size is fixed in SynthDef. the second argument of XEnvSpec is not required to be an array, if not, XEnvSpec will expand it automatically to match the size of the levels array. The curve argument is not provided because it's not mapped like levels or times
+<p>It's also important to define the spec of the envelope argument, else, Param has no way to know it's an envelope and not a regular array since they are the same internally.<pre class='code prettyprint lang-sc'>~p = Param(Ndef(\ndef_env), \freqenv, XEnvSpec(\freq!4, ControlSpec(0,2,\lin,0,0.1)));</pre>
+
+<p>Same methods as always:<pre class='code prettyprint lang-sc'>~p.get; // asEnv is called transparently unlike Ndef.get
+~p.get.asCompileString; // see content of the env
+
+~p.set( Env([1000,200,501,3200],[0.2,0.4,0.6]) );
+~p.normSet(Env([0.4,0.2,0.7,0.5],[0.2,0.4,0.6]));
+
+~p.edit; // default GUI</pre>
+<h3><a class='anchor' name='Accessing individual values of the envelope'>Accessing individual values of the envelope</a></h3>
+
+<p>To access individual values of the envelope, the syntax is:
+<p>argument_name -&gt; levels_or_times -&gt; index<pre class='code prettyprint lang-sc'>~mp = Param(Ndef(\ndef_env), \freqenv -&gt; \levels -&gt; 1, \freq); // level of the second envelope point
+~mp = Param(Ndef(\ndef_env), \freqenv -&gt; \times -&gt; 1, ControlSpec(0,2,\lin)); // duration of the second envelope segment
+
+~mp.set(0.3); // it's a Param, same methods apply
+
+// you can see the envelope change in real time if you open the two GUI on your screen
+~mp.edit;
+~p.edit;</pre>
+<h2><a class='anchor' name='Default specs'>Default specs</a></h2>
+
+<p>If you don't provide a spec in the third argument when creating a Param, it will try to get it from the Ndef of SynthDef, if not found, it will look up in the Spec using argument name, if not found it will use a default Spec. It will also use the default value to guess if it's a scalar spec or an Array spec (but there is no way to know if it's an envelope spec, so you must always specify it somewhere in this case)
+<p>Setting specs in a Ndef:<pre class='code prettyprint lang-sc'>Ndef(\ndef_scalar).addSpec(\freq, ControlSpec(300,7000,\exp));
+Ndef(\ndef_scalar).addSpec(\pan, ControlSpec(-1,1,\lin));</pre>
+
+<p>Setting specs in a SynthDef:<pre class='code prettyprint lang-sc'>SynthDef(\synthdef_scalar, { arg out=0, amp=0.1, gate=1, pan=0, freq=200;
+    var sig;
+    sig = SinOsc.ar(freq);
+    sig = sig * EnvGen.ar(Env.adsr(0.01,0.1,0.8,0.1),gate,doneAction:2);
+    sig = Pan2.ar(sig, pan, amp);
+    Out.ar(out, sig);
+}, metadata:(specs:(
+    freq: ControlSpec(300,7000,\exp),
+    pan: ControlSpec(-1,1,\lin),
+))).add;</pre>
+
+<p>For Param to find the SynthDef specs, it must know the SynthDef name. It will first look for the \instrument key if it's a Pbind but you can always tell it what it is with:<pre class='code prettyprint lang-sc'>Pdef(\pdef_scalar).addHalo(\instrument, \synthdef_scalar);</pre>
+
+<p>Setting specs in a Pdef, this will override specs defined in the SynthDef:<pre class='code prettyprint lang-sc'>Pdef(\pdef_scalar).addSpec(\freq, ControlSpec(300,7000,\exp));
+Pdef(\pdef_scalar).addSpec(\pan, ControlSpec(-1,1,\lin));</pre>
+
+<p>Setting specs with the Spec dictionary: if the spec is not found and the argument name is found in Spec, it will use it<pre class='code prettyprint lang-sc'>Spec.add(\myargument, ControlSpec(0,3,\lin)); // add to the Spec library
+
+Param(Ndef(\myndef), \myargument); // Param will use ControlSpec(0,3,\lin) as the spec</pre>
+
+<p>Setting the default Param spec when every other method fails:<pre class='code prettyprint lang-sc'>Param.defaultSpec; // by default, it's \widefreq.asSpec
+Param.defaultSpec = ControlSpec(10,10000,\exp);</pre>
+<h2><a class='anchor' name='Other controlled objects'>Other controlled objects</a></h2>
+<h3><a class='anchor' name='Volume'>Volume</a></h3>
+
+<p>You may want to control the master volume of the server as a generic parameter.<pre class='code prettyprint lang-sc'>s.volume.volume = -0.2; // set volume the normal way (in db)
+
+~p = Param(s.volume, \amp); // currently, you need to provide a second argument, but it's not used
+~p = Param(s.volume, \amp, ControlSpec(-10,1,\lin)); // set your spec
+~p.edit;</pre>
+
+<p><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/param/HelpSource/Tutorials/Param tutorial.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/param/HelpSource/Tutorials/Param tutorial.schelp</a><br>link::Tutorials/Param tutorial::<br>sc version: 3.7alpha0</div></div></body></html>

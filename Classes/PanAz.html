@@ -30,6 +30,7 @@
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Comparison to Pan2'>Comparison to Pan2</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>Multichannel equal power panner.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
@@ -63,4 +64,15 @@ s.boot;
 }.play;
 s.scope;
 )</pre>
+<h2><a class='anchor' name='Comparison to Pan2'>Comparison to Pan2</a></h2>
+
+<p>Despite a certain similarity, <a href="./../Classes/Pan2.html">Pan2</a> and <a href="./../Classes/PanAz.html">PanAz</a> with 2 channels behave differently.<pre class='code prettyprint lang-sc'>// one full cycle for PanAz: from 0 to 1
+{ PanAz.ar(2, DC.ar(1), Line.ar(0, 1, 0.1)) }.plot(0.1)
+// one full cycle for Pan2: from -1 to 1 and back to -1
+{ Pan2.ar(DC.ar(1), EnvGen.kr(Env([-1, 1, -1], [0.05, 0.05]))) }.plot(0.1)
+
+// in other words, while Pan2 makes one full transition
+{ Pan2.ar(DC.ar(1), Line.ar(-1, 1, 0.1)) }.plot(0.1)
+// we need only a half one in PanAz:
+{ PanAz.ar(2, DC.ar(1), Line.ar(0, 1/2, 0.1)) }.plot(0.1)</pre>
 <div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/PanAz.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/PanAz.schelp</a><br>link::Classes/PanAz::<br>sc version: 3.7alpha0</div></div></body></html>
