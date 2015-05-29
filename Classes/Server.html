@@ -221,7 +221,14 @@
 <p>There is always a default Server, which is stored in the class variable <code class='code prettyprint lang-sc'>default</code>. Any <a href="./../Classes/Synth.html">Synth</a>s or <a href="./../Classes/Group.html">Group</a>s created without a target will be created on the default server. At startup this is set to be the local server (see above), but can be set to be any Server.<h3><a class='anchor' name='Local vs. Remote Servers, Multi-client Configurations'>Local vs. Remote Servers, Multi-client Configurations</a></h3>
 
 <p>Most of the time users work with a server app running on the same machine as the SC language client. It is possible to use a server running on a different machine via a network, providing you know the IP address and port of that server. The <a href="#*remote">*remote</a> method provides a convenient way to do this.
-<p>One common variant of this approach is multiple clients using the same server. If you wish to do this you will need to set the server's <a href="./../Classes/ServerOptions.html#-maxLogins">ServerOptions: -maxLogins</a> to at least the number of clients you wish to allow. When a client registers for <a href="#-notify">notifications</a> the server will supply a client ID. This also configures the allocators to avoid conflicts when allocating <a href="./../Classes/Node.html">Nodes</a>, <a href="./../Classes/Buffer.html">Buffers</a>, or <a href="./../Classes/Bus.html">Busses</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>One common variant of this approach is multiple clients using the same server. If you wish to do this you will need to set the server's <a href="./../Classes/ServerOptions.html#-maxLogins">ServerOptions: -maxLogins</a> to at least the number of clients you wish to allow. When a client registers for <a href="#-notify">notifications</a> the server will supply a client ID. This also configures the allocators to avoid conflicts when allocating <a href="./../Classes/Node.html">Nodes</a>, <a href="./../Classes/Buffer.html">Buffers</a>, or <a href="./../Classes/Bus.html">Busses</a>.
+<p>In order to use a remote server with tcp one should first boot the remote server using the <code class='code prettyprint lang-sc'>-t</code> option and then run the following code:<pre class='code prettyprint lang-sc'>(
+s.options.protocol_(\tcp);
+s.addr.connect;
+s.startAliveThread( 0 );
+s.doWhenBooted({ "remote tcp server started".postln; s.notify; s.initTree });
+)</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>name</span>, <span class='argstr'>addr</span>, <span class='argstr'>options</span>, <span class='argstr'>clientID</span>)</h3>
 <div class='method'>
 <p>Create a new Server instance.<h4>Arguments:</h4>
