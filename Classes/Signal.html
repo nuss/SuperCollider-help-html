@@ -108,10 +108,16 @@
 <tr><td class='argumentname'>size<td class='argumentdesc'>
 <p>the number of samples in the Signal.<tr><td class='argumentname'>amplitudes<td class='argumentdesc'>
 <p>an Array of amplitudes for each harmonic beginning with the fundamental.<tr><td class='argumentname'>phases<td class='argumentdesc'>
-<p>an Array of phases in radians for each harmonic beginning with the fundamental.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*chebyFill' href='./../Overviews/Methods.html#chebyFill'>chebyFill</a> (<span class='argstr'>size</span>, <span class='argstr'>amplitudes</span>, <span class='argstr'>normalize: true</span>)</h3>
+<p>an Array of phases in radians for each harmonic beginning with the fundamental.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*chebyFill' href='./../Overviews/Methods.html#chebyFill'>chebyFill</a> (<span class='argstr'>size</span>, <span class='argstr'>amplitudes</span>, <span class='argstr'>normalize: true</span>, <span class='argstr'>zeroOffset: true</span>)</h3>
 <div class='method'>
 <p>Fill a Signal of the given size with a sum of Chebyshev polynomials at the given amplitudes. For eventual use in waveshaping by the Shaper ugen; see <a href="./../Classes/Shaper.html">Shaper</a> helpfile and <a href="./../Classes/Buffer.html#-cheby">Buffer:cheby</a> too.<pre class='code prettyprint lang-sc'>Signal.chebyFill(1000, [1]).plot;
+
+// by default, shifted to avoid DC offset when waveshaping a zero signal
 Signal.chebyFill(1000, [0, 1]).plot;
+
+// normalized sum of (unshifted) Chebyshev polynomials
+Signal.chebyFill(1000, [0, 1, 0, 0, 0, 1], true, false).plot;
+
 Signal.chebyFill(1000, [0, 0, 1]).plot;
 Signal.chebyFill(1000, [0.3, -0.8, 1.1]).plot;</pre>
 
@@ -120,7 +126,8 @@ Signal.chebyFill(1000, [0.3, -0.8, 1.1]).plot;</pre>
 <tr><td class='argumentname'>size<td class='argumentdesc'>
 <p>the number of samples in the Signal.<tr><td class='argumentname'>amplitudes<td class='argumentdesc'>
 <p>an <a href="./../Classes/Array.html">Array</a> of amplitudes for each Chebyshev polynomial beginning with order 1.<tr><td class='argumentname'>normalize<td class='argumentdesc'>
-<p>a <a href="./../Classes/Boolean.html">Boolean</a></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*hanningWindow' href='./../Overviews/Methods.html#hanningWindow'>hanningWindow</a> (<span class='argstr'>size</span>, <span class='argstr'>pad: 0</span>)</h3>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a> indicating whether to normalize the resulting Signal. If the zeroOffset argument is true, the normalization is done for use as a transfer function, using <a href="./../Classes/Signal.html#-normalizeTransfer">normalizeTransfer</a>, otherwise it just uses <a href="./../Classes/Signal.html#-normalize">normalize</a> to make the absolute peak value 1. Default is true.<tr><td class='argumentname'>zeroOffset<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a> indicating whether to offset the middle of each polynomial to zero. If true, then a zero input will always result in a zero output when used as a <a href="./../Classes/Shaper.html">waveshaper</a>. If false, then the "raw" (unshifted) Chebyshev polynomials are used. Default is true.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*hanningWindow' href='./../Overviews/Methods.html#hanningWindow'>hanningWindow</a> (<span class='argstr'>size</span>, <span class='argstr'>pad: 0</span>)</h3>
 <div class='method'>
 <p>Fill a Signal of the given size with a Hanning window.<pre class='code prettyprint lang-sc'>Signal.hanningWindow(1024).plot;
 Signal.hanningWindow(1024, 512).plot;</pre>
@@ -413,7 +420,7 @@ y = Signal.fill(512, { |i| (i * pi / 64).sin });
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-asInteger' href='./../Overviews/Methods.html#asInteger'>asInteger</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-asSignal' href='./../Overviews/Methods.html#asSignal'>asSignal</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-asWavetableNoWrap' href='./../Overviews/Methods.html#asWavetableNoWrap'>asWavetableNoWrap</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-chebyFill' href='./../Overviews/Methods.html#chebyFill'>chebyFill</a> (<span class='argstr'>amplitudes</span>, <span class='argstr'>normalize: true</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-chebyFill' href='./../Overviews/Methods.html#chebyFill'>chebyFill</a> (<span class='argstr'>amplitudes</span>, <span class='argstr'>normalize: true</span>, <span class='argstr'>zeroOffset: true</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-chebyFill_old' href='./../Overviews/Methods.html#chebyFill_old'>chebyFill_old</a> (<span class='argstr'>amplitudes</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-clip' href='./../Overviews/Methods.html#clip'>clip</a> (<span class='argstr'>lo</span>, <span class='argstr'>hi</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-fftCosTable' href='./../Overviews/Methods.html#fftCosTable'>fftCosTable</a> </h3>
