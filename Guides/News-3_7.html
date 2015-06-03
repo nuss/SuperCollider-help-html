@@ -21,24 +21,42 @@
 <div class='subheader'>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#SuperCollider IDE'>SuperCollider IDE</a></li>
+<ul class='toc'><li class='toc1'><a href='#Editor'>Editor</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Language-side news'>Language-side news</a></li>
-<ul class='toc'><li class='toc2'><a href='#Human Interface Devices (HID)'>Human Interface Devices (HID)</a></li>
+<ul class='toc'><li class='toc2'><a href='#External Interfacing'>External Interfacing</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#List of new methods and classes'>List of new methods and classes</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#List of deprecated methods/classes, or that will be deprecated soon'>List of deprecated methods/classes, or that will be deprecated soon</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#Server-side news'>Server-side news</a></li>
-<ul class='toc'><li class='toc2'><a href='#More operators work uniformly across sclang and scserver'>More operators work uniformly across sclang and scserver</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='note'><span class='notelabel'>NOTE:</span> This is an incomplete stub</div><h2><a class='anchor' name='SuperCollider IDE'>SuperCollider IDE</a></h2>
+<ul class='toc'><li class='toc2'><a href='#List of new UGens'>List of new UGens</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Improved or corrected behavior'>Improved or corrected behavior</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#More operators work uniformly across sclang and scserver'>More operators work uniformly across sclang and scserver</a></li>
+<ul class='toc'></ul></ul></ul></div><div class='note'><span class='notelabel'>NOTE:</span> This is an incomplete stub</div><div class='note'><span class='notelabel'>NOTE:</span> 3.7 is an alpha version, which fixes many issues, but may also introduce new ones. Please do not hesitate to add them to the issue tracker (<a href="https://github.com/supercollider/supercollider/issues">https://github.com/supercollider/supercollider/issues</a>) or on the supercollider mailing list.</div>
+<p> This document focusses on features, there are <strong>many bugfixes and interesting improvements</strong>, which can be found by exploring the recent changes file and snooping around the system itself.<h2><a class='anchor' name='Editor'>Editor</a></h2>
 <ul>
-<li>New controls for server<li>Control IDE documents from sclang</ul>
+<li>Menu entries for Recording, scope and server inspection<li>Modify and query IDE documents from sclang<li>Support for the Atom text editor</ul>
 <h2><a class='anchor' name='Language-side news'>Language-side news</a></h2>
 <ul>
-<li>An interface for Key Value Pairs, see <a href="./../Reference/Key-Value-Pairs.html">Key Value Pairs</a><li>Refactored JITLib, see <a href="./../Other/JITLibChanges3.7.html">JITLib Changes in 3.7</a></ul>
-<h3><a class='anchor' name='Human Interface Devices (HID)'>Human Interface Devices (HID)</a></h3>
+<li>Improved <a href="./../Classes/Quark.html">Quark</a> system and many new interesting Quarks.<li><a href="./../Classes/TempoClock.html#-beats">TempoClock: -beats</a> can be set.<li>An interface for key-value-pairs, see <a href="./../Reference/Key-Value-Pairs.html">Key Value Pairs</a><li>Refactored JITLib, see <a href="./../Other/JITLibChanges3.7.html">JITLib Changes in 3.7</a> (in particular dynamic channel expansion).<li><a href="./../Classes/QuartzComposerView.html">QuartzComposerView</a></ul>
+<h3><a class='anchor' name='External Interfacing'>External Interfacing</a></h3>
 
-<p>There is an entirely new HID implementation: see <a href="./../Guides/Working_with_HID.html">Working with HID</a>.<h2><a class='anchor' name='Server-side news'>Server-side news</a></h2>
+<p> There is an entirely new HID implementation: see <a href="./../Guides/Working_with_HID.html">Working with HID</a>.<h3><a class='anchor' name='List of new methods and classes'>List of new methods and classes</a></h3>
+<ul>
+<li><a href="./../Classes/Collection.html#-collectCopy">Collection: -collectCopy</a>, <a href="./../Classes/Collection.html#-collectInPlace">Collection: -collectInPlace</a><li><a href="./../Classes/SimpleNumber.html#-lcm">SimpleNumber: -lcm</a> and <a href="./../Classes/SimpleNumber.html#-gcd">SimpleNumber: -gcd</a> have consistent interpretations of negative values and zero.<li><a href="./../Classes/Dictionary.html#-embedInStream">Dictionary: -embedInStream</a> can be customized from within the dictionary.<li><a href="./../Classes/Server.html#*remote">Server: *remote</a> Create a new Server instance corresponding to a server app running on a separate machine.</ul>
+<h3><a class='anchor' name='List of deprecated methods/classes, or that will be deprecated soon'>List of deprecated methods/classes, or that will be deprecated soon</a></h3>
+<ul>
+<li>GeneralHID, GeneralHIDSpec, GeneralHIDDevice (replaced by the new <a href="./../Classes/HID.html">HID</a> system)</ul>
+<h2><a class='anchor' name='Server-side news'>Server-side news</a></h2>
+
+<p> Apart from UDP, the TCP-protocol is now supported<h3><a class='anchor' name='List of new UGens'>List of new UGens</a></h3>
+<ul>
+<li>NodeID (UGen that returns the current node id)<li><a href="./../Classes/Dconst.html">Dconst</a></ul>
+<h3><a class='anchor' name='Improved or corrected behavior'>Improved or corrected behavior</a></h3>
+<ul>
+<li><a href="./../Classes/LinXFade2.html">LinXFade2</a> (correct fading direction)<li>Instances of PV_Copy are added automatically where necessary for parallel processing<li><a href="./../Classes/Env.html#*new">Env: *new</a> accepts a new <code>step2</code> shape, which steps to a value at the end of a shape<li><a href="./../Classes/UGen.html#-curvelin">UGen: -curvelin</a> is now inverse of <a href="./../Classes/UGen.html#-lincurve">UGen: -lincurve</a></ul>
 <h3><a class='anchor' name='More operators work uniformly across sclang and scserver'>More operators work uniformly across sclang and scserver</a></h3>
 
-<p>The following operators have been added as ugens and work the same as in sclang:<table>
+<p> The following operators have been added as ugens and work the same as in sclang:<table>
 <tr><td>unary operators<td><code class='code prettyprint lang-sc'>rand, rand2, linrand, bilinrand, sum3rand, coin</code><tr><td>binary operators<td><code class='code prettyprint lang-sc'>lcm, gcd, rrand, exprand</code></table>
 
-<p><code class='code prettyprint lang-sc'>lcm</code> and <code class='code prettyprint lang-sc'>gcd</code> have consistent interpretations of negative values and zero.
-<p>See <a href="./../Overviews/Operators.html">Operators</a><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Guides/News-3_7.schelp'>/usr/local/share/SuperCollider/HelpSource/Guides/News-3_7.schelp</a><br>link::Guides/News-3_7::<br>sc version: 3.7alpha0</div></div></body></html>
+<p> See <a href="./../Overviews/Operators.html">Operators</a>
+<p> <div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Guides/News-3_7.schelp'>/usr/local/share/SuperCollider/HelpSource/Guides/News-3_7.schelp</a><br>link::Guides/News-3_7::<br>sc version: 3.7alpha0</div></div></body></html>
