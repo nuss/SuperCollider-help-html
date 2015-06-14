@@ -166,7 +166,28 @@ t.tempo;</pre>
 <div class='method'>
 <p>Gets or sets the current logical time in beats according to this clock.
 <p>When <strong>getting</strong> <code class='code prettyprint lang-sc'>beats</code>, if this clock is the current Thread's <a href="./../Classes/Thread.html#-clock">associated clock</a>, the Thread's own <a href="./../Classes/Thread.html#-beats">time in beats</a> is returned, otherwise the Thread's <a href="./../Classes/Thread.html#-seconds">time in seconds</a> converted to beats according to this clock is returned.
-<p>After <strong>changing</strong> <code class='code prettyprint lang-sc'>beats</code> towards the <strong>future</strong>, the clock will immediately perform all tasks scheduled until the new time. Likewise, when changing <code class='code prettyprint lang-sc'>beats</code> towards the <strong>past</strong>, already scheduled tasks will be postponed, so they will still be performed at the scheduled time in beats.<div class='note'><span class='notelabel'>NOTE:</span> When changing <code class='code prettyprint lang-sc'>beats</code>, you are only changing the clocks's notion of time, and not the current Thread's <a href="./../Classes/Thread.html#-beats">logical time</a>, which will stay the same while the Thread is running. Hence, if this clock is the current Thread's <a href="./../Classes/Thread.html#-clock">associated clock</a>, and you ask the clock for time in beats just after changing it, you will see no effect. Nevertheless, the effect will be visible immediately on a different Thread.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-schedAbs' href='./../Overviews/Methods.html#schedAbs'>schedAbs</a> (<span class='argstr'>beat</span>, <span class='argstr'>item</span>)</h3>
+<p>After <strong>changing</strong> <code class='code prettyprint lang-sc'>beats</code> towards the <strong>future</strong>, the clock will immediately perform all tasks scheduled until the new time. Likewise, when changing <code class='code prettyprint lang-sc'>beats</code> towards the <strong>past</strong>, already scheduled tasks will be postponed, so they will still be performed at the scheduled time in beats.<div class='note'><span class='notelabel'>NOTE:</span> When changing <code class='code prettyprint lang-sc'>beats</code>, you are only changing the clocks's notion of time, and not the current Thread's <a href="./../Classes/Thread.html#-beats">logical time</a>, which will stay the same until the Thread is called again. Hence, if this clock is the current Thread's <a href="./../Classes/Thread.html#-clock">associated clock</a>, and you ask the clock for time in beats just after changing it, you will see no effect. Nevertheless, the effect will be visible immediately on a different Thread.</div><pre class='code prettyprint lang-sc'>(
+t = TempoClock.new;
+
+t.sched(3, {
+    t.beats = 100;
+    t.beats.postln; // still 3
+    nil
+});
+)
+
+(
+c = TempoClock.new;
+fork {
+    loop {
+        c.beats.postln; // updates, because ".wait" calls the thread
+        1.wait;
+    }
+};
+)
+
+c.beats = 100;</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-schedAbs' href='./../Overviews/Methods.html#schedAbs'>schedAbs</a> (<span class='argstr'>beat</span>, <span class='argstr'>item</span>)</h3>
 <div class='method'>
 <p>Schedules a task to be performed at a particular time in <strong>beats</strong>.
 <p>When the scheduling time is up, the task's <code class='code prettyprint lang-sc'>awake</code> method is called. If the method returns a number, the task will be rescheduled for the time equal to the last scheduling time plus the returned value.
@@ -321,4 +342,4 @@ t.stop;
 u.stop;
 )</pre>
 
-<p><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/TempoClock.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/TempoClock.schelp</a><br>link::Classes/TempoClock::<br>sc version: 3.7alpha0</div></div></body></html>
+<p><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/TempoClock.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/TempoClock.schelp</a><br>link::Classes/TempoClock::<br>sc version: 3.7alpha1</div></div></body></html>

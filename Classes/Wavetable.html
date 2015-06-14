@@ -53,26 +53,59 @@
 <tr><td class='argumentname'>size<td class='argumentdesc'>
 <p>must be a power of 2.<tr><td class='argumentname'>amplitudes<td class='argumentdesc'>
 <p>an Array of amplitudes for each harmonic beginning with the fundamental.<tr><td class='argumentname'>phases<td class='argumentdesc'>
-<p>an Array of phases in radians for each harmonic beginning with the fundamental.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*chebyFill' href='./../Overviews/Methods.html#chebyFill'>chebyFill</a> (<span class='argstr'>size</span>, <span class='argstr'>amplitudes</span>, <span class='argstr'>normalize: true</span>, <span class='argstr'>zeroOffset: true</span>)</h3>
+<p>an Array of phases in radians for each harmonic beginning with the fundamental.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*chebyFill' href='./../Overviews/Methods.html#chebyFill'>chebyFill</a> (<span class='argstr'>size</span>, <span class='argstr'>amplitudes</span>, <span class='argstr'>normalize: true</span>, <span class='argstr'>zeroOffset: false</span>)</h3>
 <div class='method'>
-<p>Fill a Wavetable of the given size with a sum of Chebyshev polynomials at the given amplitudes for use in waveshaping by the <a href="./../Classes/Shaper.html">Shaper</a> ugen.<pre class='code prettyprint lang-sc'>Wavetable.chebyFill(513, [1]).plot;
-
-// by default, shifted to avoid DC offset when waveshaping a zero signal:
-Wavetable.chebyFill(513, [0, 1]).plot;
-
-// normalized sum of (unshifted) Chebyshev polynomials:
-Wavetable.chebyFill(513, [0, 1, 0, 0, 0, 1], true, false).plot;
-
-Wavetable.chebyFill(513, [0, 0, 1]).plot;
-Wavetable.chebyFill(513, [0.3, -0.8, 1.1]).plot;</pre>
-
-<p><h4>Arguments:</h4>
+<p>Fill a Wavetable of the given size with a sum of Chebyshev polynomials at the given amplitudes for use in waveshaping by the <a href="./../Classes/Shaper.html">Shaper</a> ugen.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>size<td class='argumentdesc'>
 <p>must be a power of 2 plus 1, eventual wavetable is next power of two size up.<tr><td class='argumentname'>amplitudes<td class='argumentdesc'>
 <p>an <a href="./../Classes/Array.html">Array</a> of amplitudes for each Chebyshev polynomial beginning with order 1.<tr><td class='argumentname'>normalize<td class='argumentdesc'>
 <p>a <a href="./../Classes/Boolean.html">Boolean</a> indicating whether to normalize the resulting Wavetable. If the zeroOffset argument is true, the normalization is done for use as a transfer function, using <a href="./../Classes/Signal.html#-normalizeTransfer">normalizeTransfer</a>, otherwise it just uses <a href="./../Classes/Signal.html#-normalize">normalize</a> to make the absolute peak value 1. Default is true.<tr><td class='argumentname'>zeroOffset<td class='argumentdesc'>
-<p>a <a href="./../Classes/Boolean.html">Boolean</a> indicating whether to offset the middle of each polynomial to zero. If true, then a zero input will always result in a zero output when used as a <a href="./../Classes/Shaper.html">waveshaper</a>. If false, then the "raw" (unshifted) Chebyshev polynomials are used. Default is true.</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a> indicating whether to offset the middle of each polynomial to zero. If true, then a zero input will always result in a zero output when used as a <a href="./../Classes/Shaper.html">waveshaper</a>. If false, then the "raw" (unshifted) Chebyshev polynomials are used. Default is false.</table><h4>Discussion:</h4>
+<div class='note'><span class='notelabel'>NOTE:</span> In previous versions, chebyFill always offset the curves to ensure the center value was zero. The zeroOffset argument was added in version 3.7, and the default behavior was changed, so that it no longer offsets.</div>
+<p><pre class='code prettyprint lang-sc'>Wavetable.chebyFill(513, [1]).plot;
+
+// shifted to avoid DC offset when waveshaping a zero signal
+Wavetable.chebyFill(513, [0, 1], zeroOffset: true).plot;
+
+// normalized sum of (unshifted) Chebyshev polynomials (the default)
+Wavetable.chebyFill(513, [0, 1, 0, 0, 0, 1], normalize: true, zeroOffset: false).plot;
+
+Wavetable.chebyFill(513, [0, 0, 1]).plot;
+Wavetable.chebyFill(513, [0.3, -0.8, 1.1]).plot;
+
+
+// This waveshaping example uses two buffers, one with zero offset and
+// the other not.
+//
+// 1. The offset version gives zero output (DC free) when waveshaping an
+// input signal with amplitude of zero (e.g. DC.ar(0)).
+//
+// 2. The non-offset version makes better use of the full (-1 to 1) range
+// when waveshaping a varying signal with amplitude near 1, but (if even
+// Chebyshev polynomial degrees are used) will have a DC offset when
+// waveshaping a signal with amplitude of zero.
+//
+// 3. Wrapping the non-offset Shaper in a LeakDC (the third signal in the
+// example) cancels out any DC offsets (third version), while making full use
+// of the -1 to 1 range.
+(
+s.waitForBoot {
+    var amplitudes = [0, 1, 1, -2, 1];
+    var wavs = [
+        Wavetable.chebyFill(256+1, amplitudes, normalize: true, zeroOffset: true),
+        Wavetable.chebyFill(256+1, amplitudes, normalize: true, zeroOffset: false)
+    ];
+    b = wavs.collect{ arg wav; Buffer.loadCollection(s, wav) };
+    s.sync;
+    x = {
+        var in = SinOsc.ar(100, 0, SinOsc.kr(0.1, 0, 0.5, 0.5));
+        Shaper.ar(b, in ) ++ LeakDC.ar(Shaper.ar(b[1], in))
+    }.scope;
+}
+)
+x.free; b.do(_.free); b = nil;</pre>
+</div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*chebyFill_old' href='./../Overviews/Methods.html#chebyFill_old'>chebyFill_old</a> (<span class='argstr'>size</span>, <span class='argstr'>amplitudes</span>)</h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> </h3>
@@ -103,4 +136,4 @@ Wavetable: [2*a0-a1, a1-a0, 2*a1-a2, a2-a1, 2*a2-a3, a3-a2...]</pre>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-blend' href='./../Overviews/Methods.html#blend'>blend</a> (<span class='argstr'>anotherWavetable</span>, <span class='argstr'>blendFrac: 0.5</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-write' href='./../Overviews/Methods.html#write'>write</a> (<span class='argstr'>path</span>)</h3>
-<div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Wavetable.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Wavetable.schelp</a><br>link::Classes/Wavetable::<br>sc version: 3.7alpha0</div></div></body></html>
+<div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Wavetable.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Wavetable.schelp</a><br>link::Classes/Wavetable::<br>sc version: 3.7alpha1</div></div></body></html>
