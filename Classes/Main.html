@@ -103,12 +103,12 @@
 <p>Called after the class library has been compiled.<h4>Discussion:</h4>
 
 <p>This calls the superclass' startup, which among other things initializes the <a href="./../Classes/AppClock.html">AppClock</a> and the top-level <a href="./../Classes/Environment.html">Environment</a>.
-<p>Main's startup then stores Server.default in the interpreter variable s, sets the platform default's <a href="./../Classes/GUI.html">GUI</a> kit, initializes the <a href="./../Classes/GeneralHID.html">GeneralHID</a> system, calls a <a href="./../Classes/Platform.html">Platform</a> specific startup method (for example OSXPlatform's startup opens the server windows), and finally invokes StartUp.run.
+<p>Main's startup then stores Server.default in the interpreter variable s, sets the platform default's <a href="./../Classes/GUI.html">GUI</a> kit, calls a <a href="./../Classes/Platform.html">Platform</a> specific startup method (for example OSXPlatform's startup opens the server windows), and finally invokes StartUp.run.
 <p>To add your own startup functionalities, you could either edit the special startup-file (discussed in <a href="./../Reference/StartupFile.html">Sclang Startup File</a>), or use StartUp.add as discussed in the <a href="./../Classes/StartUp.html">StartUp</a> help file.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-shutdown' href='./../Overviews/Methods.html#shutdown'>shutdown</a> </h3>
 <div class='method'>
 <p>Called after SuperCollider is quit or the class library is about to be re-compiled.<h4>Discussion:</h4>
 
-<p>This will quit all audio <a href="./../Classes/Server.html">Server</a> instances, perform a platform specific shutdown (e.g. on Mac OS X, the HID service is released), finally Process' shutdown method is called, resulting in successive calls to UI.shutdown, NetAddr.disconnectAll, File.closeAll, and Archive.write. To register your own shutdown code, use a call like this:<pre class='code prettyprint lang-sc'>ShutDown.add({ "Good bye!!".postln });</pre>
+<p>This will quit all audio <a href="./../Classes/Server.html">Server</a> instances, perform a platform specific shutdown (e.g. the HID subsystem is released), finally Process' shutdown method is called, resulting in successive calls to UI.shutdown, NetAddr.disconnectAll, File.closeAll, and Archive.write. To register your own shutdown code, use a call like this:<pre class='code prettyprint lang-sc'>ShutDown.add({ "Good bye!!".postln });</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-run' href='./../Overviews/Methods.html#run'>run</a> </h3>
 <div class='method'>
 <p>Override this to do whatever you want, e. g. add a class extension file like this to the class library:<pre class='code prettyprint lang-sc'>+ Main {

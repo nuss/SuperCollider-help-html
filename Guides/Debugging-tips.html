@@ -39,7 +39,7 @@
 <p>The challenge in debugging synthdefs is the invisibility of the server's operations. There are a handful of techniques to expose the output of various UGens.<h3><a class='anchor' name='SendTrig / OSCFunc'>SendTrig / OSCFunc</a></h3>
 
 <p>SendTrig is originally intended to send a trigger message back to the client, so the client can take further action on the server. However, it can be used to send any numeric value back to the client, which can then be printed out.
-<p>To print out the values, you need to create an OSCresponderNode as follows:<pre class='code prettyprint lang-sc'>o = OSCFunc({ |msg| msg.postln }, '/tr', s.addr);</pre>
+<p>To print out the values, you need to create an OSCFunc as follows:<pre class='code prettyprint lang-sc'>o = OSCFunc({ |msg| msg.postln }, '/tr', s.addr);</pre>
 
 <p>Each line of output is an array with four values: <code class='code prettyprint lang-sc'>['/tr', defNode, id (from SendTrig), value (from SendTrig)]</code>.<pre class='code prettyprint lang-sc'>{    var    freq;
     freq = LFNoise1.kr(2, 600, 800);
