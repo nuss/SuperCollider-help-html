@@ -45,28 +45,24 @@
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>s.boot;
-
-b = Buffer.alloc(s,2048,1);
-
-(
-SynthDef("help-rectcomb", { arg out=0, bufnum=0;
-    var in, chain;
-    in = {WhiteNoise.ar(0.2)}.dup;
-    chain = FFT(bufnum, in);
+<pre class='code prettyprint lang-sc'>(
+{
+    var sig, chain;
+    sig = WhiteNoise.ar(0.2);
+    chain = FFT(LocalBuf(2048), sig);
     chain = PV_RectComb(chain, 8, LFTri.kr(0.097, 0, 0.4, 0.5),
-        LFTri.kr(0.24, 0, -0.5, 0.5));
-    Out.ar(out, IFFT(chain).dup);
-}).play(s,[\out, 0, \bufnum, b.bufnum]);
+    LFTri.kr(0.24, 0, -0.5, 0.5));
+    IFFT(chain).dup
+}.play;
 )
 
 (
-SynthDef("help-rectcomb2", { arg out=0, bufnum=0;
-    var in, chain;
-    in = {WhiteNoise.ar(0.2)}.dup;
-    chain = FFT(bufnum, in);
+{
+    var sig, chain;
+    sig = WhiteNoise.ar(0.2);
+    chain = FFT(LocalBuf(2048), sig);
     chain = PV_RectComb(chain,  MouseX.kr(0, 32), MouseY.kr, 0.2);
-    Out.ar(out, IFFT(chain).dup);
-}).play(s,[\out, 0, \bufnum, b.bufnum]);
+    IFFT(chain).dup
+}.play;
 )</pre>
 <div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/PV_RectComb.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/PV_RectComb.schelp</a><br>link::Classes/PV_RectComb::<br>sc version: 3.7alpha1</div></div></body></html>

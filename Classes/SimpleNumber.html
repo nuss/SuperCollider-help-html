@@ -672,13 +672,20 @@ l = [0, 1, 5, 9, 11]; // pentatonic scale
 <p>Uses the formula:<pre class='code prettyprint lang-sc'>a * (exp(squared(this - b) / (-2.0 * squared(c)))) Defalt values: a = 1; b = 0; c = 1</pre>
 
 <p>Example code<pre class='code prettyprint lang-sc'>(0..1000).normalize(-10, 10).collect { |num| num.gaussCurve }.plot;</pre>
-</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-equalWithPrecision' href='./../Overviews/Methods.html#equalWithPrecision'>equalWithPrecision</a> (<span class='argstr'>that</span>, <span class='argstr'>precision: 0.0001</span>)</h3>
-<div class='method'><h4>Returns:</h4>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-equalWithPrecision' href='./../Overviews/Methods.html#equalWithPrecision'>equalWithPrecision</a> (<span class='argstr'>that</span>, <span class='argstr'>precision: 0.0001</span>, <span class='argstr'>relativePrecision: 0</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>precision<td class='argumentdesc'>
+<p>The absolute precision, independent of the value compared<tr><td class='argumentname'>relativePrecision<td class='argumentdesc'>
+<p>The precision relative to the larger absolute of the values compared.</table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>true if receiver is closer to that than precision.</div><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>3.1.equalWithPrecision(3.0, 0.05); // false
 3.1.equalWithPrecision(3.0, 0.1); // false
-3.1.equalWithPrecision(3.0, 0.11); // true</pre>
+3.1.equalWithPrecision(3.0, 0.11); // true
+3000.1.equalWithPrecision(3000.0, 0, 0.01); // true
+3.1.equalWithPrecision(3.0, 0, 0.01); // false</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-quantize' href='./../Overviews/Methods.html#quantize'>quantize</a> (<span class='argstr'>quantum: 1</span>, <span class='argstr'>tolerance: 0.05</span>, <span class='argstr'>strength: 1</span>)</h3>
 <div class='method'>
 <p>round the receiver to the quantum.<h4>Arguments:</h4>
