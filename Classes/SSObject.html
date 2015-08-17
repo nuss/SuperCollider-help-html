@@ -1,0 +1,181 @@
+<html><head><title>SSObject</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>3Dj'>Libraries>3Dj</a></div>
+<h1>SSObject</h1>
+<div id='summary'>A Sound Scene Object</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/classes/Sound Scene/<a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/classes/Sound Scene/SSObject.sc'>SSObject.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/RedObject.html">RedObject</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Guides/3Dj.html">Introducing 3Dj</a>, <a href="./../Classes/SSWorld.html">SSWorld</a>, <a href="./../Classes/SpatialRender.html">SpatialRender</a>, <a href="./../Classes/Motion.html">Motion</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Object Properties'>Object Properties</a></li>
+<ul class='toc'><li class='toc3'><a href='#-channel'>channel</a> </li>
+<li class='toc3'><a href='#-setChannel'>setChannel</a> </li>
+<li class='toc3'><a href='#-name'>name</a> </li>
+<li class='toc3'><a href='#-loc'>loc</a> </li>
+<li class='toc3'><a href='#-locSph'>locSph</a> </li>
+<li class='toc3'><a href='#-shape'>shape</a> </li>
+<li class='toc3'><a href='#-preserveArea'>preserveArea</a> </li>
+<li class='toc3'><a href='#-dAzimuth'>dAzimuth</a> </li>
+<li class='toc3'><a href='#-dElevation'>dElevation</a> </li>
+<li class='toc3'><a href='#-present'>present</a> </li>
+<li class='toc3'><a href='#-remove'>remove</a> </li>
+</ul><li class='toc2'><a href='#Physical Model'>Physical Model</a></li>
+<ul class='toc'><li class='toc3'><a href='#-gravity'>gravity</a> </li>
+<li class='toc3'><a href='#-friction'>friction</a> </li>
+<li class='toc3'><a href='#-vel'>vel</a> </li>
+<li class='toc3'><a href='#-addVel'>addVel</a> </li>
+<li class='toc3'><a href='#-velSph'>velSph</a> </li>
+<li class='toc3'><a href='#-accel'>accel</a> </li>
+<li class='toc3'><a href='#-accelSph'>accelSph</a> </li>
+</ul><li class='toc2'><a href='#Motion'>Motion</a></li>
+<ul class='toc'><li class='toc3'><a href='#-motion'>motion</a> </li>
+<li class='toc3'><a href='#-setMotion'>setMotion</a> </li>
+<li class='toc3'><a href='#-stop'>stop</a> </li>
+</ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A sound object that lives inside a <a href="./../Classes/SSWorld.html">SSWorld</a>
+<p>SSObjects have a set of spatial and dynamic properties, such as position, velocity, shape, etc., and they are also related to a specific sound source (a "mono track"). Currently, the sound is only managed through <a href="./../Classes/SpatialRender.html">SpatialRender</a> and Jack.
+<p>Interaction with the dynamic behavior of a SSObject can be handled in two ways: <em>top-down</em>, by assigning the object motion to a <a href="./../Classes/Motion.html">Motion</a> instance, or <em>bottom-up</em> physical model, by applying forces.
+<p>This class is based on <a href="./../Classes/RedObject.html">RedObject</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>world</span>, <span class='argstr'>loc</span>, <span class='argstr'>vel</span>, <span class='argstr'>accel</span>, <span class='argstr'>mass</span>, <span class='argstr'>size</span>, <span class='argstr'>shape</span>, <span class='argstr'>gravity</span>, <span class='argstr'>friction</span>, <span class='argstr'>name</span>, <span class='argstr'>channel</span>, <span class='argstr'>registerInWorld: true</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>world<td class='argumentdesc'>
+<p>Reference to the <a href="./../Classes/SSWorld.html">SSWorld</a> instance in which the object is going to exist<tr><td class='argumentname'>loc<td class='argumentdesc'>
+<p>Initial position in m. <code class='code prettyprint lang-sc'>Array</code> or <code class='code prettyprint lang-sc'>Cartesian</code> in the format [x,y,z].
+<p>Default to [0,0,0]<tr><td class='argumentname'>vel<td class='argumentdesc'>
+<p>Initial velocity in m/s. <code class='code prettyprint lang-sc'>Array</code> or <code class='code prettyprint lang-sc'>Cartesian</code> in the format [x,y,z].
+<p>Default to [0,0,0]<tr><td class='argumentname'>accel<td class='argumentdesc'>
+<p>Initial acceleration in m/^2. <code class='code prettyprint lang-sc'>Array</code> or <code class='code prettyprint lang-sc'>Cartesian</code> in the format [x,y,z].
+<p>Default to [0,0,0]<tr><td class='argumentname'>mass<td class='argumentdesc'>
+<p>Mass of the object. Default to 1.<div class='note'><span class='notelabel'>NOTE:</span> At the moment, the mass parameter has any effect in the physical model</div><tr><td class='argumentname'>size<td class='argumentdesc'>
+<p>Object size. Default to 1.<div class='note'><span class='notelabel'>NOTE:</span> At the moment, the size parameter has any effect in the physical model</div><tr><td class='argumentname'>shape<td class='argumentdesc'>
+<p><code class='code prettyprint lang-sc'>Symbol</code> with the shape type. Currently, there are 4 possibilities:<ul>
+<li><code class='code prettyprint lang-sc'>\point</code> classical punctual source. Default<li><code class='code prettyprint lang-sc'>\ring</code> arbitrary width ring-type surface around a virtual sphere's surface<li><code class='code prettyprint lang-sc'>\extended</code> arbitrary squared surface around a virtual sphere's surface<li><code class='code prettyprint lang-sc'>\meridian</code> a half meridian shape</ul>
+<tr><td class='argumentname'>gravity<td class='argumentdesc'>
+<p><code class='code prettyprint lang-sc'>Boolean</code> indicating whether the object is subject to gravity. Default to <code class='code prettyprint lang-sc'>false</code><tr><td class='argumentname'>friction<td class='argumentdesc'>
+<p><code class='code prettyprint lang-sc'>Boolean</code> indicating whether the object is subject to friction. Default to <code class='code prettyprint lang-sc'>false</code><tr><td class='argumentname'>name<td class='argumentdesc'>
+<p><code class='code prettyprint lang-sc'>Symbol</code> containing the object name. 
+<p>If <code class='code prettyprint lang-sc'>nil</code>, the reference world will assign one automatically, based on the object channel<tr><td class='argumentname'>channel<td class='argumentdesc'>
+<p>Jack channel number from where the object gets its sound. 
+<p>If <code class='code prettyprint lang-sc'>nil</code>, the reference world will assign one automatically</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Object Properties'>Object Properties</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-channel' href='./../Overviews/Methods.html#channel'>channel</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-channel' href='./../Overviews/Methods.html#channel'>channel</a> = value</h3>
+<div class='method'>
+<p>Get the Jack channel associated with the object.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setChannel' href='./../Overviews/Methods.html#setChannel'>setChannel</a> (<span class='argstr'>newChannel</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Set the Jack channel associated with the object.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newChannel<td class='argumentdesc'>
+<p>Channel number</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a> = value</h3>
+<div class='method'>
+<p>Get/set the object's name, as a <code class='code prettyprint lang-sc'>Symbol</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-loc' href='./../Overviews/Methods.html#loc'>loc</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-loc' href='./../Overviews/Methods.html#loc'>loc</a>_ (<span class='argstr'>newLoc</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>z</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/RedObject.html'>RedObject</a></div>
+<div class='method'>
+<p>Get/set the object location in Cartesian coordinates<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newLoc<td class='argumentdesc'>
+<p><code class='code prettyprint lang-sc'>Array</code> in the form [x,y,z], or instance of <code class='code prettyprint lang-sc'>Cartesian</code><tr><td class='argumentname'>x<td class='argumentdesc'>
+<p>if newLoc is <code class='code prettyprint lang-sc'>nil</code>, set only x, holding other values<tr><td class='argumentname'>y<td class='argumentdesc'>
+<p>if newLoc is <code class='code prettyprint lang-sc'>nil</code>, set only y, holding other values<tr><td class='argumentname'>z<td class='argumentdesc'>
+<p>if newLoc is <code class='code prettyprint lang-sc'>nil</code>, set only z, holding other values</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-locSph' href='./../Overviews/Methods.html#locSph'>locSph</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-locSph' href='./../Overviews/Methods.html#locSph'>locSph</a>_ (<span class='argstr'>newLocSph</span>, <span class='argstr'>rho</span>, <span class='argstr'>azi</span>, <span class='argstr'>ele</span>)</h3>
+<div class='method'>
+<p>Get/set the object location in Spherical coordinates<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newLocSph<td class='argumentdesc'>
+<p><code class='code prettyprint lang-sc'>Array</code> in the form [rho,azimuth,elevation], or instance of <code class='code prettyprint lang-sc'>Spherical</code><tr><td class='argumentname'>rho<td class='argumentdesc'>
+<p>if newLocSph is <code class='code prettyprint lang-sc'>nil</code>, set only rho, holding other values<tr><td class='argumentname'>azi<td class='argumentdesc'>
+<p>if newLocSph is <code class='code prettyprint lang-sc'>nil</code>, set only azimuth, holding other values<tr><td class='argumentname'>ele<td class='argumentdesc'>
+<p>if newLocSph is <code class='code prettyprint lang-sc'>nil</code>, set only elevation, holding other values</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-shape' href='./../Overviews/Methods.html#shape'>shape</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-shape' href='./../Overviews/Methods.html#shape'>shape</a>_ (<span class='argstr'>newShape</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Get/set the object's shape<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newShape<td class='argumentdesc'>
+<p>One of these symbols:<ul>
+<li><code class='code prettyprint lang-sc'>\point</code> classical punctual source. Default<li><code class='code prettyprint lang-sc'>\ring</code> arbitrary width ring-type surface around a virtual sphere's surface<li><code class='code prettyprint lang-sc'>\extended</code> arbitrary squared surface around a virtual sphere's surface<li><code class='code prettyprint lang-sc'>\meridian</code> a meridian-type shape</ul>
+</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-preserveArea' href='./../Overviews/Methods.html#preserveArea'>preserveArea</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-preserveArea' href='./../Overviews/Methods.html#preserveArea'>preserveArea</a>_ (<span class='argstr'>bool</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Get/set wether the object preserves its area when moving, for non-punctual shapes.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bool<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-dAzimuth' href='./../Overviews/Methods.html#dAzimuth'>dAzimuth</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-dAzimuth' href='./../Overviews/Methods.html#dAzimuth'>dAzimuth</a>_ (<span class='argstr'>newD</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Get/set the azimuth difference angle, for extended sources</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-dElevation' href='./../Overviews/Methods.html#dElevation'>dElevation</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-dElevation' href='./../Overviews/Methods.html#dElevation'>dElevation</a>_ (<span class='argstr'>newD</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Get/set the elevation difference angle, for extended sources</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-present' href='./../Overviews/Methods.html#present'>present</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-present' href='./../Overviews/Methods.html#present'>present</a>_ (<span class='argstr'>bool</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Get/set if the object is <em>present</em> (active) in the reference world</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-remove' href='./../Overviews/Methods.html#remove'>remove</a> </h3>
+<div class='method'>
+<p>Remove this object from the reference world. Called internally by the <a href="./../Classes/SSWorld.html#-remove">SSWorld: -remove</a></div><h3><a class='anchor' name='Physical Model'>Physical Model</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-gravity' href='./../Overviews/Methods.html#gravity'>gravity</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-gravity' href='./../Overviews/Methods.html#gravity'>gravity</a> = value</h3>
+<div class='method'>
+<p>Get/set whether the object is subject to gravity, as a <code class='code prettyprint lang-sc'>Boolean</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-friction' href='./../Overviews/Methods.html#friction'>friction</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-friction' href='./../Overviews/Methods.html#friction'>friction</a> = value</h3>
+<div class='method'>
+<p>Get/set whether the object is subject to friction, as a <code class='code prettyprint lang-sc'>Boolean</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-vel' href='./../Overviews/Methods.html#vel'>vel</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-vel' href='./../Overviews/Methods.html#vel'>vel</a> = <span class='argstr'>newVel</span></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/RedObject.html'>RedObject</a></div>
+<div class='method'>
+<p>Get/set the object's velocity, as an <code class='code prettyprint lang-sc'>Array</code> or <code class='code prettyprint lang-sc'>Cartesian</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addVel' href='./../Overviews/Methods.html#addVel'>addVel</a> (<span class='argstr'>newVel</span>)</h3>
+<div class='method'>
+<p>Add velocity to the existing one<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newVel<td class='argumentdesc'>
+<p><code class='code prettyprint lang-sc'>Array</code> with the added velocity</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-velSph' href='./../Overviews/Methods.html#velSph'>velSph</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-velSph' href='./../Overviews/Methods.html#velSph'>velSph</a> = <span class='argstr'>newVelSph</span></h3>
+<div class='method'>
+<p>Get/set the object's velocity, as a instance of <code class='code prettyprint lang-sc'>Array</code> or <code class='code prettyprint lang-sc'>Spherical</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-accel' href='./../Overviews/Methods.html#accel'>accel</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-accel' href='./../Overviews/Methods.html#accel'>accel</a> = <span class='argstr'>newAccel</span></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/RedObject.html'>RedObject</a></div>
+<div class='method'>
+<p>Get/set the object's acceleration, as an <code class='code prettyprint lang-sc'>Array</code> or <code class='code prettyprint lang-sc'>Cartesian</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-accelSph' href='./../Overviews/Methods.html#accelSph'>accelSph</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-accelSph' href='./../Overviews/Methods.html#accelSph'>accelSph</a> = <span class='argstr'>newAccelSph</span></h3>
+<div class='method'>
+<p>Get/set the object's acceleration, as a instance of <code class='code prettyprint lang-sc'>Array</code> or <code class='code prettyprint lang-sc'>Spherical</code></div><h3><a class='anchor' name='Motion'>Motion</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-motion' href='./../Overviews/Methods.html#motion'>motion</a> </h3>
+<div class='method'>
+<p>Get the current object's motion</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setMotion' href='./../Overviews/Methods.html#setMotion'>setMotion</a> (<span class='argstr'>type: 'static'</span> <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>Assign one of the predefined motions to the object<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>type<td class='argumentdesc'>
+<p>One of the following symbols:<ul>
+<li><code class='code prettyprint lang-sc'>\static</code><li><code class='code prettyprint lang-sc'>\rect</code><li><code class='code prettyprint lang-sc'>\random</code><li><code class='code prettyprint lang-sc'>\brown</code><li><code class='code prettyprint lang-sc'>\shm</code><li><code class='code prettyprint lang-sc'>\orbit</code></ul>
+<tr><td class='argumentname'> ... args<td class='argumentdesc'>
+<p>Required parameters for each of the motion types. See <a href="./../Classes/Motion.html">Motion</a> for more information. </table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-stop' href='./../Overviews/Methods.html#stop'>stop</a> </h3>
+<div class='method'>
+<p>Set object's velocity and acceleration vectors to 0.</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/HelpSource/Classes/SSObject.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/HelpSource/Classes/SSObject.schelp</a><br>link::Classes/SSObject::<br>sc version: 3.7alpha1</div></div></body></html>

@@ -1,0 +1,83 @@
+<html><head><title>Motion</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>3Dj'>Libraries>3Dj</a></div>
+<h1>Motion</h1>
+<div id='summary'>SSObject motion type</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/classes/Sound Scene/<a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/classes/Sound Scene/Motion.sc'>Motion.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/Brownian.html">Brownian</a>, <a href="../Classes/Orbit.html">Orbit</a>, <a href="../Classes/RandomMov.html">RandomMov</a>, <a href="../Classes/RectMov.html">RectMov</a>, <a href="../Classes/Shm.html">Shm</a>, <a href="../Classes/Static.html">Static</a></div>
+<div id='related'>See also: <a href="./../Guides/3Dj.html">Introducing 3Dj</a>, <a href="./../Classes/SSWorld.html">SSWorld</a>, <a href="./../Classes/SSObject.html">SSObject</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-initMotion'>initMotion</a> </li>
+<li class='toc3'><a href='#-type'>type</a> </li>
+<li class='toc3'><a href='#-object'>object</a> </li>
+<li class='toc3'><a href='#-next'>next</a> </li>
+<li class='toc3'><a href='#-step'>step</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Motion provide, through its subclasses, predefined dynamic behaviors to the receiving SSObject instance.
+<p>All Motions provide a next method, which is used to compute the next object position.
+<p>At the moment, the following motion types are available:
+<p>--&gt; <code class='code prettyprint lang-sc'>\static</code> No predefined motion. This is the default for new SSObject instances, With this behavior, objects can still move by the physical interaction way (for instance, <a href="./../Classes/SSObject.html#-vel">SSObject: -vel</a> or <a href="./../Classes/SSObject.html#-accel">SSObject: -accel</a>).<pre class='code prettyprint lang-sc'>w = SSWorld.new.showView;
+o = SSObject(w,name:\O); // don't do nothing since it's static</pre>
+
+<p>--&gt; <code class='code prettyprint lang-sc'>\rect</code> Rectilinear motion. It takes as argument an Array with the initial velocity in each axis. Physical model actions can still interact with the object. With rectilinear motion, objects can also still interact in the physical way.<pre class='code prettyprint lang-sc'>o.setMotion(\rect,[1,0,0]) // 1m/s in the x axis
+o.setMotion(\rect,[10,5,15]) // a little more fun</pre>
+
+<p>--&gt; <code class='code prettyprint lang-sc'>\random</code> Random motion. Performs a series of rectilinear motions with random velocity and acceleration. 
+<p>It takes two arguments: the maximum value for the random velocity and acceleration vectors (default to 1), and the period (in s) of parameter recalculation (default to world.timeStep).<pre class='code prettyprint lang-sc'>o.setMotion(\random) // default to max 1m every 1 second
+o.setMotion(\random,0.01,10) // slowly
+o.setMotion(\random,5,0.1) // erratical movements</pre>
+
+<p>--&gt; <code class='code prettyprint lang-sc'>\brown</code> Brownian motion. Based on <a href="./../Classes/Pbrown.html">Pbrown</a>.
+<p>It receives as an argument the amount of position variation of each step, in reference to the world's dimension. Default to 0.01 (1% of the world size).
+<p>More in <a href="http://en.wikipedia.org/wiki/Brownian_motion">http://en.wikipedia.org/wiki/Brownian_motion</a><pre class='code prettyprint lang-sc'>o.setMotion(\brown) // default to 1% of world dimmensions
+o.setMotion(\brown,0.1) // angry mosquito</pre>
+
+<p>--&gt; <code class='code prettyprint lang-sc'>\shm</code> Simple Harmonic Motion (<a href="http://en.wikipedia.org/wiki/Simple_harmonic_motion">http://en.wikipedia.org/wiki/Simple_harmonic_motion</a>) in each of the three axis, resulting in a composite motion.
+<p>It takes two arguments; first one is an array <code class='code prettyprint lang-sc'>[xAmp,yAmp,zAmp]</code> with the amplitudes (in m) in each axis. Default to [1,1,1]. Second argument is the motion period, in seconds. Default to [1,1,1].
+<p><code class='code prettyprint lang-sc'>\orbit</code> Orbital motion in the horizontal plane. The arguments are the angular velocity (in m/s), and the rotation direction (either <code class='code prettyprint lang-sc'>\dex</code> for dextrorotatory, or <code class='code prettyprint lang-sc'>\lev</code> for levorotatory).<pre class='code prettyprint lang-sc'>o.setMotion(\shm) // default
+o.setMotion(\shm,[2,1,0],[2,1,0]) // eight movement
+o.setMotion(\shm,[1,5,1],[0.5,5,1]) // sinusoidal-like
+o.setMotion(\shm,[2,0,0],[0.1,0,0]) // fast shake</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>object</span>)</h3>
+<div class='method'>
+<p>Usually, motion creation is called internally from inside <a href="./../Classes/SSObject.html#-setMotion">SSObject: -setMotion</a> method.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>object<td class='argumentdesc'>
+<p>Receiving SSObject</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-initMotion' href='./../Overviews/Methods.html#initMotion'>initMotion</a> (<span class='argstr'>myobject</span>)</h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-type' href='./../Overviews/Methods.html#type'>type</a> </h3>
+<div class='method'>
+<p>Get motion type</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-object' href='./../Overviews/Methods.html#object'>object</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-object' href='./../Overviews/Methods.html#object'>object</a> = value</h3>
+<div class='method'>
+<p>Get object receiver</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-next' href='./../Overviews/Methods.html#next'>next</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-step' href='./../Overviews/Methods.html#step'>step</a> </h3>
+<div class='method'>
+<p>The object's SSWorld stepFreq</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/HelpSource/Classes/Motion.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/HelpSource/Classes/Motion.schelp</a><br>link::Classes/Motion::<br>sc version: 3.7alpha1</div></div></body></html>

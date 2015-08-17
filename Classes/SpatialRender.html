@@ -1,0 +1,412 @@
+<html><head><title>SpatialRender</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>3Dj'>Libraries>3Dj</a></div>
+<h1>SpatialRender</h1>
+<div id='summary'>a SpatDIF compilant spatial render</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/classes/Spatial Render/<a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/classes/Spatial Render/SpatialRender.sc'>SpatialRender.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Guides/3Dj.html">Introducing 3Dj</a>, <a href="./../Classes/SpatDifLogger.html">SpatDifLogger</a>, <a href="./../Classes/SpatDifPlayer.html">SpatDifPlayer</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Spatializatoin Techniques'>Spatializatoin Techniques</a></li>
+<ul class='toc'><li class='toc3'><a href='#-spatialTechnique'>spatialTechnique</a> </li>
+<li class='toc3'><a href='#-setSpatializationTechnique'>setSpatializationTechnique</a> </li>
+</ul><li class='toc2'><a href='#Ambisonics'>Ambisonics</a></li>
+<ul class='toc'><li class='toc3'><a href='#-ambisonicsParameters'>ambisonicsParameters</a> </li>
+<li class='toc3'><a href='#-setAmbisonicsParameters'>setAmbisonicsParameters</a> </li>
+</ul><li class='toc2'><a href='#Binaural'>Binaural</a></li>
+<ul class='toc'><li class='toc3'><a href='#-binauralDecoder'>binauralDecoder</a> </li>
+<li class='toc3'><a href='#-binauralSubjectID'>binauralSubjectID</a> </li>
+<li class='toc3'><a href='#-setBinauralDecoder'>setBinauralDecoder</a> </li>
+</ul><li class='toc2'><a href='#Vbap'>Vbap</a></li>
+<ul class='toc'><li class='toc3'><a href='#-vbapSpeakerArray'>vbapSpeakerArray</a> </li>
+<li class='toc3'><a href='#-vbapSpeakerBuffer'>vbapSpeakerBuffer</a> </li>
+<li class='toc3'><a href='#-vbapNumSpeakers'>vbapNumSpeakers</a> </li>
+<li class='toc3'><a href='#-setVbapParameters'>setVbapParameters</a> </li>
+</ul><li class='toc2'><a href='#Rendering Parameters'>Rendering Parameters</a></li>
+<ul class='toc'><li class='toc3'><a href='#-setMaximumAttenuation'>setMaximumAttenuation</a> </li>
+<li class='toc3'><a href='#-setMaximumDistance'>setMaximumDistance</a> </li>
+<li class='toc3'><a href='#-setReferenceDistance'>setReferenceDistance</a> </li>
+<li class='toc3'><a href='#-absorptionModel'>absorptionModel</a> </li>
+<li class='toc3'><a href='#-setAbsorptionModel'>setAbsorptionModel</a> </li>
+<li class='toc3'><a href='#-attenuationModel'>attenuationModel</a> </li>
+<li class='toc3'><a href='#-setAttenuationModel'>setAttenuationModel</a> </li>
+</ul><li class='toc2'><a href='#Network Communication'>Network Communication</a></li>
+<ul class='toc'><li class='toc3'><a href='#-worldAddresses'>worldAddresses</a> </li>
+<li class='toc3'><a href='#-addWorldAddress'>addWorldAddress</a> </li>
+<li class='toc3'><a href='#-removeWorldAddress'>removeWorldAddress</a> </li>
+<li class='toc3'><a href='#-resendToWorld'>resendToWorld</a> </li>
+</ul><li class='toc2'><a href='#Control'>Control</a></li>
+<ul class='toc'><li class='toc3'><a href='#-sourceNames'>sourceNames</a> </li>
+<li class='toc3'><a href='#-receiverFunctions'>receiverFunctions</a> </li>
+</ul><li class='toc2'><a href='#SpatDIF Logger'>SpatDIF Logger</a></li>
+<ul class='toc'><li class='toc3'><a href='#-spatDifLoggerPath'>spatDifLoggerPath</a> </li>
+<li class='toc3'><a href='#-spatDifLoggerFilename'>spatDifLoggerFilename</a> </li>
+<li class='toc3'><a href='#-logOSC'>logOSC</a> </li>
+<li class='toc3'><a href='#-autosaveOSC'>autosaveOSC</a> </li>
+<li class='toc3'><a href='#-autosavePeriod'>autosavePeriod</a> </li>
+</ul><li class='toc2'><a href='#SpatDIF Player'>SpatDIF Player</a></li>
+<ul class='toc'><li class='toc3'><a href='#-spatDifPlayer_load'>spatDifPlayer_load</a> </li>
+<li class='toc3'><a href='#-spatDifPlayer_start'>spatDifPlayer_start</a> </li>
+<li class='toc3'><a href='#-spatDifPlayer_play'>spatDifPlayer_play</a> </li>
+<li class='toc3'><a href='#-spatDifPlayer_pause'>spatDifPlayer_pause</a> </li>
+<li class='toc3'><a href='#-spatDifPlayer_stop'>spatDifPlayer_stop</a> </li>
+<li class='toc3'><a href='#-spatDifPlayer_reset'>spatDifPlayer_reset</a> </li>
+<li class='toc3'><a href='#-spatDifPlayer_isPlaying'>spatDifPlayer_isPlaying</a> </li>
+<li class='toc3'><a href='#-spatDifPlayer_verbose'>spatDifPlayer_verbose</a> </li>
+</ul><li class='toc2'><a href='#Other'>Other</a></li>
+<ul class='toc'><li class='toc3'><a href='#-verbose'>verbose</a> </li>
+<li class='toc3'><a href='#-close'>close</a> </li>
+<li class='toc3'><a href='#-server'>server</a> </li>
+</ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-absorptionSynths'>absorptionSynths</a> </li>
+<li class='toc3'><a href='#-attenuationSynths'>attenuationSynths</a> </li>
+<li class='toc3'><a href='#-channels'>channels</a> </li>
+<li class='toc3'><a href='#-distanceBuses'>distanceBuses</a> </li>
+<li class='toc3'><a href='#-distanceGroups'>distanceGroups</a> </li>
+<li class='toc3'><a href='#-encoders'>encoders</a> </li>
+<li class='toc3'><a href='#-objectPositions'>objectPositions</a> </li>
+<li class='toc3'><a href='#-pannerBuses'>pannerBuses</a> </li>
+<li class='toc3'><a href='#-pannerSynths'>pannerSynths</a> </li>
+<li class='toc3'><a href='#-spatDifLogger'>spatDifLogger</a> </li>
+<li class='toc3'><a href='#-spatDifPlayer'>spatDifPlayer</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A SuperCollider implementation of a Spatial Render. It reads OSC messages in SpatDIF format (from <a href="./../Classes/SSWorld.html">SSWorld</a> or any other Sound Scene Simulator), as well as audio streams from Jack, and renders the corresponding audio.
+<p>Three different audio spatialization techniques are available, which can be changed on the fly:<ol>
+<li><span class='soft'>Ambisonics</span> Up to full 3rd order. Decoding is provided externally by the AmbDec software.<div class='warning'><span class='warninglabel'>WARNING:</span> AmbDec must be installed in the system in order to get the proper spatialized audio. The SpatialRender manages internally the connexions</div>
+<p><li><span class='soft'>VBAP</span> Thanks to the <a href="./../Classes/VBAP.html">VBAP</a> implementation<li><span class='soft'>Binaural</span> Provided by the wonderful <em>Ambisonic Toolkit</em>, first encodes in HOA and then decodes using the HRTF models</ol>
+
+<p>It also handles internally a <a href="./../Classes/SpatDifLogger.html">SpatDifLogger</a> with autosaving features for recording the incoming messages.
+<p>See <a href="./../Guides/3Dj.html">Introducing 3Dj</a> for a deeper insight into the concepts.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>server</span>, <span class='argstr'>spatDifLoggerPath</span>)</h3>
+<div class='method'>
+<p>Create a instance of SpatialRender.
+<p>Default render parameters are <code class='code prettyprint lang-sc'>\binaural</code> decoder, <code class='code prettyprint lang-sc'>\listen</code> head, hrtfID <code class='code prettyprint lang-sc'>1002</code><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>Reference to the server<tr><td class='argumentname'>spatDifLoggerPath<td class='argumentdesc'>
+<p>String with the path to the folder in which save the log files.
+<p>If <code class='code prettyprint lang-sc'>nil</code>, the default path <code class='code prettyprint lang-sc'>"~/.local/share/SuperCollider/SpatialRender"</code> will be used</table><h4>Discussion:</h4>
+
+<p>When a <code class='code prettyprint lang-sc'>SpatialRender</code> is instanciated, the server is (re)booted, in order to load VBAP and Binaural Buffers.
+<p>It also sets the SuperCollider output number to 24 (this parameter is accesible in the variable numAudioOutputs), and sets the required Jack connexions.</div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Spatializatoin Techniques'>Spatializatoin Techniques</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-spatialTechnique' href='./../Overviews/Methods.html#spatialTechnique'>spatialTechnique</a> </h3>
+<div class='method'>
+<p>Get the current spatialization technique.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setSpatializationTechnique' href='./../Overviews/Methods.html#setSpatializationTechnique'>setSpatializationTechnique</a> (<span class='argstr'>newSpatialTechnique</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Set the desired spatialization technique. The possible values are either <code class='code prettyprint lang-sc'>\ambisonics</code>, <code class='code prettyprint lang-sc'>\binaural</code> or <code class='code prettyprint lang-sc'>\vbap</code>.
+<p>It manages internally the required Jack connexions (and eventually AmbDec instanciation/quit)</div><h3><a class='anchor' name='Ambisonics'>Ambisonics</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-ambisonicsParameters' href='./../Overviews/Methods.html#ambisonicsParameters'>ambisonicsParameters</a> </h3>
+<div class='method'>
+<p>Get a Dictionary with the form <code class='code prettyprint lang-sc'>(sourceName -&gt; [order, shape] )</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setAmbisonicsParameters' href='./../Overviews/Methods.html#setAmbisonicsParameters'>setAmbisonicsParameters</a> (<span class='argstr'>source</span>, <span class='argstr'>order: 3</span>, <span class='argstr'>shape: 'point'</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>If ambisonics is the current spatialization technique, configure its properties.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>source<td class='argumentdesc'>
+<p>A <code class='code prettyprint lang-sc'>Symbol</code> with the name of one source, or <code class='code prettyprint lang-sc'>nil</code> for applying to all sources<div class='note'><span class='notelabel'>NOTE:</span> Notice that, in ambisonics, each source can be encoded in a different order, and with a different shape</div><tr><td class='argumentname'>order<td class='argumentdesc'>
+<p><code class='code prettyprint lang-sc'>Integer</code> with the desired order. For the moment, between 0 and 3. Default to 3.<tr><td class='argumentname'>shape<td class='argumentdesc'>
+<p>One of the following<ol>
+<li><code class='code prettyprint lang-sc'>\point</code> classical punctual source. Default<li><code class='code prettyprint lang-sc'>\ring</code> arbitrary width ring-type surface around a virtual sphere's surface<li><code class='code prettyprint lang-sc'>\extended</code> arbitrary squared surface around a virtual sphere's surface<li><code class='code prettyprint lang-sc'>\meridian</code> a half meridian shape</ol>
+<tr><td class='argumentname'>internal<td class='argumentdesc'>
+<p>Private use</table></div><h3><a class='anchor' name='Binaural'>Binaural</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-binauralDecoder' href='./../Overviews/Methods.html#binauralDecoder'>binauralDecoder</a> </h3>
+<div class='method'>
+<p>Get the current binaural decoder type</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-binauralSubjectID' href='./../Overviews/Methods.html#binauralSubjectID'>binauralSubjectID</a> </h3>
+<div class='method'>
+<p>Get the current subject ID for the binaural model used</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setBinauralDecoder' href='./../Overviews/Methods.html#setBinauralDecoder'>setBinauralDecoder</a> (<span class='argstr'>decoderType</span>, <span class='argstr'>subjectID</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Configure the binaural model, if <code class='code prettyprint lang-sc'>\binaural</code> is the current spatialization technique.
+<p>decoderType should be one of these: <code class='code prettyprint lang-sc'>\spherical</code>, <code class='code prettyprint lang-sc'>\listen</code> or <code class='code prettyprint lang-sc'>\cipic</code>. subjectID is the integer holding the subject code.<div class='note'><span class='notelabel'>NOTE:</span> subjectID number are not consecutive. Please check the reference</div>
+<p>For more information about binaural decoders, check <a href="./../Classes/FoaDecoderKernel.html">FoaDecoderKernel</a>.</div><h3><a class='anchor' name='Vbap'>Vbap</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-vbapSpeakerArray' href='./../Overviews/Methods.html#vbapSpeakerArray'>vbapSpeakerArray</a> </h3>
+<div class='method'>
+<p>Get the current vbap speaker configuration</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-vbapSpeakerBuffer' href='./../Overviews/Methods.html#vbapSpeakerBuffer'>vbapSpeakerBuffer</a> </h3>
+<div class='method'>
+<p>Get the current vbap speaker buffer</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-vbapNumSpeakers' href='./../Overviews/Methods.html#vbapNumSpeakers'>vbapNumSpeakers</a> </h3>
+<div class='method'>
+<p>get the current number of speakers in vbap</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setVbapParameters' href='./../Overviews/Methods.html#setVbapParameters'>setVbapParameters</a> (<span class='argstr'>speakerArray</span>)</h3>
+<div class='method'>
+<p>Set the vbap speaker configuration. 
+<p>speakerArray is an instance of <a href="./../Classes/VBAPSpeakerArray.html">VBAPSpeakerArray</a></div><h3><a class='anchor' name='Rendering Parameters'>Rendering Parameters</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setMaximumAttenuation' href='./../Overviews/Methods.html#setMaximumAttenuation'>setMaximumAttenuation</a> (<span class='argstr'>newValue</span>, <span class='argstr'>unit: 'linear'</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Set the maximum attenuation used used for the distance attenuation function. Default to 0.000016.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setMaximumDistance' href='./../Overviews/Methods.html#setMaximumDistance'>setMaximumDistance</a> (<span class='argstr'>newValue</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Set the maximum source distance used for the distance attenuation function. Default to 62500 m.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setReferenceDistance' href='./../Overviews/Methods.html#setReferenceDistance'>setReferenceDistance</a> (<span class='argstr'>newValue</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Set the reference distance used for the distance attenuation function. Default to 1 m.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-absorptionModel' href='./../Overviews/Methods.html#absorptionModel'>absorptionModel</a> </h3>
+<div class='method'>
+<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setAbsorptionModel' href='./../Overviews/Methods.html#setAbsorptionModel'>setAbsorptionModel</a> (<span class='argstr'>newValue</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Select the air absorption model.  The possible values are 0 for no model, 1 for standard model, or <code class='code prettyprint lang-sc'>\default</code>. Default to 1.
+<p>Check <a href="http://redmine.spatdif.org/attachments/download/105/SpatDIF-specs-V0.3.pdf">http://redmine.spatdif.org/attachments/download/105/SpatDIF-specs-V0.3.pdf</a>, Appendix F</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-attenuationModel' href='./../Overviews/Methods.html#attenuationModel'>attenuationModel</a> </h3>
+<div class='method'>
+<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setAttenuationModel' href='./../Overviews/Methods.html#setAttenuationModel'>setAttenuationModel</a> (<span class='argstr'>newValue</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Select the distance attenuation model.  Possible values are 0 for no model, 1 for higher attenuation model, 2 for lower attenuation model, or <code class='code prettyprint lang-sc'>\default</code>. Default to 2.
+<p>Check <a href="http://redmine.spatdif.org/attachments/download/105/SpatDIF-specs-V0.3.pdf">http://redmine.spatdif.org/attachments/download/105/SpatDIF-specs-V0.3.pdf</a>, Appendix F</div><h3><a class='anchor' name='Network Communication'>Network Communication</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-worldAddresses' href='./../Overviews/Methods.html#worldAddresses'>worldAddresses</a> </h3>
+<div class='method'>
+<p>Get the list of all <code class='code prettyprint lang-sc'>Classes/SSWorld</code> addresses where to send back the scene information (in case of <code class='code prettyprint lang-sc'>SpatDifPlayer</code> playback) or remote control. Multiple addresses are allowed.
+<p>At instanciation, the only address available will be <a href="./../Classes/NetAddr.html#-localAddr">NetAddr: -localAddr</a>. It is responsability of the user to provide a correct address, when working in remote. </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addWorldAddress' href='./../Overviews/Methods.html#addWorldAddress'>addWorldAddress</a> (<span class='argstr'>addr</span>)</h3>
+<div class='method'>
+<p>Add a <code class='code prettyprint lang-sc'>NetAddress</code> to the <a href="./../Classes/SpatialRender.html#-worldAddresses">SpatialRender: -worldAddresses</a> list.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeWorldAddress' href='./../Overviews/Methods.html#removeWorldAddress'>removeWorldAddress</a> (<span class='argstr'>addr</span>)</h3>
+<div class='method'>
+<p>Remove a <code class='code prettyprint lang-sc'>NetAddress</code> from the <a href="./../Classes/SpatialRender.html#-worldAddresses">SpatialRender: -worldAddresses</a> list.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>The removed <code class='code prettyprint lang-sc'>NetAddress</code> if succesful, or <code class='code prettyprint lang-sc'>nil</code> if not.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-resendToWorld' href='./../Overviews/Methods.html#resendToWorld'>resendToWorld</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-resendToWorld' href='./../Overviews/Methods.html#resendToWorld'>resendToWorld</a> = value</h3>
+<div class='method'>
+<p>Get/set whether scene information will be resended to all associated <code class='code prettyprint lang-sc'>SSWorld</code>, when there is no <code class='code prettyprint lang-sc'>SpatDifPlayer</code> playback.
+<p>By default it will be <code class='code prettyprint lang-sc'>false</code>. User should set it only for remote visualization.</div><h3><a class='anchor' name='Control'>Control</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sourceNames' href='./../Overviews/Methods.html#sourceNames'>sourceNames</a> </h3>
+<div class='method'>
+<p>Get a <code class='code prettyprint lang-sc'>List</code> with all source names</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-receiverFunctions' href='./../Overviews/Methods.html#receiverFunctions'>receiverFunctions</a> </h3>
+<div class='method'>
+<p>Get a <code class='code prettyprint lang-sc'>Dictionary</code> in the form [sourceName -&gt; OSCReceiver function associated]</div><h3><a class='anchor' name='SpatDIF Logger'>SpatDIF Logger</a></h3>
+
+<p>A <a href="./../Classes/SpatDifLogger.html">SpatDifLogger</a> instance is provided with the Spatial Render. It is recommended to control it from the following methods.<h3 class='imethodname'><span class='methprefix'>-</span><a name='-spatDifLoggerPath' href='./../Overviews/Methods.html#spatDifLoggerPath'>spatDifLoggerPath</a> </h3>
+<div class='method'>
+<p>Get the current path for the SpatDIF log file.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-spatDifLoggerFilename' href='./../Overviews/Methods.html#spatDifLoggerFilename'>spatDifLoggerFilename</a> </h3>
+<div class='method'>
+<p>Get the complete file name for the SpatDIF log file.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-logOSC' href='./../Overviews/Methods.html#logOSC'>logOSC</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-logOSC' href='./../Overviews/Methods.html#logOSC'>logOSC</a> = <span class='argstr'>bool</span></h3>
+<div class='method'>
+<p>Set wheter the SpatDifLogger is active or inactive.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-autosaveOSC' href='./../Overviews/Methods.html#autosaveOSC'>autosaveOSC</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-autosaveOSC' href='./../Overviews/Methods.html#autosaveOSC'>autosaveOSC</a> = <span class='argstr'>bool</span></h3>
+<div class='method'>
+<p>Activate or deactivate the autosave functionality of the log file. Default to <code class='code prettyprint lang-sc'>true</code>.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-autosavePeriod' href='./../Overviews/Methods.html#autosavePeriod'>autosavePeriod</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-autosavePeriod' href='./../Overviews/Methods.html#autosavePeriod'>autosavePeriod</a> = value</h3>
+<div class='method'>
+<p>Get/set the period between consecutive autosavings of the log file. Default to 10 s.</div><h3><a class='anchor' name='SpatDIF Player'>SpatDIF Player</a></h3>
+
+<p>A <a href="./../Classes/SpatDifPlayer.html">SpatDifPlayer</a> instance is provided with the Spatial Render. It is recommended to control it from the following methods.<h3 class='imethodname'><span class='methprefix'>-</span><a name='-spatDifPlayer_load' href='./../Overviews/Methods.html#spatDifPlayer_load'>spatDifPlayer_load</a> (<span class='argstr'>aFile</span>)</h3>
+<div class='method'>
+<p>Load the content of a OSC-SpatDIF file and prepare it for playback.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>aFile<td class='argumentdesc'>
+<p><code class='code prettyprint lang-sc'>String</code> with the path to the file.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-spatDifPlayer_start' href='./../Overviews/Methods.html#spatDifPlayer_start'>spatDifPlayer_start</a> (<span class='argstr'>loop: 1</span>)</h3>
+<div class='method'>
+<p>Start playback from the beggining of the document.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>loop<td class='argumentdesc'>
+<p>Set the looping. 1 for one-shot, 2 for two repetitions... inf for eternal repeat</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-spatDifPlayer_play' href='./../Overviews/Methods.html#spatDifPlayer_play'>spatDifPlayer_play</a> </h3>
+<div class='method'>
+<p>Starts playback from where it was paused last time.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-spatDifPlayer_pause' href='./../Overviews/Methods.html#spatDifPlayer_pause'>spatDifPlayer_pause</a> </h3>
+<div class='method'>
+<p>Pauses playback. Next call to <a href="./../Classes/SpatialRender.html#-spatDifPlayer_play">SpatialRender: -spatDifPlayer_play</a> will start from where it was paused.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-spatDifPlayer_stop' href='./../Overviews/Methods.html#spatDifPlayer_stop'>spatDifPlayer_stop</a> </h3>
+<div class='method'>
+<p>Stop playback. Next call to <a href="./../Classes/SpatialRender.html#-spatDifPlayer_play">SpatialRender: -spatDifPlayer_play</a> will start from the beginning</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-spatDifPlayer_reset' href='./../Overviews/Methods.html#spatDifPlayer_reset'>spatDifPlayer_reset</a> </h3>
+<div class='method'>
+<p>Next call to <a href="./../Classes/SpatialRender.html#-spatDifPlayer_play">SpatialRender: -spatDifPlayer_play</a> will start from the beginning</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-spatDifPlayer_isPlaying' href='./../Overviews/Methods.html#spatDifPlayer_isPlaying'>spatDifPlayer_isPlaying</a> </h3>
+<div class='method'>
+<p>Answer whether the player is currently playing. See <a href="./../Classes/SpatDifPlayer.html#-isPlaying">SpatDifPlayer: -isPlaying</a></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-spatDifPlayer_verbose' href='./../Overviews/Methods.html#spatDifPlayer_verbose'>spatDifPlayer_verbose</a> (<span class='argstr'>bool</span>)</h3>
+<div class='method'>
+<p>If <code class='code prettyprint lang-sc'>true</code>, it will print all sended messages.</div><h3><a class='anchor' name='Other'>Other</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-verbose' href='./../Overviews/Methods.html#verbose'>verbose</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-verbose' href='./../Overviews/Methods.html#verbose'>verbose</a> = value</h3>
+<div class='method'>
+<p>If verbose is set to true, outcoming messages will be printed</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-close' href='./../Overviews/Methods.html#close'>close</a> </h3>
+<div class='method'>
+<p>Close all OSCResponders, free all synths, close the OSC Logger file.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-server' href='./../Overviews/Methods.html#server'>server</a> </h3>
+<div class='method'>
+<p>Get the used server</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-absorptionSynths' href='./../Overviews/Methods.html#absorptionSynths'>absorptionSynths</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-attenuationSynths' href='./../Overviews/Methods.html#attenuationSynths'>attenuationSynths</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-channels' href='./../Overviews/Methods.html#channels'>channels</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-distanceBuses' href='./../Overviews/Methods.html#distanceBuses'>distanceBuses</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-distanceGroups' href='./../Overviews/Methods.html#distanceGroups'>distanceGroups</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-encoders' href='./../Overviews/Methods.html#encoders'>encoders</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-objectPositions' href='./../Overviews/Methods.html#objectPositions'>objectPositions</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-pannerBuses' href='./../Overviews/Methods.html#pannerBuses'>pannerBuses</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-pannerSynths' href='./../Overviews/Methods.html#pannerSynths'>pannerSynths</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-spatDifLogger' href='./../Overviews/Methods.html#spatDifLogger'>spatDifLogger</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-spatDifPlayer' href='./../Overviews/Methods.html#spatDifPlayer'>spatDifPlayer</a> </h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// instanciate a Spatial Render
+r=SpatialRender.new(s);
+
+//create a sound scene
+(
+w = SSWorld([20,20,10]).showView;
+o = SSObject(w,loc:[2,0,0],channel:0).setMotion(\orbit)
+)
+
+
+// NOTICE that, even if the object's radius is 1, the render is receiving 2.
+// This is because SSWorld adjusts internally the minimum radius to the sweetSpotSize:
+w.sweetSpotSize
+w.setSweetSpotSize(1)
+
+// by default, the render is verbose. we can change it...
+r.verbose_(false)
+
+
+// each object has a SuperCollider input associated...
+o.channel // will answer 0 (default)
+
+// ...which can be setted at any time
+o.setChannel(1)
+
+// now, connect something to the second SuperCollider input and listen
+// (remember to use headphones, we are using binaural for the moment)
+
+// ......
+
+
+
+
+
+
+// // // // // // SPATDIF LOG AND PLAYBACK // // // // // //
+
+// let's say we liked the sound scene we just produced.
+// everything is logged in...
+r.spatDifLoggerFilename
+// ...because the log option is by default set to true
+r.logOSC
+
+// we can stop the scene
+w.pause;
+
+// and playback it (remember to save the file first!)
+(
+r.spatDifLogger.save;
+r.spatDifPlayer_load(r.spatDifLoggerFilename);
+r.spatDifPlayer_start
+)
+
+// looping is also allowed
+r.spatDifPlayer_start(inf)
+r.spatDifPlayer_start(3)
+
+// spatDifPlayer is verbose by default
+r.spatDifPlayer.verbose
+r.spatDifPlayer_verbose(false)
+
+// and usual task controls provided
+r.spatDifPlayer.pause
+r.spatDifPlayer_play
+r.spatDifPlayer_reset
+r.spatDifPlayer_isPlaying
+
+r.spatDifPlayer_stop
+
+
+
+
+
+// // // // // // RENDERING PARAMETERS // // // // // //
+
+// we have some options for the distance cues: air absorption and distance attenuation
+
+// let's put another source and listen to them
+(
+o.setMotion(\static);
+o.stop;
+o.loc_([2,0,0]);
+SSObject(w,loc:[5,0,0],channel:1);
+)
+
+// there are two absorption models: 0 (no absorption) and 1 (lpf)
+r.absorptionModel
+r.setAbsorptionModel(0)
+
+// and 3 attenuation models: 0 (no attenuation), and 1 and 2 (around 1/r^2)
+r.attenuationModel
+r.setAttenuationModel(0)
+
+// we can also control the attenuation parameters
+r.setMaximumAttenuation(0.0002)
+r.setMaximumDistance(100);
+r.setReferenceDistance(0.5)
+
+// see the SpatialRender helpfile for more information about
+
+
+
+
+
+
+// // // // // // SPATIALIZATION PARAMETERS // // // // // //
+
+///// BINAURAL (HTRF)
+
+// there are three different possible spatialization techniques
+
+// by default, the one used is binaural (provided by ATK)
+r.spatialTechnique
+
+// we can see the decoder parameters
+r.binauralDecoder // \cipic model, ID 65
+
+// and set them. Search the one that most match your perception
+r.setBinauralDecoder(\cipic,131)
+r.setBinauralDecoder(\listen,1030)
+r.setBinauralDecoder(\spherical,0005)
+
+// see FoaDecoderKernel for more info about binaural decoding
+
+
+///// VBAP
+
+r.setSpatializationTechnique(\vbap)
+
+// by default, a 5.1 speaker array is provided
+r.vbapNumSpeakers
+r.vbapSpeakerArray
+r.vbapSpeakerBuffer
+
+// we can set the speaker array.
+// remember that the given speaker order is the output channels order
+r.setVbapParameters(VBAPSpeakerArray.new(2,[45,135,-135,-45])) //quad
+
+//// AMBISONICS
+
+// we provide a custom set of ambisonic encoders, up to 3rd order
+// decoding is managed by AmbDec
+
+r.setSpatializationTechnique(\ambisonics)
+// an instance of AmbDec appeared. Select your choice decoding configuration there
+
+// also the Jack/SC/AmbDec connexions are managed internally. take a look..
+
+// when using ambisonics, every source can have a different order and shape..
+r.ambisonicsParameters
+
+// .. thus, we can set them individually or together
+r.setAmbisonicsParameters(order:1)
+r.setAmbisonicsParameters(\0,order:2)
+
+// source shape should be changed from SSWorld in order to visualize it
+w.getObject(\0).shape_(\extended).dAzimuth_(pi/2).dElevation_(pi/4)
+w.getObject(\1).shape_(\ring).locSph_(ele:pi/8)
+w.getObject(\1).shape_(\meridian).locSph_([3,pi,0])</pre>
+
+<p><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/HelpSource/Classes/SpatialRender.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/HelpSource/Classes/SpatialRender.schelp</a><br>link::Classes/SpatialRender::<br>sc version: 3.7alpha1</div></div></body></html>

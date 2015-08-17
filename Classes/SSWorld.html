@@ -1,0 +1,304 @@
+<html><head><title>SSWorld</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>3Dj'>Libraries>3Dj</a></div>
+<h1>SSWorld</h1>
+<div id='summary'>Sound Scene World Simulation</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/classes/Sound Scene/<a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/classes/Sound Scene/SSWorld.sc'>SSWorld.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/RedWorld1.html">RedWorld1</a> : <a href="../Classes/RedWorld.html">RedWorld</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Guides/3Dj.html">Introducing 3Dj</a>, <a href="./../Classes/SSObject.html">SSObject</a>, <a href="./../Classes/SpatialRender.html">SpatialRender</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#World Properties'>World Properties</a></li>
+<ul class='toc'><li class='toc3'><a href='#-dim'>dim</a> </li>
+<li class='toc3'><a href='#-sweetSpotSize'>sweetSpotSize</a> </li>
+<li class='toc3'><a href='#-setSweetSpotSize'>setSweetSpotSize</a> </li>
+<li class='toc3'><a href='#-stepFreq'>stepFreq</a> </li>
+<li class='toc3'><a href='#-rDiff'>rDiff</a> </li>
+<li class='toc3'><a href='#-aziDiff'>aziDiff</a> </li>
+<li class='toc3'><a href='#-eleDiff'>eleDiff</a> </li>
+<li class='toc3'><a href='#-center'>center</a> </li>
+<li class='toc3'><a href='#-maxDistance'>maxDistance</a> </li>
+<li class='toc3'><a href='#-friction'>friction</a> </li>
+<li class='toc3'><a href='#-pause'>pause</a> </li>
+<li class='toc3'><a href='#-resume'>resume</a> </li>
+<li class='toc3'><a href='#-update'>update</a> </li>
+</ul><li class='toc2'><a href='#Object managing'>Object managing</a></li>
+<ul class='toc'><li class='toc3'><a href='#-add'>add</a> </li>
+<li class='toc3'><a href='#-remove'>remove</a> </li>
+<li class='toc3'><a href='#-removeByName'>removeByName</a> </li>
+<li class='toc3'><a href='#-contains'>contains</a> </li>
+<li class='toc3'><a href='#-getObject'>getObject</a> </li>
+<li class='toc3'><a href='#-getAllObjects'>getAllObjects</a> </li>
+<li class='toc3'><a href='#-getAllObjectNames'>getAllObjectNames</a> </li>
+<li class='toc3'><a href='#-numObjects'>numObjects</a> </li>
+</ul><li class='toc2'><a href='#Visualization'>Visualization</a></li>
+<ul class='toc'><li class='toc3'><a href='#-showView'>showView</a> </li>
+<li class='toc3'><a href='#-hideView'>hideView</a> </li>
+<li class='toc3'><a href='#-alwaysOnTop'>alwaysOnTop</a> </li>
+<li class='toc3'><a href='#-viewDiff'>viewDiff</a> </li>
+<li class='toc3'><a href='#-showNames'>showNames</a> </li>
+<li class='toc3'><a href='#-closeWindow'>closeWindow</a> </li>
+</ul><li class='toc2'><a href='#Network Communication'>Network Communication</a></li>
+<ul class='toc'><li class='toc3'><a href='#-renderAddresses'>renderAddresses</a> </li>
+<li class='toc3'><a href='#-addRenderAddress'>addRenderAddress</a> </li>
+<li class='toc3'><a href='#-removeRenderAddress'>removeRenderAddress</a> </li>
+<li class='toc3'><a href='#-receivingFromServer'>receivingFromServer</a> </li>
+</ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>The world where the sound scene exists. It can contain an arbitrary number of <a href="./../Classes/SSObject.html">SSObject</a>.
+<p>A <code class='code prettyprint lang-sc'>SSWorld</code> presents some settable physical parameters (gravity, friction...), that objects are subject to.
+<p>There is a sweet spot in the bottom center of the room, where the objects cannot be located. For a room with dimmension <code class='code prettyprint lang-sc'>dim =[x,y,z]</code>, the room center will be <code class='code prettyprint lang-sc'>[0,0,0]</code>, and the possible locations: [ -x/2 to x/2, -y/2 to y/2, 0 to z ]. If an object location exceeds world limits, it will be relocated in the equivalent folded position.
+<p>The <code class='code prettyprint lang-sc'>SSWorld</code> is continuously monitoring what happens inside, and sending to a desired addres the scene description in OSC-SpatDIF format.
+<p>It is a subclass of <a href="./../Classes/RedWorld1.html">RedWorld1</a>. Notice that, in contraposition with its superclass, the SSWorld is the <em>higher level</em> element. There is, for the moment, not a such thing like SSUniverse.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>dim</span>, <span class='argstr'>gravity</span>, <span class='argstr'>maxVel</span>, <span class='argstr'>damping</span>, <span class='argstr'>friction: 0.01</span>, <span class='argstr'>timeStep: 60</span>, <span class='argstr'>netAddr</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>dim<td class='argumentdesc'>
+<p><code class='code prettyprint lang-sc'>Array</code> or <code class='code prettyprint lang-sc'>Cartesian</code> with the world dimensions (in m) in each of the three axis, in the format [dimX,dimY,dimZ]. 
+<p>Default to [10, 10, 5]. <tr><td class='argumentname'>gravity<td class='argumentdesc'>
+<p><code class='code prettyprint lang-sc'>Array</code> or <code class='code prettyprint lang-sc'>Cartesian</code> with the default gravity acceleration (in m/s^2) in each of the three axis, in the format [gravX,gravY,gravZ].
+<p>Default to [0, 0, 0.98]<tr><td class='argumentname'>maxVel<td class='argumentdesc'>
+<p>Light velocity : maximum velocity allowed in the world, in m/s. Default to 100.<tr><td class='argumentname'>damping<td class='argumentdesc'>
+<p>Coefficient of energy loss when an object rebounces in the wall. 0 for nothing and 1 for all.
+<p>Default to 0.25<tr><td class='argumentname'>friction<td class='argumentdesc'>
+<p>Coefficient of velocity loss in contact with the medium. 0 for nothing and 1 for all.
+<p>Default to 0.01<tr><td class='argumentname'>timeStep<td class='argumentdesc'>
+<p>Frequency of monitoring changes inside the world, and generating the scene description.
+<p>Default to 60 Hz.<tr><td class='argumentname'>netAddr<td class='argumentdesc'>
+<p>Instance of <code class='code prettyprint lang-sc'>NetAddr</code> where to send the scene description.
+<p>Default to <code class='code prettyprint lang-sc'>NetAddr.localAddr</code></table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='World Properties'>World Properties</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-dim' href='./../Overviews/Methods.html#dim'>dim</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-dim' href='./../Overviews/Methods.html#dim'>dim</a> = <span class='argstr'>value</span></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/RedWorld.html'>RedWorld</a></div>
+<div class='method'>
+<p>Get/set the world dimensions. <h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>value<td class='argumentdesc'>
+<p><code class='code prettyprint lang-sc'>Array</code> or <code class='code prettyprint lang-sc'>Cartesian</code> in the form [dimX,dimY,dimX]</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-sweetSpotSize' href='./../Overviews/Methods.html#sweetSpotSize'>sweetSpotSize</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setSweetSpotSize' href='./../Overviews/Methods.html#setSweetSpotSize'>setSweetSpotSize</a> (<span class='argstr'>newSize</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newSize<td class='argumentdesc'>
+<p>Radius in meters. Default to 2 m</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-stepFreq' href='./../Overviews/Methods.html#stepFreq'>stepFreq</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-stepFreq' href='./../Overviews/Methods.html#stepFreq'>stepFreq</a> = value</h3>
+<div class='method'>
+<p>Get/set the world's update frequency.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rDiff' href='./../Overviews/Methods.html#rDiff'>rDiff</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-rDiff' href='./../Overviews/Methods.html#rDiff'>rDiff</a> = value</h3>
+<div class='method'>
+<p>Get/set the distance JND: minimum distance change (in spherical coordenates) to be considered as a different position.
+<p>Default to 0.05 m.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-aziDiff' href='./../Overviews/Methods.html#aziDiff'>aziDiff</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-aziDiff' href='./../Overviews/Methods.html#aziDiff'>aziDiff</a> = value</h3>
+<div class='method'>
+<p>Get/set the azimuth JND: minimum angle change to be considered as a different position.
+<p>Default to 1 degree.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-eleDiff' href='./../Overviews/Methods.html#eleDiff'>eleDiff</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-eleDiff' href='./../Overviews/Methods.html#eleDiff'>eleDiff</a> = value</h3>
+<div class='method'>
+<p>Get/set the elevation JND: minimum angle change to be considered as a different position.
+<p>Default to 5 degrees.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-center' href='./../Overviews/Methods.html#center'>center</a> </h3>
+<div class='method'>
+<p>Get the world's coordinate system center.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code class='code prettyprint lang-sc'>Cartesian()</code></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-maxDistance' href='./../Overviews/Methods.html#maxDistance'>maxDistance</a> </h3>
+<div class='method'>
+<p>Get the maximum possible distance from any point to the world's coordinate system center. </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-friction' href='./../Overviews/Methods.html#friction'>friction</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-friction' href='./../Overviews/Methods.html#friction'>friction</a> = value</h3>
+<div class='method'>
+<p>Get/set the medium friction parameter. A number between 0 (no friction) and 1 (every time step, velocity will be decreased a 100%) </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pause' href='./../Overviews/Methods.html#pause'>pause</a> </h3>
+<div class='method'>
+<p>Stop the time passing.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-resume' href='./../Overviews/Methods.html#resume'>resume</a> </h3>
+<div class='method'>
+<p>Resume the time passing, as if nothing happened.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-update' href='./../Overviews/Methods.html#update'>update</a> </h3>
+<div class='method'>
+<p>Forces a world update. This can be useful when the world is paused.
+<p>This method is called automatically every <a href="./../Classes/SSWorld.html#-stepFreq">SSWorld: -stepFreq</a></div><h3><a class='anchor' name='Object managing'>Object managing</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-add' href='./../Overviews/Methods.html#add'>add</a> (<span class='argstr'>obj</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Add an object to the world. This method is called automatically from <a href="./../Classes/SSObject.html#*new">SSObject: *new</a><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>obj<td class='argumentdesc'>
+<p>an instance of <code class='code prettyprint lang-sc'>SSObject</code></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-remove' href='./../Overviews/Methods.html#remove'>remove</a> (<span class='argstr'>obj</span>, <span class='argstr'>internal: true</span>)</h3>
+<div class='method'>
+<p>Remove completely the given object from the world<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>obj<td class='argumentdesc'>
+<p>An instance of <code class='code prettyprint lang-sc'>SSObject</code></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeByName' href='./../Overviews/Methods.html#removeByName'>removeByName</a> (<span class='argstr'>name</span>)</h3>
+<div class='method'>
+<p>Remove completely the given object from the world<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>A <code class='code prettyprint lang-sc'>\Symbol</code> with the object's name.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-contains' href='./../Overviews/Methods.html#contains'>contains</a> (<span class='argstr'>ssObj</span>)</h3>
+<div class='method'>
+<p>Ask if the world contains the given object.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>ssObj<td class='argumentdesc'>
+<p>An instance of <code class='code prettyprint lang-sc'>SSObject</code></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Boolean</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getObject' href='./../Overviews/Methods.html#getObject'>getObject</a> (<span class='argstr'>objName</span>)</h3>
+<div class='method'>
+<p>Get the reference to an object, given its name<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>objName<td class='argumentdesc'>
+<p>A <code class='code prettyprint lang-sc'>Symbol</code> with the object name</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>The <code class='code prettyprint lang-sc'>SSObject</code> instance, or <code class='code prettyprint lang-sc'>nil</code> if not found</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getAllObjects' href='./../Overviews/Methods.html#getAllObjects'>getAllObjects</a> </h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an Array with references to all existing SSObjects</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getAllObjectNames' href='./../Overviews/Methods.html#getAllObjectNames'>getAllObjectNames</a> </h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an Array with the names of all existing SSObjects</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-numObjects' href='./../Overviews/Methods.html#numObjects'>numObjects</a> </h3>
+<div class='method'>
+<p>Get the number of exisisting objects in the world</div><h3><a class='anchor' name='Visualization'>Visualization</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-showView' href='./../Overviews/Methods.html#showView'>showView</a> </h3>
+<div class='method'>
+<p>Show the world's view</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-hideView' href='./../Overviews/Methods.html#hideView'>hideView</a> </h3>
+<div class='method'>
+<p>Hide the world's view</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-alwaysOnTop' href='./../Overviews/Methods.html#alwaysOnTop'>alwaysOnTop</a> (<span class='argstr'>bool</span>)</h3>
+<div class='method'>
+<p>Set the alwaysOnTop property of the world's view</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-viewDiff' href='./../Overviews/Methods.html#viewDiff'>viewDiff</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-viewDiff' href='./../Overviews/Methods.html#viewDiff'>viewDiff</a> = value</h3>
+<div class='method'>
+<p>If <code class='code prettyprint lang-sc'>true</code>, update world's view only after checking that the scene changed. If <code class='code prettyprint lang-sc'>false</code>, update it in a continuous way (every <code class='code prettyprint lang-sc'>stepFreq.reciprocal</code> seconds)
+<p>Default to <code class='code prettyprint lang-sc'>false</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-showNames' href='./../Overviews/Methods.html#showNames'>showNames</a> (<span class='argstr'>bool</span>)</h3>
+<div class='method'>
+<p>Show or hide the object names in the view</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-closeWindow' href='./../Overviews/Methods.html#closeWindow'>closeWindow</a> </h3>
+<div class='method'>
+<p>Closes the window</div><h3><a class='anchor' name='Network Communication'>Network Communication</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-renderAddresses' href='./../Overviews/Methods.html#renderAddresses'>renderAddresses</a> </h3>
+<div class='method'>
+<p>Get the list of all <code class='code prettyprint lang-sc'>Classes/SpatialRender</code> addresses where to send the scene information.
+<p>Multiple addresses are allowed, in order to support remote control.
+<p>By default, there will be only the <code class='code prettyprint lang-sc'>NetAddress</code> provided in instanciation. </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addRenderAddress' href='./../Overviews/Methods.html#addRenderAddress'>addRenderAddress</a> (<span class='argstr'>addr</span>)</h3>
+<div class='method'>
+<p>Add a <code class='code prettyprint lang-sc'>NetAddress</code> to the <a href="./../Classes/SSWorld.html#-renderAddresses">SSWorld: -renderAddresses</a></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeRenderAddress' href='./../Overviews/Methods.html#removeRenderAddress'>removeRenderAddress</a> (<span class='argstr'>addr</span>)</h3>
+<div class='method'>
+<p>Remove a <code class='code prettyprint lang-sc'>NetAddress</code> to the <a href="./../Classes/SSWorld.html#-renderAddresses">SSWorld: -renderAddresses</a><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>The removed <code class='code prettyprint lang-sc'>NetAddress</code> if succesful, or <code class='code prettyprint lang-sc'>nil</code> if not.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-receivingFromServer' href='./../Overviews/Methods.html#receivingFromServer'>receivingFromServer</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-receivingFromServer' href='./../Overviews/Methods.html#receivingFromServer'>receivingFromServer</a> = value</h3>
+<div class='method'>
+<p>If <code class='code prettyprint lang-sc'>this</code> receives any external messages (from <code class='code prettyprint lang-sc'>SpatDifPlayer</code> playback or remote control), <a href="./../Classes/SSWorld.html#-receivingFromServer">SSWorld: -receivingFromServer</a> will be automatically set to true. In that case, the world won't update itself (avoiding message redundancy to the server).
+<p>The user can set its value at any time through the set method.</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// // // // // // PHYSICAL MODEL // // // // // //
+
+// create a new world with dimension 10x10x10
+// the coordinate system is located on the floor, half away from wals
+w = SSWorld([10,10,10]).showView;
+
+// put an object into the world
+o = SSObject(w,name:\1)
+
+// locate it
+o.loc_([3,1,0]) // in cartesian (x,y,z)
+o.loc_(z:5) // only the desired dimension
+
+o.locSph_([3,pi,0]) // in spherical (rho, azi, ele)
+o.locSph_(ele:pi/4)
+
+//get location
+o.loc
+o.locSph
+
+// put some gravity in the world
+w.gravity
+w.gravity_([3,0,0])
+// nothing happened? objects have gravity disabled by default
+o.gravity_(true)
+
+// movement won't stop because we don't have almost friction..
+w.friction
+w.friction_(0.5) //50% of velocity loosed in every step
+o.friction_(true)
+
+// .. and because the wall dampening is not so high
+w.damping
+w.damping_(0.5) //50% of velocity loosed in bounce
+
+// we can always show only when there was a significative difference
+w.viewDiff_(true)
+
+// something with more fun...
+(
+t=Task({
+    inf.do{
+        w.gravity_((3.0.dup(3).collect(_.rand2)).postln);
+        w.friction_(1.0.rand);
+        w.gravity_(1.0.rand);
+        2.wait;
+        w.gravity_([0,0,0]);
+        5.wait;
+    }
+});
+
+t.play;
+)
+t.stop
+
+// if we want to stop an object, we use its method stop
+o.stop
+
+// we can interact with objects directly (the "bottom-up" approach)
+o.accel_([-1,0,0])
+o.accel_(3.0.dup(3).collect(_.rand2))
+
+o.friction_(false) // try it without friction
+o.accel_([-1,0,0])
+
+o.stop
+
+// the other interaction way is the "top-bottom" or god mode. See the Motion helpfile for examples on that...
+
+// it is possible to stop the world's time, freezing everything...
+w.pause
+// ...and resume it again when desired
+w.resume
+
+
+w.closeWindow</pre>
+<pre class='code prettyprint lang-sc'>// // // // // // OBJECT MANAGING // // // // // //
+
+w = SSWorld([10,10,10]).showView;
+
+// objects are usually created by the SSObject.new method
+o = SSObject(w,name:\object,loc:[1,2,3])
+
+// sometimes we don't want to save a instance...
+SSObject(w) // a default name will be applied
+
+//...but we can still acces it by name (remember: it's a Symbol)
+w.getObject(\1).loc_([3,0,0])
+
+// we can remove objects
+w.remove(o)
+// and also by name
+w.removeByName(\1)</pre>
+<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/HelpSource/Classes/SSWorld.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/3Dj/HelpSource/Classes/SSWorld.schelp</a><br>link::Classes/SSWorld::<br>sc version: 3.7alpha1</div></div></body></html>

@@ -1,0 +1,322 @@
+<html><head><title>RedLTurtle</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Red>redUniverse>additional'>Red>redUniverse>additional</a></div>
+<h1>RedLTurtle</h1>
+<div id='summary'>turtle graphics for RedLSystem</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/downloaded-quarks/redUniverse/classes/additional/<a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redUniverse/classes/additional/RedLTurtle.sc'>RedLTurtle.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/RedLSystem.html">RedLSystem</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-draw'>draw</a> </li>
+<li class='toc3'><a href='#-defaultCommands'>defaultCommands</a> </li>
+<li class='toc3'><a href='#-addCommand'>addCommand</a> </li>
+<li class='toc3'><a href='#-makeWindow'>makeWindow</a> </li>
+<li class='toc3'><a href='#-lsystem'>lsystem</a> </li>
+<li class='toc3'><a href='#-length'>length</a> </li>
+<li class='toc3'><a href='#-theta'>theta</a> </li>
+<li class='toc3'><a href='#-scale'>scale</a> </li>
+<li class='toc3'><a href='#-noise'>noise</a> </li>
+<li class='toc3'><a href='#-commands'>commands</a> </li>
+<li class='toc3'><a href='#-preCommandAction'>preCommandAction</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Plotting with <a href="./../Classes/Pen.html">Pen</a>. After Flake - "The Computational Beauty of Nature".<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>lsystem</span>, <span class='argstr'>length: 40</span>, <span class='argstr'>theta: 20</span>, <span class='argstr'>scale: 1</span>, <span class='argstr'>noise: 0</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>lsystem<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/RedLSystem.html">RedLSystem</a> or a <a href="./../Classes/String.html">String</a>.<tr><td class='argumentname'>length<td class='argumentdesc'>
+<p>Line segment length in pixels.<tr><td class='argumentname'>theta<td class='argumentdesc'>
+<p>Angle in degrees.<tr><td class='argumentname'>scale<td class='argumentdesc'>
+<p>The amount to scale all moving commands ($F, $G, $|) in percent.<tr><td class='argumentname'>noise<td class='argumentdesc'>
+<p>The amount of uniform noise to add to all angles in radians.</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-draw' href='./../Overviews/Methods.html#draw'>draw</a> </h3>
+<div class='method'>
+<p>Start drawing the l-system or string at current <a href="./../Classes/Pen.html">Pen</a> position.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-defaultCommands' href='./../Overviews/Methods.html#defaultCommands'>defaultCommands</a> </h3>
+<div class='method'>
+<p>Return a dictionary of default (character : function) pairs.<table>
+<tr><td>$F<td>draw forward<tr><td>$G<td>go forward<tr><td>$+<td>turn right by theta<tr><td>$-<td>turn left by theta<tr><td>$[<td>push state<tr><td>$]<td>pop state<tr><td>$|<td>draw forward scaled by depth</table>
+
+<p>An <a href="./../Classes/Integer.html">Integer</a> before each character repeats that command <strong>n</strong> times.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addCommand' href='./../Overviews/Methods.html#addCommand'>addCommand</a> (<span class='argstr'>chr</span>, <span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>Make up new rules by putting a character : function pair into command dictionary. Arguments passed in to function: depth, depthLength, index.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeWindow' href='./../Overviews/Methods.html#makeWindow'>makeWindow</a> (<span class='argstr'>bounds</span>, <span class='argstr'>initAngle: 0</span>, <span class='argstr'>initTranslate</span>)</h3>
+<div class='method'>
+<p>Creates a <a href="./../Classes/Window.html">Window</a> and draw the l-system or string. Mainly for testing.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bounds<td class='argumentdesc'>
+<p>A <a href="./../Classes/Rect.html">Rect</a>.<tr><td class='argumentname'>initAngle<td class='argumentdesc'>
+<p>Sets the initial <a href="./../Classes/Pen.html">Pen</a> rotation in radians.<tr><td class='argumentname'>initTranslate<td class='argumentdesc'>
+<p>Sets the initial <a href="./../Classes/Pen.html">Pen</a> translation in percent.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-lsystem' href='./../Overviews/Methods.html#lsystem'>lsystem</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-lsystem' href='./../Overviews/Methods.html#lsystem'>lsystem</a> = value</h3>
+<div class='method'>
+<p>Either a <a href="./../Classes/RedLSystem.html">RedLSystem</a> or a <a href="./../Classes/String.html">String</a>. For strings depth and thereby $| scaling is ignored. For l-systems (the preferred way) the depth is calculated ($| scaling by generation).</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-length' href='./../Overviews/Methods.html#length'>length</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-length' href='./../Overviews/Methods.html#length'>length</a> = value</h3>
+<div class='method'>
+<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-theta' href='./../Overviews/Methods.html#theta'>theta</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-theta' href='./../Overviews/Methods.html#theta'>theta</a> = value</h3>
+<div class='method'>
+<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-scale' href='./../Overviews/Methods.html#scale'>scale</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scale' href='./../Overviews/Methods.html#scale'>scale</a> = value</h3>
+<div class='method'>
+<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-noise' href='./../Overviews/Methods.html#noise'>noise</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-noise' href='./../Overviews/Methods.html#noise'>noise</a> = value</h3>
+<div class='method'>
+<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-commands' href='./../Overviews/Methods.html#commands'>commands</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-commands' href='./../Overviews/Methods.html#commands'>commands</a> = value</h3>
+<div class='method'>
+<p>A dictionary of current commands.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-preCommandAction' href='./../Overviews/Methods.html#preCommandAction'>preCommandAction</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-preCommandAction' href='./../Overviews/Methods.html#preCommandAction'>preCommandAction</a> = value</h3>
+<div class='method'>
+<p>A general <a href="./../Classes/Function.html">Function</a> that gets evaluated right before each command (character in the production array). Arguments passed in to function: depth, depthLength, index.</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>//--simple example using string
+RedLTurtle("FF+F").makeWindow;
+RedLTurtle("FF+F[+F[+F]]").makeWindow;
+
+//--same string but different length, angle and scale factor
+RedLTurtle("FF+F[+F[+F]]", 40, -90, 0.3).makeWindow;
+
+//--adding your own commands
+t= RedLTurtle("FF+sFsFsF");
+t.commands;        //list default commands
+t.addCommand($s, {Pen.translate(50, 0)});    //$s will shift 50 px to the right
+t.makeWindow;
+
+
+//--in combo with RedLSystem (the preferred way)
+(
+l= RedLSystem("B", ($B: "F[-B]+B", $F: "FF"));
+6.do{l.next};
+RedLTurtle(l, scale:0.94.pow(l.generation)).makeWindow;
+)
+
+//--koch curve
+(
+l= RedLSystem("F", ($F: "F-F++F-F"));
+5.do{l.next};
+RedLTurtle(l, 40, 60, 0.91.pow(l.generation)).makeWindow(Rect(100, 200, 800, 600), 0.5pi, Point(0.5, 0));
+)
+
+//--big h
+(
+l= RedLSystem("[F]--F", ($F: "|[+F][-F]"));
+9.do{l.next};
+RedLTurtle(l, 200, 90, 0.65).makeWindow;
+)
+
+//--bent big h
+(
+l= RedLSystem("[F]--F", ($F: "|[+F][-F]"));
+9.do{l.next};
+RedLTurtle(l, 200, 80, 0.65).makeWindow;
+)
+
+//--two y
+(
+l= RedLSystem("[F]4-F", ($F: "|[+F][-F]"));
+9.do{l.next};
+RedLTurtle(l, 200, 45, 0.65).makeWindow;
+)
+
+//--twig
+(
+l= RedLSystem("F", ($F: "|[-F][+F]"));
+7.do{l.next};
+RedLTurtle(l, 200, 20, 0.65, 0.2).makeWindow;
+)
+
+//--weed 1
+(
+l= RedLSystem("F", ($F: "F[-F]F[+F]F"));
+6.do{l.next};
+RedLTurtle(l, 40, 25, 0.6, 0.2).makeWindow(initTranslate: Point(0.5, 0));
+)
+
+//--weed 2
+(
+l= RedLSystem("F", ($F: "|[-F]|[+F]F"));
+7.do{l.next};
+RedLTurtle(l, 200, 25, 0.65, 0.2).makeWindow(initTranslate: Point(0.5, 0));
+)
+
+//--weed 3
+(
+l= RedLSystem("F", ($F: "|[-F]|[+F][-F]F"));
+5.do{l.next};
+RedLTurtle(l, 800, 20, 0.45, 0.2).makeWindow(initTranslate: Point(0.5, 0));
+)
+
+//--bush 1
+(
+l= RedLSystem("F", ($F: "FF+[+F-F-F]-[-F+F+F]"));
+5.do{l.next};
+RedLTurtle(l, 80, 25, 0.65, 0.1).makeWindow(initTranslate: Point(0.5, 0));
+)
+
+//--bush 2
+(
+l= RedLSystem("F", ($F: "|[+F]|[-F]+F"));
+7.do{l.next};
+RedLTurtle(l, 600, 20, 0.5, 0.1).makeWindow(initTranslate: Point(0.5, 0));
+)
+
+//--tree 1
+(
+l= RedLSystem("F", ($F: "|[3-F][3+F]|[--F][++F]|F"));
+6.do{l.next};
+RedLTurtle(l, 400, 20, 0.5, 0.1).makeWindow(initTranslate: Point(0.5, 0.1));
+)
+
+//--tree 2
+(
+l= RedLSystem("F", ($F: "|[5+F][7-F]-|[4+F][6-F]-|[3+F][5-F]-|F"));
+4.do{l.next};
+RedLTurtle(l, 300, 8, 0.5, 0.1).makeWindow(initTranslate: Point(0.5, 0.1));
+)
+
+//--tree 3
+(
+l= RedLSystem("F", ($F: "|[--F][+F]-F"));
+7.do{l.next};
+RedLTurtle(l, 400, 20, 0.65, 0.1).makeWindow(initTranslate: Point(0.5, 0));
+)
+
+//--carpet
+(
+l= RedLSystem("F-F-F-F", ($F: "F[F]-F+F[--F]+F-F"));
+4.do{l.next};
+RedLTurtle(l, 4, 90, 1).makeWindow(initTranslate: Point(2/3, 1/3));
+)
+
+//--sierpinski square
+(
+l= RedLSystem("F-F-F-F", ($F: "FF[-F-F-F]F"));
+4.do{l.next};
+RedLTurtle(l, 4, 90, 1).makeWindow(initTranslate: Point(2/3, 1/3));
+)
+
+//--rug
+(
+l= RedLSystem("F-F-F-F", ($F: "F[-F-F]FF"));
+4.do{l.next};
+RedLTurtle(l, 4, 90, 1).makeWindow(initTranslate: Point(2/3, 1/3));
+)
+
+//--koch island
+(
+l= RedLSystem("F++F++F", ($F: "F-F++F-F"));
+4.do{l.next};
+RedLTurtle(l, 5, 60, 1).makeWindow(initTranslate: Point(1/3, 1/3));
+)
+
+//--quadric koch island
+(
+l= RedLSystem("F-F-F-F", ($F: "F-F+F+FF-F-F+F"));
+4.do{l.next};
+RedLTurtle(l, 1, 90, 1).makeWindow(initTranslate: Point(2/3, 1/3));
+)
+
+//--square spikes
+(
+l= RedLSystem("F18-F18-F18-F", ($F: "F17-F34+F17-F"));
+5.do{l.next};
+RedLTurtle(l, 60, 5, 0.94.pow(l.generation)).makeWindow(initTranslate: Point(0.75, 0.25));
+)
+
+//--sierpinski gasket
+(
+l= RedLSystem("F--F--F", ($F: "F--F--F--GG", $G: "GG"));
+6.do{l.next};
+RedLTurtle(l, 5, 60, 1).makeWindow(initAngle: 0.5pi, initTranslate: Point(2/3, 1/3));
+)
+
+//--sierpinski maze
+(
+l= RedLSystem("F", ($F: "[GF][+G3-F][G+G+F]", $G: "GG"));
+6.do{l.next};
+RedLTurtle(l, 5, 60, 1).makeWindow(initAngle: 1.5pi, initTranslate: Point(1/3, 1/3));
+)
+
+//--sierpinski arrowhead
+(
+l= RedLSystem("F", ($F: "[-G+++F][-G+F][GG--F]", $G: "GG"));
+6.do{l.next};
+RedLTurtle(l, 5, 60, 1).makeWindow(initAngle: 0.5pi, initTranslate: Point(2/3, 1/3));
+)
+
+//--penrose snowflake
+(
+l= RedLSystem("F4-F4-F4-F4-F", ($F: "F4-F4-F10-F++F4-F"));
+4.do{l.next};
+RedLTurtle(l, 60, 18, 0.65).makeWindow(initTranslate: Point(0.75, 1/3));
+)
+
+//--penrose tile
+(
+l= RedLSystem("[X]++[X]++[X]++[X]++[X]", ($W: "YF++ZF4-XF[-YF4-WF]++", $X: "+YF--ZF[3-WF--XF]+", $Y: "-WF++XF[3+YF++ZF]-", $Z: "--YF4+WF[+ZF4+XF]--XF", $F: ""));
+5.do{l.next};
+RedLTurtle(l, 20, 36, 1).makeWindow;
+)
+
+//--dragon curve
+(
+l= RedLSystem("F", ($F: "[+F][+G--G4-F]", $G: "-G++G-"));
+11.do{l.next};
+RedLTurtle(l, 5, 45, 1).makeWindow(initAngle: 0.5pi, initTranslate: Point(0.5, 0.5));
+)
+
+
+
+(
+l= RedLSystem("F", ($F: "F[+F--F]+F"));
+6.do{l.next};
+RedLTurtle(l, 40, 10, 0.9, 0.1).makeWindow;
+)
+
+(
+l= RedLSystem("F", ($F: "F[-FFF--F]+F"));
+5.do{l.next};
+RedLTurtle(l, 20, 20, 0.99, 0.1).makeWindow.view.background_(Color.red);
+)
+
+//--custom preCommand action
+(
+var size;
+l= RedLSystem("F", ($F: "F[-BF-B[-F]-F]++F"));
+5.do{l.next};
+size= l.asString.size;
+t= RedLTurtle(l, 60, 66.67, 1, 0.1);
+t.preCommandAction= {|depth, depthLength, index|
+    var c= index/size;
+    Pen.strokeColor= Color.grey(c, c);
+    Pen.stroke;    //stroke needed because of colour change
+};
+t.makeWindow;
+)</pre>
+
+<p><div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redUniverse/HelpSource/Classes/RedLTurtle.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redUniverse/HelpSource/Classes/RedLTurtle.schelp</a><br>link::Classes/RedLTurtle::<br>sc version: 3.7alpha1</div></div></body></html>
