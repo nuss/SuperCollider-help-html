@@ -31,8 +31,9 @@
 <ul class='toc'><li class='toc2'><a href='#List of new UGens'>List of new UGens</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Improved or corrected behavior'>Improved or corrected behavior</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#More operators work uniformly across sclang and scserver'>More operators work uniformly across sclang and scserver</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='note'><span class='notelabel'>NOTE:</span> This is an incomplete stub</div><div class='note'><span class='notelabel'>NOTE:</span> 3.7 is an alpha version, which fixes many issues, but may also introduce new ones. Please do not hesitate to add them to the <a href="https://github.com/supercollider/supercollider/issues">issue tracker</a> or mention them on any of the supercollider <a href="http://www.birmingham.ac.uk/facilities/ea-studios/research/supercollider/mailinglist.aspx">mailing list</a>.</div>
-<p> This document focusses on features, there are <strong>many bugfixes and interesting improvements</strong>, which can be found by exploring the recent changes file and snooping around the system itself.<h2><a class='anchor' name='Editor'>Editor</a></h2>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Known Issues'>Known Issues</a></li>
+<ul class='toc'></ul></ul></div><div class='note'><span class='notelabel'>NOTE:</span> 3.7.0 fixes many issues, but may also introduce new ones. See also <strong>Known Issues</strong> section below. Please do not hesitate to add new issues you find to the <a href="https://github.com/supercollider/supercollider/issues">issue tracker</a> or mention them on any of the supercollider <a href="http://www.birmingham.ac.uk/facilities/ea-studios/research/supercollider/mailinglist.aspx">mailing list</a>.</div>
+<p>This document focusses on features, there are <strong>many bugfixes and interesting improvements</strong>, which can be found by exploring the recent changes file and snooping around the system itself.<h2><a class='anchor' name='Editor'>Editor</a></h2>
 <ul>
 <li>Menu entries for Recording, scope and server inspection<li>Modify and query IDE documents from sclang<li>Support for the Atom text editor</ul>
 <h2><a class='anchor' name='Language-side news'>Language-side news</a></h2>
@@ -48,16 +49,21 @@
 <li>GeneralHID, GeneralHIDSpec, GeneralHIDDevice (replaced by the new <a href="./../Classes/HID.html">HID</a> system)</ul>
 <h2><a class='anchor' name='Server-side news'>Server-side news</a></h2>
 
-<p> Apart from UDP, the TCP-protocol is now supported<h3><a class='anchor' name='List of new UGens'>List of new UGens</a></h3>
+<p>Apart from UDP, the TCP-protocol is now supported.
+<p>When mapping controls of synths to busses, their number of channels is limited to the number of control channels, avoiding a "spill-over" of mappings.<h3><a class='anchor' name='List of new UGens'>List of new UGens</a></h3>
 <ul>
 <li>NodeID (UGen that returns the current node id)<li><a href="./../Classes/Dconst.html">Dconst</a></ul>
 <h3><a class='anchor' name='Improved or corrected behavior'>Improved or corrected behavior</a></h3>
 <ul>
-<li><a href="./../Classes/LinXFade2.html">LinXFade2</a> (correct fading direction)<li>Instances of PV_Copy are added automatically where necessary for parallel processing<li><a href="./../Classes/Env.html#*new">Env: *new</a> accepts a new <code>step2</code> shape, which steps to a value at the end of a shape<li><a href="./../Classes/UGen.html#-curvelin">UGen: -curvelin</a> is now inverse of <a href="./../Classes/UGen.html#-lincurve">UGen: -lincurve</a></ul>
+<li><a href="./../Classes/LinXFade2.html">LinXFade2</a> (correct fading direction)<li><a href="./../Classes/LFPulse.html">LFPulse</a> (when width = 0.5, return exacly as many 0 as 1)<li><a href="./../Classes/TrigControl.html">TrigControl</a> is now independent of synth order, like <a href="./../Classes/Control.html">Control</a>.<li><a href="./../Classes/TRand.html">TRand</a>, <a href="./../Classes/TExpRand.html">TExpRand</a>, <a href="./../Classes/TIRand.html">TIRand</a> (can operate at audio rate)<li><a href="./../Classes/Env.html#*new">Env: *new</a> accepts a new <code>step2</code> shape, which steps to a value at the end of a shape<li><a href="./../Classes/UGen.html#-curvelin">UGen: -curvelin</a> is now inverse of <a href="./../Classes/UGen.html#-lincurve">UGen: -lincurve</a><li><a href="./../Classes/Server.html#-record">Server: -record</a> correcty closes short files<li>In combinations of demand-ugens: Instances of PV_Copy are added automatically where necessary for parallel processing</ul>
 <h3><a class='anchor' name='More operators work uniformly across sclang and scserver'>More operators work uniformly across sclang and scserver</a></h3>
 
-<p> The following operators have been added as ugens and work the same as in sclang:<table>
+<p>The following operators have been added as ugens and work the same as in sclang:<table>
 <tr><td>unary operators<td><code class='code prettyprint lang-sc'>rand, rand2, linrand, bilinrand, sum3rand, coin</code><tr><td>binary operators<td><code class='code prettyprint lang-sc'>lcm, gcd, rrand, exprand</code></table>
 
-<p> See <a href="./../Overviews/Operators.html">Operators</a>
-<p> <div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Guides/News-3_7.schelp'>/usr/local/share/SuperCollider/HelpSource/Guides/News-3_7.schelp</a><br>link::Guides/News-3_7::<br>sc version: 3.7alpha1</div></div></body></html>
+<p>See <a href="./../Overviews/Operators.html">Operators</a><h2><a class='anchor' name='Known Issues'>Known Issues</a></h2>
+
+<p>While much has improved and many bugs from 3.6 have been fixed, there are still many known issues. For a complete list see: <a href="https://github.com/supercollider/supercollider/issues/">https://github.com/supercollider/supercollider/issues/</a>
+<p>Here is one few that are worth a special mention:<ul>
+<li>Evaluating code in the help document doesn't work (OSX) <a href="https://github.com/supercollider/supercollider/issues/1385">https://github.com/supercollider/supercollider/issues/1385</a><li>Drag and drop files to expand paths broken (OSX): <a href="https://github.com/supercollider/supercollider/issues/1295">https://github.com/supercollider/supercollider/issues/1295</a></ul>
+<div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Guides/News-3_7.schelp'>/usr/local/share/SuperCollider/HelpSource/Guides/News-3_7.schelp</a><br>link::Guides/News-3_7::<br>sc version: 3.7alpha1</div></div></body></html>
