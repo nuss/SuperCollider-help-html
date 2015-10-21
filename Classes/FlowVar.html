@@ -14,82 +14,48 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES</div>
-<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<div id='categories'><a href='./../Browse.html#Scheduling'>Scheduling</a></div>
 <h1>FlowVar</h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>A place holder, which when accessed pauses a thread until the place holder has a value</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: /usr/local/share/SuperCollider/SCClassLibrary/Common/Core/<a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Core/Condition.sc'>Condition.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/Ref.html">Ref</a>, <a href="./../Classes/Thunk.html">Thunk</a>, <a href="./../Classes/Condition.html">Condition</a>, <a href="./../Classes/Routine.html">Routine</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-init'>init</a> </li>
-<li class='toc3'><a href='#-value'>value</a> </li>
-</ul></ul><li class='toc1'><a href='#Help template'>Help template</a></li>
-<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+<pre class='code prettyprint lang-sc'>(
+a = FlowVar.new;
+fork {
+    "I am waiting, please enter a value ...".postln;
+    a.value.postln;
+    "...... ok, done.".postln;
+}
+)
 
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+// later, set the value. Then we can continue ...
+a.value = 2;</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>inVal: 'unbound'</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-init' href='./../Overviews/Methods.html#init'>init</a> (<span class='argstr'>inVal</span>)</h3>
+<div class='method'>
+<p>Return a new instance,<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>inVal<td class='argumentdesc'>
+<p>If a value is given here, the FlowVar will not block execution.</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a> = <span class='argstr'>inVal</span></h3>
-<h2><a class='anchor' name='Help template'>Help template</a></h2>
-
-<p>Copy and paste the text below and save to HelpSource/Classes/FlowVar.schelp<pre class='code prettyprint lang-sc'>TITLE:: FlowVar
-summary:: (put short description here)
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
-
-DESCRIPTION::
-(put long description here)
-
-
-CLASSMETHODS::
-
-METHOD:: new
-(describe method here)
-
-ARGUMENT:: inVal
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-
-INSTANCEMETHODS::
-
-METHOD:: init
-(describe method here)
-
-ARGUMENT:: inVal
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: value
-(describe method here)
-
-ARGUMENT:: inVal
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-
-EXAMPLES::
-
-code::
-(some example code)
-::
-</pre>
-<div class='doclink'>link::Classes/FlowVar::<br>sc version: 3.7alpha1</div></div></body></html>
+<div class='method'>
+<p>Set the value bound to the FlowVar.
+<p>The getter returns the value bound to the FlowVar. If the value is not yet available, hold execution (this requires thie method to be called from within a <a href="./../Classes/Routine.html">Routine</a> or similar thread.).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>inVal<td class='argumentdesc'>
+<p>Any object.</table></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/FlowVar.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/FlowVar.schelp</a><br>link::Classes/FlowVar::<br>sc version: 3.7alpha1</div></div></body></html>

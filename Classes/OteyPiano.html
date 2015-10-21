@@ -31,17 +31,17 @@
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
+<p>Should not use this class but OteyPianoString instead (see example) for having only one soundboard for all strings which is more efficient.
 <p>Digital wave guide physical model of a piano wrapping the code provided by Clayton Otey.
 <p>It is important to release synth once finished because because it is CPU expensive.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>freq: 440</span>, <span class='argstr'>vel: 1</span>, <span class='argstr'>gate: 1</span>, <span class='argstr'>release: 0.1</span>, <span class='argstr'>rmin: 0.35</span>, <span class='argstr'>rmax: 2</span>, <span class='argstr'>rampl: 4</span>, <span class='argstr'>rampr: 8</span>, <span class='argstr'>rcore: 1</span>, <span class='argstr'>lmin: 0.07</span>, <span class='argstr'>lmax: 1.4</span>, <span class='argstr'>lampl: -4</span>, <span class='argstr'>lampr: 4</span>, <span class='argstr'>rho: 1</span>, <span class='argstr'>e: 1</span>, <span class='argstr'>zb: 1</span>, <span class='argstr'>zh: 0</span>, <span class='argstr'>mh: 1</span>, <span class='argstr'>k: 1</span>, <span class='argstr'>alpha: 1</span>, <span class='argstr'>p: 1</span>, <span class='argstr'>hpos: 0.142</span>, <span class='argstr'>loss: 1</span>, <span class='argstr'>detune: 0.0003</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>freq: 440</span>, <span class='argstr'>vel: 1</span>, <span class='argstr'>t_gate: 0</span>, <span class='argstr'>rmin: 0.35</span>, <span class='argstr'>rmax: 2</span>, <span class='argstr'>rampl: 4</span>, <span class='argstr'>rampr: 8</span>, <span class='argstr'>rcore: 1</span>, <span class='argstr'>lmin: 0.07</span>, <span class='argstr'>lmax: 1.4</span>, <span class='argstr'>lampl: -4</span>, <span class='argstr'>lampr: 4</span>, <span class='argstr'>rho: 1</span>, <span class='argstr'>e: 1</span>, <span class='argstr'>zb: 1</span>, <span class='argstr'>zh: 0</span>, <span class='argstr'>mh: 1</span>, <span class='argstr'>k: 0.2</span>, <span class='argstr'>alpha: 1</span>, <span class='argstr'>p: 1</span>, <span class='argstr'>hpos: 0.142</span>, <span class='argstr'>loss: 1</span>, <span class='argstr'>detune: 0.0003</span>, <span class='argstr'>hammer_type: 1</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>freq<td class='argumentdesc'>
 <p>Sound frequency.<tr><td class='argumentname'>vel<td class='argumentdesc'>
-<p>Key pulsation velocity. Betwen 0 and 1.<tr><td class='argumentname'>gate<td class='argumentdesc'>
-<p>Releases synth when value is 0.<tr><td class='argumentname'>release<td class='argumentdesc'>
-<p>Release time in seconds.<tr><td class='argumentname'>rmin<td class='argumentdesc'>
+<p>Key pulsation velocity. Betwen 0 and 1.<tr><td class='argumentname'>t_gate<td class='argumentdesc'>
+<p>Retriggers note, use a TriggerControl for not retriggering continuosly.<tr><td class='argumentname'>rmin<td class='argumentdesc'>
 <p>minimum string radio<tr><td class='argumentname'>rmax<td class='argumentdesc'>
 <p>maximun string radio<tr><td class='argumentname'>rampl<td class='argumentdesc'>
 <p>radius left sigmoidal shape.<tr><td class='argumentname'>rampr<td class='argumentdesc'>
@@ -61,7 +61,8 @@
 <p>stiffness_exponent_hammer multiplier.<tr><td class='argumentname'>hpos<td class='argumentdesc'>
 <p>hammer position. (0 to 1)<tr><td class='argumentname'>loss<td class='argumentdesc'>
 <p>string loss factor. <tr><td class='argumentname'>detune<td class='argumentdesc'>
-<p>detuning among 3 strings.</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<p>detuning among 3 strings.<tr><td class='argumentname'>hammer_type<td class='argumentdesc'>
+<p>1 is Stulov model, 2 is Banks model.</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
@@ -72,8 +73,8 @@ x.free;
 
 //Define piano synthdef
 (
-SynthDef(\help_oteypiano, { |out=0, freq=440, amp=0.5, gate=1,rho=1|
-    var son = OteyPiano.ar(freq, amp, gate, rho:rho);
+SynthDef(\help_oteypiano, { |out=0, freq=440,gate=1, amp=0.5,rho=1|
+    var son = OteyPiano.ar(freq, amp, rho:rho)*EnvGen.ar(Env.asr(0,1,0.1),gate,doneAction:2);
     Out.ar(out, Pan2.ar(son * 0.1, LinLin.kr(freq,36.midicps,90.midicps,-0.75,0.75)));
 }).add;
 )
@@ -85,7 +86,7 @@ Pbind(
     \delta, 1,
     \dur, 3,
     \degree, Pseq([1,3,5], inf),
-    \rho, Pwhite(0.1,3) //comment this line to get standart sound
+    \rho, Pwhite(0.1,3) //comment this line to get standard sound
 ).play;
 )</pre>
 
