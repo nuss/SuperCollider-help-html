@@ -32,9 +32,12 @@
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>A linear-interpolating sound generator based on the difference equation:<pre class='code prettyprint lang-sc'>    x[n+1] = a * pow(x[n], 2) + b * x[n] + c</pre>
-
-<p><div class='warning'><span class='warninglabel'>WARNING:</span> revise formulae conversion to c like code</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>A linear-interpolating sound generator based on the difference equation:<pre>    x(n+1) = a * x(n)^2 + b * x(n) + c</pre>
+<p>sclang code translation:<pre class='code prettyprint lang-sc'>(
+var a = 1, b = -1, c = -0.75, xi = 0, size = 64;
+plot(size.collect { xi = (a * (xi ** 2)) + (b * xi) + c; xi });
+)</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>freq: 22050</span>, <span class='argstr'>a: 1</span>, <span class='argstr'>b: -1</span>, <span class='argstr'>c: -0.75</span>, <span class='argstr'>xi: 0</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/QuadN.html'>QuadN</a></div>
 <div class='method'><h4>Arguments:</h4>

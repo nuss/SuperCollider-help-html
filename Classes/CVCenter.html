@@ -78,6 +78,7 @@
 <ul class='toc'><li class='toc3'><a href='#*connectSliders'>connectSliders</a> </li>
 <li class='toc3'><a href='#*connectTextFields'>connectTextFields</a> </li>
 <li class='toc3'><a href='#*dontSave'>dontSave</a> </li>
+<li class='toc3'><a href='#*front'>front</a> </li>
 <li class='toc3'><a href='#*prRegroupPrefPane'>prRegroupPrefPane</a> </li>
 <li class='toc3'><a href='#*saveSnapshot'>saveSnapshot</a> </li>
 <li class='toc3'><a href='#*snapShots'>snapShots</a> </li>
@@ -110,12 +111,12 @@
 
 <p>For a detailed description of the above listet arguments see the descriptions of the according classvar-methods.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*makeWindow' href='./../Overviews/Methods.html#makeWindow'>makeWindow</a> (<span class='argstr'>tab</span> <span class='argstr'>... cvs</span>)</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*makeWindow' href='./../Overviews/Methods.html#makeWindow'>makeWindow</a> </h3>
 <div class='method'>
 <p>Creates and fronts the CVCenter GUI if it's closed or nil. Sends the GUI to front if it's in the background. If CVs are passed in as key/value pairs it adds them as widgets to the GUI under the given tab if given or the one that's currently in front.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>tab<td class='argumentdesc'>
-<p>a String or a Symbol, indicating the label of a tab. If none is provided the widgets will be added to "default" or any other tab that's currently in front. If an event containing the keys <code class='code prettyprint lang-sc'>\hi</code> and <code class='code prettyprint lang-sc'>\hi</code> gets passed in the widget will be a CVWidget2D.<tr><td class='argumentname'>... cvs<td class='argumentdesc'>
+<tr><td class='argumentname'>(tab)<td class='argumentdesc'>
+<p>a String or a Symbol, indicating the label of a tab. If none is provided the widgets will be added to "default" or any other tab that's currently in front. If an event containing the keys <code class='code prettyprint lang-sc'>\hi</code> and <code class='code prettyprint lang-sc'>\hi</code> gets passed in the widget will be a CVWidget2D.<tr><td class='argumentname'>(... cvs)<td class='argumentdesc'>
 <p>key/value pairs: <code class='code prettyprint lang-sc'>\wdgtName1, a CV, \wdgtName2, (lo: a CV, hi: a CV),  \wdgtNameN, a CV</code></table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*use' href='./../Overviews/Methods.html#use'>use</a> (<span class='argstr'>key</span>, <span class='argstr'>spec</span>, <span class='argstr'>value</span>, <span class='argstr'>tab</span>, <span class='argstr'>slot</span>, <span class='argstr'>svItems</span>, <span class='argstr'>connectS</span>, <span class='argstr'>connectTF</span>)</h3>
@@ -493,6 +494,7 @@ CVCenter.removeAll;</pre>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*connectTextFields' href='./../Overviews/Methods.html#connectTextFields'>connectTextFields</a> = value</h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*dontSave' href='./../Overviews/Methods.html#dontSave'>dontSave</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*dontSave' href='./../Overviews/Methods.html#dontSave'>dontSave</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*front' href='./../Overviews/Methods.html#front'>front</a> (<span class='argstr'>tab</span> <span class='argstr'>... cvs</span>)</h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*prRegroupPrefPane' href='./../Overviews/Methods.html#prRegroupPrefPane'>prRegroupPrefPane</a> </h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*saveSnapshot' href='./../Overviews/Methods.html#saveSnapshot'>saveSnapshot</a> (<span class='argstr'>dialog: false</span>)</h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*snapShots' href='./../Overviews/Methods.html#snapShots'>snapShots</a> </h3>
@@ -534,12 +536,12 @@ CVCenter.addActionAt(\test2D, \setFreq2, { |cv| a !? { a.set(\freq2, cv.value) }
 
 // CVCenter will not open another gui if one is already present
 // if the GUI is in the background it will be sent to front
-CVCenter.makeWindow;
+CVCenter.front;
 
 // close the GUI and open it again
 // all widgets should just work as before
 CVCenter.window.close;
-CVCenter.makeWindow;
+CVCenter.front;
 
 // free the synth and remove all widgets
 a.free;

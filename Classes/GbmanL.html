@@ -32,11 +32,14 @@
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>A linear-interpolating sound generator based on the difference equations:<pre class='code prettyprint lang-sc'>    x[n+1] = 1 - y[n] + abs(x[n])
-    y[n+1] = x[n]</pre>
-
-<p><div class='warning'><span class='warninglabel'>WARNING:</span> reviser formulae converted to c like code</div>
+<p>A linear-interpolating sound generator based on the difference equations:<pre>    x(n+1) = 1 - y(n) + |x(n)|
+    y(n+1) = x(n)</pre>
 <p>The behavior of the system is dependent only on its initial conditions and cannot be changed once it's started.
+<p>sclang code translation:<pre class='code prettyprint lang-sc'>(
+var xi = 1.2, yi = 2.1, size = 64;
+plot(size.collect { var x; xi = 1 - yi + abs(x = xi); yi = x; xi });
+)</pre>
+
 <p>Reference: Devaney, R. L. "The Gingerbreadman." Algorithm 3, 15-16, Jan. 1992.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>freq: 22050</span>, <span class='argstr'>xi: 1.2</span>, <span class='argstr'>yi: 2.1</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/GbmanN.html'>GbmanN</a></div>

@@ -32,11 +32,18 @@
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>A cubic-interpolating sound generator based on a function given in Clifford Pickover's book Chaos In Wonderland, pg 26. The function is:<pre class='code prettyprint lang-sc'>    x[n+1] = sin(b * y[n]) + c * sin(b * x[n])
-    y[n+1] = sin(a * y[n]) + d * sin(a * x[n])</pre>
-
-<p><div class='warning'><span class='warninglabel'>WARNING:</span> revise formulae conversion to c like code</div>
-<p>According to Pickover, parameters <code class='code prettyprint lang-sc'>a</code> and <code class='code prettyprint lang-sc'>b</code> should be in the range from -3 to +3, and parameters <code class='code prettyprint lang-sc'>c</code> and <code class='code prettyprint lang-sc'>d</code> should be in the range from 0.5 to 1.5. The function can, depending on the parameters given, give continuous chaotic output, converge to a single value (silence) or oscillate in a cycle (tone).<div class='note'><span class='notelabel'>NOTE:</span> This UGen is experimental and not optimized currently, so is rather hoggish of CPU.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>A cubic-interpolating sound generator based on a function given in Clifford Pickover's book Chaos In Wonderland, pg 26. The function is:<pre>    x(n+1) = sin(b * y(n)) + c * sin(b * x(n))
+    y(n+1) = sin(a * x(n)) + d * sin(a * y(n))</pre>
+<p>According to Pickover, parameters <code class='code prettyprint lang-sc'>a</code> and <code class='code prettyprint lang-sc'>b</code> should be in the range from -3 to +3, and parameters <code class='code prettyprint lang-sc'>c</code> and <code class='code prettyprint lang-sc'>d</code> should be in the range from 0.5 to 1.5. The function can, depending on the parameters given, give continuous chaotic output, converge to a single value (silence) or oscillate in a cycle (tone).
+<p>sclang code translation:<pre class='code prettyprint lang-sc'>(
+var a = 1, b = 3, c = 0.5, d = 0.5, xi = 0.5, yi = 0.5, size = 64;
+plot(size.collect { var x = xi;
+xi = sin(b * yi) + (c * sin(b * xi));
+yi = sin(a * x) + (d * sin(a * yi));
+xi
+});
+)</pre>
+<div class='note'><span class='notelabel'>NOTE:</span> This UGen is experimental and not optimized currently, so is rather hoggish of CPU.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>freq: 22050</span>, <span class='argstr'>a: 1</span>, <span class='argstr'>b: 3</span>, <span class='argstr'>c: 0.5</span>, <span class='argstr'>d: 0.5</span>, <span class='argstr'>xi: 0.5</span>, <span class='argstr'>yi: 0.5</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/LatoocarfianN.html'>LatoocarfianN</a></div>
 <div class='method'><h4>Arguments:</h4>

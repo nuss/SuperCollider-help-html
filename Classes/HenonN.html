@@ -35,10 +35,13 @@
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>A non-interpolating sound generator based on the difference equation:<pre class='code prettyprint lang-sc'>    x[n+2] = 1 - a * pow(x[n+1], 2) + b * x[n]</pre>
-
-<p><div class='warning'><span class='warninglabel'>WARNING:</span> revise formulae converted to c like code.</div>
-<p>This equation was discovered by French astronomer Michel Hénon while studying the orbits of stars in globular clusters.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>A non-interpolating sound generator based on the difference equation:<pre>        x(n+2) = 1 - a * x(n+1)^2 + b * x(n)</pre>
+<p>This equation was discovered by French astronomer Michel Hénon while studying the orbits of stars in globular clusters.
+<p>sclang code translation:<pre class='code prettyprint lang-sc'>(
+var a = 1.4, b = 0.3, x0 = 0, x1 = 1, size = 64;
+plot(size.collect { var aux = 1 - (a * (x1 ** 2)) + (b * x0); x0 = x1; x1 = aux; aux });
+)</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>freq: 22050</span>, <span class='argstr'>a: 1.4</span>, <span class='argstr'>b: 0.3</span>, <span class='argstr'>x0: 0</span>, <span class='argstr'>x1: 0</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
