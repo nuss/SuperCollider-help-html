@@ -87,11 +87,7 @@ Synth.play({
 )
 
 // The same example in SC3 (will execute)
-(
-s = Server.default;
 s.boot;
-)
-
 (
 SynthDef("help-EnvGen",{ arg out = 0;
     Out.ar(
@@ -107,11 +103,7 @@ SystemClock.play(r);
 )</pre>
 
 <p>Note that the above example uses a precompiled <a href="./../Classes/SynthDef.html">SynthDef</a>. This results in a lower CPU spike when Synths are created than SC2-style Spawning. It is possible to create SynthDefs on the fly, if this is necessary, but a great deal of variation can be achieved with arguments, or with UGens such as <a href="./../Classes/Rand.html">Rand</a> and <a href="./../Classes/TRand.html">TRand</a>. See the section <a href="./../Overviews/SC3vsSC2.html#SynthDefsVsSynths">SuperCollider 3 versus SuperCollider 2: SynthDefsVsSynths</a> for more detail.<pre class='code prettyprint lang-sc'>// SynthDefs on the fly
-(
-s = Server.default;
 s.boot;
-)
-
 (
 t = TempoClock.new;
 r = Routine.new({
@@ -176,11 +168,7 @@ t.clock.tempo = 0.25;    // Get the Task's clock and change the tempo. This work
             // default is a TempoClock.
 t.pause;        // Same as t.stop</pre>
 
-<p>TSpawn's functionality can be replicated with <a href="./../Classes/SendTrig.html">SendTrig</a> and <a href="./../Classes/OSCFunc.html">OSCFunc</a>. See their individual helpfiles for details on their arguments and functionality.<pre class='code prettyprint lang-sc'>(
-s = Server.default;
-s.boot;
-)
-
+<p>TSpawn's functionality can be replicated with <a href="./../Classes/SendTrig.html">SendTrig</a> and <a href="./../Classes/OSCFunc.html">OSCFunc</a>. See their individual helpfiles for details on their arguments and functionality.<pre class='code prettyprint lang-sc'>s.boot;
 (
 // this Synth will send a trigger to the client app
 SynthDef("help-SendTrig", {

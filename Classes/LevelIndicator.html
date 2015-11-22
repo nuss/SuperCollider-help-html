@@ -196,7 +196,7 @@ l.criticalColor = Color.black.alpha_(0.3);
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 <pre class='code prettyprint lang-sc'>(
 // something to meter
-Server.default.boot.doWhenBooted {
+s.waitForBoot({
 b = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");
 
     x = {
@@ -217,7 +217,7 @@ o = OSCFunc({arg msg;
         a.peakLevel = msg[4].ampdb.linlin(-40, 0, 0, 1);
     }.defer;
 }, '/levels', s.addr);
-}
+})
 )
 
 (

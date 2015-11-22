@@ -34,36 +34,36 @@
 <p><a href="./../Reference/Server-Architecture.html">Server Architecture</a>
 <p>and
 <p><a href="./../Reference/Server-Command-Reference.html">Server Command Reference</a>.
-<p>There are two parts to SuperCollider. One part is the language application and another is a synthesis server that can run either inside the language application, or as a separate program on the same machine, or run on a different computer across a network connection. The language application sends command messages to the server using a subset of the Open Sound Control protocol.<h2><a class='anchor' name='Booting a Server'>Booting a Server</a></h2>
+<p>Since version 3.6 SuperCollider consists of three separate components: The sound synthesiser (audio server), the programming language (and language interpreter) and the code editor (integrated development environment, or shortly, IDE).
+<p>The server can run either inside the language application ("internal server"), as a separate program on the same machine ("local server"), or run on a different computer across a network connection. The language application sends command messages to the server using a subset of the Open Sound Control protocol.<h2><a class='anchor' name='Booting a Server'>Booting a Server</a></h2>
 
-<p>In order to run sound we need to start a server running. The easiest way to start a server is to click on one of the "Start Server" buttons in the server windows. Sometimes though it is useful to start a server programmatically. To do this we need to get or create a server object and tell it to "boot". Two servers, internal and local, are predefined.
-<p>The internal server runs in the same process as the SuperCollider application. It is internal to the program itself.<pre class='code prettyprint lang-sc'>// set the interpreter variable s to the internal server object.
-s = Server.internal;</pre>
+<p>In order to run sound we need to start a server running. The easiest way to start a server is to click on "Boot Server" in the pull-up menu you get by clicking on the server stats field on the bottom of the IDE's editor window. Or by clicking on the "Start Server" button in the respective server window. This you get with s.makeWindow (for instance for the default server) for any server object you created (see below). Sometimes though it is useful to start a server programmatically. To do this we need to get or create a server object and tell it to "boot". Two servers, internal and local, are predefined.
+<p>The internal server runs in the same process as the SuperCollider application. It is internal to the program itself.<pre class='code prettyprint lang-sc'>// set the interpreter variable i to the internal server object.
+i = Server.internal;</pre>
 
-<p><strong>VERY IMPORTANT</strong> : This line must be executed for the variable 's' to be set. The mechanics are different depending on your platform. The MacOSX standard is to place the cursor anywhere on this line and press the "Enter" key on the numeric keypad. Pressing the main return key does not execute code! This allows you to write code fragments of multiple lines. To execute a multi-line block of code, select the block and press "Enter." For convenience, a code block can be enclosed in parentheses, and the entire block selected by double-clicking just inside either parenthesis. (For instructions in other editors (e.g. on Linux or Windows), consult the documentation specific to that platform. See also the helpfile <a href="./../Reference/KeyboardShortcuts.html">Keyboard Shortcuts</a> for key commands in other editors.) If you don't have an enter key, then you can use ctrl-Return, Ctrl-c, fn-Return (on Some Macs), or Shift-Return.
+<p><strong>VERY IMPORTANT</strong> : This line must be executed for the variable 'i' to be set. The mechanics are different depending on your platform. The MacOSX standard is to place the cursor anywhere on this line and press the "Enter" key on the numeric keypad. Pressing the main return key does not execute code! This allows you to write code fragments of multiple lines. To execute a multi-line block of code, select the block and press "Enter." For convenience, a code block can be enclosed in parentheses, and the entire block selected by double-clicking just inside either parenthesis. (For instructions in other editors (e.g. on Linux or Windows), consult the documentation specific to that platform. See also the helpfile <a href="./../Reference/KeyboardShortcuts.html">Keyboard Shortcuts</a> for key commands in other editors.) If you don't have an enter key, then you can use ctrl-Return, Ctrl-c, fn-Return (on Some Macs), or Shift-Return.
 <p>The local server runs on the same machine as the SuperCollider application, but is a separate program, 'scsynth'.<div class='note'><span class='notelabel'>NOTE:</span> By default the interpreter variable <code class='code prettyprint lang-sc'>s</code> is set to the local server at startup. For further information see the <a href="./../Classes/Server.html">Server</a> helpfile.</div><pre class='code prettyprint lang-sc'>// set the interpreter variable s to the local server object.
-s = Server.local;</pre>
+s = Server.local;    // s is set to Server.default at startup of SuperCollider</pre>
 
 <p>To boot the server you send it the boot message.<pre class='code prettyprint lang-sc'>s.boot;</pre>
 
 <p>To quit the server send it the quit message.<pre class='code prettyprint lang-sc'>s.quit;</pre>
 
-<p>We can also create a server to run. To create a server object we need to provide the IP address or the server and a port number. Port numbers are somewhat arbitrary but they should not conflict with common protocols like telnet, ftp http, etc. The IP address 127.0.0.1 is defined to mean the local host. This is the IP address to use for running a server on your own machine.<pre class='code prettyprint lang-sc'>// create a server object that will run on the local host using port #58009
-s = Server(\myServer, NetAddr("127.0.0.1", 58009));
+<p>We can also create a server to run. To create a server object we need to provide the IP address or the server and a port number. Port numbers are somewhat arbitrary but they should not conflict with common protocols like telnet, ftp http, etc. The IP address 127.0.0.1 is defined to mean the local host. This is the IP address to use for running a server on your own machine.<pre class='code prettyprint lang-sc'>// create another server object that will run on the local host using port #58009
+m = Server(\myServer, NetAddr("127.0.0.1", 58009));
 
-s.boot; //start the server
+m.boot; //start the server
 
-s.quit; // quit the server</pre>
+m.quit; // quit the server</pre>
 
-<p>It is not possible to boot a server on a remote machine, but if you have one running already or you know of one running, you can send messages to it. You create the server object using the IP address of the machine running the server and the port it is using.<pre class='code prettyprint lang-sc'>// create a server object for talking to the server running on a machine having
-// IP address 192.168.0.47 using port #57110
-s = Server(\myServer, NetAddr("192.168.0.47", 57110));</pre>
+<p>It is not possible to boot a server on a remote machine, but if you have one running already or you know of one running, you can send messages to it. You create the server object using the IP address of the machine running the server and the port it is using.<pre class='code prettyprint lang-sc'>// create a server object for talking to the server running on a 
+// remote machine having IP address 192.168.0.47 using port #57110
+r = Server(\myServer, NetAddr("192.168.0.47", 57110));</pre>
 <h2><a class='anchor' name='Making Sound'>Making Sound</a></h2>
 
 <p>(note: This tutorial uses raw OSC commands as described in <a href="./../Reference/Server-Command-Reference.html">Server Command Reference</a>, rather than the classes <a href="./../Classes/Synth.html">Synth</a> and <a href="./../Classes/Group.html">Group</a>. See those helpfiles also for some simpler ways of working with Synths. This tutorial explains the basic underlying design of Synths and SynthDefs).
-<p>Now lets make some audio.<pre class='code prettyprint lang-sc'>s = Server.local; // assign it to interpreter variable 's'</pre>
-
-<p>Boot it.<pre class='code prettyprint lang-sc'>s.boot;</pre>
+<p>Now lets make some audio.
+<p>Boot the server:<pre class='code prettyprint lang-sc'>s.boot;</pre>
 
 <p>Create a <a href="./../Classes/SynthDef.html">SynthDef</a>. A SynthDef is a description of a processing module that you want to run on the server. It can read audio from the server's audio buses, read control from the control buses and write control or audio back to buses. Here we will create a sine oscillator and send it to audio bus zero.<pre class='code prettyprint lang-sc'>(
 SynthDef("sine", { arg freq=800;
@@ -108,9 +108,7 @@ SynthDef("sine", { arg freq=800;
 )</pre>
 <h2><a class='anchor' name='Using Arguments'>Using Arguments</a></h2>
 
-<p>It is useful to be able to specify parameters of a synth when it is created. Here a frequency argument is added to the sine SynthDef so that we can create it<pre class='code prettyprint lang-sc'>s = Server.local; // assign it to interpreter variable 's'
-
-s.boot;
+<p>It is useful to be able to specify parameters of a synth when it is created. Here a frequency argument is added to the sine SynthDef so that we can create it<pre class='code prettyprint lang-sc'>s.boot;
 
 (
 SynthDef("sine", { arg freq;

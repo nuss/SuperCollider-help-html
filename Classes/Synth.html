@@ -257,13 +257,13 @@ x.free;</pre>
 </table><h4>Discussion:</h4>
 <div class='note'><span class='notelabel'>NOTE:</span> The synthdef has to be .add'ed, so that it is stored in the <a href="./../Classes/SynthDescLib.html">SynthDescLib</a>.</div>
 <p>Example:<pre class='code prettyprint lang-sc'>(
-s.waitForBoot {
+s.waitForBoot({
     SynthDef(\helpSeti, { |freqs = #[100,150,200,250]|
         Out.ar(0, SinOsc.ar(freqs.poll,0,0.1).sum ! 2)
     }).add;
     s.sync;
     x = Synth(\helpSeti);
-}
+})
 )
 x.seti(\freqs,2,600); // set only the third element
 x.seti(\freqs,1,[400,410]); // set second and third element
@@ -302,11 +302,7 @@ x.free;</pre>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-trackRelease' href='./../Overviews/Methods.html#trackRelease'>trackRelease</a> </h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SynthTracker/extVarious-SynthTracker.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SynthTracker/extVarious-SynthTracker.sc</a></div>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>// boot the default server
-s = Server.default; // just to be sure
-s.boot;
-
-
+<pre class='code prettyprint lang-sc'>s.boot;
 (
 // send a synth def to server
 SynthDef("tpulse", { arg out = 0,freq = 700, sawFreq = 440.0;
