@@ -29,13 +29,55 @@
 <ul class='toc'><li class='toc2'><a href='#Creating objects in primitives, and GC safety'>Creating objects in primitives, and GC safety</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Type safety'>Type safety</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#FAQ'>FAQ</a></li>
-<ul class='toc'></ul></ul></div><h2><a class='anchor' name='Example'>Example</a></h2>
+<ul class='toc'></ul></ul></div>
+<p>Although much of SuperCollider's functionality is implemented in the SuperCollider language itself, for reasons of efficiency, some functionality is implemented in 'back end' C++ functions called 'primitives'. This document provides guidance to members of the SC development community on writing primitives.<h2><a class='anchor' name='Example'>Example</a></h2>
 <h3><a class='anchor' name='SuperCollider code'>SuperCollider code</a></h3>
-<pre class='code prettyprint lang-sc'>Cocoa {
+
+<p>Primitive calls are preceded with an underscore, so for example _myPrimitiveName. Here is an example call to a primitive in an SC class:<pre class='code prettyprint lang-sc'>Cocoa {
     prGetPathsDialog { arg returnSlot;
         _Cocoa_GetPathsDialog
         ^this.primitiveFailed
     }
+}</pre>
+
+<p>In the example above the primitive is dispatched at _Cocoa_GetPathsDialog. If it is successful, it will return without executing the code below that. Primitive functions (see below) return an integer, which should be one of the values defined in the file PyrErrors.h:<pre>enum { // primitive errors
+    errReturn = -1,    // not really an error.. primitive executed a non-local return
+    errNone,
+    errFailed = 5000,
+    errBadPrimitive,
+    errWrongType,
+    errIndexNotAnInteger,
+    errIndexOutOfRange,
+    errImmutableObject,
+    errNotAnIndexableObject,
+    errStackOverflow,
+    errOutOfMemory,
+    errCantCallOS,
+    errException,
+    
+    errPropertyNotFound = 6000,
+    
+    errLastError
+};</pre>
+<p>If your primitive can return any value besides <code class='code prettyprint lang-sc'>errNone</code> then you will need to provide handling code after the primitive call. In most cases this will be <code class='code prettyprint lang-sc'>^this.primitiveFailed</code>. This will throw an Error giving the user information about what went wrong.
+<p>In some cases, you may wish to execute fallback SC code instead of throwing an Error. This can be useful in cases where for example a primitive provides an optimised version of a method which is not usable in all instances. Here is an example of how this can be done:<pre class='code prettyprint lang-sc'>flop {
+    _ArrayMultiChannelExpand
+    ^super.flop // this gets executed if the primitive fails
+}</pre>
+
+<p>Note that returning anything besides errNone will result in executing the SC method <em>ignoring</em> the primitive call. For this reason, if you need to do some prepatory work in SC before calling the primitive, it is best practice to do this in a separate method to avoid duplication. For example:<pre class='code prettyprint lang-sc'>// do initial work here
+openUDPPort {|portNum|
+    var result;
+    if(openPorts.includes(portNum), {^true});
+    result = this.prOpenUDPPort(portNum);
+    if(result, { openPorts = openPorts.add(portNum); });
+    ^result;
+}
+
+// this method only calls the primitive, and throws any primitive errors
+prOpenUDPPort {|portNum|
+    _OpenUDPPort
+    ^this.primitiveFailed;
 }</pre>
 <h3><a class='anchor' name='Define your primitive'>Define your primitive</a></h3>
 

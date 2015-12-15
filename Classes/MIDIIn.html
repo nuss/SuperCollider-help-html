@@ -20,7 +20,7 @@
 </div>
 <div class='subheader'>
 <div id='filename'>Source: /usr/local/share/SuperCollider/SCClassLibrary/Common/Control/<a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Control/MIDIOut.sc'>MIDIOut.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
-<div id='related'>See also: <a href="./../Classes/MIDIOut.html">MIDIOut</a>, <a href="./../Classes/MIDIFunc.html">MIDIFunc</a>, <a href="./../Classes/MIDIdef.html">MIDIdef</a>, <a href="./../Guides/MIDI.html">MIDI</a>, <a href="./../Guides/UsingMIDI.html">Using MIDI</a></div>
+<div id='related'>See also: <a href="./../Classes/MIDIClient.html">MIDIClient</a>, <a href="./../Classes/MIDIOut.html">MIDIOut</a>, <a href="./../Classes/MIDIFunc.html">MIDIFunc</a>, <a href="./../Classes/MIDIdef.html">MIDIdef</a>, <a href="./../Guides/MIDI.html">MIDI</a>, <a href="./../Guides/UsingMIDI.html">Using MIDI</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -31,6 +31,8 @@
 <li class='toc3'><a href='#*removeFuncFrom'>removeFuncFrom</a> </li>
 <li class='toc3'><a href='#*replaceFuncTo'>replaceFuncTo</a> </li>
 <li class='toc3'><a href='#*noteOnZeroAsNoteOff'>noteOnZeroAsNoteOff</a> </li>
+<li class='toc3'><a href='#*connectAll'>connectAll</a> </li>
+<li class='toc3'><a href='#*disconnectAll'>disconnectAll</a> </li>
 <li class='toc2'><a href='#Getter/Setters for Specific Message Types'>Getter/Setters for Specific Message Types</a></li>
 <ul class='toc'><li class='toc3'><a href='#*noteOn'>noteOn</a> </li>
 <li class='toc3'><a href='#*noteOff'>noteOff</a> </li>
@@ -47,7 +49,6 @@
 <ul class='toc'><li class='toc3'><a href='#*action'>action</a> </li>
 <li class='toc3'><a href='#*bendList'>bendList</a> </li>
 <li class='toc3'><a href='#*connect'>connect</a> </li>
-<li class='toc3'><a href='#*connectAll'>connectAll</a> </li>
 <li class='toc3'><a href='#*controlList'>controlList</a> </li>
 <li class='toc3'><a href='#*disconnect'>disconnect</a> </li>
 <li class='toc3'><a href='#*doAction'>doAction</a> </li>
@@ -120,7 +121,15 @@ MIDIClient.sources;</pre>
 <p>A <a href="./../Classes/Function.html">Function</a> or similar object to be evaluated when a message of the specified type is received. See the setters below for the arguments which will be passed at evaluation time.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*noteOnZeroAsNoteOff' href='./../Overviews/Methods.html#noteOnZeroAsNoteOff'>noteOnZeroAsNoteOff</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*noteOnZeroAsNoteOff' href='./../Overviews/Methods.html#noteOnZeroAsNoteOff'>noteOnZeroAsNoteOff</a> = value</h3>
 <div class='method'>
-<p>By default this flag is <code class='code prettyprint lang-sc'>true</code> and SuperCollider interprets incoming MIDI noteOn message with velocity 0 as noteOff messages. In case you do not want this automatic translation, you can set this flag to <code class='code prettyprint lang-sc'>false</code></div><h3><a class='anchor' name='Getter/Setters for Specific Message Types'>Getter/Setters for Specific Message Types</a></h3>
+<p>By default this flag is <code class='code prettyprint lang-sc'>true</code> and SuperCollider interprets incoming MIDI noteOn message with velocity 0 as noteOff messages. In case you do not want this automatic translation, you can set this flag to <code class='code prettyprint lang-sc'>false</code></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*connectAll' href='./../Overviews/Methods.html#connectAll'>connectAll</a> (<span class='argstr'>verbose: true</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Platform/linux/extMIDIOut.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Platform/linux/extMIDIOut.sc</a></div>
+<div class='method'>
+<p>Connect to all possible MIDI inputs.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>verbose<td class='argumentdesc'>
+<p>If set to true (default) it will print out the ports found in MIDIClient.init.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*disconnectAll' href='./../Overviews/Methods.html#disconnectAll'>disconnectAll</a> </h3>
+<div class='method'>
+<p>Disconnect from all MIDI inputs.</div><h3><a class='anchor' name='Getter/Setters for Specific Message Types'>Getter/Setters for Specific Message Types</a></h3>
 
 <p>The methods below allow you to register a function to respond to a particular message type.<div class='note'><span class='notelabel'>NOTE:</span> It is preferable to use the <a href="#*addFuncTo">*addFuncTo</a>, <a href="#*removeFuncFrom">*removeFuncFrom</a> and <a href="#*replaceFuncTo">*replaceFuncTo</a> methods above instead of these methods, as they will not overwrite any functions added by system objects.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*noteOn' href='./../Overviews/Methods.html#noteOn'>noteOn</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*noteOn' href='./../Overviews/Methods.html#noteOn'>noteOn</a> = value</h3>
@@ -208,7 +217,6 @@ MIDIClient.sources;</pre>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*bendList' href='./../Overviews/Methods.html#bendList'>bendList</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*bendList' href='./../Overviews/Methods.html#bendList'>bendList</a> = value</h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*connect' href='./../Overviews/Methods.html#connect'>connect</a> (<span class='argstr'>inport: 0</span>, <span class='argstr'>device: 0</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*connectAll' href='./../Overviews/Methods.html#connectAll'>connectAll</a> </h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*controlList' href='./../Overviews/Methods.html#controlList'>controlList</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*controlList' href='./../Overviews/Methods.html#controlList'>controlList</a> = value</h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*disconnect' href='./../Overviews/Methods.html#disconnect'>disconnect</a> (<span class='argstr'>inport: 0</span>, <span class='argstr'>device: 0</span>)</h3>
