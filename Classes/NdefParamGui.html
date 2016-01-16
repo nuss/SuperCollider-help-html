@@ -34,16 +34,13 @@
 <li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-accepts'>accepts</a> </li>
 <li class='toc3'><a href='#-checkUpdate'>checkUpdate</a> </li>
-<li class='toc3'><a href='#-clearField'>clearField</a> </li>
 <li class='toc3'><a href='#-dragAction'>dragAction</a> </li>
 <li class='toc3'><a href='#-drags'>drags</a> </li>
 <li class='toc3'><a href='#-getState'>getState</a> </li>
 <li class='toc3'><a href='#-makeViews'>makeViews</a> </li>
 <li class='toc3'><a href='#-setByKeys'>setByKeys</a> </li>
 <li class='toc3'><a href='#-setDefaults'>setDefaults</a> </li>
-<li class='toc3'><a href='#-setField'>setField</a> </li>
 <li class='toc3'><a href='#-setFunc'>setFunc</a> </li>
-<li class='toc3'><a href='#-updateSliderSpecs'>updateSliderSpecs</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
@@ -56,10 +53,11 @@
 <p>create a new NdefParamGui<pre class='code prettyprint lang-sc'>// simple example - see also NdefGui!
 
 g = NdefParamGui.new(nil, 5);    // empty with 5 slots
+g.parent.alwaysOnTop_(true);
 g.object_(Ndef(\a));        // put in a nodeproxy
-Ndef(\a, { |freq = 300, amp = 0.2| SinOsc.ar(freq) * amp });
-Ndef(\a).set(\freq, 2000);    // add a setting
-
+Ndef(\a, { |freq = 300, amp = 0.2| SinOsc.ar(freq) * amp ! 2 }).play;
+Ndef(\a).set(\freq, 200);    // add a setting
+Ndef(\a);
 g.object_(nil);            // put in nothing
 
 g.object_(Ndef(\a));         // put in a nodeproxy
@@ -71,10 +69,11 @@ Ndef(\a).play
 Ndef(\lfo, { LFNoise0.kr([12, 8], 200).sum + 500 });
 Ndef(\a).map(\freq, Ndef(\lfo));// mapped proxies are shown
 
+g.useRanger = false;
 
 //Multichannel controls are shown in EZText
-
-Ndef(\a, { |freqs = #[300, 303], pan, amp = 0.2, moddd = 0.1| SinOsc.ar(freqs).sum * amp });
+g.putSpec(\freqs, \freq);
+Ndef(\a, { |freqs = #[300, 303], pan, amp = 0.2| SinOsc.ar(freqs).sum * amp });
 Ndef(\a).play
 Ndef(\a).setn(\freqs, [300, 350])
 Ndef(\a).setn(\freqs, [330, 350])
@@ -104,16 +103,13 @@ g.parent.close</pre>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-accepts' href='./../Overviews/Methods.html#accepts'>accepts</a> (<span class='argstr'>obj</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-checkUpdate' href='./../Overviews/Methods.html#checkUpdate'>checkUpdate</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-clearField' href='./../Overviews/Methods.html#clearField'>clearField</a> (<span class='argstr'>index</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-dragAction' href='./../Overviews/Methods.html#dragAction'>dragAction</a> (<span class='argstr'>i</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-drags' href='./../Overviews/Methods.html#drags'>drags</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-getState' href='./../Overviews/Methods.html#getState'>getState</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeViews' href='./../Overviews/Methods.html#makeViews'>makeViews</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-setByKeys' href='./../Overviews/Methods.html#setByKeys'>setByKeys</a> (<span class='argstr'>newKeys</span>, <span class='argstr'>newSettings</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-setDefaults' href='./../Overviews/Methods.html#setDefaults'>setDefaults</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setField' href='./../Overviews/Methods.html#setField'>setField</a> (<span class='argstr'>index</span>, <span class='argstr'>key</span>, <span class='argstr'>value</span>, <span class='argstr'>sameKey: false</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-setFunc' href='./../Overviews/Methods.html#setFunc'>setFunc</a> (<span class='argstr'>key</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateSliderSpecs' href='./../Overviews/Methods.html#updateSliderSpecs'>updateSliderSpecs</a> (<span class='argstr'>editKeys</span>)</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 <pre class='code prettyprint lang-sc'>    // put an NdefParamGui in an existing window - margin becomes 0@0
 (
@@ -124,6 +120,6 @@ NdefParamGui(Ndef(\c), 15, w);
 )
     // even
 Ndef(\c).set(\otto, 123, \mops, [1,2,3], \kotzt, [0, 6, 0, 6]);
-Ndef(\c).nodeMap.clear</pre>
+Ndef(\c).nodeMap.clear;</pre>
 
 <p><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/NdefParamGui.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/NdefParamGui.schelp</a><br>link::Classes/NdefParamGui::<br>sc version: 3.7alpha1</div></div></body></html>

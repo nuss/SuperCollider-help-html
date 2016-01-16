@@ -34,12 +34,11 @@
 <ul class='toc'><li class='toc3'><a href='#-numItems'>numItems</a> </li>
 <li class='toc3'><a href='#-envir'>envir</a> </li>
 <li class='toc3'><a href='#-zone'>zone</a> </li>
-<li class='toc3'><a href='#-valFields'>valFields</a> </li>
-<li class='toc3'><a href='#-widgets'>widgets</a> </li>
+<li class='toc3'><a href='#-paramViews'>paramViews</a> </li>
 <li class='toc3'><a href='#-specs'>specs</a> </li>
 <li class='toc3'><a href='#-editKeys'>editKeys</a> </li>
 <li class='toc3'><a href='#-keysRotation'>keysRotation</a> </li>
-<li class='toc3'><a href='#-widgets'>widgets</a>  <a href='#-docBut'>docBut</a>  <a href='#-knowBut'>knowBut</a>  <a href='#-parentBut'>parentBut</a>  <a href='#-protoBut'>protoBut</a> </li>
+<li class='toc3'><a href='#-docBut'>docBut</a>  <a href='#-knowBut'>knowBut</a>  <a href='#-parentBut'>parentBut</a>  <a href='#-protoBut'>protoBut</a> </li>
 </ul><li class='toc2'><a href='#Some Methods'>Some Methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-object'>object</a> </li>
 <li class='toc3'><a href='#-envir'>envir</a> </li>
@@ -49,18 +48,14 @@
 <li class='toc3'><a href='#-replaceKeys'>replaceKeys</a>  <a href='#-addReplaceKey'>addReplaceKey</a>  <a href='#-removeReplaceKey'>removeReplaceKey</a>  <a href='#-showKeyFor'>showKeyFor</a> </li>
 <li class='toc3'><a href='#-highlight'>highlight</a>  <a href='#-unhighlight'>unhighlight</a>  <a href='#-colorizeArea'>colorizeArea</a> </li>
 </ul><li class='toc2'><a href='#Some internal methods'>Some internal methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-setField'>setField</a> </li>
-<li class='toc3'><a href='#-setByKeys'>setByKeys</a> </li>
-<li class='toc3'><a href='#-clearField'>clearField</a> </li>
-<li class='toc3'><a href='#-clearFields'>clearFields</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-setByKeys'>setByKeys</a> </li>
+<li class='toc3'><a href='#-showFields'>showFields</a> </li>
 <li class='toc3'><a href='#-useRanger'>useRanger</a> </li>
-<li class='toc3'><a href='#-findWidget'>findWidget</a>  <a href='#-setFunc'>setFunc</a>  <a href='#-setToRanger'>setToRanger</a>  <a href='#-setToSlider'>setToSlider</a>  <a href='#-setToText'>setToText</a> </li>
 <li class='toc3'><a href='#-makeViews'>makeViews</a>  <a href='#-makeNameView'>makeNameView</a>  <a href='#-makeOptionalViews'>makeOptionalViews</a>  <a href='#-makeKnowBut'>makeKnowBut</a>  <a href='#-makeDocBut'>makeDocBut</a>  <a href='#-makeClrBut'>makeClrBut</a>  <a href='#-makeProtoBut'>makeProtoBut</a>  <a href='#-makeParentBut'>makeParentBut</a> </li>
-<li class='toc3'><a href='#-accepts'>accepts</a>  <a href='#-getState'>getState</a>  <a href='#-checkUpdate'>checkUpdate</a>  <a href='#-updateButtons'>updateButtons</a> </li>
+<li class='toc3'><a href='#-accepts'>accepts</a>  <a href='#-setDefaults'>setDefaults</a>  <a href='#-getState'>getState</a>  <a href='#-checkUpdate'>checkUpdate</a>  <a href='#-updateButtons'>updateButtons</a> </li>
 </ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-setDefaults'>setDefaults</a> </li>
-<li class='toc3'><a href='#-updateSliderSpecs'>updateSliderSpecs</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-setFunc'>setFunc</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
@@ -68,13 +63,16 @@
 <h3><a class='anchor' name='Creation'>Creation</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>object</span>, <span class='argstr'>numItems: 8</span>, <span class='argstr'>parent</span>, <span class='argstr'>bounds</span>, <span class='argstr'>makeSkip: true</span>, <span class='argstr'>options: [  ]</span>)</h3>
 <div class='method'>
-<p>create a new EnvirGui<pre class='code prettyprint lang-sc'>// simple example
-g = EnvirGui.new(nil, 5);                // empty with 5 slots
+<p>create a new EnvirGui NdefParamGui<pre class='code prettyprint lang-sc'>// simple example
+g = EnvirGui.new(nil, 5);    // empty with 5 slots
+g.parent.alwaysOnTop_(true);
 g.object_((a: 1, b: \werty, freq: [500, 2000]));    // put some things in
-g.envir.put(\karl, \otto1);                // one more
+g.envir.put(\karl1, \otto1);                // one more
+g.envir.put(\caesar, \julius);                // one more
+
 g.envir.putAll((b: -12, r: 1, s: 2, t: 3, u: 4, v: 5))
 
-g.object_((x: 2));    // put something else in
+g.object_((x: 2));    // put another object in
 
 g.envir.putAll((b: -12, r: 1, s: 2, t: 3, u: 4, v: 5))
 
@@ -84,8 +82,7 @@ g.envir.removeAt(\s)
 g.envir.removeAt(\t)
 g.envir.removeAt(\u)
 g.envir.removeAt(\v)
-
-g.parent.close;</pre>
+g.close;</pre>
 <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>object<td class='argumentdesc'>
@@ -106,21 +103,19 @@ g.parent.close;</pre>
 <p>the envir displayed - actually an alias for object.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-zone' href='./../Overviews/Methods.html#zone'>zone</a> </h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/JITGui.html'>JITGui</a></div>
 <div class='method'>
-<p>the composite view the envirgui makes for itself</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-valFields' href='./../Overviews/Methods.html#valFields'>valFields</a> </h3>
+<p>the composite view the envirgui makes for itself</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-paramViews' href='./../Overviews/Methods.html#paramViews'>paramViews</a> </h3>
 <div class='method'>
-<p>the areas in which the key-value pairs are displayed.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-widgets' href='./../Overviews/Methods.html#widgets'>widgets</a> </h3>
+<p>the paramViews that display the values:<ul>
+<li>Single numbers appear in an <a href="./../Classes/EZSlider.html">EZSlider</a>,<li>pairs of numbers will be shown in an <a href="./../Classes/EZRanger.html">EZRanger</a>,<li>all other values are shown as compileStrings in an <a href="./../Classes/EZText.html">EZText</a>.</ul>
+
+<p>See <a href="./../Classes/ParamView.html">ParamView</a> for details.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-specs' href='./../Overviews/Methods.html#specs'>specs</a> </h3>
 <div class='method'>
-<p>the EZGuis that display the values:<ul>
-<li>Single numbers will have an <a href="./../Classes/EZSlider.html">EZSlider</a>,<li>pairs of numbers will be shown as an <a href="./../Classes/EZRanger.html">EZRanger</a>,<li>all other values are shown as compileStrings in an <a href="./../Classes/EZText.html">EZText</a>.</ul>
-</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-specs' href='./../Overviews/Methods.html#specs'>specs</a> </h3>
-<div class='method'>
-<p>EZSlider and EZRanger needs specs for their display ranges; if there is a global spec for that key (key.asSpec), it will be used. If not, a spec is generated (see the <a href="#-getSpec">-getSpec</a> method) and kept in these (local) specs. (With the JITLibExtensions quark, one can also use the Halo class to attach specs to objects, and use those.)</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-editKeys' href='./../Overviews/Methods.html#editKeys'>editKeys</a> </h3>
+<p>a local dictionary of the specs used for display ranges of numerical parameters by the paramViews of this envirgui. See the <a href="#-getSpec">-getSpec</a> method for details.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-editKeys' href='./../Overviews/Methods.html#editKeys'>editKeys</a> </h3>
 <div class='method'>
 <p>the keys of the currently displayed items in the dict.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-keysRotation' href='./../Overviews/Methods.html#keysRotation'>keysRotation</a> </h3>
 <div class='method'>
-<p>if the size of envir exceeds numItems, the keys displayed can be rotated: e.g. with 10 keys displayed on 5 valFields, keysRotation 0 means show keys (0..4), keysRotation 2 means show keys (2..6), etc.
-<p><strong>gui elements present if requested in options</strong></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-widgets' href='./../Overviews/Methods.html#widgets'>widgets</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-docBut' href='./../Overviews/Methods.html#docBut'>docBut</a> </h3>
+<p>if the size of envir exceeds numItems, the keys displayed can be rotated: e.g. with 10 keys displayed on 5 paramViews, keysRotation 0 means show keys (0..4), keysRotation 2 means show keys (2..6), etc.
+<p><strong>gui elements present if requested in options</strong></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-docBut' href='./../Overviews/Methods.html#docBut'>docBut</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-knowBut' href='./../Overviews/Methods.html#knowBut'>knowBut</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-parentBut' href='./../Overviews/Methods.html#parentBut'>parentBut</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-protoBut' href='./../Overviews/Methods.html#protoBut'>protoBut</a> </h3>
@@ -144,7 +139,7 @@ g.object_((a: 1, b: [2, 3], c: \symbol, d: [4, 5, 6], f: { "boing".postln }))</p
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getSpec' href='./../Overviews/Methods.html#getSpec'>getSpec</a> (<span class='argstr'>key</span>, <span class='argstr'>value</span>)</h3>
 <div class='method'>
 <p>For editing, numerical parameters need control specs for the ranges on the gui. These can be set locally in the EnvirGui, or global specs will be looked up. If no local or global specs exist for that parameter name, getSpec makes a usable guess for them. (With JITLibExtensions, one can also look up specs attached to an object such as a proxy.)<pre class='code prettyprint lang-sc'>// inline example
-g = EnvirGui.new;
+g = EnvirGui.new; g.parent.alwaysOnTop_(true);
 g.getSpec(\freq, 400);        // \freq exists as global spec, so use that
 g.object_((freq: 150));
 
@@ -156,45 +151,45 @@ g.envir.put(\iFrek, 500);</pre>
 <table class='arguments'>
 <tr><td class='argumentname'>key<td class='argumentdesc'>
 <p>the parameter name for which to find a spec<tr><td class='argumentname'>value<td class='argumentdesc'>
-<p>the current value of that param, which may be used for guessing specs.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-putSpec' href='./../Overviews/Methods.html#putSpec'>putSpec</a> (<span class='argstr'>key</span>, <span class='argstr'>obj</span>)</h3>
+<p>the current value of that param, which is used when guessing specs.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-putSpec' href='./../Overviews/Methods.html#putSpec'>putSpec</a> (<span class='argstr'>key</span>, <span class='argstr'>obj</span>)</h3>
 <div class='method'>
-<p>add a spec for a given key, or (if it is a global key) override a global spec with a local one:<pre class='code prettyprint lang-sc'>g.putSpec(\iFrek, [10, 1000, \exp]);
-g.putSpec(\freq, [100, 1000, \exp]);
-g.object_((freq: 200, iFrek: 20));</pre>
+<p>add a spec for a given key, or (if it is a global key) override a global spec with a local one:<pre class='code prettyprint lang-sc'>// set a desired range and warp:
+g.putSpec(\iFrek, [10, 1000, \exp]);
+g.putSpec(\freq, [10, 1000, \exp]);
+g.specs;
+g.putSpec(\freq, \freq);
+
+// specs are remembered when object changes
+g.putSpec(\freq, [10, 1000, \exp]);
+g.object_((freq: 200, iFrek: 20));
+
+// if needed, clear specs by hand when switching objects
+g.specs.clear; g.object_((freq: 200, iFrek: 20));
+
+g.close</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-replaceKeys' href='./../Overviews/Methods.html#replaceKeys'>replaceKeys</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-addReplaceKey' href='./../Overviews/Methods.html#addReplaceKey'>addReplaceKey</a> (<span class='argstr'>replaced</span>, <span class='argstr'>replacer</span>, <span class='argstr'>spec</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeReplaceKey' href='./../Overviews/Methods.html#removeReplaceKey'>removeReplaceKey</a> (<span class='argstr'>replaced</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeReplaceKey' href='./../Overviews/Methods.html#removeReplaceKey'>removeReplaceKey</a> (<span class='argstr'>replacer</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-showKeyFor' href='./../Overviews/Methods.html#showKeyFor'>showKeyFor</a> (<span class='argstr'>key</span>)</h3>
 <div class='method'>
-<p>keys with technical names can be replaced in the display with clearer names.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-highlight' href='./../Overviews/Methods.html#highlight'>highlight</a> (<span class='argstr'>index</span>, <span class='argstr'>prefix</span>, <span class='argstr'>color</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-unhighlight' href='./../Overviews/Methods.html#unhighlight'>unhighlight</a> (<span class='argstr'>index</span>, <span class='argstr'>prefix</span>, <span class='argstr'>color</span>)</h3>
+<p>keys with technical names can be replaced in the display with clearer names.
+<p>e = (longFreq: 123, amp: 0.25); g = EnvirGui(e); g.parent.alwaysOnTop_(true);
+<p>g.editKeys; g.addReplaceKey(\longFreq, \freq1, [50, 500, \exp]); g.viewForParam(\longFreq).visible_(false); g.viewForParam(\freq1).visible_(true);
+<p>e.put(\z, 345); e.put(\a, 34);
+<p>g.replaceKeys g.removeReplaceKey(\longFreq)</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-highlight' href='./../Overviews/Methods.html#highlight'>highlight</a> (<span class='argstr'>index</span>, <span class='argstr'>prefix</span>, <span class='argstr'>color</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-unhighlight' href='./../Overviews/Methods.html#unhighlight'>unhighlight</a> (<span class='argstr'>index</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-colorizeArea' href='./../Overviews/Methods.html#colorizeArea'>colorizeArea</a> (<span class='argstr'>area</span>, <span class='argstr'>hilite: true</span>)</h3>
 <div class='method'>
-<p>methods for visually emphasizing areas.</div><h3><a class='anchor' name='Some internal methods'>Some internal methods</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setField' href='./../Overviews/Methods.html#setField'>setField</a> (<span class='argstr'>index</span>, <span class='argstr'>key</span>, <span class='argstr'>value</span>, <span class='argstr'>sameKey: false</span>)</h3>
+<p>methods for visually emphasizing areas.
+<p>g.highlight(0, "&gt;&gt;_", Color.red(1, 0.5)); g.unhighlight(0);</div><h3><a class='anchor' name='Some internal methods'>Some internal methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setByKeys' href='./../Overviews/Methods.html#setByKeys'>setByKeys</a> (<span class='argstr'>newKeys</span>)</h3>
 <div class='method'>
-<p>set a field by index, with the new key, value;<h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>index<td class='argumentdesc'>
-<p>the index<tr><td class='argumentname'>key<td class='argumentdesc'>
-<p>a new key<tr><td class='argumentname'>value<td class='argumentdesc'>
-<p>the value<tr><td class='argumentname'>sameKey<td class='argumentdesc'>
-<p>means the field had the same key already.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setByKeys' href='./../Overviews/Methods.html#setByKeys'>setByKeys</a> (<span class='argstr'>newKeys</span>)</h3>
+<p>update the widgets for the current keys</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-showFields' href='./../Overviews/Methods.html#showFields'>showFields</a> (<span class='argstr'>num: 0</span>)</h3>
 <div class='method'>
-<p>update the widgets for the current keys</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-clearField' href='./../Overviews/Methods.html#clearField'>clearField</a> (<span class='argstr'>index</span>)</h3>
-<div class='method'>
-<p>remove the <a href="./../Classes/EZGui.html">EZGui</a> at this index</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-clearFields' href='./../Overviews/Methods.html#clearFields'>clearFields</a> (<span class='argstr'>from: 0</span>)</h3>
-<div class='method'>
-<p>remove all unused EZGuis</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-useRanger' href='./../Overviews/Methods.html#useRanger'>useRanger</a></h3>
+<p>show (num) active fields, make others invisible.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-useRanger' href='./../Overviews/Methods.html#useRanger'>useRanger</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-useRanger' href='./../Overviews/Methods.html#useRanger'>useRanger</a> = value</h3>
 <div class='method'>
 <p>set and get whether arrays of 2 number values should be displayed with EZRangers.
-<p><strong>methods that update and replace gui elements based on current envir content:</strong></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-findWidget' href='./../Overviews/Methods.html#findWidget'>findWidget</a> (<span class='argstr'>key</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setFunc' href='./../Overviews/Methods.html#setFunc'>setFunc</a> (<span class='argstr'>key</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setToRanger' href='./../Overviews/Methods.html#setToRanger'>setToRanger</a> (<span class='argstr'>index</span>, <span class='argstr'>key</span>, <span class='argstr'>value</span>, <span class='argstr'>sameKey</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setToSlider' href='./../Overviews/Methods.html#setToSlider'>setToSlider</a> (<span class='argstr'>index</span>, <span class='argstr'>key</span>, <span class='argstr'>value</span>, <span class='argstr'>sameKey</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setToText' href='./../Overviews/Methods.html#setToText'>setToText</a> (<span class='argstr'>index</span>, <span class='argstr'>key</span>, <span class='argstr'>value</span>, <span class='argstr'>sameKey: false</span>)</h3>
-<div class='method'>
 <p><strong>methods that make gui elements:</strong></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeViews' href='./../Overviews/Methods.html#makeViews'>makeViews</a> (<span class='argstr'>options</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeNameView' href='./../Overviews/Methods.html#makeNameView'>makeNameView</a> (<span class='argstr'>nameWid</span>, <span class='argstr'>height</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeOptionalViews' href='./../Overviews/Methods.html#makeOptionalViews'>makeOptionalViews</a> (<span class='argstr'>options</span>, <span class='argstr'>height: 20</span>)</h3>
@@ -205,14 +200,14 @@ g.object_((freq: 200, iFrek: 20));</pre>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeParentBut' href='./../Overviews/Methods.html#makeParentBut'>makeParentBut</a> (<span class='argstr'>width</span>, <span class='argstr'>height</span>)</h3>
 <div class='method'>
 <p><strong>standard JITGui methods:</strong></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-accepts' href='./../Overviews/Methods.html#accepts'>accepts</a> (<span class='argstr'>obj</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setDefaults' href='./../Overviews/Methods.html#setDefaults'>setDefaults</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-getState' href='./../Overviews/Methods.html#getState'>getState</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-checkUpdate' href='./../Overviews/Methods.html#checkUpdate'>checkUpdate</a> (<span class='argstr'>doFull: false</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-checkUpdate' href='./../Overviews/Methods.html#checkUpdate'>checkUpdate</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateButtons' href='./../Overviews/Methods.html#updateButtons'>updateButtons</a> </h3>
 <div class='method'>
 <p></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setDefaults' href='./../Overviews/Methods.html#setDefaults'>setDefaults</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateSliderSpecs' href='./../Overviews/Methods.html#updateSliderSpecs'>updateSliderSpecs</a> (<span class='argstr'>editKeys</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setFunc' href='./../Overviews/Methods.html#setFunc'>setFunc</a> (<span class='argstr'>key</span>)</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 <pre class='code prettyprint lang-sc'>    // Setting envir variables in a Tdef:
 (
@@ -236,10 +231,11 @@ Tdef(\text, { |ev|
 )
 
     // or equivalently, use the built-in EnvirGui in TdefGui:
-TdefGui(Tdef(\text), 4);
+TdefGui(Tdef(\text), 8);
 
 Tdef(\text).set(\yuhu, Prand([2, 3, 5, 8, 13], inf), \magic, [\abra, \cadabra]);
 
-Tdef(\text).clear;</pre>
+Tdef(\text).clear;
+Tdef(\text).envir.clear;</pre>
 
 <p><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/EnvirGui.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/EnvirGui.schelp</a><br>link::Classes/EnvirGui::<br>sc version: 3.7alpha1</div></div></body></html>
