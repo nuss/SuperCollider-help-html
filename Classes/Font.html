@@ -60,8 +60,7 @@
 
 <p>This is the object you pass to other gui objects to set their font name or size.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>name</span>, <span class='argstr'>size</span>, <span class='argstr'>bold: false</span>, <span class='argstr'>italic: false</span>, <span class='argstr'>usePointSize: false</span>)</h3>
-<div class='method'>
-<p><div class='note'><span class='notelabel'>NOTE:</span> The <strong>bold</strong>, <strong>italic</strong> and <strong>isPointSize</strong> arguments are only available in Qt GUI.</div><h4>Arguments:</h4>
+<div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>name<td class='argumentdesc'>
 <p>An instance of <a href="./../Classes/String.html">String</a>. Must coincide with the name of a font on the system. See <a href="#*availableFonts">*availableFonts</a>.<tr><td class='argumentname'>size<td class='argumentdesc'>
@@ -95,8 +94,8 @@
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*default' href='./../Overviews/Methods.html#default'>default</a> = <span class='argstr'>font</span></h3>
 <div class='method'>
 <p>The global default Font.
-<p>In Qt GUI, setting this property is equivalent to <code class='code prettyprint lang-sc'>Font.setDefault(font)</code>. See <a href="#*setDefault">*setDefault</a> for details.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*setDefault' href='./../Overviews/Methods.html#setDefault'>setDefault</a> (<span class='argstr'>font</span>, <span class='argstr'>class</span>)</h3>
-<div class='method'><div class='note'><span class='notelabel'>NOTE:</span> Only available in Qt GUI</div>
+<p>Setting this property is equivalent to <code class='code prettyprint lang-sc'>Font.setDefault(font)</code>. See <a href="#*setDefault">*setDefault</a> for details.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*setDefault' href='./../Overviews/Methods.html#setDefault'>setDefault</a> (<span class='argstr'>font</span>, <span class='argstr'>class</span>)</h3>
+<div class='method'>
 <p>Sets the global default font. Properties of the <code class='code prettyprint lang-sc'>font</code> argument will be combined with properties of the default system font, and those of individual views.
 <p>Optionally, a class can be given, so only views of that class will be affected.
 <p>Note that this will immediately affect any existing views.<h4>Arguments:</h4>
@@ -112,7 +111,7 @@
 <p>Create a new serif face Font.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*available' href='./../Overviews/Methods.html#available'>available</a> (<span class='argstr'>name</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extLib.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extLib.sc</a></div>
 <div class='method'>
-<p>Return the font defined by <code class='code prettyprint lang-sc'>name</code> if available, otherwise return <code class='code prettyprint lang-sc'>nil</code><pre class='code prettyprint lang-sc'>Font.available("Arial");
+<p>Return the font-name defined by <code class='code prettyprint lang-sc'>name</code> if the font is available on the user's machine, otherwise return <code class='code prettyprint lang-sc'>nil</code><pre class='code prettyprint lang-sc'>Font.available("Arial");
 Font.available("ywrsdstr");
 Font(Font.available("Arial") ? Font.defaultSansFace, 9.5)</pre>
 <h4>Arguments:</h4>
@@ -134,28 +133,27 @@ Font(Font.available("Arial") ? Font.defaultSansFace, 9.5)</pre>
 <p>An instance of <a href="./../Classes/String.html">String</a>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-size' href='./../Overviews/Methods.html#size'>size</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-size' href='./../Overviews/Methods.html#size'>size</a> = <span class='argstr'>pixelSize</span></h3>
 <div class='method'>
-<p>Gets/sets the size of the font.<div class='note'><span class='notelabel'>NOTE:</span> In Qt GUI, setting this variable is always considered as setting the <a href="#-pixelSize">-pixelSize</a>, while getting it will return any size set. In other GUI kits, size is always considered as pixel-size anyway. See <a href="#-hasPointSize">-hasPointSize</a> for distinction.</div><h4>Arguments:</h4>
+<p>Gets/sets the size of the font. Setting this variable is always considered as setting the <a href="#-pixelSize">-pixelSize</a>, while getting it will return any size set. See <a href="#-hasPointSize">-hasPointSize</a> for distinction.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>pixelSize<td class='argumentdesc'>
 <p>A Float.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-hasPointSize' href='./../Overviews/Methods.html#hasPointSize'>hasPointSize</a> </h3>
-<div class='method'><div class='note'><span class='notelabel'>NOTE:</span> Only in Qt GUI</div>
+<div class='method'>
 <p>A Boolean variable indicating whether the <a href="#-size">-size</a> is regarded as pixel-size (precise amount of pixels), or point-size (adapting to screen resolution). To change this, you need to set the size via <a href="#-pixelSize">-pixelSize</a> or <a href="#-pointSize">-pointSize</a>.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pixelSize' href='./../Overviews/Methods.html#pixelSize'>pixelSize</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-pixelSize' href='./../Overviews/Methods.html#pixelSize'>pixelSize</a> = <span class='argstr'>pixelSize</span></h3>
-<div class='method'><div class='note'><span class='notelabel'>NOTE:</span> Only in Qt GUI</div>
+<div class='method'>
 <p>Gets or sets the pixel-size of the font. When getting, returns nil if the font has point-size instead. See <a href="#-hasPointSize">-hasPointSize</a> for distinction.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>pixelSize<td class='argumentdesc'>
 <p> Any number, but note that floats will be rounded to integer values when setting pixel-size.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pointSize' href='./../Overviews/Methods.html#pointSize'>pointSize</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-pointSize' href='./../Overviews/Methods.html#pointSize'>pointSize</a> = <span class='argstr'>pointSize</span></h3>
-<div class='method'><div class='note'><span class='notelabel'>NOTE:</span> Only in Qt GUI</div>
+<div class='method'>
 <p>Gets or sets the point-size of the font. When getting, returns nil if the font has pixel-size instead. See <a href="#-hasPointSize">-hasPointSize</a> for distinction.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>pointSize<td class='argumentdesc'>
 <p> A Float.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setDefault' href='./../Overviews/Methods.html#setDefault'>setDefault</a> (<span class='argstr'>class</span>)</h3>
 <div class='method'>
 <p>Makes this instance of Font the default.
-<p>In Qt GUI, this is equivalent to calling <a href="#*setDefault">*setDefault</a> with this Font and the given class as arguments.
-<p>In other GUI kits, this is equivalent to setting the <a href="#*default">*default</a> property.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeArgs' href='./../Overviews/Methods.html#storeArgs'>storeArgs</a> </h3>
+<p>This is equivalent to calling <a href="#*setDefault">*setDefault</a> with this Font and the given class as arguments.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-storeArgs' href='./../Overviews/Methods.html#storeArgs'>storeArgs</a> </h3>
 <div class='method'>
 <p>(?)<h4>Returns:</h4>
 <div class='returnvalue'>
@@ -230,15 +228,15 @@ w.view.decorator = f = FlowLayout(w.view.bounds,Point(4, 4),Point(4, 2));
 ].do({ arg name;
     var v, s, n, spec, p, height = 16;
 
-        v = StaticText(w, Rect(0, 0, 56, height + 2));
+        v = StaticText(w, Rect(0, 0, 110, height + 20));
         v.font = Font(name, 13);
         v.string = name;
 
-        s = Button(w, Rect(0, 0, 140, height + 2));
+        s = Button(w, Rect(0, 0, 140, height + 20));
         s.font = Font(name, 13);
         s.states = [[name]];
 
-        n = NumberBox(w, Rect(0, 0, 56, height + 2));
+        n = NumberBox(w, Rect(0, 0, 56, height + 20));
         n.font = Font(name, 13);
         n.object = pi;
 
@@ -252,7 +250,7 @@ w.front;
 (
 var w, f, i = 0;
 
-w = Window("Fonts", Rect(128, 64, 820, 760));
+w = Window("Fonts", Rect(128, 64, 1024, 768));
 b = ScrollView(w, w.view.bounds);
 
 b.decorator = f = FlowLayout(b.bounds, Point(4,4), Point(4,2));
@@ -261,16 +259,16 @@ Font.availableFonts.do({ arg name;
     var v, s, n, spec, p, height = 16, font;
     font = Font(name,13);
 
-        v = StaticText(b, Rect(0, 0, 56, height + 2));
+        v = StaticText(b, Rect(0, 0, 120, height + 20));
         v.font = font;
         v.string = name;
 
-        s = Button(b, Rect(0, 0, 140, height + 2));
+        s = Button(b, Rect(0, 0, 140, height + 20));
         s.font = font;
         s.states = [[name]];
         s.action = { font.asCompileString.postln; };
 
-        n = NumberBox(b, Rect(0, 0, 56, height + 2));
+        n = NumberBox(b, Rect(0, 0, 56, height + 20));
         n.font = font;
         n.object = pi;
     if( (i = i + 1) % 3 == 0,{
@@ -281,4 +279,4 @@ Font.availableFonts.do({ arg name;
 w.front;
 )</pre>
 
-<p><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Font.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Font.schelp</a><br>link::Classes/Font::<br>sc version: 3.7alpha0</div></div></body></html>
+<p><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Font.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Font.schelp</a><br>link::Classes/Font::<br>sc version: 3.8dev</div></div></body></html>

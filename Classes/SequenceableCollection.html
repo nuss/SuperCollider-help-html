@@ -155,6 +155,8 @@
 <li class='toc3'><a href='#-breakUp'>breakUp</a> </li>
 <li class='toc3'><a href='#-canFreeSynth'>canFreeSynth</a> </li>
 <li class='toc3'><a href='#-cauchy'>cauchy</a> </li>
+<li class='toc3'><a href='#-connectAll'>connectAll</a> </li>
+<li class='toc3'><a href='#-connectEach'>connectEach</a> </li>
 <li class='toc3'><a href='#-containsAssociations'>containsAssociations</a> </li>
 <li class='toc3'><a href='#-containsSeqColl'>containsSeqColl</a> </li>
 <li class='toc3'><a href='#-convertOneRhythm'>convertOneRhythm</a> </li>
@@ -256,6 +258,7 @@
 <li class='toc3'><a href='#-postItems'>postItems</a> </li>
 <li class='toc3'><a href='#-pow'>pow</a> </li>
 <li class='toc3'><a href='#-prFlat'>prFlat</a> </li>
+<li class='toc3'><a href='#-prUnixCmd'>prUnixCmd</a> </li>
 <li class='toc3'><a href='#-prepareForProxySynthDef'>prepareForProxySynthDef</a> </li>
 <li class='toc3'><a href='#-prevPrime'>prevPrime</a> </li>
 <li class='toc3'><a href='#-quickSort'>quickSort</a> </li>
@@ -294,6 +297,7 @@
 <li class='toc3'><a href='#-transposeKey'>transposeKey</a> </li>
 <li class='toc3'><a href='#-triWindow'>triWindow</a> </li>
 <li class='toc3'><a href='#-uni2bi'>uni2bi</a> </li>
+<li class='toc3'><a href='#-unixCmd'>unixCmd</a> </li>
 <li class='toc3'><a href='#-unlace'>unlace</a> </li>
 <li class='toc3'><a href='#-unsignedRightShift'>unsignedRightShift</a> </li>
 <li class='toc3'><a href='#-unwrap'>unwrap</a> </li>
@@ -454,14 +458,15 @@ y.findAll([7, 6]);</pre>
 <p>Returns a linearly interpolated value between the two closest indices. Inverse operation is <a href="#-indexInBetween">-indexInBetween</a>.<pre class='code prettyprint lang-sc'>x = [2, 5, 6].blendAt(0.4);</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-copyRange' href='./../Overviews/Methods.html#copyRange'>copyRange</a> (<span class='argstr'>start</span>, <span class='argstr'>end</span>)</h3>
 <div class='method'>
-<p>Return a new SequenceableCollection which is a copy of the indexed slots of the receiver from <strong>start</strong> to <strong>end</strong>. <code class='code prettyprint lang-sc'>x.copyRange(a, b)</code> can also be written as <code class='code prettyprint lang-sc'>x[a..b]</code><pre class='code prettyprint lang-sc'>(
+<p>Return a new SequenceableCollection which is a copy of the indexed slots of the receiver from <strong>start</strong> to <strong>end</strong>. If <strong>end</strong> &lt; <strong>start</strong>, an empty collection is returned.<pre class='code prettyprint lang-sc'>(
 var y, z;
 z = [1, 2, 3, 4, 5];
 y = z.copyRange(1, 3);
 z.postln;
 y.postln;
 )</pre>
-</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-copyToEnd' href='./../Overviews/Methods.html#copyToEnd'>copyToEnd</a> (<span class='argstr'>start</span>)</h3>
+
+<p><div class='warning'><span class='warninglabel'>WARNING:</span> <code class='code prettyprint lang-sc'>x.copyRange(a, b)</code> is <strong>not</strong> equivalent to <code class='code prettyprint lang-sc'>x[a..b]</code>. The latter compiles to <a href="./../Classes/ArrayedCollection.html#-copySeries">ArrayedCollection: -copySeries</a>, which has different behavior when <strong>end</strong> &lt; <strong>start</strong>.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-copyToEnd' href='./../Overviews/Methods.html#copyToEnd'>copyToEnd</a> (<span class='argstr'>start</span>)</h3>
 <div class='method'>
 <p>Return a new SequenceableCollection which is a copy of the indexed slots of the receiver from <strong>start</strong> to the end of the collection. <code class='code prettyprint lang-sc'>x.copyToEnd(a)</code> can also be written as <code class='code prettyprint lang-sc'>x[a..]</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-copyFromStart' href='./../Overviews/Methods.html#copyFromStart'>copyFromStart</a> (<span class='argstr'>end</span>)</h3>
 <div class='method'>
@@ -954,6 +959,10 @@ a.selectIndices({ |it| it &gt; 0 });</pre>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/canFreeSynth.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/canFreeSynth.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-cauchy' href='./../Overviews/Methods.html#cauchy'>cauchy</a> (<span class='argstr'>spread: 1</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/LoopBufUGens/classes/LJP Classes/ProbabilityDistributions.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/LoopBufUGens/classes/LJP Classes/ProbabilityDistributions.sc</a></div>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectAll' href='./../Overviews/Methods.html#connectAll'>connectAll</a> (<span class='argstr'>dependant</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/extCollection.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/extCollection.sc</a></div>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectEach' href='./../Overviews/Methods.html#connectEach'>connectEach</a> (<span class='argstr'>dependantList</span>, <span class='argstr'>signalName</span>, <span class='argstr'>method</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/extCollection.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/extCollection.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-containsAssociations' href='./../Overviews/Methods.html#containsAssociations'>containsAssociations</a> </h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/EventArray/Classes/extDeepFindRule.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/EventArray/Classes/extDeepFindRule.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-containsSeqColl' href='./../Overviews/Methods.html#containsSeqColl'>containsSeqColl</a> </h3>
@@ -1109,6 +1118,7 @@ a.selectIndices({ |it| it &gt; 0 });</pre>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Posting/extVarious-postItems.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Posting/extVarious-postItems.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-pow' href='./../Overviews/Methods.html#pow'>pow</a> (<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-prFlat' href='./../Overviews/Methods.html#prFlat'>prFlat</a> (<span class='argstr'>list</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prUnixCmd' href='./../Overviews/Methods.html#prUnixCmd'>prUnixCmd</a> (<span class='argstr'>postOutput: true</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepareForProxySynthDef' href='./../Overviews/Methods.html#prepareForProxySynthDef'>prepareForProxySynthDef</a> (<span class='argstr'>proxy</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/JITLib/ProxySpace/wrapForNodeProxy.sc'>/usr/local/share/SuperCollider/SCClassLibrary/JITLib/ProxySpace/wrapForNodeProxy.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-prevPrime' href='./../Overviews/Methods.html#prevPrime'>prevPrime</a> </h3>
@@ -1165,6 +1175,7 @@ a.selectIndices({ |it| it &gt; 0 });</pre>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-triWindow' href='./../Overviews/Methods.html#triWindow'>triWindow</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-uni2bi' href='./../Overviews/Methods.html#uni2bi'>uni2bi</a> (<span class='argstr'>lo: -1</span>, <span class='argstr'>hi: 1</span>, <span class='argstr'>clip: 'none'</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Lang/Improvements/extVarious-range.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Lang/Improvements/extVarious-range.sc</a></div>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-unixCmd' href='./../Overviews/Methods.html#unixCmd'>unixCmd</a> (<span class='argstr'>action</span>, <span class='argstr'>postOutput: true</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-unlace' href='./../Overviews/Methods.html#unlace'>unlace</a> (<span class='argstr'>numlists</span>, <span class='argstr'>clumpSize: 1</span>, <span class='argstr'>clip: false</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-unsignedRightShift' href='./../Overviews/Methods.html#unsignedRightShift'>unsignedRightShift</a> (<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-unwrap' href='./../Overviews/Methods.html#unwrap'>unwrap</a> (<span class='argstr'>lo: -1</span>, <span class='argstr'>hi: 1</span>)</h3>
@@ -1193,4 +1204,4 @@ a.selectIndices({ |it| it &gt; 0 });</pre>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-wvariance' href='./../Overviews/Methods.html#wvariance'>wvariance</a> (<span class='argstr'>weights</span>, <span class='argstr'>wmean</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/statistics/extStatistics.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/statistics/extStatistics.sc</a></div>
 <div class='footnotes'>
-<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - see Laurson and Kuuskankare's 2003, "From RTM-notation to ENP-score-notation" <a href="http://jim2003.agglo-montbeliard.fr/articles/laurson.pdf">http://jim2003.agglo-montbeliard.fr/articles/laurson.pdf</a></div></div><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/SequenceableCollection.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/SequenceableCollection.schelp</a><br>link::Classes/SequenceableCollection::<br>sc version: 3.7alpha1</div></div></body></html>
+<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - see Laurson and Kuuskankare's 2003, "From RTM-notation to ENP-score-notation" <a href="http://jim2003.agglo-montbeliard.fr/articles/laurson.pdf">http://jim2003.agglo-montbeliard.fr/articles/laurson.pdf</a></div></div><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/SequenceableCollection.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/SequenceableCollection.schelp</a><br>link::Classes/SequenceableCollection::<br>sc version: 3.8dev</div></div></body></html>
