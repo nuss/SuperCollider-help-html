@@ -42,7 +42,7 @@
 
 <p>A Control is a UGen that can be set and routed externally to interact with a running Synth. Typically, Controls are created from the arguments of a SynthDef function.
 <p>Generally you do not create Controls yourself. (See Arrays example below).
-<p>The rate may be either .kr (continous control rate signal) or .ir (a static value, set at the time the synth starts up, and subsequently unchangeable). For .ar, see <a href="./../Classes/AudioControl.html">AudioControl</a>
+<p>The rate may be either .kr (continuous control rate signal) or .ir (a static value, set at the time the synth starts up, and subsequently unchangeable). For .ar, see <a href="./../Classes/AudioControl.html">AudioControl</a>
 <p>SynthDef creates these when compiling the ugenGraph function. They are created for you, you use them, and you don't really need to worry about them if you don't want to.
 <p>For a more concise combination of name, default value and lag, see <a href="./../Classes/NamedControl.html">NamedControl</a><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*kr' href='./../Overviews/Methods.html#kr'>kr</a> (<span class='argstr'>values</span>)</h3>
@@ -151,14 +151,14 @@ b.setn(\amp, Array.rand(4, 0.005, 0.1))
 b.setn(\ring, Array.rand(4, 0.005, 1.0))</pre>
 <h3><a class='anchor' name='Symbols'>Symbols</a></h3>
 
-<p>Inside SynthDefs and UGen functions, symbols can be used to conventiently specify control inputs of different rates and with lags (see: <a href="./../Classes/NamedControl.html">NamedControl</a>, and <a href="./../Classes/Symbol.html">Symbol</a>)<dl>
+<p>Inside SynthDefs and UGen functions, symbols can be used to conveniently specify control inputs of different rates and with lags (see: <a href="./../Classes/NamedControl.html">NamedControl</a>, and <a href="./../Classes/Symbol.html">Symbol</a>)<dl>
 <dt><code class='code prettyprint lang-sc'>\name.kr(val, lag)</code><dd>Return a control rate <a href="./../Classes/NamedControl.html">NamedControl</a> input with a default value (val), and if supplied, with a lag. If val is an array, the control will be multichannel.<pre class='code prettyprint lang-sc'>a = { SinOsc.ar(\freq.kr(440, 1.2)) }.play;
 a.set(\freq, 330);
 a.release;
 a = { SinOsc.ar(\freq.kr([440, 460], 1.2)) }.play;
 a.setn(\freq, [330, 367]);
 a.release;</pre>
-<dt><code class='code prettyprint lang-sc'>\name.ar(val, lag)</code><dd>Return an audio rate <a href="./../Classes/NamedControl.html">NamedControl</a> input with a default value (val), and if supplied, with a lag. If val is an array, the control will be multichannel.<dt><code class='code prettyprint lang-sc'>\name.ir(val)</code><dd>Return an intitalization rate <a href="./../Classes/NamedControl.html">NamedControl</a> input with a default value (val). If val is an array, the control will be multichannel.<dt><code class='code prettyprint lang-sc'>\name.tr(val)</code><dd>Return a <a href="./../Classes/TrigControl.html">TrigControl</a> input with a default value (val). If val is an array, the control will be multichannel.<pre class='code prettyprint lang-sc'>a = { Ringz.ar(T2A.ar(\trig.tr), \freq.kr(500, 1), 0.8) }.play;
+<dt><code class='code prettyprint lang-sc'>\name.ar(val, lag)</code><dd>Return an audio rate <a href="./../Classes/NamedControl.html">NamedControl</a> input with a default value (val), and if supplied, with a lag. If val is an array, the control will be multichannel.<dt><code class='code prettyprint lang-sc'>\name.ir(val)</code><dd>Return an initialization rate <a href="./../Classes/NamedControl.html">NamedControl</a> input with a default value (val). If val is an array, the control will be multichannel.<dt><code class='code prettyprint lang-sc'>\name.tr(val)</code><dd>Return a <a href="./../Classes/TrigControl.html">TrigControl</a> input with a default value (val). If val is an array, the control will be multichannel.<pre class='code prettyprint lang-sc'>a = { Ringz.ar(T2A.ar(\trig.tr), \freq.kr(500, 1), 0.8) }.play;
 a.set(\freq, 330, \trig, 1);
 a.set(\freq, 830, \trig, 1);
 a.release;</pre>

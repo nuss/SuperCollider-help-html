@@ -53,7 +53,7 @@ Pbind(
 
 <p>Event.default contains a function bound to the Symbol <code class='code prettyprint lang-sc'>'finish'</code> which is called for each new event generated in order to complete any computations that depend on the other values in the event.<h2><a class='anchor' name='The pitch model'>The pitch model</a></h2>
 
-<p>Event.default implements a multi level pitch model which allows composition using modal scale degrees, equal division note values, midi note values, or frequencies in Hertz. These different ways of specifying the pitch can all be used interchangably.
+<p>Event.default implements a multi level pitch model which allows composition using modal scale degrees, equal division note values, midi note values, or frequencies in Hertz. These different ways of specifying the pitch can all be used interchangeably.
 <p>The way this works is due to the default values bound to the Symbols of the pitch model.
 <p>The lowest level Symbol in the pitch model is <code class='code prettyprint lang-sc'>'freq'</code>. The default binding for <code class='code prettyprint lang-sc'>'freq'</code> is a <a href="./../Classes/Function.html">Function</a> which calculates the frequency by getting the value of <code class='code prettyprint lang-sc'>'midinote'</code>, adding a transpose value and converting it to Hertz using <code class='code prettyprint lang-sc'>midicps</code>.<pre class='code prettyprint lang-sc'>    ~freq = {
         (~midinote.value + ~ctranspose).midicps;

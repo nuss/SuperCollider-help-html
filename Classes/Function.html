@@ -198,7 +198,7 @@ e = Environment.make({ ~a = 3; ~b = 10 });
 )</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-functionPerformList' href='./../Overviews/Methods.html#functionPerformList'>functionPerformList</a> (<span class='argstr'>selector</span>, <span class='argstr'>arglist</span>)</h3>
 <div class='method'>
-<p>For Function, this behaves the same as valueArray(arglist). It is used where Functions and other objects should behave differently to value, such as in the objecr prototyping implementation of Environment.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-performWithEnvir' href='./../Overviews/Methods.html#performWithEnvir'>performWithEnvir</a> (<span class='argstr'>selector</span>, <span class='argstr'>envir</span>)</h3>
+<p>For Function, this behaves the same as valueArray(arglist). It is used where Functions and other objects should behave differently to value, such as in the object prototyping implementation of Environment.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-performWithEnvir' href='./../Overviews/Methods.html#performWithEnvir'>performWithEnvir</a> (<span class='argstr'>selector</span>, <span class='argstr'>envir</span>)</h3>
 <div class='method'>
 <p><pre class='code prettyprint lang-sc'>a = { |a, b, c| postf("% plus % plus % is %\n", a, b, c, a + b + c); "" };
 a.performWithEnvir(\value, (a: 1, c: 3, d: 4, b: 2));</pre>
@@ -255,10 +255,10 @@ x.postln;</pre>
 <p>Returns the amount of time this function takes to evaluate. print is a boolean indicating whether the result is posted. The default is true.<pre class='code prettyprint lang-sc'>{ 1000000.do({ 1.0.rand }); }.bench;</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-fork' href='./../Overviews/Methods.html#fork'>fork</a> (<span class='argstr'>clock</span>, <span class='argstr'>quant</span>, <span class='argstr'>stackSize</span>)</h3>
 <div class='method'>
-<p>Returns a Routine using the receiver as it's function, and plays it in a TempoClock.<pre class='code prettyprint lang-sc'>{ 4.do({ "Threadin...".postln; 1.wait;}) }.fork;</pre>
+<p>Returns a Routine using the receiver as it's function, and plays it in a TempoClock.<pre class='code prettyprint lang-sc'>{ 4.do({ "Threading...".postln; 1.wait;}) }.fork;</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-forkIfNeeded' href='./../Overviews/Methods.html#forkIfNeeded'>forkIfNeeded</a> (<span class='argstr'>clock</span>, <span class='argstr'>quant</span>, <span class='argstr'>stackSize</span>)</h3>
 <div class='method'>
-<p>If needed, creates a new Routine to evaluate the function in, if the message is called within a routine already, it simply evaluates it.<pre class='code prettyprint lang-sc'>f = { 4.do({ "Threadin...".postln; 1.wait;}) };
+<p>If needed, creates a new Routine to evaluate the function in, if the message is called within a routine already, it simply evaluates it.<pre class='code prettyprint lang-sc'>f = { 4.do({ "Threading...".postln; 1.wait;}) };
 f.forkIfNeeded;
 { "we are now in a routine".postln; 1.wait; f.forkIfNeeded }.fork;</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-block' href='./../Overviews/Methods.html#block'>block</a> </h3>
@@ -276,7 +276,7 @@ x.value;
 x.value;</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-flop' href='./../Overviews/Methods.html#flop'>flop</a> </h3>
 <div class='method'>
-<p>Return a function that, when evaluated with nested arguments, does multichannel expansion by evaluting the receiver function for each channel. A flopped function responds like the "map" function in languages like Lisp.<pre class='code prettyprint lang-sc'>f = { |a, b| if(a &gt; 0) { a + b } { -inf } }.flop;
+<p>Return a function that, when evaluated with nested arguments, does multichannel expansion by evaluating the receiver function for each channel. A flopped function responds like the "map" function in languages like Lisp.<pre class='code prettyprint lang-sc'>f = { |a, b| if(a &gt; 0) { a + b } { -inf } }.flop;
 f.value([-1, 2, 1, -3.0], [10, 1000]);
 f.value(2, 3);</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-envirFlop' href='./../Overviews/Methods.html#envirFlop'>envirFlop</a> </h3>
@@ -343,7 +343,7 @@ x.release(4); // fadeout over 4 seconds</pre>
 { SinOsc.ar(440, 0, 0.3) }.play(fadeTime: 0.0);
 SynthDef(\help_FuncPlay, { Out.ar(0, SinOsc.ar(440, 0, 0.3))}).play;</pre>
 
-<p>Function.play is often more convienent than SynthDef.play, particularly for short examples and quick testing. The latter does have some additional options, such as lagtimes for controls, etc. Where reuse and maximum flexibility are of greater importance, SynthDef and its various methods are usually the better choice.<h4>Arguments:</h4>
+<p>Function.play is often more convenient than SynthDef.play, particularly for short examples and quick testing. The latter does have some additional options, such as lagtimes for controls, etc. Where reuse and maximum flexibility are of greater importance, SynthDef and its various methods are usually the better choice.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>target<td class='argumentdesc'>
 <p>a Node, Server, or Nil. A Server will be converted to the default group of that server. Nil will be converted to the default group of the default Server.<tr><td class='argumentname'>outbus<td class='argumentdesc'>

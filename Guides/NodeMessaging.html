@@ -64,7 +64,7 @@ n.set(\freq, 500)
 n.free;</pre>
 
 <p>The answer to the question of whether one should work with node objects or directly with messages depends to some extent on context, and to some extent is a matter of personal taste.
-<p>The encapsulation of node objects results in a certain generalization, meaning that other compound objects can respond to the same messages and thus exploit polymorphism. They also provide a certain level of convienence, keeping track of indexes and IDs, etc.
+<p>The encapsulation of node objects results in a certain generalization, meaning that other compound objects can respond to the same messages and thus exploit polymorphism. They also provide a certain level of convenience, keeping track of indexes and IDs, etc.
 <p>In certain cases, such as for granular synthesis it is recommended to use messages directly, because there is no benefit to be gained from the node objects (i.e. no need to message them) and they add cpu load to the client side.<pre class='code prettyprint lang-sc'>(
 SynthDef("grain", {
     Out.ar(0, Line.kr(0.1, 0, 0.01, doneAction:2) * FSinOsc.ar(12000))
@@ -81,7 +81,7 @@ Routine({
 )</pre>
 
 <p>In cases where you need to keep track of the synth's state, it is advisable to use node objects and register them with a <a href="./../Classes/NodeWatcher.html">NodeWatcher</a>. (see helpfile)
-<p>Apart from such cases it is a matter of taste whether you want to use the combination of message and a numerical global representation or an object representation. The two can be mixed, and certain advantages of the object style can be accessed when using messaging style. For instance <code class='code prettyprint lang-sc'>Server.nextNodeID</code> allows one to use dynamically assigned IDs in messaging style. As a gross generalization, it is probably fair to say that object style is more convienent, but messaging style is more efficient, due to reduce client-side CPU load.<div class='note'><span class='notelabel'>NOTE:</span> IMPORTANT: If you wish to have the functionality of the default_group (e.g. problem free use of Server's record and scope functionality) you should treat ID 1 (the default_group) as the root of your node tree rather than ID 0 (the RootNode). See default_group for more details.</div>
+<p>Apart from such cases it is a matter of taste whether you want to use the combination of message and a numerical global representation or an object representation. The two can be mixed, and certain advantages of the object style can be accessed when using messaging style. For instance <code class='code prettyprint lang-sc'>Server.nextNodeID</code> allows one to use dynamically assigned IDs in messaging style. As a gross generalization, it is probably fair to say that object style is more convenient, but messaging style is more efficient, due to reduce client-side CPU load.<div class='note'><span class='notelabel'>NOTE:</span> IMPORTANT: If you wish to have the functionality of the default_group (e.g. problem free use of Server's record and scope functionality) you should treat ID 1 (the default_group) as the root of your node tree rather than ID 0 (the RootNode). See default_group for more details.</div>
 <p>Note that <a href="./../Classes/Function.html#play">Function-play</a> and <a href="./../Classes/SynthDef.html#play">SynthDef-play</a> return a synth object that can be used to send messages to.<pre class='code prettyprint lang-sc'>x = { arg freq=1000; Ringz.ar(Crackle.ar(1.95, 0.1), freq, 0.05) }.play(s);
 x.set(\freq, 1500);
 x.free;</pre>

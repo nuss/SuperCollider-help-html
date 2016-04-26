@@ -50,7 +50,8 @@
 <li class='toc3'><a href='#-<>>'>&lt;&gt;&gt;</a> </li>
 </ul><li class='toc2'><a href='#Setting the source'>Setting the source</a></li>
 <ul class='toc'><li class='toc3'><a href='#-source'>source</a> </li>
-</ul><li class='toc2'><a href='#Making copies'>Making copies</a></li>
+</ul><li class='toc2'><a href='#Routing'>Routing</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Making copies'>Making copies</a></li>
 <ul class='toc'><li class='toc3'><a href='#-copy'>copy</a> </li>
 <li class='toc3'><a href='#-copyState'>copyState</a> </li>
 </ul><li class='toc2'><a href='#Reshaping'>Reshaping</a></li>
@@ -329,7 +330,21 @@ a.source = { Pulse.ar(130, Saw.kr(0.3)) * 0.1 }; // change this line while runni
 <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>obj<td class='argumentdesc'>
-<p>can be one of the supported inputs (see <a href="#Supported sources">Supported sources</a>)</table></div><h3><a class='anchor' name='Making copies'>Making copies</a></h3>
+<p>can be one of the supported inputs (see <a href="#Supported sources">Supported sources</a>)<div class='note'><span class='notelabel'>NOTE:</span> When reshaping is set, e.g. to \elastic, setting the source can change the number of channels of the proxy. This means that its bus changes, and that child proxies, which read signals from it, may also change. See the example in <a href="#routing">routing</a>.</div></table></div><h3><a class='anchor' name='Routing'>Routing</a></h3>
+
+<p>Signals can be routed between any number of node proxies.
+<p>See also: <a href="./../Classes/BusPlug.html#ar">BusPlug: ar</a>, <a href="./../Classes/BusPlug.html#value">BusPlug: value</a>, <a href="#reshaping">reshaping</a>.
+<p>Here is a simple example, using Ndef (NodeProxy works similarly):<pre class='code prettyprint lang-sc'>Ndef(\maus, { MouseX.kr });
+Ndef(\haus, { Pan2.ar(Blip.ar(Ndef.kr(\maus, 1) * 70), SinOsc.kr(Ndef.ar(\maus, 1) * 5)) }).play;</pre>
+<div class='note'><span class='notelabel'>NOTE:</span> If you don't specify the number of channels, an expression like <code class='code prettyprint lang-sc'>Ndef.kr(\maus)</code> will return an Array. Subsequently, e.g. by a <code class='code prettyprint lang-sc'>Pan2</code> UGen, you may get the message:
+<p><code class='code prettyprint lang-sc'>WARNING: Synth output should be a flat array.</code>
+<p>If you intend the output to be really mono, make it explicit by writing: <code class='code prettyprint lang-sc'>Ndef.kr(\maus, 1)</code></div>
+<p>With elastic reshaping, you can use the parent to expand the child, if you omit the number of channels in the routing:<pre class='code prettyprint lang-sc'>Ndef(\maus, { MouseX.kr });
+Ndef(\haus, { Blip.ar(Ndef.kr(\maus) * 70) }).play;
+Ndef(\haus).reshaping = \elastic;
+Ndef(\maus).reshaping = \elastic;
+Ndef(\maus, { LFNoise0.kr(1 ! 8) + 1 }); // now 8 parallel channels of audio are audible.</pre>
+<h3><a class='anchor' name='Making copies'>Making copies</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-copy' href='./../Overviews/Methods.html#copy'>copy</a> </h3>
 <div class='method'>
 <p>copies the hidden internal state to make the new proxy independent of the old, but will keep the reference to the source object. The rendered SynthDef is cached, which makes this method more efficient than simply assigning the same function to a new proxy. By design, the monitor is copied, but is not running (use play to start it in the same configuration).<pre class='code prettyprint lang-sc'>a = NodeProxy(s);
@@ -370,7 +385,7 @@ a.source = { BPF.ar(Dust.ar(8 ! 8), (0..5).nthPrime * 300, 0.01) * 20 };
 a.numChannels; // 8</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-mold' href='./../Overviews/Methods.html#mold'>mold</a> (<span class='argstr'>numChannels</span>, <span class='argstr'>rate</span>, <span class='argstr'>argReshaping</span>, <span class='argstr'>fadeTime</span>)</h3>
 <div class='method'>
-<p>Adjust the proxy to a given rate / numChannels. If there are any child proxies that have elastic <a href="#-reshaping">-reshaping</a>, they are adjusted accordigly.<pre class='code prettyprint lang-sc'>a = NodeProxy(s);
+<p>Adjust the proxy to a given rate / numChannels. If there are any child proxies that have elastic <a href="#-reshaping">-reshaping</a>, they are adjusted accordingly.<pre class='code prettyprint lang-sc'>a = NodeProxy(s);
 a.play;
 a.source = { BPF.ar(Impulse.ar({ rrand(1.0, 2.0) } ! a.numChannels), (0..5).nthPrime * 300, 0.01) * 20 };
 a.numChannels; // 2
@@ -503,7 +518,7 @@ a.clear; b.clear;</pre>
 <p>An array of pairs: <strong>key, value, key, value, ...</strong>
 <p>The unique key (a <a href="./../Classes/Symbol.html">Symbol</a>) specifies the control name to be set.
 <p>For value anything can be specified that responds to "asControlInput", in particular:<dl>
-<dt>number<dd>set the control to that number<dt>array of numbers<dd>set the subsequent control channels to the correspoding value<dt>node proxy<dd>map subsequent control channels to the corrseponding proxy output channel</dl>
+<dt>number<dd>set the control to that number<dt>array of numbers<dd>set the subsequent control channels to the corresponding value<dt>node proxy<dd>map subsequent control channels to the corresponding proxy output channel</dl>
 </table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-unset' href='./../Overviews/Methods.html#unset'>unset</a> ( <span class='argstr'>... keys</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-unmap' href='./../Overviews/Methods.html#unmap'>unmap</a> ( <span class='argstr'>... keys</span>)</h3>
 <div class='method'>
@@ -542,7 +557,7 @@ a.clear; b.clear;</pre>
 <p>Arguments used to set the synth. the argument list is applied to the synth only.<tr><td class='argumentname'>freeLast<td class='argumentdesc'>
 <p>if to free the last synth at that index or not (default: true)</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendEach' href='./../Overviews/Methods.html#sendEach'>sendEach</a> (<span class='argstr'>extraArgs</span>, <span class='argstr'>freeLast: true</span>)</h3>
 <div class='method'>
-<p>Like send, just iterating seperately over the objects.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-wakeUp' href='./../Overviews/Methods.html#wakeUp'>wakeUp</a> </h3>
+<p>Like send, just iterating separately over the objects.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-wakeUp' href='./../Overviews/Methods.html#wakeUp'>wakeUp</a> </h3>
 <div class='method'>
 <p>Until the proxy is not used by any output ( either .play or .ar/.kr ) it is not running on the server. you can wake it up to force it playing. Normally this is not needed.</div><h3><a class='anchor' name='GUI'>GUI</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-edit' href='./../Overviews/Methods.html#edit'>edit</a> (<span class='argstr'>nSliders</span>, <span class='argstr'>parent</span>, <span class='argstr'>bounds</span>)</h3>
@@ -699,7 +714,7 @@ a.source = { SinOsc.ar([350, 351.3], 0, 0.2) };
 a.numChannels.postln;
 a.source = { SinOsc.ar([390, 286] * 1.2, 0, 0.2) };
 
-// exeeding channels wrap:
+// exceeding channels wrap:
 a.source = { SinOsc.ar([390, 286, 400, 420, 300] * 1.2, 0, 0.2) };
 
 // other inputs
