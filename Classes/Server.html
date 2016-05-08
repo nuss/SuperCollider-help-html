@@ -126,7 +126,6 @@
 </ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-actualSampleRate'>actualSampleRate</a> </li>
-<li class='toc3'><a href='#-addStatusWatcher'>addStatusWatcher</a> </li>
 <li class='toc3'><a href='#-addr'>addr</a> </li>
 <li class='toc3'><a href='#-aliveThreadIsRunning'>aliveThreadIsRunning</a> </li>
 <li class='toc3'><a href='#-aliveThreadPeriod'>aliveThreadPeriod</a> </li>
@@ -149,6 +148,7 @@
 <li class='toc3'><a href='#-closeBundle'>closeBundle</a> </li>
 <li class='toc3'><a href='#-cmdPeriod'>cmdPeriod</a> </li>
 <li class='toc3'><a href='#-controlBusAllocator'>controlBusAllocator</a> </li>
+<li class='toc3'><a href='#-disconnectSharedMemory'>disconnectSharedMemory</a> </li>
 <li class='toc3'><a href='#-doOnServerTree'>doOnServerTree</a> </li>
 <li class='toc3'><a href='#-dumpMode'>dumpMode</a> </li>
 <li class='toc3'><a href='#-emacsbuf'>emacsbuf</a> </li>
@@ -157,6 +157,7 @@
 <li class='toc3'><a href='#-guiClass'>guiClass</a> </li>
 <li class='toc3'><a href='#-inProcess'>inProcess</a> </li>
 <li class='toc3'><a href='#-isLocal'>isLocal</a> </li>
+<li class='toc3'><a href='#-isRecording'>isRecording</a> </li>
 <li class='toc3'><a href='#-latency'>latency</a> </li>
 <li class='toc3'><a href='#-makeView'>makeView</a> </li>
 <li class='toc3'><a href='#-makeView2'>makeView2</a> </li>
@@ -184,17 +185,18 @@
 <li class='toc3'><a href='#-schedSync'>schedSync</a> </li>
 <li class='toc3'><a href='#-scopeBufferAllocator'>scopeBufferAllocator</a> </li>
 <li class='toc3'><a href='#-scopeWindow'>scopeWindow</a> </li>
-<li class='toc3'><a href='#-sendNotifyRequest'>sendNotifyRequest</a> </li>
 <li class='toc3'><a href='#-sendQuit'>sendQuit</a> </li>
 <li class='toc3'><a href='#-serverBooting'>serverBooting</a> </li>
 <li class='toc3'><a href='#-serverRunning'>serverRunning</a> </li>
 <li class='toc3'><a href='#-setControlBusValue'>setControlBusValue</a> </li>
 <li class='toc3'><a href='#-setControlBusValues'>setControlBusValues</a> </li>
 <li class='toc3'><a href='#-startAliveThread'>startAliveThread</a> </li>
+<li class='toc3'><a href='#-statusWatcher'>statusWatcher</a> </li>
 <li class='toc3'><a href='#-stopAliveThread'>stopAliveThread</a> </li>
 <li class='toc3'><a href='#-syncTasks'>syncTasks</a> </li>
 <li class='toc3'><a href='#-syncThread'>syncThread</a> </li>
 <li class='toc3'><a href='#-tree'>tree</a> </li>
+<li class='toc3'><a href='#-unresponsive'>unresponsive</a> </li>
 <li class='toc3'><a href='#-window'>window</a> </li>
 </ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
@@ -264,7 +266,7 @@ s.postln; // internal</pre>
 <p>get/set the set of all servers.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allRunningServers' href='./../Overviews/Methods.html#allRunningServers'>allRunningServers</a> </h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>the set of all running servers.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*quitAll' href='./../Overviews/Methods.html#quitAll'>quitAll</a> </h3>
+<p>the set of all running servers.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*quitAll' href='./../Overviews/Methods.html#quitAll'>quitAll</a> (<span class='argstr'>watchShutDown: true</span>)</h3>
 <div class='method'>
 <p>quit all registered servers</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*killAll' href='./../Overviews/Methods.html#killAll'>killAll</a> </h3>
 <div class='method'>
@@ -349,7 +351,7 @@ s.postln; // internal</pre>
 <p>If true, create a new node ID allocator for the server, but use the old buffer and bus allocators. This is useful if the server process did not actually stop. In normal use, the default value "false" should be used.<tr><td class='argumentname'>onFailure<td class='argumentdesc'>
 <p>In this method, the onFailure argument is for internal use only. If you wish to take specific actions when the server boots or fails to boot, it is recommended to use <a href="#-waitForBoot">-waitForBoot</a> or <a href="#-doWhenBooted">-doWhenBooted</a>.</table><h4>Discussion:</h4>
 
-<p>N.B. You cannot boot a server app on a remote machine.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-quit' href='./../Overviews/Methods.html#quit'>quit</a> </h3>
+<p>N.B. You cannot boot a server app on a remote machine.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-quit' href='./../Overviews/Methods.html#quit'>quit</a> (<span class='argstr'>watchShutDown: true</span>)</h3>
 <div class='method'>
 <p>quit the server application</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-reboot' href='./../Overviews/Methods.html#reboot'>reboot</a> (<span class='argstr'>func</span>)</h3>
 <div class='method'>
@@ -358,7 +360,7 @@ s.postln; // internal</pre>
 <p>free all nodes in this server</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-status' href='./../Overviews/Methods.html#status'>status</a> </h3>
 <div class='method'>
 <p>query the server status</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-notify' href='./../Overviews/Methods.html#notify'>notify</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-notify' href='./../Overviews/Methods.html#notify'>notify</a> = <span class='argstr'>flag: true</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-notify' href='./../Overviews/Methods.html#notify'>notify</a> = <span class='argstr'>flag</span></h3>
 <div class='method'>
 <p>The server sends notifications, for example if a node was created, a 'tr' message from a <a href="./../Classes/SendTrig.html">SendTrig</a>, or a <strong>/done</strong> action. if <code class='code prettyprint lang-sc'>flag</code> is set to false, these messages will not be sent to this client. The default is true. If true the server will respond with a clientID (scsynth only) which can be useful in multi-client situations. If this is different from any previously received ID new allocators will be created. See <a href="#Local vs. Remote Servers, Multi-client Configurations">Local vs. Remote Servers, Multi-client Configurations</a> for more information.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-ping' href='./../Overviews/Methods.html#ping'>ping</a> (<span class='argstr'>n: 1</span>, <span class='argstr'>wait: 0.1</span>, <span class='argstr'>func</span>)</h3>
 <div class='method'>
@@ -688,12 +690,11 @@ Routine.run {
 </div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-actualSampleRate' href='./../Overviews/Methods.html#actualSampleRate'>actualSampleRate</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addStatusWatcher' href='./../Overviews/Methods.html#addStatusWatcher'>addStatusWatcher</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-addr' href='./../Overviews/Methods.html#addr'>addr</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-addr' href='./../Overviews/Methods.html#addr'>addr</a> = value</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-aliveThreadIsRunning' href='./../Overviews/Methods.html#aliveThreadIsRunning'>aliveThreadIsRunning</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-aliveThreadPeriod' href='./../Overviews/Methods.html#aliveThreadPeriod'>aliveThreadPeriod</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-aliveThreadPeriod' href='./../Overviews/Methods.html#aliveThreadPeriod'>aliveThreadPeriod</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-aliveThreadPeriod' href='./../Overviews/Methods.html#aliveThreadPeriod'>aliveThreadPeriod</a> = <span class='argstr'>val</span></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-archiveAsCompileString' href='./../Overviews/Methods.html#archiveAsCompileString'>archiveAsCompileString</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-archiveAsObject' href='./../Overviews/Methods.html#archiveAsObject'>archiveAsObject</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-asBus' href='./../Overviews/Methods.html#asBus'>asBus</a> (<span class='argstr'>rate</span>, <span class='argstr'>numChannels: 1</span>)</h3>
@@ -715,10 +716,12 @@ Routine.run {
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-calcOffset' href='./../Overviews/Methods.html#calcOffset'>calcOffset</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-calculateViewBounds' href='./../Overviews/Methods.html#calculateViewBounds'>calculateViewBounds</a> </h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Control/ServerPlusGUI.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Control/ServerPlusGUI.sc</a></div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-clientID' href='./../Overviews/Methods.html#clientID'>clientID</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-clientID' href='./../Overviews/Methods.html#clientID'>clientID</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-clientID' href='./../Overviews/Methods.html#clientID'>clientID</a> = <span class='argstr'>val</span></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-closeBundle' href='./../Overviews/Methods.html#closeBundle'>closeBundle</a> (<span class='argstr'>time</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-cmdPeriod' href='./../Overviews/Methods.html#cmdPeriod'>cmdPeriod</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-controlBusAllocator' href='./../Overviews/Methods.html#controlBusAllocator'>controlBusAllocator</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disconnectSharedMemory' href='./../Overviews/Methods.html#disconnectSharedMemory'>disconnectSharedMemory</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-doOnServerTree' href='./../Overviews/Methods.html#doOnServerTree'>doOnServerTree</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-dumpMode' href='./../Overviews/Methods.html#dumpMode'>dumpMode</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-emacsbuf' href='./../Overviews/Methods.html#emacsbuf'>emacsbuf</a> </h3>
@@ -728,6 +731,7 @@ Routine.run {
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/ServerTools/plusServer.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/ServerTools/plusServer.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-inProcess' href='./../Overviews/Methods.html#inProcess'>inProcess</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-isLocal' href='./../Overviews/Methods.html#isLocal'>isLocal</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-isRecording' href='./../Overviews/Methods.html#isRecording'>isRecording</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-latency' href='./../Overviews/Methods.html#latency'>latency</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-latency' href='./../Overviews/Methods.html#latency'>latency</a> = value</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeView' href='./../Overviews/Methods.html#makeView'>makeView</a> (<span class='argstr'>w</span>, <span class='argstr'>useRoundButton: true</span>, <span class='argstr'>onColor</span>)</h3>
@@ -769,19 +773,19 @@ Routine.run {
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-scopeBufferAllocator' href='./../Overviews/Methods.html#scopeBufferAllocator'>scopeBufferAllocator</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-scopeWindow' href='./../Overviews/Methods.html#scopeWindow'>scopeWindow</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-scopeWindow' href='./../Overviews/Methods.html#scopeWindow'>scopeWindow</a> = value</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendNotifyRequest' href='./../Overviews/Methods.html#sendNotifyRequest'>sendNotifyRequest</a> (<span class='argstr'>flag: true</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendQuit' href='./../Overviews/Methods.html#sendQuit'>sendQuit</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendQuit' href='./../Overviews/Methods.html#sendQuit'>sendQuit</a> = value</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-serverBooting' href='./../Overviews/Methods.html#serverBooting'>serverBooting</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-serverRunning' href='./../Overviews/Methods.html#serverRunning'>serverRunning</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-serverRunning' href='./../Overviews/Methods.html#serverRunning'>serverRunning</a> = <span class='argstr'>val</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-serverRunning' href='./../Overviews/Methods.html#serverRunning'>serverRunning</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-setControlBusValue' href='./../Overviews/Methods.html#setControlBusValue'>setControlBusValue</a> (<span class='argstr'>busIndex</span>, <span class='argstr'>value</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-setControlBusValues' href='./../Overviews/Methods.html#setControlBusValues'>setControlBusValues</a> (<span class='argstr'>busIndex</span>, <span class='argstr'>valueArray</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-startAliveThread' href='./../Overviews/Methods.html#startAliveThread'>startAliveThread</a> (<span class='argstr'>delay: 0</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-statusWatcher' href='./../Overviews/Methods.html#statusWatcher'>statusWatcher</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-stopAliveThread' href='./../Overviews/Methods.html#stopAliveThread'>stopAliveThread</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-syncTasks' href='./../Overviews/Methods.html#syncTasks'>syncTasks</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-syncThread' href='./../Overviews/Methods.html#syncThread'>syncThread</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-tree' href='./../Overviews/Methods.html#tree'>tree</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-tree' href='./../Overviews/Methods.html#tree'>tree</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-unresponsive' href='./../Overviews/Methods.html#unresponsive'>unresponsive</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-window' href='./../Overviews/Methods.html#window'>window</a> </h3>
 <div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Server.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Server.schelp</a><br>link::Classes/Server::<br>sc version: 3.8dev</div></div></body></html>
