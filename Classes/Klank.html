@@ -32,14 +32,14 @@
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>Klank is a bank of fixed frequency resonators which can be used to simulate the resonant modes of an object. Each mode is given a ring time, which is the time for the mode to decay by 60 dB.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>Klank is a bank of fixed frequency resonators which can be used to simulate the resonant modes of an object. Each mode is given a ring time, which is the time for the mode to decay by 60 dB.<div class='note'><span class='notelabel'>NOTE:</span> for dynamic changes of parameters refer to <a href="./../Classes/DynKlank.html">DynKlank</a></div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>specificationsArrayRef</span>, <span class='argstr'>input</span>, <span class='argstr'>freqscale: 1</span>, <span class='argstr'>freqoffset: 0</span>, <span class='argstr'>decayscale: 1</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>specificationsArrayRef<td class='argumentdesc'>
 <p>A <a href="./../Classes/Ref.html">Ref</a> to an <a href="./../Classes/Array.html">Array</a> of three Arrays:<dl>
-<dt>frequencies:<dd>An Array of filter frequencies.<dt>amplitudes:<dd>an Array of filter amplitudes, or nil. If nil, then amplitudes default to 1.0.<dt>ring times:<dd>an Array of 60 dB decay times for the filters.</dl>
+<dt>frequencies:<dd>An Array of filter frequencies.<dt>amplitudes:<dd>an Array of filter amplitudes, or nil. If nil, then amplitudes default to 1.0.<dt>ring times:<dd>an Array of 60 dB decay times in seconds for the filters.</dl>
 
 <p>All subarrays, if not nil, should have the same length.<tr><td class='argumentname'>input<td class='argumentdesc'>
 <p>The excitation input to the resonant filter bank.<tr><td class='argumentname'>freqscale<td class='argumentdesc'>
@@ -51,15 +51,17 @@
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>{ Klank.ar(`[[800, 1071, 1153, 1723], nil, [1, 1, 1, 1]], Impulse.ar(2, 0, 0.1)) }.play;
+
+<p>Four resonators each at maximum amplitude of 1.0 and ring times of 1 second, different exciters and no scaling:<div class='note'><span class='notelabel'>NOTE:</span> Watch the ` before the opening bracket of the parameter array! Also see <a href="./../Guides/Multichannel-Expansion.html">Multichannel Expansion</a></div>
+<p><pre class='code prettyprint lang-sc'>{ Klank.ar(`[[800, 1071, 1153, 1723], nil, [1, 1, 1, 1]], Impulse.ar(2, 0, 0.1)) }.play;
 
 { Klank.ar(`[[800, 1071, 1353, 1723], nil, [1, 1, 1, 1]], Dust.ar(8, 0.1)) }.play;
 
 { Klank.ar(`[[800, 1071, 1353, 1723], nil, [1, 1, 1, 1]], PinkNoise.ar(0.007)) }.play;
 
-{ Klank.ar(`[[200, 671, 1153, 1723], nil, [1, 1, 1, 1]], PinkNoise.ar([0.007, 0.007])) }.play;
+{ Klank.ar(`[[200, 671, 1153, 1723], nil, [1, 1, 1, 1]], PinkNoise.ar([0.007, 0.007])) }.play;</pre>
 
-(
+<p>Three resonators at maximum amplitude of 1.0, random frequency and ring times. Excited by two pulses at 2 and 2.5 Hz:<pre class='code prettyprint lang-sc'>(
 play({
     Klank.ar(`[
         Array.rand(12, 800.0, 4000.0),         // frequencies
@@ -67,27 +69,21 @@ play({
         Array.rand(12, 0.1, 2)                // ring times
         ], Decay.ar(Impulse.ar(4), 0.03, ClipNoise.ar(0.01)))
 })
-)
+)</pre>
 
-// multi channel expansion:
-// an array of specs
-(
+<p><a href="./../Guides/Multichannel-Expansion.html">Multichannel Expansion</a> via an array of specs (note the ` before the opening bracket of the parameter array!):<pre class='code prettyprint lang-sc'>(
 {
-Klank.ar([
-    `[[500, 1078, 1201.5, 1723], nil, [1, 1, 0.5, 0.3]],
-    `[[700, 1071, 1053, 1723], nil, [1, 1, 1, 1]]
-    ], Impulse.ar([2, 2.5], 0, 0.1))
+Klank.ar([ // the multichannel-expansion
+    `[[500, 1078, 1201.5, 1723], nil, [1, 1, 0.5, 0.3]], // left channel
+    `[[700, 1071, 1053, 1723], nil, [1, 1, 1, 1]] // right channel
+    ], Impulse.ar([1.5, 1.875], 0, 0.1))
 }.play
 );
 
-// expanding specs
-{ Klank.ar(`[[[800, 6000], 1071, [1153, 8000], 1723], nil, [1, 1, 1, 1]], Impulse.ar([2, 3], 0, 0.1)) }.play;
+// expanding specs within the parameter array
+{ Klank.ar(`[[[800, 6000], 1071, [1153, 8000], 1723], nil, [1, 1, 1, 1]], Impulse.ar([2, 3], 0, 0.1)) }.play;</pre>
 
-
-
-// a synth def that has 4 partials
-(
-
+<p>A SynthDef that generates 4 partials used in different configurations:<pre class='code prettyprint lang-sc'>(
 SynthDef(\help_Klank, { arg out=0, i_freq;
     var klank, n, harm, amp, ring;
 
@@ -130,12 +126,9 @@ a = Synth(\help_Klank, [
     \ring, Array.fill(4, 0.1), // set shorter ring time
     \amp, Array.fill(4, 0.2) // set louder amps
 ])
-);
+);</pre>
 
-
-
-
-// -- overlap texture
+<p>Advanced examples:<pre class='code prettyprint lang-sc'>// -- overlap texture
 (
 SynthDef("help-KlankOverlapTexture",
 {|out = 0, freqs = #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], rings = #[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], atk = 5, sus = 8, rel = 5, pan = 0|

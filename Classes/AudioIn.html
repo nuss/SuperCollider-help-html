@@ -49,25 +49,15 @@
 
 <p>Patching input to output<pre class='code prettyprint lang-sc'>// patching input to output
 
-// watch the feedback
+// beware of the feedback
 
 (
-SynthDef("help-AudioIn",{ arg out=0;
-    Out.ar(out,
-        AudioIn.ar(1)
-    )
-}).play;
-)</pre>
-
-<p>Stereo through patching from input to output<pre class='code prettyprint lang-sc'>// stereo through patching from input to output
-
-// watch the feedback
-
-(
-SynthDef("help-AudioIn",{ arg out=0;
-    Out.ar(out,
-        AudioIn.ar([1,2])
-    )
-}).play;
+ServerOptions.inDevices.postln;    //  post available audio input devices
+s.meter;    // display level meters for monitoring
+SynthDef("help-AudioIn", {
+    var input = AudioIn.ar(1); // first input
+    // delay output to tame feedback in case of microphones are configured:
+    Out.ar(0, CombN.ar(input * -25.dbamp, 0.5, 0.5, 0.001))
+}).play
 )</pre>
 <div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/AudioIn.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/AudioIn.schelp</a><br>link::Classes/AudioIn::<br>sc version: 3.8dev</div></div></body></html>
