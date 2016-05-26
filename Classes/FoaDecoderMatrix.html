@@ -33,6 +33,8 @@
 <li class='toc3'><a href='#*newPeri'>newPeri</a> </li>
 <li class='toc3'><a href='#*newDiametric'>newDiametric</a> </li>
 <li class='toc3'><a href='#*newBtoA'>newBtoA</a> </li>
+<li class='toc3'><a href='#*newHoa1'>newHoa1</a> </li>
+<li class='toc3'><a href='#*newAmbix1'>newAmbix1</a> </li>
 <li class='toc2'><a href='#Decoder k'>Decoder k</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
@@ -110,7 +112,7 @@
 <p>Varying <strong>angle</strong> allows a number of flexible quadraphonic decoders to be generated. E.g, <strong>angle</strong> = pi/6 returns a decoder with loudspeakers at [ 30, 150, -150, 30 ] degrees.
 <p>Please see <a href="#decoder_k">decoder_k</a> for further discussion on <strong>k</strong>.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new5_0' href='./../Overviews/Methods.html#new5_0'>new5_0</a> (<span class='argstr'>irregKind: 'focused'</span>)</h3>
 <div class='method'>
-<p><a href="http://www.brucewiggins.co.uk/?page_id=78">Bruce Wiggins'</a> optimised ITU 5.0 decoders.<a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a>  <h4>Arguments:</h4>
+<p><a href="http://www.brucewiggins.co.uk/?page_id=78">Bruce Wiggins'</a> optimised ITU 5.0 decoders.<a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a> <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>irregKind<td class='argumentdesc'>
 <p>Three kinds are available:<ul>
@@ -259,7 +261,23 @@
 }.scope;
 )
 // ------------------------------------------------------------</pre>
-</div><h3><a class='anchor' name='Decoder k'>Decoder k</a></h3>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newHoa1' href='./../Overviews/Methods.html#newHoa1'>newHoa1</a> (<span class='argstr'>ordering: 'acn'</span>, <span class='argstr'>normalisation: 'n3d'</span>)</h3>
+<div class='method'>
+<p>A first order <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats">Ambisonic format exchange</a> decoder. Decodes traditional B-format to a variety of formats.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>ordering<td class='argumentdesc'>
+<p>Input Ambisonic channel component ordering.<table>
+<tr><td><strong>ordering</strong><td><strong>kind</strong><tr><td><code class='code prettyprint lang-sc'>'acn'</code><td>Ambisonic Channel Number (ACN)<tr><td><code class='code prettyprint lang-sc'>'sid'</code><td>Single Index Designation (SID)</table>
+<tr><td class='argumentname'>normalisation<td class='argumentdesc'>
+<p>Spherical harmonic normalisation method.<table>
+<tr><td><strong>normalisation</strong><td><strong>kind</strong><tr><td><code class='code prettyprint lang-sc'>'n3d'</code><td>Orthonormal basis for 3D decomposition (N3D)<tr><td><code class='code prettyprint lang-sc'>'sn3d'</code><td>Semi-normalised basis for 3D decomposition (SN3D)</table>
+</table><h4>Discussion:</h4>
+
+<p>Decoding means decoding from traditional B-format to another Ambisonic channel componenent orderding and normalisation. In other words, from <strong>Gerzon</strong> (aka <strong>Furse-Malham</strong>) ordering with <strong>MaxN</strong> normalisation to some other standard scheme.<div class='note'><span class='notelabel'>NOTE:</span> <code class='code prettyprint lang-sc'>Hoa1</code> in the method name <a href="#*newHoa1">*newHoa1</a> refers to Higher Order Ambisonic (HOA) encoding format, Ambisonic order = 1.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newAmbix1' href='./../Overviews/Methods.html#newAmbix1'>newAmbix1</a> </h3>
+<div class='method'>
+<p>A first order <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats">Ambisonic format exchange</a> decoder. Decodes traditional B-format to AmbiX. A convenience alias to <a href="#*newHoa1">*newHoa1</a>.<h4>Discussion:</h4>
+
+<p>Decoding means decoding from traditional B-format to another Ambisonic channel componenent orderding and normalisation. In this case, from <strong>Gerzon</strong> (aka <strong>Furse-Malham</strong>) ordering, <strong>MaxN</strong> normalisation to the AmbiX encoding scheme (<strong>ACN</strong> ordering, <strong>SN3D</strong> normalisation).</div><h3><a class='anchor' name='Decoder k'>Decoder k</a></h3>
 
 <p>The default <strong>k</strong> ( <code class='code prettyprint lang-sc'>'single'</code> ), for decoders accepting <strong>k</strong> as an argument, returns an <code class='code prettyprint lang-sc'>'energy'</code> optimised (aka "max rE") decoder. <code class='code prettyprint lang-sc'>'dual'</code> returns a dual-band psychoacoustically optimised decoder.<a class='footnote anchor' name='footnote_org_5' href='#footnote_5'><sup>5</sup></a>  The <code class='code prettyprint lang-sc'>'dual'</code> decoder is the optimum choice for small scale studio or domestic settings. <code class='code prettyprint lang-sc'>'single'</code> is suitable for larger, mid-scale environments. <code class='code prettyprint lang-sc'>'velocity'</code> returns "strict soundfield" (aka "basic") decoding, and is not preferred for first order Ambisonics in most circumstances. <code class='code prettyprint lang-sc'>'controlled'</code> returns "controlled opposites" decoding (aka "in phase"), which is often preferred in large-scale, concert environments.<a class='footnote anchor' name='footnote_org_6' href='#footnote_6'><sup>6</sup></a>  (SuperCollider's inbuilt decoder, <a href="./../Classes/DecodeB2.html#*ar">DecodeB2: *ar</a>, is a "controlled opposites" decoder. See <a href="./../Classes/FoaDecode.html#supercollider">this</a>.)
 <p>The <strong>k</strong> keywords translate to numerical values as follows:<table>

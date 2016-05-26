@@ -35,7 +35,10 @@
 <li class='toc3'><a href='#*newPeri'>newPeri</a> </li>
 <li class='toc3'><a href='#*newDirections'>newDirections</a> </li>
 <li class='toc3'><a href='#*newZoomH2'>newZoomH2</a> </li>
+<li class='toc3'><a href='#*newZoomH2n'>newZoomH2n</a> </li>
 <li class='toc3'><a href='#*newAtoB'>newAtoB</a> </li>
+<li class='toc3'><a href='#*newHoa1'>newHoa1</a> </li>
+<li class='toc3'><a href='#*newAmbix1'>newAmbix1</a> </li>
 <li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-kind'>kind</a> </li>
@@ -170,7 +173,11 @@
 
 ~in = [ SRxxxR.at(0), SRxxxR.at(1), SRxxxF.at(0), SRxxxF.at(1) ]</pre>
 
-<p><a class='anchor' name='newzoomh2k'>&nbsp;</a>The encoder includes a Y scalar, <strong>k</strong>, and an auditioned adjustment is usually necessary to improve the resulting image. As the <a href="http://www.zoom.co.jp/english/products/h2/">ZoomH2</a>'s polar patterns are not consistent across frequency, and the capsules are not coincident, imaging is not always consistent. Touching <strong>k</strong> can go some way towards remedy-ing this.<div class='note'><span class='notelabel'>NOTE:</span> <strong>k</strong> = 1.7378 is a value that has been found suitable for matching <a href="http://www.radio.uqam.ca/ambisonic/comparative_recording.html">Courville</a>'s <a href="http://www.zoom.co.jp/english/products/h2/">ZoomH2</a><a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a>  and Soundfield recordings.<a class='footnote anchor' name='footnote_org_4' href='#footnote_4'><sup>4</sup></a> </div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newAtoB' href='./../Overviews/Methods.html#newAtoB'>newAtoB</a> (<span class='argstr'>orientation: 'flu'</span>, <span class='argstr'>weight: 'dec'</span>)</h3>
+<p><a class='anchor' name='newzoomh2k'>&nbsp;</a>The encoder includes a Y scalar, <strong>k</strong>, and an auditioned adjustment is usually necessary to improve the resulting image. As the <a href="http://www.zoom.co.jp/english/products/h2/">ZoomH2</a>'s polar patterns are not consistent across frequency, and the capsules are not coincident, imaging is not always consistent. Touching <strong>k</strong> can go some way towards remedy-ing this.<div class='note'><span class='notelabel'>NOTE:</span> <strong>k</strong> = 1.7378 is a value that has been found suitable for matching <a href="http://www.radio.uqam.ca/ambisonic/comparative_recording.html">Courville</a>'s <a href="http://www.zoom.co.jp/english/products/h2/">ZoomH2</a><a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a>  and Soundfield recordings.<a class='footnote anchor' name='footnote_org_4' href='#footnote_4'><sup>4</sup></a> </div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newZoomH2n' href='./../Overviews/Methods.html#newZoomH2n'>newZoomH2n</a> </h3>
+<div class='method'>
+<p>A first order <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats">Ambisonic format exchange</a> encoder, for use with the <a href="https://www.zoom-na.com/products/field-video-recording/field-recording/zoom-h2n-handy-recorder">ZoomH2n</a>. Encodes from AmbiX to traditional B-format. A convenience alias to <a href="#*newHoa1">*newHoa1</a>.<h4>Discussion:</h4>
+
+<p>Encoding means encoding from one Ambisonic channel componenent orderding and normalisation to that of traditional B-format. In this case, from AmbiX encoding scheme (<strong>ACN</strong> ordering, <strong>SN3D</strong> normalisation) to <strong>Gerzon</strong> (aka <strong>Furse-Malham</strong>) ordering, <strong>MaxN</strong> normalisation.<div class='note'><span class='notelabel'>NOTE:</span> Requires a device firmware update to <a href="https://www.zoom-na.com/sites/default/files/products/downloads/software/H2n_v2.00E.zip">H2n System Version 2.00</a> or higher. Set the <a href="https://www.zoom-na.com/products/field-video-recording/field-recording/zoom-h2n-handy-recorder">ZoomH2n</a> to record in the <code class='code prettyprint lang-sc'>SPATIAL AUDIO</code> mode. Further details may be reviewed in the manual addendum <a href="https://www.zoom.co.jp/sites/default/files/products/downloads/pdfs/H2n_Ver2_OPmanual_E.pdf">found here</a>.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newAtoB' href='./../Overviews/Methods.html#newAtoB'>newAtoB</a> (<span class='argstr'>orientation: 'flu'</span>, <span class='argstr'>weight: 'dec'</span>)</h3>
 <div class='method'>
 <p>A-format to B-format encoder. Encodes to a variety of tetrahedral orientations and W channel weights.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -183,7 +190,23 @@
 </table><h4>Discussion:</h4>
 
 <p>The A-format encoder is often used in conjunction with the <a href="./../Classes/FoaDecoderMatrix.html#*newBtoA">FoaDecoderMatrix: *newBtoA</a> B-format decoder to form signal processing networks which preserve the spatial encoding as is described <a href="./../Classes/FoaDecoderMatrix.html#btoadiscuss">here</a>.
-<p>On its own, <a href="#*newAtoB">*newAtoB</a> is often used to author immersive, periphonic (3D) decorrelated soundfields.</div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<p>On its own, <a href="#*newAtoB">*newAtoB</a> is often used to author immersive, periphonic (3D) decorrelated soundfields.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newHoa1' href='./../Overviews/Methods.html#newHoa1'>newHoa1</a> (<span class='argstr'>ordering: 'acn'</span>, <span class='argstr'>normalisation: 'n3d'</span>)</h3>
+<div class='method'>
+<p>A first order <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats">Ambisonic format exchange</a> encoder. Encodes a variety of formats to traditional B-format.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>ordering<td class='argumentdesc'>
+<p>Input Ambisonic channel component ordering.<table>
+<tr><td><strong>ordering</strong><td><strong>kind</strong><tr><td><code class='code prettyprint lang-sc'>'acn'</code><td>Ambisonic Channel Number (ACN)<tr><td><code class='code prettyprint lang-sc'>'sid'</code><td>Single Index Designation (SID)</table>
+<tr><td class='argumentname'>normalisation<td class='argumentdesc'>
+<p>Spherical harmonic normalisation method.<table>
+<tr><td><strong>normalisation</strong><td><strong>kind</strong><tr><td><code class='code prettyprint lang-sc'>'n3d'</code><td>Orthonormal basis for 3D decomposition (N3D)<tr><td><code class='code prettyprint lang-sc'>'sn3d'</code><td>Semi-normalised basis for 3D decomposition (SN3D)</table>
+</table><h4>Discussion:</h4>
+
+<p>Encoding means encoding from one Ambisonic channel componenent orderding and normalisation to that of traditional B-format. In other words, from some standard scheme to <strong>Gerzon</strong> (aka <strong>Furse-Malham</strong>) ordering with <strong>MaxN</strong> normalisation.<div class='note'><span class='notelabel'>NOTE:</span> <code class='code prettyprint lang-sc'>Hoa1</code> in the method name <a href="#*newHoa1">*newHoa1</a> refers to Higher Order Ambisonic (HOA) encoding format, Ambisonic order = 1. The input signal should have four channels, with the given encoding format as specified in the arguments.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newAmbix1' href='./../Overviews/Methods.html#newAmbix1'>newAmbix1</a> </h3>
+<div class='method'>
+<p>A first order <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats">Ambisonic format exchange</a> encoder. Encodes from AmbiX to traditional B-format. A convenience alias to <a href="#*newHoa1">*newHoa1</a>.<h4>Discussion:</h4>
+
+<p>Encoding means encoding from one Ambisonic channel componenent orderding and normalisation to that of traditional B-format. In this case, from AmbiX encoding scheme (<strong>ACN</strong> ordering, <strong>SN3D</strong> normalisation) to <strong>Gerzon</strong> (aka <strong>Furse-Malham</strong>) ordering, <strong>MaxN</strong> normalisation.</div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-kind' href='./../Overviews/Methods.html#kind'>kind</a> </h3>
 <div class='method'>
