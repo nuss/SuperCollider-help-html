@@ -19,7 +19,7 @@
 <div id='summary'>Gaussian function oscillator</div>
 </div>
 <div class='subheader'>
-<div id='filename'>Source: /usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/<a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/Osc.sc'>Osc.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/Osc.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/Osc.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -27,11 +27,10 @@
 <ul class='toc'><li class='toc3'><a href='#*ar'>ar</a>  <a href='#*kr'>kr</a> </li>
 <li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-minval'>minval</a> </li>
 <li class='toc3'><a href='#-range'>range</a> </li>
-</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'><li class='toc2'><a href='#Some plots'>Some plots</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Some calculations'>Some calculations</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Sound examples'>Sound examples</a></li>
@@ -54,11 +53,14 @@
 <p>if loop is &gt; 0, UGen oscillates. Otherwise it calls doneAction after one cycle (default: 1)<tr><td class='argumentname'>doneAction<td class='argumentdesc'>
 <p>doneAction, which is evaluated after cycle completes (2 frees the synth, default: 0). See <a href="./../Reference/UGen-doneActions.html">UGen done-actions</a> for more detail.</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-minval' href='./../Overviews/Methods.html#minval'>minval</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-range' href='./../Overviews/Methods.html#range'>range</a> (<span class='argstr'>min: 0</span>, <span class='argstr'>max: 1</span>)</h3>
-<h2><a class='anchor' name='examples'>Examples</a></h2>
+<div class='method'>
+<p>Returns the lowest value for the given parameters, which is <code class='code prettyprint lang-sc'>exp(1.0 / (-2.0 * squared(width)))</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-range' href='./../Overviews/Methods.html#range'>range</a> (<span class='argstr'>min: 0</span>, <span class='argstr'>max: 1</span>)</h3>
+<div class='method'>
+<p>Scales the output to the given range. This can be convenient when using LFGauss as an envelope (see example below).<pre class='code prettyprint lang-sc'>{ LFGauss.ar(0.01, 0.6).range }.plot;
+{ LFGauss.ar(0.01, 0.6) }.plot; // starts at about 0.25</pre>
+</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 <h3><a class='anchor' name='Some plots'>Some plots</a></h3>
 <pre class='code prettyprint lang-sc'>s.boot ;
 
@@ -98,18 +100,18 @@ sqrt(-1 / ( 2 * log(-60.dbamp))) // 0.269
 // rescale the function to the range 0..1
 (
 {
-var width = XLine.kr(0.04, 1.0, 1);
-var min = (exp(1.0 / (-2.0 * squared(width))));
-var gauss = LFGauss.ar(0.1, width, loop: 1);
-gauss.linlin(min, 1, 0, 1);
+    var width = XLine.kr(0.04, 1.0, 1);
+    var min = (exp(1.0 / (-2.0 * squared(width))));
+    var gauss = LFGauss.ar(0.1, width, loop: 1);
+    gauss.linlin(min, 1, 0, 1);
 }.plot(1)
 );
 
 // range does the same implicitly
 (
 {
-var width = XLine.kr(0.04, 1.0, 1);
-LFGauss.ar(0.1, width, loop: 1).range(0, 1);
+    var width = XLine.kr(0.04, 1.0, 1);
+    LFGauss.ar(0.1, width, loop: 1).range(0, 1);
 }.plot(1)
 );</pre>
 <h3><a class='anchor' name='Sound examples'>Sound examples</a></h3>
@@ -158,14 +160,14 @@ LFGauss.ar(0.1, width, loop: 1).range(0, 1);
 }.play;
 )</pre>
 <h3><a class='anchor' name='Gabor Grain'>Gabor Grain</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<div class='note'><span class='notelabel'>NOTE:</span> The gaussian function doesn't start with 0 – it asymptotically approaches it at <code class='code prettyprint lang-sc'>-inf</code> and <code class='code prettyprint lang-sc'>inf</code>. When using it as an envelope, it has to start at some smaller value, and it has an offset for this value. You can remove this offset by explicitly setting the <strong>range</strong>, e.g. to <code class='code prettyprint lang-sc'>0..1</code> (this is the default).</div><pre class='code prettyprint lang-sc'>(
 var freq = 1000;
 var ncycles = 10;
 var width = 0.25;
 var dur = ncycles / freq;
 {
 
-    var env = LFGauss.ar(dur, width, loop: 0, doneAction: 2);
+    var env = LFGauss.ar(dur, width, loop: 0, doneAction: 2).range;
     var son = FSinOsc.ar(freq, 0.5pi, env);
     son
 }.plot(dur);
@@ -174,7 +176,7 @@ var dur = ncycles / freq;
 
 (
 SynthDef(\gabor, { |out, i_freq = 440, i_sustain = 1, i_pan = 1, i_amp = 0.1, i_width = 0.25 |
-    var env = LFGauss.ar(i_sustain, i_width, loop: 0, doneAction: 2);
+    var env = LFGauss.ar(i_sustain, i_width, loop: 0, doneAction: 2).range;
     var son = FSinOsc.ar(i_freq, 0.5pi, env);
     OffsetOut.ar(out, Pan2.ar(son, i_pan, i_amp));
 
@@ -217,4 +219,4 @@ SynthDef(\gabor, { |out, i_freq = 440, i_sustain = 1, i_pan = 1, i_amp = 0.1, i_
 }).add;
 )</pre>
 
-<p><div class='doclink'>source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/LFGauss.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/LFGauss.schelp</a><br>link::Classes/LFGauss::<br>sc version: 3.8dev</div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/LFGauss.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/LFGauss.schelp</a><br>link::Classes/LFGauss::<br>sc version: 3.8dev</div></div></body></html>
