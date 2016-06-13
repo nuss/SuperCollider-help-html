@@ -14,7 +14,7 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#UGens>GranularSynthesis'>UGens>GranularSynthesis</a>, <a href='./../Browse.html#UGens>Buffer'>UGens>Buffer</a>, <a href='./../Browse.html#UGens>Generators>Granular'>UGens>Generators>Granular</a></div>
+<div id='categories'><a href='./../Browse.html#Libraries>JoshUGens'>Libraries>JoshUGens</a>, <a href='./../Browse.html#Classes'>Classes</a></div>
 <h1>WarpOverlap</h1>
 <div id='summary'>Create a texture of Warps</div>
 </div>
@@ -53,7 +53,7 @@
 <pre class='code prettyprint lang-sc'>s.boot;
 
 (
-b = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");
+s.sendMsg(\b_allocRead, 0, "sounds/a11wlk01.wav", 0, -1);
 
 SynthDef(\warpoverlap, {arg buffer = 0, stretch = 1, windowsize = 6, mul = 1, gate = 1;
     var out, env, overlaps, harm, wwinsize, wwinoverlap, wwinran;
@@ -66,10 +66,12 @@ SynthDef(\warpoverlap, {arg buffer = 0, stretch = 1, windowsize = 6, mul = 1, ga
     env = EnvGen.kr(Env([0.01, 1, 0.01], [0.1, 0.1], 'exp', 1), gate, doneAction: 2);
     out = WarpOverlap.ar(1, buffer, overlaps, 0, stretch, harm, windowsize, wwinsize, wwinoverlap, wwinran, mul);
     Out.ar(0, out * env);
-}).add;
+}).send(s);
+
 )
 
-a = Synth(\warpoverlap, [\buffer, 0, \stretch, 30, \mul, 0.1]);
-a.free;</pre>
+s.sendMsg(\s_new, \warpoverlap, a=s.nextNodeID, 0, 1, \buffer, 0, \stretch, 30, \mul, 0.1)
+
+s.sendMsg(\n_free, a);</pre>
 
 <p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/WarpOverlap.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/WarpOverlap.schelp</a><br>link::Classes/WarpOverlap::<br>sc version: 3.8dev</div></div></body></html>
