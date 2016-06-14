@@ -14,451 +14,155 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a>, <a href='./../Browse.html#UGens>Undocumented'>UGens>Undocumented</a>, <a href='./../Browse.html#UGens>Multichannel>Ambisonics'>UGens>Multichannel>Ambisonics</a></div>
+<div id='categories'><a href='./../Browse.html#Libraries>JoshUGens'>Libraries>JoshUGens</a>, <a href='./../Browse.html#Classes'>Classes</a>, <a href='./../Browse.html#UGens>Multichannel>Ambisonics'>UGens>Multichannel>Ambisonics</a></div>
 <h1>FMHDecode1</h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>Decode an FMH signal for a specific speaker</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/Ambisonics.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/Ambisonics.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/BFDecoder.html">BFDecoder</a> : <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/FMHEncode1.html">FMHEncode1</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*ar'>ar</a> </li>
 <li class='toc3'><a href='#*ar1'>ar1</a> </li>
-<li class='toc3'><a href='#*cube'>cube</a> </li>
-<li class='toc3'><a href='#*dodecahedron'>dodecahedron</a> </li>
-<li class='toc3'><a href='#*doubleHex'>doubleHex</a> </li>
+<li class='toc3'><a href='#*stereo'>stereo</a> </li>
+<li class='toc3'><a href='#*square'>square</a> </li>
+<li class='toc3'><a href='#*quad'>quad</a> </li>
+<li class='toc3'><a href='#*pentagon'>pentagon</a> </li>
 <li class='toc3'><a href='#*hexagon'>hexagon</a> </li>
 <li class='toc3'><a href='#*octagon1'>octagon1</a> </li>
 <li class='toc3'><a href='#*octagon2'>octagon2</a> </li>
-<li class='toc3'><a href='#*pentagon'>pentagon</a> </li>
-<li class='toc3'><a href='#*quad'>quad</a> </li>
-<li class='toc3'><a href='#*square'>square</a> </li>
-<li class='toc3'><a href='#*stereo'>stereo</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<li class='toc3'><a href='#*cube'>cube</a> </li>
+<li class='toc3'><a href='#*doubleHex'>doubleHex</a> </li>
+<li class='toc3'><a href='#*dodecahedron'>dodecahedron</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-checkInputs'>checkInputs</a> </li>
-</ul></ul><li class='toc1'><a href='#Help template'>Help template</a></li>
-<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
-
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><a class='anchor' name='kw_JoshUGens'>&nbsp;</a><h2><a class='anchor' name='description'>Description</a></h2>
+<div class='warning'><span class='warninglabel'>WARNING:</span> Second-order encoding and decoding has some quirks. Decoding for arbitrary arrays will probably not result in the cleanest results. Often, components need to be discarded depending on the kind of speaker array. See: <a href="http://www.muse.demon.co.uk/ref/speakers.html">http://www.muse.demon.co.uk/ref/speakers.html</a> for more information. Some of the more common speaker rigs are pre-done for you according to the specifications from Richard Furse's site.</div><div class='note'><span class='notelabel'>NOTE:</span> In addition, after a number of conversations with Miguel Negrao (and his contacts with Fons Adriaensen), it is fairly clear that for Second Order decoding to really work well, filtering should be done on the output... for a later date!</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>z</span>, <span class='argstr'>r</span>, <span class='argstr'>s</span>, <span class='argstr'>t</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>azimuth: 0</span>, <span class='argstr'>elevation: 0</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar1' href='./../Overviews/Methods.html#ar1'>ar1</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>z</span>, <span class='argstr'>r</span>, <span class='argstr'>s</span>, <span class='argstr'>t</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>azimuth: 0</span>, <span class='argstr'>elevation: 0</span>, <span class='argstr'>maxDist: 10</span>, <span class='argstr'>distance: 10</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>, <span class='argstr'>scaleflag: 1</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*cube' href='./../Overviews/Methods.html#cube'>cube</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>z</span>, <span class='argstr'>s</span>, <span class='argstr'>t</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*dodecahedron' href='./../Overviews/Methods.html#dodecahedron'>dodecahedron</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>z</span>, <span class='argstr'>r</span>, <span class='argstr'>s</span>, <span class='argstr'>t</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*doubleHex' href='./../Overviews/Methods.html#doubleHex'>doubleHex</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>z</span>, <span class='argstr'>s</span>, <span class='argstr'>t</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*hexagon' href='./../Overviews/Methods.html#hexagon'>hexagon</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*octagon1' href='./../Overviews/Methods.html#octagon1'>octagon1</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*octagon2' href='./../Overviews/Methods.html#octagon2'>octagon2</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*pentagon' href='./../Overviews/Methods.html#pentagon'>pentagon</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*quad' href='./../Overviews/Methods.html#quad'>quad</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*square' href='./../Overviews/Methods.html#square'>square</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*stereo' href='./../Overviews/Methods.html#stereo'>stereo</a> (<span class='argstr'>w</span>, <span class='argstr'>y</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>w<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>x<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>y<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>z<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>r<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>s<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>t<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>u<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>v<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>azimuth<td class='argumentdesc'>
+<p>Speaker angle in radians. 0 is front, values should be anti-clockwise (-0.5pi is right, 0.5pi is left).<tr><td class='argumentname'>elevation<td class='argumentdesc'>
+<p>Speaker elevation in radians. 0 to 0.5pi is up, 0 to -0.5pi is down.<tr><td class='argumentname'>mul<td class='argumentdesc'><tr><td class='argumentname'>add<td class='argumentdesc'></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar1' href='./../Overviews/Methods.html#ar1'>ar1</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>z</span>, <span class='argstr'>r</span>, <span class='argstr'>s</span>, <span class='argstr'>t</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>azimuth: 0</span>, <span class='argstr'>elevation: 0</span>, <span class='argstr'>maxDist: 10</span>, <span class='argstr'>distance: 10</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>, <span class='argstr'>scaleflag: 1</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>w<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>x<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>y<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>z<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>r<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>s<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>t<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>u<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>v<td class='argumentdesc'>
+<p>Component of a second order ambisonic signal.<tr><td class='argumentname'>azimuth<td class='argumentdesc'>
+<p>Speaker angle in radians. 0 is front, values should be anti-clockwise (-0.5pi is right, 0.5pi is left).<tr><td class='argumentname'>elevation<td class='argumentdesc'>
+<p>Speaker elevation in radians. 0 to 0.5pi is up, 0 to -0.5pi is down.<tr><td class='argumentname'>maxDist<td class='argumentdesc'>
+<p>The distance (in meters) to the furthest speaker from center (this allocates the delay size).<tr><td class='argumentname'>distance<td class='argumentdesc'>
+<p>The distance (in meteres) to each speaker.<tr><td class='argumentname'>scaleflag<td class='argumentdesc'>
+<p>If 1, apply amplitude scaling to the closest signals to match more distant speakers.<tr><td class='argumentname'>mul<td class='argumentdesc'><tr><td class='argumentname'>add<td class='argumentdesc'>
+<p>The following are some common speaker rigs, with the appropriate components zeroed out:</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*stereo' href='./../Overviews/Methods.html#stereo'>stereo</a> (<span class='argstr'>w</span>, <span class='argstr'>y</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*square' href='./../Overviews/Methods.html#square'>square</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p>stereo pairs - lf, rf, lr, rr</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*quad' href='./../Overviews/Methods.html#quad'>quad</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p>Clockwise - lf, rf, rr, lr.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*pentagon' href='./../Overviews/Methods.html#pentagon'>pentagon</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p>center front, rf, rr, lr, lf</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*hexagon' href='./../Overviews/Methods.html#hexagon'>hexagon</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p>lf, rf, r, rr, lr, l</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*octagon1' href='./../Overviews/Methods.html#octagon1'>octagon1</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p>lf, rf, rfs, rrs, rr, lr, lrs, lfs</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*octagon2' href='./../Overviews/Methods.html#octagon2'>octagon2</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p>f, rf, r, rr, rear, lr, l, lf</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*cube' href='./../Overviews/Methods.html#cube'>cube</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>z</span>, <span class='argstr'>s</span>, <span class='argstr'>t</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p>lfu, rfu, rru, lru, lfd, rfd, rrd, lrd</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*doubleHex' href='./../Overviews/Methods.html#doubleHex'>doubleHex</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>z</span>, <span class='argstr'>s</span>, <span class='argstr'>t</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p>lfu, rfu, ru, rru, lru, lu, lfd, rfd, rd, rrd, lrd, ld</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*dodecahedron' href='./../Overviews/Methods.html#dodecahedron'>dodecahedron</a> (<span class='argstr'>w</span>, <span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>z</span>, <span class='argstr'>r</span>, <span class='argstr'>s</span>, <span class='argstr'>t</span>, <span class='argstr'>u</span>, <span class='argstr'>v</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p>top, fu, rfu, rru, lru, lfu, fd, rfd, rrd, lrd, lfd, bottom</div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-checkInputs' href='./../Overviews/Methods.html#checkInputs'>checkInputs</a> </h3>
-<h2><a class='anchor' name='Help template'>Help template</a></h2>
-
-<p>Copy and paste the text below and save to HelpSource/Classes/FMHDecode1.schelp<pre class='code prettyprint lang-sc'>TITLE:: FMHDecode1
-summary:: (put short description here)
-categories:: Undocumented classes, UGens&gt;Undocumented, UGens&gt;Multichannel&gt;Ambisonics
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
-
-DESCRIPTION::
-(put long description here)
-
-
-CLASSMETHODS::
-
-METHOD:: cube
-(describe method here)
-
-ARGUMENT:: w
-(describe argument here)
-
-ARGUMENT:: x
-(describe argument here)
-
-ARGUMENT:: y
-(describe argument here)
-
-ARGUMENT:: z
-(describe argument here)
-
-ARGUMENT:: s
-(describe argument here)
-
-ARGUMENT:: t
-(describe argument here)
-
-ARGUMENT:: v
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: pentagon
-(describe method here)
-
-ARGUMENT:: w
-(describe argument here)
-
-ARGUMENT:: x
-(describe argument here)
-
-ARGUMENT:: y
-(describe argument here)
-
-ARGUMENT:: u
-(describe argument here)
-
-ARGUMENT:: v
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: octagon2
-(describe method here)
-
-ARGUMENT:: w
-(describe argument here)
-
-ARGUMENT:: x
-(describe argument here)
-
-ARGUMENT:: y
-(describe argument here)
-
-ARGUMENT:: u
-(describe argument here)
-
-ARGUMENT:: v
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: hexagon
-(describe method here)
-
-ARGUMENT:: w
-(describe argument here)
-
-ARGUMENT:: x
-(describe argument here)
-
-ARGUMENT:: y
-(describe argument here)
-
-ARGUMENT:: u
-(describe argument here)
-
-ARGUMENT:: v
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: octagon1
-(describe method here)
-
-ARGUMENT:: w
-(describe argument here)
-
-ARGUMENT:: x
-(describe argument here)
-
-ARGUMENT:: y
-(describe argument here)
-
-ARGUMENT:: u
-(describe argument here)
-
-ARGUMENT:: v
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: dodecahedron
-(describe method here)
-
-ARGUMENT:: w
-(describe argument here)
-
-ARGUMENT:: x
-(describe argument here)
-
-ARGUMENT:: y
-(describe argument here)
-
-ARGUMENT:: z
-(describe argument here)
-
-ARGUMENT:: r
-(describe argument here)
-
-ARGUMENT:: s
-(describe argument here)
-
-ARGUMENT:: t
-(describe argument here)
-
-ARGUMENT:: u
-(describe argument here)
-
-ARGUMENT:: v
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: square
-(describe method here)
-
-ARGUMENT:: w
-(describe argument here)
-
-ARGUMENT:: x
-(describe argument here)
-
-ARGUMENT:: y
-(describe argument here)
-
-ARGUMENT:: v
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: ar
-(describe method here)
-
-ARGUMENT:: w
-(describe argument here)
-
-ARGUMENT:: x
-(describe argument here)
-
-ARGUMENT:: y
-(describe argument here)
-
-ARGUMENT:: z
-(describe argument here)
-
-ARGUMENT:: r
-(describe argument here)
-
-ARGUMENT:: s
-(describe argument here)
-
-ARGUMENT:: t
-(describe argument here)
-
-ARGUMENT:: u
-(describe argument here)
-
-ARGUMENT:: v
-(describe argument here)
-
-ARGUMENT:: azimuth
-(describe argument here)
-
-ARGUMENT:: elevation
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: ar1
-(describe method here)
-
-ARGUMENT:: w
-(describe argument here)
-
-ARGUMENT:: x
-(describe argument here)
-
-ARGUMENT:: y
-(describe argument here)
-
-ARGUMENT:: z
-(describe argument here)
-
-ARGUMENT:: r
-(describe argument here)
-
-ARGUMENT:: s
-(describe argument here)
-
-ARGUMENT:: t
-(describe argument here)
-
-ARGUMENT:: u
-(describe argument here)
-
-ARGUMENT:: v
-(describe argument here)
-
-ARGUMENT:: azimuth
-(describe argument here)
-
-ARGUMENT:: elevation
-(describe argument here)
-
-ARGUMENT:: maxDist
-(describe argument here)
-
-ARGUMENT:: distance
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-ARGUMENT:: scaleflag
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: stereo
-(describe method here)
-
-ARGUMENT:: w
-(describe argument here)
-
-ARGUMENT:: y
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: doubleHex
-(describe method here)
-
-ARGUMENT:: w
-(describe argument here)
-
-ARGUMENT:: x
-(describe argument here)
-
-ARGUMENT:: y
-(describe argument here)
-
-ARGUMENT:: z
-(describe argument here)
-
-ARGUMENT:: s
-(describe argument here)
-
-ARGUMENT:: t
-(describe argument here)
-
-ARGUMENT:: u
-(describe argument here)
-
-ARGUMENT:: v
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: quad
-(describe method here)
-
-ARGUMENT:: w
-(describe argument here)
-
-ARGUMENT:: x
-(describe argument here)
-
-ARGUMENT:: y
-(describe argument here)
-
-ARGUMENT:: v
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-
-INSTANCEMETHODS::
-
-METHOD:: checkInputs
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-
-EXAMPLES::
-
-code::
-(some example code)
-::
-</pre>
-<div class='doclink'>link::Classes/FMHDecode1::<br>sc version: 3.8dev</div></div></body></html>
+<div class='method'></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>s.boot;
+
+(
+{
+    var w, x, y, z, r, s, t, u, v, p, a, b, c, d;
+
+    p = PinkNoise.ar;
+
+    // second order B-format encode
+    #w, x, y, z, r, s, t, u, v = FMHEncode1.ar(p, MouseX.kr(-pi, pi),
+        MouseY.kr(0.25pi, -0.25pi), 1);
+
+    // B-format decode to cube / quad ([lfh, rfh, rrh, lrh, lfl, rfl, rrl, lrl])
+    // lfl = left front high, lfl = left front low etc...
+
+    FMHDecode1.ar(w, x, y, z, r, s, t, u, v,
+        [-0.25pi, 0.25pi, 0.75pi, 1.25pi,-0.25pi, 0.25pi, 0.75pi, 1.25pi],
+        [0.25pi,0.25pi,0.25pi,0.25pi,-0.25pi,-0.25pi,-0.25pi,-0.25pi]);
+}.scope(8);
+)
+
+
+// some common speaker rigs
+(
+{
+    var w, x, y, z, r, s, t, u, v;
+    #w, x, y, z, r, s, t, u, v =
+        FMHEncode1.ar(WhiteNoise.ar,MouseX.kr(0, 2pi), MouseY.kr(-0.5pi, 0.5pi), 1, 0.3);
+    FMHDecode1.stereo(w, y);
+}.scope(5));
+
+(
+{
+    var w, x, y, z, r, s, t, u, v;
+    #w, x, y, z, r, s, t, u, v =
+        FMHEncode1.ar(SinOsc.ar,MouseX.kr(0, 2pi), MouseY.kr(-0.5pi, 0.5pi), 1, 0.3);
+    FMHDecode1.pentagon(w, x, y, u, v);
+}.scope(5));
+
+(
+{
+    var w, x, y, z, r, s, t, u, v;
+    #w, x, y, z, r, s, t, u, v =
+        FMHEncode1.ar(WhiteNoise.ar,MouseX.kr(0, 2pi), MouseY.kr(-0.5pi, 0.5pi), 1, 0.3);
+    FMHDecode1.cube(w, x, y, z, s, t, v);
+}.scope(8));
+
+
+(
+{
+    var w, x, y, z, r, s, t, u, v;
+    #w, x, y, z, r, s, t, u, v =
+        FMHEncode1.ar(SinOsc.ar,MouseX.kr(0, 2pi), MouseY.kr(-0.5pi, 0.5pi), 1, 0.3);
+    FMHDecode1.doubleHex(w, x, y, z, s, t, u, v);
+}.scope(12));
+
+(
+{
+    var w, x, y, z, r, s, t, u, v;
+    #w, x, y, z, r, s, t, u, v =
+        FMHEncode1.ar(WhiteNoise.ar,MouseX.kr(0, 2pi), MouseY.kr(-0.5pi, 0.5pi), 1, 0.3);
+    FMHDecode1.dodecahedron(w, x, y, z, r, s, t, u, v);
+}.scope(12));</pre>
+
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/FMHDecode1.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/FMHDecode1.schelp</a><br>link::Classes/FMHDecode1::<br>sc version: 3.8dev</div></div></body></html>
