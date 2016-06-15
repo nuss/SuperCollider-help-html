@@ -14,9 +14,9 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a>, <a href='./../Browse.html#UGens>Undocumented'>UGens>Undocumented</a></div>
+<div id='categories'><a href='./../Browse.html#Libraries>JoshUGens'>Libraries>JoshUGens</a>, <a href='./../Browse.html#Classes'>Classes</a>, <a href='./../Browse.html#UGens>Analysis:Synthesis'>UGens>Analysis:Synthesis</a></div>
 <h1>Maxamp</h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>Tracks and prints amplitudes</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/Maxamp.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/Maxamp.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
@@ -24,52 +24,64 @@
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*ar'>ar</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-</ul><li class='toc1'><a href='#Help template'>Help template</a></li>
-<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
-
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><a class='anchor' name='kw_JoshUGens'>&nbsp;</a><h2><a class='anchor' name='description'>Description</a></h2>
+<div class='warning'><span class='warninglabel'>WARNING:</span> Printing from the server is very expensive on the client side (lang). This CPU usage will not show up in your CPU usage on the server side.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>in</span>, <span class='argstr'>numSamps: 1000</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>in<td class='argumentdesc'>
+<p>The input you would like to track.<tr><td class='argumentname'>numSamps<td class='argumentdesc'>
+<p>The period in which Maxamp will post amp information.</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h2><a class='anchor' name='Help template'>Help template</a></h2>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>s.boot;
 
-<p>Copy and paste the text below and save to HelpSource/Classes/Maxamp.schelp<pre class='code prettyprint lang-sc'>TITLE:: Maxamp
-summary:: (put short description here)
-categories:: Undocumented classes, UGens&gt;Undocumented
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+(
+SynthDef(\sample, {|dur|
+    Out.ar(0, SinOsc.ar(440, 0, LFNoise1.ar(0.5)) *
+        EnvGen.kr(Env([0.01, 1, 1, 0.01], [0.01, dur - 0.02, 0.01]), doneAction: 2))
+}).add;
 
-DESCRIPTION::
-(put long description here)
+SynthDef(\maxamptest, {|inbus|
+    Maxamp.ar(In.ar(inbus, 1), SampleRate.ir / 10)
+}).add;
+)
 
+s.sendBundle(0.1, [\s_new, \sample, -1, 0, 1, \dur, 4],
+    // run maxamp test at the tail of group 1
+    [\s_new, \maxamptest, -1, 1, 1, \inbus, 0]);
 
-CLASSMETHODS::
+// run a couple more synths
+s.sendBundle(0.1, [\s_new, \sample, -1, 0, 1, \dur, 2],
+    [\s_new, \sample, -1, 0, 1, \dur, 3],
+    [\s_new, \sample, -1, 0, 1, \dur, 4]);
 
-METHOD:: ar
-(describe method here)
+// kill maxamptest
+s.sendBundle(0.1, [\g_freeAll, 1]);</pre>
 
-ARGUMENT:: in
-(describe argument here)
+<p>Here is a sample of what prints:<pre>Maxamp from 1.8 to 1.9: 0.87646, Overall Maxamp at 1.89903: 0.87646
+Maxamp from 1.9 to 2: 0.930082, Overall Maxamp at 1.999: 0.930082
+Maxamp from 2 to 2.1: 0.930123, Overall Maxamp at 2.00011: 0.930123
+Maxamp from 2.1 to 2.2: 0.88386, Overall Maxamp at 2.00011: 0.930123
+Maxamp from 2.2 to 2.3: 0.837598, Overall Maxamp at 2.00011: 0.930123
+Maxamp from 2.3 to 2.4: 0.791335, Overall Maxamp at 2.00011: 0.930123</pre>
+<p>The last line shows that the Maxamp from 2.3 - 2.4 seconds was 0.791335. The overall Maxamp occurred at 2.00011 seconds, with a value of 0.930123.
+<p><strong>For NRT</strong>This UGen can be particularly useful during NRT synthesis:<pre class='code prettyprint lang-sc'>a = [
+    [0, [\g_new, 1], [\s_new, \sample, -1, 0, 1, \dur, 4], [\s_new, \maxamptest, -1, 1, 1]],
+    [6, [\s_new, \sample, -1, 0, 1, \dur, 2]],
+    [8, [\s_new, \sample, -1, 0, 1, \dur, 3]],
+    [11, [\c_set, 0, 0]]
+    ]
 
-ARGUMENT:: numSamps
-(describe argument here)
+// make sure the local server is not booted
 
-returns:: (describe returnvalue here)
+Score.recordNRT(a, "/tmp/sc.sc", "test.aiff");</pre>
 
-
-INSTANCEMETHODS::
-
-
-EXAMPLES::
-
-code::
-(some example code)
-::
-</pre>
-<div class='doclink'>link::Classes/Maxamp::<br>sc version: 3.8dev</div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/Maxamp.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/Maxamp.schelp</a><br>link::Classes/Maxamp::<br>sc version: 3.8dev</div></div></body></html>

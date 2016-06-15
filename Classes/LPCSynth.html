@@ -14,71 +14,63 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a>, <a href='./../Browse.html#UGens>Undocumented'>UGens>Undocumented</a></div>
+<div id='categories'><a href='./../Browse.html#Libraries>JoshUGens'>Libraries>JoshUGens</a>, <a href='./../Browse.html#Classes'>Classes</a></div>
 <h1>LPCSynth</h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>Utilize LPC data</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/LPCSynth.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/LPCSynth.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/LPCAna.html">LPCAna</a>, <a href="./../Classes/LPCFile.html">LPCFile</a>, <a href="./../Classes/LPCVals.html">LPCVals</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*ar'>ar</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-</ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<p>LPCSynth uses data from a LPC data file to filter a signal.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>buffer</span>, <span class='argstr'>signal</span>, <span class='argstr'>pointer</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>buffer<td class='argumentdesc'>
+<p>The buffer where data is stored from LPCFile (see <a href="./../Classes/LPCFile.html">LPCFile</a>).<tr><td class='argumentname'>signal<td class='argumentdesc'>
+<p>The signal to filter.<tr><td class='argumentname'>pointer<td class='argumentdesc'>
+<p>A pointer into the LPC data file, where 0 is the begining and 1 is the end.<tr><td class='argumentname'>mul<td class='argumentdesc'><tr><td class='argumentname'>add<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h2><a class='anchor' name='Help template'>Help template</a></h2>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 
-<p>Copy and paste the text below and save to HelpSource/Classes/LPCSynth.schelp<pre class='code prettyprint lang-sc'>TITLE:: LPCSynth
-summary:: (put short description here)
-categories:: Undocumented classes, UGens&gt;Undocumented
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+<p>This uses the fate.lpc file, created with the following command:
+<p><code>lpanal -p 50 -h 300 fate.aiff fate.lpc</code><ul>
+<li>-p = num poles<li>-h = hop size in samples</ul>
 
-DESCRIPTION::
-(put long description here)
+<p>Analysis window is 2X the hop size.<pre class='code prettyprint lang-sc'>s.boot;
 
+// this file came with the JoshUGens... Leonard Bernstein talking about Beethoven.
+// Place it in your SC3/sounds directory.
+a = LPCFile.new(Platform.resourceDir +/+ "sounds/fate.lpc", server: s).loadToBuffer;
 
-CLASSMETHODS::
+(
+z = {
+var cps, rmso, err, voc, noise, timepoint, dur;
+timepoint = LFSaw.ar(0.4/a.sndDur, 1, 0.5, 0.5);
 
-METHOD:: ar
-(describe method here)
+# cps, rmso, err = LPCVals.ar(a.buffer, timepoint);
+// a periodic Blip to filter, amplitude is 1 - error
+noise = WhiteNoise.ar(err); // a noise source
 
-ARGUMENT:: buffer
-(describe argument here)
+voc = Blip.ar(cps, 100);
+// the rms values tend to be high... scale them back quite a bit!
+Out.ar(0, LPCSynth.ar(a.buffer, voc + noise, timepoint, rmso));
+}.play(s)
+)
+z.free;
+// clean up
+s.sendBundle(0.1, [\b_free, a.buffer]);</pre>
 
-ARGUMENT:: signal
-(describe argument here)
-
-ARGUMENT:: pointer
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-
-INSTANCEMETHODS::
-
-
-EXAMPLES::
-
-code::
-(some example code)
-::
-</pre>
-<div class='doclink'>link::Classes/LPCSynth::<br>sc version: 3.8dev</div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/LPCSynth.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/LPCSynth.schelp</a><br>link::Classes/LPCSynth::<br>sc version: 3.8dev</div></div></body></html>
