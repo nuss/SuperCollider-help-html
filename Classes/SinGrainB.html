@@ -14,74 +14,55 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a>, <a href='./../Browse.html#UGens>Undocumented'>UGens>Undocumented</a>, <a href='./../Browse.html#UGens>GranularSynthesis'>UGens>GranularSynthesis</a></div>
+<div id='categories'><a href='./../Browse.html#Libraries>JoshUGens'>Libraries>JoshUGens</a>, <a href='./../Browse.html#Classes'>Classes</a>, <a href='./../Browse.html#UGens>GranularSynthesis'>UGens>GranularSynthesis</a></div>
 <h1>SinGrainB</h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>Granular synthesis with sinusoidal grains and user supplied envelope</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/GrainSynths.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/GrainSynths.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/JoshGrain.html">JoshGrain</a> : <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/SinGrain.html">SinGrain</a>, <a href="./../Classes/SinGrainI.html">SinGrainI</a>, <a href="./../Classes/SinGrainBF.html">SinGrainBF</a>, <a href="./../Classes/SinGrainBBF.html">SinGrainBBF</a>, <a href="./../Classes/SinGrainIBF.html">SinGrainIBF</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*ar'>ar</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-</ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
-
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>trigger: 0</span>, <span class='argstr'>dur: 1</span>, <span class='argstr'>freq: 440</span>, <span class='argstr'>envbuf</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>trigger<td class='argumentdesc'>
+<p>A kr or ar trigger to start a new grain. If ar, grains after the start of the synth are sample accurate.<tr><td class='argumentname'>dur<td class='argumentdesc'>
+<p>Size of the grain. Polled at creation time.<tr><td class='argumentname'>freq<td class='argumentdesc'>
+<p>The freq of the grain generators internal oscillator. Polled at creation time.<tr><td class='argumentname'>envbuf<td class='argumentdesc'>
+<p>A buffer with a stored signal to be used for the envelope of the grain.<tr><td class='argumentname'>mul<td class='argumentdesc'><tr><td class='argumentname'>add<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h2><a class='anchor' name='Help template'>Help template</a></h2>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>s.boot;
 
-<p>Copy and paste the text below and save to HelpSource/Classes/SinGrainB.schelp<pre class='code prettyprint lang-sc'>TITLE:: SinGrainB
-summary:: (put short description here)
-categories:: Undocumented classes, UGens&gt;Undocumented, UGens&gt;GranularSynthesis
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+(
+SynthDef(\sin_grain_test, {arg gate = 1, amp = 1, envbuf;
+    Out.ar(0,
+        SinGrainB.ar(Impulse.kr(20), 0.2, WhiteNoise.kr.range(440, 880), envbuf,
+            EnvGen.kr(
+                Env([0, 1, 0], [1, 1], \sin, 1),
+                gate,
+                levelScale: amp,
+                doneAction: 2)
+            )
+        )
+    }).add;
+)
 
-DESCRIPTION::
-(put long description here)
+z = Env([0, 1, 0], [1, 1], [10, -10]).asSignal(1024);
+s.sendMsg(\b_alloc, b = s.bufferAllocator.alloc(1), 1024, 1, [\b_setn, b, 0, 1024] ++ z)
+s.sendMsg(\s_new, \sin_grain_test, a=s.nextNodeID, 0, 1, \amp, 0.2, \envbuf, b);
+s.sendMsg(\n_set, a, \gate, 0);
+s.sendMsg(\b_free, b);</pre>
 
-
-CLASSMETHODS::
-
-METHOD:: ar
-(describe method here)
-
-ARGUMENT:: trigger
-(describe argument here)
-
-ARGUMENT:: dur
-(describe argument here)
-
-ARGUMENT:: freq
-(describe argument here)
-
-ARGUMENT:: envbuf
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-
-INSTANCEMETHODS::
-
-
-EXAMPLES::
-
-code::
-(some example code)
-::
-</pre>
-<div class='doclink'>link::Classes/SinGrainB::<br>sc version: 3.8dev</div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/SinGrainB.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/SinGrainB.schelp</a><br>link::Classes/SinGrainB::<br>sc version: 3.8dev</div></div></body></html>
