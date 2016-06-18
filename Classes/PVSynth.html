@@ -14,90 +14,57 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a>, <a href='./../Browse.html#UGens>Undocumented'>UGens>Undocumented</a>, <a href='./../Browse.html#UGens>Analysis:Synthesis'>UGens>Analysis:Synthesis</a></div>
+<div id='categories'><a href='./../Browse.html#Libraries>JoshUGens'>Libraries>JoshUGens</a>, <a href='./../Browse.html#UGens>FFT'>UGens>FFT</a></div>
 <h1>PVSynth</h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>Resynthesize Csound PV data</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/PVSynth.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/PVSynth.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/PVFile.html">PVFile</a>, <a href="./../Classes/PVInfo.html">PVInfo</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#*ar'>ar</a> </li>
-<li class='toc3'><a href='#*categories'>categories</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*categories'>categories</a> </li>
+<li class='toc3'><a href='#*ar'>ar</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-</ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>pvbuffer</span>, <span class='argstr'>numBins: 0</span>, <span class='argstr'>binStart: 0</span>, <span class='argstr'>binSkip: 1</span>, <span class='argstr'>filePointer: 0</span>, <span class='argstr'>freqMul: 1</span>, <span class='argstr'>freqAdd: 0</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<p>Resyntesize data with a bank of sine tones from a CSound PV analysis file.<div class='note'><span class='notelabel'>NOTE:</span> This currently only works with .pv files. .pvx and CSound 5 files will be implemented soon.</div><div class='warning'><span class='warninglabel'>WARNING:</span> The values stored inside the pv file for magnitudes are NOT scaled to a linear amplitude system. See PVFile (and the example below) for suggestions on how to scale these values so you don't destroy things.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*categories' href='./../Overviews/Methods.html#categories'>categories</a> </h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<div class='method'>
+<p></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>pvbuffer</span>, <span class='argstr'>numBins: 0</span>, <span class='argstr'>binStart: 0</span>, <span class='argstr'>binSkip: 1</span>, <span class='argstr'>filePointer: 0</span>, <span class='argstr'>freqMul: 1</span>, <span class='argstr'>freqAdd: 0</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>pvbuffer<td class='argumentdesc'>
+<p>The buffer containing pv data (stored with PVFile).<tr><td class='argumentname'>numBins<td class='argumentdesc'>
+<p>The number of bins to resynthesize. Default is 0.<tr><td class='argumentname'>binStart<td class='argumentdesc'>
+<p>The bin number to start on. Default value is 0.<tr><td class='argumentname'>binSkip<td class='argumentdesc'>
+<p>The number of bins to skip. Default value is 1.<tr><td class='argumentname'>filePointer<td class='argumentdesc'>
+<p>A pointer into the soundfile. 0.0 is the beginning, 1.0 is the end. Default value is 0.<tr><td class='argumentname'>freqMul<td class='argumentdesc'>
+<p>Freq value scaler. Default value is 1.0.<tr><td class='argumentname'>freqAdd<td class='argumentdesc'>
+<p>Freq value offset. Default value is 0.0.<tr><td class='argumentname'>mul<td class='argumentdesc'><tr><td class='argumentname'>add<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h2><a class='anchor' name='Help template'>Help template</a></h2>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>s.boot;
 
-<p>Copy and paste the text below and save to HelpSource/Classes/PVSynth.schelp<pre class='code prettyprint lang-sc'>TITLE:: PVSynth
-summary:: (put short description here)
-categories:: Undocumented classes, UGens&gt;Undocumented, UGens&gt;Analysis:Synthesis
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+// load a file and save it to a buffer
+a = PVFile.new(Platform.resourceDir +/+ "sounds/cl-c4.pv", s).loadToBuffer;
 
-DESCRIPTION::
-(put long description here)
+(
+x = SynthDef(\helpPVSynth, {arg scale = 1;
+    Out.ar(0, Pan2.ar(
+        PVSynth.ar(a.buffer, a.nBins, 0, 1, MouseX.kr(0, 1),
+            mul: a.magScale * scale),
+        0.0));
+}).play(s, [\scale, 0.2]);
+)
 
+x.free;</pre>
 
-CLASSMETHODS::
-
-METHOD:: categories
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: ar
-(describe method here)
-
-ARGUMENT:: pvbuffer
-(describe argument here)
-
-ARGUMENT:: numBins
-(describe argument here)
-
-ARGUMENT:: binStart
-(describe argument here)
-
-ARGUMENT:: binSkip
-(describe argument here)
-
-ARGUMENT:: filePointer
-(describe argument here)
-
-ARGUMENT:: freqMul
-(describe argument here)
-
-ARGUMENT:: freqAdd
-(describe argument here)
-
-ARGUMENT:: mul
-(describe argument here)
-
-ARGUMENT:: add
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-
-INSTANCEMETHODS::
-
-
-EXAMPLES::
-
-code::
-(some example code)
-::
-</pre>
-<div class='doclink'>link::Classes/PVSynth::<br>sc version: 3.8dev</div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PVSynth.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PVSynth.schelp</a><br>link::Classes/PVSynth::<br>sc version: 3.8dev</div></div></body></html>

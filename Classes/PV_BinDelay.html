@@ -14,9 +14,9 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<div id='categories'><a href='./../Browse.html#Libraries>JoshUGens'>Libraries>JoshUGens</a>, <a href='./../Browse.html#UGens>FFT'>UGens>FFT</a></div>
 <h1>PV_BinDelay</h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>Delay and Feedback on a bin by bin basis.</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/JoshPV.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/JoshPV.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/PV_ChainUGen.html">PV_ChainUGen</a> : <a href="../Classes/WidthFirstUGen.html">WidthFirstUGen</a> : <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
@@ -24,61 +24,115 @@
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-</ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
-
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<div class='warning'><span class='warninglabel'>WARNING:</span> This UGen needs to allocate a large amount of real-time memory at the outset (approx. SampleRate * maxDelayTime). This will cause a CPU spike at startup. Also, due to memory mangement restrictions, There is a limited number of previous frames that can be stored. Right now no more the 512 frames can be stored. With a frame size of 512 samples, this makes a hard limit to the max delay of about 5.9 seconds at a SR of 44100 (or (FFT size * 512) / SR). Chances are, however, that you will run out of RT memory (the memSize ServerOption) before hitting these limits, especially at larger FFT frame sizes.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>buffer</span>, <span class='argstr'>maxdelay</span>, <span class='argstr'>delaybuf</span>, <span class='argstr'>fbbuf</span>, <span class='argstr'>hop: 0.5</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>buffer<td class='argumentdesc'>
+<p>The FFT buffer.<tr><td class='argumentname'>maxdelay<td class='argumentdesc'>
+<p>In seconds. Used at init time to create memory for the delays. Non-modulatable.<tr><td class='argumentname'>delaybuf<td class='argumentdesc'>
+<p>A buffer of (fft buffer size / 2) containing the delay times for each bin. Delay times will be rounded to the closest bin. Smaller FFT windows will yield better time resolution.<tr><td class='argumentname'>fbbuf<td class='argumentdesc'>
+<p>A buffer of (fft buffer size / 2) containing the fb percentages for each bin.<tr><td class='argumentname'>hop<td class='argumentdesc'>
+<p>If you are using FFT with a hop value different then the default 0.5, you need to tell PV_BinDelay so it can calculate the correct times.</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h2><a class='anchor' name='Help template'>Help template</a></h2>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>s.boot;
 
-<p>Copy and paste the text below and save to HelpSource/Classes/PV_BinDelay.schelp<pre class='code prettyprint lang-sc'>TITLE:: PV_BinDelay
-summary:: (put short description here)
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+(
+Routine.run({
+    // use as multislider - del time vals on top, feedback on the bottom
+    // max delay time is 1 second, delaytime and fb are initialized to 0.0
+    // and are controlled by the GUI. The multi-slider on the top controls
+    // each bins delay time, the bottom controls FB.
 
-DESCRIPTION::
-(put long description here)
+    var size, awin, bsl, car, dar, fsl, maxdel, synth, cond;
 
+    size = 128;
+    maxdel = 0.5;
+    cond = Condition.new;
+    s.sendMsg(\b_alloc, b=s.bufferAllocator.alloc(1), size * 2);
+    s.sendMsg(\b_alloc, c=s.bufferAllocator.alloc(1), size);
+    s.sendMsg(\b_alloc, d=s.bufferAllocator.alloc(1), size);
 
-CLASSMETHODS::
+    y = Array.fill(size, {0.0});
+    s.sendBundle(0.1, [\b_setn, d, 0, size] ++ y);
 
-METHOD:: new
-(describe method here)
+    z = Array.fill(size, {arg i; 0.0});
+    s.sendBundle(0.1, [\b_setn, c, 0, size] ++ z);
+    s.sync(cond);
 
-ARGUMENT:: buffer
-(describe argument here)
+    synth = SynthDef("help-noopFFT", { arg inbus,out=0,bufnum=0,   dels=0, fb=0;
+        var in, chain;
+        in = Impulse.ar(0.33);
+        in = PlayBuf.ar(1, playbuf, loop: 1);
+        chain = FFT(bufnum, in, 0.25);
+        chain = PV_BinDelay(chain, maxdel, dels, fb, 0.25);
+        Out.ar(out,
+            in + IFFT(chain) // inverse FFT
+        );
+    }).play(s,[\out,0,\bufnum,b,\dels, c, \fb, d, \inbus, s.options.numOutputBusChannels]);
+    {
+    awin = GUI.window.new("test", Rect(200 , 450, 10 + (size * 1), 10 + (size * 2)));
+    awin.view.decorator = FlowLayout(awin.view.bounds);
 
-ARGUMENT:: maxdelay
-(describe argument here)
+    bsl = GUI.multiSliderView.new(awin, Rect(0, 0, size * 1, size * 1));
+    bsl.action = {arg xb; ("Deltime index: " ++ xb.index ++" value: " ++
+            (xb.currentvalue * maxdel)).postln;
+        s.sendMsg(\b_set, c, xb.index, xb.currentvalue * maxdel);
+        };
 
-ARGUMENT:: delaybuf
-(describe argument here)
+    fsl = GUI.multiSliderView.new(awin, Rect(0, 0, size * 1, size * 1));
+    fsl.action = {arg xb; ("FB index: " ++ xb.index ++" value: " ++ xb.currentvalue).postln;
+        s.sendMsg(\b_set, d, xb.index, xb.currentvalue);
+        };
 
-ARGUMENT:: fbbuf
-(describe argument here)
+    car = Array.new;
+    size.do({arg i;
+        car = car.add(0);
+    });
+    bsl.value_(car);
 
-ARGUMENT:: hop
-(describe argument here)
+    dar = Array.new;
+    size.do({arg i;
+        dar = dar.add(0);
+    });
+    fsl.value_(car);
 
-returns:: (describe returnvalue here)
+    bsl.xOffset_(5);
+    bsl.thumbSize_(12.0);
+    fsl.xOffset_(5);
+    fsl.thumbSize_(12.0);
 
+    // value axis size of each blip in pixels
+    bsl.valueThumbSize_(15.0);
+    // index axis size of each blip in pixels
+    bsl.indexThumbSize_( bsl.bounds.width / car.size );
+    bsl.gap = 0;
 
-INSTANCEMETHODS::
+    // value axis size of each blip in pixels
+    fsl.valueThumbSize_(15.0);
+    // index axis size of each blip in pixels
+    fsl.indexThumbSize_( fsl.bounds.width / dar.size );
+    fsl.gap = 0;
 
+    awin.front;
 
-EXAMPLES::
+    awin.onClose_({
+        synth.free;
+        s.sendMsg(\b_free, b);
+        s.sendMsg(\b_free, c);
+        s.sendMsg(\b_free, d);
+        })
+    }.defer;
+    })
+)</pre>
 
-code::
-(some example code)
-::
-</pre>
-<div class='doclink'>link::Classes/PV_BinDelay::<br>sc version: 3.8dev</div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PV_BinDelay.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PV_BinDelay.schelp</a><br>link::Classes/PV_BinDelay::<br>sc version: 3.8dev</div></div></body></html>
