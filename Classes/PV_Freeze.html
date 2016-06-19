@@ -14,62 +14,68 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<div id='categories'><a href='./../Browse.html#Libraries>JoshUGens'>Libraries>JoshUGens</a>, <a href='./../Browse.html#UGens>FFT'>UGens>FFT</a></div>
 <h1>PV_Freeze</h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>Freeze FFT frames</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/JoshPV.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/JoshPV.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/PV_ChainUGen.html">PV_ChainUGen</a> : <a href="../Classes/WidthFirstUGen.html">WidthFirstUGen</a> : <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Guides/FFT-Overview.html">FFT Overview</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-</ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<p>Freezes magnitudes at current levels when freeze &gt; 0, and advances phase according to difference between frames to try and maintain currect spectral quality.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>buffer</span>, <span class='argstr'>freeze: 0</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>buffer<td class='argumentdesc'>
+<p>FFT buffer.<tr><td class='argumentname'>freeze<td class='argumentdesc'>
+<p>If freeze &gt; 0, then magnitudes are frozen at current levels.</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h2><a class='anchor' name='Help template'>Help template</a></h2>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>s.boot;
+(
+b = Buffer.alloc(s,1024);
+c = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");
+)
 
-<p>Copy and paste the text below and save to HelpSource/Classes/PV_Freeze.schelp<pre class='code prettyprint lang-sc'>TITLE:: PV_Freeze
-summary:: (put short description here)
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+// compare PV_Freeze with PV_MagFreeze
+(
+SynthDef("help-freeze", { arg out=0, bufnum=0;
+    var in, chain;
+    in = SinOsc.ar(LFNoise1.kr(5.2,250,400));
+    chain = FFT(bufnum, in);
+    // uncomment the line below to compare while ...
+    //chain = PV_MagFreeze(chain, SinOsc.kr(0.2) );
+    // commenting the line below
+    chain = PV_Freeze(chain, SinOsc.kr(0.2) );
+    Out.ar(out, 0.5 * IFFT(chain).dup);
+}).play(s,[\out, 0, \bufnum, b.bufnum]);
+)
 
-DESCRIPTION::
-(put long description here)
+(
+//trig with MouseY
+SynthDef("help-magFreeze2", { arg out=0, bufnum=0, soundBufnum=2;
+    var in, chain;
+    in = PlayBuf.ar(1, soundBufnum, BufRateScale.kr(soundBufnum), loop: 1);
+    chain = FFT(bufnum, in);
+    // uncomment the line below to compare while ...
+    // chain = PV_MagFreeze(chain, MouseY.kr &gt; 0.5 );
+    // commenting the line below
+    chain = PV_Freeze(chain, MouseY.kr &gt; 0.5 );
+    Out.ar(out, 0.5 * IFFT(chain).dup);
+}).play(s,[\out, 0, \bufnum, b.bufnum, \soundBufnum, c.bufnum]);
+)
 
-
-CLASSMETHODS::
-
-METHOD:: new
-(describe method here)
-
-ARGUMENT:: buffer
-(describe argument here)
-
-ARGUMENT:: freeze
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-
-INSTANCEMETHODS::
-
-
-EXAMPLES::
-
-code::
-(some example code)
-::
-</pre>
-<div class='doclink'>link::Classes/PV_Freeze::<br>sc version: 3.8dev</div></div></body></html>
+b.free; c.free;</pre>
+<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PV_Freeze.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PV_Freeze.schelp</a><br>link::Classes/PV_Freeze::<br>sc version: 3.8dev</div></div></body></html>

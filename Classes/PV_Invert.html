@@ -14,59 +14,44 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<div id='categories'><a href='./../Browse.html#Libraries>JoshUGens'>Libraries>JoshUGens</a>, <a href='./../Browse.html#UGens>FFT'>UGens>FFT</a></div>
 <h1>PV_Invert</h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>Invert FFT frames</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/JoshPV.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/JoshPV.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/PV_ChainUGen.html">PV_ChainUGen</a> : <a href="../Classes/WidthFirstUGen.html">WidthFirstUGen</a> : <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-</ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
-
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>buffer</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>buffer<td class='argumentdesc'>
+<p>An FFT buffer.</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h2><a class='anchor' name='Help template'>Help template</a></h2>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>SynthDef(\invert, {arg buffer;
+    var in, chain;
+    // a sample signal (strong sin tone, little PinkNoise)
+    in = SinOsc.ar(440, 0, 0.4) + PinkNoise.ar(0.1);
+    chain = FFT(buffer, in);
+    chain = PV_Invert(chain);
+    Out.ar(0, [in, IFFT(chain) * 0.5]);
+ }).add;
 
-<p>Copy and paste the text below and save to HelpSource/Classes/PV_Invert.schelp<pre class='code prettyprint lang-sc'>TITLE:: PV_Invert
-summary:: (put short description here)
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+s.boot;
 
-DESCRIPTION::
-(put long description here)
+s.sendMsg(\b_alloc, 0, 2048)
 
-
-CLASSMETHODS::
-
-METHOD:: new
-(describe method here)
-
-ARGUMENT:: buffer
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-
-INSTANCEMETHODS::
-
-
-EXAMPLES::
-
-code::
-(some example code)
-::
-</pre>
-<div class='doclink'>link::Classes/PV_Invert::<br>sc version: 3.8dev</div></div></body></html>
+s.sendMsg(\s_new, \invert, 1000, 0, 1, \buffer, 0);</pre>
+<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PV_Invert.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PV_Invert.schelp</a><br>link::Classes/PV_Invert::<br>sc version: 3.8dev</div></div></body></html>

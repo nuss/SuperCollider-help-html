@@ -14,13 +14,14 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<div id='categories'><a href='./../Browse.html#Libraries>JoshUGens'>Libraries>JoshUGens</a>, <a href='./../Browse.html#UGens>FFT'>UGens>FFT</a></div>
 <h1>PV_OddBin</h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>Return the odd numbered bins in an FFT buffer</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/JoshPV.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/JoshPV.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/PV_ChainUGen.html">PV_ChainUGen</a> : <a href="../Classes/WidthFirstUGen.html">WidthFirstUGen</a> : <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
 <div id='subclasses'>Subclasses: <a href="../Classes/PV_EvenBin.html">PV_EvenBin</a></div>
+<div id='related'>See also: <a href="./../Classes/PV_EvenBin.html">PV_EvenBin</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -30,44 +31,47 @@
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-</ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
-
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<pre class='code prettyprint lang-sc'>PV_OddBin(buffer)</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>buffer</span>)</h3>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h2><a class='anchor' name='Help template'>Help template</a></h2>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// resynthesize only odd or even bins
+s.boot;
 
-<p>Copy and paste the text below and save to HelpSource/Classes/PV_OddBin.schelp<pre class='code prettyprint lang-sc'>TITLE:: PV_OddBin
-summary:: (put short description here)
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+// a sample sig
+{SinOsc.ar(440 + SinOsc.kr(0.05).range(0, 440), 0, 0.5)}.play;
 
-DESCRIPTION::
-(put long description here)
+(
+SynthDef(\evenbin, {arg fftbuf1, fftbuf2;
+    var in, chain1, chain2, out1, out2;
+    in = SinOsc.ar(440 + SinOsc.kr(0.05).range(0, 440), 0, 0.5);
+    chain1 = FFT(fftbuf1, in);
+    chain1 = PV_EvenBin(chain1);
+    out1 = IFFT(chain1);
+    chain2 = FFT(fftbuf2, in);
+    chain2 = PV_OddBin(chain2);
+    out2 = IFFT(chain2);
+    //   Out.ar(0, out1 + out2); // add back together
+    Out.ar(0, [out1, out2]); // or split apart
+}).add;
+)
 
+// the fft buf
+s.sendMsg(\b_alloc, 0, 2048);
+s.sendMsg(\b_alloc, 1, 2048);
 
-CLASSMETHODS::
+// start the synth
+s.sendMsg(\s_new, \evenbin, z = s.nextNodeID, 0, 1, \fftbuf1, 0, \fftbuf2, 1);
+// free it
+s.sendMsg(\n_free, z);
+s.sendMsg(\b_free, 0);
+s.sendMsg(\b_free, 1);
 
-METHOD:: new
-(describe method here)
-
-ARGUMENT:: buffer
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-
-INSTANCEMETHODS::
-
-
-EXAMPLES::
-
-code::
-(some example code)
-::
-</pre>
-<div class='doclink'>link::Classes/PV_OddBin::<br>sc version: 3.8dev</div></div></body></html>
+s.quit</pre>
+<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PV_OddBin.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PV_OddBin.schelp</a><br>link::Classes/PV_OddBin::<br>sc version: 3.8dev</div></div></body></html>
