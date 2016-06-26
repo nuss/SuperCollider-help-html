@@ -14,77 +14,130 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<div id='categories'><a href='./../Browse.html#Libraries>JoshUGens'>Libraries>JoshUGens</a>, <a href='./../Browse.html#UGens>FFT'>UGens>FFT</a></div>
 <h1>PV_BinBufRd</h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>Plays FFT data to a memory buffer</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/JoshPV.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/JoshPV.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/PV_ChainUGen.html">PV_ChainUGen</a> : <a href="../Classes/WidthFirstUGen.html">WidthFirstUGen</a> : <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/PV_RecordBuf.html">PV_RecordBuf</a>, <a href="./../Classes/PV_BinPlayBuf.html">PV_BinPlayBuf</a>, <a href="./../Classes/PV_BufRd.html">PV_BufRd</a>, <a href="./../Classes/PV_PlayBuf.html">PV_PlayBuf</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-</ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
-
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<div class='warning'><span class='warninglabel'>WARNING:</span> Resynth of a FFTs with large window sizes may cause CPU spikes.</div><div class='warning'><span class='warninglabel'>WARNING:</span> Unlike <a href="./../Classes/PV_BufRd.html">PV_BufRd</a>, PV_BinBufRd needs to have an FFT Ugen preceding it in the processing chain.</div><div class='note'><span class='notelabel'>NOTE:</span> <a href="./../Classes/PV_RecordBuf.html">PV_RecordBuf</a> stores FFT data to a buffer for use by a number of PV UGens.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>buffer</span>, <span class='argstr'>playbuf</span>, <span class='argstr'>point: 1</span>, <span class='argstr'>binStart: 0</span>, <span class='argstr'>binSkip: 1</span>, <span class='argstr'>numBins: 1</span>, <span class='argstr'>clear: 0</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>buffer<td class='argumentdesc'>
+<p>The FFT buffer to fill data into.<tr><td class='argumentname'>playbuf<td class='argumentdesc'>
+<p>The buffer to read frames of FFT data from.<tr><td class='argumentname'>point<td class='argumentdesc'>
+<p>A value between 0.0 and 1.0. 0.0 is the beginning of the file, 1.0 the end. Values greater then 1.0<tr><td class='argumentname'>binStart<td class='argumentdesc'><div class='note'><span class='notelabel'>NOTE:</span> With binStart, binSkip and numBins, you have some control over which bins to synthesize:<ul>
+<li>binStart = 0<li>binSkip = 2<li>numBins = 10<li>bins to synthesize = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]</ul>
+</div><tr><td class='argumentname'>binSkip<td class='argumentdesc'>
+<p>See binStart.<tr><td class='argumentname'>numBins<td class='argumentdesc'>
+<p>See binStart.<tr><td class='argumentname'>clear<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h2><a class='anchor' name='Help template'>Help template</a></h2>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// anazlyze a soundfile and store its data to a buffer
 
-<p>Copy and paste the text below and save to HelpSource/Classes/PV_BinBufRd.schelp<pre class='code prettyprint lang-sc'>TITLE:: PV_BinBufRd
-summary:: (put short description here)
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+s.boot;
 
-DESCRIPTION::
-(put long description here)
+(
+var sf;
+// path to a sound file here
+p = Platform.resourceDir +/+ "sounds/a11wlk01.wav";
+// the frame size for the analysis - experiment with other sizes (powers of 2)
+f = 1024;
+// the hop size
+h = 0.25;
+// get some info about the file
+sf = SoundFile.new( p );
+sf.openRead;
+sf.close;
+// allocate memory to store FFT data to... SimpleNumber.calcPVRecSize(frameSize, hop) will return
+// the appropriate number of samples needed for the buffer
+y = Buffer.alloc(s, sf.duration.calcPVRecSize(f, h));
+// allocate the soundfile you want to analyze
+z = Buffer.read(s, p);
+)
 
+// this does the analysis and saves it to buffer 1... frees itself when done
+(
+SynthDef("pvrec", { arg recBuf=1, soundBufnum=2;
+    var in, chain, bufnum;
+    bufnum = LocalBuf.new(1024);
+    Line.kr(1, 1, BufDur.kr(soundBufnum), doneAction: 2);
+    in = PlayBuf.ar(1, soundBufnum, BufRateScale.kr(soundBufnum), loop: 0);
+    // note the window type and overlaps... this is important for resynth parameters
+    chain = FFT(bufnum, in, 0.25, 1);
+    chain = PV_RecordBuf(chain, recBuf, 0, 1, 0, 0.25, 1);
+    // no ouput ... simply save the analysis to recBuf
+    }).add;
+)
 
-CLASSMETHODS::
+a = Synth("pvrec", [\recBuf, y, \soundBufnum, z]);
 
-METHOD:: new
-(describe method here)
+// you can save your 'analysis' file to disk! I suggest using float32 for the format
+// These can be read back in using Buffer.read
 
-ARGUMENT:: buffer
-(describe argument here)
+y.write(p++".scpv", "wav", "float32");
 
-ARGUMENT:: playbuf
-(describe argument here)
+// play your analysis back ... see the playback UGens listed above for more examples.
+(
+SynthDef("pvplay", { arg out=0, recBuf=1, playbuf, clear = 0.0;
+    var in, chain, bufnum;
+    bufnum = LocalBuf.new(1024);
+    chain = FFT(bufnum, PlayBuf.ar(1, playbuf, BufRateScale.kr(playbuf), loop: 1));
+    // MouseX points into file. start at bin 10, skip 3, resynth 50
+    chain = PV_BinBufRd(chain, recBuf, MouseX.kr(0, 1), 10, 3, 5, clear);
+    Out.ar(out, IFFT(chain, 1).dup);
+    }).add;
+);
 
-ARGUMENT:: point
-(describe argument here)
+// mix the resynth and data from the recBuf
+b = Synth("pvplay", [\out, 0, \recBuf, y, \playbuf, z, \clear, 0.0]);
 
-ARGUMENT:: binStart
-(describe argument here)
+b.free;
 
-ARGUMENT:: binSkip
-(describe argument here)
+// zero out the data in the FFT buf that ins't read in from recBuf
+b = Synth("pvplay", [\out, 0, \bufnum, x, \recBuf, y, \playbuf, z, \clear, 1.0]);
 
-ARGUMENT:: numBins
-(describe argument here)
+// stop the synth
+b.free;
 
-ARGUMENT:: clear
-(describe argument here)
+// play your analysis back ... use multiple PV_BinBufRd ugens.
+(
+SynthDef("pvplay", { arg out=0, recBuf=1, playbuf, clear = 0.0;
+    var in, chain, bufnum;
+    bufnum = LocalBuf.new(1024);
+    chain = FFT(bufnum, PlayBuf.ar(1, playbuf, BufRateScale.kr(playbuf), loop: 1));
+    // MouseX points into file. start at bin 10, skip 3, resynth 50
+    chain = PV_BinBufRd(chain, recBuf, MouseX.kr(0, 1), 10, 3, 50, clear);
+    chain = PV_BinBufRd(chain, recBuf, MouseX.kr(0.1, 0.9), 10, 3, 50, 0.0);
+    Out.ar(out, IFFT(chain, 1).dup);
+    }).add;
+);
 
-returns:: (describe returnvalue here)
+// mix the resynth and data from the recBuf
+b = Synth("pvplay", [\out, 0, \recBuf, y, \playbuf, z, \clear, 0.0]);
 
+b.free;
 
-INSTANCEMETHODS::
+// zero out the data in the FFT buf that ins't read in from recBuf
+b = Synth("pvplay", [\out, 0, \bufnum, x, \recBuf, y, \playbuf, z, \clear, 1.0]);
 
+// stop the synth
+b.free;
+// free the buffers
+[y, z].do({arg me; me.free});</pre>
 
-EXAMPLES::
-
-code::
-(some example code)
-::
-</pre>
-<div class='doclink'>link::Classes/PV_BinBufRd::<br>sc version: 3.8dev</div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PV_BinBufRd.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PV_BinBufRd.schelp</a><br>link::Classes/PV_BinBufRd::<br>sc version: 3.8dev</div></div></body></html>

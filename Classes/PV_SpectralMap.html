@@ -14,77 +14,62 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<div id='categories'><a href='./../Browse.html#Libraries>JoshUGens'>Libraries>JoshUGens</a>, <a href='./../Browse.html#UGens>FFT'>UGens>FFT</a></div>
 <h1>PV_SpectralMap</h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>Maps the spectral envelope of one FFT process onto another</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/JoshPV.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/classes/JoshPV.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/PV_ChainUGen.html">PV_ChainUGen</a> : <a href="../Classes/WidthFirstUGen.html">WidthFirstUGen</a> : <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../PV_SpectralEnhance">PV_SpectralEnhance</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-</ul><li class='toc1'><a href='#Help template'>Help template</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<p>Acts as a spectral filter.<div class='warning'><span class='warninglabel'>WARNING:</span> Use of a FFTs with a large window size may cause CPU spikes.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>buffer</span>, <span class='argstr'>specBuffer</span>, <span class='argstr'>floor: 0</span>, <span class='argstr'>freeze: 0</span>, <span class='argstr'>mode: 0</span>, <span class='argstr'>norm: 0</span>, <span class='argstr'>window: 0</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>buffer<td class='argumentdesc'>
+<p>The FFT buffer to filter.<tr><td class='argumentname'>specBuffer<td class='argumentdesc'>
+<p>The FFT buffer to derive the spectral curve from.<tr><td class='argumentname'>floor<td class='argumentdesc'>
+<p>The spectral curve is a normalized representation of the magnitudes in specBuffer (between 0 and 1). if floor &gt; 0, mags in the spectral curve BELOW this number are also zeroed out.<tr><td class='argumentname'>freeze<td class='argumentdesc'>
+<p>If &gt; 0, freeze the current spectral curve. The 'floor' parameter is ignored once the spectral curve is frozen.<tr><td class='argumentname'>mode<td class='argumentdesc'>
+<p>If mode == 0, PV_SpectralMap does not have any effect. &gt; 0 acts as a bandpass filter, &lt; 0 a bandreject.<tr><td class='argumentname'>norm<td class='argumentdesc'>
+<p>Normalization mode. If &lt;=0, the specBuffer's magnitudes are normalized on a frame by from basis. &gt;0, normalized according to the the sum of the FFT window's sample values.<tr><td class='argumentname'>window<td class='argumentdesc'>
+<p>The window used for the FFT - this will effect scaling if norm is &gt; 0.</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h2><a class='anchor' name='Help template'>Help template</a></h2>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>s.boot;
+z = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");
 
-<p>Copy and paste the text below and save to HelpSource/Classes/PV_SpectralMap.schelp<pre class='code prettyprint lang-sc'>TITLE:: PV_SpectralMap
-summary:: (put short description here)
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+(
+x = SynthDef(\specMap, {arg sndBuf, freeze = 0;
+    var a, b, chain1, chain2, out;
+    a = LocalBuf.new(2048);
+    b = LocalBuf.new(2048);
+    chain1 = FFT(a, LFSaw.ar(120)); // to be filtered
+    chain2 = FFT(b, PlayBuf.ar(1, z, 1, loop: 1));
+    // mouse x to play with floor.
+    chain1 = PV_SpectralMap(chain1, chain2, 0.0, freeze, MouseX.kr(-1, 1), 1);
+    out = IFFT(chain1);
+    Out.ar(0, out.dup);
+}).play(s, [\sndBuf, z, \freeze, 0])
+)
 
-DESCRIPTION::
-(put long description here)
+x.set(\freeze, 1)
+x.set(\freeze, 0);
 
+x.free;
 
-CLASSMETHODS::
+z.free;</pre>
 
-METHOD:: new
-(describe method here)
-
-ARGUMENT:: buffer
-(describe argument here)
-
-ARGUMENT:: specBuffer
-(describe argument here)
-
-ARGUMENT:: floor
-(describe argument here)
-
-ARGUMENT:: freeze
-(describe argument here)
-
-ARGUMENT:: mode
-(describe argument here)
-
-ARGUMENT:: norm
-(describe argument here)
-
-ARGUMENT:: window
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-
-INSTANCEMETHODS::
-
-
-EXAMPLES::
-
-code::
-(some example code)
-::
-</pre>
-<div class='doclink'>link::Classes/PV_SpectralMap::<br>sc version: 3.8dev</div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PV_SpectralMap.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PV_SpectralMap.schelp</a><br>link::Classes/PV_SpectralMap::<br>sc version: 3.8dev</div></div></body></html>
