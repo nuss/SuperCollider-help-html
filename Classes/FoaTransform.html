@@ -102,7 +102,7 @@
 
     // ------------------------------------------------------------
     // test sig
-    sig = PlayBuf.ar(~sndbuf.numChannels, ~sndbuf, doneAction:2);   // soundfile
+    sig = PlayBuf.ar(~sndbuf.numChannels, ~sndbuf, BufRateScale.kr(~sndbuf), doneAction:2);   // soundfile
 
     // ------------------------------------------------------------
     // transform
@@ -159,7 +159,7 @@
 
     // ------------------------------------------------------------
     // test sig
-    sig = PlayBuf.ar(~sndbuf.numChannels, ~sndbuf, doneAction:2);   // soundfile
+    sig = PlayBuf.ar(~sndbuf.numChannels, ~sndbuf, BufRateScale.kr(~sndbuf), doneAction:2);   // soundfile
 
     // ------------------------------------------------------------
     // transform
@@ -273,7 +273,7 @@
     var freqs = [50.0, 7000.0], gains = [-24, 0], rtimes = [0.1, 2.0];
     var frequencies, amplitudes, ringTimes;
     var numModes = 20;
-    
+
     var density = 20;                  // grain/klank density
 
     var rttFreq = 10 * density;
@@ -367,7 +367,7 @@
 ~encoder
 ~encoder.kind
 ~encoder.numChannels
-~encoder.dirChannels * 180/pi
+~encoder.dirChannels.raddeg
 
 
 // read a whole sound into memory
@@ -403,7 +403,7 @@
 
     // ------------------------------------------------------------
     // test sig
-    sig = PlayBuf.ar(~sndbuf.numChannels, ~sndbuf, doneAction:2);   // soundfile
+    sig = PlayBuf.ar(~sndbuf.numChannels, ~sndbuf, BufRateScale.kr(~sndbuf), doneAction:2);   // soundfile
     sig = 0.5 * sig.sum; // to mono
 
 
@@ -445,7 +445,7 @@
 
 // define encoder matricies, for each cardinal point
 (
-~encoder = [ 
+~encoder = [
     FoaEncoderMatrix.newDirection,
     FoaEncoderMatrix.newDirection(pi/2),
     FoaEncoderMatrix.newDirection(pi),
@@ -493,7 +493,7 @@
     // ------------------------------------------------------------
     // encode
     sig = Mix.fill(sig.numChannels, { arg i;  FoaEncode.ar(sig.at(i), ~encoder.at(i)) });
-    
+
 
     // ------------------------------------------------------------
     // transform
@@ -519,7 +519,7 @@
 
 // define encoder matricies, for each cardinal point
 (
-~encoder = [ 
+~encoder = [
     FoaEncoderMatrix.newDirection,
     FoaEncoderMatrix.newDirection(pi/2),
     FoaEncoderMatrix.newDirection(pi),
@@ -566,7 +566,7 @@
     // ------------------------------------------------------------
     // encode
     sig = Mix.fill(sig.numChannels, { arg i;  FoaEncode.ar(sig.at(i), ~encoder.at(i)) });
-    
+
 
     // ------------------------------------------------------------
     // transform
@@ -592,7 +592,7 @@
 
 // define encoder matricies
 (
-~encoder = [ 
+~encoder = [
     FoaEncoderMatrix.newDirection(pi/6),
     FoaEncoderMatrix.newDirection(pi/12),
     FoaEncoderMatrix.newDirection(pi.neg/12),
@@ -638,7 +638,7 @@
     // ------------------------------------------------------------
     // encode
     sig = Mix.fill(sig.numChannels, { arg i;  FoaEncode.ar(sig.at(i), ~encoder.at(i)) });
-    
+
 
     // ------------------------------------------------------------
     // transform
@@ -692,7 +692,7 @@
 
     // ------------------------------------------------------------
     // test sig
-    sig = PlayBuf.ar(~sndbuf.numChannels, ~sndbuf, doneAction:2);   // soundfile
+    sig = PlayBuf.ar(~sndbuf.numChannels, ~sndbuf, BufRateScale.kr(~sndbuf), doneAction:2);   // soundfile
 
 
     // ------------------------------------------------------------

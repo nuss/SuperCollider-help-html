@@ -129,7 +129,7 @@ s.waitForBoot({
         s.sync(cond);
         SynthDef(\kernelDecode, {arg buffer;
             var out, src;
-            src = PlayBuf.ar(4, buffer);
+            src = PlayBuf.ar(4, buffer, BufRateScale.kr(buffer));
             out = FoaDecode.ar(src, ~decoder);
             Out.ar(0, out);
         }).add;
@@ -154,7 +154,7 @@ s.waitForBoot({
         s.sync(cond);
         SynthDef(\kernelEncodeDecode, {arg buffer;
             var out, src, encode;
-            src = PlayBuf.ar(2, buffer);
+            src = PlayBuf.ar(2, buffer, BufRateScale.kr(buffer));
             encode = FoaEncode.ar(src, ~encoder);
             out = FoaDecode.ar(encode, ~decoder);
             Out.ar(0, out);
@@ -198,7 +198,7 @@ s.waitForBoot({
     s.sync(cond);
     SynthDef(\kernelEncodeDecode, {arg buffer;
         var out, src, encode;
-        src = PlayBuf.ar(2, buffer);
+        src = PlayBuf.ar(2, buffer, BufRateScale.kr(buffer));
         encode = FoaEncode.ar(src, ~encoder);
         out = FoaDecode.ar(encode, ~decoder);
         Out.ar(0, out);
@@ -246,7 +246,7 @@ s.waitForBoot({
     });
     sd = CtkSynthDef(\kernelEncodeDecode, {arg buffer;
         var out, src, encode;
-        src = PlayBuf.ar(2, buffer);
+        src = PlayBuf.ar(2, buffer, BufRateScale.kr(buffer));
         encode = FoaEncode.ar(src, encoder);
         out = FoaDecode.ar(encode, decoder);
         Out.ar(0, out);
@@ -262,4 +262,5 @@ s.waitForBoot({
     decoder.free;
 })
 )</pre>
-<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Guides/ATK-SynthDef-Examples.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Guides/ATK-SynthDef-Examples.schelp</a><br>link::Guides/ATK-SynthDef-Examples::<br>sc version: 3.8dev</div></div></body></html>
+
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Guides/ATK-SynthDef-Examples.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Guides/ATK-SynthDef-Examples.schelp</a><br>link::Guides/ATK-SynthDef-Examples::<br>sc version: 3.8dev</div></div></body></html>

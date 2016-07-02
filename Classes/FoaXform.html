@@ -66,13 +66,13 @@
 
 // define xformer matrix
 ~xformer = FoaXformerMatrix.newRotate           // no rotation --&gt; try this 1st
-~xformer = FoaXformerMatrix.newRotate(110/180 * pi.neg) // by -110deg   --&gt; try this 2nd
+~xformer = FoaXformerMatrix.newRotate(-110.degrad) // by -110deg   --&gt; try this 2nd
 
 
 // inspect
 ~encoder.kind
 ~encoder.numChannels
-~encoder.dirChannels * 180/pi
+~encoder.dirChannels.raddeg
 
 
 // read a whole sound into memory
@@ -92,7 +92,7 @@
 
     // ------------------------------------------------------------
     // test sig
-    sig = PlayBuf.ar(~sndbuf.numChannels, ~sndbuf, doneAction:2);   // soundfile
+    sig = PlayBuf.ar(~sndbuf.numChannels, ~sndbuf, BufRateScale.kr(~sndbuf), doneAction:2);   // soundfile
 
     // ------------------------------------------------------------
     // transform
@@ -126,7 +126,7 @@
 // inspect
 ~encoder.kind
 ~encoder.numChannels
-~encoder.dirChannels * 180/pi
+~encoder.dirChannels.raddeg
 
 
 // read a whole sound into memory
@@ -155,7 +155,7 @@
 
     // ------------------------------------------------------------
     // test sig
-    sig = PlayBuf.ar(~sndbuf.numChannels, ~sndbuf, doneAction:2);   // soundfile
+    sig = PlayBuf.ar(~sndbuf.numChannels, ~sndbuf, BufRateScale.kr(~sndbuf), doneAction:2);   // soundfile
 
     // ------------------------------------------------------------
     // delay, lp and gain
@@ -198,7 +198,7 @@
 // inspect
 ~encoder.kind
 ~encoder.numChannels
-~encoder.dirChannels * 180/pi
+~encoder.dirChannels.raddeg
 
 
 // read a whole sound into memory
@@ -217,7 +217,7 @@
 
     // ------------------------------------------------------------
     // test sig
-    sig = PlayBuf.ar(~sndbuf.numChannels, ~sndbuf, doneAction:2);   // soundfile
+    sig = PlayBuf.ar(~sndbuf.numChannels, ~sndbuf, BufRateScale.kr(~sndbuf), doneAction:2);   // soundfile
 
     // ------------------------------------------------------------
     // transform
@@ -236,4 +236,5 @@
 // ------------------------------------------------------------</pre>
 <div class='note'><span class='notelabel'>NOTE:</span> <strong>Soundfile Credits</strong><ul>
 <li>J. Leonard, "The Orfeo Trio &amp; TetraMic," Sound of Space: ambisonic surround sound. [Online]. Available: <a href="http://soundofspace.com/ambisonic_files/41">http://soundofspace.com/ambisonic_files/41</a> [Accessed: 03-Nov-2011].</ul>
-</div><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Classes/FoaXform.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Classes/FoaXform.schelp</a><br>link::Classes/FoaXform::<br>sc version: 3.8dev</div></div></body></html>
+</div>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Classes/FoaXform.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Classes/FoaXform.schelp</a><br>link::Classes/FoaXform::<br>sc version: 3.8dev</div></div></body></html>

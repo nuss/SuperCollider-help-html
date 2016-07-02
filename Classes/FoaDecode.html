@@ -82,7 +82,7 @@
 
 ~decoder.kind
 ~decoder.numChannels
-~decoder.dirChannels * 180/pi
+~decoder.dirChannels.raddeg
 
 (
 {
@@ -103,7 +103,7 @@
     //          hard right     = back
     azim = MouseX.kr(pi, -pi);
 
-    
+
     // ------------------------------------------------------------
     // test sig
     sig = PinkNoise.ar;             // mono pink noise
@@ -150,7 +150,7 @@
 
 ~decoder.kind
 ~decoder.numChannels
-~decoder.dirChannels * 180/pi
+~decoder.dirChannels.raddeg
 
 (
 {
@@ -171,7 +171,7 @@
     //          hard right     = back
     azim = MouseX.kr(pi, -pi);
 
-    
+
     // ------------------------------------------------------------
     // test sig
     sig = PinkNoise.ar;             // mono pink noise
@@ -200,7 +200,7 @@
 <h3><a class='anchor' name='Synthetic binaural decoder'>Synthetic binaural decoder</a></h3>
 
 <p>The Ambisonic Tookit provides a synthetic spherical head model HRTF decoder.<a class='footnote anchor' name='footnote_org_2' href='#footnote_2'><sup>2</sup></a>  Ten subjects with varying head sizes are available. Audition to find one that works best for you.
-<p>Additionally, HRTF decoders computed from measured HRIRs are also available: <a href="./../Classes/FoaDecoderKernel.html#*newListen">FoaDecoderKernel: *newListen</a> &amp; <a href="./../Classes/FoaDecoderKernel.html#*newCIPIC">FoaDecoderKernel: *newCIPIC</a>. <div class='note'><span class='notelabel'>NOTE:</span> A kernel type decoder, see <a href="./../Classes/FoaDecoderKernel.html#*newSpherical">FoaDecoderKernel: *newSpherical</a> for further details.</div><div class='warning'><span class='warninglabel'>WARNING:</span> Kernel decoders require special care. Allow the kernel time to load before attempting to use. Additionally, the kernel buffer should be freed through the use of <a href="./../Classes/FoaDecoderKernel.html#-free">FoaDecoderKernel: -free</a> after use.</div><pre class='code prettyprint lang-sc'>// ------------------------------------------------------------
+<p>Additionally, HRTF decoders computed from measured HRIRs are also available: <a href="./../Classes/FoaDecoderKernel.html#*newListen">FoaDecoderKernel: *newListen</a> &amp; <a href="./../Classes/FoaDecoderKernel.html#*newCIPIC">FoaDecoderKernel: *newCIPIC</a>.<div class='note'><span class='notelabel'>NOTE:</span> A kernel type decoder, see <a href="./../Classes/FoaDecoderKernel.html#*newSpherical">FoaDecoderKernel: *newSpherical</a> for further details.</div><div class='warning'><span class='warninglabel'>WARNING:</span> Kernel decoders require special care. Allow the kernel time to load before attempting to use. Additionally, the kernel buffer should be freed through the use of <a href="./../Classes/FoaDecoderKernel.html#-free">FoaDecoderKernel: -free</a> after use.</div><pre class='code prettyprint lang-sc'>// ------------------------------------------------------------
 // Binaural (synthetic) decoder
 //
 // mono pink noise source
@@ -219,7 +219,7 @@
 
 ~decoder.kind
 ~decoder.numChannels
-~decoder.dirChannels * 180/pi
+~decoder.dirChannels.raddeg
 
 (
 {
@@ -240,7 +240,7 @@
     //          hard right     = back
     azim = MouseX.kr(pi, -pi);
 
-    
+
     // ------------------------------------------------------------
     // test sig
     sig = PinkNoise.ar;             // mono pink noise
@@ -287,7 +287,7 @@
 
 ~decoder.kind
 ~decoder.numChannels
-~decoder.dirChannels * 180/pi
+~decoder.dirChannels.raddeg
 
 (
 {
@@ -308,7 +308,7 @@
     //          hard right     = back
     azim = MouseX.kr(pi, -pi);
 
-    
+
     // ------------------------------------------------------------
     // test sig
     sig = PinkNoise.ar;             // mono pink noise
@@ -355,7 +355,7 @@
 
 ~decoder.kind
 ~decoder.numChannels
-~decoder.dirChannels * 180/pi
+~decoder.dirChannels.raddeg
 
 (
 {
@@ -491,7 +491,7 @@ funK = { arg k;
 <h3><a class='anchor' name='Psychoacoustically optimised quadraphonic decoder'>Psychoacoustically optimised quadraphonic decoder</a></h3>
 
 <p>The decoder presented here is an example of a dual-band ( <code class='code prettyprint lang-sc'>'dual'</code> ) psychoacoustically optmisied, near-field compensated decoder described by Gerzon.<a class='footnote anchor' name='footnote_org_4' href='#footnote_4'><sup>4</sup></a>  This sort of decoder is considered the ideal for first order Ambisonics, meeting all the criteria outlined by Gerzon to qualify as Ambisonic, <a class='footnote anchor' name='footnote_org_5' href='#footnote_5'><sup>5</sup></a>  and is the choice for critical studio listening.
-<p>Additionally, this decode is rendered as a 'narrow quadraphonic' layout, with loudspeaker angles at <code class='code prettyprint lang-sc'>[ 30.0, 150.0, -150.0, -30.0 ]</code>. For studio based work, this can be convenient, as the front pair is at the correct angle for two channel stereo monitoring. The narrow layout gives increased localisation and stabilised images at front and back, at the expense of reduced stability at the sides. 
+<p>Additionally, this decode is rendered as a 'narrow quadraphonic' layout, with loudspeaker angles at <code class='code prettyprint lang-sc'>[ 30.0, 150.0, -150.0, -30.0 ]</code>. For studio based work, this can be convenient, as the front pair is at the correct angle for two channel stereo monitoring. The narrow layout gives increased localisation and stabilised images at front and back, at the expense of reduced stability at the sides.
 <p>Near-field compensation, filtering for the near-field effects of loudspeaker placement, is made through the use of <a href="./../Classes/FoaNFC.html">FoaNFC</a>.<div class='note'><span class='notelabel'>NOTE:</span> A matrix type decoder, see <a href="./../Classes/FoaDecoderMatrix.html#*newQuad">FoaDecoderMatrix: *newQuad</a> and <a href="./../Classes/FoaNFC.html">FoaNFC</a> for further details.</div><pre class='code prettyprint lang-sc'>// ------------------------------------------------------------
 // narrow quad decoder, psychocacousticly optimised, &amp; with NFC
 //
@@ -512,7 +512,7 @@ funK = { arg k;
 
 ~decoder.kind
 ~decoder.numChannels
-~decoder.dirChannels * 180/pi
+~decoder.dirChannels.raddeg
 ~distance
 
 (
@@ -562,7 +562,7 @@ funK = { arg k;
 // ------------------------------------------------------------</pre>
 <h3><a class='anchor' name='ITU 5.0 decoder'>ITU 5.0 decoder</a></h3>
 
-<p>The Ambisonic Toolkit includes <a href="http://www.brucewiggins.co.uk/?page_id=78">Bruce Wiggins'</a> optimised ITU 5.0 decoders.<a class='footnote anchor' name='footnote_org_6' href='#footnote_6'><sup>6</sup></a>  <div class='note'><span class='notelabel'>NOTE:</span> A matrix type decoder, see <a href="./../Classes/FoaDecoderMatrix.html#*new5_0">FoaDecoderMatrix: *new5_0</a> for further details.</div><pre class='code prettyprint lang-sc'>// ------------------------------------------------------------
+<p>The Ambisonic Toolkit includes <a href="http://www.brucewiggins.co.uk/?page_id=78">Bruce Wiggins'</a> optimised ITU 5.0 decoders.<a class='footnote anchor' name='footnote_org_6' href='#footnote_6'><sup>6</sup></a> <div class='note'><span class='notelabel'>NOTE:</span> A matrix type decoder, see <a href="./../Classes/FoaDecoderMatrix.html#*new5_0">FoaDecoderMatrix: *new5_0</a> for further details.</div><pre class='code prettyprint lang-sc'>// ------------------------------------------------------------
 // 5.0 decoder
 //
 // mono pink noise source
@@ -580,7 +580,7 @@ funK = { arg k;
 
 ~decoder.kind
 ~decoder.numChannels
-~decoder.dirChannels * 180/pi
+~decoder.dirChannels.raddeg
 
 (
 {
@@ -603,7 +603,7 @@ funK = { arg k;
     //          hard right     = back
     azim = MouseX.kr(pi, -pi);
 
-    
+
     // ------------------------------------------------------------
     // test sig
     sig = PinkNoise.ar;             // mono pink noise
@@ -649,7 +649,7 @@ funK = { arg k;
 
 ~decoder.kind
 ~decoder.numChannels
-~decoder.dirChannels * 180/pi
+~decoder.dirChannels.raddeg
 
 (
 {
@@ -710,7 +710,7 @@ funK = { arg k;
 // define encoder / decoder matrices
 ~encoder = FoaEncoderMatrix.newOmni
 ~decoder = FoaDecoderMatrix.newDiametric(
-    pi/180 * [[30, 0], [-30, 0], [90, 35.3], [-90, 35.3]],
+    [[30, 0], [-30, 0], [90, 35.3], [-90, 35.3]].degrad,
     'dual'
 )
 ~distance = 1.2                 // louspeaker distance, for NFC, in meters
@@ -722,7 +722,7 @@ funK = { arg k;
 
 ~decoder.kind
 ~decoder.numChannels
-~decoder.dirChannels * 180/pi
+~decoder.dirChannels.raddeg
 ~distance
 
 (
