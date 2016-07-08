@@ -1,0 +1,94 @@
+<html><head><title>RMS</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#UGens>Analysis>Amplitude'>UGens>Analysis>Amplitude</a></div>
+<h1>RMS</h1>
+<div id='summary'>root mean square</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/DEINDUGens/RMS.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/DEINDUGens/RMS.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/Amplitude.html">Amplitude</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*kr'>kr</a>  <a href='#*ar'>ar</a> </li>
+<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>2016, Till Bovermann <a href="http://tai-studio.org">http://tai-studio.org</a>
+<p>calculates root mean square of 1st order low-pass filtered input for each sample.<pre class='code prettyprint lang-sc'>rms = sqrt(lpf1(x^2))</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*kr' href='./../Overviews/Methods.html#kr'>kr</a> (<span class='argstr'>in</span>, <span class='argstr'>lpFreq: 10</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>in</span>, <span class='argstr'>lpFreq: 10</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>in<td class='argumentdesc'>
+<p>the input signal<tr><td class='argumentname'>lpFreq<td class='argumentdesc'>
+<p>lowpass frequency</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+
+<p>Simple example<pre class='code prettyprint lang-sc'>// analyse a signal
+{
+    var sig, rms;
+    sig = SinOsc.ar(300, 0, MouseX.kr(0, 1)) * LFPulse.ar(1, 0.5);
+    rms = RMS.ar(sig, 10).poll;
+    [sig, rms]
+}.scope;</pre>
+
+<p>More complex usage example adapted from a Pd patch by Dario Sanfilippo<pre class='code prettyprint lang-sc'>// Feedback delay modulation
+
+(
+Ndef(\fb).addSpec(\modScale,  [-20, 20, \lin, 1]);
+Ndef(\fb).addSpec(\gain,      [0, 2, \lin, 0]);
+Ndef(\fb).addSpec(\amp,       [0, 2, \lin, 0]);
+Ndef(\fb).addSpec(\limit,     [0, 1, \lin, 0]);
+Ndef(\fb).addSpec(\lookahead, [0, 1, \lin, 0]);
+Ndef(\fb).addSpec(\lpf, [0.01, 4, \exp, 0]);
+
+Ndef(\fb, {
+    // var in = SoundIn.ar([0, 1]) * \gain.kr(0);
+    var in = SoundIn.ar(0) * \gain.kr(0);
+
+    var rms = RMS.ar(in, \lpf.kr(0.01));
+    // var rms = Amplitude.ar(in, 2, 2);
+    // var rms = EnvFollow.ar(in, 0.2);
+    var snd = DelayC.ar(in, 1, 0.5 + LeakDC.ar(rms, 0.9998) * \modScale.kr(0));
+
+    //////////////////
+    // AGC2.1 ( a limiter)
+    var rms500 = RMS.ar(snd, 500);
+    var rms1   = RMS.ar(snd, 1) * 2;
+    var analytics = max(rms500 - rms1, 0) + rms1;
+
+    snd = (DelayC.ar(snd, 0.02, \lookahead.kr(0) * 0.02) / max(analytics / \limit.kr(0), 1)).clip2(1, 1);
+
+
+    // the standard SC limiter
+    // snd = Limiter.ar(snd, \limit.kr(0), \lookahead.kr(0)).sum * \amp.kr(0)
+
+    snd * \amp.kr(0.1)
+
+})
+)
+
+ProxyMeter.addMixer(NdefMixer(s));</pre>
+<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/DEINDUGens/HelpSource/Classes/RMS.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/DEINDUGens/HelpSource/Classes/RMS.schelp</a><br>link::Classes/RMS::<br>sc version: 3.8dev</div></div></body></html>

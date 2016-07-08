@@ -52,39 +52,47 @@
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>Generates encoding kernels required by the Ambisonic Toolkit's first order encoder, <a href="./../Classes/FoaEncode.html">FoaEncode</a>.<div class='note'><span class='notelabel'>NOTE:</span> The ATK kernels are required for kernel encoding. Please see the instructions <a href="http://www.ambisonictoolkit.net/download/kernels/#ATK_Kernels">here</a> for installation.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newSuper' href='./../Overviews/Methods.html#newSuper'>newSuper</a> (<span class='argstr'>kernelSize</span>, <span class='argstr'>server</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newSuper' href='./../Overviews/Methods.html#newSuper'>newSuper</a> (<span class='argstr'>kernelSize</span>, <span class='argstr'>server</span>, <span class='argstr'>sampleRate</span>, <span class='argstr'>score</span>)</h3>
 <div class='method'>
 <p>Ambisonic Super Stereo encoder.<a class='footnote anchor' name='footnote_org_1' href='#footnote_1'><sup>1</sup></a> <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>kernelSize<td class='argumentdesc'>
 <p>256, 512, 1024, 2048, 4096, 8192<tr><td class='argumentname'>server<td class='argumentdesc'>
-<p><a href="./../Classes/Server.html">Server</a> on which to load kernel.</table><h4>Discussion:</h4>
+<p><a href="./../Classes/Server.html">Server</a> on which to load kernel.<tr><td class='argumentname'>sampleRate<td class='argumentdesc'>
+<p>The sample rate defaults to <code class='code prettyprint lang-sc'>nil</code> and is usually supplied by the running server. In NRT, you can specify a sampleRate to avoid booting a server.<tr><td class='argumentname'>score<td class='argumentdesc'>
+<p>Default is <code class='code prettyprint lang-sc'>nil</code> for most real time usages. When using NRT, you can supply a score (a <a href="./../Classes/Score.html">Score</a> or a <a href="./../Classes/CtkScore">CtkScore</a>) onto which the kernels will be added, which lets you bypass booting a server.</table><h4>Discussion:</h4>
 
-<p>The Super Stereo encoding technique is the classic method for encoding stereophonic signals into B-format.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newUHJ' href='./../Overviews/Methods.html#newUHJ'>newUHJ</a> (<span class='argstr'>kernelSize</span>, <span class='argstr'>server</span>)</h3>
+<p>The Super Stereo encoding technique is the classic method for encoding stereophonic signals into B-format.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newUHJ' href='./../Overviews/Methods.html#newUHJ'>newUHJ</a> (<span class='argstr'>kernelSize</span>, <span class='argstr'>server</span>, <span class='argstr'>sampleRate</span>, <span class='argstr'>score</span>)</h3>
 <div class='method'>
 <p>Ambisonic UHJ stereo encoder.<a class='footnote anchor' name='footnote_org_2' href='#footnote_2'><sup>2</sup></a> <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>kernelSize<td class='argumentdesc'>
 <p>256, 512, 1024, 2048, 4096, 8192<tr><td class='argumentname'>server<td class='argumentdesc'>
-<p><a href="./../Classes/Server.html">Server</a> on which to load kernel.</table><h4>Discussion:</h4>
+<p><a href="./../Classes/Server.html">Server</a> on which to load kernel.<tr><td class='argumentname'>sampleRate<td class='argumentdesc'>
+<p>The sample rate defaults to <code class='code prettyprint lang-sc'>nil</code> and is usually supplied by the running server. In NRT, you can specify a sampleRate to avoid booting a server.<tr><td class='argumentname'>score<td class='argumentdesc'>
+<p>Default is <code class='code prettyprint lang-sc'>nil</code> for most real time usages. When using NRT, you can supply a score (a <a href="./../Classes/Score.html">Score</a> or a <a href="./../Classes/CtkScore">CtkScore</a>) onto which the kernels will be added, which lets you bypass booting a server.</table><h4>Discussion:</h4>
 
-<p>The UHJ encoder offers access to numerous published recordings<a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a>  for periphonic (2D) audition.<div class='note'><span class='notelabel'>NOTE:</span> For optimal performance, use a dual-band decoder ( <code class='code prettyprint lang-sc'>'dual'</code> ) for monitoring. See discussion <a href="./../Classes/FoaDecoderMatrix.html#decoder_k">here</a>.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newSpread' href='./../Overviews/Methods.html#newSpread'>newSpread</a> (<span class='argstr'>subjectID: 6</span>, <span class='argstr'>kernelSize: 2048</span>, <span class='argstr'>server</span>)</h3>
+<p>The UHJ encoder offers access to numerous published recordings<a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a>  for periphonic (2D) audition.<div class='note'><span class='notelabel'>NOTE:</span> For optimal performance, use a dual-band decoder ( <code class='code prettyprint lang-sc'>'dual'</code> ) for monitoring. See discussion <a href="./../Classes/FoaDecoderMatrix.html#decoder_k">here</a>.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newSpread' href='./../Overviews/Methods.html#newSpread'>newSpread</a> (<span class='argstr'>subjectID: 6</span>, <span class='argstr'>kernelSize: 2048</span>, <span class='argstr'>server</span>, <span class='argstr'>sampleRate</span>, <span class='argstr'>score</span>)</h3>
 <div class='method'>
 <p>Frequency spreading mono encoder.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>subjectID<td class='argumentdesc'>
 <p>0 to 12. Specifies the number of bands per octave of the frequency spreader. 0 returns 1 band per octave, etc.<tr><td class='argumentname'>kernelSize<td class='argumentdesc'>
 <p>512, 1024, 2048, 4096, 8192, 16384<tr><td class='argumentname'>server<td class='argumentdesc'>
-<p><a href="./../Classes/Server.html">Server</a> on which to load kernel.</table><h4>Discussion:</h4>
+<p><a href="./../Classes/Server.html">Server</a> on which to load kernel.<tr><td class='argumentname'>sampleRate<td class='argumentdesc'>
+<p>The sample rate defaults to <code class='code prettyprint lang-sc'>nil</code> and is usually supplied by the running server. In NRT, you can specify a sampleRate to avoid booting a server.<tr><td class='argumentname'>score<td class='argumentdesc'>
+<p>Default is <code class='code prettyprint lang-sc'>nil</code> for most real time usages. When using NRT, you can supply a score (a <a href="./../Classes/Score.html">Score</a> or a <a href="./../Classes/CtkScore">CtkScore</a>) onto which the kernels will be added, which lets you bypass booting a server.</table><h4>Discussion:</h4>
 
-<p>The frequency spreading technique encodes a monophonic signal into B-format by smoothly rotating the signal across the soundfield sphere, by frequency.<div class='note'><span class='notelabel'>NOTE:</span> As the number of bands per octaves increases, more time domain artefacts are introduced. This is usually heard as smearing in time.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newDiffuse' href='./../Overviews/Methods.html#newDiffuse'>newDiffuse</a> (<span class='argstr'>subjectID: 3</span>, <span class='argstr'>kernelSize: 2048</span>, <span class='argstr'>server</span>)</h3>
+<p>The frequency spreading technique encodes a monophonic signal into B-format by smoothly rotating the signal across the soundfield sphere, by frequency.<div class='note'><span class='notelabel'>NOTE:</span> As the number of bands per octaves increases, more time domain artefacts are introduced. This is usually heard as smearing in time.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newDiffuse' href='./../Overviews/Methods.html#newDiffuse'>newDiffuse</a> (<span class='argstr'>subjectID: 3</span>, <span class='argstr'>kernelSize: 2048</span>, <span class='argstr'>server</span>, <span class='argstr'>sampleRate</span>, <span class='argstr'>score</span>)</h3>
 <div class='method'>
 <p>Frequency diffusion mono encoder.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>subjectID<td class='argumentdesc'>
 <p>0 to 5. Specifies the amount of phase dispersion of the frequency diffuser. 0 is low, 5 is high.<tr><td class='argumentname'>kernelSize<td class='argumentdesc'>
 <p>512, 1024, 2048, 4096, 8192, 16384<tr><td class='argumentname'>server<td class='argumentdesc'>
-<p><a href="./../Classes/Server.html">Server</a> on which to load kernel.</table><h4>Discussion:</h4>
+<p><a href="./../Classes/Server.html">Server</a> on which to load kernel.<tr><td class='argumentname'>sampleRate<td class='argumentdesc'>
+<p>The sample rate defaults to <code class='code prettyprint lang-sc'>nil</code> and is usually supplied by the running server. In NRT, you can specify a sampleRate to avoid booting a server.<tr><td class='argumentname'>score<td class='argumentdesc'>
+<p>Default is <code class='code prettyprint lang-sc'>nil</code> for most real time usages. When using NRT, you can supply a score (a <a href="./../Classes/Score.html">Score</a> or a <a href="./../Classes/CtkScore">CtkScore</a>) onto which the kernels will be added, which lets you bypass booting a server.</table><h4>Discussion:</h4>
 
 <p>The frequency diffusion technique encodes a monophonic signal into B-format by randomising the phase of the signal across the soundfield sphere, by frequency.<div class='note'><span class='notelabel'>NOTE:</span> As the diffusion increases, more time domain artefacts are introduced. This is usually heard as smearing in time.</div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>

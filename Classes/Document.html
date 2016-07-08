@@ -16,16 +16,15 @@
 <div id='label'>SuperCollider CLASSES</div>
 <div id='categories'><a href='./../Browse.html#Frontends'>Frontends</a></div>
 <h1>Document</h1>
-<div id='summary'>An abstract class for editor-specific text document editing classes</div>
+<div id='summary'>Editor-specific text document editing</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Location: <b>NOT INSTALLED!</b></div>
-<div id='related'>See also: <a href="./../Classes/CocoaDocument.html">CocoaDocument</a>, <a href="./../Classes/EmacsDocument">EmacsDocument</a>, <a href="./../Classes/ScelDocument">ScelDocument</a></div>
+<div id='related'>See also: <a href="./../Classes/EmacsDocument">EmacsDocument</a>, <a href="./../Classes/ScelDocument">ScelDocument</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
-<ul class='toc'><li class='toc2'><a href='#Some Important Issues Regarding Document'>Some Important Issues Regarding Document</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Setting the Environment'>Setting the Environment</a></li>
+<ul class='toc'><li class='toc2'><a href='#Setting the Environment'>Setting the Environment</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
 <li class='toc3'><a href='#*open'>open</a> </li>
@@ -34,7 +33,6 @@
 <li class='toc3'><a href='#*closeAll'>closeAll</a> </li>
 <li class='toc3'><a href='#*closeAllUnedited'>closeAllUnedited</a> </li>
 <li class='toc3'><a href='#*current'>current</a> </li>
-<li class='toc3'><a href='#*listener'>listener</a> </li>
 <li class='toc3'><a href='#*allDocuments'>allDocuments</a> </li>
 <li class='toc3'><a href='#*globalKeyDownAction'>globalKeyDownAction</a> </li>
 <li class='toc3'><a href='#*globalKeyUpAction'>globalKeyUpAction</a> </li>
@@ -48,25 +46,21 @@
 </ul><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#General Document Properties'>General Document Properties</a></li>
-<ul class='toc'><li class='toc3'><a href='#-bounds'>bounds</a> </li>
-<li class='toc3'><a href='#-path'>path</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-path'>path</a> </li>
 <li class='toc3'><a href='#-dir'>dir</a> </li>
 <li class='toc3'><a href='#-=='>==</a> </li>
 <li class='toc3'><a href='#-editable'>editable</a> </li>
 <li class='toc3'><a href='#-name'>name</a> </li>
 <li class='toc3'><a href='#-title'>title</a> </li>
-<li class='toc3'><a href='#-alwaysOnTop'>alwaysOnTop</a> </li>
 <li class='toc3'><a href='#-promptToSave'>promptToSave</a> </li>
 <li class='toc3'><a href='#-closed'>closed</a> </li>
 <li class='toc3'><a href='#-isEdited'>isEdited</a> </li>
 <li class='toc3'><a href='#-isFront'>isFront</a> </li>
-<li class='toc3'><a href='#-isListener'>isListener</a> </li>
 <li class='toc3'><a href='#-didBecomeKey'>didBecomeKey</a> </li>
 <li class='toc3'><a href='#-didResignKey'>didResignKey</a> </li>
 </ul><li class='toc2'><a href='#Controlling Document'>Controlling Document</a></li>
 <ul class='toc'><li class='toc3'><a href='#-close'>close</a> </li>
 <li class='toc3'><a href='#-front'>front</a> </li>
-<li class='toc3'><a href='#-unfocusedFront'>unfocusedFront</a> </li>
 <li class='toc3'><a href='#-onClose'>onClose</a> </li>
 <li class='toc3'><a href='#-endFrontAction'>endFrontAction</a> </li>
 <li class='toc3'><a href='#-toFrontAction'>toFrontAction</a> </li>
@@ -83,16 +77,15 @@
 <li class='toc3'><a href='#-currentLine'>currentLine</a> </li>
 <li class='toc3'><a href='#-getSelectedLines'>getSelectedLines</a> </li>
 <li class='toc3'><a href='#-string'>string</a> </li>
-<li class='toc3'><a href='#-font'>font</a> </li>
-<li class='toc3'><a href='#-underlineSelection'>underlineSelection</a> </li>
 </ul><li class='toc2'><a href='#Subclassing and Internal Methods'>Subclassing and Internal Methods</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>The Document class represents a text document within the context of your text editing environment. You can use the class to programmatically create, modify, and query these documents. While it is an abstract class, you still use it to create a <code class='code prettyprint lang-sc'>new</code> Document. It simply passes on <code class='code prettyprint lang-sc'>new</code> to the appropriate document implementation, e.g. <a href="./../Classes/CocoaDocument.html">CocoaDocument</a>.<h3><a class='anchor' name='Some Important Issues Regarding Document'>Some Important Issues Regarding Document</a></h3>
-
-<p>Different text-editing environments can be used with SuperCollider. Therefore Document is an abstract class, meaning it doesn't provide all the functionality itself, but relies on subclasses to complete the functionality. Calls to <code class='code prettyprint lang-sc'>Document.new</code> or <code class='code prettyprint lang-sc'>Document.open</code> are actually passed down to the relevant class for the editor you're using, such as <a href="./../Classes/CocoaDocument.html">CocoaDocument</a> (for most Mac users) or <a href="./../Classes/ScelDocument">ScelDocument</a> (containing an <a href="./../Classes/EmacsDocument">EmacsDocument</a>).<h3><a class='anchor' name='Setting the Environment'>Setting the Environment</a></h3>
+<p>The Document class represents a text document within the context of your text editing environment. You can use the class to programmatically create, modify, and query these documents.
+<p>Document used to be an abstract class, meaning it didn't provide all the functionality itself, but instead relied on subclasses to complete the functionality. One such subclass was CocoaDocument. Although CocoaDocument was available only to OS X and had an ad hoc interface, it possessed many additional features like code animation and rich text.
+<p>In SuperCollider 3.6, Document changed a bit and now the "abstract class" descriptor is only partially true. The SuperCollider IDE provides its own version of the Document class. The Emacs editor still supplies <a href="./../Classes/ScelDocument">ScelDocument</a> (which links to <a href="./../Classes/EmacsDocument">EmacsDocument</a>) as a subclass of Document. As an unfortunate byproduct of the history of Document, there are inconsistencies in the APIs of SCIDE's Document and Emacs' ScelDocument. This help file describes that of SCIDE.
+<p>Future versions of SuperCollider will aim to fix these API inconsistencies and restore the functionality of CocoaDocument.<h3><a class='anchor' name='Setting the Environment'>Setting the Environment</a></h3>
 
 <p>By default <code class='code prettyprint lang-sc'>envir</code> it is set to the current <a href="./../Classes/Environment.html">Environment</a>. However, you can make it use its own <a href="./../Classes/Environment.html">Environment</a> also. Thus, e.g., if you were to set the <a href="./../Classes/Environment.html">Environment</a> variable <code class='code prettyprint lang-sc'>~myVar = 12</code> in the current <a href="./../Classes/Environment.html">Environment</a>, you can create a new Document window in which that <a href="./../Classes/Environment.html">Environment</a> variable is not set.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> </h3>
@@ -100,8 +93,7 @@
 <table class='arguments'>
 <tr><td class='argumentname'>title<td class='argumentdesc'>
 <p>An instance of <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a>.<tr><td class='argumentname'>string<td class='argumentdesc'>
-<p>An instance of <a href="./../Classes/String.html">String</a>. The contents of the document.<tr><td class='argumentname'>makeListener<td class='argumentdesc'>
-<p>Makes this document the listener, i.e. the place where SC-lang posts messages.<tr><td class='argumentname'>envir<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/String.html">String</a>. The contents of the document.<tr><td class='argumentname'>envir<td class='argumentdesc'>
 <p>An instance of <a href="./../Classes/Environment.html">Environment</a>. The <a href="./../Classes/Environment.html">Environment</a> to be used by the interpreter of the document window. By default, it is set to the current <a href="./../Classes/Environment.html">Environment</a>.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>Document.new("this is the title", "this is the text");</pre>
 </div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*open' href='./../Overviews/Methods.html#open'>open</a> </h3>
@@ -136,25 +128,23 @@
 <tr><td class='argumentname'>value<td class='argumentdesc'>
 <p>A Document.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>Document.current.name.postln; // Prints "Document.html"</pre>
-</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*listener' href='./../Overviews/Methods.html#listener'>listener</a> </h3>
-<div class='method'>
-<p>Returns the current Document which is the listener, i.e. the Document where interpreter messages are posted.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allDocuments' href='./../Overviews/Methods.html#allDocuments'>allDocuments</a> </h3>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allDocuments' href='./../Overviews/Methods.html#allDocuments'>allDocuments</a> </h3>
 <div class='method'>
 <p>Returns all documents.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*globalKeyDownAction' href='./../Overviews/Methods.html#globalKeyDownAction'>globalKeyDownAction</a> </h3>
 <div class='method'>
 <p>Get/set A global action to be performed when a key is pressed.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>value<td class='argumentdesc'>
+<tr><td class='argumentname'>action<td class='argumentdesc'>
 <p>An instance of <a href="./../Classes/Function.html">Function</a> or <a href="./../Classes/FunctionList.html">FunctionList</a>.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*globalKeyUpAction' href='./../Overviews/Methods.html#globalKeyUpAction'>globalKeyUpAction</a> </h3>
 <div class='method'>
 <p>Get/set A global action to be performed when a key is released.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>value<td class='argumentdesc'>
+<tr><td class='argumentname'>action<td class='argumentdesc'>
 <p>An instance of <a href="./../Classes/Function.html">Function</a> or <a href="./../Classes/FunctionList.html">FunctionList</a>.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initAction' href='./../Overviews/Methods.html#initAction'>initAction</a> </h3>
 <div class='method'>
 <p>Get/set A an action to be performed up opening or creating a Document.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>value<td class='argumentdesc'>
+<tr><td class='argumentname'>action<td class='argumentdesc'>
 <p>An instance of <a href="./../Classes/Function.html">Function</a> or <a href="./../Classes/FunctionList.html">FunctionList</a>.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*autoRun' href='./../Overviews/Methods.html#autoRun'>autoRun</a> </h3>
 <div class='method'>
 <p>If a document begins with the <a href="./../Classes/String.html">String</a>, <code class='code prettyprint lang-sc'>"/*RUN*/"</code>, then the code following it int he file will be executed on opening the file, if autorun is set to true.<h4>Arguments:</h4>
@@ -165,7 +155,7 @@
 <p>The editor implementation specific class which will handle Documents.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>value<td class='argumentdesc'>
-<p>A class for implementing Document, e.g. <a href="./../Classes/CocoaDocument.html">CocoaDocument</a>.</table></div><h3><a class='anchor' name='Path Utilities'>Path Utilities</a></h3>
+<p>A class for implementing Document.</table></div><h3><a class='anchor' name='Path Utilities'>Path Utilities</a></h3>
 
 <p>Utilities and settings for dealing with documents such as supercollider code files. By default the document directory is SuperCollider's application directory.<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*dir' href='./../Overviews/Methods.html#dir'>dir</a> </h3>
 <div class='method'>
@@ -199,12 +189,7 @@ Document.standardizePath("Patches/newfoots/fastRuckAndTuck")
 <p>The file system path to the directory. An instance of <a href="./../Classes/String.html">String</a>.</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='General Document Properties'>General Document Properties</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bounds' href='./../Overviews/Methods.html#bounds'>bounds</a> </h3>
-<div class='method'>
-<p>Get/set the bounds of the document.<h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>argBounds<td class='argumentdesc'>
-<p>An instance of <a href="./../Classes/Rect.html">Rect</a>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-path' href='./../Overviews/Methods.html#path'>path</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-path' href='./../Overviews/Methods.html#path'>path</a> </h3>
 <div class='method'>
 <p>Get / set the the Document's path.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -219,14 +204,14 @@ Document.standardizePath("Patches/newfoots/fastRuckAndTuck")
 <div class='method'>
 <p>A binary operator.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>doc<td class='argumentdesc'>
+<tr><td class='argumentname'>that<td class='argumentdesc'>
 <p>An instance of Document.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>Document.current == Document.listener; // presumably returns false</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-editable' href='./../Overviews/Methods.html#editable'>editable</a> </h3>
 <div class='method'>
 <p>Get / set the the document is editable.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>boolean<td class='argumentdesc'>
+<tr><td class='argumentname'>bool<td class='argumentdesc'>
 <p>An instance of <a href="./../Classes/Boolean.html">Boolean</a>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a> </h3>
 <div class='method'>
 <p>Get / set the title (same as <a href="./../Classes/Document.html#title">Document: title</a>).<h4>Arguments:</h4>
@@ -238,13 +223,8 @@ Document.standardizePath("Patches/newfoots/fastRuckAndTuck")
 <div class='method'>
 <p>Get / set the title (same as <a href="./../Classes/Document.html#name">Document: name</a>).<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>argName<td class='argumentdesc'>
-<p>An instance of <a href="./../Classes/String.html">String</a>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-alwaysOnTop' href='./../Overviews/Methods.html#alwaysOnTop'>alwaysOnTop</a> </h3>
-<div class='method'>
-<p>Get/set whether a document is always on top.<h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>boolean<td class='argumentdesc'>
-<p>An instance of <a href="./../Classes/Boolean.html">Boolean</a>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-promptToSave' href='./../Overviews/Methods.html#promptToSave'>promptToSave</a> </h3>
+<tr><td class='argumentname'>newTitle<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/String.html">String</a>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-promptToSave' href='./../Overviews/Methods.html#promptToSave'>promptToSave</a> </h3>
 <div class='method'>
 <p>Get/set whether a document is prompts to save if it has been changed. Use this with caution.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -256,9 +236,7 @@ Document.standardizePath("Patches/newfoots/fastRuckAndTuck")
 <p>Returns <code class='code prettyprint lang-sc'>true</code> if the document has been edited.<pre class='code prettyprint lang-sc'>Document.current.isEdited.postln;</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isFront' href='./../Overviews/Methods.html#isFront'>isFront</a> </h3>
 <div class='method'>
-<p>Returns <code class='code prettyprint lang-sc'>true</code> if the document is in front.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isListener' href='./../Overviews/Methods.html#isListener'>isListener</a> </h3>
-<div class='method'>
-<p>Returns if the document is the listener.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-didBecomeKey' href='./../Overviews/Methods.html#didBecomeKey'>didBecomeKey</a> </h3>
+<p>Returns <code class='code prettyprint lang-sc'>true</code> if the document is in front.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-didBecomeKey' href='./../Overviews/Methods.html#didBecomeKey'>didBecomeKey</a> </h3>
 <div class='method'>
 <p>Saves the current <a href="./../Classes/Environment.html">Environment</a>, makes the document current, and performs its <a href="./../Classes/Document.html#toFrontAction">Document: toFrontAction</a>.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-didResignKey' href='./../Overviews/Methods.html#didResignKey'>didResignKey</a> </h3>
 <div class='method'>
@@ -279,9 +257,6 @@ Task({
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-front' href='./../Overviews/Methods.html#front'>front</a> </h3>
 <div class='method'>
 <p>Bring a document to the front.<pre class='code prettyprint lang-sc'>Document.listener.front;</pre>
-</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-unfocusedFront' href='./../Overviews/Methods.html#unfocusedFront'>unfocusedFront</a> </h3>
-<div class='method'>
-<p>Bring a document to the front without focusing it.<pre class='code prettyprint lang-sc'>Document.listener.unfocusedFront;</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-onClose' href='./../Overviews/Methods.html#onClose'>onClose</a> </h3>
 <div class='method'>
 <p>Get/set the action to be performed on closing the document.<h4>Arguments:</h4>
@@ -299,16 +274,15 @@ Task({
 <tr><td class='argumentname'>value<td class='argumentdesc'>
 <p>An instance of <a href="./../Classes/Function.html">Function</a> or <a href="./../Classes/FunctionList.html">FunctionList</a>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-mouseDownAction' href='./../Overviews/Methods.html#mouseDownAction'>mouseDownAction</a> </h3>
 <div class='method'>
-<p>Get/set the action to be performed on <a href="./../Classes/Document.html#mouseDown">Document: mouseDown</a>.<div class='note'><span class='notelabel'>NOTE:</span> The Mac OSX built-in editor does not supports this feature. A mouseDownAction that you supply will be ignored.</div>
-<p><h4>Arguments:</h4>
+<p>Get/set the action to be performed on <a href="./../Classes/Document.html#mouseDown">Document: mouseDown</a>.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>value<td class='argumentdesc'>
-<p>An instance of <a href="./../Classes/Function.html">Function</a> or <a href="./../Classes/FunctionList.html">FunctionList</a>. The arguments passed to the function are: <code class='code prettyprint lang-sc'>x</code>, <code class='code prettyprint lang-sc'>y</code>, <code class='code prettyprint lang-sc'>modifiers</code>, <code class='code prettyprint lang-sc'>buttonNumber</code>, <code class='code prettyprint lang-sc'>clickCount</code>, <code class='code prettyprint lang-sc'>clickPos</code>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-mouseUpAction' href='./../Overviews/Methods.html#mouseUpAction'>mouseUpAction</a> </h3>
+<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/Function.html">Function</a> or <a href="./../Classes/FunctionList.html">FunctionList</a>. The arguments passed to the function are: <code class='code prettyprint lang-sc'>document</code>, <code class='code prettyprint lang-sc'>x</code>, <code class='code prettyprint lang-sc'>y</code>, <code class='code prettyprint lang-sc'>modifiers</code>, <code class='code prettyprint lang-sc'>buttonNumber</code>, <code class='code prettyprint lang-sc'>clickCount</code>, <code class='code prettyprint lang-sc'>clickPos</code>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-mouseUpAction' href='./../Overviews/Methods.html#mouseUpAction'>mouseUpAction</a> </h3>
 <div class='method'>
 <p>Get/set the action to be performed on <a href="./../Classes/Document.html#mouseUp">Document: mouseUp</a>.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>value<td class='argumentdesc'>
-<p>An instance of <a href="./../Classes/Function.html">Function</a> or <a href="./../Classes/FunctionList.html">FunctionList</a>. The arguments passed to the function are: <code class='code prettyprint lang-sc'>x</code>, <code class='code prettyprint lang-sc'>y</code>, <code class='code prettyprint lang-sc'>modifiers</code>, <code class='code prettyprint lang-sc'>buttonNumber</code>, <code class='code prettyprint lang-sc'>clickCount</code>, <code class='code prettyprint lang-sc'>clickPos</code>.</table><h4>Discussion:</h4>
+<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/Function.html">Function</a> or <a href="./../Classes/FunctionList.html">FunctionList</a>. The arguments passed to the function are: <code class='code prettyprint lang-sc'>document</code>, <code class='code prettyprint lang-sc'>x</code>, <code class='code prettyprint lang-sc'>y</code>, <code class='code prettyprint lang-sc'>modifiers</code>, <code class='code prettyprint lang-sc'>buttonNumber</code>, <code class='code prettyprint lang-sc'>clickCount</code>, <code class='code prettyprint lang-sc'>clickPos</code>.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>(
 
 //add a mouse action to this document:
@@ -333,8 +307,8 @@ s.waitForBoot({
 <div class='method'>
 <p>Get/set the action to be performed on <a href="./../Classes/Document.html#keyDown">Document: keyDown</a>.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>value<td class='argumentdesc'>
-<p>An instance of <a href="./../Classes/Function.html">Function</a> or <a href="./../Classes/FunctionList.html">FunctionList</a>. The arguments passed to the function are: <code class='code prettyprint lang-sc'>char</code>, <code class='code prettyprint lang-sc'>modifiers</code>, <code class='code prettyprint lang-sc'>unicode</code>, <code class='code prettyprint lang-sc'>keycode</code>. See <a href="./../Classes/View.html#Key actions">View: Key actions</a> for details on these arguments.</table><h4>Discussion:</h4>
+<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/Function.html">Function</a> or <a href="./../Classes/FunctionList.html">FunctionList</a>. The arguments passed to the function are: <code class='code prettyprint lang-sc'>document</code>, <code class='code prettyprint lang-sc'>char</code>, <code class='code prettyprint lang-sc'>modifiers</code>, <code class='code prettyprint lang-sc'>unicode</code>, <code class='code prettyprint lang-sc'>keycode</code>. See <a href="./../Classes/View.html#Key actions">View: Key actions</a> for details on these arguments.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>Document.current.keyDownAction = { arg ...args; args.postln };
 // now type some text
 Document.current.keyDownAction = nil;</pre>
@@ -342,8 +316,8 @@ Document.current.keyDownAction = nil;</pre>
 <div class='method'>
 <p>Get/set the action to be performed on <a href="./../Classes/Document.html#keyUp">Document: keyUp</a>.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>value<td class='argumentdesc'>
-<p>An instance of <a href="./../Classes/Function.html">Function</a> or <a href="./../Classes/FunctionList.html">FunctionList</a>. The arguments passed to the function are: <code class='code prettyprint lang-sc'>char</code>, <code class='code prettyprint lang-sc'>modifiers</code>, <code class='code prettyprint lang-sc'>unicode</code>, <code class='code prettyprint lang-sc'>keycode</code>. See <a href="./../Classes/View.html#Key actions">View: Key actions</a> for details on these arguments.</table><h4>Discussion:</h4>
+<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/Function.html">Function</a> or <a href="./../Classes/FunctionList.html">FunctionList</a>. The arguments passed to the function are: <code class='code prettyprint lang-sc'>document</code>, <code class='code prettyprint lang-sc'>char</code>, <code class='code prettyprint lang-sc'>modifiers</code>, <code class='code prettyprint lang-sc'>unicode</code>, <code class='code prettyprint lang-sc'>keycode</code>. See <a href="./../Classes/View.html#Key actions">View: Key actions</a> for details on these arguments.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>Document.current.keyUpAction = { arg ...args; args.postln };
 // now type some text
 Document.current.keyUpAction = nil;</pre>
@@ -420,24 +394,7 @@ Document.current.string_(": test test test test test ",
     18);
 )
 // Watch me change content</pre>
-</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-font' href='./../Overviews/Methods.html#font'>font</a> </h3>
-<div class='method'>
-<p>Gets or sets the font within a certain range.<h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>font<td class='argumentdesc'>
-<p>An instance of <a href="./../Classes/Font.html">Font</a>.<tr><td class='argumentname'>rangestart<td class='argumentdesc'>
-<p>An <a href="./../Classes/Integer.html">Integer</a>. Default value is -1. If <code class='code prettyprint lang-sc'>rangestart = -1</code>, the whole document is selected.<tr><td class='argumentname'>rangesize<td class='argumentdesc'>
-<p>An <a href="./../Classes/Integer.html">Integer</a>. Default value is 0.</table><h4>Discussion:</h4>
-<pre class='code prettyprint lang-sc'>// Select the following code in parentheses and execute it
-(
-Document.current.font_(Font("Impact", 14),
-    Document.current.selectedRangeLocation + 12,
-    18);
-)
-// Watch me change font</pre>
-</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-underlineSelection' href='./../Overviews/Methods.html#underlineSelection'>underlineSelection</a> </h3>
-<div class='method'>
-<p>Underlines the current selection of a Document.</div><h3><a class='anchor' name='Subclassing and Internal Methods'>Subclassing and Internal Methods</a></h3>
+</div><h3><a class='anchor' name='Subclassing and Internal Methods'>Subclassing and Internal Methods</a></h3>
 
 <p>The following methods are usually not used directly or are called by a primitive. Programmers can still call or override these as needed.<pre class='code prettyprint lang-sc'>    *startup
     *numberOfOpen
