@@ -54,7 +54,7 @@
 (
 SynthDef("help-Diskin", { arg bufnum = 0;
     Out.ar(0, DiskIn.ar(1, bufnum));
-}).send(s)
+}).add
 )</pre>
 <h3><a class='anchor' name='Normal usage (with Buffer; "Object Style")'>Normal usage (with Buffer; "Object Style")</a></h3>
 <pre class='code prettyprint lang-sc'>b = Buffer.cueSoundFile(s, Platform.resourceDir +/+ "sounds/a11wlk01-44_1.aiff", 0, 1);
@@ -92,7 +92,7 @@ r.stop; x.free; b.close; b.free; // you need to do all these to properly cleanup
 (
 SynthDef("help-Diskin", { arg bufnum = 0;
     Out.ar(0, DiskIn.ar(1, bufnum));
-}).send(s);
+}).add;
 )
 (
 x = Synth.basicNew("help-Diskin");
