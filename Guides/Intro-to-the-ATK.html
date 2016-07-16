@@ -89,11 +89,29 @@
 <p>As the Ambisonic technique is a hierarchal system, numerous options for playback are possible. These include two channel stereo, two channel binaural, pantophonic and full 3D periphonic. With the examples below, we'll take advantage of this by first choosing a suitable decoder with with to audition.<h3><a class='anchor' name='Choose a decoder'>Choose a decoder</a></h3>
 
 <p>A number of decoders are defined below. Please choose one suitable for your system. Also, don't forget to define <code class='code prettyprint lang-sc'>~renderDecode</code> !<div class='note'><span class='notelabel'>NOTE:</span> If you choose a kernel decoder, <a href="./../Classes/FoaDecoderKernel.html">FoaDecoderKernel</a>, be sure to free the kernel after use.</div><pre class='code prettyprint lang-sc'>// ------------------------------------------------------------
-// switch to internal server, and boot
+// boot server
 (
-        s = Server.internal;
-        Server.default = s;
+        s = Server.default;
         s.boot;
+)
+
+
+// ------------------------------------------------------------
+// define convenience function to verify number of server outputs
+(
+~checkMyServerOutputs = { arg server, decoder;
+    server.serverRunning.if({
+        (decoder.numOutputs &gt; server.options.numOutputBusChannels).if({
+            "Number of Server output bus channels is less than number required by Decoder!".warn;
+            "Server Outputs: %\n".postf(server.options.numOutputBusChannels);
+            "Decoder Outputs: %\n\n".postf(decoder.numOutputs);
+            "Update number of Server outputs as illustrated here: ".post;
+            "http://doc.sccode.org/Classes/ServerOptions.html#examples".postln;
+        }, {
+            "Server has an adequate number of output bus channels for use with this Decoder!".postln;
+        })
+    })
+}
 )
 
 
@@ -124,6 +142,7 @@
 
 // inspect
 ~decoder.kind
+~checkMyServerOutputs.value(s, ~decoder)
 
 
 // ------------------------------------------------------------
@@ -197,7 +216,7 @@
 <h3><a class='anchor' name='Produced via the Ambisonic Toolkit'>Produced via the Ambisonic Toolkit</a></h3>
 
 <p>The following three sound examples are excerpts from recordings produced via the ATK.
-<p>If you haven't already choosen a <code class='code prettyprint lang-sc'>~decoder</code> and defined <code class='code prettyprint lang-sc'>~renderDecode</code>, do so <a href="#choose_a_decoder">now</a>.<pre class='code prettyprint lang-sc'>// ------------------------------------------------------------
+<p>If you haven't already choosen a <code class='code prettyprint lang-sc'>~decoder</code> and defined <code class='code prettyprint lang-sc'>~renderDecode</code>, do so <a href="#Choose a decoder">now</a>.<pre class='code prettyprint lang-sc'>// ------------------------------------------------------------
 // B-format examples, produced via the ATK
 // B-format soundfile read from disk
 
@@ -240,7 +259,7 @@
 
 <p>This example illustrates the application of various spatial filtering transforms to natural soundfields, recorded via the Soundfield microphone.
 <p>The soundfield is controlled by <a href="./../Classes/MouseY.html">MouseY</a>, which specifies the transform <strong>angle</strong> argument (90 deg to 0 deg; top to bottom of display). With the mouse at the bottom of the display, the recorded soundfield is unchanged. At the top, the transform is at its most extreme.
-<p>If you haven't already choosen a <code class='code prettyprint lang-sc'>~decoder</code> and defined <code class='code prettyprint lang-sc'>~renderDecode</code>, do so <a href="#choose_a_decoder">now</a>.<div class='note'><span class='notelabel'>NOTE:</span> See <a href="./../Classes/FoaTransform.html">FoaTransform</a> for further details.</div><pre class='code prettyprint lang-sc'>// ------------------------------------------------------------
+<p>If you haven't already choosen a <code class='code prettyprint lang-sc'>~decoder</code> and defined <code class='code prettyprint lang-sc'>~renderDecode</code>, do so <a href="#Choose a decoder">now</a>.<div class='note'><span class='notelabel'>NOTE:</span> See <a href="./../Classes/FoaTransform.html">FoaTransform</a> for further details.</div><pre class='code prettyprint lang-sc'>// ------------------------------------------------------------
 // B-format examples, natural soundfield with imaging transform
 // B-format soundfile read from disk
 

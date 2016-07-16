@@ -173,11 +173,19 @@
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-kernelSize' href='./../Overviews/Methods.html#kernelSize'>kernelSize</a> </h3>
 <div class='method'>
 <p>Answers the <strong>kernelSize</strong>.<h4>Discussion:</h4>
-<pre class='code prettyprint lang-sc'>// encoder - make sure you boot the server first!!
+
+<p>Use of <a href="./../Classes/FoaEncoderKernel.html">FoaEncoderKernel</a> introduces a delay to the encoded B-format signal.
+<p>The total delay, in samples, can be calculated as <code class='code prettyprint lang-sc'>(kernelSize-1)/2 + kernelSize - blockSize</code>, where <a href="./../Classes/ServerOptions.html#-blockSize">blockSize</a> is the number of samples in one control period of the <a href="./../Classes/Server.html">Server</a> in use.<pre class='code prettyprint lang-sc'>// encoder - make sure you boot the server first!!
 ~encoder = FoaEncoderKernel.newUHJ
 
 // inspect
 ~encoder.kernelSize
+
+// calculate delay in samples
+(~encoder.kernelSize-1)/2 + ~encoder.kernelSize - s.options.blockSize
+
+// calculate delay in seconds
+((~encoder.kernelSize-1)/2 + ~encoder.kernelSize - s.options.blockSize) / s.sampleRate
 
 // don't forget to free!!
 ~encoder.free</pre>
