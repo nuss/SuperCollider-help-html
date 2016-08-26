@@ -118,9 +118,10 @@
 <tr><td class='argumentname'>pattern<td class='argumentdesc'>
 <p>Virtual microphone pattern, <code class='code prettyprint lang-sc'>nil</code>, or 0 to 1.<dl>
 <dt><code class='code prettyprint lang-sc'>nil</code><dd><strong>directions</strong> specifies virtual loudspeaker positions<dt>0 to 1<dd><strong>directions</strong> specifies a microphone array with patterns:<table>
-<tr><td><strong>pattern</strong><td><strong>microphone</strong><tr><td>0.0<td>Omni<tr><td>0.5<td>Cardioid<tr><td>1.0<td>Bi-directional</table>
+<tr><td><strong>pattern</strong><td><strong>microphone</strong><tr><td>0.0<td>Omni<tr><td>0.5<td>Cardioid<tr><td>(3-sqrt(3))/2<td>Super-cardioid<tr><td>0.75<td>Hyper-cardioid<tr><td>1.0<td>Bi-directional</table>
 
-<p> If <strong>pattern</strong> is an <a href="./../Classes/Array.html">Array</a>, individual microphone patterns are specified.</dl>
+<p> If <strong>pattern</strong> is an <a href="./../Classes/Array.html">Array</a>, individual microphone patterns are specified.
+<p> For equivalences to decoder <strong>k</strong>, please see <a href="./../Classes/FoaDecoderMatrix.html#decoder k">FoaDecoderMatrix: decoder k</a>.</dl>
 </table><h4>Discussion:</h4>
 
 <p><a href="#-newDirections">-newDirections</a> is the Ambisonic Toolkit's most versatile first order encoder. Arbitrary input loudspeaker and/or microphone arrays may be specified.<pre class='code prettyprint lang-sc'>// Periphonic (3D) encoder, a 1/2 dome of 13 loudspeakers
@@ -159,7 +160,7 @@
 <tr><td class='argumentname'>angles<td class='argumentdesc'>
 <p>Angles for front left and back left microphones, in radians. (The corresponding right microphones are mirrored across the y-axis.) Defaults to <code class='code prettyprint lang-sc'>[pi/3, 3/4*pi]</code> .<div class='note'><span class='notelabel'>NOTE:</span> <a class='anchor' name='newzoomh2note'>&nbsp;</a> The encoder reverses the labels for front and back of the <a href="http://www.zoom.co.jp/english/products/h2/">ZoomH2</a>. This is done so that directions are are preserved from the point of view of a field recording operator. With the <a href="http://www.zoom.co.jp/english/products/h2/">ZoomH2</a>'s display facing the operator (for ease of monitoring), sounds arriving in front of the operator will be encoded in the front of the soundfield. See also <a href="#newzoomdiscussion">Discussion</a> below.</div><tr><td class='argumentname'>pattern<td class='argumentdesc'>
 <p>Microphone pattern<a class='footnote anchor' name='footnote_org_2' href='#footnote_2'><sup>2</sup></a> , 0 to 1:<table>
-<tr><td><strong>pattern</strong><td><strong>virtual microphone</strong><tr><td>0.0<td>Omni<tr><td>0.5<td>Cardioid<tr><td>1.0<td>Bi-directional</table>
+<tr><td><strong>pattern</strong><td><strong>virtual microphone</strong><tr><td>0.0<td>Omni<tr><td>0.5<td>Cardioid<tr><td>(3-sqrt(3))/2<td>Super-cardioid<tr><td>0.75<td>Hyper-cardioid<tr><td>1.0<td>Bi-directional</table>
 <tr><td class='argumentname'>k<td class='argumentdesc'>
 <p>Post-encoding Y scalar.<div class='note'><span class='notelabel'>NOTE:</span> Please see further discussion of <strong>k</strong> <a href="#newzoomh2k">here</a></div></table><h4>Discussion:</h4>
 
@@ -185,8 +186,9 @@
 <p>Orientation of the A-format tetrahedron.<table>
 <tr><td><strong>orientation</strong><td><strong>angles</strong> ([theta, phi] in degrees)<tr><td><code class='code prettyprint lang-sc'>'flu'</code><td><code class='code prettyprint lang-sc'>[[45.0,  35.3], [-45.0, -35.3], [135.0, -35.3], [-135.0,  35.3]]</code><tr><td><code class='code prettyprint lang-sc'>'fld'</code><td><code class='code prettyprint lang-sc'>[[45.0, -35.3], [-45.0 , 35.3], [135.0,  35.3], [-135.0, -35.3]]</code><tr><td><code class='code prettyprint lang-sc'>'flr'</code><td><code class='code prettyprint lang-sc'>[[54.7,   0.0], [-54.7,   0.0], [180.0,  54.7], [ 180.0, -54.7]]</code><tr><td><code class='code prettyprint lang-sc'>'fud'</code><td><code class='code prettyprint lang-sc'>[[ 0.0,  54.7], [  0.0, -54.7], [125.7,   0.0], [-125.7,   0.0]]</code><tr><td><code class='code prettyprint lang-sc'>'fbd'</code><td><code class='code prettyprint lang-sc'>[[ 0.0,   0.0], [180.0, -70.5], [112.2,  28.1], [-112.2,  28.1]]</code><tr><td><code class='code prettyprint lang-sc'>'fbu'</code><td><code class='code prettyprint lang-sc'>[[ 0.0,   0.0], [180.0,  70.5], [112.2, -28.1], [-112.2, -28.1]]</code><tr><td><code class='code prettyprint lang-sc'>'flru'</code><td><code class='code prettyprint lang-sc'>[[67.8,  28.1], [-67.8,  28.1], [  0.0, -70.5], [ 180.0,   0.0]]</code><tr><td><code class='code prettyprint lang-sc'>'flrd'</code><td><code class='code prettyprint lang-sc'>[[67.8, -28.1], [-67.8, -28.1], [  0.0,  70.5], [ 180.0,   0.0]]</code></table>
 <tr><td class='argumentname'>weight<td class='argumentdesc'>
-<p>The W weight factor.<table>
-<tr><td><strong>weight</strong><td><strong>kind</strong><td><strong>W scale</strong><tr><td><code class='code prettyprint lang-sc'>'dec'</code><td>Decorrelated (on the sphere)<td>1/sqrt(3)<tr><td><code class='code prettyprint lang-sc'>'can'</code><td>Canonical (B-format)<td>1/sqrt(2)<tr><td><code class='code prettyprint lang-sc'>'uns'</code><td>Unscaled<td>1<tr><td><code class='code prettyprint lang-sc'>'car'</code><td>Cardioid<td>sqrt(3)</table>
+<p>The W weight factor.
+<p>For convenience, equivalent virtual microphone <strong>pattern</strong> and decoding <strong>k</strong> are also listed.<table>
+<tr><td><strong>weight</strong><td><strong>kind</strong><td><strong>W scale</strong><td><strong>virtual microphone</strong><td><strong>pattern</strong><td><strong>decoding</strong><td><strong>k</strong><tr><td><code class='code prettyprint lang-sc'>'dec'</code><td>Decorrelated (on the sphere)<td>1/sqrt(3)<td>Hyper-cardioid<td>0.75<td>strict soundfield<td><code class='code prettyprint lang-sc'>'velocity'</code><tr><td><code class='code prettyprint lang-sc'>'can'</code><td>Canonical (B-format)<td>1/sqrt(2)<td><td>sqrt(6)/(1+sqrt(6))<td><td>sqrt(2/3)<tr><td><code class='code prettyprint lang-sc'>'uns'</code><td>Unscaled<td>1<td>Super-cardioid<td>(3-sqrt(3))/2<td>energy optimised<td><code class='code prettyprint lang-sc'>'energy'</code><tr><td><code class='code prettyprint lang-sc'>'car'</code><td>Cardioid<td>sqrt(3)<td>Cardioid<td>0.5<td>controlled opposites<td><code class='code prettyprint lang-sc'>'controlled'</code></table>
 </table><h4>Discussion:</h4>
 
 <p>The A-format encoder is often used in conjunction with the <a href="./../Classes/FoaDecoderMatrix.html#*newBtoA">FoaDecoderMatrix: *newBtoA</a> B-format decoder to form signal processing networks which preserve the spatial encoding as is described <a href="./../Classes/FoaDecoderMatrix.html#btoadiscuss">here</a>.
