@@ -21,9 +21,7 @@
 <div class='subheader'>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#First problem: Platform independence'>First problem: Platform independence</a></li>
-<ul class='toc'><li class='toc2'><a href='#Use "GUI redirect" classes whenever possible'>Use "GUI redirect" classes whenever possible</a></li>
-<ul class='toc'></ul></ul><li class='toc1'><a href='#Basic elements: Windows, views and containers'>Basic elements: Windows, views and containers</a></li>
+<ul class='toc'><li class='toc1'><a href='#Basic elements: Windows, views and containers'>Basic elements: Windows, views and containers</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Automatic positioning and resizing of views'>Automatic positioning and resizing of views</a></li>
 <ul class='toc'><li class='toc2'><a href='#View's resize options'>View's resize options</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Decorators'>Decorators</a></li>
@@ -40,32 +38,9 @@
 <ul class='toc'></ul><li class='toc2'><a href='#Other specialized actions'>Other specialized actions</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Hooks'>Hooks</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#Custom views'>Custom views</a></li>
-<ul class='toc'><li class='toc2'><a href='#The simple way: using the UserView class'>The simple way: using the UserView class</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#The advanced way: subclassing the UserView'>The advanced way: subclassing the UserView</a></li>
-<ul class='toc'></ul></ul><li class='toc1'><a href='#Caution: GUI and timing'>Caution: GUI and timing</a></li>
-<ul class='toc'></ul></ul></div><h2><a class='anchor' name='First problem: Platform independence'>First problem: Platform independence</a></h2>
-
-<p><strong>Why do you need to know about this?</strong><ol>
-<li>You'll create a Window.new and wonder why you got back a SCWindow or QWindow.<li>You might use Mac-only GUI objects and wonder why your friend on Windows can't run your code.<li>On Mac, you might run some examples that are specific to Q- objects and wonder why they don't work right away.</ol>
-
-<p><strong>Short answer</strong>
-<p>Make sure you select the right <strong>GUI kit</strong>.
-<p>When SuperCollider starts, one of the available kits becomes the default.<table>
-<tr><td><strong>Platform</strong><td><strong>Default kit</strong><tr><td>Mac OSX<td>Cocoa -- <code class='code prettyprint lang-sc'>GUI.cocoa</code><tr><td>Linux/FreeBSD<td>Qt -- <code class='code prettyprint lang-sc'>GUI.qt</code><tr><td>Windows<td>Qt -- <code class='code prettyprint lang-sc'>GUI.qt</code></table>
-
-<p>For most cases, the Qt GUI kit is sufficient. Cocoa is retained as the default in Mac OSX for historical reasons. (This may change in a future release.)<div class='warning'><span class='warninglabel'>WARNING:</span> Some GUI examples are Qt-specific. They are labeled as such in the documentation. <strong>These examples will not work in OSX unless you manually switch to the Qt kit</strong> by running the following code:
-<p><code class='code prettyprint lang-sc'>GUI.qt;</code></div>
-<p>See the <a href="./../Classes/GUI.html">GUI</a> help file for more background on the GUI kits.<h3><a class='anchor' name='Use "GUI redirect" classes whenever possible'>Use "GUI redirect" classes whenever possible</a></h3>
-
-<p>It is strongly recommended to use generic view class names: Window, Button, Slider, etc. Code written using the generic names can run in other GUI kits.<pre class='code prettyprint lang-sc'>// DO write
-w = Window.new.front;
-
-// DO NOT write
-w = SCWindow.new.front;</pre>
-
-<p>In the second example, the use of the Cocoa-specific window class ensures that the code will not run in Linux or Windows without modification. This is usually not a good idea.
-<p>For a list of all the generic GUI classes and their kit-specific equivalents see <a href="./../Overviews/GUI-Classes.html">List of GUI classes</a>.
-<p>In the rest of this document we will refer to GUI classes by their generic name, adding notes where important differences between GUI kits are of concern.<h2><a class='anchor' name='Basic elements: Windows, views and containers'>Basic elements: Windows, views and containers</a></h2>
+<ul class='toc'></ul><li class='toc1'><a href='#Caution: GUI and timing'>Caution: GUI and timing</a></li>
+<ul class='toc'></ul></ul></div><div class='note'><span class='notelabel'>NOTE:</span> To avoid confusion, we start off with an important historical note. SuperCollider used to have a pretty nasty GUI class system that involved platform-dependent classes like SCWindow. This system is completely gone in 3.7 with a unified Qt GUI.
+<p>You will still see remnants of the old GUI classes in some SuperCollider help files and quarks. We're still working on updating all the help files. If you encounter such old classes in a quark, you can do a public service by informing the quark author.</div><h2><a class='anchor' name='Basic elements: Windows, views and containers'>Basic elements: Windows, views and containers</a></h2>
 
 <p>The most fundamental element of the GUI is the <strong>Window</strong>. It occupies a rectangular space on screen within which other GUI elements are displayed. It usually has a bar that displays the window's title and allows for moving it, resizing it and closing it with the controls it displays or through mouse and keyboard interaction. Some of these aspects may be controlled within SuperCollider GUI code, though it is largely platform-dependent how precisely interaction with a window happens and is visually indicated.
 <p>The GUI elements contained within a Window are called <strong>views</strong>. They all inherit from the basic View class. The view occupies a rectangular space of the window within which it draws itself to display some data or to indicate a mode of interaction between the user and the program. Views receive keyboard and mouse events generated by the user and respond to them by controlling the behavior of the program. They also display information about the state of the program and the data on which it operates.
@@ -213,9 +188,8 @@ y.keyUpAction = ~reset;
 <p>For example, one hook that every view as well as Window has is onClose, which is triggered when the window is closed or the view is removed. Other hooks for example exist for the case when a Window becomes or ceases to be the active one.<h2><a class='anchor' name='Custom views'>Custom views</a></h2>
 
 <p>The UserView is a view that displays and does nothing on itself, but allows <em>you</em> to define how it will be drawn, and for which you can define the entire behavior using mouse, key, and drag and drop actions. For documentation on all of these aspects, see <a href="./../Classes/UserView.html">UserView</a>, <a href="./../Classes/View.html">View</a>, and <a href="./../Classes/Pen.html">Pen</a>. The explanation below, however, will demonstrate the basic techniques for designing a custom view.
-<p>There is two ways of using the UserView class: either creating it and using its methods to define its behavior, or subclassing it, which gives you more freedom but is more complex. Either way, you will be using the <a href="./../Classes/Pen.html">Pen</a> class to draw the view. Pen is a powerful class that allows you to algorithmically draw using simple visual primitives like lines, arcs, curves, rectangles, ellipses, etc. and fill the shapes with colors and gradients.<h3><a class='anchor' name='The simple way: using the UserView class'>The simple way: using the UserView class</a></h3>
-
-<p>The simple way comprises the following steps:<ol>
+<p>You will be using the <a href="./../Classes/Pen.html">Pen</a> class to draw the view. Pen is a powerful class that allows you to algorithmically draw using simple visual primitives like lines, arcs, curves, rectangles, ellipses, etc. and fill the shapes with colors and gradients.<div class='note'><span class='notelabel'>NOTE:</span> Older tutorials might recommend subclassing UserView. Don't do that. Use composition, not inheritance. Make the UserView a property of your custom view class.</div>
+<p>Creating a custom view involves the following steps:<ol>
 <li>create a User View<li>define a draw function<li>define the default action<li>define mouse actions<li>define key actions<li>define drag and drop actions</ol>
 
 <p>You can omit steps which you don't need.<pre class='code prettyprint lang-sc'>(
@@ -277,9 +251,7 @@ Slider(w,Rect(50,100,200,20));
 StaticText(w,Rect(50,150,350,50)).string_("To Test Drag and Drop,\nHold down Cmd (Ctl) Key");
 
 )</pre>
-<h3><a class='anchor' name='The advanced way: subclassing the UserView'>The advanced way: subclassing the UserView</a></h3>
-
-<p>Subclassing the UserView differs in many aspects from the example above. For a subclassing template and a quick tutorial on how to write a custom widget as a UserView subclass, see the <a href="./../Guides/UserView-Subclassing.html">Custom Views</a> guide.<h2><a class='anchor' name='Caution: GUI and timing'>Caution: GUI and timing</a></h2>
+<h2><a class='anchor' name='Caution: GUI and timing'>Caution: GUI and timing</a></h2>
 <div class='warning'><span class='warninglabel'>WARNING:</span> Executing code that uses the GUI system is restricted to main application context. There are many ways in SuperCollider for code to be executed in other contexts that run in parallel with the main one, and interacting with GUI objects is not allowed there. This includes:<ul>
 <li>Code scheduled on the SystemClock and the TempoClock<li>Code executed in response to OSC messages</ul>
 </div>
