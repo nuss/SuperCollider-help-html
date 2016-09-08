@@ -19,7 +19,7 @@
 <div id='summary'>First Order Ambisonic (FOA) decoder matrices</div>
 </div>
 <div class='subheader'>
-<div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/Classes/ATKMatrix.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/Classes/ATKMatrix.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/Classes/ATKMatrix.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/Classes/ATKMatrix.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/AtkMatrix.html">AtkMatrix</a> : <a href="../Classes/Object.html">Object</a></div>
 <div id='related'>See also: <a href="./../Classes/FoaDecoderKernel.html">FoaDecoderKernel</a>, <a href="./../Classes/FoaDecode.html">FoaDecode</a></div>
 </div>
 <div id='toc'>
@@ -35,10 +35,15 @@
 <li class='toc3'><a href='#*newBtoA'>newBtoA</a> </li>
 <li class='toc3'><a href='#*newHoa1'>newHoa1</a> </li>
 <li class='toc3'><a href='#*newAmbix1'>newAmbix1</a> </li>
+<li class='toc3'><a href='#*newFromFile'>newFromFile</a> </li>
+<li class='toc3'><a href='#*newFromMatrix'>newFromMatrix</a> </li>
 <li class='toc2'><a href='#Decoder k'>Decoder k</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-kind'>kind</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-set'>set</a> </li>
+<li class='toc3'><a href='#-type'>type</a> </li>
+<li class='toc3'><a href='#-op'>op</a> </li>
+<li class='toc3'><a href='#-kind'>kind</a> </li>
 <li class='toc3'><a href='#-dim'>dim</a> </li>
 <li class='toc3'><a href='#-numChannels'>numChannels</a> </li>
 <li class='toc3'><a href='#-dirChannels'>dirChannels</a> </li>
@@ -49,6 +54,11 @@
 <li class='toc3'><a href='#-dirOutputs'>dirOutputs</a> </li>
 <li class='toc3'><a href='#-numInputs'>numInputs</a> </li>
 <li class='toc3'><a href='#-dirInputs'>dirInputs</a> </li>
+<li class='toc3'><a href='#-info'>info</a> </li>
+<li class='toc3'><a href='#-fileParse'>fileParse</a> </li>
+<li class='toc3'><a href='#-filePath'>filePath</a> </li>
+<li class='toc3'><a href='#-fileName'>fileName</a> </li>
+<li class='toc3'><a href='#-writeToFile'>writeToFile</a> </li>
 <li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
@@ -281,7 +291,23 @@
 <div class='method'>
 <p>A first order <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats">Ambisonic format exchange</a> decoder. Decodes traditional B-format to AmbiX. A convenience alias to <a href="#*newHoa1">*newHoa1</a>.<h4>Discussion:</h4>
 
-<p>Decoding means decoding from traditional B-format to another Ambisonic channel componenent orderding and normalisation. In this case, from <strong>Gerzon</strong> (aka <strong>Furse-Malham</strong>) ordering, <strong>MaxN</strong> normalisation to the AmbiX encoding scheme (<strong>ACN</strong> ordering, <strong>SN3D</strong> normalisation).</div><h3><a class='anchor' name='Decoder k'>Decoder k</a></h3>
+<p>Decoding means decoding from traditional B-format to another Ambisonic channel componenent orderding and normalisation. In this case, from <strong>Gerzon</strong> (aka <strong>Furse-Malham</strong>) ordering, <strong>MaxN</strong> normalisation to the AmbiX encoding scheme (<strong>ACN</strong> ordering, <strong>SN3D</strong> normalisation).</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newFromFile' href='./../Overviews/Methods.html#newFromFile'>newFromFile</a> (<span class='argstr'>filePathOrName</span>)</h3>
+<div class='method'>
+<p>Create an FoaEncoderMatrix by loading a matrix from a file.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>filePathOrName<td class='argumentdesc'>
+<p>Can be a path relative to your <code class='code prettyprint lang-sc'>/extensions/matrices/decoders</code> folder:<pre class='code prettyprint lang-sc'>Atk.getMatrixExtensionPath('decoders').fullPath</pre>
+
+<p>Otherwise a full path to your matrix file.</table><h4>Discussion:</h4>
+
+<p>See the <a href="./../Guides/Guide-to-ATK-Matrix-Files.html">Guide to ATK Matrix Files</a> for more information.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newFromMatrix' href='./../Overviews/Methods.html#newFromMatrix'>newFromMatrix</a> (<span class='argstr'>aMatrix</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Create an instance from a raw 2D <a href="./../Classes/Matrix.html">Matrix</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>aMatrix<td class='argumentdesc'>
+<p>A <a href="./../Classes/Matrix.html">Matrix</a> in the form of<pre class='code prettyprint lang-sc'>Matrix.with([[row1],[row2],...[rowN]])</pre>
+</table></div><h3><a class='anchor' name='Decoder k'>Decoder k</a></h3>
 
 <p>The default <strong>k</strong> ( <code class='code prettyprint lang-sc'>'single'</code> ), for decoders accepting <strong>k</strong> as an argument, returns an <code class='code prettyprint lang-sc'>'energy'</code> optimised (aka "maximum energy" or "max rE") decoder. <code class='code prettyprint lang-sc'>'dual'</code> returns a dual-band psychoacoustically optimised decoder.<a class='footnote anchor' name='footnote_org_5' href='#footnote_5'><sup>5</sup></a>  The <code class='code prettyprint lang-sc'>'dual'</code> decoder is the optimum choice for small scale studio or domestic settings. <code class='code prettyprint lang-sc'>'single'</code> is suitable for larger, mid-scale environments. <code class='code prettyprint lang-sc'>'velocity'</code> returns "strict soundfield" (aka "planewave" or "basic") decoding.<a class='footnote anchor' name='footnote_org_6' href='#footnote_6'><sup>6</sup></a>  <code class='code prettyprint lang-sc'>'controlled'</code> returns "controlled opposites" decoding (aka "minimum energy" or "in phase"), which is often preferred in large-scale, concert environments.<a class='footnote anchor' name='footnote_org_7' href='#footnote_7'><sup>7</sup></a>  (SuperCollider's inbuilt decoder, <a href="./../Classes/DecodeB2.html#*ar">DecodeB2: *ar</a>, is a "controlled opposites" decoder. See <a href="./../Classes/FoaDecode.html#supercollider">this discussion</a>.)
 <p>Given a uniform periphonic (3D) distribution of loudspeakers, e.g. a <a href="https://en.wikipedia.org/wiki/Platonic_solid">Platonic solid</a>, some useful <strong>virtual microphone</strong> equivalences:<table>
@@ -291,7 +317,20 @@
 <tr><td><strong>keyword</strong><td><strong>k</strong> for pantophonic (2D)<td><strong>k</strong> for periphonic (3D)<tr><td><code class='code prettyprint lang-sc'>'velocity'</code><td>1<td>1<tr><td><code class='code prettyprint lang-sc'>'energy'</code><td>1/sqrt(2)<td>1/sqrt(3)<tr><td><code class='code prettyprint lang-sc'>'controlled'</code><td>1/2<td>1/3</table>
 <div class='note'><span class='notelabel'>NOTE:</span> For large-scale concert presentation, the authors advise auditioning values of <strong>k</strong> between those noted for <code class='code prettyprint lang-sc'>'energy'</code> and <code class='code prettyprint lang-sc'>'controlled'</code>.</div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-kind' href='./../Overviews/Methods.html#kind'>kind</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-set' href='./../Overviews/Methods.html#set'>set</a> </h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Describes both the <em>signal set</em> and the <em>tool set</em>, encompassing the Ambisonic order, as well as channel ordering and normalisation.
+<p>Answers <code class='code prettyprint lang-sc'>'FOA'</code>, aka traditional B-format:<table>
+<tr><td><strong>Ambisonic Order</strong><td><strong>Channel Ordering</strong><td><strong>Channel Normalisation</strong><tr><td>1st<td>Gerzon (aka Furse-Malham)<td>MaxN</table>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-type' href='./../Overviews/Methods.html#type'>type</a> </h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code class='code prettyprint lang-sc'>'decoder'</code></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-op' href='./../Overviews/Methods.html#op'>op</a> </h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Answers <code class='code prettyprint lang-sc'>'matrix'</code>, i.e. the type of operation used to compute the resulting signals.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-kind' href='./../Overviews/Methods.html#kind'>kind</a> </h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
 <div class='method'>
 <p>Answers the kind of decoder<h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>// decoder
@@ -364,6 +403,7 @@
 // inspect
 ~decoder.dirChannels.raddeg</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-matrix' href='./../Overviews/Methods.html#matrix'>matrix</a> </h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
 <div class='method'>
 <p>Answers the decoding matrix</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-shelfFreq' href='./../Overviews/Methods.html#shelfFreq'>shelfFreq</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-shelfFreq' href='./../Overviews/Methods.html#shelfFreq'>shelfFreq</a> = value</h3>
@@ -384,8 +424,34 @@
 <div class='method'>
 <p>A convenience method providing polymorphism with <a href="./../Classes/FoaEncoderMatrix.html#-dirInputs">FoaEncoderMatrix: -dirInputs</a>.<h4>Returns:</h4>
 <div class='returnvalue'><ul>
-<li>for 2D: <code class='code prettyprint lang-sc'>[ inf, inf, inf ]</code><li>for 3D: <code class='code prettyprint lang-sc'>[ inf, inf, inf , inf ]</code></ul>
-</div></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<li>for 2D: <code class='code prettyprint lang-sc'>[ inf, inf, inf ]</code><li>for 3D: <code class='code prettyprint lang-sc'>[ inf, inf, inf, inf ]</code></ul>
+</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-info' href='./../Overviews/Methods.html#info'>info</a> </h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>A convenience method to post the properties of the matrix, including metadata if the matrix was loaded from a <code class='code prettyprint lang-sc'>.yml</code> file.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-fileParse' href='./../Overviews/Methods.html#fileParse'>fileParse</a> </h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>If the instance was created by loading a <code class='code prettyprint lang-sc'>.yml</code> file, this method returns the <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> containing the parsed metadata. This can be useful if anything was stored in the metadata that can be subsequently used once reloaded, such as encoding directions, rotations, etc.<div class='note'><span class='notelabel'>NOTE:</span> For simply a quick glance at the metadata, it's recommended to use <a href="#-info">-info</a>.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-filePath' href='./../Overviews/Methods.html#filePath'>filePath</a> </h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Answers the path of the file used to create the instance, or <code class='code prettyprint lang-sc'>nil</code> if not created by loading a matrix from a file.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-fileName' href='./../Overviews/Methods.html#fileName'>fileName</a> </h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Answers the name of the file used to create the instance, or <code class='code prettyprint lang-sc'>nil</code> if not created by loading a matrix from a file.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-writeToFile' href='./../Overviews/Methods.html#writeToFile'>writeToFile</a> (<span class='argstr'>fileNameOrPath</span>, <span class='argstr'>note</span>, <span class='argstr'>attributeDictionary</span>, <span class='argstr'>overwrite: false</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Write the matrix to a file<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>fileNameOrPath<td class='argumentdesc'>
+<p>A String of the file name. The file extension determines the format:<ul>
+<li><code class='code prettyprint lang-sc'>.yml</code> allows for additional user-specified metadata (recommended).<li><code class='code prettyprint lang-sc'>.txt</code> writes the matrix coefficients only, in rows.<li><code class='code prettyprint lang-sc'>.mosl.txt</code> creates basic matrix files compatible with the <a href="http://www.ambisonictoolkit.net/download/reaper/">ATK for Reaper</a>, a set of <a href="http://www.reaper.fm/sdk/js/js.php">JSFX plugins</a> for the <a href="http://www.reaper.fm/">Reaper</a> DAW.</ul>
+
+<p>You may provide a full path if you would like to save the file somewhere other than the default location in the Atk <code class='code prettyprint lang-sc'>extensions</code> folder. See the Discussion below for more information.<tr><td class='argumentname'>note<td class='argumentdesc'>
+<p>A String that is a short description or bit of info about the matrix to store for future reference.<tr><td class='argumentname'>attributeDictionary<td class='argumentdesc'>
+<p>A Dictionary containing any information that's useful to store in key:value pairs. Keys that match getters in the AtkMatrix will take precedence over the defaults. See the Discussion for more details.<tr><td class='argumentname'>overwrite<td class='argumentdesc'>
+<p>A boolean specifying whether you'd like to force overwriting an existing file of the same name and extension.</table><h4>Discussion:</h4>
+
+<p>The <a href="./../Guides/Guide-to-ATK-Matrix-Files.html">Guide to ATK Matrix Files</a> offers examples and more discussion regarding writing and reading matrices and metadata, including how to generate matrices for use in Reaper.</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 
 <p>Please see <a href="./../Classes/FoaDecode.html#Examples">FoaDecode: Examples</a>.<div class='footnotes'>
