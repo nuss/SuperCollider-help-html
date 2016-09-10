@@ -57,12 +57,12 @@ Atk.userExtensionsDir.openOS  // open it... if it exists!</pre>
 </ul>
 </ul>
 
-<p>Each of the folders (<code class='code prettyprint lang-sc'>FOA&gt;encoders</code>, <code class='code prettyprint lang-sc'>HOA5&gt;decoders</code>, etc.) are empty and ready to store matrices (and kernels) for use with the ATK-sc (this package) and <a href="http://www.ambisonictoolkit.net/download/reaper/">ATK-Reaper</a>(more on that later). When you write a matrix using the ATK, it will store it in this directory structure by default, and will look here by default when asked to read in a matrix from file.
-<p>You can view this structure and any files you've stored there using the following method:<pre class='code prettyprint lang-sc'>Atk.postMyMatrixDir();                    // All sets, all matrices types
-Atk.postMyMatrixDir('FOA');               // FOA matrices hierarchy
-Atk.postMyMatrixDir('FOA', 'encoders');    // FOA encoders only
-Atk.postMyMatrixDir('FOA', 'decoders');    // FOA decoders only
-Atk.postMyMatrixDir('FOA', 'xformers');    // FOA xformers only</pre>
+<p>Each of the folders (<code class='code prettyprint lang-sc'>FOA&gt;encoders</code>, <code class='code prettyprint lang-sc'>HOA5&gt;decoders</code>, etc.) are empty and ready to store matrices (and kernels) for use with the ATK-SC3 (this package) and <a href="http://www.ambisonictoolkit.net/download/reaper/">ATK-Reaper</a> (more on that later). When you write a matrix using the ATK, it will store it in this directory structure by default, and will look here by default when asked to read in a matrix from file.
+<p>You can view this structure and any files you've stored there using the following method:<pre class='code prettyprint lang-sc'>Atk.postMyMatrices();                    // All sets, all matrices types
+Atk.postMyMatrices('FOA');               // FOA matrices hierarchy
+Atk.postMyMatrices('FOA', 'encoders');    // FOA encoders only
+Atk.postMyMatrices('FOA', 'decoders');    // FOA decoders only
+Atk.postMyMatrices('FOA', 'xformers');    // FOA xformers only</pre>
 
 <p>Each of these matrix subdirectories can have further subdirectories at your discretion, e.g. for particular projects or categories of matrices.<h2><a class='anchor' name='Writing Matrices'>Writing Matrices</a></h2>
 
@@ -79,7 +79,16 @@ Atk.postMyMatrixDir('FOA', 'xformers');    // FOA xformers only</pre>
 ~encoder = FoaEncoderMatrix.newDirections(~directions);
 )</pre>
 
-<p>This <a href="./../Classes/FoaEncoderMatrix.html">FoaEncoderMatrix</a> is now ready to be used for encoding planewaves arriving from those nine uniformly distributed incidences. After all that hard work (thanks ATK!), we want to store the result to a file for use in the future, and to use in <a href="http://www.ambisonictoolkit.net/download/reaper/">ATK-Reaper</a> plugins!
+<p>This <a href="./../Classes/FoaEncoderMatrix.html">FoaEncoderMatrix</a> is now ready to be used for encoding planewaves arriving from those nine uniformly distributed incidences. Within the ATK's classification hierarchy, <code class='code prettyprint lang-sc'>~encoder</code> looks like this:<table>
+<tr><td><strong>set</strong><td><strong>type</strong><td><strong>op</strong><td><strong>kind</strong><tr><td><code class='code prettyprint lang-sc'>'FOA'</code><td><code class='code prettyprint lang-sc'>'encoder'</code><td><code class='code prettyprint lang-sc'>'matrix'</code><td><code class='code prettyprint lang-sc'>'dirs'</code></table>
+
+<p>For fun, let's inspect:<pre class='code prettyprint lang-sc'>(
+var methodsToInspect = ['class', 'set', 'type', 'op', 'kind' ];
+
+methodsToInspect.do({arg item; (item.asString ++ " : " ++ ~encoder.perform(item)).postln;})
+)</pre>
+
+<p>After all that hard work (thanks ATK!), we want to store the result to a file for use in the future, and to use in <a href="http://www.ambisonictoolkit.net/download/reaper/">ATK-Reaper</a> plugins! <a class='footnote anchor' name='footnote_org_2' href='#footnote_2'><sup>2</sup></a> 
 <p>There are three available file formats, each with a special purpose:<ul>
 <li><code class='code prettyprint lang-sc'>.txt</code> : the most basic text file, writing the raw matrix only.<li><code class='code prettyprint lang-sc'>.yml</code> : store the matrix along with metadata in a human readable format.<li><code class='code prettyprint lang-sc'>.mosl.txt</code> : a text file formatted for use with ATK-Reaper JSFX-plugins.</ul>
 
@@ -92,12 +101,12 @@ Atk.postMyMatrixDir('FOA', 'xformers');    // FOA xformers only</pre>
 // .mosl.txt writes matrix only, single lines for Reaper to read
 ~encoder.writeToFile("my9PointEncoder.mosl.txt");</pre>
 
-<p>Because we only specified a file name, not a full path, it will store the matrix in the default location. We're writing an <a href="./../Classes/FoaEncoderMatrix.html">FoaEncoderMatrix</a>, ATK can infer that it's an <strong>encoder</strong> in the <strong>FOA</strong> set. Therefore, the ATK knows to put it in: <code class='code prettyprint lang-sc'>../extensions/matrices/FOA/encoders</code>.
+<p>Because we only specified a file name, not a full path, the ATK will store the matrix in the default location. As we're writing an <a href="./../Classes/FoaEncoderMatrix.html">FoaEncoderMatrix</a>, ATK can infer that it's an <strong>encoder</strong> in the <strong>FOA</strong> set. (We also know, we're dealing with a <strong>matrix</strong> operation.) Therefore, the ATK knows to put it in: <code class='code prettyprint lang-sc'>../extensions/matrices/FOA/encoders</code>.
 <p>Had we specified a full path instead, it would have saved to that location.<pre class='code prettyprint lang-sc'>// Here are our encoders (defaults to showing the FOA set)
-Atk.postMyMatrixDir('FOA', 'encoders');</pre>
+Atk.postMyMatrices('FOA', 'encoders');</pre>
 <h3><a class='anchor' name='Writing Metadata'>Writing Metadata</a></h3>
 
-<p>Because this matrix is somewhat unique, it would be helpful to provide a bit more information about it for future reference. This is where the <code class='code prettyprint lang-sc'>.yml</code> file format comes in.
+<p>Because this matrix encoder is somewhat unique, it would be helpful to provide a bit more information about it for future reference. This is where the <code class='code prettyprint lang-sc'>.yml</code> file format comes in.
 <p>Note that the <a href="./../Classes/AtkMatrix.html#-writeToFile">AtkMatrix: -writeToFile</a> method has some optional arguments: <code class='code prettyprint lang-sc'>note</code> and <code class='code prettyprint lang-sc'>attributeDictionary</code>. A <code class='code prettyprint lang-sc'>note</code> can be a brief description, while an <code class='code prettyprint lang-sc'>attributeDictionary</code> is a Dictionary for storing any info you'd like in the form of key:value pairs.<pre class='code prettyprint lang-sc'>(
 // A 'note': a description or note about the matrix.
 ~note = "This is a nine-point t-design encoder made for a matrix file writing demo.";
@@ -112,7 +121,7 @@ Atk.postMyMatrixDir('FOA', 'encoders');</pre>
 );
 )</pre>
 <div class='note'><span class='notelabel'>NOTE:</span> If keys in the <strong>attributeDictionary</strong> match instance variables of FoaEncoderMatrix, they can be retrieved with getters once loaded from the file. This is the case for <strong>dirInputs</strong> specified in the <code class='code prettyprint lang-sc'>~properties</code> dictionary above. We'll see the effect this has below.</div>
-<p>Now write this matrix and metadata to file... Be sure to specify the <code class='code prettyprint lang-sc'>.yml</code> extension in order to write the metadata. Set <strong>overwrite = true</strong> to force overwrite the file we wrote before with the same name and extension.<pre class='code prettyprint lang-sc'>(
+<p>Now write this matrix and metadata to file... Be sure to specify the <code class='code prettyprint lang-sc'>.yml</code> extension in order to write the metadata. Set <strong>overwrite</strong> <code class='code prettyprint lang-sc'>= true</code> to force overwrite the file we wrote before with the same name and extension.<pre class='code prettyprint lang-sc'>(
 ~encoder.writeToFile( "my9PointEncoder.yml",
   note: ~note,
   attributeDictionary: ~properties,
@@ -121,7 +130,7 @@ Atk.postMyMatrixDir('FOA', 'encoders');</pre>
 )</pre>
 <h3><a class='anchor' name='Writing Raw Matrices'>Writing Raw Matrices</a></h3>
 
-<p>In the above examples, we've been reading/writing matrices encapsulated in the AtkMatrix subclasses. When writing from these objects, some the information can be inferred from them, such as the <strong>set</strong> (Ambisonic order, channel ordering, channel normalisation, e.g. <code class='code prettyprint lang-sc'>'FOA'</code>, <code class='code prettyprint lang-sc'>'HOA3'</code>, etc.) and <strong>type</strong> of matrix (e.g. <code class='code prettyprint lang-sc'>'encoder', 'decoder', 'xformer'</code>). In the case of a raw matrix, this information can't be inferred and should be explicitly set when writing to file.<pre class='code prettyprint lang-sc'>( // Here's a raw A-to-B encoder matrix:
+<p>In the above examples, we've been reading/writing matrices encapsulated in the <a href="./../Classes/AtkMatrix.html">AtkMatrix</a> subclasses. When writing from these objects, some the information can be inferred from them, such as the <strong>set</strong> (Ambisonic order, channel ordering, channel normalisation, e.g. <code class='code prettyprint lang-sc'>'FOA'</code>, <code class='code prettyprint lang-sc'>'HOA3'</code>, etc.) and <strong>type</strong> of matrix (e.g. <code class='code prettyprint lang-sc'>'encoder', 'decoder', 'xformer'</code>). In the case of a raw matrix, this information can't be inferred and should be explicitly set when writing to file.<pre class='code prettyprint lang-sc'>( // Here's a raw A-to-B encoder matrix:
 ~matrix = Matrix.with([
     [ 0.61237243569579, 0.61237243569579, 0.61237243569579, 0.61237243569579 ],
     [ 0.5, 0.5, -0.5, -0.5 ],
@@ -152,18 +161,18 @@ Atk.postMyMatrixDir('FOA', 'encoders');</pre>
 )
 )</pre>
 <div class='note'><span class='notelabel'>NOTE:</span> If providing a file path relative to your <code class='code prettyprint lang-sc'>/ATK/extension/matrices/...</code>directory, <strong>set</strong> and <strong>type</strong> are necessary arguments to locate the proper directory to store your file. If providing an absolute file path, <strong>set</strong> and <strong>type</strong> are recommended but not strictly enforced. This allows storing matrices outside the ATK paradigm, e.g. VBAP matrices, etc.</div>
-<p>There it is:<pre class='code prettyprint lang-sc'>Atk.postMyMatrixDir('FOA', 'encoders');</pre>
+<p>There it is:<pre class='code prettyprint lang-sc'>Atk.postMyMatrices('FOA', 'encoders');</pre>
 <h3><a class='anchor' name='Subfolders: Organizing your matrices'>Subfolders: Organizing your matrices</a></h3>
 
 <p>If you'll be generating many matrices, it's advisable to organize your matrices into subfolders. For example, if you're algorithmically generating hundreds of matrices for a particular project or process, it makes sense to store them in a subfolder.
 <p>To do this, you can create subfolders inside your <code class='code prettyprint lang-sc'>/encoders</code>, <code class='code prettyprint lang-sc'>/decoders</code>, and <code class='code prettyprint lang-sc'>/xformers</code> folders.<pre class='code prettyprint lang-sc'>// Store your encoder matrix with the other encoders, which live here:
-Atk.getMatrixExtensionPath('FOA', 'encoders');
+Atk.getMatrixExtensionSubPath('FOA', 'encoders');
 
 // You can make subfolder for a group of matrices, say, for a particular project:
 (
 ~projSubFolderName = "myProject";
 
-File.mkdir( Atk.getMatrixExtensionPath('FOA', 'encoders').fullPath +/+ ~projSubFolderName )
+File.mkdir( Atk.getMatrixExtensionSubPath('FOA', 'encoders').fullPath +/+ ~projSubFolderName )
 )
 
 // For convenience, we'll write the 9-point ~encoder matrix,
@@ -189,7 +198,7 @@ File.mkdir( Atk.getMatrixExtensionPath('FOA', 'encoders').fullPath +/+ ~projSubF
 )
 )</pre>
 <div class='note'><span class='notelabel'>NOTE:</span> Remember that because <code class='code prettyprint lang-sc'>~encoder</code> is an <a href="./../Classes/FoaEncoderMatrix.html">FoaEncoderMatrix</a>, the <strong>set</strong> (<code class='code prettyprint lang-sc'>'FOA'</code>) and <strong>type</strong> (<code class='code prettyprint lang-sc'>'encoder'</code>) arguments are inferred.</div><pre class='code prettyprint lang-sc'>// There it is, in the 'myProject' subdirectory.
-Atk.postMyMatrixDir('FOA', 'encoders')</pre>
+Atk.postMyMatrices('FOA', 'encoders')</pre>
 
 <p>Later you'll use <a href="./../Classes/FoaEncoderMatrix.html">FoaEncoderMatrix</a> to read the file back in. ATK will know where to look ( <code class='code prettyprint lang-sc'>extensions/matrices/enocoders/FOA</code> ) so you can simply specify the <em>relative</em> path of your <code class='code prettyprint lang-sc'>subfolder/file.yml</code>:<pre class='code prettyprint lang-sc'>~projectEncoder1 = FoaEncoderMatrix.newFromFile(~projSubFolderName +/+ "projectEncoder1.yml");
 
@@ -249,7 +258,7 @@ Atk.postMyMatrixDir('FOA', 'encoders')</pre>
 ~encoder.fileParse.keysValuesDo{|k,v| postf("% : %\n", k, v)};</pre>
 <h3><a class='anchor' name='Test case: Creating a decoder from an FoaEncoderMatrix'>Test case: Creating a decoder from an FoaEncoderMatrix</a></h3>
 
-<p>We've now instantiated a new <code class='code prettyprint lang-sc'>~encoder</code> by reading in the file that stored the matrix that we originally built using the planewave encoder: <a href="./../Classes/FoaEncoderMatrix.html#*newDirections">FoaEncoderMatrix: *newDirections</a> (using the points of a nine-point t-design). As it turns out, a matrix <em>encoder</em> created by <a href="./../Classes/FoaEncoderMatrix.html#*newDirections">FoaEncoderMatrix: *newDirections</a> can be used to build a <em>decoder</em> of the same geometry.<a class='footnote anchor' name='footnote_org_2' href='#footnote_2'><sup>2</sup></a> Doing so just involves performing the <a href="./../Classes/Matrix.html#-pseudoInverse">Matrix: -pseudoInverse</a> on the encoder's Matrix.<a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a> <pre class='code prettyprint lang-sc'>// Retrieve the Matrix object stored in the FoaEncoderMatrix
+<p>We've now instantiated a new <code class='code prettyprint lang-sc'>~encoder</code> by reading in the file that stored the matrix that we originally built using the planewave encoder: <a href="./../Classes/FoaEncoderMatrix.html#*newDirections">FoaEncoderMatrix: *newDirections</a> (using the points of a nine-point t-design). As it turns out, a matrix <em>encoder</em> created by <a href="./../Classes/FoaEncoderMatrix.html#*newDirections">FoaEncoderMatrix: *newDirections</a> can be used to build a <em>decoder</em> of the same geometry.<a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a> Doing so just involves performing the <a href="./../Classes/Matrix.html#-pseudoInverse">Matrix: -pseudoInverse</a> on the encoder's Matrix.<a class='footnote anchor' name='footnote_org_4' href='#footnote_4'><sup>4</sup></a> <pre class='code prettyprint lang-sc'>// Retrieve the Matrix object stored in the FoaEncoderMatrix
 // (Should be the 9-point t-design from above!)
 ~encoderMatrix = ~encoder.matrix;
 
@@ -260,7 +269,7 @@ Atk.postMyMatrixDir('FOA', 'encoders')</pre>
 <div class='note'><span class='notelabel'>NOTE:</span> Because we're inverting an encoder to produce a decoder, the original <em>input directions</em> of the <strong>encoder</strong> will now be the <em>output directions</em> of the <strong>decoder</strong>. The channel ordering will be in the same order the input directions were specified in the encoder. Therefore, in the above code we query the <em>encoder</em> for its <code class='code prettyprint lang-sc'>-dirInputs</code> to know where our output channel signals are expected to be sent (in space!).</div>
 <p>It's important to note here that the <code class='code prettyprint lang-sc'>~decoderMatrix</code> matrix is a <a href="./../Classes/Matrix.html">Matrix</a> object, not an <a href="./../Classes/FoaDecoderMatrix.html">FoaDecoderMatrix</a> object. As such, we'll need to use care when building the decoding SynthDef. Instead of using the <a href="./../Classes/FoaDecode.html">FoaDecode</a> UGen (which expects an FoaDecoderMatrix or FoaDecoderKernel decoder), we'll use the <a href="./../Classes/AtkMatrixMix.html">AtkMatrixMix</a> UGen, which will decode our B-format signal by using our newly authored decoding Matrix, <code class='code prettyprint lang-sc'>~decoderMatrix</code>.<pre class='code prettyprint lang-sc'>(
 ~decoderDef = SynthDef(\pinv_decoder, { arg outbus=0, amp=1;
-    var foa, decoder;
+    var foa, out;
 
     // Test signal: panning noise
     foa = FoaPanB.ar( PinkNoise.ar, LFSaw.kr( 12.reciprocal, 1 ), 0 );
@@ -282,4 +291,4 @@ s.scope(9, 0);
 ~decoderSynth.free;</pre>
 
 <p><div class='footnotes'>
-<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - Hardin, R. H. and Sloane, N. J. A., "Sperical Designs", <a href="http://neilsloane.com/sphdesigns/">http://neilsloane.com/sphdesigns/</a>, accessed on July 29, 2016.</div><a class='anchor' name='footnote_2'/><div class='footnote'>[<a href='#footnote_org_2'>2</a>] - Recall the ATK's matching A-format <a href="./../Classes/FoaEncoderMatrix.html#*newAtoB">encoders</a> and <a href="./../Classes/FoaDecoderMatrix.html#*newBtoA">decoders</a>!</div><a class='anchor' name='footnote_3'/><div class='footnote'>[<a href='#footnote_org_3'>3</a>] - This decoder design method is often described as <em>pseudo-inverse</em> or <em>mode-matching</em>.</div></div><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Guides/Guide-to-ATK-Matrix-Files.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Guides/Guide-to-ATK-Matrix-Files.schelp</a><br>link::Guides/Guide-to-ATK-Matrix-Files::<br>sc version: 3.8dev</div></div></body></html>
+<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - Hardin, R. H. and Sloane, N. J. A., "Sperical Designs", <a href="http://neilsloane.com/sphdesigns/">http://neilsloane.com/sphdesigns/</a>, accessed on July 29, 2016.</div><a class='anchor' name='footnote_2'/><div class='footnote'>[<a href='#footnote_org_2'>2</a>] - ATK-Reaper will support matrix loading in an upcoming release.</div><a class='anchor' name='footnote_3'/><div class='footnote'>[<a href='#footnote_org_3'>3</a>] - Recall the ATK's matching A-format <a href="./../Classes/FoaEncoderMatrix.html#*newAtoB">encoders</a> and <a href="./../Classes/FoaDecoderMatrix.html#*newBtoA">decoders</a>!</div><a class='anchor' name='footnote_4'/><div class='footnote'>[<a href='#footnote_org_4'>4</a>] - This decoder design method is often described as <em>pseudo-inverse</em> or <em>mode-matching</em>.</div></div><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Guides/Guide-to-ATK-Matrix-Files.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Guides/Guide-to-ATK-Matrix-Files.schelp</a><br>link::Guides/Guide-to-ATK-Matrix-Files::<br>sc version: 3.8dev</div></div></body></html>
