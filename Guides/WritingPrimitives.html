@@ -22,16 +22,16 @@
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#Example'>Example</a></li>
-<ul class='toc'><li class='toc2'><a href='#SuperCollider code'>SuperCollider code</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Define your primitive'>Define your primitive</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Write your primitive'>Write your primitive</a></li>
+<ul class='toc'><li class='toc2'><a href='#SuperCollider%20code'>SuperCollider code</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Define%20your%20primitive'>Define your primitive</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Write%20your%20primitive'>Write your primitive</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#Guidelines'>Guidelines</a></li>
-<ul class='toc'><li class='toc2'><a href='#Creating objects in primitives, and GC safety'>Creating objects in primitives, and GC safety</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Type safety'>Type safety</a></li>
+<ul class='toc'><li class='toc2'><a href='#Creating%20objects%20in%20primitives,%20and%20GC%20safety'>Creating objects in primitives, and GC safety</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Type%20safety'>Type safety</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#FAQ'>FAQ</a></li>
 <ul class='toc'></ul></ul></div>
 <p>Although much of SuperCollider's functionality is implemented in the SuperCollider language itself, for reasons of efficiency, some functionality is implemented in 'back end' C++ functions called 'primitives'. This document provides guidance to members of the SC development community on writing primitives.<h2><a class='anchor' name='Example'>Example</a></h2>
-<h3><a class='anchor' name='SuperCollider code'>SuperCollider code</a></h3>
+<h3><a class='anchor' name='SuperCollider%20code'>SuperCollider code</a></h3>
 
 <p>Primitive calls are preceded with an underscore, so for example _myPrimitiveName. Here is an example call to a primitive in an SC class:<pre class='code prettyprint lang-sc'>Cocoa {
     prGetPathsDialog { arg returnSlot;
@@ -79,7 +79,7 @@ prOpenUDPPort {|portNum|
     _OpenUDPPort
     ^this.primitiveFailed;
 }</pre>
-<h3><a class='anchor' name='Define your primitive'>Define your primitive</a></h3>
+<h3><a class='anchor' name='Define%20your%20primitive'>Define your primitive</a></h3>
 
 <p>In your primitive source code define the primitive:<pre>void initCocoaFilePrimitives()
 {
@@ -94,7 +94,7 @@ prOpenUDPPort {|portNum|
 }</pre>
 <p>Here is the prototype for definePrimitive:<pre>int definePrimitive(int base, int index, char *name, PrimitiveHandler handler, int numArgs, int varArgs);</pre>
 <p>The numArgs is the number of arguments that were passed into the SuperCollider method that calls the primitive, plus one to include the receiver which is passed in as the first argument.
-<p>(TODO varArgs ...)<h3><a class='anchor' name='Write your primitive'>Write your primitive</a></h3>
+<p>(TODO varArgs ...)<h3><a class='anchor' name='Write%20your%20primitive'>Write your primitive</a></h3>
 
 <p><code>g-&gt;sp</code> is the top of the stack and is the last argument pushed. <code>g-&gt;sp - inNumArgsPushed + 1</code> is the receiver and where the result goes.
 <p>In this example, the numArgsPushed will be 2 (as specified in definePrimitive)<pre>int prGetPathsDialog(struct VMGlobals *g, int numArgsPushed)
@@ -109,7 +109,7 @@ prOpenUDPPort {|portNum|
     return errNone;
 }</pre>
 <p>This example does not set the receiver, so the primitive returns the original receiver unchanged (still an instance of Cocoa). Or set the object at <code>receiver</code> which again is at <code>(g-&gt;sp - numArgsPushed + 1)</code>.<h2><a class='anchor' name='Guidelines'>Guidelines</a></h2>
-<h3><a class='anchor' name='Creating objects in primitives, and GC safety'>Creating objects in primitives, and GC safety</a></h3>
+<h3><a class='anchor' name='Creating%20objects%20in%20primitives,%20and%20GC%20safety'>Creating objects in primitives, and GC safety</a></h3>
 
 <p>SuperCollider uses a garbage collector to manage memory allocation and collection where needed.<a class='footnote anchor' name='footnote_org_1' href='#footnote_1'><sup>1</sup></a>  In order to meet the requirements of good real time performance, a small and bounded amount of garbage collection may be triggered each time an object is created. This consists of incrementally examining all objects and determining if they are reachable (see below) or not. Unreachable objects may have their memory reallocated to new objects.
 <p>The following points are important to understanding how the GC works, and how to avoid bugs:<ul>
@@ -225,7 +225,7 @@ It is good practice to avoid creating objects in a primitive at all where possib
 
     return errNone;
 }</pre>
-<p>If we would have put <code>SetObject(arg, array);</code> at the end of this function, <code>array</code> would <strong>not</strong> have been reachable at the call to <code>newPyrString</code>, and thus may have been marked <code>free</code>, resulting in a hard to track down bug.<div class='warning'><span class='warninglabel'>WARNING:</span> Do not store pointers to PyrObjects in C/C++ variables unless you can absolutely guarantee that they cannot be garbage collected. For example the File and SCWindow classes do this by storing the objects in an array in a classvar. The object has to stay in that array until no C object refers to it. <strong>Failing to observe the above two points can result in very hard to find bugs.</strong></div><h3><a class='anchor' name='Type safety'>Type safety</a></h3>
+<p>If we would have put <code>SetObject(arg, array);</code> at the end of this function, <code>array</code> would <strong>not</strong> have been reachable at the call to <code>newPyrString</code>, and thus may have been marked <code>free</code>, resulting in a hard to track down bug.<div class='warning'><span class='warninglabel'>WARNING:</span> Do not store pointers to PyrObjects in C/C++ variables unless you can absolutely guarantee that they cannot be garbage collected. For example the File and SCWindow classes do this by storing the objects in an array in a classvar. The object has to stay in that array until no C object refers to it. <strong>Failing to observe the above two points can result in very hard to find bugs.</strong></div><h3><a class='anchor' name='Type%20safety'>Type safety</a></h3>
 
 <p>Since SC is dynamically typed, you cannot rely on any of the arguments being of the class you expect. You should check every argument to make sure it is the correct type.
 <p>One way to do this is by using <code>isKindOfSlot</code>. If you just want a numeric value, you can use <code>slotIntVal</code>, <code>slotFloatVal</code>, or <code>slotDoubleVal</code> which will return an error if the value is not a numeric type. Similarly there is <code>slotStringVal</code>.

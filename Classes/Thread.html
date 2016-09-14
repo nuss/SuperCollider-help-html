@@ -28,8 +28,8 @@
 <ul class='toc'><li class='toc3'><a href='#.thisThread'>thisThread</a> </li>
 </ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
-<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*primitiveError'>primitiveError</a> </li>
 <li class='toc3'><a href='#*primitiveErrorString'>primitiveErrorString</a> </li>
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
@@ -39,11 +39,11 @@
 <li class='toc3'><a href='#-clock'>clock</a> </li>
 <li class='toc3'><a href='#-isPlaying'>isPlaying</a> </li>
 <li class='toc3'><a href='#-state'>state</a> </li>
-<li class='toc2'><a href='#Seeding the random number generator'>Seeding the random number generator</a></li>
+<li class='toc2'><a href='#Seeding%20the%20random%20number%20generator'>Seeding the random number generator</a></li>
 <ul class='toc'><li class='toc3'><a href='#-randSeed'>randSeed</a> </li>
 <li class='toc3'><a href='#-randData'>randData</a> </li>
-</ul><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-archiveAsCompileString'>archiveAsCompileString</a> </li>
 <li class='toc3'><a href='#-checkCanArchive'>checkCanArchive</a> </li>
 <li class='toc3'><a href='#-copy'>copy</a> </li>
@@ -72,7 +72,7 @@
 <h3 class='imethodname'><span class='methprefix'>&nbsp;</span><a name='.thisThread' href='./../Overviews/Methods.html#thisThread'>thisThread</a> </h3>
 <div class='method'>
 <p>The global pseudo-variable <code class='code prettyprint lang-sc'>thisThread</code> always represents the current Thread, i.e. the context in which the current code is running. It can be either the <a href="./../Classes/Process.html#-mainThread">main Thread</a> or the <a href="./../Classes/Routine.html">Routine</a> running the current code.
-<p>See also: <a href="./../Classes/Clock.html#Scheduling and Threads">Clock: Scheduling and Threads</a>.<pre class='code prettyprint lang-sc'>// example
+<p>See also: <a href="./../Classes/Clock.html#Scheduling%20and%20Threads">Clock: Scheduling%20and%20Threads</a>.<pre class='code prettyprint lang-sc'>// example
 thisThread.beats;
 thisThread.seconds;
 thisThread.clock;</pre>
@@ -83,8 +83,8 @@ thisThread.clock;</pre>
 <table class='arguments'>
 <tr><td class='argumentname'>func<td class='argumentdesc'>
 <p>A Function with code for the Thread to run.<tr><td class='argumentname'>stackSize<td class='argumentdesc'>
-<p>Call stack size (an Integer).</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
+<p>Call stack size (an Integer).</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*primitiveError' href='./../Overviews/Methods.html#primitiveError'>primitiveError</a> </h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*primitiveErrorString' href='./../Overviews/Methods.html#primitiveErrorString'>primitiveErrorString</a> </h3>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
@@ -105,7 +105,7 @@ thisThread.clock;</pre>
 <li>When code is run from the code editor, the command line, or in response to OSC and MIDI messages, the <a href="./../Classes/Process.html#-mainThread">main Thread</a>'s logical time is set to the current <strong>physical time</strong> (see <a href="./../Classes/Process.html#*elapsedTime">Process: *elapsedTime</a>).<li>When code <strong>scheduled</strong> on a <a href="./../Classes/Clock.html">Clock</a> is run, the <a href="./../Classes/Process.html#-mainThread">main Thread</a>'s logical time is set to the time the code was scheduled for.<li>Child Threads <strong>inherit</strong> logical time from their <a href="#-parent">parents</a> - whenever a Thread (Routine) is started or resumed, its logical time is set to that of the parent Thread.</ul>
 
 <p>However, a Thread's logical time may also be set <strong>manually</strong> (using this method or <a href="#-seconds">-seconds</a>). It may be useful to change the <strong>current</strong> Thread's time in order to manipulate behavior of streams that use the current logical time for their operation (e.g. streams created by <a href="./../Classes/Pstep.html">Pstep</a> and <a href="./../Classes/Pseg.html">Pseg</a> patterns). This will affect all code running within the current Thread, as well as any child Threads, due to logical time inheritance. Note however that changing <strong>another</strong> Thread's time will have no effect, because the time will be overridden by inheritance as soon as the Thread is run; likewise, any changes to the current Thread's time only have effect until the Thread is suspended (it <a href="./../Classes/Object.html#-yield">yields</a>) and resumed again.
-<p>See also: <a href="./../Classes/Clock.html#Scheduling and Threads">Clock: Scheduling and Threads</a>.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-seconds' href='./../Overviews/Methods.html#seconds'>seconds</a></h3>
+<p>See also: <a href="./../Classes/Clock.html#Scheduling%20and%20Threads">Clock: Scheduling%20and%20Threads</a>.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-seconds' href='./../Overviews/Methods.html#seconds'>seconds</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-seconds' href='./../Overviews/Methods.html#seconds'>seconds</a> = <span class='argstr'>inSeconds</span></h3>
 <div class='method'>
 <p>Get or set the current logical time of the Thread in seconds.
@@ -119,14 +119,14 @@ thisThread.clock;</pre>
 <li>When code is run from the code editor, the command line, or in response to OSC and MIDI messages, the <a href="./../Classes/Process.html#-mainThread">main Thread</a>'s clock is set to <a href="./../Classes/SystemClock.html">SystemClock</a>.<li>When code <strong>scheduled</strong> on a Clock is run, that clock becomes the <a href="./../Classes/Process.html#-mainThread">main Thread</a>'s clock.<li>Child Threads <strong>inherit</strong> the associated clock from their <a href="#-parent">parents</a>.</ul>
 
 <p>A Thread's associated clock may also be set <strong>manually</strong> using this method. Setting the <strong>current</strong> Thread's clock is useful to manipulate further behavior of the Thread or its child Threads, but the clock will be reset the next time the Thread is resumed, due to clock inheritance. For the same reason, setting <strong>another</strong> Thread's clock will have no effect on code running on it.
-<p>See also: <a href="./../Classes/Clock.html#Scheduling and Threads">Clock: Scheduling and Threads</a>.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isPlaying' href='./../Overviews/Methods.html#isPlaying'>isPlaying</a> </h3>
+<p>See also: <a href="./../Classes/Clock.html#Scheduling%20and%20Threads">Clock: Scheduling%20and%20Threads</a>.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isPlaying' href='./../Overviews/Methods.html#isPlaying'>isPlaying</a> </h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>true if it is playing.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-state' href='./../Overviews/Methods.html#state'>state</a> </h3>
 <div class='method'>
 <p>The internal state values for a Thread instance can be polled:<table>
 <tr><td>0<td>not started<tr><td>7<td>running<tr><td>8<td>stopped</table>
-</div><h3><a class='anchor' name='Seeding the random number generator'>Seeding the random number generator</a></h3>
+</div><h3><a class='anchor' name='Seeding%20the%20random%20number%20generator'>Seeding the random number generator</a></h3>
 
 <p>see also: <a href="./../Reference/randomSeed.html">Random Seed</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-randSeed' href='./../Overviews/Methods.html#randSeed'>randSeed</a> = <span class='argstr'>seed</span></h3>
 <div class='method'>
@@ -145,8 +145,8 @@ thisThread.clock;</pre>
 <p><pre class='code prettyprint lang-sc'>// each time the seed is reset, the random number generation should give the same sequence
 thisThread.randData_(Int32Array[ -662787342, 1546785953, 1661466823 ]);
 10.do{1.0.rand2.postln};</pre>
-</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-archiveAsCompileString' href='./../Overviews/Methods.html#archiveAsCompileString'>archiveAsCompileString</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-checkCanArchive' href='./../Overviews/Methods.html#checkCanArchive'>checkCanArchive</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-copy' href='./../Overviews/Methods.html#copy'>copy</a> </h3>

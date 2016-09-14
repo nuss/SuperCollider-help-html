@@ -22,12 +22,12 @@
 <div id='related'>See also: <a href="./../Tutorials/Streams-Patterns-Events1.html">Understanding Streams, Patterns and Events - Part 1</a>, <a href="./../Tutorials/Streams-Patterns-Events2.html">Understanding Streams, Patterns and Events - Part 2</a>, <a href="./../Tutorials/Streams-Patterns-Events3.html">Understanding Streams, Patterns and Events - Part 3</a>, <a href="./../Tutorials/Streams-Patterns-Events4.html">Understanding Streams, Patterns and Events - Part 4</a>, <a href="./../Tutorials/Streams-Patterns-Events5.html">Understanding Streams, Patterns and Events - Part 5</a>, <a href="./../Tutorials/Streams-Patterns-Events6.html">Understanding Streams, Patterns and Events - Part 6</a></div>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#Practical Considerations'>Practical Considerations</a></li>
-<ul class='toc'><li class='toc2'><a href='#Using your own ~instrument'>Using your own ~instrument</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Defining your own message bindings'>Defining your own message bindings</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Manipulating an EventStreamPlayer in Realtime'>Manipulating an EventStreamPlayer in Realtime</a></li>
-<ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='Practical Considerations'>Practical Considerations</a></h2>
-<h3><a class='anchor' name='Using your own ~instrument'>Using your own ~instrument</a></h3>
+<ul class='toc'><li class='toc1'><a href='#Practical%20Considerations'>Practical Considerations</a></li>
+<ul class='toc'><li class='toc2'><a href='#Using%20your%20own%20~instrument'>Using your own ~instrument</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Defining%20your%20own%20message%20bindings'>Defining your own message bindings</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Manipulating%20an%20EventStreamPlayer%20in%20Realtime'>Manipulating an EventStreamPlayer in Realtime</a></li>
+<ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='Practical%20Considerations'>Practical Considerations</a></h2>
+<h3><a class='anchor' name='Using%20your%20own%20~instrument'>Using your own ~instrument</a></h3>
 <pre class='code prettyprint lang-sc'>(
 SynthDef(\help_SPE7_BerlinB, { arg i_out=0, freq = 80, amp = 0.2, pan=0;
     var out, a, b;
@@ -62,7 +62,7 @@ Pbind(
     \amp, 0.03
 ).play; // this returns an EventStreamPlayer
 )</pre>
-<h3><a class='anchor' name='Defining your own message bindings'>Defining your own message bindings</a></h3>
+<h3><a class='anchor' name='Defining%20your%20own%20message%20bindings'>Defining your own message bindings</a></h3>
 
 <p>The default event prototype uses a <code class='code prettyprint lang-sc'>msgFunc</code> to determine which bindings to pass to the server. Synthdefs that have been stored in a <a href="./../Classes/SynthDescLib.html">SynthDescLib</a> ("synth description library") construct the <code class='code prettyprint lang-sc'>msgFunc</code> automatically. The default event looks up the instrument name in a SynthDescLib of your choosing (using the <code class='code prettyprint lang-sc'>\synthLib</code> key). Normally only the global SynthDescLib is used; if <code class='code prettyprint lang-sc'>\synthLib</code> is empty, the global library is the default.
 <p>You should not send or load synthdefs that you plan to use with patterns. Instead, store them in a SynthDescLib.<pre class='code prettyprint lang-sc'>// saves .scsyndef file on disk (like .load), and adds description to the global library
@@ -112,7 +112,7 @@ Pbind(
 )</pre>
 
 <p>But this is quite clumsy. It is strongly recommended to get into the habit of using <code class='code prettyprint lang-sc'>.add</code> for all SynthDefs intended for use with Patterns.
-<p>The other option you have if you will be using unspecified bindings, is of course to define an event with the appropriate <code class='code prettyprint lang-sc'>msgFunc</code> as default. Have a look at Event's source, it's easy, and it's cleaner than passing in the <code class='code prettyprint lang-sc'>msgFunc</code> every time.<h3><a class='anchor' name='Manipulating an EventStreamPlayer in Realtime'>Manipulating an EventStreamPlayer in Realtime</a></h3>
+<p>The other option you have if you will be using unspecified bindings, is of course to define an event with the appropriate <code class='code prettyprint lang-sc'>msgFunc</code> as default. Have a look at Event's source, it's easy, and it's cleaner than passing in the <code class='code prettyprint lang-sc'>msgFunc</code> every time.<h3><a class='anchor' name='Manipulating%20an%20EventStreamPlayer%20in%20Realtime'>Manipulating an EventStreamPlayer in Realtime</a></h3>
 <pre class='code prettyprint lang-sc'>(
 p = Pbind(
     \degree, Pwhite(0,12),

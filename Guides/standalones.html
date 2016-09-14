@@ -21,17 +21,17 @@
 <div class='subheader'>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#Modifying the Template'>Modifying the Template</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Creating from Scratch'>Creating from Scratch</a></li>
-<ul class='toc'><li class='toc2'><a href='#Basic Setup and Building'>Basic Setup and Building</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Custom Startup'>Custom Startup</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Managing Multiple Standalone Applications'>Managing Multiple Standalone Applications</a></li>
+<ul class='toc'><li class='toc1'><a href='#Modifying%20the%20Template'>Modifying the Template</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Creating%20from%20Scratch'>Creating from Scratch</a></li>
+<ul class='toc'><li class='toc2'><a href='#Basic%20Setup%20and%20Building'>Basic Setup and Building</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Custom%20Startup'>Custom Startup</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Managing%20Multiple%20Standalone%20Applications'>Managing Multiple Standalone Applications</a></li>
 <ul class='toc'></ul></ul></ul></div><a class='anchor' name='kw_standalones'>&nbsp;</a><a class='anchor' name='kw_stand-alones'>&nbsp;</a><div class='note'><span class='notelabel'>NOTE:</span> The concept of standalone applications is only relevant on Mac OS X. There is no such concept on other platforms.</div>
 <p>Standalone applications are applications that run SuperCollider code in an opaque way, in the sense that the user does not need to install SuperCollider, manually run SuperCollider code, or even know that SuperCollider is involved. This is useful for distributing applications to the general public, or for creating special-purpose applications for your own use. There is one important restriction: the entire application must be open-source and comply with the GNU General Public License.
 <p>On Mac OS X, applications are special directories with an ".app" extension, known as <em>bundles</em>. SuperCollider <em>standalone applications</em> are bundles that contain your SuperCollider code, as well as a copy of SuperCollider itself to run your code.
 <p>There are two ways of making standalone applications:<ul>
 <li>Modifying an existing Standalone Template.app by editing the contents in its folder, which does not require XCode or any other development environment.<li>Creating a standalone application from scratch.</ul>
-<h2><a class='anchor' name='Modifying the Template'>Modifying the Template</a></h2>
+<h2><a class='anchor' name='Modifying%20the%20Template'>Modifying the Template</a></h2>
 
 <p>If you do not have or use Apple Developer tools, the easiest way to create a standalone application is to modify an existing one. Here are instructions how to modify the basic template compiled from the SuperCollider source code:<ol>
 <li><strong>Obtain the Template</strong>
@@ -47,10 +47,10 @@
 <p> Edit Resources/HelpSource/Help.schelp to inform users about YourApp.<li><strong>Add Resources, Extensions, etc.</strong><ul>
 <li>Put any soundfiles you intend to use in /Contents/Resources/sounds<li>Put any extra UGen plugin libraries your app requires in (e.g. Kloink.scx) in Resources/plugins<li>Put any classes for YourApp in Resources/SCClassLibrary</ul>
 <li><strong>Startup File</strong>
-<p> In Resources/SCClassLibrary/, modify the file modifyStartup.sc to do anything your app needs at startup, such as boot the server, instantiate classes and run code... See the section <a href="#Custom Startup">Custom Startup</a> below.<li><strong>Test Your Application</strong>
+<p> In Resources/SCClassLibrary/, modify the file modifyStartup.sc to do anything your app needs at startup, such as boot the server, instantiate classes and run code... See the section <a href="#Custom%20Startup">Custom%20Startup</a> below.<li><strong>Test Your Application</strong>
 <p> Start YourApp and test that it works. You can recompile, edit scripts, add classes, as in SuperCollider itself.<li>When your app works as desired - <strong>Share and Enjoy!</strong></ol>
-<h2><a class='anchor' name='Creating from Scratch'>Creating from Scratch</a></h2>
-<h3><a class='anchor' name='Basic Setup and Building'>Basic Setup and Building</a></h3>
+<h2><a class='anchor' name='Creating%20from%20Scratch'>Creating from Scratch</a></h2>
+<h3><a class='anchor' name='Basic%20Setup%20and%20Building'>Basic Setup and Building</a></h3>
 <ol>
 <li><strong>Obtain SuperCollider Source Code</strong>
 <p> The easiest way to do so is to download the latest source release from SourceForge:  <a href="http://supercollider.sourceforge.net/downloads/">http://supercollider.sourceforge.net/downloads/</a><li><strong>Open XCode Project</strong>
@@ -66,7 +66,7 @@
 <p> The template "Standalone Resources" directory implements an application that shows a window with a button that generates a tone when clicked.<li><strong>Build Application</strong>
 <p> Build the standalone application by control-clicking on the target and choosing "Build [target name]". This will place your standalone app in the build directory.<div class='image'><img src='standalones_build.png'/></div>
 </ol>
-<div class='note'><span class='notelabel'>NOTE:</span> It is recommended that you develop your entire SuperCollider code in a normal SuperCollider environment before creating a standalone application.</div><h3><a class='anchor' name='Custom Startup'>Custom Startup</a></h3>
+<div class='note'><span class='notelabel'>NOTE:</span> It is recommended that you develop your entire SuperCollider code in a normal SuperCollider environment before creating a standalone application.</div><h3><a class='anchor' name='Custom%20Startup'>Custom Startup</a></h3>
 
 <p>You've now created an application that behaves exactly like SuperCollider. To run your own code on launch and simulate an ordinary application, you'll need to modify the startup-related methods, which are overwritten in (Standalone Resources)/SCClassLibrary/modifyStartup.sc.
 <p>Here's an example (the same code used by the SC_StandAlone target):<pre class='code prettyprint lang-sc'>+ OSXPlatform {
@@ -139,6 +139,6 @@
 <p>The class SCSA_Demo in the code above is supposed to contain the entire application, including the main window. This is the tidiest way to work, and requires the least modification to SuperCollider. If you don't want to write a class, you can execute an .scd file instead:<pre class='code prettyprint lang-sc'>load(Platform.resourceDir ++ "/myapp.scd");</pre>
 
 <p>However, any sizable application will benefit from encapsulation in classes.
-<p>Note that the example uses the internal server. This is part and parcel of keeping the application stand-alone; it shouldn't call extraneous processes behind the user's back that will persist if the application fails. If you need to use the local server for some reason, make sure scsynth is in your resources folder.<h3><a class='anchor' name='Managing Multiple Standalone Applications'>Managing Multiple Standalone Applications</a></h3>
+<p>Note that the example uses the internal server. This is part and parcel of keeping the application stand-alone; it shouldn't call extraneous processes behind the user's back that will persist if the application fails. If you need to use the local server for some reason, make sure scsynth is in your resources folder.<h3><a class='anchor' name='Managing%20Multiple%20Standalone%20Applications'>Managing Multiple Standalone Applications</a></h3>
 
 <p>To manage several standalone applications simply create several targets in the XCode project, and several resources directories. The resources directories should be named according to "[target name] Resources". If a resources directory is found when building that matches the target name, that directory will be used instead of the default "Standalone Resources" directory.<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Guides/standalones.schelp'>/usr/local/share/SuperCollider/HelpSource/Guides/standalones.schelp</a><br>link::Guides/standalones::<br>sc version: 3.8dev</div></div></body></html>

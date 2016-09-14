@@ -22,21 +22,21 @@
 <div id='related'>See also: <a href="./../Guides/Understanding-Errors.html">Understanding errors</a></div>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#Debugging synthdefs'>Debugging synthdefs</a></li>
-<ul class='toc'><li class='toc2'><a href='#SendTrig / OSCFunc'>SendTrig / OSCFunc</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Trace control signals using a control bus'>Trace control signals using a control bus</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Server-side trace'>Server-side trace</a></li>
-<ul class='toc'></ul></ul><li class='toc1'><a href='#Debugging client-to-server communication'>Debugging client-to-server communication</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Debugging client code'>Debugging client code</a></li>
+<ul class='toc'><li class='toc1'><a href='#Debugging%20synthdefs'>Debugging synthdefs</a></li>
+<ul class='toc'><li class='toc2'><a href='#SendTrig%20/%20OSCFunc'>SendTrig / OSCFunc</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Trace%20control%20signals%20using%20a%20control%20bus'>Trace control signals using a control bus</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Server-side%20trace'>Server-side trace</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Debugging%20client-to-server%20communication'>Debugging client-to-server communication</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Debugging%20client%20code'>Debugging client code</a></li>
 <ul class='toc'><li class='toc2'><a href='#Errors'>Errors</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Debug output using post statements'>Debug output using post statements</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Debug%20output%20using%20post%20statements'>Debug output using post statements</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#dumpBackTrace'>dumpBackTrace</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Tracing streams'>Tracing streams</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Debugging infinite loops or recursion'>Debugging infinite loops or recursion</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Removing debugging statements'>Removing debugging statements</a></li>
-<ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='Debugging synthdefs'>Debugging synthdefs</a></h2>
+<ul class='toc'></ul><li class='toc2'><a href='#Tracing%20streams'>Tracing streams</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Debugging%20infinite%20loops%20or%20recursion'>Debugging infinite loops or recursion</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Removing%20debugging%20statements'>Removing debugging statements</a></li>
+<ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='Debugging%20synthdefs'>Debugging synthdefs</a></h2>
 
-<p>The challenge in debugging synthdefs is the invisibility of the server's operations. There are a handful of techniques to expose the output of various UGens.<h3><a class='anchor' name='SendTrig / OSCFunc'>SendTrig / OSCFunc</a></h3>
+<p>The challenge in debugging synthdefs is the invisibility of the server's operations. There are a handful of techniques to expose the output of various UGens.<h3><a class='anchor' name='SendTrig%20/%20OSCFunc'>SendTrig / OSCFunc</a></h3>
 
 <p>SendTrig is originally intended to send a trigger message back to the client, so the client can take further action on the server. However, it can be used to send any numeric value back to the client, which can then be printed out.
 <p>To print out the values, you need to create an OSCFunc as follows:<pre class='code prettyprint lang-sc'>o = OSCFunc({ |msg| msg.postln }, '/tr', s.addr);</pre>
@@ -75,7 +75,7 @@ o.free;  // when done, you need to clean up the OSCFunc
 
 // plot as two channels: frequencies in the top graph, amps in the bottom
 l.flat.plot(numChannels: 2);</pre>
-<h3><a class='anchor' name='Trace control signals using a control bus'>Trace control signals using a control bus</a></h3>
+<h3><a class='anchor' name='Trace%20control%20signals%20using%20a%20control%20bus'>Trace control signals using a control bus</a></h3>
 
 <p>Another technique to watch control values is to output the signal to a control-rate bus. Then you can access the bus using <a href="./../Classes/Bus.html#-get">Bus: -get</a> or <a href="./../Classes/Bus.html#-getSynchronous">Bus: -getSynchronous</a>. Saving the values into an Array or List is a little more straightforward with getSynchronous.<pre class='code prettyprint lang-sc'>b = Bus.control(s, 1);
 
@@ -95,7 +95,7 @@ a.free;
 l.array.plot;  // to view the results graphically</pre>
 
 <p>This works only with internal or local servers. For remote servers, the routine may be rewritten as follows.<pre class='code prettyprint lang-sc'>r = fork { loop { b.get({ |value| l.add(value) }); 0.1.wait } };</pre>
-<div class='note'><span class='notelabel'>NOTE:</span> This approach is not valid for audio buses, because the data move too quickly to support 'get'.</div><h3><a class='anchor' name='Server-side trace'>Server-side trace</a></h3>
+<div class='note'><span class='notelabel'>NOTE:</span> This approach is not valid for audio buses, because the data move too quickly to support 'get'.</div><h3><a class='anchor' name='Server-side%20trace'>Server-side trace</a></h3>
 
 <p>The <code class='code prettyprint lang-sc'>/n_trace</code> message causes the server to print a list of all the UGens in the node as well as their input and output values.
 <p>It takes some practice to read a synthdef trace, but it's the ultimate source of information when a synthdef is not behaving as expected. Signal flow can be identified by looking at the numbers at inputs and outputs. When a UGen's output feeds into another's input, the values will be the same at both ends.
@@ -188,7 +188,7 @@ a.free;
 a = Synth(\resonz);
 a.trace;
 a.free;</pre>
-<h2><a class='anchor' name='Debugging client-to-server communication'>Debugging client-to-server communication</a></h2>
+<h2><a class='anchor' name='Debugging%20client-to-server%20communication'>Debugging client-to-server communication</a></h2>
 
 <p>Some bugs result from OSC messages to the server being constructed incorrectly. Julian Rohrhuber's DebugNetAddr is a convenient way to capture messages. The class may be downloaded from: <a href="http://swiki.hfbk-hamburg.de">http://swiki.hfbk-hamburg.de</a>:8888/MusicTechnology/710 .
 <p>To use it, you need to quit the currently running local server, then create a new server using a DebugNetAddr instead of a regular NetAddr. Messages will be dumped into a new document window.<pre class='code prettyprint lang-sc'>s.quit;
@@ -212,7 +212,7 @@ a.free;
 
     latency nil
         [ 11, 1001 ]</pre>
-<h2><a class='anchor' name='Debugging client code'>Debugging client code</a></h2>
+<h2><a class='anchor' name='Debugging%20client%20code'>Debugging client code</a></h2>
 
 <p>SuperCollider does not have a step trace function, which makes debugging on the client side tougher, but not impossible.<h3><a class='anchor' name='Errors'>Errors</a></h3>
 
@@ -221,7 +221,7 @@ a.free;
 <p>There's also a graphic Inspector for error dumps, which is enabled with the following command:<pre class='code prettyprint lang-sc'>Exception.debug = true;        // enable
 Exception.debug = false;    // disable</pre>
 
-<p>In most cases, this will give you more information than a regular error dump. Usually the regular error dump is sufficient. If you are using Environments or prototype-style programming, the graphic inspector is indispensable.<h3><a class='anchor' name='Debug output using post statements'>Debug output using post statements</a></h3>
+<p>In most cases, this will give you more information than a regular error dump. Usually the regular error dump is sufficient. If you are using Environments or prototype-style programming, the graphic inspector is indispensable.<h3><a class='anchor' name='Debug%20output%20using%20post%20statements'>Debug output using post statements</a></h3>
 
 <p>The most common approach is to insert statements to print the values of variables and expressions. Since the normal printing methods don't change the value of an expression, they can be placed in the middle of the statement without altering the processing flow. There's no significant difference between:<pre class='code prettyprint lang-sc'>if(a &gt; 0) { positive.value(a) };</pre>
 
@@ -278,7 +278,7 @@ CALL STACK:
 50</pre>
 
 <p>This tells you that the function came from interpreting a closed FunctionDef (automatically created when evaluating a block of code).
-<p>In a method definition, it's recommended to use <code class='code prettyprint lang-sc'>this.dumpBackTrace</code>; in a free-standing function, there is no "this" so you should pick some arbitrary object.<h3><a class='anchor' name='Tracing streams'>Tracing streams</a></h3>
+<p>In a method definition, it's recommended to use <code class='code prettyprint lang-sc'>this.dumpBackTrace</code>; in a free-standing function, there is no "this" so you should pick some arbitrary object.<h3><a class='anchor' name='Tracing%20streams'>Tracing streams</a></h3>
 
 <p>To see the results of a pattern, use the .trace method. Each output value from the pattern gets posted to the main output.<pre class='code prettyprint lang-sc'>s.boot;
 SynthDescLib.global.read;
@@ -286,7 +286,7 @@ SynthDescLib.global.read;
 p = Pbind(\degree, Pwalk((0..14), Pstutter(Pwhite(1, 4, inf), Prand(#[-2, -1, 1, 2], inf)), Pseq(#[-1, 1], inf), 0), \delta, 0.25, \sustain, 0.2, \instrument, \default).trace.play;
 
 p.stop;</pre>
-<h3><a class='anchor' name='Debugging infinite loops or recursion'>Debugging infinite loops or recursion</a></h3>
+<h3><a class='anchor' name='Debugging%20infinite%20loops%20or%20recursion'>Debugging infinite loops or recursion</a></h3>
 <pre class='code prettyprint lang-sc'>while(true);</pre>
 
 <p>This is a bad idea. It will lock up SuperCollider and you will have to force quit. Sometimes this happens in your code and the reason isn't obvious. Debugging these situations is very painful because you might have to force quit, relaunch SuperCollider, and reload your code just to try again.<pre class='code prettyprint lang-sc'>f = { |func| func.value(func) };
@@ -322,7 +322,7 @@ SystemClock.sched(2, { a.postln });    // crashes when scheduler fires the funct
 <p>When a scheduled function executes, if it returns a number, the function will be rescheduled for now + the number. If the number is 0, it is effectively the same as an infinite loop.
 <p>To fix it, make sure the function returns a non-number.<pre class='code prettyprint lang-sc'>a = 0;
 SystemClock.sched(2, { a.postln; nil });</pre>
-<h3><a class='anchor' name='Removing debugging statements'>Removing debugging statements</a></h3>
+<h3><a class='anchor' name='Removing%20debugging%20statements'>Removing debugging statements</a></h3>
 
 <p>Use formatting to help your eye locate debugging statements when it's time to remove them. SuperCollider code is usually indented. If you write your debugging statements fully left-justified, they're much easier to see.<pre class='code prettyprint lang-sc'>a = Array.new;
 r = Routine({

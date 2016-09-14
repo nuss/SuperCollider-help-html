@@ -22,10 +22,10 @@
 <div id='related'>See also: <a href="./../../Overviews/JITLib.html">JITLib</a></div>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#a) rebuild and send: manual rate'>a) rebuild and send: manual rate</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#b) starting synths and tasks'>b) starting synths and tasks</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#c) sending messages to running synths'>c) sending messages to running synths</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#switching audio'>switching audio</a></li>
+<ul class='toc'><li class='toc1'><a href='#a)%20rebuild%20and%20send:%20manual%20rate'>a) rebuild and send: manual rate</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#b)%20starting%20synths%20and%20tasks'>b) starting synths and tasks</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#c)%20sending%20messages%20to%20running%20synths'>c) sending messages to running synths</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#switching%20audio'>switching audio</a></li>
 <ul class='toc'></ul></ul></div>
 <p><a href="./../../Classes/NodeProxy.html">NodeProxy</a> (and, in disguise <a href="./../../Classes/ProxySpace.html">ProxySpace</a>) represent "pronouns", placeholders for all kinds of sound producing objects that are able to write to a specific bus on the server.
 <p>To prepare such an object for playing, different objects require different things, some very little, some more. As working with the placeholders does not show directly which actions are very efficient and which ones are not, it is shown here more in detail.
@@ -34,7 +34,7 @@ ProxySpace.push;
 
 a.source = ... is equivalent to ~a = ...
 a.add(...) a.put(0,...) a[0] = ... ~a[0] = ... are equivalent in cpu load.</pre>
-<h2><a class='anchor' name='a) rebuild and send: manual rate'>a) rebuild and send: manual rate</a></h2>
+<h2><a class='anchor' name='a)%20rebuild%20and%20send:%20manual%20rate'>a) rebuild and send: manual rate</a></h2>
 
 <p>the following code requires a rebuild and send of a <a href="./../../Classes/SynthDef.html">SynthDef</a> and is thus most cpu-expensive. though fine for slower use (esp.hand-use) for automatisation it is better to build a synthdef and assign it.<pre class='code prettyprint lang-sc'>~a = { someUGenFunction };
 ~a = Patch(instrname, args);
@@ -46,7 +46,7 @@ a.add(...) a.put(0,...) a[0] = ... ~a[0] = ... are equivalent in cpu load.</pre>
 
 // this rebuild is also used when setting one of the following properties:
 server, bus, setRates</pre>
-<h2><a class='anchor' name='b) starting synths and tasks'>b) starting synths and tasks</a></h2>
+<h2><a class='anchor' name='b)%20starting%20synths%20and%20tasks'>b) starting synths and tasks</a></h2>
 
 <p>the following code sends commands to the server to start synths, which is load mainly on the server and depends on the characteristics of the synthdef:<pre class='code prettyprint lang-sc'>~a = \synthDefName; // the synthdef is already on the server
 ~a = Pbind(\instrument, name, \freq, ...);
@@ -72,7 +72,7 @@ server, bus, setRates</pre>
 // the above or a lag in the synth.
 
 ~a.lineAt(key), ~a.xlineAt(key)</pre>
-<h2><a class='anchor' name='c) sending messages to running synths'>c) sending messages to running synths</a></h2>
+<h2><a class='anchor' name='c)%20sending%20messages%20to%20running%20synths'>c) sending messages to running synths</a></h2>
 
 <p>for these the least calculation has to be done<pre class='code prettyprint lang-sc'>~a.set(\freq, 400, \dt, 0.2); ~a.unset(\freq); // if running the bundle will be recalculated
 ~a.map(\freq, ~lfo); ~a.unmap(\freq);
@@ -82,7 +82,7 @@ server, bus, setRates</pre>
 // for avoiding bundle recalculation you can directly talk to the group.
 // this setting will not be kept when you exchange the synth
 ~a.group.set(\freq, 500);</pre>
-<h2><a class='anchor' name='switching audio'>switching audio</a></h2>
+<h2><a class='anchor' name='switching%20audio'>switching audio</a></h2>
 
 <p>(this can now be done with map!)
 <p>todo: rewrite this part.

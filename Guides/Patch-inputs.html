@@ -21,10 +21,10 @@
 <div class='subheader'>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#Fixed Arguments'>Fixed Arguments</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Talking to the Patch's input objects'>Talking to the Patch's input objects</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Scaling inputs and outputs'>Scaling inputs and outputs</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Meta-patches : factory methods and creating Patches with Patches'>Meta-patches : factory methods and creating Patches with Patches</a></li>
+<ul class='toc'><li class='toc1'><a href='#Fixed%20Arguments'>Fixed Arguments</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Talking%20to%20the%20Patch's%20input%20objects'>Talking to the Patch's input objects</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Scaling%20inputs%20and%20outputs'>Scaling inputs and outputs</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Meta-patches%20:%20factory%20methods%20and%20creating%20Patches%20with%20Patches'>Meta-patches : factory methods and creating Patches with Patches</a></li>
 <ul class='toc'></ul></ul></div>
 <p>Each argument of the Instr function has a Spec. See Instr for how these specs are determined.
 <p>An argument may be nil. For a nil argument, Patch will ask the spec to create a suitable defaultControl.<ul>
@@ -68,7 +68,7 @@ Patch(\bubbles,
 <p>This is useful for Instr with long arg lists and helps to avoid errors.
 <p>For any nil arguments, a default control will be created.
 <p>This gives the impression that Patch is "an automatic gui for an Instr / SynthDef".
-<p>If you do not supply arguments, it will make default ones, simple ones, but the real power of Patch is to supply functions with complex and varied inputs. Sitting there with 5 sliders on a 1 dimensional Instrument isn't really the height of synthesis.<h2><a class='anchor' name='Fixed Arguments'>Fixed Arguments</a></h2>
+<p>If you do not supply arguments, it will make default ones, simple ones, but the real power of Patch is to supply functions with complex and varied inputs. Sitting there with 5 sliders on a 1 dimensional Instrument isn't really the height of synthesis.<h2><a class='anchor' name='Fixed%20Arguments'>Fixed Arguments</a></h2>
 
 <p>Floats and other scalar values including Envelopes, are transparently dealt with by Patch. These items are passed to the Instr function, but not to the SynthDef or the Synth. They are not modulateable.<pre class='code prettyprint lang-sc'>(
 // fixing arguments
@@ -84,7 +84,7 @@ q = Patch([\jmcExamples,'moto-rev'],[
 q.gui;
 
 )</pre>
-<h2><a class='anchor' name='Talking to the Patch's input objects'>Talking to the Patch's input objects</a></h2>
+<h2><a class='anchor' name='Talking%20to%20the%20Patch's%20input%20objects'>Talking to the Patch's input objects</a></h2>
 
 <p>As an extra facility, each arg name automagically becomes an attribute of the patch object itself.<pre class='code prettyprint lang-sc'>p = Patch({ arg freq=440; SinOsc.ar( freq ) });
 // with no args supplied, a KrNumberEditor was made as input for \freq
@@ -101,7 +101,7 @@ p.freq.value = 300
 // look for the input for the 'freq' arg
 // and sends it the .set(500) message if it responds to that
 p.set(\freq, 500)</pre>
-<h2><a class='anchor' name='Scaling inputs and outputs'>Scaling inputs and outputs</a></h2>
+<h2><a class='anchor' name='Scaling%20inputs%20and%20outputs'>Scaling inputs and outputs</a></h2>
 
 <p>First of all, quite apart from Patch, you can use a spec to map a signal from a 0..1 range to the range of the spec :<pre class='code prettyprint lang-sc'>(
 var spec;
@@ -151,7 +151,7 @@ f.value</pre>
 
 <p>where the output of the Patch is multiplied by 0.1, reducing the amplitude. Internal optimization in this case results in using a PlayerAmp<pre class='code prettyprint lang-sc'>// true binary op players not yet implemented :(
 (Patch({SinOsc.ar(440) }) % 0.4).play</pre>
-<h2><a class='anchor' name='Meta-patches : factory methods and creating Patches with Patches'>Meta-patches : factory methods and creating Patches with Patches</a></h2>
+<h2><a class='anchor' name='Meta-patches%20:%20factory%20methods%20and%20creating%20Patches%20with%20Patches'>Meta-patches : factory methods and creating Patches with Patches</a></h2>
 
 <p>Patch's auto-input creation is simple and convienient, but to really get interesting results I recommend experimenting with factory methods to create your patches, supplying them with inputs useful for what you are working on.
 <p>eg. If you often use a certain physical controller then make a factory method:<pre class='code prettyprint lang-sc'>buildPatch  = { arg instrName;

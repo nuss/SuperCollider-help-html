@@ -26,14 +26,14 @@
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-beat'>beat</a> </li>
 <li class='toc3'><a href='#-makeTask'>makeTask</a> </li>
 <li class='toc3'><a href='#-startTask'>startTask</a> </li>
-<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Compared to Pbind'>Compared to Pbind</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Compared%20to%20Pbind'>Compared to Pbind</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>a Pbind-like spawner that plays an Instr with streams supplied to its inputs.
@@ -70,12 +70,12 @@
     ).play
 )</pre>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-beat' href='./../Overviews/Methods.html#beat'>beat</a> </h3>
 <div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeTask' href='./../Overviews/Methods.html#makeTask'>makeTask</a> </h3>
 <div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-startTask' href='./../Overviews/Methods.html#startTask'>startTask</a> </h3>
-<div class='method'></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<div class='method'></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 
 <p>(  InstrGateSpawner({ arg freq=440,rq=0.1,width=0.5,fenv,fenvmod=1000,envadsr,dur=0.1,tempo;  var gate;  gate = Trig1.kr(1.0,dur / tempo);  RLPF.ar(  VarSaw.ar(  freq,  0.0,  width  ),  EnvGen.kr(fenv,gate,levelScale: fenvmod),  rq)  * EnvGen.kr(envadsr,gate,0.15, doneAction: 2)  },[  PdurStutter(  Pseq(#[1,1,1,1,1,2,2,2,2,2,3,3,3,3,4,4,0,4,4],inf),  Pseq((70 + [ 0, 1, 4, 8, 10, 15 ]).midicps ,inf)  ),  0.2,  Patch({ LFTri.kr(FSinOsc.kr(1.0).range(0.1,3.0),[0.0,0.5],0.5,0.5) }),  Env.adsr(0.3,sustainLevel: 0.1),  Pbrown(6000,10000,100),  Env.adsr(releaseTime: 0.5),
@@ -98,7 +98,7 @@
 <p>A metro-gnome ( var nome,layout; nome = InstrGateSpawner({ arg freq,amp;  Decay2.ar(  Impulse.ar(0.0), 0.01,0.11,  SinOsc.ar( freq, 0, amp )  ) * EnvGen.kr(Env.perc,doneAction: 2)  },[  Pseq([ 750, 500, 300, 500, 750, 500, 400, 500, 750, 500, 400, 500, 750, 500, 400, 500 ],inf),  Pseq([1,0.25,0.5,0.25,0.75,0.25,0.5,0.25,0.75,0.25,0.5,0.25,0.75,0.25,0.5,0.25] * 0.1,inf)  ],1.0);
 <p>layout = FlowView.new;
 <p>ToggleButton(layout,"Gnome",{  if(nome.isPlaying.not,{ nome.play(atTime: 1) }) },{  if(nome.isPlaying,{ nome.stop }) },minWidth: 250);
-<p>)<h2><a class='anchor' name='Compared to Pbind'>Compared to Pbind</a></h2>
+<p>)<h2><a class='anchor' name='Compared%20to%20Pbind'>Compared to Pbind</a></h2>
 
 <p>Its a different approach and has plusses and minuses.
 <p>Pbind streams each item, whether it is going to change or not (a float will not change, an Env will not change). so InstrGateSpawner has much more simple/efficient event handling,  not using an environment  streamed items are placed directly into the OSC message to be sent  only using the features that are needed for the ugenFunc  no lag, offsetChannel etc.  But as computers and SC get faster, this speed advantage is less significant.

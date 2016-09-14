@@ -21,21 +21,21 @@
 <div class='subheader'>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#Booting a Server'>Booting a Server</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Making Sound'>Making Sound</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Using Arguments'>Using Arguments</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Controlling a Synth'>Controlling a Synth</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Adding an Effect Dynamically'>Adding an Effect Dynamically</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Mapping an Argument to a Control Bus'>Mapping an Argument to a Control Bus</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Sequencing with Routines'>Sequencing with Routines</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Sequencing with Patterns'>Sequencing with Patterns</a></li>
+<ul class='toc'><li class='toc1'><a href='#Booting%20a%20Server'>Booting a Server</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Making%20Sound'>Making Sound</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Using%20Arguments'>Using Arguments</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Controlling%20a%20Synth'>Controlling a Synth</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Adding%20an%20Effect%20Dynamically'>Adding an Effect Dynamically</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Mapping%20an%20Argument%20to%20a%20Control%20Bus'>Mapping an Argument to a Control Bus</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Sequencing%20with%20Routines'>Sequencing with Routines</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Sequencing%20with%20Patterns'>Sequencing with Patterns</a></li>
 <ul class='toc'></ul></ul></div>
 <p>To follow this tutorial you should read
 <p><a href="./../Reference/Server-Architecture.html">Server Architecture</a>
 <p>and
 <p><a href="./../Reference/Server-Command-Reference.html">Server Command Reference</a>.
 <p>Since version 3.6 SuperCollider consists of three separate components: The sound synthesiser (audio server), the programming language (and language interpreter) and the code editor (integrated development environment, or shortly, IDE).
-<p>The server can run either inside the language application ("internal server"), as a separate program on the same machine ("local server"), or run on a different computer across a network connection. The language application sends command messages to the server using a subset of the Open Sound Control protocol.<h2><a class='anchor' name='Booting a Server'>Booting a Server</a></h2>
+<p>The server can run either inside the language application ("internal server"), as a separate program on the same machine ("local server"), or run on a different computer across a network connection. The language application sends command messages to the server using a subset of the Open Sound Control protocol.<h2><a class='anchor' name='Booting%20a%20Server'>Booting a Server</a></h2>
 
 <p>In order to run sound we need to start a server running. The easiest way to start a server is to click on "Boot Server" in the pull-up menu you get by clicking on the server stats field on the bottom of the IDE's editor window. Or by clicking on the "Start Server" button in the respective server window. This you get with s.makeWindow (for instance for the default server) for any server object you created (see below). Sometimes though it is useful to start a server programmatically. To do this we need to get or create a server object and tell it to "boot". Two servers, internal and local, are predefined.
 <p>The internal server runs in the same process as the SuperCollider application. It is internal to the program itself.<pre class='code prettyprint lang-sc'>// set the interpreter variable i to the internal server object.
@@ -59,7 +59,7 @@ m.quit; // quit the server</pre>
 <p>It is not possible to boot a server on a remote machine, but if you have one running already or you know of one running, you can send messages to it. You create the server object using the IP address of the machine running the server and the port it is using.<pre class='code prettyprint lang-sc'>// create a server object for talking to the server running on a 
 // remote machine having IP address 192.168.0.47 using port #57110
 r = Server(\myServer, NetAddr("192.168.0.47", 57110));</pre>
-<h2><a class='anchor' name='Making Sound'>Making Sound</a></h2>
+<h2><a class='anchor' name='Making%20Sound'>Making Sound</a></h2>
 
 <p>(note: This tutorial uses raw OSC commands as described in <a href="./../Reference/Server-Command-Reference.html">Server Command Reference</a>, rather than the classes <a href="./../Classes/Synth.html">Synth</a> and <a href="./../Classes/Group.html">Group</a>. See those helpfiles also for some simpler ways of working with Synths. This tutorial explains the basic underlying design of Synths and SynthDefs).
 <p>Now lets make some audio.
@@ -106,7 +106,7 @@ SynthDef("sine", { arg freq=800;
     Out.ar(0, osc); // send output to audio bus zero.
 }).send(s); // send without writing
 )</pre>
-<h2><a class='anchor' name='Using Arguments'>Using Arguments</a></h2>
+<h2><a class='anchor' name='Using%20Arguments'>Using Arguments</a></h2>
 
 <p>It is useful to be able to specify parameters of a synth when it is created. Here a frequency argument is added to the sine SynthDef so that we can create it<pre class='code prettyprint lang-sc'>s.boot;
 
@@ -145,7 +145,7 @@ s.sendBundle(0.2,
     ["/s_new", "sine", z = s.nextNodeID, 1, 1, "freq", 1202]);
 s.sendBundle(1.2, ["/n_free", x],["/n_free", y],["/n_free", z]);
 )</pre>
-<h2><a class='anchor' name='Controlling a Synth'>Controlling a Synth</a></h2>
+<h2><a class='anchor' name='Controlling%20a%20Synth'>Controlling a Synth</a></h2>
 
 <p>You can send messages to update the values of a Synth's arguments.
 <p>Play a 900 Hz sine wave.<pre class='code prettyprint lang-sc'>s.sendMsg("/s_new", "sine", x = s.nextNodeID, 1, 1, "freq", 900);</pre>
@@ -155,7 +155,7 @@ s.sendBundle(1.2, ["/n_free", x],["/n_free", y],["/n_free", z]);
 s.sendMsg("/n_set", x, "freq", 700);
 
 s.sendMsg("/n_free", x);</pre>
-<h2><a class='anchor' name='Adding an Effect Dynamically'>Adding an Effect Dynamically</a></h2>
+<h2><a class='anchor' name='Adding%20an%20Effect%20Dynamically'>Adding an Effect Dynamically</a></h2>
 
 <p>You can dynamically add and remove an effect to process another synth. In order to do this, the effect has to be added after the node to be processed.<pre class='code prettyprint lang-sc'>(
 // define a noise pulse
@@ -195,7 +195,7 @@ s.sendMsg("/n_free", z);
 // stop the pulse
 s.sendMsg("/n_free", x);</pre>
 
-<p>This works because we added the effect after the other node. Sometimes you will need to use groups or <code class='code prettyprint lang-sc'>/n_after</code> to insure that an effect gets added after what it is supposed to process.<h2><a class='anchor' name='Mapping an Argument to a Control Bus'>Mapping an Argument to a Control Bus</a></h2>
+<p>This works because we added the effect after the other node. Sometimes you will need to use groups or <code class='code prettyprint lang-sc'>/n_after</code> to insure that an effect gets added after what it is supposed to process.<h2><a class='anchor' name='Mapping%20an%20Argument%20to%20a%20Control%20Bus'>Mapping an Argument to a Control Bus</a></h2>
 <pre class='code prettyprint lang-sc'>(
 // define a control
 SynthDef("line", { arg i_bus=10, i_start=1000, i_end=500, i_time=1;
@@ -214,7 +214,7 @@ SynthDef("line", { arg i_bus=10, i_start=1000, i_end=500, i_time=1;
 <p>Start a control process that writes to bus #10. The <a href="./../Classes/EnvGen.html">EnvGen</a> doneAction will free this node automatically when it finishes.<pre class='code prettyprint lang-sc'>s.sendMsg("/s_new", "line", s.nextNodeID, 0, 1);</pre>
 
 <p>Free the node.<pre class='code prettyprint lang-sc'>s.sendMsg("/n_free", x);</pre>
-<h2><a class='anchor' name='Sequencing with Routines'>Sequencing with Routines</a></h2>
+<h2><a class='anchor' name='Sequencing%20with%20Routines'>Sequencing with Routines</a></h2>
 <pre class='code prettyprint lang-sc'>(
 var space, offset, timer, saw, envsaw, sampler, delay;
 
@@ -283,7 +283,7 @@ timer.sched(0,{
 });
 
 )</pre>
-<h2><a class='anchor' name='Sequencing with Patterns'>Sequencing with Patterns</a></h2>
+<h2><a class='anchor' name='Sequencing%20with%20Patterns'>Sequencing with Patterns</a></h2>
 <pre class='code prettyprint lang-sc'>(
 //sappy emo electronica example...
 Tempo.bpm = 120;

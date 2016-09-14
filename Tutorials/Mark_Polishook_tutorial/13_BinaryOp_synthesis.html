@@ -22,23 +22,23 @@
 <div id='related'>See also: <a href="./../../Tutorials/Mark_Polishook_tutorial/00_Introductory_tutorial.html">00_Introductory tutorial</a></div>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#Binary messages'>Binary messages</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Mixing = addition'>Mixing = addition</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Scaling = multiplication'>Scaling = multiplication</a></li>
+<ul class='toc'><li class='toc1'><a href='#Binary%20messages'>Binary messages</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Mixing%20=%20addition'>Mixing = addition</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Scaling%20=%20multiplication'>Scaling = multiplication</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Envelopes'>Envelopes</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Keyword arguments'>Keyword arguments</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Additive Synthesis'>Additive Synthesis</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Keyword%20arguments'>Keyword arguments</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Additive%20Synthesis'>Additive Synthesis</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Envelopes'>Envelopes</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Ring modulation'>Ring modulation</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Amplitude modulation'>Amplitude modulation</a></li>
-<ul class='toc'></ul></ul></div><h2><a class='anchor' name='Binary messages'>Binary messages</a></h2>
+<ul class='toc'></ul><li class='toc1'><a href='#Ring%20modulation'>Ring modulation</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Amplitude%20modulation'>Amplitude modulation</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='Binary%20messages'>Binary messages</a></h2>
 
 <p>The pattern for a binary message is<table>
 <tr><td>RECEIVER<td>OPERATOR<td>OPERAND</table>
 
 <p>For example<pre class='code prettyprint lang-sc'>2 * 3</pre>
 
-<p>is a receiver (the object to which a message is sent), a binary operator, and an operand.<h2><a class='anchor' name='Mixing = addition'>Mixing = addition</a></h2>
+<p>is a receiver (the object to which a message is sent), a binary operator, and an operand.<h2><a class='anchor' name='Mixing%20=%20addition'>Mixing = addition</a></h2>
 
 <p>Use addition (a binary operation) to mix two or more ugens.<pre class='code prettyprint lang-sc'>(
     // mix 2 sawtooth waves
@@ -80,7 +80,7 @@
 
 <p>Or use Mix.arFill to create the same result.<pre class='code prettyprint lang-sc'>{ Mix.arFill(3, { arg i; Saw.ar(500 + (i * 100), 0.05) }) }.scope;</pre>
 
-<p>Every time the function is evaluated, the argument i is incremented. So i equals 0 the first time the function is evaluated, i equals 1 the second time, i equals 2, the third time, and so on.<h2><a class='anchor' name='Scaling = multiplication'>Scaling = multiplication</a></h2>
+<p>Every time the function is evaluated, the argument i is incremented. So i equals 0 the first time the function is evaluated, i equals 1 the second time, i equals 2, the third time, and so on.<h2><a class='anchor' name='Scaling%20=%20multiplication'>Scaling = multiplication</a></h2>
 
 <p>Apply an envelope, in the form of a low-frequency sine wave, to a WhiteNoise generator.<pre class='code prettyprint lang-sc'>{ WhiteNoise.ar(0.1) * SinOsc.kr(1, 1) }.scope;
 
@@ -99,7 +99,7 @@
 <p>Dynamically modulate any parameter in a ugen (such as frequency, phase, or amplitude) with an envelope.<pre class='code prettyprint lang-sc'>// modulate amplitude
 { SinOsc.ar(440, 0, 0.1) * EnvGen.kr(Env.sine(1), doneAction: 2) }.scope;</pre>
 
-<p>Setting the doneAction argument (control) to 2 insures that after the envelope reaches its endpoint, SuperCollider will release the memory it used for the instances of the SinOsc and the EnvGen.<h2><a class='anchor' name='Keyword arguments'>Keyword arguments</a></h2>
+<p>Setting the doneAction argument (control) to 2 insures that after the envelope reaches its endpoint, SuperCollider will release the memory it used for the instances of the SinOsc and the EnvGen.<h2><a class='anchor' name='Keyword%20arguments'>Keyword arguments</a></h2>
 
 <p>Keywords make code easier to read and they allow arguments to be presented in any order. Here, the doneAction and the timeScale arguments are expressed in keyword style.<pre class='code prettyprint lang-sc'>(
 SynthDef("timeScale", { arg ts = 1;
@@ -128,7 +128,7 @@ r = Routine({
 });
 )
 r.play</pre>
-<h2><a class='anchor' name='Additive Synthesis'>Additive Synthesis</a></h2>
+<h2><a class='anchor' name='Additive%20Synthesis'>Additive Synthesis</a></h2>
 
 <p>Additive synthesis is as its name says. Components are added (mixed) together.<pre class='code prettyprint lang-sc'>(
 {    // evaluate the function 12 times
@@ -181,7 +181,7 @@ r.play</pre>
 }.scope
 )</pre>
 
-<p>(Or use the <a href="./../../Classes/Klang.html">Klang</a> ugen to produce a similar effect).<h2><a class='anchor' name='Ring modulation'>Ring modulation</a></h2>
+<p>(Or use the <a href="./../../Classes/Klang.html">Klang</a> ugen to produce a similar effect).<h2><a class='anchor' name='Ring%20modulation'>Ring modulation</a></h2>
 
 <p>Multiply two UGens.<pre class='code prettyprint lang-sc'>{ SinOsc.ar(440, 0, 0.571) * SinOsc.kr(880) }.scope
 
@@ -196,7 +196,7 @@ r.play</pre>
         )
     }.scope
 )</pre>
-<h2><a class='anchor' name='Amplitude modulation'>Amplitude modulation</a></h2>
+<h2><a class='anchor' name='Amplitude%20modulation'>Amplitude modulation</a></h2>
 
 <p>Multiply two UGens and restrict the value of the modulator to positive values (use the .abs message to calculate 'absolute' value) to create what Charles Dodge calls "classic" amplitude modulation.<pre class='code prettyprint lang-sc'>// use an lfo to modulate the amplitude of the modulator
 (

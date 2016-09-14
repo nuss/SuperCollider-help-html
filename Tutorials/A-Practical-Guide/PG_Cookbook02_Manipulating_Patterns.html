@@ -22,12 +22,12 @@
 <div id='related'>See also: <a href="./../../Tutorials/A-Practical-Guide/PG_Cookbook01_Basic_Sequencing.html">Pattern Guide Cookbook 01: Basic Sequencing</a>, <a href="./../../Tutorials/A-Practical-Guide/PG_Cookbook03_External_Control.html">Pattern Guide Cookbook 03: External Control</a></div>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#Manipulating pattern data'>Manipulating pattern data</a></li>
-<ul class='toc'><li class='toc2'><a href='#Merging (interleaving) independent streams'>Merging (interleaving) independent streams</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Reading an array forward or backward arbitrarily'>Reading an array forward or backward arbitrarily</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Changing Pbind value patterns on the fly'>Changing Pbind value patterns on the fly</a></li>
-<ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='Manipulating pattern data'>Manipulating pattern data</a></h2>
-<h3><a class='anchor' name='Merging (interleaving) independent streams'>Merging (interleaving) independent streams</a></h3>
+<ul class='toc'><li class='toc1'><a href='#Manipulating%20pattern%20data'>Manipulating pattern data</a></li>
+<ul class='toc'><li class='toc2'><a href='#Merging%20(interleaving)%20independent%20streams'>Merging (interleaving) independent streams</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Reading%20an%20array%20forward%20or%20backward%20arbitrarily'>Reading an array forward or backward arbitrarily</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Changing%20Pbind%20value%20patterns%20on%20the%20fly'>Changing Pbind value patterns on the fly</a></li>
+<ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='Manipulating%20pattern%20data'>Manipulating pattern data</a></h2>
+<h3><a class='anchor' name='Merging%20(interleaving)%20independent%20streams'>Merging (interleaving) independent streams</a></h3>
 
 <p>Suppose you wanted a pattern that generated pitches in a lower range 70% of the time, and a higher range the other 30%. For purely random patterns, this is simple because the pattern for each range has no memory (the next value does not depend on the previous value in any perceptible way). The random number generator patterns ( <a href="./../../Classes/Pwhite.html">Pwhite</a> ) return one element before yielding control back to the "selector" ( <a href="./../../Classes/Pwrand.html">Pwrand</a> ).<pre class='code prettyprint lang-sc'>    \degree, Pwrand([Pwhite(-7, 11, 1), Pwhite(7, 18, 1)], #[0.7, 0.3], inf)</pre>
 
@@ -45,7 +45,7 @@ p = Pbind(
 )
 
 p.stop;</pre>
-<h3><a class='anchor' name='Reading an array forward or backward arbitrarily'>Reading an array forward or backward arbitrarily</a></h3>
+<h3><a class='anchor' name='Reading%20an%20array%20forward%20or%20backward%20arbitrarily'>Reading an array forward or backward arbitrarily</a></h3>
 
 <p>Here's an interesting one. We have an array of possible output values, and we want the pattern to move forward or backward through the array depending on some kind of user input.
 <p>There is actually a pattern that handles this already, based on the standard programming concept of a (random) walk. In a random walk, there is an "observer" who is at a position within an array. The observer moves randomly by some number of steps forward or backward. In the SuperCollider pattern implementation, <a href="./../../Classes/Pwalk.html">Pwalk</a>, the steps don't have to be random. So here, we determine the step size from a slider.
@@ -74,7 +74,7 @@ p = Pbind(
 
 p.stop;</pre>
 
-<p><strong>Third-party extension alert</strong> : The <a href="./../../Classes/Pwalk.html">Pwalk</a> pattern shown here moves forward and backward in a preset array. To do the same thing with the results of a pattern, see Pscratch in the <strong>ddwPatterns</strong> quark. An especially fun use of Pscratch is to use it on an event pattern like Pbind, skipping around in a series of fully realized note events.<h3><a class='anchor' name='Changing Pbind value patterns on the fly'>Changing Pbind value patterns on the fly</a></h3>
+<p><strong>Third-party extension alert</strong> : The <a href="./../../Classes/Pwalk.html">Pwalk</a> pattern shown here moves forward and backward in a preset array. To do the same thing with the results of a pattern, see Pscratch in the <strong>ddwPatterns</strong> quark. An especially fun use of Pscratch is to use it on an event pattern like Pbind, skipping around in a series of fully realized note events.<h3><a class='anchor' name='Changing%20Pbind%20value%20patterns%20on%20the%20fly'>Changing Pbind value patterns on the fly</a></h3>
 
 <p>Patterns are converted into streams to generate values (or events). By design, there is no way to access the internal state of the stream. This means, for Pbind and similar patterns, the streams producing values for the event keys are invisible. So, it isn't possible to reach inside the stream and change them while the pattern is playing.
 <p>What we can do instead is base the Pbind on <strong>pattern proxies</strong> -- objects that take the place of a pattern. The <a href="./../../Classes/PatternProxy.html">PatternProxy</a> is a single object that creates a single stream within Pbind, but it looks for its values to the pattern and stream contained inside the proxy. Changing the proxy's pattern replaces the stream, without having to touch the Pbind's closed box.

@@ -22,17 +22,17 @@
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#Installing'>Installing</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Quick Start'>Quick Start</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Inside the bundle'>Inside the bundle</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Quick%20Start'>Quick Start</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Inside%20the%20bundle'>Inside the bundle</a></li>
 <ul class='toc'><li class='toc2'><a href='#serverConfig.plist'>serverConfig.plist</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#pluginSpec.plist'>pluginSpec.plist</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#synthdefs'>synthdefs</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#plugins'>plugins</a></li>
-<ul class='toc'></ul></ul><li class='toc1'><a href='#Making standalone plugins'>Making standalone plugins</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Making%20standalone%20plugins'>Making standalone plugins</a></li>
 <ul class='toc'></ul></ul></div>
 <p>SuperColliderAU is an AudioUnit wrapper that allows using SuperCollider servers inside AudioUnits hosts on MacOSX. The embedded server may be controlled over OSC as usual. In addition, it may be packed with a synth definition and a configuration file that defines its parameters.<h2><a class='anchor' name='Installing'>Installing</a></h2>
 
-<p>Copy the bundle "SuperColliderAU.component" into /Library/Audio/Plug-ins/Components or in ~/Library/Audio/Plug-ins/Components<h2><a class='anchor' name='Quick Start'>Quick Start</a></h2>
+<p>Copy the bundle "SuperColliderAU.component" into /Library/Audio/Plug-ins/Components or in ~/Library/Audio/Plug-ins/Components<h2><a class='anchor' name='Quick%20Start'>Quick Start</a></h2>
 
 <p>Start up an Audio Units host application. Common hosts include Apple Logic and Ableton Live. A list of supported hosts can be found in this page of the SuperCollider swiki (feel free to update it):
 <p><a href="http://swiki.hfbk-hamburg.de">http://swiki.hfbk-hamburg.de</a>:8888/MusicTechnology/823
@@ -42,7 +42,7 @@ u.serverRunning = true;
 u.ping(10); // Gives about 0.02 for me - confirms that communication is working
 // Now let's create a quick ring-modulator effect:
 z = { AudioIn.ar([1,2]) * SinOsc.ar(MouseX.kr(100, 1000)) }.play(u);</pre>
-<h2><a class='anchor' name='Inside the bundle'>Inside the bundle</a></h2>
+<h2><a class='anchor' name='Inside%20the%20bundle'>Inside the bundle</a></h2>
 
 <p>As an AudioUnit plugin, SuperColliderAU is packaged in a component bundle. All the files needed by SuperColliderAU can be found in the Resources folder inside the bundle:<h3><a class='anchor' name='serverConfig.plist'>serverConfig.plist</a></h3>
 
@@ -54,6 +54,6 @@ z = { AudioIn.ar([1,2]) * SinOsc.ar(MouseX.kr(100, 1000)) }.play(u);</pre>
 
 <p>For standalone plugins you should have your synth definition here. When controlling the server remotely you can just send the synth definitions.<h3><a class='anchor' name='plugins'>plugins</a></h3>
 
-<p>Here you need all the SC plugins you intend to use with that server.<h2><a class='anchor' name='Making standalone plugins'>Making standalone plugins</a></h2>
+<p>Here you need all the SC plugins you intend to use with that server.<h2><a class='anchor' name='Making%20standalone%20plugins'>Making standalone plugins</a></h2>
 
 <p>Besides controlling SuperColliderAU from within the language, you can create AudioUnits plugins that are controlled from the host using the default GUI. This can be done manually by duplicating SupercolliderAU.component, adding a synthdef and associated SC plugins and editing pluginSpec.plist. However, if you want an AudioUnit with a unique identifier (the identifier is what you see from within the host GUI) you have to recompile its resource file (with the new identifier) using Rez. This program is included in Apple's Developer Tools. A helper class that automates all this process is maintained in the AudioUnitBuilder quark. Using the class AudioUnitBuilder you can create standalone AudioUnit plugins without leaving SuperCollider.<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Guides/SuperColliderAU.schelp'>/usr/local/share/SuperCollider/HelpSource/Guides/SuperColliderAU.schelp</a><br>link::Guides/SuperColliderAU::<br>sc version: 3.8dev</div></div></body></html>

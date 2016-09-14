@@ -33,17 +33,17 @@
 <li class='toc3'><a href='#*usageID'>usageID</a> </li>
 <li class='toc3'><a href='#*proto'>proto</a> </li>
 <li class='toc3'><a href='#*element'>element</a> </li>
-<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-key'>key</a> </li>
 <li class='toc3'><a href='#-free'>free</a> </li>
-<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'><li class='toc2'><a href='#Filtering based on usage'>Filtering based on usage</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Filtering based on usage ID'>Filtering based on usage ID</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Filtering based on a device'>Filtering based on a device</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Filtering based on a prototype element'>Filtering based on a prototype element</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Filtering based on an element ID'>Filtering based on an element ID</a></li>
+<ul class='toc'><li class='toc2'><a href='#Filtering%20based%20on%20usage'>Filtering based on usage</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Filtering%20based%20on%20usage%20ID'>Filtering based on usage ID</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Filtering%20based%20on%20a%20device'>Filtering based on a device</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Filtering%20based%20on%20a%20prototype%20element'>Filtering based on a prototype element</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Filtering%20based%20on%20an%20element%20ID'>Filtering based on an element ID</a></li>
 <ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>HIDdef provides a global reference to the functionality of its superclass HIDFunc. Essentially it stores itself at a key within a global dictionary, allowing replacement at any time. Most methods are inherited from its superclass.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
@@ -134,7 +134,7 @@
 <p>If the argTemplateType is <code class='code prettyprint lang-sc'>\rawValue</code> (the default) then the matching is done based on the incoming raw value of the element (not mapped according to the logical min and max). Otherwise the matching is done according to the mapped value.<tr><td class='argumentname'>dispatcher<td class='argumentdesc'>
 <p>An optional instance of an appropriate subclass of <a href="./../Classes/AbstractDispatcher.html">AbstractDispatcher</a>. This can be used to allow for customised dispatching. Normally this should not be needed. The default for this type of <code class='code prettyprint lang-sc'>HIDdef</code> is <code class='code prettyprint lang-sc'>HIDElementDispatcher</code></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>A new instance of HIDdef which responds to a specific element id for a specific device.</div></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<p>A new instance of HIDdef which responds to a specific element id for a specific device.</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-key' href='./../Overviews/Methods.html#key'>key</a> </h3>
 <div class='method'>
@@ -142,13 +142,13 @@
 <div class='returnvalue'>
 <p>Usually a <a href="./../Classes/Symbol.html">Symbol</a>.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-free' href='./../Overviews/Methods.html#free'>free</a> </h3>
 <div class='method'>
-<p>Clears this HIDdef from the global collection and deactivates it.</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<p>Clears this HIDdef from the global collection and deactivates it.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 
 <p>For all the examples below here, you will need to have initialized an HID device (see also <a href="./../Guides/Working_with_HID.html">Working with HID</a>). The examples below should work with a standard USB mouse.<pre class='code prettyprint lang-sc'>HID.findAvailable; // check which devices are attached
 HID.postAvailable; // post the available devices
 ~myhid = HID.open( 1103, 53251 ); // adapt this line for  the device that you want to open!</pre>
-<h3><a class='anchor' name='Filtering based on usage'>Filtering based on usage</a></h3>
+<h3><a class='anchor' name='Filtering%20based%20on%20usage'>Filtering based on usage</a></h3>
 <pre class='code prettyprint lang-sc'>// filter all events coming from the x-axis of a mouse
 HIDdef.usage( \example, { |...args| args.postln; }, \X, \Mouse );
 
@@ -181,7 +181,7 @@ HIDdef.usage( \example, { |...args| args.postln; }, \X, deviceInfo: ( usageName:
 HIDdef.usage( \example, { |...args| args.postln; }, nil, deviceInfo: ( usageName: \Mouse ) );
 
 HIDdef( \example ).free;</pre>
-<h3><a class='anchor' name='Filtering based on usage ID'>Filtering based on usage ID</a></h3>
+<h3><a class='anchor' name='Filtering%20based%20on%20usage%20ID'>Filtering based on usage ID</a></h3>
 <pre class='code prettyprint lang-sc'>// filter by usage ID 48 on usage page 1
 HIDdef.usageID( \example2, { |...args| args.postln; }, 48, 1 );
 
@@ -198,16 +198,16 @@ HIDdef.usageID( \example2, { |...args| args.postln; }, 48, 1, "" );
 HIDdef.usageID( \example2, { |...args| args.postln; }, 48, 1, deviceInfo: ( path: "/dev/hidraw2" )  );
 
 HIDdef( \example2 ).free;</pre>
-<h3><a class='anchor' name='Filtering based on a device'>Filtering based on a device</a></h3>
+<h3><a class='anchor' name='Filtering%20based%20on%20a%20device'>Filtering based on a device</a></h3>
 <pre class='code prettyprint lang-sc'>// filter for device with name "", and element with usage \X.
 HIDdef.device( \example3, { |...args| args.postln; }, \X, "" );
 HIDdef( \example3 ).free;</pre>
-<h3><a class='anchor' name='Filtering based on a prototype element'>Filtering based on a prototype element</a></h3>
+<h3><a class='anchor' name='Filtering%20based%20on%20a%20prototype%20element'>Filtering based on a prototype element</a></h3>
 <pre class='code prettyprint lang-sc'>// create an prototype element with usageName \X
 c = HIDElementProto.new.usageName_( \X );
 HIDdef.proto( \example4, { |...args| args.postln; }, c );
 HIDdef( \example4 ).free;</pre>
-<h3><a class='anchor' name='Filtering based on an element ID'>Filtering based on an element ID</a></h3>
+<h3><a class='anchor' name='Filtering%20based%20on%20an%20element%20ID'>Filtering based on an element ID</a></h3>
 <pre class='code prettyprint lang-sc'>// filter for elements with element id 6:
 HIDdef.element( \example5, { |...args| args.postln; }, 6 );
 HIDdef( \example5 ).free;</pre>

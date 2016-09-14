@@ -25,13 +25,13 @@
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-pvcalc'>pvcalc</a> </li>
 <li class='toc3'><a href='#-pvcalc2'>pvcalc2</a> </li>
 <li class='toc3'><a href='#-pvcollect'>pvcollect</a> </li>
-<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-addCopiesIfNeeded'>addCopiesIfNeeded</a> </li>
 <li class='toc3'><a href='#-fftSize'>fftSize</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
@@ -43,7 +43,7 @@
 <p>"PV_ChainUGen" is an abstract class - in other words, a class that you do not use directly. Instead, use one of its subclasses. It represents phase-vocoder UGens - i.e. UGens which apply some kind of transformation to the frequency-domain signal produced by FFT.
 <p>(Strictly, this class encompasses all units whose output is an FFT chain. This is why FFT is in this group but IFFT is not - the IFFT unit outputs ordinary time-domain audio.)
 <p>For more info on using these units, see <a href="./../Guides/FFT-Overview.html">FFT Overview</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-pvcalc' href='./../Overviews/Methods.html#pvcalc'>pvcalc</a> (<span class='argstr'>numframes</span>, <span class='argstr'>func</span>, <span class='argstr'>frombin: 0</span>, <span class='argstr'>tobin</span>, <span class='argstr'>zeroothers: 0</span>)</h3>
 <div class='method'>
@@ -69,8 +69,8 @@
 <p>Note that this procedure can be relatively CPU-heavy, depending on how you use it. Using pvcollect (or its components, UnpackFFT &amp; PackFFT) is usually less efficient than using a single "PV_" unit generator to process an FFT chain, because it involves the creation of quite a large graph of demand-rate unit generators.
 <p>If you wish to reduce the CPU impact of using this approach, try the following:<ul>
 <li>Use the frombin and tobin arguments to limit the number of FFT bins that will be included in the calculation. Often the lower FFT bins contain the loudest and/or most relevant information, so perhaps your effect sounds very similar if you ignore the higher-up bins (either leave them unprocessed, or discard them by setting the zeroothers argument to 1, which has the effect of a band-pass frequency-domain filter).<li>Use a smaller FFT buffer size.<li>Avoid creating ugens inside your calculation function if at all possible. For example, a deterministic ugen such as LFPar.kr(0.5, 0, 1) will be replicated once for each bin if specified inside the function, despite the fact that the output is always the same. Define it outside the calculation function and then reference it by variable name.<li>Avoid unused calculations! For example, uncommenting all the different lines in the above will waste effort because many values will be calculated but not used. This cannot be optimised away during compilation. It is particularly important because all calculations are duplicated (once for each bin) so can have a significant impact on efficiency.<li>If you find yourself calling pvcollect on an FFT chain more than once in series, you should definitely try to combine your processing into a single pvcollect function, to avoid unnecessary unpacking-then-packing-then-unpacking-then-packing.</ul>
-</div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-addCopiesIfNeeded' href='./../Overviews/Methods.html#addCopiesIfNeeded'>addCopiesIfNeeded</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-fftSize' href='./../Overviews/Methods.html#fftSize'>fftSize</a> </h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>

@@ -22,9 +22,9 @@
 <div id='related'>See also: <a href="./../../Tutorials/A-Practical-Guide/PG_06b_Time_Based_Patterns.html">Pattern Guide 06b: Time Based Patterns</a>, <a href="./../../Tutorials/A-Practical-Guide/PG_06d_Parallel_Patterns.html">Pattern Guide 06d: Parallel Patterns</a></div>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#Adding values to a base event pattern (Or, "Pattern Composition")'>Adding values to a base event pattern (Or, "Pattern Composition")</a></li>
-<ul class='toc'><li class='toc2'><a href='#Pset and cousins'>Pset and cousins</a></li>
-<ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='Adding values to a base event pattern (Or, "Pattern Composition")'>Adding values to a base event pattern (Or, "Pattern Composition")</a></h2>
+<ul class='toc'><li class='toc1'><a href='#Adding%20values%20to%20a%20base%20event%20pattern%20(Or,%20"Pattern%20Composition")'>Adding values to a base event pattern (Or, "Pattern Composition")</a></li>
+<ul class='toc'><li class='toc2'><a href='#Pset%20and%20cousins'>Pset and cousins</a></li>
+<ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='Adding%20values%20to%20a%20base%20event%20pattern%20(Or,%20"Pattern%20Composition")'>Adding values to a base event pattern (Or, "Pattern Composition")</a></h2>
 
 <p>One way to use patterns is to write everything into the pattern up front. This has the advantage of clarity and ease of understanding. Another way is to modularize the behavior by creating smaller, simpler patterns and combining their results into single events that have keys and values from all the component patterns.
 <p>This is related to the computer science concept of "function composition," in which a complex calculation can be written not as a single large function, but as several smaller functions that are then chained together into a single function. Since Functions are normal objects in SuperCollider, it's easy to do an operation on a function that returns a composite function (which may then be used like any other function). <a href="http://en.wikipedia.org/wiki/Function_composition_(computer_science)">http://en.wikipedia.org/wiki/Function_composition_(computer_science)</a>
@@ -79,7 +79,7 @@ p = Pchain(~melody, ~rhythm).play;
 
 p.stop;</pre>
 </dl>
-<h3><a class='anchor' name='Pset and cousins'>Pset and cousins</a></h3>
+<h3><a class='anchor' name='Pset%20and%20cousins'>Pset and cousins</a></h3>
 
 <p>A group of pattern classes allow single event keys to be overwritten, or one addition or multiplication to be performed. <a href="./../../Classes/Pkey.html">Pkey</a>, in combination with the <a href="./../../Classes/Pchain.html">Pchain</a> or <a href="./../../Classes/Pbindf.html">Pbindf</a> "pattern composition" classes, can do everything the following classes can do (though this alternate notation may be more convenient in certain cases).<dl>
 <dt><code class='code prettyprint lang-sc'>Pset(name, value, pattern)</code><dd>Get one event from <code class='code prettyprint lang-sc'>pattern</code>, and then put the next value from the <code class='code prettyprint lang-sc'>value</code> pattern into the <code class='code prettyprint lang-sc'>name</code> key. If the source pattern specifies a value for the same name, the value from the source will be replaced with the new one.<dt><code class='code prettyprint lang-sc'>Padd(name, value, pattern)</code><dd>After getting the next event, replace the <code class='code prettyprint lang-sc'>name</code> value with its existing value <code class='code prettyprint lang-sc'>+</code> the next number from <code class='code prettyprint lang-sc'>value</code>.<dt><code class='code prettyprint lang-sc'>Pmul(name, value, pattern)</code><dd>After getting the next event, replace the <code class='code prettyprint lang-sc'>name</code> value with its existing value <code class='code prettyprint lang-sc'>*</code> the next number from <code class='code prettyprint lang-sc'>value</code>.</dl>

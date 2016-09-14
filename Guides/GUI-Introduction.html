@@ -21,26 +21,26 @@
 <div class='subheader'>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#Basic elements: Windows, views and containers'>Basic elements: Windows, views and containers</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Automatic positioning and resizing of views'>Automatic positioning and resizing of views</a></li>
-<ul class='toc'><li class='toc2'><a href='#View's resize options'>View's resize options</a></li>
+<ul class='toc'><li class='toc1'><a href='#Basic%20elements:%20Windows,%20views%20and%20containers'>Basic elements: Windows, views and containers</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Automatic%20positioning%20and%20resizing%20of%20views'>Automatic positioning and resizing of views</a></li>
+<ul class='toc'><li class='toc2'><a href='#View's%20resize%20options'>View's resize options</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Decorators'>Decorators</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Layouts'>Layouts</a></li>
-<ul class='toc'></ul></ul><li class='toc1'><a href='#Customizing appearance'>Customizing appearance</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Customizing%20appearance'>Customizing appearance</a></li>
 <ul class='toc'><li class='toc2'><a href='#Colors'>Colors</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Palette'>Palette</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Fonts'>Fonts</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Other visual properties'>Other visual properties</a></li>
-<ul class='toc'></ul></ul><li class='toc1'><a href='#Actions and hooks: Make that button do something!'>Actions and hooks: Make that button do something!</a></li>
-<ul class='toc'><li class='toc2'><a href='#Default actions'>Default actions</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Keyboard and mouse actions'>Keyboard and mouse actions</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Drag and drop actions'>Drag and drop actions</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Other specialized actions'>Other specialized actions</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Other%20visual%20properties'>Other visual properties</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Actions%20and%20hooks:%20Make%20that%20button%20do%20something!'>Actions and hooks: Make that button do something!</a></li>
+<ul class='toc'><li class='toc2'><a href='#Default%20actions'>Default actions</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Keyboard%20and%20mouse%20actions'>Keyboard and mouse actions</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Drag%20and%20drop%20actions'>Drag and drop actions</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Other%20specialized%20actions'>Other specialized actions</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Hooks'>Hooks</a></li>
-<ul class='toc'></ul></ul><li class='toc1'><a href='#Custom views'>Custom views</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Caution: GUI and timing'>Caution: GUI and timing</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Custom%20views'>Custom views</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Caution:%20GUI%20and%20timing'>Caution: GUI and timing</a></li>
 <ul class='toc'></ul></ul></div><div class='note'><span class='notelabel'>NOTE:</span> To avoid confusion, we start off with an important historical note. SuperCollider used to have a pretty nasty GUI class system that involved platform-dependent classes like SCWindow. This system is completely gone in 3.7 with a unified Qt GUI.
-<p>You will still see remnants of the old GUI classes in some SuperCollider help files and quarks. We're still working on updating all the help files. If you encounter such old classes in a quark, you can do a public service by informing the quark author.</div><h2><a class='anchor' name='Basic elements: Windows, views and containers'>Basic elements: Windows, views and containers</a></h2>
+<p>You will still see remnants of the old GUI classes in some SuperCollider help files and quarks. We're still working on updating all the help files. If you encounter such old classes in a quark, you can do a public service by informing the quark author.</div><h2><a class='anchor' name='Basic%20elements:%20Windows,%20views%20and%20containers'>Basic elements: Windows, views and containers</a></h2>
 
 <p>The most fundamental element of the GUI is the <strong>Window</strong>. It occupies a rectangular space on screen within which other GUI elements are displayed. It usually has a bar that displays the window's title and allows for moving it, resizing it and closing it with the controls it displays or through mouse and keyboard interaction. Some of these aspects may be controlled within SuperCollider GUI code, though it is largely platform-dependent how precisely interaction with a window happens and is visually indicated.
 <p>The GUI elements contained within a Window are called <strong>views</strong>. They all inherit from the basic View class. The view occupies a rectangular space of the window within which it draws itself to display some data or to indicate a mode of interaction between the user and the program. Views receive keyboard and mouse events generated by the user and respond to them by controlling the behavior of the program. They also display information about the state of the program and the data on which it operates.
@@ -54,9 +54,9 @@ StaticText.new(c,Rect(20,30,80,30)).string_("World!");
 b.action = { c.visible = b.value.asBoolean.not };
 s.action = { c.bounds = Rect( s.value * 150 + 20, 35, 100, 100 ) };
 w.front;</pre>
-<h2><a class='anchor' name='Automatic positioning and resizing of views'>Automatic positioning and resizing of views</a></h2>
+<h2><a class='anchor' name='Automatic%20positioning%20and%20resizing%20of%20views'>Automatic positioning and resizing of views</a></h2>
 
-<p>As a handy alternative to specifying all the dimensions and positions of views explicitly in code, SuperCollider allows for automatic positioning and resizing of views in relation to each other and in relation to window size - at the view creation and dynamically, when window is resized. There is several mechanisms for this purpose.<h3><a class='anchor' name='View's resize options'>View's resize options</a></h3>
+<p>As a handy alternative to specifying all the dimensions and positions of views explicitly in code, SuperCollider allows for automatic positioning and resizing of views in relation to each other and in relation to window size - at the view creation and dynamically, when window is resized. There is several mechanisms for this purpose.<h3><a class='anchor' name='View's%20resize%20options'>View's resize options</a></h3>
 
 <p>Views can automatically resize or move when their parent is resized, in one of the nine different ways that define how each of the view's edges will move along with the parent's edges. For documentation see the view's <a href="./../Classes/View.html#-resize">resize</a> method and <a href="./../Reference/Resize.html">Resize behaviour</a> document.<pre class='code prettyprint lang-sc'>w = Window.new("GUI Introduction", Rect(200,200,200,200));
 TextField.new(w,Rect(0,0,200,30)).resize_(2);
@@ -79,7 +79,7 @@ w.view.decorator = FlowLayout(w.view.bounds);
         TextView()
     )
 ).front;</pre>
-</div><div class='note'><span class='notelabel'>NOTE:</span> Layouts are not compatible with decorators and will ignore view resize options. The effect of combining layouts and decorators is undefined.</div><h2><a class='anchor' name='Customizing appearance'>Customizing appearance</a></h2>
+</div><div class='note'><span class='notelabel'>NOTE:</span> Layouts are not compatible with decorators and will ignore view resize options. The effect of combining layouts and decorators is undefined.</div><h2><a class='anchor' name='Customizing%20appearance'>Customizing appearance</a></h2>
 
 <p>Views offer various ways to customize their appearance. This ranges from decorative changing of colors they use to draw themselves to controlling how they display various kinds of data.<h3><a class='anchor' name='Colors'>Colors</a></h3>
 
@@ -132,13 +132,13 @@ b = Button.new(w,Rect(10,10,180,50))
     .font_(a[0])
     .action_({|b| b.font = a[b.value]});
 )</pre>
-<h3><a class='anchor' name='Other visual properties'>Other visual properties</a></h3>
+<h3><a class='anchor' name='Other%20visual%20properties'>Other visual properties</a></h3>
 
-<p>Complex views may have many other ways to customize how they display the same data. <a href="./../Classes/MultiSliderView.html">MultiSliderView</a> and <a href="./../Classes/EnvelopeView.html">EnvelopeView</a> are good examples.<h2><a class='anchor' name='Actions and hooks: Make that button do something!'>Actions and hooks: Make that button do something!</a></h2>
+<p>Complex views may have many other ways to customize how they display the same data. <a href="./../Classes/MultiSliderView.html">MultiSliderView</a> and <a href="./../Classes/EnvelopeView.html">EnvelopeView</a> are good examples.<h2><a class='anchor' name='Actions%20and%20hooks:%20Make%20that%20button%20do%20something!'>Actions and hooks: Make that button do something!</a></h2>
 
 <p>Views and windows can be assigned <strong>actions</strong> that they will perform whenever a specific event occurs as a result of user's interaction. Technically, an action can be any Object, and when the relevant event occurs, it's <a href="./../Classes/Object.html#-value">value</a> method will be called. For example, it is useful to assign a Function as an action, which allows one to define an arbitrary chunk of code to be performed in response to a GUI event.
 <p>Objects can also be given to views and windows to evaluate on events that are not a direct result of user's interaction, but convey useful information about the view's operation and the state it moved in. In this case they are often differentiated from actions and called <strong>hooks</strong>.
-<p>Here, we will give an overview of different kinds of actions and hooks. See <a href="./../Classes/View.html#Actions in general">View: Actions in general</a> and following sections for precise explanation of how to assign and make use of them.<h3><a class='anchor' name='Default actions'>Default actions</a></h3>
+<p>Here, we will give an overview of different kinds of actions and hooks. See <a href="./../Classes/View.html#Actions%20in%20general">View: Actions%20in%20general</a> and following sections for precise explanation of how to assign and make use of them.<h3><a class='anchor' name='Default%20actions'>Default actions</a></h3>
 
 <p>Views can typically be assigned a default action with their <a href="./../Classes/View.html#-action">action</a> setter method, which will be performed when the view's primary mode of interaction is invoked. The default action for a Button for example occurs when it is clicked, for a Slider when its handle is moved.
 <p>In the following example, pressing the button will open an exact same window but at different position.<pre class='code prettyprint lang-sc'>~makeWindow = { var w;
@@ -146,11 +146,11 @@ b = Button.new(w,Rect(10,10,180,50))
     Button.new(w,Rect(10,10,180,30)).states_([["Evade"]]).action_(~makeWindow);
 };
 ~makeWindow.value;</pre>
-<h3><a class='anchor' name='Keyboard and mouse actions'>Keyboard and mouse actions</a></h3>
+<h3><a class='anchor' name='Keyboard%20and%20mouse%20actions'>Keyboard and mouse actions</a></h3>
 
 <p>All the views can be assigned actions to specific mouse and keyboard events, no matter what other effects those events might have on the view or what other specialized actions or hooks the view might trigger on these events.
 <p>You can assign actions to <strong>mouse events</strong> generated when the mouse pointer enters the space of a view, when it moves over them, and when a mouse button is pressed or released.
-<p>See <a href="./../Classes/View.html#Mouse actions">View: Mouse actions</a> for details.
+<p>See <a href="./../Classes/View.html#Mouse%20actions">View: Mouse%20actions</a> for details.
 <p>In the following example the StaticText will report whether the Button is pressed or released.<pre class='code prettyprint lang-sc'>w = Window.new(bounds:Rect(200,200,200,50)).front;
 b = Button.new(w,Rect(10,10,80,30)).states_([["Off"],["On"]]);
 t = StaticText(w,Rect(100,10,90,30)).string_("Button released");
@@ -158,7 +158,7 @@ b.mouseDownAction = { t.string = "Button pressed" };
 b.mouseUpAction = { t.string = "Button released" };</pre>
 
 <p>You can assign actions to <strong>keyboard events</strong> generated whenever a key is pressed or released while the view has keyboard focus. Keyboard focus is a state of a view in which it has exclusive priority to respond to keyboard events. A view that has keyboard focus typically in a way visually indicates so. On most platforms, pressing the Tab key will switch the keyboard focus between views in the active window and clicking on a view will give it focus.
-<p>See <a href="./../Classes/View.html#Key actions">View: Key actions</a> for details.
+<p>See <a href="./../Classes/View.html#Key%20actions">View: Key%20actions</a> for details.
 <p>Typing text into any of the TextFields in the following example will change the color of the rectangle bellow, for each TextField a different color.<pre class='code prettyprint lang-sc'>w = Window.new(bounds:Rect(200,200,200,100)).front;
 x = TextField(w,Rect(10,10,80,30));
 y = TextField(w,Rect(110,10,80,30));
@@ -170,22 +170,22 @@ y.keyDownAction = {t.background = Color.blue};
 y.keyUpAction = ~reset;
 ~reset.value;</pre>
 
-<p>If a key or mouse event is not handled by the view on which it occurs, it may <strong>propagate</strong> to the parent view, and trigger the parent's action. See <a href="./../Classes/View.html#Key and mouse event processing">View: Key and mouse event processing</a> for detailed explanation.<h3><a class='anchor' name='Drag and drop actions'>Drag and drop actions</a></h3>
+<p>If a key or mouse event is not handled by the view on which it occurs, it may <strong>propagate</strong> to the parent view, and trigger the parent's action. See <a href="./../Classes/View.html#Key%20and%20mouse%20event%20processing">View: Key%20and%20mouse%20event%20processing</a> for detailed explanation.<h3><a class='anchor' name='Drag%20and%20drop%20actions'>Drag and drop actions</a></h3>
 
 <p>When a mouse button is pressed on a view together with Cmd(Mac OS) or Ctrl(Other OS) key and the mouse pointer is moved while holding the button, a <strong>drag-and-drop</strong> operation is initiated - in case the view supports it. Most views have a default object that they export when a drag is attempted. For a Slider it is its value, for a List it is the numeric index of the currently selected item, etc. It is said that the exported object is being <strong>dragged</strong>. When the dragging gesture ends on another view by releasing the mouse button on top of it, it is said that the dragged object was <strong>dropped</strong> on another view. A view may respond to various objects dropped on it in different ways.
 <p>It is possible to customize what object a view exports when dragged from and how a view reacts to objects dropped by assigning custom drag and drop actions.
-<p>See <a href="./../Classes/View.html#Drag and drop">View: Drag and drop</a> for details.<pre class='code prettyprint lang-sc'>(
+<p>See <a href="./../Classes/View.html#Drag%20and%20drop">View: Drag%20and%20drop</a> for details.<pre class='code prettyprint lang-sc'>(
     w = Window.new.front;
     a = Button(w, Rect(10, 10, 200, 20)).states_([["Hi There!"]]);
     a.beginDragAction = { a.dragLabel ="I'm dragging: \""++ a.states[0][0]++"\""; a.states[0][0] };
     DragSink(w,Rect(10,40,200,20)).align_(\center).string="Cmd-drag from Button to here";
 )</pre>
-<h3><a class='anchor' name='Other specialized actions'>Other specialized actions</a></h3>
+<h3><a class='anchor' name='Other%20specialized%20actions'>Other specialized actions</a></h3>
 
 <p>Some views can be assigned actions on other events specific to their mode of interaction with the user which you are invited to discover by consulting their documentation.<h3><a class='anchor' name='Hooks'>Hooks</a></h3>
 
 <p>Hooks are various events that signify important changes of state of GUI elements. Technically they are used the same way as actions, but are distinguished from them to denote events that are not a direct result of the user's interaction. Methods of GUI classes used to assign hooks are usually prefixed with "on". (You will also find this naming pattern in methods of other SuperCollider classes, that have hooks in the same sense).
-<p>For example, one hook that every view as well as Window has is onClose, which is triggered when the window is closed or the view is removed. Other hooks for example exist for the case when a Window becomes or ceases to be the active one.<h2><a class='anchor' name='Custom views'>Custom views</a></h2>
+<p>For example, one hook that every view as well as Window has is onClose, which is triggered when the window is closed or the view is removed. Other hooks for example exist for the case when a Window becomes or ceases to be the active one.<h2><a class='anchor' name='Custom%20views'>Custom views</a></h2>
 
 <p>The UserView is a view that displays and does nothing on itself, but allows <em>you</em> to define how it will be drawn, and for which you can define the entire behavior using mouse, key, and drag and drop actions. For documentation on all of these aspects, see <a href="./../Classes/UserView.html">UserView</a>, <a href="./../Classes/View.html">View</a>, and <a href="./../Classes/Pen.html">Pen</a>. The explanation below, however, will demonstrate the basic techniques for designing a custom view.
 <p>You will be using the <a href="./../Classes/Pen.html">Pen</a> class to draw the view. Pen is a powerful class that allows you to algorithmically draw using simple visual primitives like lines, arcs, curves, rectangles, ellipses, etc. and fill the shapes with colors and gradients.<div class='note'><span class='notelabel'>NOTE:</span> Older tutorials might recommend subclassing UserView. Don't do that. Use composition, not inheritance. Make the UserView a property of your custom view class.</div>
@@ -251,7 +251,7 @@ Slider(w,Rect(50,100,200,20));
 StaticText(w,Rect(50,150,350,50)).string_("To Test Drag and Drop,\nHold down Cmd (Ctl) Key");
 
 )</pre>
-<h2><a class='anchor' name='Caution: GUI and timing'>Caution: GUI and timing</a></h2>
+<h2><a class='anchor' name='Caution:%20GUI%20and%20timing'>Caution: GUI and timing</a></h2>
 <div class='warning'><span class='warninglabel'>WARNING:</span> Executing code that uses the GUI system is restricted to main application context. There are many ways in SuperCollider for code to be executed in other contexts that run in parallel with the main one, and interacting with GUI objects is not allowed there. This includes:<ul>
 <li>Code scheduled on the SystemClock and the TempoClock<li>Code executed in response to OSC messages</ul>
 </div>

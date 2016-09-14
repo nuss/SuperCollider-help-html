@@ -22,11 +22,11 @@
 <div id='related'>See also: <a href="./../Guides/Debugging-tips.html">Debugging tips</a></div>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#Tracing sclang processes'>Tracing sclang processes</a></li>
-<ul class='toc'><li class='toc2'><a href='#Streams, tasks and routines'>Streams, tasks and routines</a></li>
-<ul class='toc'></ul></ul><li class='toc1'><a href='#Tracing server processes'>Tracing server processes</a></li>
+<ul class='toc'><li class='toc1'><a href='#Tracing%20sclang%20processes'>Tracing sclang processes</a></li>
+<ul class='toc'><li class='toc2'><a href='#Streams,%20tasks%20and%20routines'>Streams, tasks and routines</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Tracing%20server%20processes'>Tracing server processes</a></li>
 <ul class='toc'></ul></ul></div>
-<p>What goes on in a running system? In SC, various methods help to get information about processes on different levels: server side and client side (in sclang).<h2><a class='anchor' name='Tracing sclang processes'>Tracing sclang processes</a></h2>
+<p>What goes on in a running system? In SC, various methods help to get information about processes on different levels: server side and client side (in sclang).<h2><a class='anchor' name='Tracing%20sclang%20processes'>Tracing sclang processes</a></h2>
 
 <p>In order to know more about objects as they are created by processes like tasks or even simply by evaluating a bit of code, one can insert messages like postln and postcs anywhere in the code.
 <p>calculating the sum of n subsequent squares<pre class='code prettyprint lang-sc'>var n = 8, x = 0;
@@ -52,7 +52,7 @@ var n = 3;
 
 <p>posts the compile string, i.e. the code needed to recreate the receiver (here the array)<pre class='code prettyprint lang-sc'>var n = 3;
 (1..n).do { |num| { num.rand }.dup(200).postcs };</pre>
-<h3><a class='anchor' name='Streams, tasks and routines'>Streams, tasks and routines</a></h3>
+<h3><a class='anchor' name='Streams,%20tasks%20and%20routines'>Streams, tasks and routines</a></h3>
 
 <p>in streams, tasks and routines, this works just as well:<pre class='code prettyprint lang-sc'>fork {
     var n = 14;
@@ -90,7 +90,7 @@ b.next;</pre>
     \degree, Pseq([1, 4, 1, Pwhite(0, 6, 3), 100, 39], inf),
     \dur, Pwhite(0.2, 0.4, inf)
 ).trace([\degree, \dur], prefix: ["degree ", "dur "]).play</pre>
-<h2><a class='anchor' name='Tracing server processes'>Tracing server processes</a></h2>
+<h2><a class='anchor' name='Tracing%20server%20processes'>Tracing server processes</a></h2>
 
 <p>Using postln or post on a UGen will only return the UGen, but not the values it produces in a running synth. The poll message creates a Poll UGen which posts at regular intervals when given a time value or as a response to a trigger (see <a href="./../Classes/Poll.html">Poll</a> helpfile)<pre class='code prettyprint lang-sc'>// postln returns only the UGen itself (a MulAdd here)
 { SinOsc.ar(SinOsc.kr(0.2, 0, 300, 400).postln) * 0.1 }.play;

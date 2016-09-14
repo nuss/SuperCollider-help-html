@@ -22,14 +22,14 @@
 <div id='related'>See also: <a href="./../../Tutorials/A-Practical-Guide/PG_Cookbook02_Manipulating_Patterns.html">Pattern Guide Cookbook 02: Manipulating Patterns</a>, <a href="./../../Tutorials/A-Practical-Guide/PG_Cookbook04_Sending_MIDI.html">Pattern Guide Cookbook 04: Sending MIDI</a></div>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#Pattern control by external device'>Pattern control by external device</a></li>
-<ul class='toc'><li class='toc2'><a href='#Control of parameters by MIDI or HID'>Control of parameters by MIDI or HID</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Triggering patterns by external control'>Triggering patterns by external control</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Triggering a pattern by a GUI'>Triggering a pattern by a GUI</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Triggering a pattern by MIDI'>Triggering a pattern by MIDI</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Triggering a pattern by signal amplitude'>Triggering a pattern by signal amplitude</a></li>
-<ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='Pattern control by external device'>Pattern control by external device</a></h2>
-<h3><a class='anchor' name='Control of parameters by MIDI or HID'>Control of parameters by MIDI or HID</a></h3>
+<ul class='toc'><li class='toc1'><a href='#Pattern%20control%20by%20external%20device'>Pattern control by external device</a></li>
+<ul class='toc'><li class='toc2'><a href='#Control%20of%20parameters%20by%20MIDI%20or%20HID'>Control of parameters by MIDI or HID</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Triggering%20patterns%20by%20external%20control'>Triggering patterns by external control</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Triggering%20a%20pattern%20by%20a%20GUI'>Triggering a pattern by a GUI</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Triggering%20a%20pattern%20by%20MIDI'>Triggering a pattern by MIDI</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Triggering%20a%20pattern%20by%20signal%20amplitude'>Triggering a pattern by signal amplitude</a></li>
+<ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='Pattern%20control%20by%20external%20device'>Pattern control by external device</a></h2>
+<h3><a class='anchor' name='Control%20of%20parameters%20by%20MIDI%20or%20HID'>Control of parameters by MIDI or HID</a></h3>
 
 <p>The best approach is to save an incoming value into a variable, and then use <a href="./../../Classes/Pfunc.html">Pfunc</a> to access the variable for each event.<pre class='code prettyprint lang-sc'>(
 ~legato = 1;
@@ -66,10 +66,10 @@ p = Pbind(
 
 p.stop;
 c.remove;</pre>
-<h3><a class='anchor' name='Triggering patterns by external control'>Triggering patterns by external control</a></h3>
+<h3><a class='anchor' name='Triggering%20patterns%20by%20external%20control'>Triggering patterns by external control</a></h3>
 
 <p>Issuing <code class='code prettyprint lang-sc'>play</code> to a pattern can occur in an action function for many different kinds of objects: GUI, MIDI, OSCFunc, HID actions. This allows triggering patterns from a variety of interfaces.
-<p>It's very unlikely that an action function would be triggered exactly in sync with a clock. If the pattern being played needs to run in time with other patterns, use the <code class='code prettyprint lang-sc'>quant</code> argument to control its starting time (see <a href="./../../Classes/Quant.html">Quant</a>).<h3><a class='anchor' name='Triggering a pattern by a GUI'>Triggering a pattern by a GUI</a></h3>
+<p>It's very unlikely that an action function would be triggered exactly in sync with a clock. If the pattern being played needs to run in time with other patterns, use the <code class='code prettyprint lang-sc'>quant</code> argument to control its starting time (see <a href="./../../Classes/Quant.html">Quant</a>).<h3><a class='anchor' name='Triggering%20a%20pattern%20by%20a%20GUI'>Triggering a pattern by a GUI</a></h3>
 <pre class='code prettyprint lang-sc'>(
 var    pattern = Pbind(
         \degree, Pseries(7, Pwhite(1, 3, inf) * Prand(#[-1, 1], inf), inf).fold(0, 14)
@@ -97,7 +97,7 @@ window.front;
 )
 
 p.stop;</pre>
-<h3><a class='anchor' name='Triggering a pattern by MIDI'>Triggering a pattern by MIDI</a></h3>
+<h3><a class='anchor' name='Triggering%20a%20pattern%20by%20MIDI'>Triggering a pattern by MIDI</a></h3>
 <pre class='code prettyprint lang-sc'>(
 var    pattern = Pbind(
         \degree, Pseries(7, Pwhite(1, 3, inf) * Prand(#[-1, 1], inf), inf).fold(0, 14)
@@ -119,7 +119,7 @@ var    pattern = Pbind(
 
 // when done
 ~noteOnFunc.free;</pre>
-<h3><a class='anchor' name='Triggering a pattern by signal amplitude'>Triggering a pattern by signal amplitude</a></h3>
+<h3><a class='anchor' name='Triggering%20a%20pattern%20by%20signal%20amplitude'>Triggering a pattern by signal amplitude</a></h3>
 
 <p>Triggering a pattern based on audio amplitude is a bit trickier -- not because it's harder to play the pattern, but because identifying when the trigger should happen is more involved. The most straightforward way in SuperCollider is to use the <a href="./../../Classes/Amplitude.html">Amplitude</a> UGen to get the volume of the input signal and compare it to a threshold. Volume can fluctuate rapidly, so the <code class='code prettyprint lang-sc'>releaseTime</code> argument of Amplitude is set to a high value. This makes the measured amplitude fall more slowly toward the baseline, preventing triggers from being sent too close together.
 <p>The actual threshold depends on the incoming signal, so the example pops up a quick and dirty window to see the measured amplitude and set the threshold and decay accordingly. The synth listens by default to the first hardware input bus, but you can change it the following in the code to use a different input bus:<pre class='code prettyprint lang-sc'>    inbus: s.options.numOutputBusChannels</pre>

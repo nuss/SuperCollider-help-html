@@ -22,17 +22,17 @@
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#Introduction'>Introduction</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Messaging nodes'>Messaging nodes</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Argument lists in node messages'>Argument lists in node messages</a></li>
-<ul class='toc'><li class='toc2'><a href='#Messaging style'>Messaging style</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Object style'>Object style</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Event style'>Event style</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Messaging%20nodes'>Messaging nodes</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Argument%20lists%20in%20node%20messages'>Argument lists in node messages</a></li>
+<ul class='toc'><li class='toc2'><a href='#Messaging%20style'>Messaging style</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Object%20style'>Object style</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Event%20style'>Event style</a></li>
 <ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='Introduction'>Introduction</a></h2>
 
 <p>The most direct and fast way to send commands to the server is to send messages to the <a href="./../Classes/Server.html">Server</a> object, if you are within sc-lang. If you are in a shell you can use sendOSC (available from CNMAT).
 <p>this messaging scheme is explained in detail in:<ul>
 <li><a href="./../Reference/Server-Architecture.html">Server Architecture</a><li><a href="./../Reference/Server-Command-Reference.html">Server Command Reference</a><li><a href="./../Tutorials/Tutorial.html">SuperCollider 3 Server Tutorial</a></ul>
-<h2><a class='anchor' name='Messaging nodes'>Messaging nodes</a></h2>
+<h2><a class='anchor' name='Messaging%20nodes'>Messaging nodes</a></h2>
 
 <p>When creating nodes on the server (synths and groups) the only things we need to know are the nodeID and the server (its address to be precise).
 <p>In order to communicate with a synth, one sends messages with its nodeID. If you do not intend to communicate with the node after its creation (and the node will cause itself to end without external messaging), the node id can be set to -1, which is the server's equivalent to nil.
@@ -85,7 +85,7 @@ Routine({
 <p>Note that <a href="./../Classes/Function.html#play">Function-play</a> and <a href="./../Classes/SynthDef.html#play">SynthDef-play</a> return a synth object that can be used to send messages to.<pre class='code prettyprint lang-sc'>x = { arg freq=1000; Ringz.ar(Crackle.ar(1.95, 0.1), freq, 0.05) }.play(s);
 x.set(\freq, 1500);
 x.free;</pre>
-<h2><a class='anchor' name='Argument lists in node messages'>Argument lists in node messages</a></h2>
+<h2><a class='anchor' name='Argument%20lists%20in%20node%20messages'>Argument lists in node messages</a></h2>
 
 <p>Several node messages accept lists of values to map onto the controls of Synth nodes, as in some of the examples already given:<pre class='code prettyprint lang-sc'>s.sendMsg(\s_new, \default, n, 0, 0, \freq, 850);
 n = Synth(\default, [\freq, 850]);</pre>
@@ -113,17 +113,17 @@ ControlName  P 5 out control 0
 <p>The list shows that the 'freq' control has index 0, 'amp' is 1 and so on. Detune is defined as an "array argument," occupying indices 2-3.
 <p>SynthDefs with a large number of controls may need a little extra code to print the entire list.<pre class='code prettyprint lang-sc'>SynthDescLib.global[\controlList].controls.do(_.postln); ""</pre>
 
-<p>Prior to SuperCollider 3.3, the only way to set array arguments by name was using n_setn (or Node's setn method). Beginning in version 3.3, array arguments can be included in s_new or n_set messages transparently.<h3><a class='anchor' name='Messaging style'>Messaging style</a></h3>
+<p>Prior to SuperCollider 3.3, the only way to set array arguments by name was using n_setn (or Node's setn method). Beginning in version 3.3, array arguments can be included in s_new or n_set messages transparently.<h3><a class='anchor' name='Messaging%20style'>Messaging style</a></h3>
 
 <p>note the characters $[ and $] delimiting the array in the list:<pre class='code prettyprint lang-sc'>n = s.nextNodeID;
 s.sendMsg(\s_new, \controlList, n, 0, 0, \detune, $[, 0.95, 1.005, $], \freq, 220);
 s.sendMsg(\n_set, n, \gate, 0);</pre>
-<h3><a class='anchor' name='Object style'>Object style</a></h3>
+<h3><a class='anchor' name='Object%20style'>Object style</a></h3>
 
 <p>the Node object automatically inserts $[ and $] for you:<pre class='code prettyprint lang-sc'>n = Synth(\controlList, [\detune, [0.95, 1.005], \freq, 220]);
 n.set(\detune, [0.99, 1.01]);
 n.release;</pre>
-<h3><a class='anchor' name='Event style'>Event style</a></h3>
+<h3><a class='anchor' name='Event%20style'>Event style</a></h3>
 
 <p>Supplying an array for an argument in an event already has another meaning: multichannel expansion, in which a separate node is created for each array item. If all items of the array should be sent to the same node, then the array argument should be enclosed in another array level:<pre class='code prettyprint lang-sc'>(instrument: \controlList, freq: 220, detune: [[0.95, 1.005]], sustain: 2).play;</pre>
 <div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Guides/NodeMessaging.schelp'>/usr/local/share/SuperCollider/HelpSource/Guides/NodeMessaging.schelp</a><br>link::Guides/NodeMessaging::<br>sc version: 3.8dev</div></div></body></html>

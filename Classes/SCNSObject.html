@@ -23,16 +23,16 @@
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
-<ul class='toc'><li class='toc2'><a href='#Object Creation - LifeCycle'>Object Creation - LifeCycle</a></li>
+<ul class='toc'><li class='toc2'><a href='#Object%20Creation%20-%20LifeCycle'>Object Creation - LifeCycle</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Invocation'>Invocation</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Deferring your calls'>Deferring your calls</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Common Conversion Table'>Common Conversion Table</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Deferring%20your%20calls'>Deferring your calls</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Common%20Conversion%20Table'>Common Conversion Table</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
 <li class='toc3'><a href='#*newFromRawPointer'>newFromRawPointer</a> </li>
 <li class='toc3'><a href='#*dumpPool'>dumpPool</a> </li>
 <li class='toc3'><a href='#*freePool'>freePool</a> </li>
-<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-invoke'>invoke</a> </li>
 <li class='toc3'><a href='#-release'>release</a> </li>
@@ -40,10 +40,10 @@
 <li class='toc3'><a href='#-setDelegate'>setDelegate</a> </li>
 <li class='toc3'><a href='#-registerNotification'>registerNotification</a> </li>
 <li class='toc3'><a href='#-asArray'>asArray</a> </li>
-<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
-<div class='note'><span class='notelabel'>NOTE:</span> This is experimental (03/2006), things might change and be careful wrong or unsupported Cocoa-calls can crash this Application !</div><h3><a class='anchor' name='Object Creation - LifeCycle'>Object Creation - LifeCycle</a></h3>
+<div class='note'><span class='notelabel'>NOTE:</span> This is experimental (03/2006), things might change and be careful wrong or unsupported Cocoa-calls can crash this Application !</div><h3><a class='anchor' name='Object%20Creation%20-%20LifeCycle'>Object Creation - LifeCycle</a></h3>
 
 <p>On creation only the init message is passed, alloc is called internally. Instance methods and Class methods are supported by the bridge, but if an object (id or SCNSObject) is returned by the method you owns it (even for autoreleased object - because they are retained internally by SuperCollider), so you must call <strong>release</strong> when you're done with it (SCNSObject(s) are not automatically garbage collected).<h3><a class='anchor' name='Invocation'>Invocation</a></h3>
 
@@ -58,12 +58,12 @@ n.invoke("floatValue");</pre>
 <p>Example: Cocoa:<pre class='code prettyprint lang-sc'>NSWindow *c = [[NSWindow alloc] initWithContentRect: rect styleMask: 10 backing: 2 defer:YES];</pre>
 
 <p>SC:<pre class='code prettyprint lang-sc'>c = SCNSObject("NSWindow", "initWithContentRect:styleMask:backing:defer:",[Rect(0,0,400,100), 10, 2, 1]);</pre>
-<h3><a class='anchor' name='Deferring your calls'>Deferring your calls</a></h3>
+<h3><a class='anchor' name='Deferring%20your%20calls'>Deferring your calls</a></h3>
 
 <p>Some methods need to be defered. If you want to defer ust call invoke with defer:true. Watch out there is no smart protection for methods that need defer until now! In general you should defer graphic operations. So calling this might crash sc-lang:<pre class='code prettyprint lang-sc'>c.invoke("makeKeyAndOrderFront:", [nil]);</pre>
 
 <p>but this line is fine:<pre class='code prettyprint lang-sc'>c.invoke("makeKeyAndOrderFront:", [nil], true);</pre>
-<h3><a class='anchor' name='Common Conversion Table'>Common Conversion Table</a></h3>
+<h3><a class='anchor' name='Common%20Conversion%20Table'>Common Conversion Table</a></h3>
 
 <p>SuperCollider will try to convert types when possible, here are the most common types and their translation between the two languages.<table>
 <tr><td><strong>SuperCollider Types -&gt;</strong><td><strong>Objective-C Types (when using invoke / SCNSObject.new)</strong><tr><td>SCNSObject<td>id (NSObject)<tr><td>Nil<td>nil, NULL pointer<tr><td>Number (Float, Integer)<td>float, int, long, short, char, NSNumber<tr><td>Boolean<td>YES, NO, bool, NSNumber<tr><td>String<td>NSString, SEL, char*, void*<tr><td>Rect<td>NSRect<tr><td>Color<td>NSColor<tr><td>Point<td>NSPoint, NSRange, NSSize<tr><td>Int8Array<td>void*, char*<tr><td>Int16Array<td>void*, short*<tr><td>Int32Array<td>void*, int*<tr><td>DoubleArray<td>void*, double*<tr><td>FloatArray<td>void*, float*<tr><td>Signal<td>float*<tr><td>Array<td>QTTime, NSRange, NSSize, SCNSObject*</table>
@@ -93,7 +93,7 @@ i.free; // release it when done
 <div class='method'>
 <p>Dump the current NSObjects in the pool, so retained by SuperCollider.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*freePool' href='./../Overviews/Methods.html#freePool'>freePool</a> </h3>
 <div class='method'>
-<p>Release all the current NSObjects in the pool and clear it. Call this method only if you really know what you are doing : all the SCNSObjects will be unvalidated !</div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<p>Release all the current NSObjects in the pool and clear it. Call this method only if you really know what you are doing : all the SCNSObjects will be unvalidated !</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-invoke' href='./../Overviews/Methods.html#invoke'>invoke</a> </h3>
 <div class='method'>
@@ -177,7 +177,7 @@ d.release;</pre>
 <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>arrayType<td class='argumentdesc'>
-<p>\string \int8 \int16 \int32 \float \double are the possible argument for an explicit conversion.</table></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<p>\string \int8 \int16 \int32 \float \double are the possible argument for an explicit conversion.</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 <pre class='code prettyprint lang-sc'>//create a window and add a Slider that posts its value.
 (

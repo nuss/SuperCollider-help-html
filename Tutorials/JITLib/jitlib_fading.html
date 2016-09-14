@@ -22,12 +22,12 @@
 <div id='related'>See also: <a href="./../../Overviews/JITLib.html">JITLib</a></div>
 </div>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#a) automatic fade envelope generation'>a) automatic fade envelope generation</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#b) automatic free instead of crossfade'>b) automatic free instead of crossfade</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#c) custom fade envelope'>c) custom fade envelope</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#d) SynthDef name assignment'>d) SynthDef name assignment</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#e) own free responsibility'>e) own free responsibility</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#f) own output responsibility'>f) own output responsibility</a></li>
+<ul class='toc'><li class='toc1'><a href='#a)%20automatic%20fade%20envelope%20generation'>a) automatic fade envelope generation</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#b)%20automatic%20free%20instead%20of%20crossfade'>b) automatic free instead of crossfade</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#c)%20custom%20fade%20envelope'>c) custom fade envelope</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#d)%20SynthDef%20name%20assignment'>d) SynthDef name assignment</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#e)%20own%20free%20responsibility'>e) own free responsibility</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#f)%20own%20output%20responsibility'>f) own output responsibility</a></li>
 <ul class='toc'></ul></ul></div>
 <p><a href="./../../Classes/NodeProxy.html">NodeProxy</a> ( <a href="./../../Classes/ProxySynthDef.html">ProxySynthDef</a> ) looks for inner envelopes in your definition function to find out whether a fade envelope is needed or not. In case there is no other inner possibility of freeing the synth, either<ul>
 <li><a href="#a)_automatic_fade_envelope_generation">a)</a> a fade envelope is created (audio / control rate output)<li><a href="#b)_automatic_free_instead_of_crossfade">b)</a> the synth is freed directly with no fading (scalar output or doneAction 1)<li><a href="#c)_custom_fade_envelope">c)</a> if you provide a gate arg and a doneAction 2 to your ugenGraph function, this is supposed to be a fade envelope for the synth<li><a href="#d)_synthdef_name_assignment">d)</a> if a synthdef name is used, case <a href="#c)_custom_fade_envelope">c)</a> is supposed</ul>
@@ -45,7 +45,7 @@ s.sendMsg("/s_new", "test", 1980, 1, 1, \freq, 340);
 s.sendMsg("/n_set", 1980, \freq, 240);
 s.sendMsg("/n_set", 1980, \fadeTime, 4);
 s.sendMsg("/n_set", 1980, \gate, 0);</pre>
-<h2><a class='anchor' name='a) automatic fade envelope generation'>a) automatic fade envelope generation</a></h2>
+<h2><a class='anchor' name='a)%20automatic%20fade%20envelope%20generation'>a) automatic fade envelope generation</a></h2>
 <pre class='code prettyprint lang-sc'>// no inner envelope and audio / control rate output
 (
 ~out = { PinkNoise.ar([1,1]*0.1) };
@@ -54,7 +54,7 @@ s.sendMsg("/n_set", 1980, \gate, 0);</pre>
 (
 ~kout = { PinkNoise.kr([1,1]*0.1) };
 )</pre>
-<h2><a class='anchor' name='b) automatic free instead of crossfade'>b) automatic free instead of crossfade</a></h2>
+<h2><a class='anchor' name='b)%20automatic%20free%20instead%20of%20crossfade'>b) automatic free instead of crossfade</a></h2>
 <pre class='code prettyprint lang-sc'>// inner envelope that cannot free the synth, the synth is freed when a new
 // function is assigned.
 (
@@ -72,13 +72,13 @@ s.sendMsg("/n_set", 1980, \gate, 0);</pre>
 (
 ~out = { Out.ar(0, SinOsc.ar(Rand(440,550),0,0.2)) };
 )</pre>
-<h2><a class='anchor' name='c) custom fade envelope'>c) custom fade envelope</a></h2>
+<h2><a class='anchor' name='c)%20custom%20fade%20envelope'>c) custom fade envelope</a></h2>
 <pre class='code prettyprint lang-sc'>// when a gate arg is provided, and the env can free the synth, this envelope
 // is supposed to be the fade envelope for the synth: no extra fade env is created.
 (
 ~out = { arg gate=1; EnvGen.kr(Env.asr, gate, doneAction:2) * 0.2 * SinOsc.ar([1,1]*Rand(440,550)) };
 )</pre>
-<h2><a class='anchor' name='d) SynthDef name assignment'>d) SynthDef name assignment</a></h2>
+<h2><a class='anchor' name='d)%20SynthDef%20name%20assignment'>d) SynthDef name assignment</a></h2>
 <pre class='code prettyprint lang-sc'>// if a symbol is used as input, the defname of a def on the server is supposed
 // to represent a SynthDef that has a gate, an out input and can free itself.
 (
@@ -116,7 +116,7 @@ SynthDef("test", { arg gate=1, out;
 )
 
 ~out = \test;</pre>
-<h2><a class='anchor' name='e) own free responsibility'>e) own free responsibility</a></h2>
+<h2><a class='anchor' name='e)%20own%20free%20responsibility'>e) own free responsibility</a></h2>
 <pre class='code prettyprint lang-sc'>//inner envelope that can free the synth, no extra fade env is created:
 (
 ~out = { arg t_trig; EnvGen.kr(Env.asr, t_trig, doneAction:2) * PinkNoise.ar([1,1]) };
@@ -137,7 +137,7 @@ SynthDef("test", { arg gate=1, out;
 };
 )
 ~out.group.set(\t_trig, 1);</pre>
-<h2><a class='anchor' name='f) own output responsibility'>f) own output responsibility</a></h2>
+<h2><a class='anchor' name='f)%20own%20output%20responsibility'>f) own output responsibility</a></h2>
 <pre class='code prettyprint lang-sc'>// the arg name 'out' can be used to output through the right channel.
 // of course with this one can get problems due to a wrong number of channels
 // or deliberate hacks.

@@ -24,15 +24,15 @@
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#Inheriting'>Inheriting</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Methods'>Methods</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#New Instance creation'>New Instance creation</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Overriding Methods (Overloading)'>Overriding Methods (Overloading)</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Getter Setter'>Getter Setter</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#External Method Files'>External Method Files</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Slotted classes'>Slotted classes</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Printing custom messages to post window'>Printing custom messages to post window</a></li>
-<ul class='toc'><li class='toc2'><a href='#Defining custom asCompileString behaviour'>Defining custom asCompileString behaviour</a></li>
-<ul class='toc'></ul></ul><li class='toc1'><a href='#Catching methods that are not explicitly defined'>Catching methods that are not explicitly defined</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Tricks and Traps'>Tricks and Traps</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#New%20Instance%20creation'>New Instance creation</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Overriding%20Methods%20(Overloading)'>Overriding Methods (Overloading)</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Getter%20Setter'>Getter Setter</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#External%20Method%20Files'>External Method Files</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Slotted%20classes'>Slotted classes</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Printing%20custom%20messages%20to%20post%20window'>Printing custom messages to post window</a></li>
+<ul class='toc'><li class='toc2'><a href='#Defining%20custom%20asCompileString%20behaviour'>Defining custom asCompileString behaviour</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Catching%20methods%20that%20are%20not%20explicitly%20defined'>Catching methods that are not explicitly defined</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Tricks%20and%20Traps'>Tricks and Traps</a></li>
 <ul class='toc'></ul></ul></div>
 <p>For a basic tutorial on how standard object-orientated classes are composed, look elsewhere <a href="http://www.google.com/search?q=oop+class+tutorial">http://www.google.com/search?q=oop+class+tutorial</a><div class='note'><span class='notelabel'>NOTE:</span> Class definitions are statically compiled when you launch supercollider or "recompile the library." This means that class definitions must be saved into a file with the extension .sc, in a disk location where supercollider looks for classes. Saving into the main class library (SCClassLibrary) is generally not recommended. It's preferable to use either the user or system extension directories.<pre class='code prettyprint lang-sc'>Platform.userExtensionDir;   // Extensions available only to your user account
 Platform.systemExtensionDir; // Extensions available to all users on the machine</pre>
@@ -71,7 +71,7 @@ Platform.systemExtensionDir; // Extensions available to all users on the machine
     }
 
 }</pre>
-<h2><a class='anchor' name='New Instance creation'>New Instance creation</a></h2>
+<h2><a class='anchor' name='New%20Instance%20creation'>New Instance creation</a></h2>
 
 <p><code class='code prettyprint lang-sc'>Object.new</code> will return to you a new object. When overriding the class method <code class='code prettyprint lang-sc'>.new</code> you must call the superclass, which in turn calls its superclass, up until <code class='code prettyprint lang-sc'>Object.new</code> is called and an object is actually created and its memory allocated.<pre class='code prettyprint lang-sc'>MyClass {
     // this example adds no new functionality
@@ -111,7 +111,7 @@ MyChildClass : MyClass{
     var myInstanceVar;
 }</pre>
 
-<p>For class initialization check <code class='code prettyprint lang-sc'>initClass</code>.<h2><a class='anchor' name='Overriding Methods (Overloading)'>Overriding Methods (Overloading)</a></h2>
+<p>For class initialization check <code class='code prettyprint lang-sc'>initClass</code>.<h2><a class='anchor' name='Overriding%20Methods%20(Overloading)'>Overriding Methods (Overloading)</a></h2>
 
 <p>In order to change the behaviour of the superclass, often methods are overridden. Note that an object looks always for the method it has defined first and then looks in the superclass. Here <code class='code prettyprint lang-sc'>MyClass.value(2)</code> will return 6, not 4:<pre class='code prettyprint lang-sc'>Superclass {
     calculate { arg in; in * 2 }
@@ -137,7 +137,7 @@ MyClass : Superclass {
         y = 6;
     }
 }</pre>
-<h2><a class='anchor' name='Getter Setter'>Getter Setter</a></h2>
+<h2><a class='anchor' name='Getter%20Setter'>Getter Setter</a></h2>
 
 <p>SuperCollider demands that variables are not accessible outside of the class or instance. A method must be added to explicitly give access:<pre class='code prettyprint lang-sc'>MyClass : Superclass {
     var myVariable;
@@ -175,7 +175,7 @@ someObject.getMeOrSetMe.postln;</pre>
         ^newValue       // DO NOT DO THIS
     }
 }</pre>
-<h2><a class='anchor' name='External Method Files'>External Method Files</a></h2>
+<h2><a class='anchor' name='External%20Method%20Files'>External Method Files</a></h2>
 
 <p>Methods may be added to Classes in separate files. This is equivalent to Categories in Objective-C. By convention, the file name starts with a lower case letter: the name of the method or feature that the methods are supporting.<pre class='code prettyprint lang-sc'>+ Class {
     newMethod {
@@ -184,7 +184,7 @@ someObject.getMeOrSetMe.postln;</pre>
     *newClassMethod {
     }
 }</pre>
-<h2><a class='anchor' name='Slotted classes'>Slotted classes</a></h2>
+<h2><a class='anchor' name='Slotted%20classes'>Slotted classes</a></h2>
 
 <p>Classes defined with [slot] can use the syntax myClass[i] which will call myClass.at(i). This is useful when defining classes that inherit from a Collection type class.<pre class='code prettyprint lang-sc'>MyClass[slot] {
     *new {
@@ -202,7 +202,7 @@ a[3];</pre>
     center { ^Point(*this.asArray.flop.collect{ |item| item.sum / item.size } ) }
     asArray{ ^this.collect{ |elem| elem.asArray } }
 }</pre>
-<h2><a class='anchor' name='Printing custom messages to post window'>Printing custom messages to post window</a></h2>
+<h2><a class='anchor' name='Printing%20custom%20messages%20to%20post%20window'>Printing custom messages to post window</a></h2>
 
 <p>By default when postln is called on an class instance the name of the class is printed in a post window. When <code class='code prettyprint lang-sc'>postln</code> or <code class='code prettyprint lang-sc'>asString</code> is called on a class instance, the class then calls <code class='code prettyprint lang-sc'>printOn</code> which can be overridden to obtain more useful information.<pre class='code prettyprint lang-sc'>MyTestPoint {
     var &lt;x, &lt;y;
@@ -214,7 +214,7 @@ a[3];</pre>
     }
 }</pre>
 <pre class='code prettyprint lang-sc'>a = MyTestPoint(2,3);</pre>
-<h3><a class='anchor' name='Defining custom asCompileString behaviour'>Defining custom asCompileString behaviour</a></h3>
+<h3><a class='anchor' name='Defining%20custom%20asCompileString%20behaviour'>Defining custom asCompileString behaviour</a></h3>
 
 <p>A call to <code class='code prettyprint lang-sc'>asCompileString</code> should return a string which when evaluated creates the exact same instance of the class. To define a custom behaviour one should either override <code class='code prettyprint lang-sc'>storeOn</code> or <code class='code prettyprint lang-sc'>storeArgs</code>. The method <code class='code prettyprint lang-sc'>storeOn</code> should return the string that evaluated creates the instance of the current object. The method <code class='code prettyprint lang-sc'>storeArgs</code> should return an array with the arguments to be passed to <code class='code prettyprint lang-sc'>TheClass.new</code>. In most cases this method can be used instead of <code class='code prettyprint lang-sc'>storeOn</code>.<pre class='code prettyprint lang-sc'>// either
 MyTestPoint {
@@ -238,7 +238,7 @@ MyTestPoint {
     }
 }</pre>
 <pre class='code prettyprint lang-sc'>MyTestPoint(2,3).asCompileString;</pre>
-<h2><a class='anchor' name='Catching methods that are not explicitly defined'>Catching methods that are not explicitly defined</a></h2>
+<h2><a class='anchor' name='Catching%20methods%20that%20are%20not%20explicitly%20defined'>Catching methods that are not explicitly defined</a></h2>
 
 <p>It is possible to catch calls to methods that are not explicitly defined in a Class by overriding <code class='code prettyprint lang-sc'>doesNotUnderstand</code>.<pre class='code prettyprint lang-sc'>MyClass {
     *new { ^super.new }
@@ -253,7 +253,7 @@ MyTestPoint {
 }</pre>
 <pre class='code prettyprint lang-sc'>a = MyClass();
 a.someMethodThatDoesNotExist</pre>
-<h2><a class='anchor' name='Tricks and Traps'>Tricks and Traps</a></h2>
+<h2><a class='anchor' name='Tricks%20and%20Traps'>Tricks and Traps</a></h2>
 <dl>
 <dt>"Superclass not found..."<dd>In one given code file, you can only put classes that inherit from each Object, each other, and one external class. In other words, you can't inherit from two separate classes that are defined in separate files.
 <p>If you should happen to declare a variable in a subclass and use the same name as a variable declared in a superclass, you will find that both variables exist, but only the one in the object's actual class is accessible. You should not do that. This will at some point become an error worthy of compilation failure.</dl>

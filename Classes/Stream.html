@@ -26,15 +26,15 @@
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'><li class='toc2'><a href='#Overview'>Overview</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#FuncStream(nextFunction, resetFunction)'>FuncStream(nextFunction, resetFunction)</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Routine(nextFunction, stacksize)'>Routine(nextFunction, stacksize)</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Playing streams'>Playing streams</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#FuncStream(nextFunction,%20resetFunction)'>FuncStream(nextFunction, resetFunction)</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Routine(nextFunction,%20stacksize)'>Routine(nextFunction, stacksize)</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Playing%20streams'>Playing streams</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Iteration'>Iteration</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Composite Streams'>Composite Streams</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Unary messages'>Unary messages</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Binary messages'>Binary messages</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Composite%20Streams'>Composite Streams</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Unary%20messages'>Unary messages</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Binary%20messages'>Binary messages</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-play'>play</a> </li>
 <li class='toc3'><a href='#-do'>do</a> </li>
@@ -46,8 +46,8 @@
 <li class='toc3'><a href='#-appendStream'>appendStream</a> </li>
 <li class='toc3'><a href='#-embedInStream'>embedInStream</a> </li>
 <li class='toc3'><a href='#-trace'>trace</a> </li>
-<li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-++'>++</a> </li>
 <li class='toc3'><a href='#-<>'>&lt;&gt;</a> </li>
 <li class='toc3'><a href='#-addToSynthDef'>addToSynthDef</a> </li>
@@ -85,7 +85,7 @@
 
 <p>A Stream represents a sequence of values that are obtained incrementally by repeated <strong>next</strong> messages. A Stream can be restarted with a <strong>reset</strong> message. (Not all streams actually implement reset semantics.)
 <p>The class <a href="./../Classes/Object.html">Object</a> defines <strong>next</strong> to return the object itself. Thus every object can be viewed as a stream and most simply stream themselves.
-<p>In SuperCollider, Streams are primarily used for handling text and for generating music.<h3><a class='anchor' name='FuncStream(nextFunction, resetFunction)'>FuncStream(nextFunction, resetFunction)</a></h3>
+<p>In SuperCollider, Streams are primarily used for handling text and for generating music.<h3><a class='anchor' name='FuncStream(nextFunction,%20resetFunction)'>FuncStream(nextFunction, resetFunction)</a></h3>
 
 <p>A <a href="./../Classes/Function.html">Function</a> defines a stream consisting of the Function itself, a <a href="./../Classes/FuncStream.html">FuncStream</a> defines a stream that consists of <em>evaluations</em> of its nextFunction.<pre class='code prettyprint lang-sc'>// Example 1: a Function vs. a FuncStream
 (
@@ -102,7 +102,7 @@
     x.reset;
     10.do({ [f.next, x.next].postln });
 )</pre>
-<h3><a class='anchor' name='Routine(nextFunction, stacksize)'>Routine(nextFunction, stacksize)</a></h3>
+<h3><a class='anchor' name='Routine(nextFunction,%20stacksize)'>Routine(nextFunction, stacksize)</a></h3>
 
 <p>In a <a href="./../Classes/FuncStream.html">FuncStream</a>, the nextFunction runs through to completion for each element of the stream. In a <a href="./../Classes/Routine.html">Routine</a>, the nextFunction returns values with <strong>yield</strong> and resumes execution (when it receives a <strong>next</strong> message) at the expression following the yield. This allows a sequence of expressions in the function definition to represent a sequence of distinct events, like a musical score.<pre class='code prettyprint lang-sc'>// example
 (
@@ -123,7 +123,7 @@
     });
     17.do({ x.next.postln });
 )</pre>
-<h3><a class='anchor' name='Playing streams'>Playing streams</a></h3>
+<h3><a class='anchor' name='Playing%20streams'>Playing streams</a></h3>
 
 <p>Because streams respond like functions to the value message, they can be used as a scheduling task.<pre class='code prettyprint lang-sc'>// compare:
 // a function, returning 0.5
@@ -171,7 +171,7 @@ Routine({ loop {
 <h3><a class='anchor' name='Iteration'>Iteration</a></h3>
 
 <p>The method <a href="#-do">-do</a> effectively 'plays' a stream by iterating all of its contents.
-<p>And the following messages create a stream by filtering another stream in some way: <a href="#-collect">-collect</a>, <a href="#-reject">-reject</a>, <a href="#-select">-select</a>, <a href="#-dot">-dot</a>, <a href="#-interlace">-interlace</a>, <a href="#-appendStream">-appendStream</a>, <a href="#-embedInStream">-embedInStream</a>, <a href="#-trace">-trace</a>.<h3><a class='anchor' name='Composite Streams'>Composite Streams</a></h3>
+<p>And the following messages create a stream by filtering another stream in some way: <a href="#-collect">-collect</a>, <a href="#-reject">-reject</a>, <a href="#-select">-select</a>, <a href="#-dot">-dot</a>, <a href="#-interlace">-interlace</a>, <a href="#-appendStream">-appendStream</a>, <a href="#-embedInStream">-embedInStream</a>, <a href="#-trace">-trace</a>.<h3><a class='anchor' name='Composite%20Streams'>Composite Streams</a></h3>
 
 <p>Routines can be <strong>embedded</strong> in each other, using <a href="#-embedInStream">-embedInStream</a> :<pre class='code prettyprint lang-sc'>// example
 (
@@ -222,7 +222,7 @@ z = x &lt;&gt; y;
 17.do({ z.value.postln }); // call .value here, as this is a function.
 )</pre>
 
-<p>Composite Streams can be defined as combinations of Streams using the unary and binary messages.<h3><a class='anchor' name='Unary messages'>Unary messages</a></h3>
+<p>Composite Streams can be defined as combinations of Streams using the unary and binary messages.<h3><a class='anchor' name='Unary%20messages'>Unary messages</a></h3>
 
 <p>Streams support most of the unary messages defined in <a href="./../Classes/AbstractFunction.html">AbstractFunction</a> :<pre class='code prettyprint lang-sc'>(
 a = Routine({ 20.do({ 33.rand.yield }) });
@@ -246,7 +246,7 @@ c = b.neg; // define a composite stream
 });
 nil;
 )</pre>
-<h3><a class='anchor' name='Binary messages'>Binary messages</a></h3>
+<h3><a class='anchor' name='Binary%20messages'>Binary messages</a></h3>
 
 <p>Streams support the following binary messages defined in <a href="./../Classes/AbstractFunction.html">AbstractFunction</a> :<pre class='code prettyprint lang-sc'>(
 a = Routine({ 20.do({ 33.rand.yield }) });
@@ -265,7 +265,7 @@ b = Routine({ [-100,00,300,400].do({ arg v; v.yield}) });
 nil;
 )</pre>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-play' href='./../Overviews/Methods.html#play'>play</a> (<span class='argstr'>clock</span>, <span class='argstr'>quant</span>)</h3>
 <div class='method'>
@@ -296,8 +296,8 @@ nil;
 <tr><td class='argumentname'>key<td class='argumentdesc'>
 <p>when streaming events, post only this key.<tr><td class='argumentname'>printStream<td class='argumentdesc'>
 <p>printOn this stream (default: <a href="./../Classes/Post.html">Post</a>).<tr><td class='argumentname'>prefix<td class='argumentdesc'>
-<p>string added to the printout to separate different streams.</table></div><h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
+<p>string added to the printout to separate different streams.</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-++' href='./../Overviews/Methods.html#++'>++</a> (<span class='argstr'>stream</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-<>' href='./../Overviews/Methods.html#&lt;&gt;'>&lt;&gt;</a> (<span class='argstr'>obj</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-addToSynthDef' href='./../Overviews/Methods.html#addToSynthDef'>addToSynthDef</a> (<span class='argstr'>synthDef</span>, <span class='argstr'>name</span>)</h3>
