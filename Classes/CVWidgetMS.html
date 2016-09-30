@@ -28,7 +28,8 @@
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
 <li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-open'>open</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-split'>split</a> </li>
+<li class='toc3'><a href='#-open'>open</a> </li>
 <li class='toc2'><a href='#GUI-elements'>GUI-elements</a></li>
 <ul class='toc'><li class='toc3'><a href='#-mSlider'>mSlider</a> </li>
 <li class='toc3'><a href='#-numVal'>numVal</a> </li>
@@ -41,7 +42,8 @@
 <li class='toc3'><a href='#-stringColor'>stringColor</a> </li>
 </ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-midiOscRememberBatchConnection'>midiOscRememberBatchConnection</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-cvArray'>cvArray</a> </li>
+<li class='toc3'><a href='#-midiOscRememberBatchConnection'>midiOscRememberBatchConnection</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
@@ -55,7 +57,7 @@
 <p>an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/CV.html">CV</a>s - optional. If none is given it will be created internally. The array may hold an arbitrary number of <a href="./../Classes/CV.html">CV</a>s.<tr><td class='argumentname'>name<td class='argumentdesc'>
 <p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a> - optional. If none is given the widget will be named "multislider".<tr><td class='argumentname'>bounds<td class='argumentdesc'>
 <p>a <a href="./../Classes/Rect.html">Rect</a> - optional. If none is given the widget will be created with a default size.<tr><td class='argumentname'>defaultAction<td class='argumentdesc'>
-<p>optional - a <a href="./../Classes/Function.html">Function</a> or a <a href="./../Classes/String.html">String</a> that compiles to one when <a href="./../Classes/String.html#-interpret">interpret</a> is called on it. If an argument is added to the function it will provide the widget's <a href="./../Classes/CV.html">CV</a>. E.g.: <code class='code prettyprint lang-sc'>{ arg cv; cv.value.postln }</code> <tr><td class='argumentname'>setup<td class='argumentdesc'>
+<p>optional - a <a href="./../Classes/Function.html">Function</a> or a <a href="./../Classes/String.html">String</a> that compiles to one when <a href="./../Classes/String.html#-interpret">interpret</a> is called on it. If an argument is added to the function it will provide the widget's <a href="./../Classes/CV.html">CV</a>. E.g.: <code class='code prettyprint lang-sc'>{ arg cv; cv.value.postln }</code><tr><td class='argumentname'>setup<td class='argumentdesc'>
 <p>optional - an <a href="./../Classes/Event.html">Event</a> containing the following optional keys:<dl>
 <dt>midiMode<dd>see <a href="./../Classes/CVWidget.html#-setMidiMode">CVWidget: -setMidiMode</a>. default: an <a href="./../Classes/Array.html">Array</a> with a size given in argument <code class='code prettyprint lang-sc'>numSliders</code>, all slots filled with <code class='code prettyprint lang-sc'>0</code><dt>midiMean<dd>see <a href="./../Classes/CVWidget.html#-setMidiMean">CVWidget: -setMidiMean</a>. default: an <a href="./../Classes/Array.html">Array</a> with a size given in argument <code class='code prettyprint lang-sc'>numSliders</code>, all slots filled with <code class='code prettyprint lang-sc'>64</code><dt>midiResolution<dd>see <a href="./../Classes/CVWidget.html#-setMidiResolution">CVWidget: -setMidiResolution</a>. default: an <a href="./../Classes/Array.html">Array</a> with a size given in argument <code class='code prettyprint lang-sc'>numSliders</code>, all slots filled with <code class='code prettyprint lang-sc'>1</code><dt>softWithin<dd>see <a href="./../Classes/CVWidget.html#-setSoftWithin">CVWidget: -setSoftWithin</a>. default: an <a href="./../Classes/Array.html">Array</a> with a size given in argument <code class='code prettyprint lang-sc'>numSliders</code>, all slots filled with <code class='code prettyprint lang-sc'>0.1</code><dt>ctrlButtonBank<dd>see <a href="./../Classes/CVWidget.html#-setCtrlButtonBank">CVWidget: -setCtrlButtonBank</a>. default: an <a href="./../Classes/Array.html">Array</a> with a size given in argument <code class='code prettyprint lang-sc'>numSliders</code>, all slots filled with <code class='code prettyprint lang-sc'>nil</code><dt>calibrate<dd>see <a href="./../Classes/CVWidget.html#-setCalibrate">CVWidget: -setCalibrate</a>. default: an <a href="./../Classes/Array.html">Array</a> with a size given in argument <code class='code prettyprint lang-sc'>numSliders</code>, all slots filled with <code class='code prettyprint lang-sc'>true</code></dl>
 <tr><td class='argumentname'>controllersAndModels<td class='argumentdesc'>
@@ -67,7 +69,16 @@
 <div class='returnvalue'>
 <p>this (a <code class='code prettyprint lang-sc'>CVWidgetMS</code>)</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-open' href='./../Overviews/Methods.html#open'>open</a> (<span class='argstr'>window</span>, <span class='argstr'>wdgtBounds</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-split' href='./../Overviews/Methods.html#split'>split</a> </h3>
+<div class='method'>
+<p>Split the internal multi-dimensional <a href="./../Classes/CV.html">CV</a> into an array of one-dimensional CVs. This is especially useful for the usage in <a href="./../Classes/Pattern.html">Pattern</a>s. Once a CV has been split, it will return the split CVs in a variable <code class='code prettyprint lang-sc'>cvArray</code>. Calling the method repeatedly will not try to split the CV again. Hence, it should be save to call <code class='code prettyprint lang-sc'>split</code> within Pattern code.<pre class='code prettyprint lang-sc'>// a CVWidgetMS holding a 5-dimensional CV
+w = CVWidgetMS(nil, CV([20!5, 20000!5, \exp].asSpec, 200!5), "freq", true, true).front;
+// we cannot insert the internal CV in w directly into the Pattern
+// as a Pseq requires an array. Hence, we split the CV into an array of CVs
+s.waitForBoot { p = Pbind(\freq, Pseq(w.split, inf)).play };
+p.stop;
+w.close;</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-open' href='./../Overviews/Methods.html#open'>open</a> (<span class='argstr'>window</span>, <span class='argstr'>wdgtBounds</span>)</h3>
 <div class='method'>
 <p>If a widget has been created with the argument <code class='code prettyprint lang-sc'>persistent</code> set to true the user may reopen the widget with this method. This is basically a workaround due to the fact that GUIs in SuperCollider usually can't be opened again once they have been closed (even though executing the variable storing the the regarding object still returns the object). However, rather than reopening the old widget this method will create a new one, holding all properties, the CV and MIDI-/OSC-responders. In order to make this work as desired one should apply the following syntax where <code class='code prettyprint lang-sc'>x</code> holds the instance of the initially created widget:
 <p><code class='code prettyprint lang-sc'>x = x.open // the old widget was stored in x which will afterwards hold the new widget</code>
@@ -104,13 +115,13 @@
 <div class='returnvalue'>
 <p>a <a href="./../Classes/Button.html">Button</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-calibViews' href='./../Overviews/Methods.html#calibViews'>calibViews</a> </h3>
 <div class='method'>
-<p>A <a href="./../Classes/List.html">List</a> of <a href="./../Classes/View.html">View</a>s, each displaying the current <a href="./../Classes/CVWidget.html#getCalibration">(OSC) calibration</a>-status of one slider within the multi-slider of the widget: green means calibration is active, red means it's currently off. The views are displayed as a bar beneath the multi-slider of the widget. <h4>Returns:</h4>
+<p>A <a href="./../Classes/List.html">List</a> of <a href="./../Classes/View.html">View</a>s, each displaying the current <a href="./../Classes/CVWidget.html#getCalibration">(OSC) calibration</a>-status of one slider within the multi-slider of the widget: green means calibration is active, red means it's currently off. The views are displayed as a bar beneath the multi-slider of the widget.<h4>Returns:</h4>
 <div class='returnvalue'>
 <p>a <a href="./../Classes/List.html">List</a> of <a href="./../Classes/View.html">View</a>s</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-background' href='./../Overviews/Methods.html#background'>background</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-background' href='./../Overviews/Methods.html#background'>background</a> = <span class='argstr'>color</span></h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/CVWidget.html'>CVWidget</a></div>
 <div class='method'>
-<p>Get or set the background-color of the widget. Tne setter for this method is implemented within CVWidgetMS while the getter is implemented as a global getter for all CVWidgets in <a href="./../Classes/CVWidget.html">CVWidget</a>. <h4>Arguments:</h4>
+<p>Get or set the background-color of the widget. Tne setter for this method is implemented within CVWidgetMS while the getter is implemented as a global getter for all CVWidgets in <a href="./../Classes/CVWidget.html">CVWidget</a>.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>color<td class='argumentdesc'>
 <p>a <a href="./../Classes/Color.html">Color</a></table><h4>Returns:</h4>
@@ -119,13 +130,14 @@
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-stringColor' href='./../Overviews/Methods.html#stringColor'>stringColor</a> = <span class='argstr'>color</span></h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/CVWidget.html'>CVWidget</a></div>
 <div class='method'>
-<p>Get or set the string-color of the widget. Tne setter for this method is implemented within CVWidgetMS while the getter is implemented as a global getter for all CVWidgets in <a href="./../Classes/CVWidget.html">CVWidget</a>. <h4>Arguments:</h4>
+<p>Get or set the string-color of the widget. Tne setter for this method is implemented within CVWidgetMS while the getter is implemented as a global getter for all CVWidgets in <a href="./../Classes/CVWidget.html">CVWidget</a>.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>color<td class='argumentdesc'>
 <p>a <a href="./../Classes/Color.html">Color</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>a <a href="./../Classes/Color.html">Color</a> (getter) or <code class='code prettyprint lang-sc'>this</code> (a <code class='code prettyprint lang-sc'>CVWidgetMS</code>) (setter)</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-cvArray' href='./../Overviews/Methods.html#cvArray'>cvArray</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-midiOscRememberBatchConnection' href='./../Overviews/Methods.html#midiOscRememberBatchConnection'>midiOscRememberBatchConnection</a> </h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 
