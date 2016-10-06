@@ -27,7 +27,7 @@
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Basic%20usage'>Basic usage</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
-<li class='toc3'><a href='#*makeWindow'>makeWindow</a> </li>
+<li class='toc3'><a href='#*front'>front</a> </li>
 <li class='toc3'><a href='#*use'>use</a> </li>
 <li class='toc3'><a href='#*put'>put</a> </li>
 </ul><li class='toc2'><a href='#Connecting%20Nodes%20(Groups,%20Synths)%20and%20NodeProxies'>Connecting Nodes (Groups, Synths) and NodeProxies</a></li>
@@ -47,6 +47,9 @@
 <li class='toc3'><a href='#*addActionAt'>addActionAt</a> </li>
 <li class='toc3'><a href='#*removeActionAt'>removeActionAt</a> </li>
 <li class='toc3'><a href='#*activateActionAt'>activateActionAt</a> </li>
+<li class='toc3'><a href='#*snapShots'>snapShots</a> </li>
+<li class='toc3'><a href='#*saveSnapshot'>saveSnapshot</a> </li>
+<li class='toc3'><a href='#*deleteSnapshots'>deleteSnapshots</a> </li>
 </ul><li class='toc2'><a href='#Setting%20GUI-properties'>Setting GUI-properties</a></li>
 <ul class='toc'><li class='toc3'><a href='#*bounds'>bounds</a> </li>
 <li class='toc3'><a href='#*alwaysOnTop'>alwaysOnTop</a> </li>
@@ -57,6 +60,7 @@
 <li class='toc3'><a href='#*guiChangeDimensions'>guiChangeDimensions</a> </li>
 <li class='toc3'><a href='#*renameTab'>renameTab</a> </li>
 <li class='toc3'><a href='#*widgetsAtTab'>widgetsAtTab</a> </li>
+<li class='toc3'><a href='#*widgetConnectGUI'>widgetConnectGUI</a> </li>
 </ul><li class='toc2'><a href='#Saving%20and%20loading%20setups'>Saving and loading setups</a></li>
 <ul class='toc'><li class='toc3'><a href='#*saveSetup'>saveSetup</a> </li>
 <li class='toc3'><a href='#*loadSetup'>loadSetup</a> </li>
@@ -74,18 +78,7 @@
 <li class='toc3'><a href='#*guiwidth'>guiwidth</a> </li>
 <li class='toc3'><a href='#*guiheight'>guiheight</a> </li>
 </ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#*connectSliders'>connectSliders</a> </li>
-<li class='toc3'><a href='#*connectTextFields'>connectTextFields</a> </li>
-<li class='toc3'><a href='#*deleteSnapshots'>deleteSnapshots</a> </li>
-<li class='toc3'><a href='#*dontSave'>dontSave</a> </li>
-<li class='toc3'><a href='#*front'>front</a> </li>
-<li class='toc3'><a href='#*prRegroupPrefPane'>prRegroupPrefPane</a> </li>
-<li class='toc3'><a href='#*saveSnapshot'>saveSnapshot</a> </li>
-<li class='toc3'><a href='#*snapShots'>snapShots</a> </li>
-<li class='toc3'><a href='#*systemWidgets'>systemWidgets</a> </li>
-<li class='toc3'><a href='#*widgetConnectGUI'>widgetConnectGUI</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'><li class='toc2'><a href='#Auto-generating%20CVWidgets%20within%20CVCenter%20GUI%20from%20running%20Synths,%20NodeProxies,%20Ndefs%20and%20ProxySpaces%20and%20Instr/Patch'>Auto-generating CVWidgets within CVCenter GUI from running Synths, NodeProxies, Ndefs and ProxySpaces and Instr/Patch</a></li>
@@ -112,13 +105,13 @@
 
 <p>For a detailed description of the above listet arguments see the descriptions of the according classvar-methods.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*makeWindow' href='./../Overviews/Methods.html#makeWindow'>makeWindow</a> </h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*front' href='./../Overviews/Methods.html#front'>front</a> (<span class='argstr'>tab</span> <span class='argstr'>... cvs</span>)</h3>
 <div class='method'>
 <p>Creates and fronts the CVCenter GUI if it's closed or nil. Sends the GUI to front if it's in the background. If CVs are passed in as key/value pairs it adds them as widgets to the GUI under the given tab if given or the one that's currently in front.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>(tab)<td class='argumentdesc'>
-<p>a String or a Symbol, indicating the label of a tab. If none is provided the widgets will be added to "default" or any other tab that's currently in front. If an event containing the keys <code class='code prettyprint lang-sc'>\hi</code> and <code class='code prettyprint lang-sc'>\hi</code> gets passed in the widget will be a CVWidget2D.<tr><td class='argumentname'>(... cvs)<td class='argumentdesc'>
-<p>key/value pairs: <code class='code prettyprint lang-sc'>\wdgtName1, a CV, \wdgtName2, (lo: a CV, hi: a CV),  \wdgtNameN, a CV</code></table><h4>Returns:</h4>
+<tr><td class='argumentname'>tab<td class='argumentdesc'>
+<p>a String or a Symbol, indicating the label of a tab. If none is provided the widgets will be added to "default" or any other tab that's currently in front. If an event containing the keys <code class='code prettyprint lang-sc'>\hi</code> and <code class='code prettyprint lang-sc'>\hi</code> gets passed in the widget will be a CVWidget2D.<tr><td class='argumentname'>... cvs<td class='argumentdesc'>
+<p>key/value pairs: <code class='code prettyprint lang-sc'>\wdgtName1, a CV, \wdgtName2, (lo: a CV, hi: a CV) ...  \wdgtNameN, a CV</code></table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*use' href='./../Overviews/Methods.html#use'>use</a> (<span class='argstr'>key</span>, <span class='argstr'>spec</span>, <span class='argstr'>value</span>, <span class='argstr'>tab</span>, <span class='argstr'>slot</span>, <span class='argstr'>svItems</span>, <span class='argstr'>connectS</span>, <span class='argstr'>connectTF</span>)</h3>
 <div class='method'>
@@ -291,6 +284,21 @@ CVCenter.removeAll;</pre>
 <tr><td class='argumentname'>slot<td class='argumentdesc'>
 <p>a <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a> - either <code class='code prettyprint lang-sc'>\hi</code> or <code class='code prettyprint lang-sc'>\lo</code>. Only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*snapShots' href='./../Overviews/Methods.html#snapShots'>snapShots</a> </h3>
+<div class='method'>
+<p>Returns currently saved snapshots - an <a href="./../Classes/Event.html">Event</a> holding snapshots under the timestamp or custom name when they were saved as key and an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> of keys and values of all current <a href="./../Classes/CVWidget.html">CVWidget</a>s resp. their internal <a href="./../Classes/CV.html">CV</a>(s) as values<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*saveSnapshot' href='./../Overviews/Methods.html#saveSnapshot'>saveSnapshot</a> (<span class='argstr'>dialog: false</span>)</h3>
+<div class='method'>
+<p>Save a snapshot of all values of all <a href="./../Classes/CVWidget.html">CVWidget</a>s currently held in CVCenter. The snapshot will immediatly appear in the 'select snapshot' dropdown at the bottom of the CVCenter GUI. Selecting a snapshot will set the CVWidgets contained in the snapshot to its coresponding value in the snapshot.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>dialog<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a> denoting whether the snapshot name can be set in a dialog (default: <code class='code prettyprint lang-sc'>false</code> - the snapshot's name will be the current timestamp)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*deleteSnapshots' href='./../Overviews/Methods.html#deleteSnapshots'>deleteSnapshots</a> </h3>
+<div class='method'>
+<p>Deletes all currently saved snapshots<h4>Returns:</h4>
+<div class='returnvalue'>
 <p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3><a class='anchor' name='Setting%20GUI-properties'>Setting GUI-properties</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*bounds' href='./../Overviews/Methods.html#bounds'>bounds</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*bounds' href='./../Overviews/Methods.html#bounds'>bounds</a> = <span class='argstr'>rect</span></h3>
@@ -356,7 +364,16 @@ CVCenter.removeAll;</pre>
 <tr><td class='argumentname'>label<td class='argumentdesc'>
 <p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a> representing the name of the selected tab</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>an <a href="./../Classes/Array.html">Array</a></div></div><h3><a class='anchor' name='Saving%20and%20loading%20setups'>Saving and loading setups</a></h3>
+<p>an <a href="./../Classes/Array.html">Array</a></div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*widgetConnectGUI' href='./../Overviews/Methods.html#widgetConnectGUI'>widgetConnectGUI</a> (<span class='argstr'>key</span>, <span class='argstr'>connectSliders</span>, <span class='argstr'>connectTextFields</span>)</h3>
+<div class='method'>
+<p>Drawing sliders in a widget while they're moved from outside (e.g. when they're set from some other application outside SuperCollider via OSC) may cost a lot of CPU power. Via this method the connection to sliders and number boxes can be suspended and hence CPU power may be freed for other processes.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>a <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a> denoting the widget whose sliders, numberboxes shall be disconnected<tr><td class='argumentname'>connectSliders<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a> or <code class='code prettyprint lang-sc'>nil</code>, telling CVCenter to connect or disconnect the slider(s) for the widget denoted by the argument <code class='code prettyprint lang-sc'>key</code><tr><td class='argumentname'>connectTextFields<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a> or <code class='code prettyprint lang-sc'>nil</code>, telling CVCenter to connect or disconnect the number box(es) for the widget denoted by the argument <code class='code prettyprint lang-sc'>key</code></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3><a class='anchor' name='Saving%20and%20loading%20setups'>Saving and loading setups</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*saveSetup' href='./../Overviews/Methods.html#saveSetup'>saveSetup</a> (<span class='argstr'>path</span>)</h3>
 <div class='method'>
 <p>Save all widgets and tabs resp. their actions, connected MIDI- and OSC-responders into a setup-file on disk. A once stored setup can be loaded again with <code class='code prettyprint lang-sc'>loadSetup</code> and all its responders can get reinitialized automatically.<h4>Arguments:</h4>
@@ -488,21 +505,7 @@ CVCenter.removeAll;</pre>
 <p>The GUI-height - has no direct effect besides when being set ahead from initializing CVCenter.<h4>Returns:</h4>
 <div class='returnvalue'>
 <p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*connectSliders' href='./../Overviews/Methods.html#connectSliders'>connectSliders</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*connectSliders' href='./../Overviews/Methods.html#connectSliders'>connectSliders</a> = value</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*connectTextFields' href='./../Overviews/Methods.html#connectTextFields'>connectTextFields</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*connectTextFields' href='./../Overviews/Methods.html#connectTextFields'>connectTextFields</a> = value</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*deleteSnapshots' href='./../Overviews/Methods.html#deleteSnapshots'>deleteSnapshots</a> </h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*dontSave' href='./../Overviews/Methods.html#dontSave'>dontSave</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*dontSave' href='./../Overviews/Methods.html#dontSave'>dontSave</a> = value</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*front' href='./../Overviews/Methods.html#front'>front</a> (<span class='argstr'>tab</span> <span class='argstr'>... cvs</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*prRegroupPrefPane' href='./../Overviews/Methods.html#prRegroupPrefPane'>prRegroupPrefPane</a> </h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*saveSnapshot' href='./../Overviews/Methods.html#saveSnapshot'>saveSnapshot</a> (<span class='argstr'>dialog: false</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*snapShots' href='./../Overviews/Methods.html#snapShots'>snapShots</a> </h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*systemWidgets' href='./../Overviews/Methods.html#systemWidgets'>systemWidgets</a> </h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*widgetConnectGUI' href='./../Overviews/Methods.html#widgetConnectGUI'>widgetConnectGUI</a> (<span class='argstr'>key</span>, <span class='argstr'>connectSliders</span>, <span class='argstr'>connectTextFields</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 <pre class='code prettyprint lang-sc'>// create a couple of CVWidgets under the tab "test"
