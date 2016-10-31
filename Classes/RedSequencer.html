@@ -1,0 +1,77 @@
+<html><head><title>RedSequencer</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Red>redUGens'>Red>redUGens</a></div>
+<h1>RedSequencer</h1>
+<div id='summary'>simple sequencer</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redUGens/RedSequencer.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redUGens/RedSequencer.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/RedSequencer2.html">RedSequencer2</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*ar'>ar</a>  <a href='#*kr'>kr</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Just a wrapper for a <a href="./../Classes/Demand.html">Demand</a> ugen. Use <a href="./../Classes/Demand.html">Demand</a> for more advanced sequencing.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>array</span>, <span class='argstr'>trig</span>, <span class='argstr'>reset: 0</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*kr' href='./../Overviews/Methods.html#kr'>kr</a> (<span class='argstr'>array</span>, <span class='argstr'>trig</span>, <span class='argstr'>reset: 0</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>array<td class='argumentdesc'>
+<p>Values to be played in sequence or a <a href="./../Classes/Demand.html">Demand</a> rate ugen like <a href="./../Classes/Drand.html">Drand</a>, <a href="./../Classes/Dseries.html">Dseries</a> or <a href="./../Classes/Dgeom.html">Dgeom</a>.<tr><td class='argumentname'>trig<td class='argumentdesc'>
+<p>Jumps to the next value in array.<tr><td class='argumentname'>reset<td class='argumentdesc'>
+<p>Makes the sequence start from the beginning.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>s.boot;
+
+//basic usage
+a= {SinOsc.ar(RedSequencer.kr([100, 400, 500, 600], Impulse.kr(4)), 0, 0.1)}.play
+a.free
+a= {SinOsc.ar(RedSequencer.ar([400, 500, 600], Dust.ar(10)), 0, 0.1)}.play
+a.free
+a= {SinOsc.ar(RedSequencer.kr(Drand([100, 500, 600, 700], inf), Impulse.kr(4)), 0, 0.1)}.play
+a.free
+
+//mouse trigger reset
+a= {SinOsc.ar(RedSequencer.kr(Dgeom(400, 1.5, 8), Impulse.kr(5), MouseX.kr&gt;0.5), 0, 0.1)}.play
+a.free
+
+//more advanced example
+(
+SynthDef(\redseq, {|out= 0|
+    var freq, dur, z, e;
+    freq= RedSequencer.kr([200, 300, 400, 500], Impulse.kr(MouseX.kr(0.1, 10)));
+    dur= RedSequencer.kr([0.5, 1, 2], Impulse.kr(MouseY.kr(0.1, 1)));
+    e= EnvGen.kr(Env.perc, Impulse.kr(dur));
+    z= SinOsc.ar(freq, 0, e);
+    Out.ar(out, Pan2.ar(z, 0, 0.4));
+}).send(s);
+)
+
+a= Synth(\redseq)
+a.free</pre>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedSequencer.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedSequencer.schelp</a><br>link::Classes/RedSequencer::<br>sc version: 3.8dev</div></div></body></html>

@@ -1,0 +1,172 @@
+<html><head><title>RedBencode</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Red>redTools'>Red>redTools</a></div>
+<h1>RedBencode</h1>
+<div id='summary'>Bencode encoder and decoder</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redTools/RedBencode.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redTools/RedBencode.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/RedBase64.html">RedBase64</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*encode'>encode</a> </li>
+<li class='toc3'><a href='#*encodeBytes'>encodeBytes</a> </li>
+<li class='toc3'><a href='#*decodeBytes'>decodeBytes</a> </li>
+<li class='toc3'><a href='#*decodeString'>decodeString</a> </li>
+<li class='toc3'><a href='#*decode'>decode</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Read about this format here... <a href="http://en.wikipedia.org/wiki/Bencode">http://en.wikipedia.org/wiki/Bencode</a><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*encode' href='./../Overviews/Methods.html#encode'>encode</a> (<span class='argstr'>array</span>)</h3>
+<div class='method'>
+<p>Encodes an array of items as a bencoded string.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>array<td class='argumentdesc'>
+<p>Expects an <a href="./../Classes/Array.html">Array</a> with items of the following kind...<ul>
+<li><a href="./../Classes/Integer.html">Integer</a><li><a href="./../Classes/String.html">String</a><li><a href="./../Classes/Array.html">Array</a> (or <a href="./../Classes/List.html">List</a> etc.)<li><a href="./../Classes/Dictionary.html">Dictionary</a> (or <a href="./../Classes/Event.html">Event</a> etc.)</ul>
+
+<p>For example here is a valid argument with different items...<pre class='code prettyprint lang-sc'>["test", 4766, [555, [24, -50]], 40000, Dictionary[\one-&gt;111, \two-&gt;222]]</pre>
+</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <a href="./../Classes/String.html">String</a> containing the encoded data. For example...<pre class='code prettyprint lang-sc'>4:testi4766eli555eli24ei-50eeei40000ed3:onei111e3:twoi222ee</pre>
+</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*encodeBytes' href='./../Overviews/Methods.html#encodeBytes'>encodeBytes</a> (<span class='argstr'>array</span>)</h3>
+<div class='method'>
+<p>Same as <a href="#*encode">*encode</a> but returns an array with 8bit bytes suitable for sending over serial port.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/Int8Array.html">Int8Array</a> containing the encoded data as 8bit bytes. For example...<pre class='code prettyprint lang-sc'>Int8Array[52, 58, 116, 101, 115, 116, 105, 52, 55, 54, 54, 101, 108, 105, 53, 53, 53, 101, 108, 105, 50, 52, 101, 105, 45, 53, 48, 101, 101, 101, 105, 52, 48, 48, 48, 48, 101, 100, 51, 58, 111, 110, 101, 105, 49, 49, 49, 101, 51, 58, 116, 119, 111, 105, 50, 50, 50, 101, 101]</pre>
+</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*decodeBytes' href='./../Overviews/Methods.html#decodeBytes'>decodeBytes</a> (<span class='argstr'>array</span>)</h3>
+<div class='method'>
+<p>Same as <a href="#*decode">*decode</a> but useful when decoding data received from the serial port.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>array<td class='argumentdesc'>
+<p>An <a href="./../Classes/Int8Array.html">Int8Array</a> with 8bit values.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*decodeString' href='./../Overviews/Methods.html#decodeString'>decodeString</a> (<span class='argstr'>string</span>)</h3>
+<div class='method'>
+<p>Same as <a href="#*decode">*decode</a> but takes a <a href="./../Classes/String.html">String</a> as argument. This is the more common method for decoding (compare <a href="#*decode">*decode</a> and <a href="#*decodeBytes">*decodeBytes</a>).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>string<td class='argumentdesc'>
+<p>A bencoded <a href="./../Classes/String.html">String</a></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*decode' href='./../Overviews/Methods.html#decode'>decode</a> (<span class='argstr'>stream</span>)</h3>
+<div class='method'>
+<p>Decodes a bencoded stream of characters in to an array of items (Integer, String, Array, Dictionary). Usually it is easier to use the <a href="#*decodeString">*decodeString</a> method as it will automatically create a CollStream out of the argument string.<div class='note'><span class='notelabel'>NOTE:</span> Event will become Dictionary and List will become Array.</div><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>stream<td class='argumentdesc'>
+<p>A <a href="./../Classes/CollStream.html">CollStream</a>.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>//some items in an array to be encoded
+a= ["test", 4766, [555, [24, -50]], 40000, Dictionary[\one-&gt;111, \two-&gt;222]];
+//encode
+b= RedBencode.encode(a);
+b//this is now the bencode string
+
+//decode
+c= RedBencode.decodeString(b);
+a==c//convert back - should be the same array as above</pre>
+<pre class='code prettyprint lang-sc'>//--arduino real world test reading bencoded data from the serial port
+//upload the serialSend example from https://github.com/jcw/embencode to an arduino
+(
+var port= SerialPort("/dev/tty.usbmodemfa131", 57600);//modify this port name
+CmdPeriod.doOnce({port.close});
+Routine.run({
+    var lastByte= -1, stream;
+    inf.do{
+        var byte;
+        while({byte= port.read; byte.notNil}, {
+            if(byte==10 and:{lastByte==13}, {
+                if(stream.notNil, {//skip the initial "\n[serialSend]"
+                    stream.pos= 0;
+                    RedBencode.decode(stream).postln;//should post the result every 3sec
+                });
+                stream= CollStream.new;
+                lastByte= -1;
+                }, {
+                    if(lastByte!= -1, {
+                        if(stream.notNil, {//skip the initial "\n[serialSend]"
+                            stream.put(lastByte.asAscii);
+                        });
+                    });
+                    lastByte= byte;
+            });
+        });
+    };
+});
+)</pre>
+<pre class='code prettyprint lang-sc'>//--arduino real world test sending bencoded data to the serial port
+//upload the serialReceive example from https://github.com/jcw/embencode to an arduino
+(
+var port= SerialPort("/dev/tty.usbmodemfa131", 57600);//modify this port name
+CmdPeriod.doOnce({port.close});
+Routine.run({
+    var lastByte= -1, stream= CollStream.new;
+    inf.do{
+        var byte;
+        while({byte= port.read; byte.notNil}, {
+            if(byte==10 and:{lastByte==13}, {
+                stream.contents.postln;
+                stream= CollStream.new;
+                lastByte= -1;
+                }, {
+                    if(lastByte!= -1, {
+                        stream.put(byte.asAscii);
+                    });
+                    lastByte= byte;
+            });
+        });
+        
+    };
+});
+Routine.run({
+    var arr;
+    inf.do{
+        3.wait;
+        arr= RedBencode.encodeBytes(["abcde", "123", 12345, [987, [654], 321], 999999999, Dictionary[\one-&gt;11, \two-&gt;22], "bye!"]);
+        port.putAll(arr);
+    };
+});
+)</pre>
+<pre class='code prettyprint lang-sc'>//--arduino real world test
+//upload the blinky example from https://github.com/jcw/embencode to an arduino
+(
+~port= SerialPort("/dev/tty.usbmodemfa131", 57600);//modify this port name
+CmdPeriod.doOnce({~port.close});
+Routine.run({
+    var stream= CollStream.new;
+    inf.do{
+        var byte;
+        while({byte= ~port.next; byte.notNil}, {
+            stream.put(byte.asAscii);
+        });
+        if(stream.pos&gt;0, {
+            stream.pos= 0;
+            RedBencode.decode(stream).postln;
+            stream= CollStream.new;
+        });
+        0.01.wait;
+    };
+});
+)
+
+~port.putAll(RedBencode.encode([["rate", 250], ["trigger", 4], ["count", 10]]));
+~port.putAll(RedBencode.encode([["rate", 100], ["trigger", 10], ["count", 20]]));</pre>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedBencode.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedBencode.schelp</a><br>link::Classes/RedBencode::<br>sc version: 3.8dev</div></div></body></html>

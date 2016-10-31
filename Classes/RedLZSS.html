@@ -1,0 +1,110 @@
+<html><head><title>RedLZSS</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Red>>redTools'>Red>>redTools</a></div>
+<h1>RedLZSS</h1>
+<div id='summary'>lzss compression/decompression</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redTools/RedLZSS.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redTools/RedLZSS.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/RedBase64.html">RedBase64</a>, <a href="./../Classes/RedHuffman.html">RedHuffman</a>, <a href="./../Classes/RedLZ77.html">RedLZ77</a>, <a href="./../Classes/RedLZ78.html">RedLZ78</a>, <a href="./../Classes/RedLZW.html">RedLZW</a>, <a href="./../Classes/RedRLE.html">RedRLE</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*compress'>compress</a> </li>
+<li class='toc3'><a href='#*decompress'>decompress</a> </li>
+<li class='toc3'><a href='#*binaryStringToBytes'>binaryStringToBytes</a> </li>
+<li class='toc3'><a href='#*bytesToBinaryString'>bytesToBinaryString</a> </li>
+<li class='toc3'><a href='#*pad'>pad</a> </li>
+<li class='toc3'><a href='#*window'>window</a> </li>
+<li class='toc3'><a href='#*length'>length</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>See <a href="http://michael.dipperstein.com/lzss/">http://michael.dipperstein.com/lzss/</a> and <a href="http://en.wikipedia.org/wiki/Lempel-Ziv-Storer-Szymanski">http://en.wikipedia.org/wiki/Lempel-Ziv-Storer-Szymanski</a>
+<p>A dictionary look-up compressor that performs best with long repeating patterns e.g. [0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3].<div class='note'><span class='notelabel'>NOTE:</span> Only works with 8bit <a href="./../Classes/Integer.html">Integer</a> (0-255) values.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*compress' href='./../Overviews/Methods.html#compress'>compress</a> (<span class='argstr'>input</span>)</h3>
+<div class='method'>
+<p>Expects an array of 8bit integers. Returns a string of binary numbers.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*decompress' href='./../Overviews/Methods.html#decompress'>decompress</a> (<span class='argstr'>input</span>)</h3>
+<div class='method'>
+<p>Expects a string of binary numbers. Returns an array of 8bit integers.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*binaryStringToBytes' href='./../Overviews/Methods.html#binaryStringToBytes'>binaryStringToBytes</a> (<span class='argstr'>str</span>)</h3>
+<div class='method'>
+<p>Converts a binary string into 8-bit bytes. Up to 7 zeros might be padded automatically at the end. The number of zeros is stored in <a href="#*pad">*pad</a>. <a href="#*pad">*pad</a> is semi-private and used when converting back to bytes.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*bytesToBinaryString' href='./../Overviews/Methods.html#bytesToBinaryString'>bytesToBinaryString</a> (<span class='argstr'>arr</span>)</h3>
+<div class='method'>
+<p>Converts an array of 8-bit bytes into a binary string.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*pad' href='./../Overviews/Methods.html#pad'>pad</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*pad' href='./../Overviews/Methods.html#pad'>pad</a> = value</h3>
+<div class='method'>
+<p>Semi-private counter for number of padded zeros. Set by <a href="#*binaryStringToBytes">*binaryStringToBytes</a> and read by <a href="#*bytesToBinaryString">*bytesToBinaryString</a>.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*window' href='./../Overviews/Methods.html#window'>window</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*window' href='./../Overviews/Methods.html#window'>window</a> = value</h3>
+<div class='method'>
+<p>Maximum sliding window size. The default is 4096.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*length' href='./../Overviews/Methods.html#length'>length</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*length' href='./../Overviews/Methods.html#length'>length</a> = value</h3>
+<div class='method'>
+<p>Maximum length for matching pattern. The default is 32.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>a= [0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3];
+b= RedLZSS.compress(a);
+RedLZSS.binaryStringToBytes(b).size/a.size;    //compressed to 29%
+c= RedLZSS.decompress(b);
+a==c
+
+
+a= "AABCBBABC".ascii;
+b= RedLZSS.compress(a);
+c= RedLZSS.decompress(b);
+c.collect{|x| x.asAscii}.join;
+a==c
+
+
+a= "abracadabra".ascii;
+b= RedLZSS.compress(a);
+c= RedLZSS.decompress(b);
+a==c
+
+
+a= "JOEYNJOEYNJOEYJOEYNJOEYNJOEYJOEYNJOEYNJOEYJOEYNJOEYNJOEY".ascii;
+b= RedLZSS.compress(a);
+c= RedLZSS.binaryStringToBytes(b);
+c.size/a.size;            //compressed to 27%
+d= RedLZSS.bytesToBinaryString(c);
+e= RedLZSS.decompress(d);
+e.collect{|x| x.asAscii}.join;
+a==e
+
+
+a= "Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.".ascii;
+b= RedLZSS.compress(a);
+RedLZSS.binaryStringToBytes(b).size/a.size;    //compressed to 99%
+c= RedLZSS.decompress(b);
+c.collect{|x| x.asAscii}.join;
+a==c
+
+
+a= {|i| [0, 0, 0, 1].choose}.dup(5000);
+RedLZSS.window= 512;        //decrease window and length to speed up compression
+RedLZSS.length= 16;
+b= RedLZSS.compress(a);        //very slow to compress large arrays
+RedLZSS.binaryStringToBytes(b).size/a.size;    //compressed to around 22% (also 22% with default window and length values)
+c= RedLZSS.decompress(b);    //fast to decompress
+a==c</pre>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedLZSS.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedLZSS.schelp</a><br>link::Classes/RedLZSS::<br>sc version: 3.8dev</div></div></body></html>

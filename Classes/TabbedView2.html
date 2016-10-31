@@ -55,7 +55,12 @@
 <li class='toc3'><a href='#-followEdges'>followEdges</a> </li>
 <li class='toc3'><a href='#-lockEdges'>lockEdges</a> </li>
 </ul><li class='toc2'><a href='#Examples:%20Set%20tabPosition%20and%20followEdges'>Examples: Set tabPosition and followEdges</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Setting%20Colors'>Setting Colors</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Auto-Archiving%20a%20TabbedView2%20State'>Auto-Archiving a TabbedView2 State</a></li>
+<ul class='toc'><li class='toc3'><a href='#-autoArchive'>autoArchive</a> </li>
+<li class='toc3'><a href='#-archiveKeys'>archiveKeys</a> </li>
+<li class='toc3'><a href='#-saveStateToArchive'>saveStateToArchive</a> </li>
+<li class='toc3'><a href='#-restoreStateFromArchive'>restoreStateFromArchive</a> </li>
+</ul><li class='toc2'><a href='#Setting%20Colors'>Setting Colors</a></li>
 <ul class='toc'><li class='toc3'><a href='#-resetColors'>resetColors</a> </li>
 <li class='toc3'><a href='#-labelColors'>labelColors</a> </li>
 <li class='toc3'><a href='#-unfocusedColors'>unfocusedColors</a> </li>
@@ -73,12 +78,14 @@
 <li class='toc3'><a href='#-font'>font</a> </li>
 </ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-refreshAction'>refreshAction</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-changeAction'>changeAction</a> </li>
+<li class='toc3'><a href='#-hasDuplicates'>hasDuplicates</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'><li class='toc2'><a href='#Usage:'>Usage:</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Quick%20styling%20with%20variations%20on%20*new:'>Quick styling with variations on *new:</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Drag%20objects%20from%20one%20tab%20to%20another%20(under%20cocoa%20and%20qt%20only%20at%20the%20moment):'>Drag objects from one tab to another (under cocoa and qt only at the moment):</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Add,%20removeAt,%20insert%20tabs'>Add, removeAt, insert tabs</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Auto-Archiving%20Tabs'>Auto-Archiving Tabs</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#resize'>resize</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Nest%20TabbedView2%20&%20use%20scrolling'>Nest TabbedView2 &amp; use scrolling</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#User%20functions:%20focus%20and%20unfocus'>User functions: focus and unfocus</a></li>
@@ -94,11 +101,11 @@
 
 <p>There are extensive explanations in the <a href="#Examples">Examples</a> section on how to use TabbedView2 with its many configuration options .<h3><a class='anchor' name='Version%20and%20Author'>Version and Author</a></h3>
 
-<p>version: 1.04 , May 2, 2014
+<p>version: 1.05 , Oct 28, 2016
 <p>author: Jost Muxfeldt<h3><a class='anchor' name='New%20Features'>New Features</a></h3>
 
 <p>TabbedView2 has a number of new features compared with TabbedView.<ul>
-<li>Tabs are draggable, both for their order and view position.<li>Under QtGUI, tabs can be dragged (using cmd/ctrl-drag) to other TabbedView2s, even between windows.<li>Under QtGUI tabs can be detached.<li>Double-clicking tabs changes their orientation.<li>Tabs can be set to be closable.<li>Tabs are individually configurable, not just globally, though global defaults are settable.</ul>
+<li>Tabs are draggable, both for their order and view position.<li>Under QtGUI, tabs can be dragged (using cmd/ctrl-drag) to other TabbedView2s, even between windows.<li>Under QtGUI tabs can be detached.<li>Double-clicking tabs changes their orientation.<li>Tabs can be set to be closable.<li>Tabs are individually configurable, not just globally, though global defaults are settable.<li>Tab states can be automatically archived. See <a href="#Auto-Archiving%20a%20TabbedView2%20State">Auto-Archiving a TabbedView2 State</a></ul>
 
 <p><div class='note'><span class='notelabel'>NOTE:</span> Try the <a href="#Demo">DEMO</a> Code to test all the features, and go through the <a href="#Examples">EXAMPLES</a>.</div>
 <p><h3><a class='anchor' name='Differences%20to%20older%20TabbedView'>Differences to older TabbedView</a></h3>
@@ -302,7 +309,36 @@ TabbedView2.newTall(nil,Rect(100,500,400,100)).tabPosition_(\bottom).demo(5,"tes
 
 
 )</pre>
-<h3><a class='anchor' name='Setting%20Colors'>Setting Colors</a></h3>
+<h3><a class='anchor' name='Auto-Archiving%20a%20TabbedView2%20State'>Auto-Archiving a TabbedView2 State</a></h3>
+<div class='note'><span class='notelabel'>NOTE:</span> In order to archive tab positions, their labels must be unique.</div>
+<p><div class='note'><span class='notelabel'>NOTE:</span> Does not support detached Tabs</div>
+<p><h3 class='imethodname'><span class='methprefix'>-</span><a name='-autoArchive' href='./../Overviews/Methods.html#autoArchive'>autoArchive</a> ( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>Automatically saves the state of the TabbedView2 to given path in the Archive.<div class='note'><span class='notelabel'>NOTE:</span> If the number of saved \indexes is different than the number of tabs, the saved \indexes array will be ignored and reset.</div>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>symbols<td class='argumentdesc'>
+<p>symbol1, symbol2, symbol3, ...<pre class='code prettyprint lang-sc'>v=TabbedView2.newBasic.demo;
+v.autoArchive(\myProject, \mySection, \myTabbedViewName)</pre>
+</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-archiveKeys' href='./../Overviews/Methods.html#archiveKeys'>archiveKeys</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-archiveKeys' href='./../Overviews/Methods.html#archiveKeys'>archiveKeys</a> = value</h3>
+<div class='method'>
+<p>Array: Determines which keys will be archived when autoArchive is enabled.
+<p><code class='code prettyprint lang-sc'>default=[\indexes, \followEdges, \tabPosition, \tabFocus]</code><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>(array)<td class='argumentdesc'>
+<p>Array of Symbols, may include only <code class='code prettyprint lang-sc'>[\indexes, \followEdges, \tabPosition, \tabFocus]</code></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-saveStateToArchive' href='./../Overviews/Methods.html#saveStateToArchive'>saveStateToArchive</a> ( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>Saves the state of the TabbedView2 to given path in the Archive.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>symbols<td class='argumentdesc'>
+<p>symbol1, symbol2, symbol3, ...</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-restoreStateFromArchive' href='./../Overviews/Methods.html#restoreStateFromArchive'>restoreStateFromArchive</a> ( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>Restores the state of the TabbedView2 from given path in the Archive.<div class='note'><span class='notelabel'>NOTE:</span> If the number of saved \indexes is different than the number of tabs, the saved \indexes array will be ignored and reset.</div>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>symbols<td class='argumentdesc'>
+<p>symbol1, symbol2, symbol3, ...</table></div><h3><a class='anchor' name='Setting%20Colors'>Setting Colors</a></h3>
 <div class='note'><span class='notelabel'>NOTE:</span> Many of these methods take arrays of Color instances. These colors are used as the defaults for new tabs. If the array is shorter than the amount of tabs, then the color choice will cycle through the array. However, TabbedViewTab instances will retain their color when their positions change, and they can also have individual color definitions, which override the defaults. These defaults are only there in order to prevent repeating code when creating new tabs.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-resetColors' href='./../Overviews/Methods.html#resetColors'>resetColors</a> </h3>
 <div class='method'>
 <p>reset the tab colors, cycling through default color arrays.<div class='warning'><span class='warninglabel'>WARNING:</span> This will reset individual colors that were overriden in the tab instances!</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-labelColors' href='./../Overviews/Methods.html#labelColors'>labelColors</a></h3>
@@ -368,8 +404,9 @@ TabbedView2.newTall(nil,Rect(100,500,400,100)).tabPosition_(\bottom).demo(5,"tes
 <div class='method'>
 <p>set the font</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-refreshAction' href='./../Overviews/Methods.html#refreshAction'>refreshAction</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-refreshAction' href='./../Overviews/Methods.html#refreshAction'>refreshAction</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-changeAction' href='./../Overviews/Methods.html#changeAction'>changeAction</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-changeAction' href='./../Overviews/Methods.html#changeAction'>changeAction</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-hasDuplicates' href='./../Overviews/Methods.html#hasDuplicates'>hasDuplicates</a> </h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 <h3><a class='anchor' name='Usage:'>Usage:</a></h3>
 
@@ -425,6 +462,12 @@ v.add("I am last")
 v.insert(2,"squeeze me in")
 
 v.removeAt(2)</pre>
+<h3><a class='anchor' name='Auto-Archiving%20Tabs'>Auto-Archiving Tabs</a></h3>
+<div class='note'><span class='notelabel'>NOTE:</span> Does not support detached Tabs</div>
+<p><pre class='code prettyprint lang-sc'>v=TabbedView2.newTall.demo(3);
+b.autoArchive(\tabsDemo,\tabTest); // the Archive path to save to
+// v's state will now be stored in the archive,
+// and will be restored if you execte the above code again.</pre>
 <h3><a class='anchor' name='resize'>resize</a></h3>
 <pre class='code prettyprint lang-sc'>(
 w=GUI.window.new.front;
