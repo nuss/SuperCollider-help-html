@@ -48,6 +48,7 @@
 <ul class='toc'><li class='toc2'><a href='#using%20Ndef%20inside%20other%20Ndefs'>using Ndef inside other Ndefs</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#setting%20and%20mapping%20parameters'>setting and mapping parameters</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Simple%20audio%20routing%20with%20the%20<<>%20operator'>Simple audio routing with the &lt;&lt;&gt; operator</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Embedding%20multi-channel%20Patterns,%20playing%20Streams%20in%20parallel'>Embedding multi-channel Patterns, playing Streams in parallel</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Making%20Copies'>Making Copies</a></li>
 <ul class='toc'><li class='toc3'><a href='#.copy'>copy</a> </li>
 </ul><li class='toc2'><a href='#Recursion'>Recursion</a></li>
@@ -169,6 +170,92 @@ Ndef(\sound) &lt;&lt;&gt;.in2 Ndef(\c);
 Ndef(\a) &lt;&lt;&gt;.phase Ndef(\sound);
 Ndef(\a) &lt;&lt;&gt;.phase nil;    // unmap
 Ndef.clear(3);        // fade out and clear all Ndefs</pre>
+<h3><a class='anchor' name='Embedding%20multi-channel%20Patterns,%20playing%20Streams%20in%20parallel'>Embedding multi-channel Patterns, playing Streams in parallel</a></h3>
+
+<p>Controlling multi-channeled sequenced streams and having independent control over filtering and node ordering is a difficult topic in SuperCollider. However, using Ndefs (or their superclass <a href="./../Classes/NodeProxy.html">NodeProxy</a> or a <a href="./../Classes/ProxySpace.html">ProxySpace</a>) may provide a convenient solution.<pre class='code prettyprint lang-sc'>// a SynthDef, creating single-channel grain when instantiated
+(
+SynthDef(\grain, { |out=0, freq=300, amp=0.3|
+    OffsetOut.ar(out, Pulse.ar(freq) * EnvGen.kr(Env.perc, doneAction: 2) * amp)
+}).add;
+)
+
+// number of channels
+~numChans = 5;
+
+// values in a Pattern may be set in various ways
+// here we use control buses, except for \dur which
+// doesn't accept a control bus in parallel playing streams
+// therefore we use PatternProxies
+~durs = ~numChans.collect({ |i| PatternProxy(0.5 + (i/10)) });
+
+// other parameters could as well be controlled in PatternProxies,
+// yet, control buses are convenient either
+~freqs = Bus.control(s, ~numChans);
+~freqs.setn(Array.geom(~numChans, 300, 1.1));
+~amps = Bus.control(s, ~numChans);
+~amps.setn(0.2!~numChans);
+
+// the Pattern: a Ppar holding one Pbind for each channel,
+// all wrapped in a Pdef
+(
+Pdef(\ppar,
+    Ppar({ |i|
+        Pbind(
+            \instrument, \grain,
+            // we only set a single channel
+            \dur, ~durs[i],
+            \freq, ~freqs.subBus(i).asMap,
+            \amp, ~amps.subBus(i).asMap,
+            // the Pattern will play to a yet unknown private bus
+            // we only want to make sure the offset is right
+            \channelOffset, i,
+        )
+    }!~numChans)
+)
+)
+
+// initialize an Ndef that will hold the Pdef as its source
+// make sure the Ndef gets initialized to the right number of channels by calling 'mold'
+Ndef(\ppar).mold(~numChans, \audio, \elastic);
+Ndef(\ppar)[0] = Pdef(\ppar);
+
+// mix the 5 channel audio coming from Ndef(\ppar) down to stereo
+// Splay will spread the channels over the stereo panorama
+// possibly use headphones to clearly identify the effect
+Ndef(\stereo, { Splay.ar(\in.ar(0!~numChans)) });
+
+// concatenate the Ndefs, so Ndef(\ppar)'s out will feed into Ndef(\stereo)'s in
+Ndef(\stereo) &lt;&lt;&gt; Ndef(\ppar);
+Ndef(\stereo).play;
+
+// change durations
+~durs.do({ |pp, i| pp.source = Pseq(Array.fib(5, i/10 + 0.1, i+1/5), inf) });
+~durs.do({ |pp, i| pp.source = 0.5 + (i/10) });
+~durs.do({ |pp| pp.source.postcs });
+
+// frequencies
+~freqs.setn(Array.geom(~numChans, 250, 1.6));
+~freqs.setn(Array.geom(~numChans, 300, 1.1));
+
+// add a filter Ndef
+(
+Ndef(\filter, {
+    HPF.ar(
+        \in.ar(0!~numChans),
+        SinOsc.ar({|i| 2 + i}!~numChans) + 1 * \multFreq.kr(Array.geom(~numChans, 400, 2))
+    )
+}).mold(~numChans, \audio, \elastic);
+)
+
+// set a fadeTime for smooth transitions and add the filter to the chain
+#[ppar, stereo, filter].do({ |k| Ndef(k).fadeTime_(3) });
+Ndef(\stereo) &lt;&lt;&gt; Ndef(\filter) &lt;&lt;&gt; Ndef(\ppar);
+
+// set filter param, considering fadeTime
+Ndef(\filter).xset(\multFreq, Array.rand(~numChans, 20, 10000));
+
+Ndef.clear;
+Pdef.clear;</pre>
 <h3><a class='anchor' name='Making%20Copies'>Making Copies</a></h3>
 <h3 class='imethodname'><span class='methprefix'>&nbsp;</span><a name='.copy' href='./../Overviews/Methods.html#copy'>copy</a> </h3>
 <div class='method'>
@@ -229,4 +316,4 @@ Ndef(\x,
 ).play;
 )</pre>
 
-<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Ndef.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Ndef.schelp</a><br>link::Classes/Ndef::<br>sc version: 3.8dev</div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Ndef.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Ndef.schelp</a><br>link::Classes/Ndef::<br>sc version: 3.9dev</div></div></body></html>

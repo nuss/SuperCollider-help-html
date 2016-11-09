@@ -130,7 +130,7 @@ Atk.postMyMatrices('FOA', 'encoders');</pre>
 )</pre>
 <h3><a class='anchor' name='Writing%20Raw%20Matrices'>Writing Raw Matrices</a></h3>
 
-<p>In the above examples, we've been reading/writing matrices encapsulated in the <a href="./../Classes/AtkMatrix.html">AtkMatrix</a> subclasses. When writing from these objects, some the information can be inferred from them, such as the <strong>set</strong> (Ambisonic order, channel ordering, channel normalisation, e.g. <code class='code prettyprint lang-sc'>'FOA'</code>, <code class='code prettyprint lang-sc'>'HOA3'</code>, etc.) and <strong>type</strong> of matrix (e.g. <code class='code prettyprint lang-sc'>'encoder', 'decoder', 'xformer'</code>). In the case of a raw matrix, this information can't be inferred and should be explicitly set when writing to file.<pre class='code prettyprint lang-sc'>( // Here's a raw A-to-B encoder matrix:
+<p>In the above examples, we've been reading/writing matrices encapsulated in the <a href="./../Classes/AtkMatrix.html">AtkMatrix</a> subclasses. When writing from these objects, some the information can be inferred from them, such as the <strong>set</strong> (Ambisonic order, channel ordering, channel normalisation, e.g. <code class='code prettyprint lang-sc'>'FOA'</code>, <code class='code prettyprint lang-sc'>'HOA3'</code>, etc.) and <strong>type</strong> of matrix (e.g. <code class='code prettyprint lang-sc'>'encoder', 'decoder', 'xformer'</code>). In the case of a raw matrix, you must cast it to an <code class='code prettyprint lang-sc'>AtkMatrix</code>, specifying the <strong>set</strong> and <strong>type</strong> explicitly, before writing it to a file.<pre class='code prettyprint lang-sc'>( // Here's a raw A-to-B encoder matrix:
 ~matrix = Matrix.with([
     [ 0.61237243569579, 0.61237243569579, 0.61237243569579, 0.61237243569579 ],
     [ 0.5, 0.5, -0.5, -0.5 ],
@@ -152,15 +152,12 @@ Atk.postMyMatrices('FOA', 'encoders');</pre>
 );
 )</pre>
 
-<p>Now be sure to list the proper info for the arguments when writing it to file. This is how the ATK will know where to store the file by default (unless a full path is provided to the file name argument).<pre class='code prettyprint lang-sc'>(
-~matrix.writeToFile( "myA2B_flu_Matrix.yml", // be sure to use .yml for metadata
-  'FOA',      // set
-  'encoder',  // type
-  ~note,
-  ~properties
-)
+<p>Be sure to specify the <strong>set</strong> and <strong>type</strong> when creating an <code class='code prettyprint lang-sc'>AtkMatrix</code> from your <code class='code prettyprint lang-sc'>Matrix</code>. This is how the ATK will know where to store the file by default (unless a full path is provided to the file name argument).<pre class='code prettyprint lang-sc'>(
+~atkMatrix = ~matrix.asAtkMatrix('FOA', 'encoder'); // set, type
+// be sure to use .yml extension for metadata
+~atkMatrix.writeToFile("myA2B_flu_Matrix.yml", ~note, ~properties);
 )</pre>
-<div class='note'><span class='notelabel'>NOTE:</span> If providing a file path relative to your <code class='code prettyprint lang-sc'>/ATK/extension/matrices/...</code>directory, <strong>set</strong> and <strong>type</strong> are necessary arguments to locate the proper directory to store your file. If providing an absolute file path, <strong>set</strong> and <strong>type</strong> are recommended but not strictly enforced. This allows storing matrices outside the ATK paradigm, e.g. VBAP matrices, etc.</div>
+<div class='note'><span class='notelabel'>NOTE:</span> If providing a file path relative to your <code class='code prettyprint lang-sc'>/ATK/extension/matrices/...</code>directory, <strong>set</strong> and <strong>type</strong> arguments are necessary when creating the <code class='code prettyprint lang-sc'>AtkMatrix</code> from your <code class='code prettyprint lang-sc'>Matrix</code> in order to locate the proper directory to store your file. If providing an absolute file path, <strong>set</strong> and <strong>type</strong> are recommended but not strictly enforced. This allows storing matrices outside the ATK paradigm, e.g. VBAP matrices, etc.</div>
 <p>There it is:<pre class='code prettyprint lang-sc'>Atk.postMyMatrices('FOA', 'encoders');</pre>
 <h3><a class='anchor' name='Subfolders:%20Organizing%20your%20matrices'>Subfolders: Organizing your matrices</a></h3>
 
@@ -291,4 +288,4 @@ s.scope(9, 0);
 ~decoderSynth.free;</pre>
 
 <p><div class='footnotes'>
-<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - Hardin, R. H. and Sloane, N. J. A., "Sperical Designs", <a href="http://neilsloane.com/sphdesigns/">http://neilsloane.com/sphdesigns/</a>, accessed on July 29, 2016.</div><a class='anchor' name='footnote_2'/><div class='footnote'>[<a href='#footnote_org_2'>2</a>] - ATK-Reaper will support matrix loading in an upcoming release.</div><a class='anchor' name='footnote_3'/><div class='footnote'>[<a href='#footnote_org_3'>3</a>] - Recall the ATK's matching A-format <a href="./../Classes/FoaEncoderMatrix.html#*newAtoB">encoders</a> and <a href="./../Classes/FoaDecoderMatrix.html#*newBtoA">decoders</a>!</div><a class='anchor' name='footnote_4'/><div class='footnote'>[<a href='#footnote_org_4'>4</a>] - This decoder design method is often described as <em>pseudo-inverse</em> or <em>mode-matching</em>.</div></div><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Guides/Guide-to-ATK-Matrix-Files.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Guides/Guide-to-ATK-Matrix-Files.schelp</a><br>link::Guides/Guide-to-ATK-Matrix-Files::<br>sc version: 3.8dev</div></div></body></html>
+<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - Hardin, R. H. and Sloane, N. J. A., "Sperical Designs", <a href="http://neilsloane.com/sphdesigns/">http://neilsloane.com/sphdesigns/</a>, accessed on July 29, 2016.</div><a class='anchor' name='footnote_2'/><div class='footnote'>[<a href='#footnote_org_2'>2</a>] - ATK-Reaper will support matrix loading in an upcoming release.</div><a class='anchor' name='footnote_3'/><div class='footnote'>[<a href='#footnote_org_3'>3</a>] - Recall the ATK's matching A-format <a href="./../Classes/FoaEncoderMatrix.html#*newAtoB">encoders</a> and <a href="./../Classes/FoaDecoderMatrix.html#*newBtoA">decoders</a>!</div><a class='anchor' name='footnote_4'/><div class='footnote'>[<a href='#footnote_org_4'>4</a>] - This decoder design method is often described as <em>pseudo-inverse</em> or <em>mode-matching</em>.</div></div><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Guides/Guide-to-ATK-Matrix-Files.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/ATK/HelpSource/Guides/Guide-to-ATK-Matrix-Files.schelp</a><br>link::Guides/Guide-to-ATK-Matrix-Files::<br>sc version: 3.9dev</div></div></body></html>
