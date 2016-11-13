@@ -323,7 +323,10 @@ z = [1, 2, 3, 4, 5, 6];
 y = z.copySeries(0, 2, 5);
 y.postln;
 )</pre>
-</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-seriesFill' href='./../Overviews/Methods.html#seriesFill'>seriesFill</a> (<span class='argstr'>start</span>, <span class='argstr'>step</span>)</h3>
+<div class='note'><span class='notelabel'>NOTE:</span> If the intent is to copy <em>forward</em> in an array, and you are calculating start and end indices such that <code class='code prettyprint lang-sc'>end</code> may be less than <code class='code prettyprint lang-sc'>start</code>, it is not safe to use <code class='code prettyprint lang-sc'>copySeries</code> or the shortcut syntax <code class='code prettyprint lang-sc'>x[a..b]</code> because it will adapt to use a positive or negative step as needed. In this case, <code class='code prettyprint lang-sc'>copyRange</code> is recommended.<pre class='code prettyprint lang-sc'>a = Array.series(10, 0, 1);
+a[2..0];  // [ 2, 1, 0 ]
+a.copyRange(2, 0);  // [  ]</pre>
+</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-seriesFill' href='./../Overviews/Methods.html#seriesFill'>seriesFill</a> (<span class='argstr'>start</span>, <span class='argstr'>step</span>)</h3>
 <div class='method'>
 <p>Fill the receiver with an arithmetic progression. The first element will be <strong>start</strong>, the second <strong>start + step</strong>, the third <strong>start + step + step</strong> ...<pre class='code prettyprint lang-sc'>(
 var y;
