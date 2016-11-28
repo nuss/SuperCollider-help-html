@@ -16,7 +16,7 @@
 <div id='label'>SuperCollider CLASSES</div>
 <div id='categories'><a href='./../Browse.html#Streams-Patterns-Events>Patterns>Time'>Streams-Patterns-Events>Patterns>Time</a></div>
 <h1>Pstep</h1>
-<div id='summary'>timed embedding of values</div>
+<div id='summary'>timed, sample-and-hold embedding of values</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Streams/TimePatterns.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Streams/TimePatterns.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Pattern.html">Pattern</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
@@ -38,10 +38,17 @@
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>Pstep is good for representing chord progressions, scale progressions, accent patterns, etc.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>Pstep is a "sample and hold" pattern: The value returned by <code>next</code> is held at each value in <code>levels</code> for the corresponding duration in <code>durs</code>. This cycling is similar to <a href="./../Classes/Ptuple.html">Ptuple</a>, in that the current repeat ends when eiher pattern returns nil.
+<p>Pstep measures elapsed time using the thread's logical time. That is, it assumes it will be evaluated only exactly when needed, not before.
+<p>See <a href="./../Classes/Pseg.html">Pseg</a> for a pattern whose value changes like an <a href="./../Classes/Env.html">Env</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>levels</span>, <span class='argstr'>durs: 1</span>, <span class='argstr'>repeats: 1</span>)</h3>
 <div class='method'>
-<p>Levelpattern can return individual values, arrays, or events. The value returned by levelpattern is returned for the duration returned by durpattern.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>Create an instance of Pstep.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>levels<td class='argumentdesc'>
+<p>A number, collection, or <a href="./../Classes/Pattern.html">Pattern</a> that returns the levels.<tr><td class='argumentname'>durs<td class='argumentdesc'>
+<p>A number, collection, or <a href="./../Classes/Pattern.html">Pattern</a> that returns segments durations in beats.<tr><td class='argumentname'>repeats<td class='argumentdesc'>
+<p>An integer, or <code>inf</code>.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
@@ -65,7 +72,7 @@ p = Pstep(
 );
 Ppar([p, p]).play;
 )
-// change degree independant of number of events that have been playing
+// change degree independently of number of events that have been playing
 
 (
 Pchain(
