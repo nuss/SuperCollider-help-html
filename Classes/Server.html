@@ -25,34 +25,31 @@
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
-<ul class='toc'><li class='toc2'><a href='#Paths'>Paths</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#The%20default%20group'>The default group</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Local%20vs.%20Internal'>Local vs. Internal</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#The%20default%20Server'>The default Server</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Local%20vs.%20Remote%20Servers,%20Multi-client%20Configurations'>Local vs. Remote Servers, Multi-client Configurations</a></li>
-<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
 <li class='toc3'><a href='#*remote'>remote</a> </li>
 <li class='toc3'><a href='#*local'>local</a> </li>
 <li class='toc3'><a href='#*internal'>internal</a> </li>
 <li class='toc3'><a href='#*default'>default</a> </li>
-<li class='toc3'><a href='#*all'>all</a> </li>
+<li class='toc2'><a href='#Accessing%20all%20servers'>Accessing all servers</a></li>
+<ul class='toc'><li class='toc3'><a href='#*all'>all</a> </li>
 <li class='toc3'><a href='#*allRunningServers'>allRunningServers</a> </li>
+<li class='toc3'><a href='#*named'>named</a> </li>
 <li class='toc3'><a href='#*quitAll'>quitAll</a> </li>
 <li class='toc3'><a href='#*killAll'>killAll</a> </li>
 <li class='toc3'><a href='#*freeAll'>freeAll</a> </li>
-<li class='toc3'><a href='#*supernova'>supernova</a> </li>
+<li class='toc3'><a href='#*hardFreeAll'>hardFreeAll</a> </li>
+<li class='toc3'><a href='#*sync_s'>sync_s</a> </li>
+</ul><li class='toc2'><a href='#Switching%20the%20server%20application'>Switching the server application</a></li>
+<ul class='toc'><li class='toc3'><a href='#*supernova'>supernova</a> </li>
 <li class='toc3'><a href='#*scsynth'>scsynth</a> </li>
-<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 <li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*freeAllRemote'>freeAllRemote</a> </li>
 <li class='toc3'><a href='#*fromName'>fromName</a> </li>
-<li class='toc3'><a href='#*hardFreeAll'>hardFreeAll</a> </li>
-<li class='toc3'><a href='#*named'>named</a> </li>
 <li class='toc3'><a href='#*program'>program</a> </li>
 <li class='toc3'><a href='#*resumeThreads'>resumeThreads</a> </li>
 <li class='toc3'><a href='#*set'>set</a> </li>
-<li class='toc3'><a href='#*sync_s'>sync_s</a> </li>
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-sendMsg'>sendMsg</a> </li>
 <li class='toc3'><a href='#-sendBundle'>sendBundle</a> </li>
@@ -93,7 +90,7 @@
 <li class='toc3'><a href='#-numSynthDefs'>numSynthDefs</a> </li>
 <li class='toc3'><a href='#-pid'>pid</a> </li>
 <li class='toc3'><a href='#-hasShmInterface'>hasShmInterface</a> </li>
-</ul><li class='toc2'><a href='#Automatic%20Message%20Bundling'>Automatic Message Bundling</a></li>
+</ul><li class='toc2'><a href='#Message%20Bundling'>Message Bundling</a></li>
 <ul class='toc'><li class='toc3'><a href='#-makeBundle'>makeBundle</a> </li>
 <li class='toc3'><a href='#-bind'>bind</a> </li>
 </ul><li class='toc2'><a href='#Shared%20Controls'>Shared Controls</a></li>
@@ -114,7 +111,6 @@
 <li class='toc3'><a href='#-record'>record</a> </li>
 <li class='toc3'><a href='#-pauseRecording'>pauseRecording</a> </li>
 <li class='toc3'><a href='#-stopRecording'>stopRecording</a> </li>
-<li class='toc3'><a href='#-recordNode'>recordNode</a> </li>
 <li class='toc3'><a href='#-recChannels'>recChannels</a> </li>
 <li class='toc3'><a href='#-recHeaderFormat'>recHeaderFormat</a> </li>
 <li class='toc3'><a href='#-recSampleFormat'>recSampleFormat</a> </li>
@@ -129,6 +125,7 @@
 <li class='toc3'><a href='#-addr'>addr</a> </li>
 <li class='toc3'><a href='#-aliveThreadIsRunning'>aliveThreadIsRunning</a> </li>
 <li class='toc3'><a href='#-aliveThreadPeriod'>aliveThreadPeriod</a> </li>
+<li class='toc3'><a href='#-applicationRunning'>applicationRunning</a> </li>
 <li class='toc3'><a href='#-archiveAsCompileString'>archiveAsCompileString</a> </li>
 <li class='toc3'><a href='#-archiveAsObject'>archiveAsObject</a> </li>
 <li class='toc3'><a href='#-asBus'>asBus</a> </li>
@@ -138,6 +135,7 @@
 <li class='toc3'><a href='#-audioBusAllocator'>audioBusAllocator</a> </li>
 <li class='toc3'><a href='#-bootInProcess'>bootInProcess</a> </li>
 <li class='toc3'><a href='#-bootInTerminal'>bootInTerminal</a> </li>
+<li class='toc3'><a href='#-bootInit'>bootInit</a> </li>
 <li class='toc3'><a href='#-bootServerApp'>bootServerApp</a> </li>
 <li class='toc3'><a href='#-bufferAllocator'>bufferAllocator</a> </li>
 <li class='toc3'><a href='#-cachedBufferAt'>cachedBufferAt</a> </li>
@@ -147,14 +145,17 @@
 <li class='toc3'><a href='#-clientID'>clientID</a> </li>
 <li class='toc3'><a href='#-closeBundle'>closeBundle</a> </li>
 <li class='toc3'><a href='#-cmdPeriod'>cmdPeriod</a> </li>
+<li class='toc3'><a href='#-connectSharedMemory'>connectSharedMemory</a> </li>
 <li class='toc3'><a href='#-controlBusAllocator'>controlBusAllocator</a> </li>
 <li class='toc3'><a href='#-disconnectSharedMemory'>disconnectSharedMemory</a> </li>
-<li class='toc3'><a href='#-doOnServerTree'>doOnServerTree</a> </li>
 <li class='toc3'><a href='#-dumpMode'>dumpMode</a> </li>
 <li class='toc3'><a href='#-emacsbuf'>emacsbuf</a> </li>
+<li class='toc3'><a href='#-freeAllBuffers'>freeAllBuffers</a> </li>
 <li class='toc3'><a href='#-getControlBusValue'>getControlBusValue</a> </li>
 <li class='toc3'><a href='#-getControlBusValues'>getControlBusValues</a> </li>
 <li class='toc3'><a href='#-guiClass'>guiClass</a> </li>
+<li class='toc3'><a href='#-ifNotRunning'>ifNotRunning</a> </li>
+<li class='toc3'><a href='#-ifRunning'>ifRunning</a> </li>
 <li class='toc3'><a href='#-inProcess'>inProcess</a> </li>
 <li class='toc3'><a href='#-isLocal'>isLocal</a> </li>
 <li class='toc3'><a href='#-isRecording'>isRecording</a> </li>
@@ -168,6 +169,7 @@
 <li class='toc3'><a href='#-newBusAllocators'>newBusAllocators</a> </li>
 <li class='toc3'><a href='#-newNodeAllocators'>newNodeAllocators</a> </li>
 <li class='toc3'><a href='#-newScopeBufferAllocators'>newScopeBufferAllocators</a> </li>
+<li class='toc3'><a href='#-nextBufferNumber'>nextBufferNumber</a> </li>
 <li class='toc3'><a href='#-nodeAllocator'>nodeAllocator</a> </li>
 <li class='toc3'><a href='#-notified'>notified</a> </li>
 <li class='toc3'><a href='#-onBootAdd'>onBootAdd</a> </li>
@@ -176,7 +178,9 @@
 <li class='toc3'><a href='#-onQuitRemove'>onQuitRemove</a> </li>
 <li class='toc3'><a href='#-openBundle'>openBundle</a> </li>
 <li class='toc3'><a href='#-quitInProcess'>quitInProcess</a> </li>
+<li class='toc3'><a href='#-recordNode'>recordNode</a> </li>
 <li class='toc3'><a href='#-recordOnNodeID'>recordOnNodeID</a> </li>
+<li class='toc3'><a href='#-recorder'>recorder</a> </li>
 <li class='toc3'><a href='#-remoteControlled'>remoteControlled</a> </li>
 <li class='toc3'><a href='#-removeBusLinks'>removeBusLinks</a> </li>
 <li class='toc3'><a href='#-removeControlLinks'>removeControlLinks</a> </li>
@@ -185,6 +189,7 @@
 <li class='toc3'><a href='#-scopeBufferAllocator'>scopeBufferAllocator</a> </li>
 <li class='toc3'><a href='#-scopeWindow'>scopeWindow</a> </li>
 <li class='toc3'><a href='#-sendQuit'>sendQuit</a> </li>
+<li class='toc3'><a href='#-sendStatusMsg'>sendStatusMsg</a> </li>
 <li class='toc3'><a href='#-serverBooting'>serverBooting</a> </li>
 <li class='toc3'><a href='#-serverRunning'>serverRunning</a> </li>
 <li class='toc3'><a href='#-setControlBusValue'>setControlBusValue</a> </li>
@@ -200,36 +205,13 @@
 <li class='toc3'><a href='#-window'>window</a> </li>
 </ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>A Server object is the client-side representation of a server app and is used to control the app from the SuperCollider language application. (See <a href="./../Guides/ClientVsServer.html">Client vs Server</a> for more details on the distinction.) It forwards OSC messages and has a number of allocators that keep track of IDs for nodes, buses and buffers.
-<p>The server application is a commandline program, so all commands apart from OSC messages are unix commands.
-<p>The server application represented by a Server object might be running on the same machine as the client (in the same address space as the language application or separately; see below), or it may be running on a remote machine.
-<p>Most of a Server's options are controlled through its instance of ServerOptions. See the <a href="./../Classes/ServerOptions.html">ServerOptions</a> helpfile for more detail.<h3><a class='anchor' name='Paths'>Paths</a></h3>
+<p>A Server object is a representation of a server application. It is used to control it from SuperCollider language. (See <a href="./../Guides/Server-Guide.html">Server Guide</a>, as well as <a href="./../Guides/ClientVsServer.html">Client vs Server</a> for more details on the distinction.) It forwards OSC messages and has a number of allocators that keep track of IDs for nodes, buses and buffers.
+<p>The server application represented by a Server object might be running on the same machine as the sclang, or it may be running on a remote machine.
+<p>Most of a Server's options are controlled through its instance of ServerOptions. See the <a href="./../Classes/ServerOptions.html">ServerOptions</a> helpfile for more detail.
+<p>A server also holds an instance of a <a href="./../Classes/Recorder.html">Recorder</a> (for recording output into a file) and a <a href="./../Classes/Volume.html">Volume</a> (master level).<div class='note'><span class='notelabel'>NOTE:</span> By default, there is always one default server, which is stored in the interpreter variable 's'. E.g. you can boot the defult server by calling <code class='code prettyprint lang-sc'>s.boot</code></div><pre class='code prettyprint lang-sc'>s.boot;
+{ SinOsc.ar * 0.1 }.play(s); // play a synth on the server</pre>
 
-<p>Server apps running on the local machine have two unix environment variables: <code class='code prettyprint lang-sc'>SC_SYNTHDEF_PATH</code> and <code class='code prettyprint lang-sc'>SC_PLUGIN_PATH</code>. These indicate directories of synthdefs and ugen plugins that will be loaded at startup. These are in addition to the default synthdef/ and plugin/ directories which are hard-coded.
-<p>These can be set within SC using the getenv and setenv methods of class <a href="./../Classes/String.html">String</a>.<pre class='code prettyprint lang-sc'>// all defs in this directory will be loaded when a local server boots
-"SC_SYNTHDEF_PATH".setenv("~/scwork/".standardizePath);
-"echo $SC_SYNTHDEF_PATH".unixCmd;</pre>
-<h3><a class='anchor' name='The%20default%20group'>The default group</a></h3>
-
-<p>When a Server is booted there is a top level group with an ID of 0 that defines the root of the node tree. (This is represented by a subclass of <a href="./../Classes/Group.html">Group</a> : <a href="./../Classes/RootNode.html">RootNode</a>.) If the server app was booted from within SCLang (as opposed to from the command line) the method <code class='code prettyprint lang-sc'>initTree</code> will be called automatically after booting. This will also create a <a href="./../Reference/default_group.html">default_group</a> with an ID of 1, which is the default group for all <a href="./../Classes/Node.html">Node</a>s when using object style. This provides a predictable basic node tree so that methods such as Server-scope, Server-record, etc. can function without running into order of execution problems.
-<p>The default group is persistent, i.e. it is recreated after a reboot, pressing cmd-., etc. See <a href="./../Classes/RootNode.html">RootNode</a> and <a href="./../Reference/default_group.html">default_group</a> for more information.<div class='note'><span class='notelabel'>NOTE:</span> If a Server has been booted from the command line you must call <code class='code prettyprint lang-sc'>initTree</code> manually in order to initialize the default group, if you want it. See <code class='code prettyprint lang-sc'>initTree</code> below.</div><h3><a class='anchor' name='Local%20vs.%20Internal'>Local vs. Internal</a></h3>
-
-<p>In general, when working with a single machine one will probably be using one of two Server objects which are created at startup and stored in the class variables <a href="#*local">*local</a> and <a href="#*internal">*internal</a>. In SuperCollider.app (OSX), two GUI windows are created to control these. Use <a href="#-makeGui">-makeGui</a> to create a GUI window manually.
-<p>The difference between the two is that the local server runs as a separate application with its own address space, and the internal server runs within the same space as the language/client app.
-<p>Both local and internal server supports <a href="#-scope">scoping</a> and <a href="./../Classes/Bus.html#Synchronous%20control%20bus%20methods">synchronous bus access</a>.
-<p>The local server, and any other server apps running on your local machine, have the advantage that if the language app crashes, it (and thus possibly your piece) will continue to run. It is thus an inherently more robust arrangement. But note that even if the synths on the server continue to run, any language-side sequencing and control will terminate if the language app crashes.
-<p>At the current time, there is generally no benefit in using the internal server, but it remains for the purposes of backwards compatibility.<h3><a class='anchor' name='The%20default%20Server'>The default Server</a></h3>
-
-<p>There is always a default Server, which is stored in the class variable <code class='code prettyprint lang-sc'>default</code>. Any <a href="./../Classes/Synth.html">Synth</a>s or <a href="./../Classes/Group.html">Group</a>s created without a target will be created on the default server. At startup this is set to be the local server (see above), but can be set to be any Server.<h3><a class='anchor' name='Local%20vs.%20Remote%20Servers,%20Multi-client%20Configurations'>Local vs. Remote Servers, Multi-client Configurations</a></h3>
-
-<p>Most of the time users work with a server app running on the same machine as the SC language client. It is possible to use a server running on a different machine via a network, providing you know the IP address and port of that server. The <a href="#*remote">*remote</a> method provides a convenient way to do this.
-<p>One common variant of this approach is multiple clients using the same server. If you wish to do this you will need to set the server's <a href="./../Classes/ServerOptions.html#-maxLogins">ServerOptions: -maxLogins</a> to at least the number of clients you wish to allow. When a client registers for <a href="#-notify">notifications</a> the server will supply a client ID. This also configures the allocators to avoid conflicts when allocating <a href="./../Classes/Node.html">Nodes</a>, <a href="./../Classes/Buffer.html">Buffers</a>, or <a href="./../Classes/Bus.html">Busses</a>.
-<p>In order to use a remote server with tcp one should first boot the remote server using the <code class='code prettyprint lang-sc'>-t</code> option and then run the following code:<pre class='code prettyprint lang-sc'>(
-s.options.protocol_(\tcp);
-s.addr.connect;
-s.startAliveThread( 0 );
-s.doWhenBooted({ "remote tcp server started".postln; s.notify; s.initTree });
-)</pre>
+<p>The server application may be in three different states: running, not running, or unresponsive (for example while loading large files from disk).<pre class='code prettyprint lang-sc'>s.serverRunning // returns true if it is true</pre>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>name</span>, <span class='argstr'>addr</span>, <span class='argstr'>options</span>, <span class='argstr'>clientID</span>)</h3>
 <div class='method'>
@@ -253,26 +235,42 @@ s.doWhenBooted({ "remote tcp server started".postln; s.notify; s.initTree });
 <p>get/set the local server, stored in classvar <code class='code prettyprint lang-sc'>local</code> (created already on initClass)</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*internal' href='./../Overviews/Methods.html#internal'>internal</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*internal' href='./../Overviews/Methods.html#internal'>internal</a> = value</h3>
 <div class='method'>
-<p>get/set the internal server, stored in classvar <code class='code prettyprint lang-sc'>internal</code> (created already on initClass)</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*default' href='./../Overviews/Methods.html#default'>default</a></h3>
+<p>get/set the internal server, stored in classvar <code class='code prettyprint lang-sc'>internal</code> (created already on initClass) See: <a href="./../Guides/Server-Guide.html">Server Guide</a></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*default' href='./../Overviews/Methods.html#default'>default</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*default' href='./../Overviews/Methods.html#default'>default</a> = <span class='argstr'>server</span></h3>
 <div class='method'>
 <p>Get or set the default server. By default this is the local server (see above).<h4>Discussion:</h4>
 
-<p>Setting this will also assign it to the <a href="./../Classes/Interpreter.html">Interpreter</a> variable 's'.<pre class='code prettyprint lang-sc'>Server.default = Server.internal; // set the internal Server to be the default Server
+<p>Setting this will also assign it to the <a href="./../Classes/Interpreter.html">Interpreter</a> variable 's'.<pre class='code prettyprint lang-sc'>// set the internal Server to be the default Server
+Server.default = Server.internal;
 s.postln; // internal</pre>
-</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a> = <span class='argstr'>dict</span></h3>
+</div><h3><a class='anchor' name='Accessing%20all%20servers'>Accessing all servers</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a> = value</h3>
 <div class='method'>
-<p>get/set the set of all servers.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allRunningServers' href='./../Overviews/Methods.html#allRunningServers'>allRunningServers</a> </h3>
+<p>get a <a href="./../Classes/Set.html">Set</a> of all servers<pre class='code prettyprint lang-sc'>Server.all</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allRunningServers' href='./../Overviews/Methods.html#allRunningServers'>allRunningServers</a> </h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>the set of all running servers.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*quitAll' href='./../Overviews/Methods.html#quitAll'>quitAll</a> (<span class='argstr'>watchShutDown: true</span>)</h3>
+<p>the set of all running servers.<pre class='code prettyprint lang-sc'>Server.allRunningServers</pre>
+</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*named' href='./../Overviews/Methods.html#named'>named</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*named' href='./../Overviews/Methods.html#named'>named</a> = value</h3>
+<div class='method'>
+<p>get an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> of all servers listed by their name<pre class='code prettyprint lang-sc'>Server.named.at(\default)</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*quitAll' href='./../Overviews/Methods.html#quitAll'>quitAll</a> (<span class='argstr'>watchShutDown: true</span>)</h3>
 <div class='method'>
 <p>quit all registered servers</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*killAll' href='./../Overviews/Methods.html#killAll'>killAll</a> </h3>
 <div class='method'>
 <p>query the system for any sc-server apps and hard quit them</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*freeAll' href='./../Overviews/Methods.html#freeAll'>freeAll</a> (<span class='argstr'>evenRemote: false</span>)</h3>
 <div class='method'>
-<p>free all nodes in all registered servers</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*supernova' href='./../Overviews/Methods.html#supernova'>supernova</a> </h3>
+<p>free all nodes in all registered servers</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*hardFreeAll' href='./../Overviews/Methods.html#hardFreeAll'>hardFreeAll</a> (<span class='argstr'>evenRemote: false</span>)</h3>
+<div class='method'>
+<p>try to free all nodes in all registered servers, even if the server seems not to be running</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*sync_s' href='./../Overviews/Methods.html#sync_s'>sync_s</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*sync_s' href='./../Overviews/Methods.html#sync_s'>sync_s</a> = value</h3>
+<div class='method'>
+<p>If kept true (default), when the default server is changed, also the interpreter variable s is changed.<pre class='code prettyprint lang-sc'>Server.default = Server(\alice, NetAddr("127.0.0.1", 57130));
+s.postln; // see: it is alice.</pre>
+</div><h3><a class='anchor' name='Switching%20the%20server%20application'>Switching the server application</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*supernova' href='./../Overviews/Methods.html#supernova'>supernova</a> </h3>
 <div class='method'>
 <p>Switches the server program to supernova. Check <a href="./../Classes/ParGroup.html">ParGroup</a> how to make use of multicore hardware with the supernova server.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*scsynth' href='./../Overviews/Methods.html#scsynth'>scsynth</a> </h3>
 <div class='method'>
@@ -281,16 +279,11 @@ s.postln; // internal</pre>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*freeAllRemote' href='./../Overviews/Methods.html#freeAllRemote'>freeAllRemote</a> (<span class='argstr'>includeLocal: true</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Server/extServer-freeAllRemote.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Server/extServer-freeAllRemote.sc</a></div>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fromName' href='./../Overviews/Methods.html#fromName'>fromName</a> (<span class='argstr'>name</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*hardFreeAll' href='./../Overviews/Methods.html#hardFreeAll'>hardFreeAll</a> (<span class='argstr'>evenRemote: false</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*named' href='./../Overviews/Methods.html#named'>named</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*named' href='./../Overviews/Methods.html#named'>named</a> = value</h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*program' href='./../Overviews/Methods.html#program'>program</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*program' href='./../Overviews/Methods.html#program'>program</a> = value</h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*resumeThreads' href='./../Overviews/Methods.html#resumeThreads'>resumeThreads</a> </h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*set' href='./../Overviews/Methods.html#set'>set</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*set' href='./../Overviews/Methods.html#set'>set</a> = value</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*sync_s' href='./../Overviews/Methods.html#sync_s'>sync_s</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*sync_s' href='./../Overviews/Methods.html#sync_s'>sync_s</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*set' href='./../Overviews/Methods.html#set'>set</a> = <span class='argstr'>item</span></h3>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendMsg' href='./../Overviews/Methods.html#sendMsg'>sendMsg</a> ( <span class='argstr'>... msg</span>)</h3>
 <div class='method'>
@@ -351,11 +344,19 @@ s.postln; // internal</pre>
 <p>If true, create a new node ID allocator for the server, but use the old buffer and bus allocators. This is useful if the server process did not actually stop. In normal use, the default value "false" should be used.<tr><td class='argumentname'>onFailure<td class='argumentdesc'>
 <p>In this method, the onFailure argument is for internal use only. If you wish to take specific actions when the server boots or fails to boot, it is recommended to use <a href="#-waitForBoot">-waitForBoot</a> or <a href="#-doWhenBooted">-doWhenBooted</a>.</table><h4>Discussion:</h4>
 
-<p>N.B. You cannot boot a server app on a remote machine.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-quit' href='./../Overviews/Methods.html#quit'>quit</a> (<span class='argstr'>watchShutDown: true</span>)</h3>
+<p>You cannot boot a server app on a remote machine, but you can initialise the allocators by calling this message.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-quit' href='./../Overviews/Methods.html#quit'>quit</a> (<span class='argstr'>onComplete</span>, <span class='argstr'>onFailure</span>, <span class='argstr'>watchShutDown: true</span>)</h3>
 <div class='method'>
-<p>quit the server application</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-reboot' href='./../Overviews/Methods.html#reboot'>reboot</a> (<span class='argstr'>func</span>)</h3>
+<p>quit the server application<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>onComplete<td class='argumentdesc'>
+<p>A function that is called when quit has completed.<tr><td class='argumentname'>onFailure<td class='argumentdesc'>
+<p>A function that is called when quit has failed.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-reboot' href='./../Overviews/Methods.html#reboot'>reboot</a> (<span class='argstr'>func</span>, <span class='argstr'>onFailure</span>)</h3>
 <div class='method'>
-<p>quit and restart the server application</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-freeAll' href='./../Overviews/Methods.html#freeAll'>freeAll</a> </h3>
+<p>quit and restart the server application<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>a function that is called between quit and (re-)boot.<tr><td class='argumentname'>onFailure<td class='argumentdesc'>
+<p>A function that is called when quit has failed.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-freeAll' href='./../Overviews/Methods.html#freeAll'>freeAll</a> </h3>
 <div class='method'>
 <p>free all nodes in this server</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-status' href='./../Overviews/Methods.html#status'>status</a> </h3>
 <div class='method'>
@@ -420,7 +421,7 @@ s.quit;</pre>
 <div class='method'>
 <p>Returns true if a <a href="./../Classes/ServerShmInterface.html">ServerShmInterface</a> is available. See also <a href="./../Classes/Bus.html#Synchronous%20control%20bus%20methods">Bus: Synchronous%20control%20bus%20methods</a>.<h4>Discussion:</h4>
 
-<p>The shared memory interface is initialized after first server boot.</div><h3><a class='anchor' name='Automatic%20Message%20Bundling'>Automatic Message Bundling</a></h3>
+<p>The shared memory interface is initialized after first server boot.</div><h3><a class='anchor' name='Message%20Bundling'>Message Bundling</a></h3>
 
 <p>Server provides support for automatically bundling messages. This is quite convenient in object style, and ensures synchronous execution. See also <a href="./../Guides/Bundled-Messages.html">Bundled Server Messages</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeBundle' href='./../Overviews/Methods.html#makeBundle'>makeBundle</a> (<span class='argstr'>time</span>, <span class='argstr'>func</span>, <span class='argstr'>bundle</span>)</h3>
 <div class='method'>
@@ -592,14 +593,15 @@ s.stopRecording; // this closes the file and deallocates the buffer recording no
 x.free; // stop the synths
 
 // look in your recordings folder and you'll find a file named for this date and time</pre>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepareForRecord' href='./../Overviews/Methods.html#prepareForRecord'>prepareForRecord</a> (<span class='argstr'>path</span>)</h3>
+
+<p>Recording is done via an of <a href="./../Classes/Recorder.html">Recorder</a> - a server holds one instance implicitly.<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prepareForRecord' href='./../Overviews/Methods.html#prepareForRecord'>prepareForRecord</a> (<span class='argstr'>path</span>, <span class='argstr'>numChannels</span>)</h3>
 <div class='method'>
 <p>Allocates the necessary buffer, etc. for recording the server's output. (See <code class='code prettyprint lang-sc'>record</code> below.)<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>path<td class='argumentdesc'>
 <p>a <a href="./../Classes/String.html">String</a> representing the path and name of the output file.</table><h4>Discussion:</h4>
 
-<p>If you do not specify a path than a file will be created in your recordings folder (see the note above on this) called SC_thisDateAndTime. Changes to the header or sample format, or to the number of channels must be made <strong>before</strong> calling this.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-record' href='./../Overviews/Methods.html#record'>record</a> (<span class='argstr'>path</span>)</h3>
+<p>If you do not specify a path than a file will be created in your recordings folder (see the note above on this) called SC_thisDateAndTime. Changes to the header or sample format, or to the number of channels must be made <strong>before</strong> calling this.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-record' href='./../Overviews/Methods.html#record'>record</a> (<span class='argstr'>path</span>, <span class='argstr'>bus</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>node</span>, <span class='argstr'>duration</span>)</h3>
 <div class='method'>
 <p>Starts or resumes recording the output.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -612,20 +614,17 @@ x.free; // stop the synths
 <div class='method'>
 <p>Stops recording, closes the file, and frees the associated resources.<h4>Discussion:</h4>
 
-<p>You must call this when finished recording or the output file will be unusable. Cmd-. while recording has the same effect.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-recordNode' href='./../Overviews/Methods.html#recordNode'>recordNode</a> </h3>
-<div class='method'><h4>Returns:</h4>
-<div class='returnvalue'>
-<p>the current recording synth so that it can be used as a target. This should only be necessary for nodes which are not created in the default group.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-recChannels' href='./../Overviews/Methods.html#recChannels'>recChannels</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-recChannels' href='./../Overviews/Methods.html#recChannels'>recChannels</a> = value</h3>
+<p>You must call this when finished recording or the output file will be unusable. Cmd-. while recording has the same effect.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-recChannels' href='./../Overviews/Methods.html#recChannels'>recChannels</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-recChannels' href='./../Overviews/Methods.html#recChannels'>recChannels</a> = <span class='argstr'>n</span></h3>
 <div class='method'>
 <p>Get/set the number of channels (int) to record. Is automatically set to the value of <a href="./../Classes/ServerOptions.html#-numOutputBusChannels">ServerOptions: -numOutputBusChannels</a> when booting the server. Must be called <strong>before</strong> prepareForRecord.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-recHeaderFormat' href='./../Overviews/Methods.html#recHeaderFormat'>recHeaderFormat</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-recHeaderFormat' href='./../Overviews/Methods.html#recHeaderFormat'>recHeaderFormat</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-recHeaderFormat' href='./../Overviews/Methods.html#recHeaderFormat'>recHeaderFormat</a> = <span class='argstr'>string</span></h3>
 <div class='method'>
 <p>Get/set the header format (string) of the output file. The default is "aiff". Must be called <strong>before</strong> prepareForRecord.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-recSampleFormat' href='./../Overviews/Methods.html#recSampleFormat'>recSampleFormat</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-recSampleFormat' href='./../Overviews/Methods.html#recSampleFormat'>recSampleFormat</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-recSampleFormat' href='./../Overviews/Methods.html#recSampleFormat'>recSampleFormat</a> = <span class='argstr'>string</span></h3>
 <div class='method'>
 <p>Get/set the sample format (string) of the output file. The default is "float". Must be called <strong>before</strong> prepareForRecord.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-recBufSize' href='./../Overviews/Methods.html#recBufSize'>recBufSize</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-recBufSize' href='./../Overviews/Methods.html#recBufSize'>recBufSize</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-recBufSize' href='./../Overviews/Methods.html#recBufSize'>recBufSize</a> = <span class='argstr'>n</span></h3>
 <div class='method'>
 <p>Get/set the size of the <a href="./../Classes/Buffer.html">Buffer</a> to use with the <a href="./../Classes/DiskOut.html">DiskOut</a> UGen. This must be a power of two. The default is the <code class='code prettyprint lang-sc'>sampleRate.nextPowerOfTwo</code> or the first power of two number of samples longer than one second. Must be called <strong>before</strong> prepareForRecord.</div><h3><a class='anchor' name='Asynchronous%20Commands'>Asynchronous Commands</a></h3>
 
@@ -687,10 +686,11 @@ Routine.run {
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-actualSampleRate' href='./../Overviews/Methods.html#actualSampleRate'>actualSampleRate</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-addr' href='./../Overviews/Methods.html#addr'>addr</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addr' href='./../Overviews/Methods.html#addr'>addr</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addr' href='./../Overviews/Methods.html#addr'>addr</a> = <span class='argstr'>netAddr</span></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-aliveThreadIsRunning' href='./../Overviews/Methods.html#aliveThreadIsRunning'>aliveThreadIsRunning</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-aliveThreadPeriod' href='./../Overviews/Methods.html#aliveThreadPeriod'>aliveThreadPeriod</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-aliveThreadPeriod' href='./../Overviews/Methods.html#aliveThreadPeriod'>aliveThreadPeriod</a> = <span class='argstr'>val</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-applicationRunning' href='./../Overviews/Methods.html#applicationRunning'>applicationRunning</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-archiveAsCompileString' href='./../Overviews/Methods.html#archiveAsCompileString'>archiveAsCompileString</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-archiveAsObject' href='./../Overviews/Methods.html#archiveAsObject'>archiveAsObject</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-asBus' href='./../Overviews/Methods.html#asBus'>asBus</a> (<span class='argstr'>rate</span>, <span class='argstr'>numChannels: 1</span>)</h3>
@@ -705,7 +705,8 @@ Routine.run {
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-bootInProcess' href='./../Overviews/Methods.html#bootInProcess'>bootInProcess</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-bootInTerminal' href='./../Overviews/Methods.html#bootInTerminal'>bootInTerminal</a> </h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Server/extServer-bootInTerminal.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Server/extServer-bootInTerminal.sc</a></div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bootServerApp' href='./../Overviews/Methods.html#bootServerApp'>bootServerApp</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bootInit' href='./../Overviews/Methods.html#bootInit'>bootInit</a> (<span class='argstr'>recover: false</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bootServerApp' href='./../Overviews/Methods.html#bootServerApp'>bootServerApp</a> (<span class='argstr'>onComplete</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-bufferAllocator' href='./../Overviews/Methods.html#bufferAllocator'>bufferAllocator</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-cachedBufferAt' href='./../Overviews/Methods.html#cachedBufferAt'>cachedBufferAt</a> (<span class='argstr'>bufnum</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-cachedBuffersDo' href='./../Overviews/Methods.html#cachedBuffersDo'>cachedBuffersDo</a> (<span class='argstr'>func</span>)</h3>
@@ -716,15 +717,18 @@ Routine.run {
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-clientID' href='./../Overviews/Methods.html#clientID'>clientID</a> = <span class='argstr'>val</span></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-closeBundle' href='./../Overviews/Methods.html#closeBundle'>closeBundle</a> (<span class='argstr'>time</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-cmdPeriod' href='./../Overviews/Methods.html#cmdPeriod'>cmdPeriod</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectSharedMemory' href='./../Overviews/Methods.html#connectSharedMemory'>connectSharedMemory</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-controlBusAllocator' href='./../Overviews/Methods.html#controlBusAllocator'>controlBusAllocator</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-disconnectSharedMemory' href='./../Overviews/Methods.html#disconnectSharedMemory'>disconnectSharedMemory</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-doOnServerTree' href='./../Overviews/Methods.html#doOnServerTree'>doOnServerTree</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-dumpMode' href='./../Overviews/Methods.html#dumpMode'>dumpMode</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-emacsbuf' href='./../Overviews/Methods.html#emacsbuf'>emacsbuf</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-freeAllBuffers' href='./../Overviews/Methods.html#freeAllBuffers'>freeAllBuffers</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-getControlBusValue' href='./../Overviews/Methods.html#getControlBusValue'>getControlBusValue</a> (<span class='argstr'>busIndex</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-getControlBusValues' href='./../Overviews/Methods.html#getControlBusValues'>getControlBusValues</a> (<span class='argstr'>busIndex</span>, <span class='argstr'>busChannels</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-guiClass' href='./../Overviews/Methods.html#guiClass'>guiClass</a> </h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/ServerTools/plusServer.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/ServerTools/plusServer.sc</a></div>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-ifNotRunning' href='./../Overviews/Methods.html#ifNotRunning'>ifNotRunning</a> (<span class='argstr'>func</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-ifRunning' href='./../Overviews/Methods.html#ifRunning'>ifRunning</a> (<span class='argstr'>func</span>, <span class='argstr'>failFunc</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-inProcess' href='./../Overviews/Methods.html#inProcess'>inProcess</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-isLocal' href='./../Overviews/Methods.html#isLocal'>isLocal</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-isRecording' href='./../Overviews/Methods.html#isRecording'>isRecording</a> </h3>
@@ -736,12 +740,14 @@ Routine.run {
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extServer-makeView.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extServer-makeView.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeWindow' href='./../Overviews/Methods.html#makeWindow'>makeWindow</a> (<span class='argstr'>w</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Control/ServerPlusGUI.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Control/ServerPlusGUI.sc</a></div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a> = <span class='argstr'>argName</span></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-newAllocators' href='./../Overviews/Methods.html#newAllocators'>newAllocators</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-newBufferAllocators' href='./../Overviews/Methods.html#newBufferAllocators'>newBufferAllocators</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-newBusAllocators' href='./../Overviews/Methods.html#newBusAllocators'>newBusAllocators</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-newNodeAllocators' href='./../Overviews/Methods.html#newNodeAllocators'>newNodeAllocators</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-newScopeBufferAllocators' href='./../Overviews/Methods.html#newScopeBufferAllocators'>newScopeBufferAllocators</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-nextBufferNumber' href='./../Overviews/Methods.html#nextBufferNumber'>nextBufferNumber</a> (<span class='argstr'>n</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-nodeAllocator' href='./../Overviews/Methods.html#nodeAllocator'>nodeAllocator</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-notified' href='./../Overviews/Methods.html#notified'>notified</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-onBootAdd' href='./../Overviews/Methods.html#onBootAdd'>onBootAdd</a> (<span class='argstr'>object</span>)</h3>
@@ -754,8 +760,10 @@ Routine.run {
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Control/extSystemActions.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Control/extSystemActions.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-openBundle' href='./../Overviews/Methods.html#openBundle'>openBundle</a> (<span class='argstr'>bundle</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-quitInProcess' href='./../Overviews/Methods.html#quitInProcess'>quitInProcess</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-recordNode' href='./../Overviews/Methods.html#recordNode'>recordNode</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-recordOnNodeID' href='./../Overviews/Methods.html#recordOnNodeID'>recordOnNodeID</a> (<span class='argstr'>nodeID</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Server/extServer-recordOnNodeID.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Server/extServer-recordOnNodeID.sc</a></div>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-recorder' href='./../Overviews/Methods.html#recorder'>recorder</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-remoteControlled' href='./../Overviews/Methods.html#remoteControlled'>remoteControlled</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-remoteControlled' href='./../Overviews/Methods.html#remoteControlled'>remoteControlled</a> = value</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeBusLinks' href='./../Overviews/Methods.html#removeBusLinks'>removeBusLinks</a> (<span class='argstr'>busIndex</span>)</h3>
@@ -769,6 +777,7 @@ Routine.run {
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-scopeWindow' href='./../Overviews/Methods.html#scopeWindow'>scopeWindow</a> = value</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendQuit' href='./../Overviews/Methods.html#sendQuit'>sendQuit</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendQuit' href='./../Overviews/Methods.html#sendQuit'>sendQuit</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendStatusMsg' href='./../Overviews/Methods.html#sendStatusMsg'>sendStatusMsg</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-serverBooting' href='./../Overviews/Methods.html#serverBooting'>serverBooting</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-serverRunning' href='./../Overviews/Methods.html#serverRunning'>serverRunning</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-setControlBusValue' href='./../Overviews/Methods.html#setControlBusValue'>setControlBusValue</a> (<span class='argstr'>busIndex</span>, <span class='argstr'>value</span>)</h3>
