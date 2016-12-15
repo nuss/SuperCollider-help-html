@@ -1,0 +1,72 @@
+<html><head><title>HIDExplorer</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a></div>
+<h1>HIDExplorer<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>explore an HID device for use with the Modality toolkit</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/HID/HIDExplorer.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/HID/HIDExplorer.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Reference/MKtl_description_files.html">MKtl description files</a>, <a href="./../Classes/MIDIExplorer.html">MIDIExplorer</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*start'>start</a>  <a href='#*stop'>stop</a> </li>
+<li class='toc3'><a href='#*openDoc'>openDoc</a> </li>
+<li class='toc3'><a href='#*verbose'>verbose</a> </li>
+<li class='toc3'><a href='#*trace'>trace</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class helps you to create a description file for an HID device.<pre class='code prettyprint lang-sc'>// open an HID device
+MKtl( 'x', "*drive" );
+// create a desc file doc from what HID reports
+MKtl( 'x' ).createDescriptionFile;
+
+// or by observation:
+HIDExplorer.start(MKtl( 'x' ).device.source);
+// ... now move all controllers thru their full range ...
+
+// then do:
+HIDExplorer.stop(MKtl( 'x' ).device.source);
+MKtl( 'x' ).device.openDoc;</pre>
+
+<p>The file will have a dictionary that can be saved as a description file. It contains a device idInfo, the protocol (here, \hid), and the elements in a flat array consisting of lines like this:<pre class='code prettyprint lang-sc'>// --------- input elements ----------
+'&lt;_b1_&gt;': ('hidUsage': 1, 'hidUsagePage': 9, 'type': '&lt;type Button&gt;', 'ioType': 'in' ),</pre>
+
+<p>Here you give a proper name to: <code class='code prettyprint lang-sc'>'_b1_'</code> to e.g. <code class='code prettyprint lang-sc'>'bt1'</code>, based on the number that is written on the button - this is the name that will be used to refer to the element.
+<p>Then you also need to edit the type: <code class='code prettyprint lang-sc'>'&lt;type Button&gt;'</code> to <code class='code prettyprint lang-sc'>'button'</code>, and similar for other element types - see other HID device desc files for examples.
+<p>Note that often elements can be grouped in meaningful order, e.g. gamepads have 12 or so number buttons, which can be put into one array with shared properties - see e.g.<pre class='code prettyprint lang-sc'>MKtlDesc("*drive").openFile;</pre>
+
+<p>The other items in each line are lookup info for the MKtl, so you should not change them.
+<p>Check <a href="./../Reference/MKtl_description_files.html">MKtl description files</a> for the format of the description files.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*start' href='./../Overviews/Methods.html#start'>start</a> (<span class='argstr'>srcDev</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*stop' href='./../Overviews/Methods.html#stop'>stop</a> (<span class='argstr'>srcDev</span>)</h3>
+<div class='method'>
+<p>start abd stop observing an HID device</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*openDoc' href='./../Overviews/Methods.html#openDoc'>openDoc</a> </h3>
+<div class='method'>
+<p>open a document of the currently observed data, optionally including parameter specs.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*verbose' href='./../Overviews/Methods.html#verbose'>verbose</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*verbose' href='./../Overviews/Methods.html#verbose'>verbose</a> = value</h3>
+<div class='method'>
+<p>get and set flag whether to post info</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*trace' href='./../Overviews/Methods.html#trace'>trace</a> (<span class='argstr'>flag: true</span>)</h3>
+<div class='method'>
+<p>get and set flag whether to post tracing info, default flag is true</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/HIDExplorer.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/HIDExplorer.schelp</a><br>link::Classes/HIDExplorer::<br>sc version: 3.9dev</div></div></body></html>

@@ -1,0 +1,112 @@
+<html><head><title>ItemsSpec</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Control'>Control</a>, <a href='./../Browse.html#Spec'>Spec</a>, <a href='./../Browse.html#Libraries/Modality'>Libraries/Modality</a></div>
+<h1>ItemsSpec<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>A class to map an Array of items to a value range between 0 and 1.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/Tools/ItemsSpec.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/Tools/ItemsSpec.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Classes/MKtlDesc.html">MKtlDesc</a>, <a href="./../Tutorials/How_to_create_a_description_file_for_OSC.html">How to create a description file for an OSC device</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-map'>map</a> </li>
+<li class='toc3'><a href='#-unmap'>unmap</a> </li>
+<li class='toc3'><a href='#-default'>default</a> </li>
+<li class='toc3'><a href='#-items'>items</a> </li>
+<li class='toc3'><a href='#-spec'>spec</a> </li>
+<li class='toc3'><a href='#-asSpec'>asSpec</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-warp'>warp</a> </li>
+</ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>ItemsSpec maps an item from an array of possible items onto a value range between 0 and 1.
+<p>Simple example:<pre class='code prettyprint lang-sc'>~itspec = ItemsSpec.new( ["off","amber","red"] );
+
+// mapping
+~itspec.map( 0 );
+~itspec.map( 0.5 );
+~itspec.map( 1 );
+
+~itspec.map( 0.33); // still off
+~itspec.map( 0.34 ); // already amber
+
+// unmapping
+~itspec.unmap( "off" );
+~itspec.unmap( "amber" );
+~itspec.unmap( "red" );
+
+~itspec.unmap( "orange" ); // item not there -&gt; nil
+
+~itspec.default;
+~itspec.items;
+~itspec.spec;
+
+
+// check that ranges are equal size: 21 values, 7 each
+~itspec.map( (0, 0.05..1) );
+// -&gt; anything in [0, 0.3333] -&gt; "off", [0.3334, 0.6666] -&gt; amber, [0.6667, 1] -&gt; red
+
+["off","amber","red"].collect { |it| ~itspec.unmap(it) };
+
+// change the warp to bend ranges
+~itspec.warp = 4;
+~itspec.map( (0, 0.05..1) ); // off has wider part of the range now (15, 4, 2)</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>items</span>, <span class='argstr'>warp: 0</span>, <span class='argstr'>default</span>)</h3>
+<div class='method'>
+<p>Create a new ItemsSpec.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>items<td class='argumentdesc'>
+<p>An Array of items to map onto.<tr><td class='argumentname'>warp<td class='argumentdesc'>
+<p>An optional warp like \lin, \cos, \sin, or float number.<tr><td class='argumentname'>default<td class='argumentdesc'>
+<p>An optional default value (float between 0 and 1)</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-map' href='./../Overviews/Methods.html#map'>map</a> (<span class='argstr'>inval</span>)</h3>
+<div class='method'>
+<p>Map a SimpleNumber onto the items.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>inval<td class='argumentdesc'>
+<p>A SimpleNumber</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a String</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-unmap' href='./../Overviews/Methods.html#unmap'>unmap</a> (<span class='argstr'>inval</span>)</h3>
+<div class='method'>
+<p>Unmap an items contained in items to its number value<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>inval<td class='argumentdesc'>
+<p>an item</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A SimpleNumber or nil if the item was not found.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-default' href='./../Overviews/Methods.html#default'>default</a> </h3>
+<div class='method'>
+<p>The default value of an ItemsSpec is 0</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-items' href='./../Overviews/Methods.html#items'>items</a> </h3>
+<div class='method'>
+<p>The array of items.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-spec' href='./../Overviews/Methods.html#spec'>spec</a> </h3>
+<div class='method'>
+<p>A ControlSpec that handles the conversion of 0-1 range to number of indices for the ItemsSpec.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-asSpec' href='./../Overviews/Methods.html#asSpec'>asSpec</a> </h3>
+<div class='method'>
+<p>Convenience method.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the ItemsSpec</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-warp' href='./../Overviews/Methods.html#warp'>warp</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-warp' href='./../Overviews/Methods.html#warp'>warp</a> = <span class='argstr'>argWarp</span></h3>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/ItemsSpec.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/ItemsSpec.schelp</a><br>link::Classes/ItemsSpec::<br>sc version: 3.9dev</div></div></body></html>

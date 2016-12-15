@@ -1,0 +1,200 @@
+<html><head><title>MPadView</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#GUI'>GUI</a></div>
+<h1>MPadView<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>a view for noteOn/noteOff/touch elements</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/GUI/MPadView.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/GUI/MPadView.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/SCViewHolder.html">SCViewHolder</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/MHexPad.html">MHexPad</a></div>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Classes/MKtlElement.html">MKtlElement</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'><li class='toc2'><a href='#Code%20Examples%20for%20demonstration:'>Code Examples for demonstration:</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*modes'>modes</a> </li>
+<li class='toc3'><a href='#*modeKeys'>modeKeys</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-mode'>mode</a> </li>
+<li class='toc3'><a href='#-baseColor'>baseColor</a> </li>
+<li class='toc3'><a href='#-hiliteColor'>hiliteColor</a> </li>
+<li class='toc3'><a href='#-value'>value</a>  <a href='#-valueAction'>valueAction</a> </li>
+<li class='toc3'><a href='#-upValue'>upValue</a>  <a href='#-upValueAction'>upValueAction</a> </li>
+<li class='toc3'><a href='#-moveValue'>moveValue</a>  <a href='#-moveValueAction'>moveValueAction</a> </li>
+<li class='toc3'><a href='#-useValue'>useValue</a>  <a href='#-useUpValue'>useUpValue</a>  <a href='#-useMoveValue'>useMoveValue</a> </li>
+<li class='toc3'><a href='#-action'>action</a>  <a href='#-upAction'>upAction</a>  <a href='#-moveAction'>moveAction</a> </li>
+<li class='toc3'><a href='#-doAction'>doAction</a>  <a href='#-doUpAction'>doUpAction</a>  <a href='#-doMoveAction'>doMoveAction</a> </li>
+<li class='toc3'><a href='#-pressed'>pressed</a> </li>
+<li class='toc3'><a href='#-autoUpTime'>autoUpTime</a> </li>
+<li class='toc3'><a href='#-label'>label</a> </li>
+<li class='toc3'><a href='#-vShiftLabel'>vShiftLabel</a> </li>
+<li class='toc3'><a href='#-font'>font</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-baseDrawFunc'>baseDrawFunc</a> </li>
+<li class='toc3'><a href='#-setColors'>setColors</a> </li>
+</ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>MPadView is used in MKtlGUIs to automatically generate representations of pads and piano keys as commonly used in MIDI devices. You may never need to use MPadView explicitly.
+<p>It flexibly supports a variety of behaviors these noteOn, noteOff and touch elements may have, discussed here for clarity, and to possibly add more arcane combinations when encountered.
+<p>These types of MIDI elements include:<table>
+<tr><td>tag:<td>description:<td>noteOn:<td>noteOff:<td>touch:<td>comment<tr><td><tr><td>\noteOnTrig<td>trigger pad<td>127<td>-<td>-<td><tr><td>\noteOnVel<td>trig pad w/ vel.<td>1-127<td>-<td>-<td><tr><td><tr><td>\noteOnOff<td>piano key w/ on vel.<td>1-127<td>0<td>-<td>default<tr><td>\noteOnOffBut<td>button on/off<td>127<td>0<td>-<td><tr><td>\noteOnOffVel<td>pad/key w/ off vel.<td>1-127<td>1-127<td>-<td>rare<tr><td><tr><td>\noteOnOffTouch<td>pad/key w/ polytouch<td>1-127<td>0<td>0-127<td>semi-rare<tr><td>\noteOnOffVelTouch<td>pad/key w/ off vel and touch<td>1-127<td>1-127<td>1-127<td>very rare!</table>
+<h3><a class='anchor' name='Code%20Examples%20for%20demonstration:'>Code Examples for demonstration:</a></h3>
+<pre class='code prettyprint lang-sc'>// make a little keyboard to try the different modes:
+(
+~win = Window("PianoLayout", Rect(0, 200, 400, 200)).front;
+// switch between modes:
+~pop = EZPopUpMenu(~win, Rect(4, 4, 192, 24), "mode",
+    MPadView.modeKeys, { |pop|
+        pop.item.postln;
+        ~keys.do(_.mode_(pop.item));
+}, labelWidth: 40);
+
+// sort black before white keys so we draw them on top
+~layouts = Piano.layout(48, 72).sort { |a, b| a.color &gt; b.color };
+
+// draw MPadViews as keys
+~keys = ~layouts.collect { |ev|
+    var color = Color.perform(ev.color);
+    var height = ev.h * 60;
+    var rect = Rect(ev.x + (1-ev.w/2) * 24 + 4, 30 + 4, 24 * ev.w, height);
+    var pad = MPadView(~win, rect);
+    pad.baseColor_(color).label_(ev.note);
+    pad.vShiftLabel_( ev.h * 15);
+    pad.action = { |pd| "pad %    on: % \n".postf(ev.note, pd.value.round(0.001)) };
+    pad.upAction = { |pd| "pad %   off: % \n".postf(ev.note, pd.upValue.round(0.001)) };
+    pad.moveAction = { |pd| "pad % touch: % \n".postf(ev.note, pd.moveValue.round(0.001)) };
+};
+)
+
+// make a single MPadView and show its modes / behavior in more detail:
+
+m = MPadView().front;
+// set its basic actions for mouseDown, mouseUp and mouseMove
+m.action = { |mp| "noteOn vel: %\n".postf(mp.value.round(0.001)) };
+m.upAction = { |mp| "noteOff vel: %\n".postf(mp.upValue.round(0.001)) };
+m.moveAction = { |mp| "touch value: %\n".postf(mp.moveValue.round(0.001)) };
+
+// -&gt; try its default behavior:
+m.mode;
+m.label_(m.mode);
+// y-pos on pad determines noteOn velocity, noteOff is 0, touch is off
+// post its internal settings
+[m.useValue, m.useUpValue, m.useMoveValue, m.autoUpTime ];
+
+// noteOn/off button only - turn off useValue
+m.mode_(\noteOnOffBut).label_(m.mode);
+[m.useValue, m.useUpValue, m.useMoveValue, m.autoUpTime ];
+
+// use noteOn, e.g. for simple trigger pads:
+m.mode_(\noteOnTrig).label_(m.mode);
+// hold value for m.autoUpTime, then velocity falls by itself
+[m.useValue, m.useUpValue, m.useMoveValue, m.autoUpTime ];
+
+// use only noteOn with velocity, e.g. for drum pads:
+m.mode_(\noteOnVel).label_(m.mode);
+[m.useValue, m.useUpValue, m.useMoveValue, m.autoUpTime ];
+
+// useMouseMove to enable polytouch sensing on key
+m.mode_('noteOnOffTouch').label_(m.mode);
+[m.useValue, m.useUpValue, m.useMoveValue, m.autoUpTime ];
+
+// noteOff : enable velocity
+m.mode_('noteOnOffVel').label_(m.mode);
+[m.useValue, m.useUpValue, m.useMoveValue, m.autoUpTime ];
+
+// noteOff : enable velocity
+m.mode_('noteOnOffVelTouch').label_(m.mode);
+[m.useValue, m.useUpValue, m.useMoveValue, m.autoUpTime ];
+
+// won't switch when nonexistent mode
+m.mode_(\noSuchMode);
+
+m.baseColor = Color.grey(0.25);</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>parent<td class='argumentdesc'><tr><td class='argumentname'>bounds<td class='argumentdesc'>
+<p>make a new instance of an MPadView</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*modes' href='./../Overviews/Methods.html#modes'>modes</a> </h3>
+<div class='method'>
+<p>a dictionary of modes, see top example</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*modeKeys' href='./../Overviews/Methods.html#modeKeys'>modeKeys</a> </h3>
+<div class='method'>
+<p>names of the available behavior modes</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-mode' href='./../Overviews/Methods.html#mode'>mode</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-mode' href='./../Overviews/Methods.html#mode'>mode</a> = <span class='argstr'>modeName</span></h3>
+<div class='method'>
+<p>get and set behavior mode of the mpadview. modeName is one of <code class='code prettyprint lang-sc'>MPadView.modeKeys</code>.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-baseColor' href='./../Overviews/Methods.html#baseColor'>baseColor</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-baseColor' href='./../Overviews/Methods.html#baseColor'>baseColor</a> = <span class='argstr'>color</span></h3>
+<div class='method'>
+<p>get and set mpadview's background color</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-hiliteColor' href='./../Overviews/Methods.html#hiliteColor'>hiliteColor</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-hiliteColor' href='./../Overviews/Methods.html#hiliteColor'>hiliteColor</a> = <span class='argstr'>color</span></h3>
+<div class='method'>
+<p>get and set color for activities on view</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a> = <span class='argstr'>newValue: 0</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-valueAction' href='./../Overviews/Methods.html#valueAction'>valueAction</a> = <span class='argstr'>newValue: 0</span></h3>
+<div class='method'>
+<p>get and set current value (and optionally do its action): Clicking on gui sets it to y position within view. Usually used as noteOn velocity.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-upValue' href='./../Overviews/Methods.html#upValue'>upValue</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-upValue' href='./../Overviews/Methods.html#upValue'>upValue</a> = <span class='argstr'>newValue: 0</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-upValueAction' href='./../Overviews/Methods.html#upValueAction'>upValueAction</a> = <span class='argstr'>newValue: 0</span></h3>
+<div class='method'>
+<p>get and set current upValue (and optionally do its action): releasing mouseClick on gui sets it to y position within view. Usually used for velocity decay; also for noteOff velocity.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveValue' href='./../Overviews/Methods.html#moveValue'>moveValue</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveValue' href='./../Overviews/Methods.html#moveValue'>moveValue</a> = <span class='argstr'>newValue: 0</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveValueAction' href='./../Overviews/Methods.html#moveValueAction'>moveValueAction</a> = <span class='argstr'>newValue: 0</span></h3>
+<div class='method'>
+<p>get and set current moveValue (and optionally do its action): moving the held mouse on gui sets it to y position within view. Usually used for polytouch value.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-useValue' href='./../Overviews/Methods.html#useValue'>useValue</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-useValue' href='./../Overviews/Methods.html#useValue'>useValue</a> = <span class='argstr'>bool: true</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-useUpValue' href='./../Overviews/Methods.html#useUpValue'>useUpValue</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-useUpValue' href='./../Overviews/Methods.html#useUpValue'>useUpValue</a> = <span class='argstr'>bool: true</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-useMoveValue' href='./../Overviews/Methods.html#useMoveValue'>useMoveValue</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-useMoveValue' href='./../Overviews/Methods.html#useMoveValue'>useMoveValue</a> = <span class='argstr'>bool: true</span></h3>
+<div class='method'>
+<p>get and set booleans whether to use value, upValue, moveValue. This supports different behavior modes.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-action' href='./../Overviews/Methods.html#action'>action</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-action' href='./../Overviews/Methods.html#action'>action</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-upAction' href='./../Overviews/Methods.html#upAction'>upAction</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-upAction' href='./../Overviews/Methods.html#upAction'>upAction</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveAction' href='./../Overviews/Methods.html#moveAction'>moveAction</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveAction' href='./../Overviews/Methods.html#moveAction'>moveAction</a> = value</h3>
+<div class='method'>
+<p>get and set actions to do when value, upValue, moveValue changes</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-doAction' href='./../Overviews/Methods.html#doAction'>doAction</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-doUpAction' href='./../Overviews/Methods.html#doUpAction'>doUpAction</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-doMoveAction' href='./../Overviews/Methods.html#doMoveAction'>doMoveAction</a> (<span class='argstr'>newValue: 0</span>)</h3>
+<div class='method'>
+<p>evaluate action, upAction moveAction.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pressed' href='./../Overviews/Methods.html#pressed'>pressed</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-pressed' href='./../Overviews/Methods.html#pressed'>pressed</a> = <span class='argstr'>bool: false</span></h3>
+<div class='method'>
+<p>get and set boolean whether pad is pressed.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-autoUpTime' href='./../Overviews/Methods.html#autoUpTime'>autoUpTime</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-autoUpTime' href='./../Overviews/Methods.html#autoUpTime'>autoUpTime</a> = value</h3>
+<div class='method'>
+<p>get and set time for automatic upAction after activation. default inf means it waits for release of mouseclick, short times (e.g. 0.1) allow trigger pad-like behavior.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-label' href='./../Overviews/Methods.html#label'>label</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-label' href='./../Overviews/Methods.html#label'>label</a> = <span class='argstr'>string</span></h3>
+<div class='method'>
+<p>get and set view label to show</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-vShiftLabel' href='./../Overviews/Methods.html#vShiftLabel'>vShiftLabel</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-vShiftLabel' href='./../Overviews/Methods.html#vShiftLabel'>vShiftLabel</a> = <span class='argstr'>number: 0</span></h3>
+<div class='method'>
+<p>shift label by vertical offset</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-font' href='./../Overviews/Methods.html#font'>font</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-font' href='./../Overviews/Methods.html#font'>font</a> = <span class='argstr'>aFont</span></h3>
+<div class='method'>
+<p>get and set font to use for label</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-baseDrawFunc' href='./../Overviews/Methods.html#baseDrawFunc'>baseDrawFunc</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setColors' href='./../Overviews/Methods.html#setColors'>setColors</a> </h3>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MPadView.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MPadView.schelp</a><br>link::Classes/MPadView::<br>sc version: 3.9dev</div></div></body></html>

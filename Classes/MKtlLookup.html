@@ -1,0 +1,129 @@
+<html><head><title>MKtlLookup</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries/Modality'>Libraries/Modality</a></div>
+<h1>MKtlLookup<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>unify lookup for MKtl devices</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/MKtlLookup.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/MKtlLookup.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Classes/MKtlDesc.html">MKtlDesc</a>, <a href="./../Classes/MKtlDevice.html">MKtlDevice</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*all'>all</a> </li>
+<li class='toc3'><a href='#*names'>names</a> </li>
+<li class='toc3'><a href='#*postInfo'>postInfo</a> </li>
+<li class='toc3'><a href='#*allFor'>allFor</a> </li>
+<li class='toc3'><a href='#*addHID'>addHID</a> </li>
+<li class='toc3'><a href='#*addAllHID'>addAllHID</a> </li>
+<li class='toc3'><a href='#*addMIDI'>addMIDI</a> </li>
+<li class='toc3'><a href='#*addAllMIDI'>addAllMIDI</a> </li>
+<li class='toc3'><a href='#*midiAll'>midiAll</a> </li>
+<li class='toc3'><a href='#*addOSC'>addOSC</a> </li>
+<li class='toc3'><a href='#*findByIDInfo'>findByIDInfo</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>MKtlLookup provides a single dictionary with unique lookup names for all hardware/network devices found or declared, so they can be used with MKtls. MKtlLookup works in the background when doing <code class='code prettyprint lang-sc'>MKtl.find;</code>, so you will rarely encounter it, except when you debug device finding mechanisms.
+<p>The names are intentionally long to be both unique and descriptive of the source. short nicknames can and should be given in the MKtl creation:<pre class='code prettyprint lang-sc'>MKtl(\nk2, 'midi_0_nanokontrol2');
+MKtl('nk2').listenTo( 0 ).sendTo(0);
+MKtl('nk2').trace;
+
+
+MKtl(\nk2b, 'midi_0_nanokontrol2');
+MKtl('nk2b').listenTo( 1 ).sendTo(1);
+MKtl('nk2b').trace;
+MKtl('nk2b').elementAt(\play).value_(1);
+
+
+MKtl.find; // does these find operations:
+    // HID.findAvailable;
+    // MIDIClient.init;
+    // MKtlLookup.addAllHID;
+    // MKtlLookup.addAllMIDI;
+    // (OSC devices are not found automatically)
+
+// depending on the kind of device
+MKtlLookup.names.printcsAll;
+
+// add some osc devices by hand:
+MKtlLookup.addOSC(NetAddr.localAddr, \sclang);
+MKtlLookup.addOSC(s.addr, "server_%".format(s.name).asSymbol).put(\server, s);
+MKtlLookup.addOSC(NetAddr("192.168.94.23", 1234), \gyrosc);
+
+MKtlLookup.names.printcsAll;
+
+// list all midi devices:
+MKtlLookup.allFor(\midi);
+
+// for each device found, MKtlLookup has a dict with all the useful info
+// that is known about the device at this point.
+
+// E.g. the dict for a midi device will contain :
+MKtlLookup.allFor(\midi).choose.postcs;
+
+( 'idInfo': nanoKONTROL2,   // name of the device as it registers to the OS
+'protocol': midi,           // the protocol it uses
+            // the endpoints that belong to it, src and dest:
+'srcDevice': MIDIEndPoint("nanoKONTROL2", "SLIDER/KNOB", 1140916328),
+'destDevice': MIDIEndPoint("nanoKONTROL2", "CTRL", -1609859973),
+            // the unique name under which the info is stored
+'lookupName': midi_0_nanokontrol2,
+            // name of the matching description file if there is one:
+'filename': korg-nanokontrol2,
+            // all the endpoints that belong to it:
+'deviceInfo': [ MIDIEndPoint("nanoKONTROL2", "SLIDER/KNOB", 1140916328), MIDIEndPoint("nanoKONTROL2", "CTRL", -1609859973) ] )</pre>
+<div class='note'><span class='notelabel'>NOTE:</span> Currently, all endpoints found for the same device name are registered as one info dict. For most single-in, single-out devices this works perfectly. When multiple devices of the same kind are present (e.g. 2 midifader boxes), they are identified by a multiIndex. See <a href="./../Tutorials/Connecting_multiple_identical_devices.html">Connecting multiple identical devices</a>.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a> </h3>
+<div class='method'>
+<p>the lookup dictionary of all device infos found</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*names' href='./../Overviews/Methods.html#names'>names</a> </h3>
+<div class='method'>
+<p>the lookup names of all device infos found</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*postInfo' href='./../Overviews/Methods.html#postInfo'>postInfo</a> </h3>
+<div class='method'>
+<p>post info on all devices found</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allFor' href='./../Overviews/Methods.html#allFor'>allFor</a> (<span class='argstr'>protocol</span>)</h3>
+<div class='method'>
+<p>the lookup names of all device infos using that protocol</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*addHID' href='./../Overviews/Methods.html#addHID'>addHID</a> (<span class='argstr'>hidinfo</span>, <span class='argstr'>index</span>)</h3>
+<div class='method'>
+<p>add a HIDInfo by as found by index in HID.available</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*addAllHID' href='./../Overviews/Methods.html#addAllHID'>addAllHID</a> </h3>
+<div class='method'>
+<p>add all HIDINfos currently found in HID.available</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*addMIDI' href='./../Overviews/Methods.html#addMIDI'>addMIDI</a> (<span class='argstr'>endPoint</span>, <span class='argstr'>index</span>, <span class='argstr'>endPointType: 'src'</span>, <span class='argstr'>where</span>, <span class='argstr'>lookupName</span>, <span class='argstr'>idInfo</span>)</h3>
+<div class='method'>
+<p>add a MIDIEndpoint as found by index in MIDIClient.sources or .destinations. type (\src or \dest) tells MKtlLookup whether it is in sources or .destinations.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*addAllMIDI' href='./../Overviews/Methods.html#addAllMIDI'>addAllMIDI</a> </h3>
+<div class='method'>
+<p>add all MIDIEndpoints currently found in MIDIClient sources or destinations. Happens automatically in MIDIMktlDevice.find.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*midiAll' href='./../Overviews/Methods.html#midiAll'>midiAll</a> </h3>
+<div class='method'>
+<p>a separate dict for sorting and matching all midi ports</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*addOSC' href='./../Overviews/Methods.html#addOSC'>addOSC</a> (<span class='argstr'>sendAddr</span>, <span class='argstr'>deviceName</span>, <span class='argstr'>replyAddr</span>, <span class='argstr'>mktl</span>)</h3>
+<div class='method'>
+<p>add an OSC source or dest. As these are not globally represented, one makes them by hand, with sendAddr, replyAddr, and (given) name.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*findByIDInfo' href='./../Overviews/Methods.html#findByIDInfo'>findByIDInfo</a> (<span class='argstr'>inIdInfo</span>)</h3>
+<div class='method'>
+<p><pre class='code prettyprint lang-sc'>// On OSX, MKtl.find detects installed IAC Driver
+MKtl.find(\midi);
+// finds it directly by name
+MKtlLookup.findByIDInfo("IAC Driver");
+// also when given in a dict:
+MKtlLookup.findByIDInfo((deviceName: "IAC Driver"));
+// and even when the dict says srcPortIndex 0,
+// and the lookup info has no srcPortIndex (i.e. it is a single port
+MKtlLookup.findByIDInfo((deviceName: "IAC Driver", srcPortIndex: 0 ));</pre>
+</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+
+<p>None, MKtlLookup is a Singleton.<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MKtlLookup.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MKtlLookup.schelp</a><br>link::Classes/MKtlLookup::<br>sc version: 3.9dev</div></div></body></html>

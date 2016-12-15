@@ -1,0 +1,278 @@
+<html><head><title>Modality Tutorial</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider TUTORIALS (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a>, <a href='./../Browse.html#External Control'>External Control</a></div>
+<h1>Modality Tutorial<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Learning how to use Modality</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Classes/MKtlElement.html">MKtlElement</a>, <a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#Finding%20present%20devices'>Finding present devices</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Elements%20and%20Groups'>Elements and Groups</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Using%20actions'>Using actions</a></li>
+<ul class='toc'><li class='toc2'><a href='#Controlling%20a%20very%20simple%20sound%20process'>Controlling a very simple sound process</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Using%20named%20elements%20for%20actions'>Using named elements for actions</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Controlling%20the%20same%20process%20from%20a%20different%20device'>Controlling the same process from a different device</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Using%20multiple%20actions'>Using multiple actions</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Output%20elements'>Output elements</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='Finding%20present%20devices'>Finding present devices</a></h2>
+<div class='note'><span class='notelabel'>NOTE:</span> If you have one of the example devices used here (a Korg nanoKontrol2 faderbox or a Thrustmaster RunNDrive gamepad) at hand, plug it in now and use a real interface device. If not, you can substitute with their guis to step through this tutorial.</div>
+<p>The first step is to discover which devices are available for use:<pre class='code prettyprint lang-sc'>MKtl.find;</pre>
+
+<p>This will find all currently available devices, all the known info on them, and post instructions with example lines of code for several possible cases:<ul>
+<li>Often - Device is supported (many devices are):<pre class='code prettyprint lang-sc'>// [ [ "iCON iControl V1.02", "Port 1", 74435252 ] ]
+    // Supported. Create by lookupName only if necessary:
+// MKtl('midi_1_icon_i', 'midi_1_icon_icontrol_v1_02_port_1');
+    // Best create MKtl from desc file:
+MKtl('midi_1_icon_i', "icon-icontrols-102");</pre>
+
+<p><li>Less often - Device is not supported in modality yet:<pre class='code prettyprint lang-sc'>// [ [ "IAC Driver", "IAC Bus 1", -476939297 ] ]
+    // Unknown - Create from lookupName and explore:
+MKtl('midi_0_iac_dr', 'midi_0_iac_driver');</pre>
+
+<p><li>Sometimes - Device has multiple matching desc files:<pre class='code prettyprint lang-sc'>// [ [ "Arturia BeatStep", "Arturia BeatStep", -512494375 ] ]
+    // Supported by 2 desc files.
+// Create MKtl from lookupName only if necessary:
+// MKtl('midi_1_arturi', 'midi_1_arturia_beatstep');
+    // Best create MKtl from one of the desc files:
+MKtl('midi_1_arturi', "arturia-beatstep-rel-0");
+MKtl('midi_1_arturi', "arturia-beatstep-rel-16");</pre>
+
+<p><li>Rarely - Multiples identical devices are found, code includes a multiIndex:<pre class='code prettyprint lang-sc'>// [ "USB Game Controllers", "Mega World" ]
+    // Best create MKtl from desc file:
+MKtl('hid_5_usb_ga', "saitek-impact-gamepad", multiIndex: 0);
+
+// [ "USB Game Controllers", "Mega World" ]
+    // Best create MKtl from desc file:
+MKtl('hid_6_usb_ga', "saitek-impact-gamepad", multiIndex: 1);</pre>
+</ul>
+
+<p>Copy the code line for the device you want to use from the post window to a text document and change its nickname to one you like:<pre class='code prettyprint lang-sc'>// create a MKtl with the desired name and desc file
+MKtl('nk2', "korg-nanokontrol2");
+// access it by its MKtl lookup name
+MKtl('nk2');
+// or assign it to a global variable for less typing:
+k = MKtl('nk2');
+// if you do not have that device, create a gui to replace it:
+k.gui;</pre>
+
+<p>You can see the output from all elements by doing<pre class='code prettyprint lang-sc'>//turn it on
+k.trace;
+//turn it off
+k.trace(false);</pre>
+
+<p>The same for a Thrustmaster RunNDrive gamepad:<pre class='code prettyprint lang-sc'>g = MKtl(\gp, "*impact-gamepad");
+g.gui;
+g.trace;
+g.trace(false);</pre>
+<h2><a class='anchor' name='Elements%20and%20Groups'>Elements and Groups</a></h2>
+
+<p>Each control (i.e. knob, slider, button, etc) on the device is represented by an <a href="./../Classes/MKtlElement.html">MKtlElement</a>. All elements are contained in the elementGroup in a hierarchical order:<pre class='code prettyprint lang-sc'>k.elementGroup;
+// you can access elements in each group by index or name:
+k.elementGroup[0];
+k.elementGroup[\tr];
+// post the tree of all groups and elements to see the hierachical order:
+k.postElements;</pre>
+
+<p>The elementGroup is an (<a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a>) and usually contains some nested groups, where the final node is always an <a href="./../Classes/MKtlElement.html">MKtlElement</a>. The structure of the groups follows a meaningful order, e.g. the spatial arrangement on the device (rows, columns, areas) or a logical order (pages, function groups, etc). (One can create custom orders of elements as well, see <a href="./../Tutorials/Creating_Custom_Elements_and_Groups.html">Creating Custom Elements and Groups</a>.
+<p>This organization is defined in an <a href="./../Classes/MKtlDesc.html">MKtlDesc</a> file for the device, which are provided for many devices already.<pre class='code prettyprint lang-sc'>k.desc.openFile;
+
+// the top level keys - some may be individual elements, others groups of elements:
+k.elementGroup.keys;
+
+//the play button
+k.elAt(\tr, \play);
+
+//the first slider
+k.elAt(\sl, 0);
+k.elAt(\sl, \1);
+
+//all sliders as a group
+k.elAt(\sl);
+
+//the third knob
+k.elAt(\kn, 2);
+k.elAt(\kn, \3);
+
+//the button on row 2 and column 5
+//buttons are organized first by rows and then columns.
+k.elAt(\bt, 1, 4)
+k.elAt(\bt, \M, \5)
+
+//all buttons on row 2
+k.elAt(\bt, 1);
+
+//all buttons on column 5
+k.elAt(\bt, nil, 4);</pre>
+<div class='note'><span class='notelabel'>NOTE:</span> when using devices with hardware pages (like the nanoKONTROL 1), there may be separate desc files for each page, or a single desc with all pages. When using such a single desc, the page name or index will be used in the access code, e.g. the button on page 4 row 2 and column 5 would be at:<pre class='code prettyprint lang-sc'>MKtl(\nk1, "*nanokontrol");
+MKtl(\nk1).elAt; // the top layer - element groups
+MKtl(\nk1).elAt(\bt); // the buttons
+MKtl(\nk1).elAt(\bt, 2); // the buttons in scene 3
+MKtl(\nk1).elAt(\bt, 2, 0); // upper buttons scene 3
+MKtl(\nk1).elAt(\bt, 2, 0, 8); // last upper buttons scene 3</pre>
+
+<p>The pages can also be in the top layer, and element names below them:<pre class='code prettyprint lang-sc'>~lc = MKtl(\x, "*launchcontrol");
+~lc.elAt;  // the pages
+~lc.elAt(\pg5); // page 5
+~lc.elAt(\pg5, \kn); // the knobs there</pre>
+</div><h2><a class='anchor' name='Using%20actions'>Using actions</a></h2>
+
+<p>Actions for an element (or group) are defined using the "action_" or the "addAction" methods of <a href="./../Classes/MKtlElement.html">MKtlElement</a>. These methods take a function as argument which receives a single argument, the <a href="./../Classes/MKtlElement.html">MKtlElement</a> it belongs to. One can get the current value of the element by ".value". The value returned by an <a href="./../Classes/MKtlElement.html">MKtlElement</a> is always between 0 and 1.<pre class='code prettyprint lang-sc'>//Assign an action to the third knob
+k.elAt(\kn, 2).action_({ |el| [el.name, el.value.round(0.0001)].postcs });
+
+// reset the of this knob to nothing (nil)
+k.elAt(\kn, 2).resetAction;
+
+//Add an action to the group of all knobs
+(
+k.elAt(\kn).action_({ |el|
+    "knob % value: %\n".postf(el.parent.indexOf(el), el.value)
+});
+)
+
+//reset the \kn group's action to nil
+k.elAt(\kn).resetAction;</pre>
+<h3><a class='anchor' name='Controlling%20a%20very%20simple%20sound%20process'>Controlling a very simple sound process</a></h3>
+<pre class='code prettyprint lang-sc'>s.boot;
+
+// using a very simple SynthDef and Synth:
+(
+SynthDef(\blippy, {
+    var snd = Blip.ar(
+        \freq.kr(440).lag(0.1),
+        \numHarmonics.kr(100),
+        \amp.kr(1.0).lag(0.1) ) * 0.5;
+    Out.ar(0,
+        Pan2.ar(snd, \pan.kr(0).lag(0.1) )
+    )
+}).add
+);
+
+//start the synth by hand first
+z = Synth(\blippy, [\freq, 440, \numHarmonics, 100, \amp, 0.5, \pan, 0]);
+
+
+// create 4 control elements for it:
+(
+//clear all actions first
+k.resetActions;
+
+//slider 0 -&gt; amplitude
+k.elAt(\sl, 0).action_({ |elem| z !? _.set(\amp, \amp.asSpec.map(elem.value)) });
+
+//knob 0 -&gt; pan
+k.elAt(\kn, 0).action_({ |elem| z !? _.set(\pan, \pan.asSpec.map(elem.value)) });
+
+//slider 1
+k.elAt(\sl, 1).action_({ |elem| z !? _.set(\freq, elem.value.linlin(0.0, 1.0, 50, 2000) ) });
+
+//knob 1 -&gt; number of harmonics
+k.elAt(\kn, 1).action_({ |elem| z !? _.set(\numHarmonics, elem.value.linexp(0.0, 1.0, 1, 50) ) });
+)</pre>
+
+<p>... Now you can control four parameters of synth z.<h3><a class='anchor' name='Using%20named%20elements%20for%20actions'>Using named elements for actions</a></h3>
+
+<p>For more flexibility and clarity, one can give the elements names for their functions, and use those:<pre class='code prettyprint lang-sc'>(
+k.addNamed(\amp1, k.elAt(\sl, 0));
+k.addNamed(\pan1, k.elAt(\kn, 0));
+k.addNamed(\param1, k.elAt(\sl, 1));
+k.addNamed(\param2, k.elAt(\kn, 2));
+
+// why not prepare buttons for start and stop
+k.addNamed(\start1, k.elAt(\bt, \S, 0));
+k.addNamed(\stop1, k.elAt(\bt, \R, 0));
+)
+
+// give them the same actions as above:
+(
+k.elAt(\amp1).action_({ |elem| z !? _.set(\amp, \amp.asSpec.map(elem.value)) });
+k.elAt(\pan1).action_({ |elem| z !? _.set(\pan, \pan.asSpec.map(elem.value)) });
+k.elAt(\param1).action_({ |elem| z !? _.set(\freq, elem.value.linlin(0.0, 1.0, 50, 2000) ) });
+k.elAt(\param2).action_({ |elem| z !? _.set(\numHarmonics, elem.value.linexp(0.0, 1.0, 1, 50) ) });
+
+// and new functions  for start and stop:
+k.elAt(\start1).action_({  |elem|
+    if(elem.value &gt; 0) { // only start on button down
+        z !? _.free;
+        z = Synth(\blippy, [\freq, 440, \numHarmonics, 100, \amp, 0.5, \pan, 0])
+    }
+});
+k.elAt(\stop1).action_({  |elem|
+    if(elem.value &gt; 0) { // only stop on button down
+        z !? _.free; ~syn1 = nil;
+    }
+});
+)</pre>
+<h3><a class='anchor' name='Controlling%20the%20same%20process%20from%20a%20different%20device'>Controlling the same process from a different device</a></h3>
+<pre class='code prettyprint lang-sc'>// give the elements of the new controller the same function names:
+(
+k = MKtl(\gp); // k is now the gamepad we prepared
+k.addNamed(\amp1, k.elAt(\joy, \r, \y));
+k.elAt;
+k.addNamed(\pan1, k.elAt(\joy, \r, \x));
+k.addNamed(\param1, k.elAt(\joy, \l, \x));
+k.addNamed(\param2, k.elAt(\joy, \l, \y));
+
+// while at it, prapare buttons for start and stop
+k.addNamed(\start1, k.elAt(\bt, \5));
+k.addNamed(\stop1, k.elAt(\bt, \7));
+)</pre>
+
+<p>And now run the same function setting code as above for the gamepad controller! For a full example of this approach, see <a href="./../Tutorials/Substituting_MKtls.html">Substituting MKtls</a>.<h3><a class='anchor' name='Using%20multiple%20actions'>Using multiple actions</a></h3>
+
+<p>For very flexible use of multiple actions, see also <a href="./../Classes/MFunc.html">MFunc</a> in the "adclib" Quark.<pre class='code prettyprint lang-sc'>// Assigning multiple actions to an element can be done with .addAction:
+(
+k.elAt(\amp1).addAction({ |elem| ("1 :"++elem.value).postln });
+k.elAt(\amp1).addAction({ |elem| ("2 :"++elem.value).postln });
+)
+//clear all
+k.elAt(\sl, 0).resetAction;
+
+/// to remove them you need to have a reference to the function
+(
+f = { |elem| ("1 :"++elem.value).postln };
+g = { |elem| ("2 :"++elem.value).postln };
+k.elAt(\sl, 0).addAction(f);
+k.elAt(\sl, 0).addAction(g);
+)
+
+//remove first action
+k.elAt(\sl, 0).removeAction(f);
+// just action 2 is left
+
+//clear all
+k.elAt(\sl, 0).action = nil;</pre>
+<h2><a class='anchor' name='Output%20elements'>Output elements</a></h2>
+
+<p>Some devices can be set to specific values, e.g. setting motorfaders or LED rings around encoder knobs to the corresponding values.<pre class='code prettyprint lang-sc'>// input elements of the device :
+k.inputElements;
+
+// output elements
+k.outputElements;
+
+// sending data to the output elements
+// value range between 0 and 1, will be mapped according to the
+// deviceSpec given in the description file
+// here, should set LEDs on all S buttons
+/*
+MKtl(\nk2).elAt(\bt, \S).do { |elem| elem.value_(1.0) };
+MKtl(\nk2).elAt(\bt, \S).do { |elem| elem.value_(0.0) };
+*/
+
+k.free;</pre>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Tutorials/ModalityTutorial.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Tutorials/ModalityTutorial.schelp</a><br>link::Tutorials/ModalityTutorial::<br>sc version: 3.9dev</div></div></body></html>

@@ -1,0 +1,404 @@
+<html><head><title>MKtl</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a>, <a href='./../Browse.html#External Control'>External Control</a></div>
+<h1>MKtl<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>A class for creating and accessing external controllers</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/MKtl.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/MKtl.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/MPush.html">MPush</a></div>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtlDesc.html">MKtlDesc</a>, <a href="./../Classes/MKtlDevice.html">MKtlDevice</a>, <a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a>, <a href="./../Classes/MKtlElement.html">MKtlElement</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*all'>all</a> </li>
+<li class='toc3'><a href='#*find'>find</a> </li>
+<li class='toc3'><a href='#*protocols'>protocols</a>  <a href='#*deviceTypes'>deviceTypes</a>  <a href='#*elementTypesUsed'>elementTypesUsed</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Using%20specs%20in%20MKtl'>Using specs in MKtl</a></li>
+<ul class='toc'><li class='toc3'><a href='#*globalSpecs'>globalSpecs</a> </li>
+<li class='toc3'><a href='#*addSpec'>addSpec</a>  <a href='#*getSpec'>getSpec</a> </li>
+</ul><li class='toc2'><a href='#Description%20files%20and%20MKtlDesc'>Description files and MKtlDesc</a></li>
+<ul class='toc'><li class='toc3'><a href='#*postLoadableDescs'>postLoadableDescs</a> </li>
+<li class='toc3'><a href='#*postLoadedDescs'>postLoadedDescs</a> </li>
+<li class='toc3'><a href='#*descFolders'>descFolders</a> </li>
+<li class='toc3'><a href='#*openDescFolder'>openDescFolder</a> </li>
+<li class='toc3'><a href='#*loadDescsMatching'>loadDescsMatching</a> </li>
+<li class='toc3'><a href='#*descIsFaulty'>descIsFaulty</a> </li>
+</ul><li class='toc2'><a href='#miscellaneous'>miscellaneous</a></li>
+<ul class='toc'><li class='toc3'><a href='#*postPossible'>postPossible</a> </li>
+<li class='toc3'><a href='#*makeLookupName'>makeLookupName</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-name'>name</a> </li>
+<li class='toc3'><a href='#-gui'>gui</a> </li>
+<li class='toc3'><a href='#-specs'>specs</a>  <a href='#-addLocalSpec'>addLocalSpec</a>  <a href='#-addSpec'>addSpec</a>  <a href='#-getSpec'>getSpec</a> </li>
+<li class='toc2'><a href='#MKtl%20description'>MKtl description</a></li>
+<ul class='toc'><li class='toc3'><a href='#-desc'>desc</a> </li>
+<li class='toc3'><a href='#-rebuild'>rebuild</a> </li>
+</ul><li class='toc2'><a href='#Devices'>Devices</a></li>
+<ul class='toc'><li class='toc3'><a href='#-openDevice'>openDevice</a> </li>
+<li class='toc3'><a href='#-hasDevice'>hasDevice</a> </li>
+<li class='toc3'><a href='#-closeDevice'>closeDevice</a> </li>
+<li class='toc3'><a href='#-device'>device</a>  <a href='#-mktlDevice'>mktlDevice</a> </li>
+<li class='toc3'><a href='#-free'>free</a> </li>
+<li class='toc3'><a href='#-resetActions'>resetActions</a> </li>
+<li class='toc3'><a href='#-trace'>trace</a> </li>
+<li class='toc3'><a href='#-traceRunning'>traceRunning</a> </li>
+<li class='toc3'><a href='#-enable'>enable</a>  <a href='#-disable'>disable</a> </li>
+<li class='toc3'><a href='#-sync'>sync</a> </li>
+</ul><li class='toc2'><a href='#Elements%20of%20the%20MKtl'>Elements of the MKtl</a></li>
+<ul class='toc'><li class='toc3'><a href='#-elementGroup'>elementGroup</a>  <a href='#-elements'>elements</a> </li>
+<li class='toc3'><a href='#-namedDict'>namedDict</a> </li>
+<li class='toc3'><a href='#-elementNames'>elementNames</a> </li>
+<li class='toc3'><a href='#-postElements'>postElements</a> </li>
+<li class='toc3'><a href='#-elementsDict'>elementsDict</a> </li>
+<li class='toc3'><a href='#-inputElements'>inputElements</a>  <a href='#-outputElements'>outputElements</a> </li>
+<li class='toc3'><a href='#-elementsOfType'>elementsOfType</a>  <a href='#-elementsNotOfType'>elementsNotOfType</a> </li>
+<li class='toc3'><a href='#-elementsLabeled'>elementsLabeled</a> </li>
+</ul><li class='toc2'><a href='#Accessing%20elements%20and%20groups'>Accessing elements and groups</a></li>
+<ul class='toc'><li class='toc3'><a href='#-elAt'>elAt</a>  <a href='#-elementAt'>elementAt</a> </li>
+<li class='toc3'><a href='#-dictAt'>dictAt</a> </li>
+<li class='toc3'><a href='#-collAt'>collAt</a> </li>
+<li class='toc3'><a href='#-at'>at</a> </li>
+</ul><li class='toc2'><a href='#Getting%20and%20setting%20element%20values'>Getting and setting element values</a></li>
+<ul class='toc'><li class='toc3'><a href='#-valueAt'>valueAt</a>  <a href='#-deviceValueAt'>deviceValueAt</a> </li>
+<li class='toc3'><a href='#-setValueAt'>setValueAt</a>  <a href='#-setDeviceValueAt'>setDeviceValueAt</a> </li>
+</ul><li class='toc2'><a href='#Getting%20and%20setting%20multiple%20elements'>Getting and setting multiple elements</a></li>
+<ul class='toc'><li class='toc3'><a href='#-getKeysValues'>getKeysValues</a> </li>
+<li class='toc3'><a href='#-setKeysValues'>setKeysValues</a> </li>
+<li class='toc3'><a href='#-setKVAction'>setKVAction</a> </li>
+<li class='toc3'><a href='#-set'>set</a> </li>
+<li class='toc3'><a href='#-setAction'>setAction</a> </li>
+<li class='toc3'><a href='#-send'>send</a> </li>
+</ul><li class='toc2'><a href='#Exploration%20of%20a%20device'>Exploration of a device</a></li>
+<ul class='toc'><li class='toc3'><a href='#-explore'>explore</a> </li>
+<li class='toc3'><a href='#-exploring'>exploring</a> </li>
+<li class='toc3'><a href='#-createDescriptionFile'>createDescriptionFile</a> </li>
+<li class='toc3'><a href='#-specialMessages'>specialMessages</a> </li>
+<li class='toc3'><a href='#-sendSpecialMessage'>sendSpecialMessage</a> </li>
+</ul><li class='toc2'><a href='#Adding%20named%20groups%20and%20elements'>Adding named groups and elements</a></li>
+<ul class='toc'><li class='toc3'><a href='#-addNamed'>addNamed</a> </li>
+</ul><li class='toc2'><a href='#Collectives'>Collectives</a></li>
+<ul class='toc'><li class='toc3'><a href='#-collectivesDict'>collectivesDict</a>  <a href='#-collectiveDescriptionFor'>collectiveDescriptionFor</a> </li>
+</ul><li class='toc2'><a href='#Methods%20for%20finding%20info%20on%20available%20devices%20in%20MKtlLookup.'>Methods for finding info on available devices in MKtlLookup.</a></li>
+<ul class='toc'><li class='toc3'><a href='#-lookupInfo'>lookupInfo</a>  <a href='#-lookupName'>lookupName</a>  <a href='#-updateLookupInfo'>updateLookupInfo</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-adaptDesc'>adaptDesc</a> </li>
+<li class='toc3'><a href='#-openDeviceVia'>openDeviceVia</a> </li>
+<li class='toc3'><a href='#-reset'>reset</a> </li>
+<li class='toc3'><a href='#-resetAction'>resetAction</a> </li>
+<li class='toc3'><a href='#-toFront'>toFront</a> </li>
+</ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+<div class='note'><span class='notelabel'>NOTE:</span> For a guided tour, start reading at <a href="./../Overviews/Modality.html">Modality</a>, for a tutorial on most of what MKtl does, see <a href="./../Tutorials/ModalityTutorial.html">Modality Tutorial</a>.</div>
+<p>MKtl provides an easy to use interface for devices you can connect to your computer through MIDI, HID, OSC and possibly later Serial and other protocols. Beyond that, you will be able to use it for GUI based controllers.
+<p><code class='code prettyprint lang-sc'>MKtl.find;</code> searches for all controllers connected to your machine, and returns a list of available devices. Or, if you already know which controller you want to use, you can create it directly by name, and MKtl will find and return that controller. If it does not find it, e.g. because the physical controller is not there, it creates a virtual MKtl, which can be used to open a GUI that replaces the controller.
+<p>For most devices, this requires that someone has made a description file for the device; if there is none, it is easy to make one following the instructions here: <a href="./../Tutorials/How_to_create_a_description_file.html">How to create a description file</a>
+<p>MKtls can also be nested by composing several MKtls; for instance, the iControl ... creates both MIDI and HID devices for communication. For an example and background, see <a href="./../Classes/CompMKtl.html">CompMKtl</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a> </h3>
+<div class='method'>
+<p>all currently available MKtls.<pre class='code prettyprint lang-sc'>MKtl.all;</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*find' href='./../Overviews/Methods.html#find'>find</a> (<span class='argstr'>protocols</span>)</h3>
+<div class='method'>
+<p>Find all currently connected controllers. This method calls the find method on all of MKtlDevice's subclasses, and will post a list of available MKtl devices.<pre class='code prettyprint lang-sc'>MKtl.find;</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*protocols' href='./../Overviews/Methods.html#protocols'>protocols</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*deviceTypes' href='./../Overviews/Methods.html#deviceTypes'>deviceTypes</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*elementTypesUsed' href='./../Overviews/Methods.html#elementTypesUsed'>elementTypesUsed</a> </h3>
+<div class='method'>
+<p>the currently supported protocols, deviceTypes, and elementTypes used in loaded description files.<pre class='code prettyprint lang-sc'>MKtl.protocols;
+MKtl.deviceTypes;
+MKtl.elementTypes;</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>name</span>, <span class='argstr'>lookupNameOrDesc</span>, <span class='argstr'>lookForNew: false</span>, <span class='argstr'>multiIndex</span>)</h3>
+<div class='method'>
+<p>Accesses an existing instance of MKtl with the given name, or creates a new instance with that name. As with e.g. JITLib proxies like Ndef, Tdef, Pdef, or OSCdef, MIDIdef etc.<pre class='code prettyprint lang-sc'>// nickname and name of description file
+k = MKtl('mynano2', "korg-nanokontrol2");
+
+// description file name can also contain wildcards:
+l = MKtl('op1', "*op-1");
+
+// if you have several devices of the same kind connected,
+// say two nanoKontrol2s, you can get to each of them by multiIndex:
+m = MKtl('nk2A', "korg-nanokontrol2", multiIndex: 0);
+n = MKtl('nk2B', "korg-nanokontrol2", multiIndex: 1);
+
+// Note that this is the index of the list of multiples only,
+// and in the order they show up in the system,
+// as is posted from MKtl.find. If you connect your
+// devices to the same plugs, they will get the same multiIndex again.</pre>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>The name of the controller as you want to refer to it.<tr><td class='argumentname'>lookupNameOrDesc<td class='argumentdesc'>
+<p>The device description or lookupName to be used. This can be:<ul>
+<li>the file name of a description file (without extension, possibly with wildcards)<li>the lookupName of a device that was found by MKtl.find (useful when no desc file exists),<li>an <a href="./../Classes/MKtlDesc.html">MKtlDesc</a> object, or<li>a dictionary that is a well-formed MKtlDesc full description dict.</ul>
+<tr><td class='argumentname'>lookForNew<td class='argumentdesc'>
+<p>a flag whether or not to look for newly attached devices or newly added device descriptions. Default is false. Will always look for devices and device descriptions the first time you open an MKtl.<tr><td class='argumentname'>multiIndex<td class='argumentdesc'>
+<p>if several devices of identical make are present, multiIndex is the index within this array of identical devices. The order is alphabetical by deviceLookupName, and will be reproduceable if the same set of devices is connected.</table></div><h3><a class='anchor' name='Using%20specs%20in%20MKtl'>Using specs in MKtl</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*globalSpecs' href='./../Overviews/Methods.html#globalSpecs'>globalSpecs</a> </h3>
+<div class='method'>
+<p>A class dictionary of all preset ControlSpecs used by various controller elements.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*addSpec' href='./../Overviews/Methods.html#addSpec'>addSpec</a> (<span class='argstr'>key</span>, <span class='argstr'>spec</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*getSpec' href='./../Overviews/Methods.html#getSpec'>getSpec</a> (<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>add and access by name a ControlSpec in MKtl's dictionary of specs<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>the name by which to store the spec<tr><td class='argumentname'>(spec)<td class='argumentdesc'>
+<p>The ControlSpec or a symbol or array that can be converted to a spec.<pre class='code prettyprint lang-sc'>MKtl.globalSpecs;
+MKtl.addSpec(\bipolar, [-1, 1]);
+MKtl.getSpec(\bipolar);</pre>
+</table></div><h3><a class='anchor' name='Description%20files%20and%20MKtlDesc'>Description files and MKtlDesc</a></h3>
+
+<p>These methods are all redirected to MKtlDesc.<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*postLoadableDescs' href='./../Overviews/Methods.html#postLoadableDescs'>postLoadableDescs</a> </h3>
+<div class='method'>
+<p>post the filenames of all loadable device descriptions. For more details on using description files, see <a href="./../Classes/MKtlDesc.html">MKtlDesc</a></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*postLoadedDescs' href='./../Overviews/Methods.html#postLoadedDescs'>postLoadedDescs</a> </h3>
+<div class='method'>
+<p>post all currently loaded device descriptions.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*descFolders' href='./../Overviews/Methods.html#descFolders'>descFolders</a> </h3>
+<div class='method'>
+<p>the folder(s) where MKtlDesc finds description files.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*openDescFolder' href='./../Overviews/Methods.html#openDescFolder'>openDescFolder</a> (<span class='argstr'>index: 0</span>)</h3>
+<div class='method'>
+<p>open folder(s) at index containing description files.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadDescsMatching' href='./../Overviews/Methods.html#loadDescsMatching'>loadDescsMatching</a> (<span class='argstr'>filename</span>, <span class='argstr'>folderIndex</span>)</h3>
+<div class='method'>
+<p>load device description file(s) matching with name from indicated folder(s).</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*descIsFaulty' href='./../Overviews/Methods.html#descIsFaulty'>descIsFaulty</a> (<span class='argstr'>argDesc</span>)</h3>
+<div class='method'>
+<p>test whether the given desc is faulty.<pre class='code prettyprint lang-sc'>MKtl.postLoadableDescs;
+MKtl.postLoadedDescs;
+MKtl.descFolders;
+MKtl.openDescFolder(0);
+MKtl.loadDescsMatching("*run-n-drive*");</pre>
+</div><h3><a class='anchor' name='miscellaneous'>miscellaneous</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*postPossible' href='./../Overviews/Methods.html#postPossible'>postPossible</a> (<span class='argstr'>protocols</span>)</h3>
+<div class='method'>
+<p>post all possible (i.e. currently connected or known) devices for the protocol(s) given. MKtl.postPossible;</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*makeLookupName' href='./../Overviews/Methods.html#makeLookupName'>makeLookupName</a> (<span class='argstr'>prefix</span>, <span class='argstr'>id</span>, <span class='argstr'>prodName</span>)</h3>
+<div class='method'>
+<p>make a lookupName for a device based on (typically) its protocol, id number and productName.<pre class='code prettyprint lang-sc'>MKtl.makeLookupName(\hid, 0, "Run'N'Drive - Wireless");
+MKtl.makeLookupName(\midiSrc, 0, "nanoKEY");
+// osc - is ip addr and port good here?
+MKtl.makeLookupName(\osc, "127.0.0.1_57110", "sclang");</pre>
+</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a> = <span class='argstr'>inname</span></h3>
+<div class='method'>
+<p>get and set the name (a Symbol) of the MKtl. This also changes the name under which the MKtl is stored in Mktl.all.<pre class='code prettyprint lang-sc'>MKtl(\test, "korg-nanokontrol2");
+MKtl(\test).name_(\mynano2);
+MKtl.all; // \test is gone now, use \mynano2 instead</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-gui' href='./../Overviews/Methods.html#gui'>gui</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/GUI/MKtlElementGUI.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/GUI/MKtlElementGUI.sc</a></div>
+<div class='method'>
+<p>Open a gui representation for the MKtl, which shows the state of the MKtl's elements and can do all their actions.<pre class='code prettyprint lang-sc'>MKtl(\mynano2).gui;</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-specs' href='./../Overviews/Methods.html#specs'>specs</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addLocalSpec' href='./../Overviews/Methods.html#addLocalSpec'>addLocalSpec</a> (<span class='argstr'>key</span>, <span class='argstr'>spec</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addSpec' href='./../Overviews/Methods.html#addSpec'>addSpec</a> (<span class='argstr'>key</span>, <span class='argstr'>spec</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getSpec' href='./../Overviews/Methods.html#getSpec'>getSpec</a> (<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>a local dict for special specs to use with this MKtl's elements or groups.<pre class='code prettyprint lang-sc'>MKtl(\mynano2).specs;
+MKtl(\mynano2).addSpec(\angle, [-pi, pi]);
+MKtl(\mynano2).getSpec(\angle);</pre>
+</div><h3><a class='anchor' name='MKtl%20description'>MKtl description</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-desc' href='./../Overviews/Methods.html#desc'>desc</a> </h3>
+<div class='method'>
+<p>the MKtlDesc object that holds the device information from the description file. It is used to build the elements and groups of this MKtl.<pre class='code prettyprint lang-sc'>a = MKtl(\mynano2).desc;
+a.fullDesc;        // a dict loaded from the description file
+a.fullDesc.keys;    // the keys of the items in it
+a.protocol;            // e.g. the protocol used
+a.elementsDesc;     // the dict of the elements described
+a.postElements;     // post element names and keys/indices in hierarchical order</pre>
+
+<p>For more, see <a href="./../Classes/MKtlDesc.html">MKtlDesc</a></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-rebuild' href='./../Overviews/Methods.html#rebuild'>rebuild</a> (<span class='argstr'>descNameOrDict</span>, <span class='argstr'>lookAgain</span>, <span class='argstr'>multiIndex</span>)</h3>
+<div class='method'>
+<p>Rebuild all elements of the MKtl based on the new description file given.<div class='warning'><span class='warninglabel'>WARNING:</span> This will also remove any actions defined for the MKtl elements and groups! Only use rebuild when you are sure that you want to replace the device description with a new one.</div></div><h3><a class='anchor' name='Devices'>Devices</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-openDevice' href='./../Overviews/Methods.html#openDevice'>openDevice</a> (<span class='argstr'>lookAgain: true</span>, <span class='argstr'>multiIndex</span>)</h3>
+<div class='method'>
+<p>Open the hardware device for this MKtl if it was not opened already. It will look automatically for an appropriate device.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>lookAgain<td class='argumentdesc'>
+<p>Whether or not to look for newly attached hardware devices.<tr><td class='argumentname'>multiIndex<td class='argumentdesc'>
+<p>Needed when using multiple identical devices to identify which one to create.<pre class='code prettyprint lang-sc'>// while the run'n'drive is not yet attached,
+// this creates a virtual device
+m = MKtl( 'funky', "*run-n-drive" );
+m.clear;
+m.trace(true);
+HIDFunc.trace(true);
+MKtl.all.removeAt(\funky);
+
+// now I found my run'n'drive and plugged it in:
+m.openDevice; // finds it automatically</pre>
+</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-hasDevice' href='./../Overviews/Methods.html#hasDevice'>hasDevice</a> </h3>
+<div class='method'>
+<p>test whether MKtl has a device (a MIDI/HID/OSCMKtlDevice)<pre class='code prettyprint lang-sc'>m.hasDevice</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-closeDevice' href='./../Overviews/Methods.html#closeDevice'>closeDevice</a> </h3>
+<div class='method'>
+<p>Closes the hardware device if it was open.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-device' href='./../Overviews/Methods.html#device'>device</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-mktlDevice' href='./../Overviews/Methods.html#mktlDevice'>mktlDevice</a> </h3>
+<div class='method'>
+<p>The instance of MKtlDevice that this MKtl uses. (mktlDevice is a deprecated alias for device)</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-free' href='./../Overviews/Methods.html#free'>free</a> </h3>
+<div class='method'>
+<p>Frees the MKtl again and forgets about its existence. If there was an device, this closes it.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-resetActions' href='./../Overviews/Methods.html#resetActions'>resetActions</a> </h3>
+<div class='method'>
+<p>Reset all actions of the elements in this MKtl to nil. Note that this does not clear group actions.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-trace' href='./../Overviews/Methods.html#trace'>trace</a> (<span class='argstr'>bool: true</span>)</h3>
+<div class='method'>
+<p>set the flag whether incoming data are posted or not, default true.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-traceRunning' href='./../Overviews/Methods.html#traceRunning'>traceRunning</a> </h3>
+<div class='method'>
+<p>the flag whether incoming data are posted or not.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-enable' href='./../Overviews/Methods.html#enable'>enable</a> (<span class='argstr'>sync: true</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disable' href='./../Overviews/Methods.html#disable'>disable</a> </h3>
+<div class='method'>
+<p>enable and disable this MKtl, so one can make multiple MKtls (with different setups of elements) for the same physical device.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-sync' href='./../Overviews/Methods.html#sync'>sync</a> </h3>
+<div class='method'>
+<p>send all current MKtl values to the physical device, e.g. to move all motorfaders to a freshly recalled preset.</div><h3><a class='anchor' name='Elements%20of%20the%20MKtl'>Elements of the MKtl</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-elementGroup' href='./../Overviews/Methods.html#elementGroup'>elementGroup</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-elements' href='./../Overviews/Methods.html#elements'>elements</a> </h3>
+<div class='method'>
+<p>All the control elements (MKtlElement) on the device you may want to listen or talk to. this returns an <a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a> containing a hierarchical tree of <a href="./../Classes/MKtlElement.html">MKtlElement</a>s, organised via <a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a>. (elements is a deprecated alias of elementGroup).<pre class='code prettyprint lang-sc'>MKtl(\funky).elementGroup;</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-namedDict' href='./../Overviews/Methods.html#namedDict'>namedDict</a> </h3>
+<div class='method'>
+<p>A dict for adding elements or groups by name, so they can be accessed by name. For example, this can be used to reorganize the elements of a fader box into channels as on a mixer. See <a href="./../Tutorials/Creating_Named_Groups.html">Creating Named Groups</a> and <a href="./../Tutorials/Coding_for_Modal_Flexibility.html">Coding for Modal Flexibility</a></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-elementNames' href='./../Overviews/Methods.html#elementNames'>elementNames</a> </h3>
+<div class='method'>
+<p>An alphabetical list of all elementNames in the MKtl. m = MKtl(\funky); m.elementNames;</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-postElements' href='./../Overviews/Methods.html#postElements'>postElements</a> </h3>
+<div class='method'>
+<p>A pretty printed hierarchical list of the names and indices of all elements<pre class='code prettyprint lang-sc'>m.postElements;</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-elementsDict' href='./../Overviews/Methods.html#elementsDict'>elementsDict</a> </h3>
+<div class='method'>
+<p>all elements in one flat event so they can be accessed very fast by name.<pre class='code prettyprint lang-sc'>m.elementsDict;
+m.dictAt('joy_r_hat');</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-inputElements' href='./../Overviews/Methods.html#inputElements'>inputElements</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-outputElements' href='./../Overviews/Methods.html#outputElements'>outputElements</a> </h3>
+<div class='method'><pre class='code prettyprint lang-sc'>// collect all elements that have inputs:
+m.inputElements
+//  all elements that have outputs:
+m.outputElements</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-elementsOfType' href='./../Overviews/Methods.html#elementsOfType'>elementsOfType</a> (<span class='argstr'>type</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-elementsNotOfType' href='./../Overviews/Methods.html#elementsNotOfType'>elementsNotOfType</a> (<span class='argstr'>type</span>)</h3>
+<div class='method'>
+<p>return all elements that are of the type given, or not<pre class='code prettyprint lang-sc'>m.elementsOfType(\slider);
+m.elementsNotOfType(\slider);</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-elementsLabeled' href='./../Overviews/Methods.html#elementsLabeled'>elementsLabeled</a> (<span class='argstr'>label</span>)</h3>
+<div class='method'>
+<p>return all elements which have been given a label<pre class='code prettyprint lang-sc'>o = MKtl(\opi1, "teenage*");
+o.elementsLabeled(\white);</pre>
+</div><h3><a class='anchor' name='Accessing%20elements%20and%20groups'>Accessing elements and groups</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-elAt' href='./../Overviews/Methods.html#elAt'>elAt</a> ( <span class='argstr'>... args</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-elementAt' href='./../Overviews/Methods.html#elementAt'>elementAt</a> ( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>Access an element or group in the elementGroup or in groups by hierarchical indices or names. Supports nil and \all as wildcards, and multi-expands correctly.<pre class='code prettyprint lang-sc'>k = MKtl(\mynano2, "korg-nanokontrol2");
+k.elementGroup;
+k.elAt; // the same top group
+
+k.elAt(\tr); // the group of transport elements (in top group)
+k.elAt(\tr, \rew); // a button in the \tr group
+
+k.elAt(\not, \there); // returns nil for non-existent names
+
+k.elAt(\sl); // the group of all sliders
+k.elAt(\sl, 0); // the first slider by index
+k.elAt(\sl, \1); // the first slider by name
+k.elementGroup[\sl][0]; // same lookup by hand
+
+k.elAt(\bt); // the group of all buttons
+k.elAt(\bt, \S); // the S buttons
+k.elAt(\bt, \M, \1); // the first  button
+
+// nil or \all are wildcards:
+k.elAt(\all, 0); // the first element in every group
+k.elAt(nil, 0); // the first element in every group
+
+// arrays of keys and indexes allowed
+k.elAt([\sl, \tr], 3); // the fourth slider and tr button
+
+k.elAt(\bt, [0, 2]); // the S and R buttons</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-dictAt' href='./../Overviews/Methods.html#dictAt'>dictAt</a> (<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>Access an element in the elementsDict directly by its full name. This is a very fast lookup. <code class='code prettyprint lang-sc'>MKtl(\mynano2).dictAt(\sl_1);</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-collAt' href='./../Overviews/Methods.html#collAt'>collAt</a> ( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>Access an element in the collectivesDict by hierarchical name.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-at' href='./../Overviews/Methods.html#at'>at</a> (<span class='argstr'>index</span>)</h3>
+<div class='method'>
+<p>Access an element in the top elementGroup by index. <code class='code prettyprint lang-sc'>MKtl(\mynano2).at(0);</code></div><h3><a class='anchor' name='Getting%20and%20setting%20element%20values'>Getting and setting element values</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-valueAt' href='./../Overviews/Methods.html#valueAt'>valueAt</a> (<span class='argstr'>elName</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-deviceValueAt' href='./../Overviews/Methods.html#deviceValueAt'>deviceValueAt</a> (<span class='argstr'>elName</span>)</h3>
+<div class='method'>
+<p>Access an element's value and deviceValue (in the deviceSpec range) by the direct element key<pre class='code prettyprint lang-sc'>m = MKtl( 'funky', "*run-n-drive" );
+m.valueAt( \compass );
+m.valueAt( \bt_2 );
+
+m.deviceValueAt( \compass );
+m.deviceValueAt( \bt_2 );
+m.deviceValueAt( \joy_l_x );</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setValueAt' href='./../Overviews/Methods.html#setValueAt'>setValueAt</a> (<span class='argstr'>elName</span>, <span class='argstr'>val</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-setDeviceValueAt' href='./../Overviews/Methods.html#setDeviceValueAt'>setDeviceValueAt</a> (<span class='argstr'>elName</span>, <span class='argstr'>val</span>)</h3>
+<div class='method'>
+<p>Set an element's value or deviceValue directly by element key</div><h3><a class='anchor' name='Getting%20and%20setting%20multiple%20elements'>Getting and setting multiple elements</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getKeysValues' href='./../Overviews/Methods.html#getKeysValues'>getKeysValues</a> (<span class='argstr'>keys</span>)</h3>
+<div class='method'>
+<p>get multiple key/value pairs for a list of element keys. this is intended for more robust storage of presets.<pre class='code prettyprint lang-sc'>m.getKeysValues; // gets all keys and values
+m.getKeysValues( [\compass, \wheel] ); // get specific ones
+m.getKeysValues( [\joy_l_x, \joy_l_y, \joy_r_x, \joy_r_y, ] );
+m.getKeysValues( m.elAt(\bt).collect(_.name) ); // the bt group</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setKeysValues' href='./../Overviews/Methods.html#setKeysValues'>setKeysValues</a> (<span class='argstr'>pairs</span>)</h3>
+<div class='method'>
+<p>set multiple key/value pairs from a list of key/value arrays.<pre class='code prettyprint lang-sc'>m.setKeysValues( [[\compass, 0.125], [\wheel, 1.0]] ); // two elements
+m.gui;</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setKVAction' href='./../Overviews/Methods.html#setKVAction'>setKVAction</a> (<span class='argstr'>pairs</span>)</h3>
+<div class='method'>
+<p>same as setKeysValues, but with doAction of the elements being set</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-set' href='./../Overviews/Methods.html#set'>set</a> ( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>set multiple key/value pairs from a list of key, value arguments. m.set(\joy_l_x, 1.0.rand, \joy_l_y, 1.0.rand, \joy_r_x,1.0.rand,  \joy_r_y, 1.0.rand); m.gui;</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setAction' href='./../Overviews/Methods.html#setAction'>setAction</a> ( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>same as set, but with doAction of the elements being set</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-send' href='./../Overviews/Methods.html#send'>send</a> (<span class='argstr'>key</span>, <span class='argstr'>val</span>)</h3>
+<div class='method'>
+<p>Send the value of the element to the hardware device; called if you set the value of an MKtlElement that is an output.</div><h3><a class='anchor' name='Exploration%20of%20a%20device'>Exploration of a device</a></h3>
+
+<p>See <a href="./../Tutorials/How_to_create_a_description_file.html">How to create a description file</a> for a full discussion on this.<h3 class='imethodname'><span class='methprefix'>-</span><a name='-explore' href='./../Overviews/Methods.html#explore'>explore</a> (<span class='argstr'>bool: true</span>)</h3>
+<div class='method'>
+<p>When a device doesn't have a description file yet, explore can be used to help in creating one.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-exploring' href='./../Overviews/Methods.html#exploring'>exploring</a> </h3>
+<div class='method'>
+<p>Returns a Boolean whether or not a device is currently being explored.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-createDescriptionFile' href='./../Overviews/Methods.html#createDescriptionFile'>createDescriptionFile</a> </h3>
+<div class='method'>
+<p>When a device doesn't have a description file yet, this method can be used to create a description file.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-specialMessages' href='./../Overviews/Methods.html#specialMessages'>specialMessages</a> </h3>
+<div class='method'>
+<p>a dict of special messages for this device, typically to change setup on a MIDI device by sending it a sysex message.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendSpecialMessage' href='./../Overviews/Methods.html#sendSpecialMessage'>sendSpecialMessage</a> (<span class='argstr'>name</span>)</h3>
+<div class='method'>
+<p>send specialMessage with that name to the device</div><h3><a class='anchor' name='Adding%20named%20groups%20and%20elements'>Adding named groups and elements</a></h3>
+
+<p>One can add named elements to an MKtl and access them by name. For a full discussion, see <a href="./../Tutorials/Creating_Named_Groups.html">Creating Named Groups</a>.<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addNamed' href='./../Overviews/Methods.html#addNamed'>addNamed</a> (<span class='argstr'>name</span>, <span class='argstr'>group</span>)</h3>
+<div class='method'>
+<p>add an element or group to the mktl's namedDict, so they can be accessed by user given names.
+<p>This can be used to name single elements by the same function name across different devices - e.g. call one button \play, another \stop, no matter what its name in the device description may be:<pre class='code prettyprint lang-sc'>k = MKtl(\nk2, "*trol2");
+// in a nanoKontrol2, put all transport buttons (in group \tr)
+// in k.namedDict, so they can be accessed without the \tr prefix:
+k = MKtl(\nk2, "*trol2");
+k.elAt(\tr).do { |el| k.addNamed(el.elemDesc.key, el); };
+k.namedDict.keys;
+k.elAt(\play);
+k.elAt(\stop);</pre>
+</div><h3><a class='anchor' name='Collectives'>Collectives</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-collectivesDict' href='./../Overviews/Methods.html#collectivesDict'>collectivesDict</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-collectiveDescriptionFor' href='./../Overviews/Methods.html#collectiveDescriptionFor'>collectiveDescriptionFor</a> (<span class='argstr'>elname</span>)</h3>
+<div class='method'>
+<p>These are mainly used internally in OSCMKtlDevice, see <a href="./../Tutorials/How_to_create_a_description_file_for_OSC.html">How to create a description file for an OSC device</a></div><h3><a class='anchor' name='Methods%20for%20finding%20info%20on%20available%20devices%20in%20MKtlLookup.'>Methods for finding info on available devices in MKtlLookup.</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-lookupInfo' href='./../Overviews/Methods.html#lookupInfo'>lookupInfo</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-lookupName' href='./../Overviews/Methods.html#lookupName'>lookupName</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateLookupInfo' href='./../Overviews/Methods.html#updateLookupInfo'>updateLookupInfo</a> (<span class='argstr'>newInfo</span>)</h3>
+<div class='method'>
+<p></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-adaptDesc' href='./../Overviews/Methods.html#adaptDesc'>adaptDesc</a> (<span class='argstr'>descName</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-openDeviceVia' href='./../Overviews/Methods.html#openDeviceVia'>openDeviceVia</a> (<span class='argstr'>idInfo</span>, <span class='argstr'>lookAgain: true</span>, <span class='argstr'>multiIndex</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-reset' href='./../Overviews/Methods.html#reset'>reset</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-resetAction' href='./../Overviews/Methods.html#resetAction'>resetAction</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-toFront' href='./../Overviews/Methods.html#toFront'>toFront</a> ( <span class='argstr'>... pageNames</span>)</h3>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MKtl.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MKtl.schelp</a><br>link::Classes/MKtl::<br>sc version: 3.9dev</div></div></body></html>

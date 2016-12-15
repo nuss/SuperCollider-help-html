@@ -1,0 +1,123 @@
+<html><head><title>Naming conventions in element descriptions</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider REFERENCE (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a></div>
+<h1>Naming conventions in element descriptions<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>How to name entries in the single element descriptions in MKtl desc files.</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Tutorials/How_to_create_a_description_file.html">How to create a description file</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#generic%20keys'>generic keys</a></li>
+<ul class='toc'><li class='toc2'><a href='#elementType'>elementType</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#ioType'>ioType</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#spec'>spec</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#valueType'>valueType</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#buttonMode'>buttonMode</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#releaseMode%20and%20snapbackValue'>releaseMode and snapbackValue</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Protocol-specific%20keys'>Protocol-specific keys</a></li>
+<ul class='toc'><li class='toc2'><a href='#MIDI%20device%20elements'>MIDI device elements</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#HID%20device%20elements'>HID device elements</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#OSC%20device%20elements'>OSC device elements</a></li>
+<ul class='toc'></ul></ul></ul></div><div class='note'><span class='notelabel'>NOTE:</span> This document lists conventions to describe <a href="./../Classes/MKtlElement.html">MKtlElement</a>s in <a href="./../Overviews/Modality.html">Modality</a> description files. A more general introduction to description files can be found in <a href="./../Tutorials/How_to_create_a_description_file.html">How to create a description file</a>.</div>
+<p>A single element description is a dictionary of type <a href="./../Classes/Event.html">Event</a>. It (or the shared properties of its group) should contain these keys:<h2><a class='anchor' name='generic%20keys'>generic keys</a></h2>
+<h3><a class='anchor' name='elementType'>elementType</a></h3>
+
+<p>User-readable name for the physical type of thing. Usually one of the many types in<pre class='code prettyprint lang-sc'>MKtlElement.types; // [\button, \slider, \joyAxis, ...]</pre>
+
+<p>Example:<pre class='code prettyprint lang-sc'>( elementType: \slider )</pre>
+<h3><a class='anchor' name='ioType'>ioType</a></h3>
+
+<p>whether and how it is an input and/or output element. Usually one of<pre class='code prettyprint lang-sc'>MKtl.ioTypes; // [\in, \out, \inout, \collectiveIn, ...];
+// or soon to be:
+    // [\in, \out, \inout, \sharedIn, \sharedOut, \sharedInOut];</pre>
+
+<p>Example:<pre class='code prettyprint lang-sc'>( ioType: \inout )</pre>
+<h3><a class='anchor' name='spec'>spec</a></h3>
+
+<p>a spec for the internal number range of the device; e.g. for midi controls, <code class='code prettyprint lang-sc'>\midiCC</code> is <code class='code prettyprint lang-sc'>[0, 127, \lin, 1, 0].asSpec;</code>
+<p>This gives an overview of some predefined specs:<pre class='code prettyprint lang-sc'>Spec.specs;
+MKtl.globalSpecs.keys;</pre>
+<div class='note'><span class='notelabel'>NOTE:</span> You can also add specific specs in the desc for the MKtl itself.</div>
+<p>Example:<pre class='code prettyprint lang-sc'>spec: \midiCC,
+    // e.g. hid buttons send values of 0 or 1:
+spec: \hidBut, // or just spec: \but,</pre>
+<h3><a class='anchor' name='valueType'>valueType</a></h3>
+
+<p>Either <code class='code prettyprint lang-sc'>\absolute</code> or <code class='code prettyprint lang-sc'>\relative</code>.<dl>
+<dt>\absolute<dd>this is what most elements send, e.g. fader position, so it is the default valueType.<dt>\relative<dd>means the element sends a delta value, i.e. by how much to change whatever it is currently setting. HID mouse devices send deltaX and deltY values, MIDI encoder knobs send how many clicks one has turned, or custom increment/decrement buttons. In this case, the element's value is simply the last delta value, and there is no current absolute value in the element - the object that is being set knows its absolute value. The <code class='code prettyprint lang-sc'>RelSet</code> class can be used in the element.action to change the current value of the destination object by a delta. See <a href="./../Classes/RelSet.html">RelSet</a></dl>
+
+<p>Example:<pre class='code prettyprint lang-sc'>(
+valueType: \absolute, // this is default and need not be given.
+valueType: \relative
+)</pre>
+<h3><a class='anchor' name='buttonMode'>buttonMode</a></h3>
+
+<p>Determines how buttons behave:<dl>
+<dt>\toggle<dd>triggers action on release only for toggle buttons<dt>\momentary<dd>triggers action on push and release, so value is active only while holding down on <a href="./../Classes/MKtlGUI.html">MKtlGUI</a>s. The mode can be changed by clicking on the button view and typing 't' or 'm'.</dl>
+
+<p>Example:<pre class='code prettyprint lang-sc'>( buttonMode: \toggle ); // or
+( buttonMode: \momentary )</pre>
+<h3><a class='anchor' name='releaseMode%20and%20snapbackValue'>releaseMode and snapbackValue</a></h3>
+
+<p>Many physical elements, e.g. faders and joystick axes have one of several behaviors when they are released. <code class='code prettyprint lang-sc'>\releaseMode</code> describes which behavior the element has.<dl>
+<dt>\hold<dd>means the value is held where it is (e.g. most faders)<dt>\snapback<dd>means it physically returns to a known value, which is then given via <code class='code prettyprint lang-sc'>\snapbackValue</code>.</dl>
+
+<p>Example:<pre class='code prettyprint lang-sc'>( releaseMode: \hold ); // simple fader
+
+// joystick axes with springs that return them to center:
+(
+  releaseMode: \snapback,
+  snapbackValue: 0.5
+)</pre>
+<h2><a class='anchor' name='Protocol-specific%20keys'>Protocol-specific keys</a></h2>
+<h3><a class='anchor' name='MIDI%20device%20elements'>MIDI device elements</a></h3>
+
+<p>MIDI device elements require these keys:<pre class='code prettyprint lang-sc'>(
+    // one of MIDIMKtlDevice.allMsgTypes;
+    midiMsgType: \control,
+
+    // which channel to listen to and/or send on
+    midiChan: 0,
+
+    // for note/cc specific controls like noteOn, noteOff, cc, polyTouch:
+    // which noteNum, ccNum to use
+    midiNum: 60,
+)</pre>
+<h3><a class='anchor' name='HID%20device%20elements'>HID device elements</a></h3>
+
+<p>HID device elements require these keys:<pre class='code prettyprint lang-sc'>(
+    // which 'usage' and 'usagePage' to listen to
+    'hidUsage': 5,
+    'hidUsagePage': 9,
+
+    // if the HID's firmware is flaky,
+    // one also can define by an elementID
+    'hidElementID': 0,
+)</pre>
+<h3><a class='anchor' name='OSC%20device%20elements'>OSC device elements</a></h3>
+
+<p>OSC device elements require these keys:<pre class='code prettyprint lang-sc'>(
+    // the osc message the element listens to:
+    oscPath: "/minibee/imu",
+
+    // if multiple elements use the same message name,
+    // address this one via argTemplate:
+    argTemplate: [ 1, 2 ]
+);</pre>
+
+<p><code class='code prettyprint lang-sc'>\argTemplate</code> is further described in <a href="./../Tutorials/How_to_create_a_description_file_for_OSC.html">How to create a description file for an OSC device</a>.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Reference/Naming_conventions_in_element_descriptions.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Reference/Naming_conventions_in_element_descriptions.schelp</a><br>link::Reference/Naming_conventions_in_element_descriptions::<br>sc version: 3.9dev</div></div></body></html>

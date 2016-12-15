@@ -1,0 +1,170 @@
+<html><head><title>NamedList</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Collections'>Collections</a>, <a href='./../Browse.html#Classes/List'>Classes/List</a></div>
+<h1>NamedList<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>an ordered list of items which can be accessed by index or name.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/Tools/NamedList.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/Tools/NamedList.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/List.html">List</a> : <a href="../Classes/SequenceableCollection.html">SequenceableCollection</a> : <a href="../Classes/Collection.html">Collection</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/Collection.html">Collection</a>, <a href="./../Classes/List.html">List</a>, <a href="./../Classes/Dictionary.html">Dictionary</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a>  <a href='#*fromPairs'>fromPairs</a> </li>
+<li class='toc3'><a href='#*fromDict'>fromDict</a> </li>
+<li class='toc3'><a href='#*newUsing'>newUsing</a> </li>
+<li class='toc3'><a href='#*fromAssocs'>fromAssocs</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-names'>names</a> </li>
+<li class='toc3'><a href='#-dict'>dict</a> </li>
+<li class='toc3'><a href='#-know'>know</a> </li>
+<li class='toc3'><a href='#-at'>at</a> </li>
+<li class='toc3'><a href='#-put'>put</a> </li>
+<li class='toc3'><a href='#-add'>add</a> </li>
+<li class='toc3'><a href='#-remove'>remove</a> </li>
+<li class='toc3'><a href='#-removeAt'>removeAt</a> </li>
+<li class='toc3'><a href='#-addBefore'>addBefore</a>  <a href='#-addAfter'>addAfter</a> </li>
+<li class='toc3'><a href='#-addFirst'>addFirst</a>  <a href='#-addLast'>addLast</a> </li>
+<li class='toc3'><a href='#-replace'>replace</a> </li>
+<li class='toc3'><a href='#-do'>do</a>  <a href='#-collect'>collect</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Like a List, a NamedList has an array of items which can be accessed by index. Like a dictionary, its items can also be accessed by names. Items can be added and removed and replaced by name. It also supports pseudo-object style like a dict.
+<p>Not used yet in Modality.<div class='note'><span class='notelabel'>NOTE:</span> NamedList is designed primarily for semantic clarity, to make storage as text more clearly readable for humans, and to ensure the intended order of iteration.
+<p>NamedList also does quite efficient lookup: <code class='code prettyprint lang-sc'>put, at</code> methods are reasonably fast, and direct lookup with <code class='code prettyprint lang-sc'>namedlist.dict[key]</code> or <code class='code prettyprint lang-sc'>namedlist.array[index]</code> is almost as fast as with Array and Event.
+<p><code class='code prettyprint lang-sc'>add, remove, removeAt</code> methods are slower than with arrays or dicts, due to the overhead of keeping array, names and dict in sync. This design assumes that lookup will happen several orders of magnitude more often than add/remove.</div><pre class='code prettyprint lang-sc'>// make a new NamedNist
+n = NamedList([ \a, 4, \b, 5, \c, 6 ]);
+
+//  access list-like by index, get and set
+n[0];
+n.at([0, 2]);     // at supports multiple values by index
+n[0] = 12;
+n.put(2, 13);
+
+//  access dict-like by name, get and set
+n[\a];
+n.at(\a);
+n.at([\b, \c]);    // multiple values
+n.at([\a, 2]);     // can also mix indices and keys
+
+n[\a] = 123;
+n.put(\d, 7);     // new names get added to the end
+
+// access by name as pseudo-method (if n.know == true)
+n.a;
+n.eee;
+n.eee = 555;     // putting also works by pseudo-method
+
+// internals, can be used for faster lookup
+n.dict;
+n.array.postcs;
+n.names.postcs;
+
+// replaces item if name already there, else does addLast
+n.basicAdd (\a, 123)
+n.basicAdd (\xyz, 123)
+
+// these all put items in specific places in the order.
+n.addFirst(\x, 123);
+n.addLast (\zzz, 987);
+
+// add or move a named item relative to given name.
+// if the name to add is already in use,
+// it is moved to the position indicated.
+// if the name where to add is missing,
+// addBefore does addFirst, addAfter does addLast.
+n.addBefore (\y, 234, \a);
+n.addAfter (\y, 23, \a); // this moves \y!
+
+n.do { |val, key, i| [val * 100, key, i].postcs };
+n.collect { |val, key, i| val * 100 };</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>pairs</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fromPairs' href='./../Overviews/Methods.html#fromPairs'>fromPairs</a> (<span class='argstr'>pairs</span>)</h3>
+<div class='method'>
+<p>create new NamedList from array of pairs
+<p><code class='code prettyprint lang-sc'>n = NamedList([ \a, 4, \b, 5, \c, 6 ]);</code></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fromDict' href='./../Overviews/Methods.html#fromDict'>fromDict</a> (<span class='argstr'>dict</span>, <span class='argstr'>names</span>, <span class='argstr'>sortFunc</span>)</h3>
+<div class='method'>
+<p>create new NamedList from dict and optional ordered names or sortFunc.<pre class='code prettyprint lang-sc'>n = NamedList.fromDict((a: 1, b: 3, c: 5), [\c, \a, \b]);
+n = NamedList.fromDict((a: 1, c: 5, b: 3), sortFunc: { |a, b| a &gt; b });</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newUsing' href='./../Overviews/Methods.html#newUsing'>newUsing</a> (<span class='argstr'>array</span>, <span class='argstr'>names</span>)</h3>
+<div class='method'>
+<p>create new NamedList from array of values and names<pre class='code prettyprint lang-sc'>NamedList.newUsing([1, 3, 5], [\a, \b, \c]);</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fromAssocs' href='./../Overviews/Methods.html#fromAssocs'>fromAssocs</a> (<span class='argstr'>assocArray</span>)</h3>
+<div class='method'>
+<p>create new NamedList from array of associations:<pre class='code prettyprint lang-sc'>n = NamedList.fromAssocs([\a -&gt; 1, \b -&gt; 3, \c -&gt; 5]);</pre>
+</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-names' href='./../Overviews/Methods.html#names'>names</a> </h3>
+<div class='method'>
+<p>the ordered list of names
+<p><code class='code prettyprint lang-sc'>n.names.postcs;</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-dict' href='./../Overviews/Methods.html#dict'>dict</a> </h3>
+<div class='method'>
+<p>the unordered dict of items - for fast access by key
+<p><code class='code prettyprint lang-sc'>n.dict.postcs;</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-know' href='./../Overviews/Methods.html#know'>know</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-know' href='./../Overviews/Methods.html#know'>know</a> = value</h3>
+<div class='method'>
+<p>flag whether to use pseudomethods or not<pre class='code prettyprint lang-sc'>n.know;
+n.know = false;</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-at' href='./../Overviews/Methods.html#at'>at</a> (<span class='argstr'>keyOrNum</span>)</h3>
+<div class='method'>
+<p>put by key (name), index or collection of keys/indices<pre class='code prettyprint lang-sc'>n[0];
+n.at(0);
+n.at([0, 2]);
+
+//  access dict-like by name, get and set
+n[\a];
+n.at(\a);
+n.at([\b, \c]);    // multiple values
+n.at([\a, 2]);     // can also mix indices and keys
+n.a;            // if n.know == true, can access by name as pseudo-method
+n.know = true;
+n.a;</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-put' href='./../Overviews/Methods.html#put'>put</a> (<span class='argstr'>keyOrNum</span>, <span class='argstr'>val</span>)</h3>
+<div class='method'>
+<p>put by key (name) or index<pre class='code prettyprint lang-sc'>n[0] = 11;
+n.put(2, 33);
+n.put(\a, 111);
+n.put(\c, 333);
+n[\x] = 999;
+n.a = 123; // works if n.know is true</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-add' href='./../Overviews/Methods.html#add'>add</a> (<span class='argstr'>name</span>, <span class='argstr'>item</span>, <span class='argstr'>active: true</span>, <span class='argstr'>addAction: 'replace'</span>, <span class='argstr'>otherName</span>)</h3>
+<div class='method'>
+<p>add by name; if name exists, replaces item at name, else adds item to end <code class='code prettyprint lang-sc'>n.add(\aaa, \xyz);</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-remove' href='./../Overviews/Methods.html#remove'>remove</a> (<span class='argstr'>item</span>)</h3>
+<div class='method'>
+<p>remove item from dict, array, and remove corresponding name. <code class='code prettyprint lang-sc'>n.remove(\xyz);</code></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeAt' href='./../Overviews/Methods.html#removeAt'>removeAt</a> (<span class='argstr'>keyOrNum</span>)</h3>
+<div class='method'>
+<p>remove item at key, index or list of keys and indices.<pre class='code prettyprint lang-sc'>n.removeAt(\a);
+n;
+n.removeAt([\b, \c]);
+n;</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addBefore' href='./../Overviews/Methods.html#addBefore'>addBefore</a> (<span class='argstr'>name</span>, <span class='argstr'>item</span>, <span class='argstr'>otherName</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addAfter' href='./../Overviews/Methods.html#addAfter'>addAfter</a> (<span class='argstr'>name</span>, <span class='argstr'>item</span>, <span class='argstr'>otherName</span>)</h3>
+<div class='method'>
+<p>add relative to another named item</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addFirst' href='./../Overviews/Methods.html#addFirst'>addFirst</a> (<span class='argstr'>name</span>, <span class='argstr'>item</span>, <span class='argstr'>active: true</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addLast' href='./../Overviews/Methods.html#addLast'>addLast</a> (<span class='argstr'>name</span>, <span class='argstr'>item</span>, <span class='argstr'>active: true</span>)</h3>
+<div class='method'>
+<p>add to top or end of list</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-replace' href='./../Overviews/Methods.html#replace'>replace</a> (<span class='argstr'>name</span>, <span class='argstr'>item</span>)</h3>
+<div class='method'>
+<p>replace item at &lt;name&gt; with &lt;item&gt;.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-do' href='./../Overviews/Methods.html#do'>do</a> (<span class='argstr'>func</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-collect' href='./../Overviews/Methods.html#collect'>collect</a> (<span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>like List.do, collect</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/NamedList.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/NamedList.schelp</a><br>link::Classes/NamedList::<br>sc version: 3.9dev</div></div></body></html>

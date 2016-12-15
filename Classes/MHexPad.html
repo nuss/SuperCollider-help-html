@@ -1,0 +1,100 @@
+<html><head><title>MHexPad</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#GUI'>GUI</a></div>
+<h1>MHexPad<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>extends MPadView for Hexagonal and round pads</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/GUI/MHexPad.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/GUI/MHexPad.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/MPadView.html">MPadView</a> : <a href="../Classes/SCViewHolder.html">SCViewHolder</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/MRoundPad.html">MRoundPad</a></div>
+<div id='related'>See also: <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Classes/MKtlGUI.html">MKtlGUI</a>, <a href="./../Overviews/MOdality">MOdality</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-upDoesAction'>upDoesAction</a> </li>
+<li class='toc3'><a href='#-angle'>angle</a> </li>
+<li class='toc3'><a href='#-ledColors'>ledColors</a> </li>
+<li class='toc3'><a href='#-ledVal'>ledVal</a> </li>
+<li class='toc3'><a href='#-hexColor'>hexColor</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p><code class='code prettyprint lang-sc'>MHexPad</code> and <code class='code prettyprint lang-sc'>MRoundPad</code> allow more different shapes and behaviors than its superclass, MPadView.
+<p>First code examples:<pre class='code prettyprint lang-sc'>// make a window with some MPadViews
+
+w = Window("manta").front;
+h = 6.collect { |j|
+    8.collect { |i|
+        var h = MHexPad(w, Rect(i * 45 + (j % 2 * 22), j * 40, 45, 45)).mode_(\noteOnLed);
+        h.action = { |el| "pad %, % vel % \n".postf(j, i, el.value.round(0.01)) };
+        h.upDoesAction = true;
+        h.label = "p_%_%".format(j, i);
+        h.moveAction = { |el| "pad %, % move % \n".postf(j, i, el.moveValue.round(0.01)) };
+}};
+
+h.flat.do(_.ledVal_(2));
+h.flat.do(_.ledVal_(1));
+h.flat.do(_.ledVal_(0));
+
+h.flat.do(_.vShiftLabel_(10));
+
+
+Task {
+    100.do { |i|
+        defer { h.flat.do(_.angle_(i * 0.1)) };
+        0.1.wait;
+    }
+}.play;
+
+h[0][0].ledColors.put(0, Color.black); h[0][0].refresh;
+h[0][0].ledVal = 3.rand;
+h[0][0].label = "";
+
+h.flat.do { |m| m.hexColor_(Color.rand).refresh };
+
+Task {
+    100.do { |i|
+        defer { h.flat.do { |m| m.angle_(m.angle + 0.1.bilinrand) } };
+        0.1.wait;
+    }
+}.play;</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-upDoesAction' href='./../Overviews/Methods.html#upDoesAction'>upDoesAction</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-upDoesAction' href='./../Overviews/Methods.html#upDoesAction'>upDoesAction</a> = <span class='argstr'>bool: true</span></h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bool<td class='argumentdesc'>
+<p>get and set flag whether mouseUp also triggers the pads action or not. this allows using noteOn with value 1-127, and noteOn with value 0 to signal note end (which is the standard the Manta uses).</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-angle' href='./../Overviews/Methods.html#angle'>angle</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-angle' href='./../Overviews/Methods.html#angle'>angle</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>rotate the pad by an angle</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-ledColors' href='./../Overviews/Methods.html#ledColors'>ledColors</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-ledColors' href='./../Overviews/Methods.html#ledColors'>ledColors</a> = value</h3>
+<div class='method'>
+<p>get and set the colors to use for the led display</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-ledVal' href='./../Overviews/Methods.html#ledVal'>ledVal</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-ledVal' href='./../Overviews/Methods.html#ledVal'>ledVal</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>get and set the value which led color to show.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-hexColor' href='./../Overviews/Methods.html#hexColor'>hexColor</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-hexColor' href='./../Overviews/Methods.html#hexColor'>hexColor</a> = value</h3>
+<div class='method'>
+<p>the color for the background hexagon shape.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MHexPad.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MHexPad.schelp</a><br>link::Classes/MHexPad::<br>sc version: 3.9dev</div></div></body></html>

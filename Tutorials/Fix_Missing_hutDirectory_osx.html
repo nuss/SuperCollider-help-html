@@ -1,0 +1,48 @@
+<html><head><title>Fix Missing hutDirectory on OSX</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider TUTORIALS (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a>, <a href='./../Browse.html#Control'>Control</a></div>
+<h1>Fix Missing hutDirectory on OSX<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Instructions for adding a missing HID info directory to SC - OSX</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Classes/HID.html">HID</a>, <a href="./../Classes/HIDFunc.html">HIDFunc</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'></ul></div>
+<p>In the OSX version of SC up to release 3.7.0, the directory containing semantic information on HID devices is missing. This glitch makes HID harder to use; semantic HIDFunc and HIDdef methods will not work properly:<pre class='code prettyprint lang-sc'>HIDdef.usage(\x, { }, \X); // X-axis of mouse</pre>
+
+<p>So it is worth repairing until newer SC releases fix this.<pre class='code prettyprint lang-sc'>// * check if hutDirectory is missing:
+~hutDirMissing = HIDUsage.hutDirectory.pathMatch.postcs.isEmpty;
+
+// if ~hutDirMissing is true, goto the sensestage/hidapi project page
+    "https://github.com/sensestage/hidapi".openOS;
+    // * download hidapi master from there
+    // * then open the directory where the missing dir should go:
+    HIDUsage.hutDirectory.dirname.dirname.openOS;
+    // * make a new folder there called "HID_Support",
+    // * and copy the folder /hidapi-master/hut/ there.
+
+    // * now check that hutDirectory is in place and you see it here:
+HIDUsage.hutDirectory.pathMatch.cs;
+// you should see
+-&gt; [ "/Applications/SuperCollider3.7/SuperCollider3.7.app/Contents/Resources/SCClassLibrary/Common/Control/HID_support/hut/" ]
+
+// you should get other lookup values than 'undefined' now:
+HIDUsage.getUsageDescription(9, 6).cs;
+    // -&gt; [ 'Button', 'b6' ]</pre>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Tutorials/Fix_Missing_hutDirectory_osx.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Tutorials/Fix_Missing_hutDirectory_osx.schelp</a><br>link::Tutorials/Fix_Missing_hutDirectory_osx::<br>sc version: 3.9dev</div></div></body></html>

@@ -1,0 +1,228 @@
+<html><head><title>MAbstractElement</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a>, <a href='./../Browse.html#Control'>Control</a></div>
+<h1>MAbstractElement<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Base class for MKtl controller elements.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/MKtlElement.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/MKtlElement.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/MKtlElement.html">MKtlElement</a></div>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Classes/MKtlElement.html">MKtlElement</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-source'>source</a> </li>
+<li class='toc3'><a href='#-name'>name</a> </li>
+<li class='toc3'><a href='#-type'>type</a> </li>
+<li class='toc2'><a href='#setting%20and%20getting%20values'>setting and getting values</a></li>
+<ul class='toc'><li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc3'><a href='#-prevValue'>prevValue</a> </li>
+<li class='toc3'><a href='#-valueAction'>valueAction</a> </li>
+<li class='toc3'><a href='#-doAction'>doAction</a> </li>
+</ul><li class='toc2'><a href='#Adding%20and%20removing%20functionality'>Adding and removing functionality</a></li>
+<ul class='toc'><li class='toc3'><a href='#-action'>action</a> </li>
+<li class='toc3'><a href='#-addAction'>addAction</a> </li>
+<li class='toc3'><a href='#-removeAction'>removeAction</a> </li>
+<li class='toc3'><a href='#-resetAction'>resetAction</a>  <a href='#-reset'>reset</a> </li>
+</ul><li class='toc2'><a href='#Groups'>Groups</a></li>
+<ul class='toc'><li class='toc3'><a href='#-parent'>parent</a> </li>
+<li class='toc3'><a href='#-groups'>groups</a> </li>
+<li class='toc3'><a href='#-index'>index</a>  <a href='#-indexInGroup'>indexInGroup</a> </li>
+<li class='toc3'><a href='#-indices'>indices</a> </li>
+<li class='toc3'><a href='#-key'>key</a>  <a href='#-keyInGroup'>keyInGroup</a> </li>
+<li class='toc3'><a href='#-keys'>keys</a> </li>
+</ul><li class='toc2'><a href='#UGen%20support'>UGen support</a></li>
+<ul class='toc'><li class='toc3'><a href='#-kr'>kr</a> </li>
+<li class='toc3'><a href='#-initBus'>initBus</a> </li>
+<li class='toc3'><a href='#-freeBus'>freeBus</a> </li>
+<li class='toc3'><a href='#-bus'>bus</a> </li>
+</ul><li class='toc2'><a href='#Tagging'>Tagging</a></li>
+<ul class='toc'><li class='toc3'><a href='#-tags'>tags</a> </li>
+<li class='toc3'><a href='#-addTag'>addTag</a> </li>
+<li class='toc3'><a href='#-removeTag'>removeTag</a> </li>
+<li class='toc3'><a href='#-includesTag'>includesTag</a> </li>
+<li class='toc3'><a href='#-clearTags'>clearTags</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Abstract class for MKtl controller elements and groups. It provides the common interface that individual MKtlElements (which represent single sliders, buttons, etc) and MKtlElementGroups share.<div class='note'><span class='notelabel'>NOTE:</span> This is an abstract class that should usually not be used directly.</div>
+<p>(Theoretically, one could use MAbstractElement like an MKtlElement without specs.)<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>name</span>, <span class='argstr'>source</span>)</h3>
+<div class='method'>
+<p>create a new instance, with a name, and the MKtl it will belong to.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-source' href='./../Overviews/Methods.html#source'>source</a> </h3>
+<div class='method'>
+<p>the MKtl the element belongs to.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a> </h3>
+<div class='method'>
+<p>the element's name</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-type' href='./../Overviews/Methods.html#type'>type</a> </h3>
+<div class='method'>
+<p>the type of the element, e.g. <code class='code prettyprint lang-sc'>\button, \slider, \knob</code>. See <a href="./../Reference/MKtl_description_files.html">MKtl description files</a> for a more detailed list.</div><h3><a class='anchor' name='setting%20and%20getting%20values'>setting and getting values</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a> = <span class='argstr'>newval</span></h3>
+<div class='method'>
+<p>Get and set the element's value. with MKtlElementGroup, value is the collected values of its element. Note that value_ does not evaluate any action.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newval<td class='argumentdesc'>
+<p>the new value</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prevValue' href='./../Overviews/Methods.html#prevValue'>prevValue</a> </h3>
+<div class='method'>
+<p>the previous value</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-valueAction' href='./../Overviews/Methods.html#valueAction'>valueAction</a> = <span class='argstr'>newval</span></h3>
+<div class='method'>
+<p>Set value and evaluate the associated action.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newval<td class='argumentdesc'>
+<p>the new value</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-doAction' href='./../Overviews/Methods.html#doAction'>doAction</a> </h3>
+<div class='method'>
+<p>Evaluate the associated action (without changing the value)</div><h3><a class='anchor' name='Adding%20and%20removing%20functionality'>Adding and removing functionality</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-action' href='./../Overviews/Methods.html#action'>action</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-action' href='./../Overviews/Methods.html#action'>action</a> = value</h3>
+<div class='method'>
+<p>Get and set the action to evaluate when element is activated.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addAction' href='./../Overviews/Methods.html#addAction'>addAction</a> (<span class='argstr'>argAction</span>)</h3>
+<div class='method'>
+<p>add an action to potentially already present actions</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeAction' href='./../Overviews/Methods.html#removeAction'>removeAction</a> (<span class='argstr'>argAction</span>)</h3>
+<div class='method'>
+<p>remove an action the present list of actions</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-resetAction' href='./../Overviews/Methods.html#resetAction'>resetAction</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-reset' href='./../Overviews/Methods.html#reset'>reset</a> </h3>
+<div class='method'>
+<p>reset element action to nil, i.e. without any actions.</div><h3><a class='anchor' name='Groups'>Groups</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-parent' href='./../Overviews/Methods.html#parent'>parent</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-parent' href='./../Overviews/Methods.html#parent'>parent</a> = value</h3>
+<div class='method'>
+<p>returns the parent group of the element in the <code class='code prettyprint lang-sc'>MKtl</code> elements hierarchical structure.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-groups' href='./../Overviews/Methods.html#groups'>groups</a> </h3>
+<div class='method'>
+<p>if the element is inside one or more groups, and those groups have an action assigned, they will be returned here.<h4>Discussion:</h4>
+
+<p>Groups are instances of <a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a>.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-index' href='./../Overviews/Methods.html#index'>index</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-indexInGroup' href='./../Overviews/Methods.html#indexInGroup'>indexInGroup</a> </h3>
+<div class='method'>
+<p>returns the index (Number) of <code class='code prettyprint lang-sc'>this</code> inside its parent group</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-indices' href='./../Overviews/Methods.html#indices'>indices</a> </h3>
+<div class='method'>
+<p>returns an array of indices that points to <code class='code prettyprint lang-sc'>this</code> from the top level of the <code class='code prettyprint lang-sc'>MKtl</code> elements hierarchy. These values correspond with <a href="./../Classes/MKtl.html#elAt">MKtl: elAt</a></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-key' href='./../Overviews/Methods.html#key'>key</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-keyInGroup' href='./../Overviews/Methods.html#keyInGroup'>keyInGroup</a> </h3>
+<div class='method'>
+<p>returns the key (Symbol) of <code class='code prettyprint lang-sc'>this</code> inside its parent group</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-keys' href='./../Overviews/Methods.html#keys'>keys</a> </h3>
+<div class='method'>
+<p>returns an array of keys that points to <code class='code prettyprint lang-sc'>this</code> from the top level of the <code class='code prettyprint lang-sc'>MKtl</code> elements hierarchy. These values correspond with <a href="./../Classes/MKtl.html#elAt">MKtl: elAt</a>keys and indices can be mixed, see <a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a>.</div><h3><a class='anchor' name='UGen%20support'>UGen support</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-kr' href='./../Overviews/Methods.html#kr'>kr</a> (<span class='argstr'>server</span>)</h3>
+<div class='method'>
+<p>Use the value directly on the server (on a bus).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>optional argument that you only have to set once, and only if the server for the bus is not <a href="./../Classes/Server.html#-default">Server: -default</a>.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/In.html#-kr">In: -kr</a> holding the current value of this element. Reflects changes of the value.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-initBus' href='./../Overviews/Methods.html#initBus'>initBus</a> (<span class='argstr'>server</span>)</h3>
+<div class='method'>
+<p>initialize the bus on the server.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>The server the bus should be instantiated on. Default value is <a href="./../Classes/Server.html#-default">Server: -default</a>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-freeBus' href='./../Overviews/Methods.html#freeBus'>freeBus</a> </h3>
+<div class='method'>
+<p>frees the bus.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-bus' href='./../Overviews/Methods.html#bus'>bus</a> </h3>
+<div class='method'>
+<p>A <a href="./../Classes/Bus.html">Bus</a> that holds the element's value.<h4>Discussion:</h4>
+
+<p>Normally, you should just reference to this bus via the <a href="#-kr">-kr</a> which will also take care of creating the bus when needed.</div><h3><a class='anchor' name='Tagging'>Tagging</a></h3>
+
+<p>Tagging allows adding tags to controller elements. The tagging system is flat, i.e. only elements have tags, <a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a> (and its derivatives) do not - it forwards tagging requests to its children.<pre class='code prettyprint lang-sc'>m = MKtl(\nk, "*nanokontrol2")
+
+// add a tag
+m.elAt(\sl, 0).addTag(\a);
+m.elAt(\sl, 0).tags
+m.elAt(\sl, 0).tags; // retrieve it
+
+// add several tags at once
+m.elAt(\sl, 0).addTag([\freq, \amp]);
+m.elAt(\sl, 0).tags; // retrieve it
+
+// remove a tag
+m.elAt(\sl, 0).removeTag(\a);
+m.elAt(\sl, 0).tags; // retrieve it
+
+// add tags to specific elements
+m.elAt(\sl, [0, 1, 2, 4]).do(_.addTag(\vol));
+m.elAt(\kn, [0, 1, 2, 4]).do(_.addTag(\vol));
+
+// add tag to all elements of a group
+m.elAt(\sl).addTag(\allSliders);
+
+
+// return tags used in a group, hierarchically
+m.elementGroup.flat.collect(_.tags).select(_.notEmpty).printAll; ""
+
+// return all tags used in that group
+m.elAt(\sl).tags;
+
+
+// all elements containing the tag \vol
+a = m.elementGroup.elementsForTag(\vol);
+
+// their indices
+a.collect {|el| el.indices};
+
+// create an MKtlElementGroup containing all vol elements
+MKtlElementGroup(
+    m,
+    \myVolumes,
+    m.elements.elementsForTag(\vol)
+).gui;
+
+
+// remove a tag from all elements in a group
+m.elAt(\sl).removeTag(\vol);
+m.elAt(\sl).collect(_.tags);
+
+// clear all tags
+m.elAt(\sl, 0).clearTags</pre>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tags' href='./../Overviews/Methods.html#tags'>tags</a> </h3>
+<div class='method'>
+<p>all tags of this element.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>list of Symbols</div><h4>Discussion:</h4>
+
+<p>If <code class='code prettyprint lang-sc'>this</code> is an <a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a>, it returns a combined list of all tags of its child elements.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addTag' href='./../Overviews/Methods.html#addTag'>addTag</a> ( <span class='argstr'>... newTags</span>)</h3>
+<div class='method'>
+<p>add tags to the element<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... newTags<td class='argumentdesc'>
+<p>list of Symbols</table><h4>Discussion:</h4>
+
+<p>If <code class='code prettyprint lang-sc'>this</code> is an <a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a>, it forwards this call to its child elements.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeTag' href='./../Overviews/Methods.html#removeTag'>removeTag</a> ( <span class='argstr'>... newTags</span>)</h3>
+<div class='method'>
+<p>remove tags from the element<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... newTags<td class='argumentdesc'>
+<p>list of Symbols</table><h4>Discussion:</h4>
+
+<p>If <code class='code prettyprint lang-sc'>this</code> is an <a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a>, it forwards this call to its child elements.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-includesTag' href='./../Overviews/Methods.html#includesTag'>includesTag</a> ( <span class='argstr'>... tag</span>)</h3>
+<div class='method'>
+<p>searches for specific tag<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... tag<td class='argumentdesc'>
+<p>list of Symbols</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true, if all tags specified in the argument are found, otherwise false.</div><h4>Discussion:</h4>
+
+<p>If <code class='code prettyprint lang-sc'>this</code> is an <a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a>, it forwards this call to its child elements.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-clearTags' href='./../Overviews/Methods.html#clearTags'>clearTags</a> </h3>
+<div class='method'>
+<p>wipes all tags from the element<h4>Discussion:</h4>
+
+<p>If <code class='code prettyprint lang-sc'>this</code> is an <a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a>, it forwards this call to its child elements.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MAbstractElement.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MAbstractElement.schelp</a><br>link::Classes/MAbstractElement::<br>sc version: 3.9dev</div></div></body></html>

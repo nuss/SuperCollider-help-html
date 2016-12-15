@@ -75,6 +75,8 @@
 <li class='toc3'><a href='#-join'>join</a> </li>
 <li class='toc3'><a href='#-flat'>flat</a> </li>
 <li class='toc3'><a href='#-flatten'>flatten</a> </li>
+<li class='toc3'><a href='#-flatten2'>flatten2</a> </li>
+<li class='toc3'><a href='#-flatBelow'>flatBelow</a> </li>
 <li class='toc3'><a href='#-flop'>flop</a> </li>
 <li class='toc3'><a href='#-flopWith'>flopWith</a> </li>
 <li class='toc3'><a href='#-flopTogether'>flopTogether</a> </li>
@@ -495,12 +497,49 @@ a.drop(-3);</pre>
 "mississippi".split("i").postcs;</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-flat' href='./../Overviews/Methods.html#flat'>flat</a> </h3>
 <div class='method'>
-<p>Returns a collection from which all nesting has been flattened.<pre class='code prettyprint lang-sc'>[[1, 2, 3], [[4, 5], [[6]]]].flat;</pre>
+<p>Returns a collection from which all nesting has been flattened.<pre class='code prettyprint lang-sc'>[[1, 2, 3], [[4, 5], [[6]]]].flat; // [ 1, 2, 3, 4, 5, 6 ]
+[1, 2, [3, 4, [5, 6, [7, 8, [9, 0]]]]].flat; // [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 ]</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-flatten' href='./../Overviews/Methods.html#flatten'>flatten</a> (<span class='argstr'>numLevels: 1</span>)</h3>
 <div class='method'>
-<p>Returns a collection from which <strong>numLevels</strong> of nesting has been flattened.<pre class='code prettyprint lang-sc'>[[1, 2, 3], [[4, 5], [[6]]]].flatten(1).postcs;
-[[1, 2, 3], [[4, 5], [[6]]]].flatten(2).postcs;</pre>
-</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-flop' href='./../Overviews/Methods.html#flop'>flop</a> </h3>
+<p>Returns a collection from which <strong>numLevels</strong> of nesting has been flattened.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>numLevels<td class='argumentdesc'>
+<p>Specifies how many levels downward (inward) to flatten. Zero returns the original.<pre class='code prettyprint lang-sc'>a = [1, 2, [3, 4, [5, 6, [7, 8, [9, 0]]]]];
+a.flatten(1); // [ 1, 2, [ 3, 4, [ 5, 6, [ 7, 8, [ 9, 0 ] ] ] ] ]
+a.flatten(2); // [ 1, 2, 3, 4, 5, 6, [ 7, 8, [ 9, 0 ] ] ]
+a.flatten(3); // [ 1, 2, 3, 4, 5, 6, 7, 8, [ 9, 0 ] ]
+a.flatten(4); // [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 ]</pre>
+</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-flatten2' href='./../Overviews/Methods.html#flatten2'>flatten2</a> (<span class='argstr'>numLevels: 1</span>)</h3>
+<div class='method'>
+<p>A symmetric version of <a href="#-flatten">-flatten</a>. For a negative <code class='code prettyprint lang-sc'>numLevels</code>, it flattens starting from the innermost arrays.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>numLevels<td class='argumentdesc'>
+<p>Specifies how many levels downward (inward) or upward (outward) to flatten.<pre class='code prettyprint lang-sc'>a = [1, 2, [3, 4, [5, 6, [7, 8, [9, 0]]]]];
+a.flatten2(4);  // [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 ]
+a.flatten2(3);  // [ 1, 2, 3, 4, 5, 6, 7, 8, [ 9, 0 ] ]
+a.flatten2(2);  // [ 1, 2, 3, 4, 5, 6, [ 7, 8, [ 9, 0 ] ] ]
+a.flatten2(1);  // [ 1, 2, 3, 4, [ 5, 6, [ 7, 8, [ 9, 0 ] ] ] ]
+a.flatten2(0);  // [ 1, 2, [ 3, 4, [ 5, 6, [ 7, 8, [ 9, 0 ] ] ] ] ]
+a.flatten2(-1); // [ 1, 2, [ 3, 4, [ 5, 6, [ 7, 8, 9, 0 ] ] ] ]
+a.flatten2(-2); // [ 1, 2, [ 3, 4, [ 5, 6, 7, 8, 9, 0 ] ] ]
+a.flatten2(-3); // [ 1, 2, [ 3, 4, 5, 6, 7, 8, 9, 0 ] ]
+a.flatten2(-4); // [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 ]</pre>
+</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-flatBelow' href='./../Overviews/Methods.html#flatBelow'>flatBelow</a> (<span class='argstr'>level: 1</span>)</h3>
+<div class='method'>
+<p>Flatten all subarrays deeper than <strong>level</strong>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>level<td class='argumentdesc'>
+<p>Specifies from what level onward to flatten. level 0 is outermost, so flatBelow(0) is like flat.<pre class='code prettyprint lang-sc'>a = [1, 2, [3, 4, [5, 6, [7, 8, [9, 0]]]]];
+a.flatBelow(0); // [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 ]
+a.flatBelow(1); // [ 1, 2, [ 3, 4, 5, 6, 7, 8, 9, 0 ] ]
+a.flatBelow(2); // [ 1, 2, [ 3, 4, [ 5, 6, 7, 8, 9, 0 ] ] ]
+
+// to set the level below which to flatten from the deepest level up,
+// one can use coll.maxDepth. E.g. to flatten only the innermost level:
+a.flatBelow( (a.maxDepth - 1) - 1);
+// for lowest two levels:
+a.flatBelow( (a.maxDepth - 1) - 2);</pre>
+</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-flop' href='./../Overviews/Methods.html#flop'>flop</a> </h3>
 <div class='method'>
 <p>Invert rows and columns in a two dimensional Collection (turn inside out). See also: <a href="./../Classes/Function.html">Function</a>.<pre class='code prettyprint lang-sc'>[[1, 2, 3], [4, 5, 6]].flop;
 [[1, 2, 3], [4, 5, 6], [7, 8]].flop; // shorter array wraps

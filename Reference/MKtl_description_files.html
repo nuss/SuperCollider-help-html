@@ -1,0 +1,265 @@
+<html><head><title>MKtl description files</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider REFERENCE (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a></div>
+<h1>MKtl description files<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>describes the format for MKtl desc files and the entries in them.</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Classes/MKtlDesc.html">MKtlDesc</a>, <a href="./../Tutorials/How_to_create_a_description_file.html">How to create a description file</a>, <a href="./../Reference/MKtl_description_files.html">MKtl description files</a>, <a href="./../Reference/Naming_conventions_in_element_descriptions.html">Naming conventions in element descriptions</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#Filename%20convention'>Filename convention</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Semantic%20and%20technical%20information'>Semantic and technical information</a></li>
+<ul class='toc'><li class='toc2'><a href='#Top%20level'>Top level</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#The%20description%20of%20a%20single%20element'>The description of a single element</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#deviceInfo'>deviceInfo</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Identifier%20naming%20convention'>Identifier naming convention</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Grouping%20conventions:'>Grouping conventions:</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Syntax'>Syntax</a></li>
+<ul class='toc'></ul></ul></div>
+<p>A description file contains detailed information about a controller. Precise information about each of its interaction elements like sliders, knobs, or buttons help to create good performance setups very efficiently.
+<p>Evaluating the code in a desc file should return a <a href="./../Classes/Dictionary.html">Dictionary</a> (or more conveniently, an <a href="./../Classes/Event.html">Event</a>) of a well-defined structure. Description files are located here:<pre class='code prettyprint lang-sc'>MKtlDesc.openFolder;</pre>
+<div class='note'><span class='notelabel'>NOTE:</span> Find a similar controller that is already supported and use it as a blueprint for your new description file.</div>
+<p>This document gives an overview on<ul>
+<li><a href="#Filename%20conventions">Filename%20conventions</a><li><a href="#Semantic%20information">Semantic%20information</a><li><a href="#Identifier%20naming%20convention">Identifier%20naming%20convention</a><li><a href="#Syntax">Syntax</a></ul>
+<h2><a class='anchor' name='Filename%20convention'>Filename convention</a></h2>
+
+<p>The filename should be of the following format:<pre class='code prettyprint lang-sc'>&lt;vendor&gt;-&lt;device_name&gt;_&lt;optional_setup_naming&gt;.desc.scd</pre>
+
+<p>where<ul>
+<li><code class='code prettyprint lang-sc'>&lt;vendor&gt;</code> is lower-case name of vendor with spaces replaced by <code class='code prettyprint lang-sc'>'-'</code>.<li><code class='code prettyprint lang-sc'>&lt;device_name&gt;</code> is lower-case name of the device with spaces replaced by <code class='code prettyprint lang-sc'>'-'</code>. This is both unique enough to identify devices, and allows linking to the modality website entry on each device.<li><code class='code prettyprint lang-sc'>&lt;optional_setup_naming&gt;</code> can be used to create multiple desc files for the same device, e.g. to support multiple ports (as e.g. the QuNexus keyboard), for special presets, such as making separate desc files for switchable hardware pages, or for personalized versions of desc files.</ul>
+<h2><a class='anchor' name='Semantic%20and%20technical%20information'>Semantic and technical information</a></h2>
+<div class='note'><span class='notelabel'>NOTE:</span> A description file is bound to a single protocol - currently one of \midi, \hid, and \osc (or \virtual for sketches). If a device communicates on multiple protocols (e.g. the <em>icon iCONTROLS</em>), or on multiple ports (the <em>QuNexus</em>), its components can be built from separate desc files and optionally be merged with <a href="./../Classes/CompMKtl.html">CompMKtl</a> where that is desirable.</div><h3><a class='anchor' name='Top%20level'>Top level</a></h3>
+<dl>
+<dt>deviceName | osx | linux [required]<dd>For MIDI and HID, this is the device name as reported by the hardware or OS drivers. (OSC devices are not registered by the OS, so the name is only for description here).<dt>protocol [required]<dd>The protocol used by the device. one of <code class='code prettyprint lang-sc'>[\hid, \midi, \osc, \virtual].</code><dt>deviceType [optional, but highly recommended]<dd>Semantic description of what kind of device it is. This will make it easier to find another device that might easily replace it. For examples, do:<pre class='code prettyprint lang-sc'>MKtlDevice.deviceTypes;
+MKtlDesc.loadDescs; MKtlDesc.deviceTypesUsed;
+
+-&gt; [ controller, drum, drumpad, externalMidiPort, fader, faderbox, gamepad, joystick, keyboard, launchpad, manta, midiKeyboard, minibee, mixer, mouse, multiController, organelle, phoneApp, push, ribbon, surface ]</pre>
+<dt>elementTypes [optional, but highly recommended]<dd>Description of what kind of elements the device has. For example: <code class='code prettyprint lang-sc'>\fader, \button, \knob, \encoder, \joyAxis ...</code><pre class='code prettyprint lang-sc'>// See all currently used types
+MKtlElement.types.cs;
+
+-&gt; [ 'accelAxis', 'bender', 'button', 'compass', 'cvIn', 'cvOut', 'encoder', 'fader', 'gyroAxis', 'hatSwitch', 'joyAxis', 'key', 'keyTouch', 'knob', 'led', 'lever', 'midiBut', 'mouseAxis', 'mouseWheel', 'multiPurpose', 'option', 'pad', 'padX', 'padY', 'pianoKey', 'ribbon', 'rumble', 'scroller', 'slider', 'springFader', 'switch', 'thumbAxis', 'touch', 'trigger', 'voltage', 'wheel', 'xfader' ]</pre>
+<dt>status [optional, but highly recommended]<dd>A string describing the status of this description, i.e. how complete and how well tested it is, by platform, with a nametag and date. E.g. the akai lpd8 has:<pre class='code prettyprint lang-sc'>status: (
+    osx: "tested and working, 2016_03_15, adc",
+    linux: "tested and working 2016_03_20, nescivi",
+    win: "unknown"
+)</pre>
+
+<p>status is unknown until somebody tests the device, and incompleteness can be noted, such as "elements incomplete (X missing)" etc.<dt>idInfo | osx | linux [required]<dd>The info used to fully identify the device. For HID devices, this is a String with &lt;productname&gt;_&lt;vendorname&gt;, e.g.:<pre class='code prettyprint lang-sc'>"Cyborg X_Saitek"</pre>
+
+<p>For MIDI devices with a single source and/or destination port, this is the same as the deviceName. For multi-port MIDI devices, this should be a dictionary with entries for<pre class='code prettyprint lang-sc'>(deviceName: &lt;deviceName&gt;, // as reported in
+srcPortIndex: &lt;index in list of this device's in ports&gt;,
+destPortIndex: &lt;index in list of this device's out ports&gt;);
+
+// The KeithMcMillen QuNexus has 3 I/O ports, and the idInfo for port 0 is:
+idInfo: (deviceName: "QuNexus", srcPortIndex: 0, destPortIndex: 0)</pre>
+
+<p>For OSC devices, this is a dictionary with information on the ipAdresses and ports used. (As NetAddresses may change, this often requires updating by hand. )<dt>elementsDesc [required]<dd>A (usually hierarchical) dictionary describing the control elements of the device. These controls are called elements within the Modality toolkit.<dt>deviceInfo [optional]<dd>A dictionary giving additional information on the device.<dt>collectives [optional]<dd>Specific groups that are needed to send or receive data collectively from the device. These are commonly used in OSC devices.<dt>specs [optional]<dd>A dictionary with specs in serialized notation, like <code class='code prettyprint lang-sc'>(\key: [0, 144, \lin])</code>. These overwrite existing spec definitions locally for this description only: When an element has a symbol for a spec, this is looked up locally first, then in MKtl.globalSpecs, then in global Spec.specs.</dl>
+<h3><a class='anchor' name='The%20description%20of%20a%20single%20element'>The description of a single element</a></h3>
+
+<p>A control element is a part of a controller (often for physical interaction, like a slider, knob, accelerometer etc. etc.) that does one or more of the following things:<ul>
+<li>creates and sends a one-dimensional stream of values when played,<li>accepts a one-dimensional stream of values when sent from software.</ul>
+
+<p>For full details on single element description see also: <a href="./../Reference/Naming_conventions_in_element_descriptions.html">Naming conventions in element descriptions</a>
+<p>An element description is a dict (or event) containing these entries:<dl>
+<dt>midiMsgType<dd><code class='code prettyprint lang-sc'>midiMsgType</code> has to be present for elements belonging to a MIDI device.<dt>hidElementID | &lt;hidUsage|hidUsagePage&gt;<dd><code class='code prettyprint lang-sc'>hidElementID</code> or both <code class='code prettyprint lang-sc'>hidUsage</code> and <code class='code prettyprint lang-sc'>hidUsagePage</code> have to be present for elements belonging to an HID device.<dt>oscPath<dd><code class='code prettyprint lang-sc'>oscPath</code> has to be present for elements belonging to an OSC device, or it has to use <code class='code prettyprint lang-sc'>ioType: \groupIn</code> or <code class='code prettyprint lang-sc'>ioType: \groupOut</code><dt>spec<dd>The element <code class='code prettyprint lang-sc'>\spec</code> has to be present and is a symbol that, if called <code class='code prettyprint lang-sc'>.asSpec</code> upon, returns the (global) <code class='code prettyprint lang-sc'>ControlSpec</code> suitable for this element.<dt>midiChan, midiNum<dd>\midiChan is needed for all midi messages including <code class='code prettyprint lang-sc'>\bend, \touch, \program</code>, \midiNum is needed only for <code class='code prettyprint lang-sc'>\noteOn, \noteOff, \control and \polyTouch</code> messages.</dl>
+
+<p> The 'elementsDesc' field is a dictionary that can contain other dictionaries or arrays, which will be used to build hierarchical groups of elements in the MKtl to be built from the description. At the leaves of this data structure must be a dictionary describing an element. Its most important keys are <code class='code prettyprint lang-sc'>\key, \shared, \elements</code>; \key defines a local lookup name for the element or group; \shared defines properties shared between elements in this group, and \elements is an array of elements which again contains dictionaries describing elements or groups.
+<p>A typical structure would be:<pre class='code prettyprint lang-sc'>(
+// ...
+elementsDesc: [ // the elementsDesc of the whole device
+    (
+        key: \top,  // name of this group,
+                    // all elements use cc and midichan 0
+        shared: (midiChan: 0, midiMsgType: \control),
+
+                    // the elements descriptions:
+        elements: [
+                    // a group of 2 sliders
+            (
+                key: \sl,   // group name
+                    // they share elementType and spec
+                shared: (elementType: \slider, spec: \midiCC ),
+                elements: [
+
+                    ( key: \1, midiNum: 21 ),
+                    ( key: \2, midiNum: 22 )
+                ]
+            ),
+                    // a group of 2 buttons
+            (
+                key: \bt,
+                    // they share elementType and spec
+                shared: (elementType: \button, spec: \midiBut),
+                elements: [
+                    ( key: \1, midiNum: 41 ),
+                    ( key: \2, midiNum: 42 )
+                ]
+            )
+        ]
+    )
+]
+)</pre>
+
+<p> The 'specs' field contains a dictionary of specifications of controller ranges which the MKtl will use. An example:<pre class='code prettyprint lang-sc'>(
+    \shaper:  [0, 128, \lin],
+    \mover:   [1, 4096, \exp]
+)</pre>
+<h3><a class='anchor' name='deviceInfo'>deviceInfo</a></h3>
+
+<p>The deviceInfo is typically of the following form. All entries are optional.<pre class='code prettyprint lang-sc'>(
+...
+deviceInfo: (
+    vendorURI: "http://vendor/product",
+    manualURI: "http://manual.pdf",
+    description: "Short sentence on what a great controller this is.",
+    features: [
+        "23 colorblinding pads",
+        "42 invisible sliders",
+    ],
+    notes: "Make sure the device is in total-recall mode!",
+    type: [\pad, \slider],
+    // a scribble is a PDF for drawing a controller mapping on paper
+    // see e.g. ableton push for a device that has one
+    hasScribble: false
+),
+elementsDesc: (
+    ...
+)
+)</pre>
+<h2><a class='anchor' name='Identifier%20naming%20convention'>Identifier naming convention</a></h2>
+
+<p>Naming conventions for identifiers are:<ul>
+<li><code class='code prettyprint lang-sc'>kn</code> for knobs,<li><code class='code prettyprint lang-sc'>sl</code> for sliders,<li><code class='code prettyprint lang-sc'>bt</code> for buttons,<li><code class='code prettyprint lang-sc'>key</code> for keys,<li><code class='code prettyprint lang-sc'>pad</code> for pads, etc. Elements with names or symbols on them should have that name, e.g. a play button should be called \play, a rewind button \rew, etc.</ul>
+
+<p>Naming conventions for type values are:<ul>
+<li><code class='code prettyprint lang-sc'>slider</code> for sliders,<li><code class='code prettyprint lang-sc'>knob</code> for knobs,<li><code class='code prettyprint lang-sc'>button</code> for buttons,<li><code class='code prettyprint lang-sc'>key</code> for keys,<li><code class='code prettyprint lang-sc'>pad</code> for pads<li><code class='code prettyprint lang-sc'>oscMessage</code> for osc-messages (of collectives)</ul>
+<div class='note'><span class='notelabel'>NOTE:</span> The description file for the "Korg nanoKONTROL 2"<pre class='code prettyprint lang-sc'>korg-nanokontrol2.desc.scd</pre>
+
+<p>is a good example for element naming. All naming examples are taken from there.</div>
+<p>Generally, element names should be as clear as possible, and reasonably short to allow for compact code (e.g. for live coding mappings of controllers). The main advantage of following the conventions is that similar elements across devices will have identical or at least similar names, and thus allow substituting one device for a similar one with minimal code changes.
+<p> Unnamed buttons should be called \bt, sliders \sl, knobs \kn, pads \pad, etc., and when they are physically in arrays, they should be given like this:<pre class='code prettyprint lang-sc'>(
+    key: \kn,
+    shared: (\midiMsgType: \cc, \type: \knob, \midiChan: 0, \spec: \midiCC),
+    elements: (16..23).collect { |i| (\midiNum: i) }
+)</pre>
+
+<p>When elements in an array are not explicitly given name keys, they will get self-generated keys as follows:<pre class='code prettyprint lang-sc'>// index -&gt; key
+    0 -&gt; '1',
+    1 -&gt; '2',
+//    etc</pre>
+
+<p> When in rows and columns, these can be nested:<pre class='code prettyprint lang-sc'>(
+    key: \bt,
+    shared: (\midiMsgType: \cc, \type: \button, \midiChan: 0, \spec: \midiCC),
+    elements: [(32..39),(48..55),(64..71)].collect { |xs|
+        (
+            elements: xs.collect { |i| (\midiNum: i) }
+        )
+    }
+)</pre>
+
+<p> Elements with names or symbols on them should be given that name,  e.g. a button name "play" or with a &gt; sign on it should be  called \play or \playBt. in the nanoKontrol 2 file, such button names include transport buttons \rew, \fwd, \stop, \play, \rec,  \cycle, track buttons \tleft, \tright, and marker buttons \mset, \mleft, \mright.
+<p> When in doubt, consult files of devices with similar elements, and follow the naming schemes there.<h2><a class='anchor' name='Grouping%20conventions:'>Grouping conventions:</a></h2>
+
+<p>Multiple elements of the same type, such as a bank of sliders, should be put in a single group, which can also be nested, as shown above.
+<p>Groups of elements which belong to a single physical control element (or otherwise belong together semantically) should be put in a single group. E.g. a gamepad thumbstick typically has an x-axis, a y-axis, and sometimes a hat switch, which should be in one group:<pre class='code prettyprint lang-sc'>    (key: \l,  // the left joystick
+        elements: [
+            (key: \x, 'hidUsage': 48),
+            (key: \y, 'hidUsage': 49)
+        ]
+    )
+
+// A group of two thumbsticks would be:
+
+(
+key: \joy,
+shared: ('hidUsagePage': 1, 'elementType': 'joyAxis', 'ioType': 'in',
+    spec: \cent1, mode: \center ),
+elements: [
+    (key: \l,
+        elements: [
+            (key: \x, 'hidUsage': 48),
+            (key: \y, 'hidUsage': 49)
+        ]
+    ),
+    (key: \r,
+        elements: [
+            (key: \x, 'hidUsage': 50),
+            (key: \y, 'hidUsage': 53)
+        ]
+    )
+]
+);</pre>
+
+<p>For MIDI noteOn and noteOff, one can create pairs with MKtlDesc.notePair, which creates a dict with elements for \on and \off, and proper shared info including some gui layout information.<pre class='code prettyprint lang-sc'>// the element description
+~onoffgroup = MKtlDesc.notePair( \bt1, 12, (elementType: \button, spec: \midiBut));
+
+// in a dict
+~descdict = (idInfo: "test", \protocol: \midi, elementsDesc: ~onoffgroup);
+
+// in an MKtl
+MKtl(\x, ~descdict);
+
+// creates two elements with separate actions:
+MKtl(\x).gui;
+MKtl(\x).elAt(\on).valueAction_(1);
+MKtl(\x).elAt(\off).valueAction_(0);
+
+// check at top layer whether \on or \off happened last:
+MKtl(\x).elAt.isOn</pre>
+
+<p>When other elements should go into this group, one can also make them separately:<pre class='code prettyprint lang-sc'>// description of a pad with noteOn, noteOff and poly touch:
+d = (
+    \pad1,
+    shared: (midiChan: 0, midiNum: 45),
+    elements: [
+        (key: \on, \midiMsgType: \noteOn, spec: \midiVel),
+        (key: \off, \midiMsgType: \noteOff, spec: \midiVel),
+        (key: \touch, \midiMsgType: \polyTouch, spec: \midiCC)
+    ]
+);</pre>
+
+<p>This creates a semantically clear group, and generates separate elements with independent actions for each message type. the noteOn action could be used to start a synth, touch to update one of its parameters while alive, and noteOff (using noteOff velocity) to end this synth.<h2><a class='anchor' name='Syntax'>Syntax</a></h2>
+
+<p>The syntax for the description file as agreed on by the modalityTeam on April, 7th 2014 described in Augmented Backus–Naur Form (with <code class='code prettyprint lang-sc'>/</code> switched to <code class='code prettyprint lang-sc'>|</code> ) (see <a href="https://en.wikipedia.org/wiki/ABNF">https://en.wikipedia.org/wiki/ABNF</a>).<div class='note'><span class='notelabel'>NOTE:</span> The desc file format has since changed, and the ABNF form should be updated accordingly by the ABNF experts in the team.</div><div class='note'><span class='notelabel'>NOTE:</span> For detailed discussion of writing a conforming description file, see <a href="./../Tutorials/How_to_create_a_description_file.html">How to create a description file</a>.</div><div class='note'><span class='notelabel'>NOTE:</span> The actual description files used by Modality often don't conform to this syntax, because they use SuperCollider code to algorithmically generate parts of the dictionary. Calling <code class='code prettyprint lang-sc'>.asCompileString</code> on the dictionary should generate a string which conforms to the syntax above.</div><pre>descFile                    = "( protocol: " protocol ", device: " string ", description:" description [", infoMessage:" string] ")"
+    protocol                = "\hid" | "\midi"
+    idInfo                  = ("idInfo :" string) | ("osx : (idInfo: "string ") " [", linux: (idInfo: "string ")" ] ) | ("linux: (idInfo: "string ") " [", osx: (idInfo:" string ")" ] )
+    description             = hidDict | midiDict
+    collectives             = hidDict | midiDict
+    midiDict                = "(" symbol ":" midiNode [", " *(symbol ":" midiNode) ] ")"
+        midiArray           = "[" midiNode [", " *midiNode ] "]"
+        midiNode            = midiDict | midiArray | midiElem
+    hidDict                 = "(" symbol ":" hidNode [", " *(symbol ":" hidNode) ] ")"
+        hidArray            = "[" hidNode [", " *hidNode ] "]"
+        hidNode             = hidDict | hidArray | hidElem
+midiElem                    = midiElemFull | midiElemOnlyChan
+    midiElemFull            = "( midiMsgType:" midiMsgTypeFull ", midiChan:" int ", midiNum:" int ", spec:" symbol ", type:" type [", ioType:" ioType] [", mode:" mode] ")"
+        midiMsgTypeFull     = "\noteOnOff" | "\noteOn" | "\noteOff" | "\cc" | "\polytouch"
+    midiElemOnlyChan        = "( midiMsgType:" midiMsgTypeOnlyChan ", midiChan:" int ", spec:" symbol ", type:" type [", ioType:" ioType] [", mode:" mode] ")"
+        midiMsgTypeOnlyChan = "\bend" | "\touch"  | "\program"
+hidElem                     = "( \hidUsage:" int ", \hidUsagePage: " int ", spec:" symbol ", type:" type [", ioType:" ioType] [", mode:" mode] ")"
+    type                    = "\knob" | "\button" | "\key" | "\slider" | "\chantouch" | "\polytouch" | "\joyaxis" | "\hatswitch" | "\encoder" | "\pad"
+    mode                    = "\one-shot" | "\push" | "\minimum" | "\center" | "\toggle"
+    ioType                  = "\in" | "\out" | "\inout"
+
+int                         = digitFromOne *digitFromZero
+    digitFromZero           = "0" | digitFromOne
+        digitFromOne        = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+string                      = "\"" *char "\""
+char                        = %x01-7F</pre>
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Reference/MKtl_description_files.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Reference/MKtl_description_files.schelp</a><br>link::Reference/MKtl_description_files::<br>sc version: 3.9dev</div></div></body></html>

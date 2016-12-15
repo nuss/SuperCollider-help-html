@@ -1,0 +1,150 @@
+<html><head><title>MKtlDevice</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a>, <a href='./../Browse.html#External Control'>External Control</a></div>
+<h1>MKtlDevice<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>A class to provide a common interface for accessing external controllers</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/MKtlDevice.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/MKtlDevice.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/HIDMKtlDevice.html">HIDMKtlDevice</a>, <a href="../Classes/MIDIMKtlDevice.html">MIDIMKtlDevice</a>, <a href="../Classes/OSCMKtlDevice.html">OSCMKtlDevice</a></div>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*allProtocols'>allProtocols</a> </li>
+<li class='toc3'><a href='#*find'>find</a> </li>
+<li class='toc3'><a href='#*initHardwareDevices'>initHardwareDevices</a> </li>
+<li class='toc3'><a href='#*open'>open</a> </li>
+<li class='toc3'><a href='#*subFor'>subFor</a> </li>
+<li class='toc3'><a href='#*protocol'>protocol</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*descFileStrFor'>descFileStrFor</a> </li>
+<li class='toc3'><a href='#*deviceTypes'>deviceTypes</a> </li>
+<li class='toc3'><a href='#*subClassDict'>subClassDict</a> </li>
+<li class='toc3'><a href='#*verbose'>verbose</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-mktl'>mktl</a> </li>
+<li class='toc3'><a href='#-name'>name</a> </li>
+<li class='toc3'><a href='#-deviceName'>deviceName</a> </li>
+<li class='toc3'><a href='#-closeDevice'>closeDevice</a> </li>
+<li class='toc3'><a href='#-trace'>trace</a> </li>
+<li class='toc3'><a href='#-traceRunning'>traceRunning</a> </li>
+<li class='toc3'><a href='#-explore'>explore</a> </li>
+<li class='toc3'><a href='#-exploring'>exploring</a> </li>
+<li class='toc3'><a href='#-createDescriptionFile'>createDescriptionFile</a> </li>
+<li class='toc3'><a href='#-initElements'>initElements</a> </li>
+<li class='toc3'><a href='#-initCollectives'>initCollectives</a> </li>
+<li class='toc3'><a href='#-cleanupElementsAndCollectives'>cleanupElementsAndCollectives</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-sendSpecialMessage'>sendSpecialMessage</a> </li>
+</ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>MKtlDevice is an abstract interface to access an external device, e.g. a MIDI device such as a MIDI fader box, an HID device such as a joystick, devices or apps sending OSC, and so on.
+<p>Subclasses of MKtlDevice take care of accessing the device by its protocol.
+<p>This class is used mainly internally by <a href="./../Classes/MKtl.html">MKtl</a>, so you will not see it often.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allProtocols' href='./../Overviews/Methods.html#allProtocols'>allProtocols</a> </h3>
+<div class='method'>
+<p>all protocols supported in Modality<pre class='code prettyprint lang-sc'>MKtlDevice.allProtocols.cs</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*find' href='./../Overviews/Methods.html#find'>find</a> (<span class='argstr'>protocols</span>, <span class='argstr'>post: true</span>)</h3>
+<div class='method'>
+<p>Find out which devices are attached.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>protocols<td class='argumentdesc'>
+<p>Optional argument for which protocols to look for, e.g. <code class='code prettyprint lang-sc'>[ 'hid' ]</code>. By default, it will look for MKtlDevice.allProtocols.<tr><td class='argumentname'>post<td class='argumentdesc'>
+<p>flag to post results or not.<pre class='code prettyprint lang-sc'>MKtl.find;
+MKtl.postPossible(\midi);
+// returns list of all currently available midi devices</pre>
+</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initHardwareDevices' href='./../Overviews/Methods.html#initHardwareDevices'>initHardwareDevices</a> (<span class='argstr'>force: false</span>, <span class='argstr'>protocols</span>)</h3>
+<div class='method'>
+<p>Look for available connected hardware devices.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>force<td class='argumentdesc'>
+<p>Whether or not to look again if it was already done before.<tr><td class='argumentname'>protocols<td class='argumentdesc'>
+<p>which protocols to look for.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*open' href='./../Overviews/Methods.html#open'>open</a> (<span class='argstr'>name</span>, <span class='argstr'>parentMKtl</span>, <span class='argstr'>multiIndex</span>)</h3>
+<div class='method'>
+<p>Tries to open a device with the name (of the MKtl).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>The short name of the device to open.<tr><td class='argumentname'>parentMKtl<td class='argumentdesc'>
+<p>The instance of MKtl that will refer to this device.<tr><td class='argumentname'>multiIndex<td class='argumentdesc'>
+<p>when multiple identical devices are present, the index of the device to open.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>either an instance of MKtlDevice, or nil if no device was found.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*subFor' href='./../Overviews/Methods.html#subFor'>subFor</a> (<span class='argstr'>protocol</span>)</h3>
+<div class='method'>
+<p>Return the subclass that matches the protocol given.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>protocol<td class='argumentdesc'>
+<p>The protocol to look for, e.g. <code class='code prettyprint lang-sc'>\midi</code> or <code class='code prettyprint lang-sc'>\hid</code>.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a subclass of MKtlDevice<pre class='code prettyprint lang-sc'>MKtlDevice.subFor( \hid );
+// returns: HIDMKtlDevice</pre>
+</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*protocol' href='./../Overviews/Methods.html#protocol'>protocol</a> </h3>
+<div class='method'>
+<p>The protocol of this subclass of MKtlDevice<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a Symbol</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*descFileStrFor' href='./../Overviews/Methods.html#descFileStrFor'>descFileStrFor</a> (<span class='argstr'>nameKey</span>, <span class='argstr'>lookupKey</span>, <span class='argstr'>filenames</span>, <span class='argstr'>multiIndex</span>, <span class='argstr'>generic: ""</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*deviceTypes' href='./../Overviews/Methods.html#deviceTypes'>deviceTypes</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*subClassDict' href='./../Overviews/Methods.html#subClassDict'>subClassDict</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*verbose' href='./../Overviews/Methods.html#verbose'>verbose</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*verbose' href='./../Overviews/Methods.html#verbose'>verbose</a> = value</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-mktl' href='./../Overviews/Methods.html#mktl'>mktl</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-mktl' href='./../Overviews/Methods.html#mktl'>mktl</a> = value</h3>
+<div class='method'>
+<p>The MKtl that this MKtlDevice belongs to.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an instance of MKtl.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a> </h3>
+<div class='method'>
+<p>The short name of the device.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a Symbol</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-deviceName' href='./../Overviews/Methods.html#deviceName'>deviceName</a> </h3>
+<div class='method'>
+<p>The full device name of the device.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a String</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-closeDevice' href='./../Overviews/Methods.html#closeDevice'>closeDevice</a> </h3>
+<div class='method'>
+<p>Close the device and clean up anything that it used.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-trace' href='./../Overviews/Methods.html#trace'>trace</a> (<span class='argstr'>bool: true</span>)</h3>
+<div class='method'>
+<p>Print incoming data from the MKtlDevice or not.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bool<td class='argumentdesc'>
+<p>a Boolean whether it should be on or off.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-traceRunning' href='./../Overviews/Methods.html#traceRunning'>traceRunning</a> </h3>
+<div class='method'>
+<p>a Boolean whether or not the MKtlDevice is currently tracing.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-explore' href='./../Overviews/Methods.html#explore'>explore</a> (<span class='argstr'>bool: true</span>)</h3>
+<div class='method'>
+<p>When opening a device that is not known yet by MKtl, you want to explore the device. See for a full tutorial: <a href="./../Tutorials/How_to_create_a_description_file.html">How to create a description file</a><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bool<td class='argumentdesc'>
+<p>a Boolean to turn this on or off.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-exploring' href='./../Overviews/Methods.html#exploring'>exploring</a> </h3>
+<div class='method'>
+<p>a Boolean whether or not the device is currently being explored.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-createDescriptionFile' href='./../Overviews/Methods.html#createDescriptionFile'>createDescriptionFile</a> </h3>
+<div class='method'>
+<p>Create and open a description file for this MKtlDevice, after exploring it.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-initElements' href='./../Overviews/Methods.html#initElements'>initElements</a> </h3>
+<div class='method'>
+<p>Initialize all elements and hook them up to the hardware elements.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-initCollectives' href='./../Overviews/Methods.html#initCollectives'>initCollectives</a> </h3>
+<div class='method'>
+<p>Initialize all collectives and hook them up to the hardware elements.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-cleanupElementsAndCollectives' href='./../Overviews/Methods.html#cleanupElementsAndCollectives'>cleanupElementsAndCollectives</a> </h3>
+<div class='method'>
+<p>De-initialize all elements and collectives.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendSpecialMessage' href='./../Overviews/Methods.html#sendSpecialMessage'>sendSpecialMessage</a> </h3>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MKtlDevice.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MKtlDevice.schelp</a><br>link::Classes/MKtlDevice::<br>sc version: 3.9dev</div></div></body></html>

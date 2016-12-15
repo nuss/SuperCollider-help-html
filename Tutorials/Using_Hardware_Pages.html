@@ -1,0 +1,115 @@
+<html><head><title>Using Hardware Pages</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider TUTORIALS (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a>, <a href='./../Browse.html#External Control'>External Control</a></div>
+<h1>Using Hardware Pages<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Different ways to handle devices with hardware pages in Modality</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Tutorials/ModalityTutorial.html">Modality Tutorial</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#Simple%20hardware%20paging:%20the%20Korg%20nanoKontrol.'>Simple hardware paging: the Korg nanoKontrol.</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Bringing%20hardware%20Pages%20to%20the%20Front'>Bringing hardware Pages to the Front</a></li>
+<ul class='toc'></ul></ul></div>
+<p>Some devices have multiple hardware pages, sometimes also called scenes or layers, between which one can swtch on the hardware itself. E.g. the korg nanokontrol has a switch for 4 scenes, which change the midicontrol numbers sent from sliders, knobs and channel buttons; the transport buttons stay the same in all scenes. This allows accessing many more actions than the number of hardware control elements on the device ( it is Modality in hardware ;-).<h2><a class='anchor' name='Simple%20hardware%20paging:%20the%20Korg%20nanoKontrol.'>Simple hardware paging: the Korg nanoKontrol.</a></h2>
+<pre class='code prettyprint lang-sc'>k = MKtl(\n, "*nanokontrol").trace;
+g = k.gui; g.parent.alwaysOnTop_(true);
+
+// has lots of elements, not as many as shown on gui
+k.elementsDict.size;
+
+// test switching gui between pages:
+// turn all knobs in group 0 to random value
+k.elAt(\kn, 0).do(_.value_(1.0.rand));
+// now switch to scene 1 - all knobs are at 0
+g.pagesSwitch.valueAction_(1);
+// turn all knobs in group 1 to random value
+k.elAt(\sl, 1).do(_.value_(1.0.rand));
+
+g.pagesSwitch.valueAction_(0);
+// now switch to scene 3 on faderbox,
+// move some elements ... then see if the gui shows them:
+g.pagesSwitch.valueAction_(2);</pre>
+<h2><a class='anchor' name='Bringing%20hardware%20Pages%20to%20the%20Front'>Bringing hardware Pages to the Front</a></h2>
+<div class='note'><span class='notelabel'>NOTE:</span> It is convenient to bring one page to the front for easier code access. This is possible very nicely when the element hierarchy has the pages in the top layer, therefor it is generally better to put pages in the top element layer.</div>
+<p>The Faderfox UC-4 is a nice example where one can show this support of hardware paging in code.
+<p>The Faderfox UC4 has a more complex notion of paging. For its 8 knobs with hat switches, 8 sliders, 8 buttons, and single crossfader, there are two paging groups:<ul>
+<li>knobs and hat switches have 8 pages, paging is by holding "shift" and clicking a hat switch<li>sliders and buttons are paged by holding "shift" and clicking a button from the bottom row<li>crossfader remains the same no matter which pages are selected.</ul>
+
+<p>For demonstration purposes, it has desc files for both kinds of hierarchical orders: element types on top and pages on top.<pre class='code prettyprint lang-sc'>// Look for devices
+MKtl.find;
+
+// When a UC4 is connected, MKtl finds two descs:
+// [ [ "Faderfox UC4", "Faderfox UC4", 1937953817 ] ]
+    // Supported by 2 desc files.
+    // Best create MKtl from one of the desc files:
+MKtl('midi_1_faderf', "faderfox-uc4");
+MKtl('midi_1_faderf', "faderfox-uc4_pg");
+
+// the first one has pages like the korg above
+MKtl('ff1', "faderfox-uc4");
+MKtl('ff1').elAt;  // controller names on top
+MKtl('ff1').elAt(\kn); // 8 pages within knob group
+MKtl('ff1').elAt(\kn, 0); // 8 knobs in page 0
+
+// the second has pages on top:
+MKtl('ff2', "faderfox-uc4_pg");
+MKtl('ff2').elAt;  // 8 knob+hat pages + 8 sl+but pages + xfade
+MKtl('ff2').elAt(\pgKn1);  // knobs and pushbuttons
+MKtl('ff2').elAt(\pgKn1, \kn);  // 8 knobs in that page</pre>
+
+<p>Here, one can show how to bring pages to the front for coding convenience:<pre class='code prettyprint lang-sc'>// with the page-on-top format, one can easily "bring a page to the front":
+k.free; k = MKtl('uc4pg', "faderfox-uc4_pg"); k.gui.parent.alwaysOnTop_(true);
+k.elementsDict.size; // 361 elements!
+k.postElements; // post hierarchical order
+k.trace;
+k.trace(false);
+
+// add an action to all elements
+k.elAt.action = { |el| ["UC4-all", el.name, el.value.round(0.001), el.deviceValue].postcs };
+// an action to xfader always stays active
+k.elAt(\xfader).action = { |el| [el.name, el.deviceValue].postln };
+
+// an action for all knobs&amp;hats in pgKn1:
+k.elAt(\pgKn1).action = { |el| "knobs&amp;hats in pg1: ".post; [el.name, el.deviceValue].postln };
+
+// to get to the first knob, you must give the page name first
+// (which is clumsy, but clear):
+k.elAt(\pgKn1, \kn, 0);
+
+// Or you can bring the first page of knobs to front:
+k.toFront(\pgKn1);
+
+// this adds all groups in \pgKn1 to namedDict,
+// so they can be reached with their direct name:
+k.elAt(\kn); // pgKn1 is is front, so this is all knobs in pgKn1
+k.elAt(\kn, 0); // first knob of current knobpage
+k.elAt(\pbt, 0, \on);
+k.elAt(\pbt, 0, \on);
+
+// ... in longhand, this adding can also be done with:
+k.elAt(\pgKn1).do { |grp| k.addNamed(grp.name, grp) };
+
+
+// and add first sliderbutton page as well
+k.toFront(\pgSl1);
+k.elAt(\sl, 0);
+k.elAt(\bt, 0, \on);
+
+k.toFront(\pgSl4); // switch to page 4
+k.elAt(\sl, 0);    // now sl 0 is from page 4</pre>
+<div class='note'><span class='notelabel'>NOTE:</span> This paging to the front is not easily possible with descriptions where the element type in on top (like "faderfox-uc4" and "korg-nanokontrol"): An addNamed group called \kn will not be reached when a group \kn is already present in the top elementGroup. Therefor, it is generally better to put pages in the top element layer.</div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Tutorials/Using_Hardware_Pages.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Tutorials/Using_Hardware_Pages.schelp</a><br>link::Tutorials/Using_Hardware_Pages::<br>sc version: 3.9dev</div></div></body></html>

@@ -26,6 +26,7 @@
 <ul class='toc'></ul><li class='toc1'><a href='#Common%20parameters'>Common parameters</a></li>
 <ul class='toc'><li class='toc2'><a href='#Timing%20control'>Timing control</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Node%20control'>Node control</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#User%20function%20hooks'>User function hooks</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#Event%20Types'>Event Types</a></li>
 <ul class='toc'><li class='toc2'><a href='#Node%20control'>Node control</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Server%20control'>Server control</a></li>
@@ -53,6 +54,9 @@
 <h3><a class='anchor' name='Node%20control'>Node control</a></h3>
 <dl>
 <dt>\addAction<dd>How to add a synth or group node relative to the given <code class='code prettyprint lang-sc'>\group</code> in the event. See <a href="./../../Classes/Synth.html">Synth</a>.<dt>\amp<dd>Not formally defined as a special parameter, but this is typically used for Synth amplitude. The SynthDef should have an <code class='code prettyprint lang-sc'>amp</code> argument and use it to control volume. <code class='code prettyprint lang-sc'>\amp</code> is optionally calculated from <code class='code prettyprint lang-sc'>\db</code>.<dt>\id<dd>The desired id(s) for newly created Nodes in this event. Normally this is <code class='code prettyprint lang-sc'>nil</code>, in which case the IDs will be obtained from <code class='code prettyprint lang-sc'>server.nextNodeID</code>.<dt>\instrument<dd>The <a href="./../../Classes/SynthDef.html">SynthDef</a> name for which nodes will be created. Only one name should be given (unlike other arguments, which "multichannel expand" to create multiple nodes).<dt>\group<dd>The target node relative to which new node(s) will be created. Similar to <code class='code prettyprint lang-sc'>target</code> in <code class='code prettyprint lang-sc'>Synth(defName, args, target, addAction)</code>.<dt>\out<dd>Generally used for the output bus of a <a href="./../../Classes/Synth.html">Synth</a>. When using <a href="./../../Classes/Pbus.html">Pbus</a> or <a href="./../../Classes/Pfxb.html">Pfxb</a>, an audio bus is allocated to isolate the pattern's signal. All events from the pattern receive the new bus number in the <code class='code prettyprint lang-sc'>\out</code> slot, and SynthDefs being played should use an <code class='code prettyprint lang-sc'>out</code> argument for the target of output UGens, e.g., <code class='code prettyprint lang-sc'>Out.ar(out, ...)</code> .</dl>
+<h3><a class='anchor' name='User%20function%20hooks'>User function hooks</a></h3>
+<dl>
+<dt>\finish<dd>A function that will be executed after <code class='code prettyprint lang-sc'>play</code> has been called, but before event type processing. Use this to manipulate event data.<dt>\callback<dd>A function that will be executed after the Event has finished all its work. The <code class='code prettyprint lang-sc'>callback</code> may be used for bookkeeping. Finished Events are expected to store new node IDs under <code class='code prettyprint lang-sc'>~id</code>; with the IDs, you can register functions to watch node status or set node controls, for instance. The function receives the finished event as its argument.</dl>
 <h2><a class='anchor' name='Event%20Types'>Event Types</a></h2>
 <h3><a class='anchor' name='Node%20control'>Node control</a></h3>
 <dl>
@@ -70,7 +74,7 @@
 p.stop;</pre>
 </dl>
 <dt>on<dd>Start a Synth node (or nodes) without releasing. The node ID(s) are in the event's <code class='code prettyprint lang-sc'>~id</code> variable. Those IDs can be used with the off, set and kill event types.<dl>
-<dt>Standard Timing and Node control arguments<dd><dt>callback<dd>A function that will be executed after creating the nodes. Use this for bookkeeping, to keep track of the node IDs for later use. The function receives the finished event as its argument.<dt>(sendGate and strum parameters are not used)<dd></dl>
+<dt>Standard Timing and Node control arguments<dd><dt>(sendGate and strum parameters are not used)<dd></dl>
 <dt>off<dd>Release server nodes nicely if possible. If the SynthDef has a <code class='code prettyprint lang-sc'>gate</code> argument, the gate will be set to <code class='code prettyprint lang-sc'>0</code> or a user-specified value. Otherwise, the nodes are brutally killed with <code class='code prettyprint lang-sc'>n_free</code>.<dl>
 <dt>Standard Timing control arguments<dd><dt>hasGate<dd>True or false, telling the event whether the SynthDef has a <code class='code prettyprint lang-sc'>gate</code> argument or not. The default is assumed true.<dt>id<dd>The node ID(s) must be given explicitly.<dt>gate<dd>By default, the gate will be set to <code class='code prettyprint lang-sc'>0</code>. Negative values trigger a "forced release" in EnvGen. See the <a href="./../../Classes/EnvGen.html">EnvGen</a> help file for details.</dl>
 <dt>kill<dd>Immediately remove nodes using <code class='code prettyprint lang-sc'>n_free</code>.<dl>

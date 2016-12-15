@@ -1,0 +1,111 @@
+<html><head><title>Creating Presets for MKtl Element Values</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider TUTORIALS (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a>, <a href='./../Browse.html#External Control'>External Control</a></div>
+<h1>Creating Presets for MKtl Element Values<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>store sets of element values as state, and reuse them later</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Classes/MKtlElement.html">MKtlElement</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#Example%201'>Example 1</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Example%202'>Example 2</a></li>
+<ul class='toc'></ul></ul></div>
+<p>MKtl has simple ways to get and set multiple element values at once. This functionality can be use to create simple presets of sets of MKtl element values to set them to desired states.<h2><a class='anchor' name='Example%201'>Example 1</a></h2>
+
+<p>Making simple preset functions and saving them by hand.<pre class='code prettyprint lang-sc'>// make an MKtl
+g = MKtl(\gp, "*run*drive");
+g.gui.parent.alwaysOnTop_(true);
+// get current settings of all controllers:
+~pre0 = g.getKeysValues;
+
+// get some values only by name:
+g.getKeysValues([\joy_l_x, \joy_l_y]);
+
+// create sets of names to use in preset
+~joyKeys = g.elementAt(\joy).flat.collect(_.name);
+~butKeys = g.elementAt(\bt).collect(_.name);
+
+
+// create some random settings:
+g.elementsDict.do(_.value_(1.0.rand));
+~rnd1 = g.getKeysValues;
+g.elementsDict.do(_.value_(1.0.rand));
+~rnd2 = g.getKeysValues;
+
+// make random settings for smaller sets of keys only
+~joyKeys.do { |key| g.dictAt(key).value_(1.0.rand) };
+~rndJoy1 = g.getKeysValues(~joyKeys);
+
+~butKeys.do { |key| g.dictAt(key).value_(1.0.rand) };
+~rndBut1 = g.getKeysValues(~butKeys);
+
+// restore to initial setting
+g.setKeysValues(~pre0);
+
+// give all elements an action,
+// then set states with doAction
+g.elementGroup.action_ { |el| "YO: % %\n".postf(el.name, el.value) };
+
+// set to one of them
+g.setKVAction([~pre0, ~rnd1, ~rnd2, ~rndBut1, ~rndJoy1].choose);</pre>
+<h2><a class='anchor' name='Example%202'>Example 2</a></h2>
+
+<p>Using addHalo/getHalo (in JITLibExtensions) allows a very self-contained way of working with presets:<pre class='code prettyprint lang-sc'>g.addHalo(\allKeys, g.getKeysValues.flop[0]);
+g.getHalo(\allKeys);
+g.addHalo(\presets, ());
+g.getHalo(\presets);
+
+g.addHalo(\storeAll, { g.getHalo.postcs });
+
+g.addHalo(\storeAll, { |halo, name| halo.presets.put(name, g.getKeysValues) });
+
+g.getHalo.storeAll(\base);
+
+// create sets of names to use in preset
+g.addHalo(\joyKeys, g.elementAt(\joy).flat.collect(_.name));
+g.addHalo(\butKeys, g.elementAt(\bt).collect(_.name));
+
+
+// create some random settings:
+g.elementsDict.do(_.value_(1.0.rand));
+
+g.elementsDict.do(_.value_(1.0.rand)); g.getHalo.storeAll(\rnd1);
+g.elementsDict.do(_.value_(1.0.rand)); g.getHalo.storeAll(\rnd2);
+
+
+// make random settings for smaller sets of keys only
+g.getHalo.joyKeys.do { |key| g.dictAt(key).value_(1.0.rand) };
+g.getHalo.storeAll(\rndJoy1);
+
+
+g.getHalo.butKeys.do { |key| g.dictAt(key).value_(1.0.rand) };
+g.getHalo.storeAll(\rndBut1);
+
+g.addHalo(\recall, { |halo, name| g.setKeysValues(halo.presets[name].postln) });
+
+// restore to initial setting
+g.getHalo.recall(\base);
+
+// give all elements an action,
+// then set states with doAction
+g.elementGroup.action_ { |el| "YO: % %\n".postf(el.name, el.value.round(0.001)) };
+
+// randomly set to one of them
+g.setKVAction(g.getHalo.presets.choose);</pre>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Tutorials/Creating_Presets_for_MKtl_Values.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Tutorials/Creating_Presets_for_MKtl_Values.schelp</a><br>link::Tutorials/Creating_Presets_for_MKtl_Values::<br>sc version: 3.9dev</div></div></body></html>

@@ -1,0 +1,155 @@
+<html><head><title>PagedMKtl</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<h1>PagedMKtl<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>polyphonic control and paging for MKtls</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/PagedMKtl.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/PagedMKtl.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*all'>all</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-name'>name</a> </li>
+<li class='toc3'><a href='#-mktlDict'>mktlDict</a> </li>
+<li class='toc3'><a href='#-pageNames'>pageNames</a> </li>
+<li class='toc3'><a href='#-currMktl'>currMktl</a> </li>
+<li class='toc3'><a href='#-currPage'>currPage</a> </li>
+<li class='toc3'><a href='#-currIndex'>currIndex</a> </li>
+<li class='toc3'><a href='#-up'>up</a>  <a href='#-down'>down</a> </li>
+<li class='toc3'><a href='#-page'>page</a> </li>
+<li class='toc3'><a href='#-pageByIndex'>pageByIndex</a> </li>
+<li class='toc3'><a href='#-pageByName'>pageByName</a> </li>
+<li class='toc3'><a href='#-allOff'>allOff</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>In Modality, one can have several MKtls for the same device, and switch between them, like hardware controller pages. One can also activate them polyphically if desired, e.g. to control multiple similar processes from the same gestures.
+<p>A PagedMKtl lets one make such pages for a single physical controller. It has a dict of several MKtls, which are all controlled from the same physical interface. Paging to one contained MKtl enables it, and disables all other pages/mktls.<div class='note'><span class='notelabel'>NOTE:</span> Due to the current implementation of HIDMKtlDevice, all MKtls will point to the same instance of HIDMKtlDevice.</div>
+<p>First code examples:<pre class='code prettyprint lang-sc'>// MIDI - Attach a single nanoKontrol2 first if you have one, then find it:
+MKtl.find(\midi);
+
+// Make some MKtls which point to the same device
+MKtl('ada', "korg-nanokontrol2");
+MKtl('bob', "korg-nanokontrol2");
+MKtl('cyc', "korg-nanokontrol2");
+
+p = PagedMKtl(\nk2, [\ada, \bob, \cyc]);
+
+// now give each one a different action for the rew button
+MKtl('\ada').elAt(\tr, \rew).action_({ "rew page ada".postln });
+MKtl('\bob').elAt(\tr, \rew).action_({ "rew page bob".reverse.postln });
+MKtl('\cyc').elAt(\tr, \rew).action_({ "rew page cyc".scramble.postln });
+
+// now hit the rew button - all three are active!
+
+p.page(\ada);  // hit rew
+p.page(\bob);  // again
+p.page(\cyc);  // and again
+
+p.up.currPage;  //
+p.down.currPage;  //
+p.down.currIndex;  //
+
+// HID - create two MKtls for a gamepad:
+
+MKtl.find(\hid);
+// make two Mktls for a saitek gamepad
+g = MKtl('g', "*impact*gamepad");
+i = MKtl('i', "*impact*gamepad");
+
+// they will point to the same HID device!
+g.device.source === i.device.source;
+g.device.source.id;
+
+// set an action for all elements of g
+g.elAt.action = { |el ... groups| [el.source, el.name, el.value.round(0.001)].postln };
+i.elAt.action = { |el ... groups| [el.source, el.name, el.value.round(0.001)].postln };
+g.gui; i.gui;
+
+// press some buttons - actions of both MKtls will run and post:
+[ MKtl('g'), joy_r_y, 0.506 ]
+[ MKtl('i'), joy_r_y, 0.506 ]
+
+// add an action for button 1
+g.elAt(\bt, \1).action = { "ONE!".postln };
+i.elAt(\bt, \1).action = { "ENO?".postln };
+
+// switch between the two by hand
+g.enable; i.disable;
+i.enable; g.disable;
+
+// make a third one, then turn the three into a PagedMKtl
+MKtl('h', "*impact*gamepad");
+MKtl('h').elAt.action = g.elAt.action;
+MKtl('h').elAt(\bt, \1).action = { "T W O".postln };
+p = PagedMKtl(\impact, ['g', 'h', 'i']);
+
+// activate one at a time, add try using it after each one
+p.page(\g);
+p.page(\h);
+p.page(\i);
+
+// enable/disable all 3 at the same time:
+p.mktlDict.do(_.enable);
+// all off
+p.mktlDict.do(_.disable);</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a> </h3>
+<div class='method'>
+<p>all PagedMktls by name.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>name</span>, <span class='argstr'>mktlNames</span>, <span class='argstr'>pageNames</span>)</h3>
+<div class='method'>
+<p>make a paged MKtl<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>name for the PagedMKtl<tr><td class='argumentname'>mktlNames<td class='argumentdesc'>
+<p>an array of names of MKtl names which already exist, and which are usually all controlled from the same physical interface.<tr><td class='argumentname'>pageNames<td class='argumentdesc'>
+<p>an optional list of names for the pages, which can be different from the MKtl names.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a> </h3>
+<div class='method'>
+<p>the name of the PagedMKtl</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-mktlDict' href='./../Overviews/Methods.html#mktlDict'>mktlDict</a> </h3>
+<div class='method'>
+<p>the dict of mktls used as pages</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pageNames' href='./../Overviews/Methods.html#pageNames'>pageNames</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-pageNames' href='./../Overviews/Methods.html#pageNames'>pageNames</a> = value</h3>
+<div class='method'>
+<p>get the list of pageNames</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-currMktl' href='./../Overviews/Methods.html#currMktl'>currMktl</a> </h3>
+<div class='method'>
+<p>get currently active MKtl/page</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-currPage' href='./../Overviews/Methods.html#currPage'>currPage</a> </h3>
+<div class='method'>
+<p>get the currently active page name</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-currIndex' href='./../Overviews/Methods.html#currIndex'>currIndex</a> </h3>
+<div class='method'>
+<p>get the index of the currently active page name</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-up' href='./../Overviews/Methods.html#up'>up</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-down' href='./../Overviews/Methods.html#down'>down</a> </h3>
+<div class='method'>
+<p>step pages by + 1 / -1</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-page' href='./../Overviews/Methods.html#page'>page</a> (<span class='argstr'>nameOrIndex</span>)</h3>
+<div class='method'>
+<p>page to a name or index</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pageByIndex' href='./../Overviews/Methods.html#pageByIndex'>pageByIndex</a> (<span class='argstr'>index</span>, <span class='argstr'>wrap: true</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>index<td class='argumentdesc'><tr><td class='argumentname'>wrap<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pageByName' href='./../Overviews/Methods.html#pageByName'>pageByName</a> (<span class='argstr'>pageKey</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>pageKey<td class='argumentdesc'></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-allOff' href='./../Overviews/Methods.html#allOff'>allOff</a> </h3>
+<div class='method'>
+<p>turn all pages off</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/PagedMKtl.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/PagedMKtl.schelp</a><br>link::Classes/PagedMKtl::<br>sc version: 3.9dev</div></div></body></html>

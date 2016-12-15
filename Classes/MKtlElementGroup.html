@@ -1,0 +1,237 @@
+<html><head><title>MKtlElementGroup</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a></div>
+<h1>MKtlElementGroup<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>A group of MKtlElements or MKtlElementGroups</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/MKtlElementGroup.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/MKtlElementGroup.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/MKtlElement.html">MKtlElement</a> : <a href="../Classes/MAbstractElement.html">MAbstractElement</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/MKtlElementCollective.html">MKtlElementCollective</a></div>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MAbstractElement.html">MAbstractElement</a>, <a href="./../Classes/MKtl.html">MKtl</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*newFrom'>newFrom</a> </li>
+<li class='toc3'><a href='#*fromDesc'>fromDesc</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-elements'>elements</a> </li>
+<li class='toc3'><a href='#-dict'>dict</a> </li>
+<li class='toc3'><a href='#-elAt'>elAt</a> </li>
+<li class='toc3'><a href='#-action'>action</a> </li>
+<li class='toc3'><a href='#-do'>do</a> </li>
+<li class='toc3'><a href='#-asArray'>asArray</a> </li>
+<li class='toc3'><a href='#-flat'>flat</a> </li>
+<li class='toc3'><a href='#-gui'>gui</a> </li>
+<li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc3'><a href='#-deviceValue'>deviceValue</a> </li>
+<li class='toc3'><a href='#-prevValue'>prevValue</a>  <a href='#-prevDeviceValue'>prevDeviceValue</a> </li>
+<li class='toc3'><a href='#-valueAction'>valueAction</a>  <a href='#-deviceValueAction'>deviceValueAction</a> </li>
+<li class='toc3'><a href='#-isOn'>isOn</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-add'>add</a> </li>
+<li class='toc3'><a href='#-addAction'>addAction</a> </li>
+<li class='toc3'><a href='#-addTag'>addTag</a> </li>
+<li class='toc3'><a href='#-asBaseClass'>asBaseClass</a> </li>
+<li class='toc3'><a href='#-at'>at</a> </li>
+<li class='toc3'><a href='#-attachChildren'>attachChildren</a> </li>
+<li class='toc3'><a href='#-canFlatten'>canFlatten</a> </li>
+<li class='toc3'><a href='#-collect'>collect</a> </li>
+<li class='toc3'><a href='#-detachChildren'>detachChildren</a> </li>
+<li class='toc3'><a href='#-doAction'>doAction</a> </li>
+<li class='toc3'><a href='#-doGroupAction'>doGroupAction</a> </li>
+<li class='toc3'><a href='#-doesNotUnderstand'>doesNotUnderstand</a> </li>
+<li class='toc3'><a href='#-elemIndexOf'>elemIndexOf</a> </li>
+<li class='toc3'><a href='#-elemKeyOf'>elemKeyOf</a> </li>
+<li class='toc3'><a href='#-elementsForTag'>elementsForTag</a> </li>
+<li class='toc3'><a href='#-flatIf'>flatIf</a> </li>
+<li class='toc3'><a href='#-flatten'>flatten</a> </li>
+<li class='toc3'><a href='#-getElementsForGUI'>getElementsForGUI</a> </li>
+<li class='toc3'><a href='#-groupAction'>groupAction</a> </li>
+<li class='toc3'><a href='#-groupDeviceValueAction'>groupDeviceValueAction</a> </li>
+<li class='toc3'><a href='#-groupType'>groupType</a> </li>
+<li class='toc3'><a href='#-groupValueAction'>groupValueAction</a> </li>
+<li class='toc3'><a href='#-indexOf'>indexOf</a> </li>
+<li class='toc3'><a href='#-inject'>inject</a> </li>
+<li class='toc3'><a href='#-keys'>keys</a> </li>
+<li class='toc3'><a href='#-postElements'>postElements</a> </li>
+<li class='toc3'><a href='#-prAddGroup'>prAddGroup</a> </li>
+<li class='toc3'><a href='#-prFlat'>prFlat</a> </li>
+<li class='toc3'><a href='#-prRemoveGroup'>prRemoveGroup</a> </li>
+<li class='toc3'><a href='#-prettyValues'>prettyValues</a> </li>
+<li class='toc3'><a href='#-put'>put</a> </li>
+<li class='toc3'><a href='#-remove'>remove</a> </li>
+<li class='toc3'><a href='#-removeAction'>removeAction</a> </li>
+<li class='toc3'><a href='#-removeAll'>removeAll</a> </li>
+<li class='toc3'><a href='#-removeTag'>removeTag</a> </li>
+<li class='toc3'><a href='#-resetAction'>resetAction</a> </li>
+<li class='toc3'><a href='#-select'>select</a> </li>
+<li class='toc3'><a href='#-shape'>shape</a> </li>
+<li class='toc3'><a href='#-shared'>shared</a> </li>
+<li class='toc3'><a href='#-size'>size</a> </li>
+<li class='toc3'><a href='#-sortElementsByType'>sortElementsByType</a> </li>
+<li class='toc3'><a href='#-source'>source</a> </li>
+<li class='toc3'><a href='#-tags'>tags</a> </li>
+<li class='toc3'><a href='#-useSingleGui'>useSingleGui</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>MKtlElementGroup is used in the hierarchical tree structure of <a href="./../Classes/MKtl.html#elements">MKtl: elements</a>. It can do an action when any of the elements it contains is touched. MKtlElementGroup can also be used to make custom groups of MKtlElements and other MKtlElementGroups. The elements are stored in a fixed order, and can be accessed equally via either an index (a number) or a key (a symbol). See also <a href="./../Tutorials/Creating_Named_Groups.html">Creating Named Groups</a> and <a href="./../Tutorials/Creating_Custom_Elements_and_Groups.html">Creating Custom Elements and Groups</a><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>name</span>, <span class='argstr'>source</span>, <span class='argstr'>elements</span>)</h3>
+<div class='method'>
+<p>create a new MKtlElementGroup with a name, a source MKtl, and a list of elements</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newFrom' href='./../Overviews/Methods.html#newFrom'>newFrom</a> (<span class='argstr'>elements</span>)</h3>
+<div class='method'>
+<p>create an MKtlElementGroup from a list of elements</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fromDesc' href='./../Overviews/Methods.html#fromDesc'>fromDesc</a> (<span class='argstr'>desc</span>, <span class='argstr'>srcMktl</span>)</h3>
+<div class='method'>
+<p>create an MKtlElementGroup from an element description, as contained in a desc file.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-elements' href='./../Overviews/Methods.html#elements'>elements</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-elements' href='./../Overviews/Methods.html#elements'>elements</a> = <span class='argstr'>newElements</span></h3>
+<div class='method'>
+<p>gets and sets the <code class='code prettyprint lang-sc'>Array</code> of elements contained</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-dict' href='./../Overviews/Methods.html#dict'>dict</a> </h3>
+<div class='method'>
+<p>gets and sets the <code class='code prettyprint lang-sc'>Event</code> containing all elements of the group</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-elAt' href='./../Overviews/Methods.html#elAt'>elAt</a> ( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>get an element inside the group via a list of indices or keys.<pre class='code prettyprint lang-sc'>m = MKtl( 'nk2', "*nanokontrol2" ); // create a NanoKONTROL2 MKtl
+g = m.elementGroup;
+
+g.elAt( \bt ); // returns the buttons
+g.elAt( \bt, 0 ); // returns the first group of buttons
+g.elAt( \bt, 0, 4 ); // returns the first group of buttons
+g.elAt( 0, \play ); // returns the first group \tr, and the \play button.</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-action' href='./../Overviews/Methods.html#action'>action</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-action' href='./../Overviews/Methods.html#action'>action</a> = <span class='argstr'>func</span></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/MAbstractElement.html'>MAbstractElement</a></div>
+<div class='method'>
+<p>a <code class='code prettyprint lang-sc'>Function</code> that is fired when any of the enclosed elements is touched. The first argument of this function is the <code class='code prettyprint lang-sc'>MKtlElement</code> that is touched. The arguments that follow are it's enclosing MKtlElementGroups up until <code class='code prettyprint lang-sc'>this</code>.<pre class='code prettyprint lang-sc'>m.elementGroup.action = { |...args|
+    "group action: ".postln;
+    args.do { |el| $\t.post; el.postln };
+};
+m.elementsDict.choose.doAction;</pre>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-do' href='./../Overviews/Methods.html#do'>do</a> (<span class='argstr'>function</span>)</h3>
+<div class='method'>
+<p>Iterate a function for its enclosed MKtlElements and MKtlGroups<pre class='code prettyprint lang-sc'>m.elementGroup.do { |el| el.postln };</pre>
+
+<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-asArray' href='./../Overviews/Methods.html#asArray'>asArray</a> </h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a nested <code class='code prettyprint lang-sc'>Array</code> structure of the enclosed elements. Any enclosed element that is an <code class='code prettyprint lang-sc'>MKtlElementGroup</code> will be converted into a normal <code class='code prettyprint lang-sc'>Array</code></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-flat' href='./../Overviews/Methods.html#flat'>flat</a> </h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a flat <code class='code prettyprint lang-sc'>Array</code> of all enclosed MKtlElements.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-gui' href='./../Overviews/Methods.html#gui'>gui</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/GUI/MKtlElementGUI.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/GUI/MKtlElementGUI.sc</a></div>
+<div class='method'>
+<p>open a GUI window for <code class='code prettyprint lang-sc'>this</code><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>parent<td class='argumentdesc'>
+<p>the parent window (will create one if not specified)<tr><td class='argumentname'>bounds<td class='argumentdesc'>
+<p>the desired bounds of the window</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <code class='code prettyprint lang-sc'>MKtlElementGroupGUI</code></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-value' href='./../Overviews/Methods.html#value'>value</a> = <span class='argstr'>newvals</span></h3>
+<div class='method'>
+<p>get and set the value of all elements in the group (nested if group is nested)<pre class='code prettyprint lang-sc'>m.gui;
+g.value;
+g.elAt(\tr).size; // 11 buttons in tr
+g.elAt(\tr).value = 11.collect { 2.rand }; // 11 buttons in tr</pre>
+
+<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-deviceValue' href='./../Overviews/Methods.html#deviceValue'>deviceValue</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-deviceValue' href='./../Overviews/Methods.html#deviceValue'>deviceValue</a> = <span class='argstr'>newvals</span></h3>
+<div class='method'>
+<p>get and set the deviceValue of all elements in the group</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-prevValue' href='./../Overviews/Methods.html#prevValue'>prevValue</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prevDeviceValue' href='./../Overviews/Methods.html#prevDeviceValue'>prevDeviceValue</a> </h3>
+<div class='method'>
+<p>get the previous value or deviceValue of all elements in the group</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-valueAction' href='./../Overviews/Methods.html#valueAction'>valueAction</a> = <span class='argstr'>newvals</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-deviceValueAction' href='./../Overviews/Methods.html#deviceValueAction'>deviceValueAction</a> = <span class='argstr'>newvals</span></h3>
+<div class='method'>
+<p>set the value or deviceValue of all elements in the group, and do the action of the group only (i.e. not of each element contained)</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isOn' href='./../Overviews/Methods.html#isOn'>isOn</a> </h3>
+<div class='method'>
+<p>for groups of MIDI [\noteOn, \noteOff], return true if the \on element was activated last. see <a href="./../Tutorials/How_to_create_a_description_file_for_MIDI.html">How to create a description file for a MIDI device</a></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-add' href='./../Overviews/Methods.html#add'>add</a> (<span class='argstr'>element</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addAction' href='./../Overviews/Methods.html#addAction'>addAction</a> (<span class='argstr'>argAction</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addTag' href='./../Overviews/Methods.html#addTag'>addTag</a> ( <span class='argstr'>... newTags</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-asBaseClass' href='./../Overviews/Methods.html#asBaseClass'>asBaseClass</a> (<span class='argstr'>recursive: true</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-at' href='./../Overviews/Methods.html#at'>at</a> (<span class='argstr'>keyOrIndex</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-attachChildren' href='./../Overviews/Methods.html#attachChildren'>attachChildren</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-canFlatten' href='./../Overviews/Methods.html#canFlatten'>canFlatten</a> (<span class='argstr'>post: true</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/extElemGroup.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/extElemGroup.sc</a></div>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-collect' href='./../Overviews/Methods.html#collect'>collect</a> (<span class='argstr'>function</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-detachChildren' href='./../Overviews/Methods.html#detachChildren'>detachChildren</a> (<span class='argstr'>ignoreAction: false</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-doAction' href='./../Overviews/Methods.html#doAction'>doAction</a> ( <span class='argstr'>... children</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-doGroupAction' href='./../Overviews/Methods.html#doGroupAction'>doGroupAction</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-doesNotUnderstand' href='./../Overviews/Methods.html#doesNotUnderstand'>doesNotUnderstand</a> (<span class='argstr'>selector</span> <span class='argstr'>... args</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-elemIndexOf' href='./../Overviews/Methods.html#elemIndexOf'>elemIndexOf</a> (<span class='argstr'>item</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-elemKeyOf' href='./../Overviews/Methods.html#elemKeyOf'>elemKeyOf</a> (<span class='argstr'>item</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-elementsForTag' href='./../Overviews/Methods.html#elementsForTag'>elementsForTag</a> ( <span class='argstr'>... tag</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-flatIf' href='./../Overviews/Methods.html#flatIf'>flatIf</a> (<span class='argstr'>func</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-flatten' href='./../Overviews/Methods.html#flatten'>flatten</a> </h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/extElemGroup.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/extElemGroup.sc</a></div>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-getElementsForGUI' href='./../Overviews/Methods.html#getElementsForGUI'>getElementsForGUI</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-groupAction' href='./../Overviews/Methods.html#groupAction'>groupAction</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-groupAction' href='./../Overviews/Methods.html#groupAction'>groupAction</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-groupDeviceValueAction' href='./../Overviews/Methods.html#groupDeviceValueAction'>groupDeviceValueAction</a> = <span class='argstr'>newvals</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-groupType' href='./../Overviews/Methods.html#groupType'>groupType</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-groupType' href='./../Overviews/Methods.html#groupType'>groupType</a> = value</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-groupValueAction' href='./../Overviews/Methods.html#groupValueAction'>groupValueAction</a> = <span class='argstr'>newvals</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-indexOf' href='./../Overviews/Methods.html#indexOf'>indexOf</a> (<span class='argstr'>item</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-inject' href='./../Overviews/Methods.html#inject'>inject</a> (<span class='argstr'>thisValue</span>, <span class='argstr'>function</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-keys' href='./../Overviews/Methods.html#keys'>keys</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-postElements' href='./../Overviews/Methods.html#postElements'>postElements</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prAddGroup' href='./../Overviews/Methods.html#prAddGroup'>prAddGroup</a> (<span class='argstr'>group</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prFlat' href='./../Overviews/Methods.html#prFlat'>prFlat</a> (<span class='argstr'>list</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prRemoveGroup' href='./../Overviews/Methods.html#prRemoveGroup'>prRemoveGroup</a> (<span class='argstr'>group</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prettyValues' href='./../Overviews/Methods.html#prettyValues'>prettyValues</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-put' href='./../Overviews/Methods.html#put'>put</a> (<span class='argstr'>index</span>, <span class='argstr'>element</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-remove' href='./../Overviews/Methods.html#remove'>remove</a> (<span class='argstr'>element</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeAction' href='./../Overviews/Methods.html#removeAction'>removeAction</a> (<span class='argstr'>argAction</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeAll' href='./../Overviews/Methods.html#removeAll'>removeAll</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeTag' href='./../Overviews/Methods.html#removeTag'>removeTag</a> ( <span class='argstr'>... newTags</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-resetAction' href='./../Overviews/Methods.html#resetAction'>resetAction</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-select' href='./../Overviews/Methods.html#select'>select</a> (<span class='argstr'>function</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-shape' href='./../Overviews/Methods.html#shape'>shape</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-shared' href='./../Overviews/Methods.html#shared'>shared</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-shared' href='./../Overviews/Methods.html#shared'>shared</a> = <span class='argstr'>dict</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-size' href='./../Overviews/Methods.html#size'>size</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sortElementsByType' href='./../Overviews/Methods.html#sortElementsByType'>sortElementsByType</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-source' href='./../Overviews/Methods.html#source'>source</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-tags' href='./../Overviews/Methods.html#tags'>tags</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-useSingleGui' href='./../Overviews/Methods.html#useSingleGui'>useSingleGui</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-useSingleGui' href='./../Overviews/Methods.html#useSingleGui'>useSingleGui</a> = value</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>m = MKtl( 'nk2', "*nanokontrol2" ); // create a NanoKONTROL2 MKtl
+
+m.elementGroup; // returns the main MKtlElementGroup of the MKtl
+
+m.elAt( \bt ); // returns the MKtlElementGroup containing the buttons
+
+m.elAt( \bt, 0 ).flat; // creates and returns an Array with the first row of buttons
+
+// make a group of the upper row of buttons
+a = MKtlElementGroup( 'group', m, m.elAt( \bt, 0 ).flat );
+
+// assign an action to be fired when any element in the group is touched
+// the first argument will be the touched MKtlElement, the second argument
+// in this case will be the MKtlElementGroup we just created.
+a.action = { |...args| [ args[0].index, args[0].value ].postln; };</pre>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MKtlElementGroup.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MKtlElementGroup.schelp</a><br>link::Classes/MKtlElementGroup::<br>sc version: 3.9dev</div></div></body></html>

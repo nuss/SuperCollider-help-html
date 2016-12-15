@@ -1,0 +1,295 @@
+<html><head><title>MKtlDesc</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Modality'>Modality</a></div>
+<h1>MKtlDesc<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>handling descriptions of interface devices in Modality</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/MKtlDesc.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/MKtlDesc.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Reference/MKtl_description_files.html">MKtl description files</a>, <a href="./../Classes/MKtlElement.html">MKtlElement</a>, <a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a>, <a href="./../Reference/Naming_conventions_in_element_descriptions.html">Naming conventions in element descriptions</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*defaultFolder'>defaultFolder</a> </li>
+<li class='toc3'><a href='#*userFolder'>userFolder</a> </li>
+<li class='toc3'><a href='#*folderName'>folderName</a> </li>
+<li class='toc3'><a href='#*descFolders'>descFolders</a> </li>
+<li class='toc3'><a href='#*addFolder'>addFolder</a> </li>
+<li class='toc3'><a href='#*openFolder'>openFolder</a> </li>
+<li class='toc3'><a href='#*loadDescs'>loadDescs</a> </li>
+<li class='toc3'><a href='#*allDescs'>allDescs</a> </li>
+<li class='toc3'><a href='#*postStatus'>postStatus</a> </li>
+<li class='toc3'><a href='#*postLoadable'>postLoadable</a> </li>
+<li class='toc3'><a href='#*postLoaded'>postLoaded</a> </li>
+<li class='toc3'><a href='#*descKeysUsed'>descKeysUsed</a> </li>
+<li class='toc3'><a href='#*deviceTypesUsed'>deviceTypesUsed</a> </li>
+<li class='toc3'><a href='#*elementTypesUsed'>elementTypesUsed</a> </li>
+<li class='toc3'><a href='#*notePair'>notePair</a> </li>
+<li class='toc3'><a href='#*notePairs'>notePairs</a> </li>
+<li class='toc3'><a href='#*isValidDescDict'>isValidDescDict</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*at'>at</a> </li>
+<li class='toc3'><a href='#*fromFileName'>fromFileName</a> </li>
+<li class='toc3'><a href='#*fromDict'>fromDict</a> </li>
+<li class='toc3'><a href='#*findFile'>findFile</a> </li>
+<li class='toc3'><a href='#*fromPath'>fromPath</a> </li>
+<li class='toc3'><a href='#*web'>web</a> </li>
+<li class='toc2'><a href='#internal%20methods'>internal methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*compExt'>compExt</a>  <a href='#*descExt'>descExt</a> </li>
+<li class='toc3'><a href='#*fileToIDDict'>fileToIDDict</a> </li>
+<li class='toc3'><a href='#*idInfoForFilename'>idInfoForFilename</a> </li>
+<li class='toc3'><a href='#*filenamesForIDInfo'>filenamesForIDInfo</a> </li>
+<li class='toc3'><a href='#*writeCache'>writeCache</a>  <a href='#*cacheName'>cacheName</a>  <a href='#*loadCache'>loadCache</a>  <a href='#*updateCache'>updateCache</a> </li>
+<li class='toc3'><a href='#*platformSpecific'>platformSpecific</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*checkUserFolder'>checkUserFolder</a> </li>
+<li class='toc3'><a href='#*deepExpand'>deepExpand</a> </li>
+<li class='toc3'><a href='#*expandElemToGroup'>expandElemToGroup</a> </li>
+<li class='toc3'><a href='#*findGenericForHID'>findGenericForHID</a> </li>
+<li class='toc3'><a href='#*groupFuncs'>groupFuncs</a> </li>
+<li class='toc3'><a href='#*initGroupFuncs'>initGroupFuncs</a> </li>
+<li class='toc3'><a href='#*matchInfo'>matchInfo</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-idInfo'>idInfo</a> </li>
+<li class='toc3'><a href='#-protocol'>protocol</a> </li>
+<li class='toc3'><a href='#-deviceFilename'>deviceFilename</a> </li>
+<li class='toc3'><a href='#-testCode'>testCode</a> </li>
+<li class='toc3'><a href='#-openTestCode'>openTestCode</a> </li>
+<li class='toc3'><a href='#-fullDesc'>fullDesc</a> </li>
+<li class='toc3'><a href='#-elementsDesc'>elementsDesc</a> </li>
+<li class='toc3'><a href='#-elAt'>elAt</a> </li>
+<li class='toc3'><a href='#-elementsDict'>elementsDict</a> </li>
+<li class='toc3'><a href='#-dictAt'>dictAt</a> </li>
+<li class='toc3'><a href='#-web'>web</a> </li>
+<li class='toc3'><a href='#-openFile'>openFile</a> </li>
+<li class='toc3'><a href='#-postInfo'>postInfo</a> </li>
+<li class='toc3'><a href='#-postElements'>postElements</a> </li>
+<li class='toc3'><a href='#-path'>path</a> </li>
+<li class='toc3'><a href='#-writeFile'>writeFile</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-elementTypesUsed'>elementTypesUsed</a> </li>
+<li class='toc3'><a href='#-matchWithHID'>matchWithHID</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>MKtlDesc can read description files for hardware interface devices into <a href="./../Classes/MKtlDesc.html">MKtlDesc</a> instances. Usually, this happens automatically when an <a href="./../Classes/MKtl.html">MKtl</a> is instantiated.<div class='note'><span class='notelabel'>NOTE:</span> The file syntax can be found at <a href="./../Reference/MKtl_description_files.html">MKtl description files</a>, element description keys can be found at <a href="./../Reference/Naming_conventions_in_element_descriptions.html">Naming conventions in element descriptions</a>.</div>
+<p>Some examples:
+<p>Which devices are supported by Modality? Look at the webpage:<pre class='code prettyprint lang-sc'>MKtlDesc.web; // SC-internal webView
+MKtlDesc.docURI.openOS; // open in browser</pre>
+
+<p>Folders:<pre class='code prettyprint lang-sc'>MKtlDesc.defaultFolder;              // where modality puts descriptions
+MKtlDesc.userFolder;              // where user can put personalized descriptions
+
+MKtlDesc.addFolder("~/Desktop/"); // Add custom folders if desired
+MKtlDesc.descFolders;              // which show up here
+MKtlDesc.openFolder(0);              // open by index, 0 is defaultFolder, 1 is userFolder
+MKtlDesc.openFolder(1);</pre>
+
+<p>Loading:<pre class='code prettyprint lang-sc'>MKtlDesc.loadDescs;                // load all description files
+MKtlDesc.loadDescs("*nano*");    // or matching ones
+MKtlDesc.loadDescs("nano*", folderIndex: 0); // in specific places</pre>
+
+<p>Global inspection:<pre class='code prettyprint lang-sc'>MKtlDesc.allDescs;                // all currently loaded descs
+MKtlDesc('korg-nanokey2').dump;    // look at one
+MKtlDesc('korg-nanokey2').web;    // open its web documentation</pre>
+
+<p>Make an MKtlDesc from a desc filename<pre class='code prettyprint lang-sc'>x = MKtl/Desc.fromFileName("korg-nanokontrol2");
+x.openFile;            // open its file
+x.fullDesc            // the dict that contains all the info
+x.fullDesc.keys;    // the description items:
+x.protocol;            // one of [\midi, \hid, \osc];
+x.idInfo.postcs;    // the device name under which it registers in the OS
+x.fullDesc[\testCode].cs; // optional testCode, wrapped into a function
+
+x.elementsDesc;        // the hierarchical description of the elements
+x.elAt(\sl);        // access single elements or groups by name or index
+x.elAt(\sl, 0);        // access elements by name or index
+x.elementsDict.keys;
+
+x.postInfo;            // post overview info
+x.postInfo(postElements: true); // and the elements too
+x.postElements;
+
+// generate default test code for a desc name:
+MKtlDesc.defaultTestCode("korg-nanokontrol");
+MKtlDesc("*nanokontrol").testCode;
+// in its own document for quick testing
+MKtlDesc("*nanokontrol").openTestCode;
+
+// nanokontrol2 has specific testCode in the desc itself
+d = MKtlDesc("*nanokontrol2");
+d.fullDesc[\testCode];
+d.testCode;</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultFolder' href='./../Overviews/Methods.html#defaultFolder'>defaultFolder</a> </h3>
+<div class='method'>
+<p>the path where the folder for MKtlDesc files lives.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*userFolder' href='./../Overviews/Methods.html#userFolder'>userFolder</a> </h3>
+<div class='method'>
+<p>the path where users can put personalized MKtlDesc files.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*folderName' href='./../Overviews/Methods.html#folderName'>folderName</a> </h3>
+<div class='method'>
+<p>the name of the defaultFolder and userFolder.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*descFolders' href='./../Overviews/Methods.html#descFolders'>descFolders</a> </h3>
+<div class='method'>
+<p>all descFolders within which to look for MKtlDesc files.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*addFolder' href='./../Overviews/Methods.html#addFolder'>addFolder</a> (<span class='argstr'>path</span>, <span class='argstr'>name</span>)</h3>
+<div class='method'>
+<p>add a folder to descFolders</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*openFolder' href='./../Overviews/Methods.html#openFolder'>openFolder</a> (<span class='argstr'>index: 0</span>)</h3>
+<div class='method'>
+<p>open folder(s) in descFolders by index.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadDescs' href='./../Overviews/Methods.html#loadDescs'>loadDescs</a> (<span class='argstr'>filename: "*"</span>, <span class='argstr'>folderIndex</span>, <span class='argstr'>post: false</span>)</h3>
+<div class='method'>
+<p>load matching descriptions in descFolders.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*allDescs' href='./../Overviews/Methods.html#allDescs'>allDescs</a> </h3>
+<div class='method'>
+<p>dict of all currently loaded descs</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*postStatus' href='./../Overviews/Methods.html#postStatus'>postStatus</a> (<span class='argstr'>showWorking: false</span>)</h3>
+<div class='method'>
+<p>post status and name of all loaded descs<pre class='code prettyprint lang-sc'>MKtlDesc.postStatus;</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*postLoadable' href='./../Overviews/Methods.html#postLoadable'>postLoadable</a> (<span class='argstr'>folderIndex</span>)</h3>
+<div class='method'>
+<p>post the filenames of descs that can be loaded<pre class='code prettyprint lang-sc'>MKtlDesc.postLoadable;</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*postLoaded' href='./../Overviews/Methods.html#postLoaded'>postLoaded</a> </h3>
+<div class='method'>
+<p>post currently loaded descs<pre class='code prettyprint lang-sc'>MKtlDesc.postLoaded;</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*descKeysUsed' href='./../Overviews/Methods.html#descKeysUsed'>descKeysUsed</a> </h3>
+<div class='method'>
+<p>collect all element keys used in loaded descs<pre class='code prettyprint lang-sc'>MKtlDesc.descKeysUsed;</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*deviceTypesUsed' href='./../Overviews/Methods.html#deviceTypesUsed'>deviceTypesUsed</a> </h3>
+<div class='method'>
+<p>collect all device types used in loaded descs<pre class='code prettyprint lang-sc'>MKtlDesc.deviceTypesUsed;</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*elementTypesUsed' href='./../Overviews/Methods.html#elementTypesUsed'>elementTypesUsed</a> </h3>
+<div class='method'>
+<p>collect all element types used in loaded descs<pre class='code prettyprint lang-sc'>MKtlDesc.elementTypesUsed;</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*notePair' href='./../Overviews/Methods.html#notePair'>notePair</a> (<span class='argstr'>key</span>, <span class='argstr'>midiNum</span>, <span class='argstr'>shared</span>)</h3>
+<div class='method'>
+<p>make a pair of noteOn, noteOff elements<pre class='code prettyprint lang-sc'>MKtlDesc.notePair(\padL, 13);</pre>
+
+<p></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*notePairs' href='./../Overviews/Methods.html#notePairs'>notePairs</a> (<span class='argstr'>pairs</span>)</h3>
+<div class='method'>
+<p>make pairs for a list of key, note pairs<pre class='code prettyprint lang-sc'>MKtlDesc.notePairs([[\padL, 13], [\padL, 21]]).printAll;</pre>
+</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*isValidDescDict' href='./../Overviews/Methods.html#isValidDescDict'>isValidDescDict</a> (<span class='argstr'>dict</span>)</h3>
+<div class='method'>
+<p>check whether dict is a valid description dict.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>name</span>)</h3>
+<div class='method'>
+<p>create an MKtlDesc with a name, from a well-formed description file.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*at' href='./../Overviews/Methods.html#at'>at</a> (<span class='argstr'>descName</span>)</h3>
+<div class='method'>
+<p>access an MKtlDesc by name in the global repository</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fromFileName' href='./../Overviews/Methods.html#fromFileName'>fromFileName</a> (<span class='argstr'>filename</span>, <span class='argstr'>folderIndex</span>, <span class='argstr'>multi: false</span>)</h3>
+<div class='method'>
+<p>create an MKtlDesc from a file.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>filename<td class='argumentdesc'>
+<p>filename without path or extension, will be looked for in descfolders.<tr><td class='argumentname'>folderIndex<td class='argumentdesc'>
+<p>in which folder of descFolders to search the file<tr><td class='argumentname'>multi<td class='argumentdesc'>
+<p>flag whether to load multiple matching files</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fromDict' href='./../Overviews/Methods.html#fromDict'>fromDict</a> (<span class='argstr'>dict</span>)</h3>
+<div class='method'>
+<p>create an MKtlDesc from a well-formed description dict.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*findFile' href='./../Overviews/Methods.html#findFile'>findFile</a> (<span class='argstr'>filename: "*"</span>, <span class='argstr'>folderIndex</span>, <span class='argstr'>postFound: false</span>, <span class='argstr'>fileExt</span>)</h3>
+<div class='method'>
+<p>find the filepath for a given desc name.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fromPath' href='./../Overviews/Methods.html#fromPath'>fromPath</a> (<span class='argstr'>path</span>)</h3>
+<div class='method'>
+<p>create an MKtlDesc from a full file path.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*web' href='./../Overviews/Methods.html#web'>web</a> (<span class='argstr'>ctlname: ""</span>)</h3>
+<div class='method'>
+<p>get info for an MKtlDesc on the web<pre class='code prettyprint lang-sc'>MKtlDesc.web;
+MKtlDesc("*manta").web;
+MKtlDesc.webview;</pre>
+</div><h3><a class='anchor' name='internal%20methods'>internal methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*compExt' href='./../Overviews/Methods.html#compExt'>compExt</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*descExt' href='./../Overviews/Methods.html#descExt'>descExt</a> </h3>
+<div class='method'>
+<p>legal extensions for filenames</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*fileToIDDict' href='./../Overviews/Methods.html#fileToIDDict'>fileToIDDict</a> </h3>
+<div class='method'>
+<p>a dictionary that contains the idInfos for every desc file</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*idInfoForFilename' href='./../Overviews/Methods.html#idInfoForFilename'>idInfoForFilename</a> (<span class='argstr'>filename</span>)</h3>
+<div class='method'>
+<p>find device idInfo for given filename</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*filenamesForIDInfo' href='./../Overviews/Methods.html#filenamesForIDInfo'>filenamesForIDInfo</a> (<span class='argstr'>idInfoFromDev</span>)</h3>
+<div class='method'>
+<p>find filenames for a given device idInfo</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*writeCache' href='./../Overviews/Methods.html#writeCache'>writeCache</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*cacheName' href='./../Overviews/Methods.html#cacheName'>cacheName</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadCache' href='./../Overviews/Methods.html#loadCache'>loadCache</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*updateCache' href='./../Overviews/Methods.html#updateCache'>updateCache</a> </h3>
+<div class='method'>
+<p>support methods for cache of filenames and idInfos</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*platformSpecific' href='./../Overviews/Methods.html#platformSpecific'>platformSpecific</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*platformSpecific' href='./../Overviews/Methods.html#platformSpecific'>platformSpecific</a> = value</h3>
+<div class='method'>
+<p>Set <code class='code prettyprint lang-sc'>false</code> to disable platform specific replacements.<div class='note'><span class='notelabel'>NOTE:</span> This will break standard <code class='code prettyprint lang-sc'>MKtl</code> functionality and is only needed for rendering documentation!</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*checkUserFolder' href='./../Overviews/Methods.html#checkUserFolder'>checkUserFolder</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*deepExpand' href='./../Overviews/Methods.html#deepExpand'>deepExpand</a> (<span class='argstr'>groupDict</span>, <span class='argstr'>groupType</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*expandElemToGroup' href='./../Overviews/Methods.html#expandElemToGroup'>expandElemToGroup</a> (<span class='argstr'>dict</span>, <span class='argstr'>groupType</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*findGenericForHID' href='./../Overviews/Methods.html#findGenericForHID'>findGenericForHID</a> (<span class='argstr'>hid</span>, <span class='argstr'>rateForMatch: 0.5</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*groupFuncs' href='./../Overviews/Methods.html#groupFuncs'>groupFuncs</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initGroupFuncs' href='./../Overviews/Methods.html#initGroupFuncs'>initGroupFuncs</a> </h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*matchInfo' href='./../Overviews/Methods.html#matchInfo'>matchInfo</a> (<span class='argstr'>infoFromDev</span>, <span class='argstr'>infoInFile</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-idInfo' href='./../Overviews/Methods.html#idInfo'>idInfo</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-idInfo' href='./../Overviews/Methods.html#idInfo'>idInfo</a> = <span class='argstr'>type</span></h3>
+<div class='method'>
+<p>get the string by which the hardware device registers to the OS.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-protocol' href='./../Overviews/Methods.html#protocol'>protocol</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-protocol' href='./../Overviews/Methods.html#protocol'>protocol</a> = <span class='argstr'>type</span></h3>
+<div class='method'>
+<p>get and set the hardware protocol of the device.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-deviceFilename' href='./../Overviews/Methods.html#deviceFilename'>deviceFilename</a> </h3>
+<div class='method'>
+<p>get the filename of the desc file</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-testCode' href='./../Overviews/Methods.html#testCode'>testCode</a> (<span class='argstr'>includeDefault: true</span>)</h3>
+<div class='method'>
+<p>returns code to test a controller with this description.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-openTestCode' href='./../Overviews/Methods.html#openTestCode'>openTestCode</a> (<span class='argstr'>includeDefault: true</span>)</h3>
+<div class='method'>
+<p>Opens a Document with code to test a controller with this description.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-fullDesc' href='./../Overviews/Methods.html#fullDesc'>fullDesc</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-fullDesc' href='./../Overviews/Methods.html#fullDesc'>fullDesc</a> = <span class='argstr'>inDesc</span></h3>
+<div class='method'>
+<p>get MKtlDesc's properties, or set them from a dict fullDesc.elementsDesc contains the description of all elements</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-elementsDesc' href='./../Overviews/Methods.html#elementsDesc'>elementsDesc</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-elementsDesc' href='./../Overviews/Methods.html#elementsDesc'>elementsDesc</a> = <span class='argstr'>type</span></h3>
+<div class='method'>
+<p>the hierarchical dict that contains the description of all elements</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-elAt' href='./../Overviews/Methods.html#elAt'>elAt</a> ( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>access element descriptions hierarchically</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-elementsDict' href='./../Overviews/Methods.html#elementsDict'>elementsDict</a> </h3>
+<div class='method'>
+<p>the flat dict that contains descriptions of all elements by compound lookup name</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-dictAt' href='./../Overviews/Methods.html#dictAt'>dictAt</a> (<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>access element descriptions by compound hierarchic lookup name</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-web' href='./../Overviews/Methods.html#web'>web</a> </h3>
+<div class='method'>
+<p>open a webview on the device's info page at Modality website.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-openFile' href='./../Overviews/Methods.html#openFile'>openFile</a> </h3>
+<div class='method'>
+<p>open the desc file from which the MKtlDesc was generated</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-postInfo' href='./../Overviews/Methods.html#postInfo'>postInfo</a> (<span class='argstr'>postElements: false</span>)</h3>
+<div class='method'>
+<p>post info on the device, if postElements = true, also info on the elements</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-postElements' href='./../Overviews/Methods.html#postElements'>postElements</a> </h3>
+<div class='method'>
+<p>post info on the elements</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-path' href='./../Overviews/Methods.html#path'>path</a> </h3>
+<div class='method'>
+<p>the path where file was read (if so)</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-writeFile' href='./../Overviews/Methods.html#writeFile'>writeFile</a> (<span class='argstr'>path</span>)</h3>
+<div class='method'>
+<p>not done yet - should eventually write a well-formed description file at path based on its current data.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-elementTypesUsed' href='./../Overviews/Methods.html#elementTypesUsed'>elementTypesUsed</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-matchWithHID' href='./../Overviews/Methods.html#matchWithHID'>matchWithHID</a> (<span class='argstr'>hid</span>)</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// matching with generic desc files is done automatically now.
+
+// still, here an example for matching with a generic desc by hand:
+d = MKtlDesc.loadDescs("generic-mouse").first;
+m = MKtl.find(\hid);
+// we found an optical mouse with an hid ID, so make an MKtl,
+m = MKtl('m', 'hid_5_usb_optical_mouse');
+
+// generic-mouse desc matches, no extra elements on either side
+d.matchWithHID(m.device.source);
+
+// -&gt; this should happen automatically when no desc is found.
+// to test matching:
+// remove middle button in desc -&gt; now elements remain onlyInDesc
+d.elementsDict.removeAt(\bt_middle);
+d.matchWithHID(m.device.source);
+// remove hid elem 5 in HID -&gt; now elements remain onlyInHID as well
+m.device.source.elements.removeAt(5);
+d.matchWithHID(m.device.source);</pre>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MKtlDesc.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MKtlDesc.schelp</a><br>link::Classes/MKtlDesc::<br>sc version: 3.9dev</div></div></body></html>

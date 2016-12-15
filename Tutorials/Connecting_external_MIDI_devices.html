@@ -1,0 +1,82 @@
+<html><head><title>Connecting external MIDI devices</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider TUTORIALS (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a></div>
+<h1>Connecting external MIDI devices<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Using hardware with MIDI plugs in Modality.</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Reference/MKtl_description_files.html">MKtl description files</a>, <a href="./../Classes/MIDIExplorer.html">MIDIExplorer</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'></ul></div>
+<p>Many people have MIDI controllers they like which have only MIDI plugs, and must be connected to computers via a MIDI interface (which is often available onboard with audio interfaces or midi controllers).
+<p>This example uses an Doepfer pocketfader box (very sturdy metal box, 16 faders), and connects it via a Fireface 400, which has 2 MIDI ins and outs on a breakout cable.<pre class='code prettyprint lang-sc'>// 1. make an Mktl for the pocketfader
+MKtl(\pf, "*pocketfader"); MKtl(\pf).gui;
+
+// This will say that it is virtual only, because this desc
+// has an idInfo : "EXTERNAL", which is not an existing port name.
+MKtl(\pf).desc.fullDesc.at(\idInfo);
+
+// So we need to tell it which midi hardware interface we connect it to.
+
+
+// 2. find out which midi interfaces are there:
+MKtl.find(\midi);
+
+// this posts the 2 ports of the Fireface:
+
+// Available MIDIMKtls:
+// MKtl('myNickName', 'lookupName');
+        // [ midi device, portname, uid]
+...
+
+MKtl('midi_2_fireface_400__297__port_1', 'midi_2_fireface_400__297__port_1');
+        // [ "Fireface 400 (297)", "Port 1", 696824605 ]
+        // no matching desc files found!
+
+MKtl('midi_3_fireface_400__297__port_2', 'midi_3_fireface_400__297__port_2');
+        // [ "Fireface 400 (297)", "Port 2", -1112414548 ]
+        // no matching desc files found!
+
+// Some controllers have MIDI plugs onboard which show up as extra ports;
+// these may also have desc files (with zero elements) - e.g. the qunexus_port2
+
+
+// 3. look at their idInfo entries as copiable code:
+MKtlLookup.allFor(\midi).collect(_.idInfo).printcsAll; "";
+
+// which posts:
+"IAC Driver"
+( 'destPortIndex': 0, 'srcPortIndex': 0, 'deviceName': "Fireface 400 (297)" )
+( 'destPortIndex': 1, 'srcPortIndex': 1, 'deviceName': "Fireface 400 (297)" )
+
+
+// 4. now connect them:
+// tell MKtl(\pf) to create a mididevice by giving it the proper idInfo;
+// e.g. here, we take MIDI input 1 of the fireface
+ z = ( 'destPortIndex': 0, 'srcPortIndex': 0, 'deviceName': "Fireface 400 (297)" );
+k.openDeviceVia( z );
+k.device;  // -&gt; now it has a MIDIMKtlDevice
+k.trace;   // -&gt; and this should post incoming midi messages!</pre>
+
+<p>If your MIDI hardware device has no desc file yet, you can make one by copying the desc file of a device with similar features and adapting it, or by creating one using <a href="./../Classes/MIDIExplorer.html">MIDIExplorer</a>.
+<p>Bonus track:<pre class='code prettyprint lang-sc'>// The Doepfer pocket electronics kit is available for making custom devices;
+// e.g. adc made one with 8 joysticks called the joybox, which has a desc file:
+
+j = MKtl(\jb, "*joybox"); j.gui;
+j.openDeviceVia( ( 'destPortIndex': 0, 'srcPortIndex': 0, 'deviceName': "Fireface 400 (297)" ));</pre>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Tutorials/Connecting_external_MIDI_devices.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Tutorials/Connecting_external_MIDI_devices.schelp</a><br>link::Tutorials/Connecting_external_MIDI_devices::<br>sc version: 3.9dev</div></div></body></html>

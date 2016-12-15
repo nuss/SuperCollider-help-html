@@ -1,0 +1,237 @@
+<html><head><title>Connecting OSC devices</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider TUTORIALS (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a></div>
+<h1>Connecting OSC devices<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Handling changing addresses and ports in MKtls</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./../Guides/OSC_communication.html">OSC Communication</a>, <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Classes/OSCMon.html">OSCMon</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#OSC%20communication%20and%20Modality'>OSC communication and Modality</a></li>
+<ul class='toc'><li class='toc2'><a href='#OSC%20Basics%20-%20sending'>OSC Basics - sending</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Sending%20on%20special%20ports'>Sending on special ports</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Listening%20to%20messages%20by%20address%20and%20port'>Listening to messages by address and port</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Making%20an%20OSCMKtlDevice'>Making an OSCMKtlDevice</a></li>
+<ul class='toc'><li class='toc2'><a href='#Simulate%20sending%20OSC%20messages'>Simulate sending OSC messages</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Adapting%20to%20changing%20ports%20and%20addresses'>Adapting to changing ports and addresses</a></li>
+<ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='OSC%20communication%20and%20Modality'>OSC communication and Modality</a></h2>
+
+<p>OSC communication is flexible and widely supported. This tutorial walks through the details of how OSC is integrated in Modality.
+<p>While OSC-related networking issues can be frustrating, there are ways to test systematically why an OSC device that worked earlier may not work now.
+<p>For a detailed discussion, see <a href="./../Guides/OSC_communication.html">OSC Communication</a>.<h3><a class='anchor' name='OSC%20Basics%20-%20sending'>OSC Basics - sending</a></h3>
+
+<p>How does SuperCollider communicate with an external OSC device?
+<p>Each OSC controller device sends either UDP or TCP messages across an IP network. Both UDP and TCP protocols send messages between IP addresses (each network interface -- e.g. WLAN, LAN, loopback -- has a unique one). Each interface has an additional stack of <strong>ports</strong> that is represented by 16bit numbers.
+<p>A connection between two processes goes from the home port through the home IP address to the remote IP address to the remote port, eventually captured by the remote process.<pre class='code prettyprint lang-sc'>msg &gt;&gt; port &gt;&gt; IP &gt;&gt; (network) &gt;&gt; IP &gt;&gt; port</pre>
+
+<p>Note that UDP and TCP port numberings are completely separate from each other. A UDP port cannot transmit anything to a TCP port and vice versa.
+<p>When sender and receiver are on the same computer, communication can be handled via the loopback device, always associated with the IP address <code class='code prettyprint lang-sc'>"127.0.0.1"</code>.
+<p>To connect an OSC controller via UDP to SuperCollider means to open a port on an associated network device (the device has an <strong>IP address</strong>). Then, messages can be sent from there to a remote <strong>IP address</strong>, the one associated to the computer SuperCollider runs on where it can be picked up from a <strong>port</strong> specified by the sender.
+<p>Let's create a fake device that sends messages from SuperCollider to SuperCollider.<pre class='code prettyprint lang-sc'>// IP address to send to
+~receiverIPaddress = "127.0.0.1";
+
+// port to which the external source sends its messages to
+// very often, this is 57120, SC's the default listening port:
+~receiverPort = NetAddr.langPort;   // typically 57120, sometimes 57121, ..22, etc
+
+// now we make an address to talk to SC
+~receiverAddr = NetAddr(~receiverIPaddress, ~receiverPort);
+
+// and send to SC:
+~receiverAddr.sendMsg(\test, \yo, \world);
+
+// SC did not listen yet, so nothing happened.
+// To listen to all incoming messages, we use:
+OSCFunc.trace;
+
+~receiverAddr.sendMsg(\test, \yo, \world);
+// and this should now post:
+OSC Message Received:
+    time: 5141.891048276
+    address: a NetAddr(127.0.0.1, 57120)
+    recvPort: 57120
+    msg: [ /test, yo, world ]</pre>
+
+<p>This tells us what the message itself is, which port it arrived on - there could be multiple listening ports (not the receiving IP), and which address (IP, port) sent it - so we can send back.<h3><a class='anchor' name='Sending%20on%20special%20ports'>Sending on special ports</a></h3>
+
+<p>Some devices send on fixed port numbers. For this case, SC can open more ports:<pre class='code prettyprint lang-sc'>// open a port
+thisProcess.openUDPPort(12345);
+// -&gt; returns true when port did open, or was already open
+
+// ask which ports are open now
+thisProcess.openPorts;  // -&gt; 12345 shows up as open
+
+// same as above, only
+OSCFunc.trace;
+~receiverIPaddress = "127.0.0.1";
+~receiverPort = 12345;
+~receiverAddr = NetAddr(~receiverIPaddress, ~receiverPort);
+
+// and send to SC:
+~receiverAddr.sendMsg(\test, \yo, \world);
+
+// and SC receives on a different recvPort now!
+OSC Message Received:
+    time: 969.823055779
+    address: a NetAddr(127.0.0.1, 57120)
+    recvPort: 12345
+    msg: [ /test, yo, world ]</pre>
+<h3><a class='anchor' name='Listening%20to%20messages%20by%20address%20and%20port'>Listening to messages by address and port</a></h3>
+<pre class='code prettyprint lang-sc'>// Make an OSCdef to listen to this kind of message:
+OSCFunc.trace(false);
+OSCdef(\test, { |msg, time, sender, recvport|
+    [msg, sender, recvport].postln },
+'/test');
+
+~receiverAddr.sendMsg(\test, \yo, \world);
+// should now post:
+[ [ /test, yo, world ], a NetAddr(127.0.0.1, 57120), 12345 ]
+
+
+// note that sending from standard address is also received:
+~localAddr = NetAddr.localAddr;
+~localAddr.sendMsg(\test, \yo, \world);
+
+// change OSCdef to listen only to port 12345
+OSCdef(\test, { |msg, time, sender, recvport|
+    [msg, sender, recvport].postln },
+'/test', recvPort: 12345);
+~receiverAddr.sendMsg(\test, \yo, \world);         // received
+~localAddr.sendMsg(\test, \yo, \world);        // not received, different port
+
+
+// to really fake an external source, make a special sender address
+~senderAddr = NetAddr("168.192.0.64", 54321);
+
+// now act as if message had come thru network: this is also received
+thisProcess.recvOSCmessage(0, ~senderAddr, 12345, ['/test', \yo, \fake]);
+
+// remake OSCdef to be specific about srcID (senderAddress) and recvPort
+OSCdef(\test).clear;
+OSCdef(\test, { |msg, time, sender, recvport|
+    [msg, sender, recvport].postln },
+'/test', srcID: ~senderAddr, recvPort: 12345);
+
+//
+~receiverAddr.sendMsg(\test, \yo, \world);         // ignored
+~localAddr.sendMsg(\test, \yo, \world);        // ignored
+                                            // but this matches:
+thisProcess.recvOSCmessage(0, ~senderAddr, 12345, ['/test', \yo, \fake]);</pre>
+<h2><a class='anchor' name='Making%20an%20OSCMKtlDevice'>Making an OSCMKtlDevice</a></h2>
+
+<p>This example expands on a basic example from <a href="./../Tutorials/How_to_create_a_description_file_for_OSC.html">How to create a description file for an OSC device</a>. In a first step we create a description for an OSC device which has a single button, and uses specific, non-standard port numbers, therefore emulating a device completely independant of SuperCollider similar to the "fake" senderAddr in the above section.
+<p>We then create an <code class='code prettyprint lang-sc'>MKtl</code> from it. In the next subsection, we will send messages from SC to simulate messages as they would come from an external source, and see that the MKtl correctly receives them.<pre class='code prettyprint lang-sc'>(
+// make an OSC desc for a device with one button that uses custom ports
+(
+~desc1but = (
+    idInfo: "osc1button",
+    netAddrInfo: (
+            // ipAddress is the ipAddress from which source sends to SC
+            // ipAddress nil means any ipAddress will work
+        ipAddress: "127.0.0.1",
+            // recvPort: the port the source sends to and SC receives on.
+            // if none is given, this is NetAddr.langPort.
+            // If needed, a UDP port will be opened for it.
+        recvPort: 6666,
+            // srcPort: the port the source sends from and that SC should send to.
+            // if not specified, this is inferred from incoming messages.
+        srcPort: 3333
+    ),
+    protocol: \osc,
+    elementsDesc: (
+        elements: [
+            (
+                key: 'bt',
+                oscPath: '/button',
+                type: 'button',
+                ioType: \in,
+                spec: \but
+            )
+        ]
+    )
+);
+);
+
+// make an MKtl from this description
+m.free; m = MKtl( \osc1but, ~desc1but );
+
+m.device.oscFuncDictionary; // this contains its OSCFunc
+
+// give the single button an action
+m.elementAt(\bt).action = { |el| ["yo", el.value].postln };
+
+// test that the action works
+m.elementAt(\bt).doAction;    // [ yo, 0 ]
+m.elementAt(\bt).valueAction_(1); // [ yo, 1 ]
+m.elementAt(\bt).valueAction_(0); // [ yo, 0 ]
+
+// should include 6666 now:
+thisProcess.openPorts;
+
+// post when data are received in the MKtl
+m.trace;
+// create a gui for it - try its button
+m.gui;
+)</pre>
+<h3><a class='anchor' name='Simulate%20sending%20OSC%20messages'>Simulate sending OSC messages</a></h3>
+<pre class='code prettyprint lang-sc'>// now simulate sending values from an OSC device by network -
+// make the address the fake device is sending to - SC with special port
+~receiverAddr = NetAddr(~desc1but.netAddrInfo.ipAddress, ~desc1but.netAddrInfo.recvPort);
+
+~receiverAddr.sendMsg('/button', 0);
+~receiverAddr.sendMsg('/button', 1);
+// -&gt; does nothing so far because the OSCFunc are listening only for
+// messages from NetAddr("127.0.0.1", (srcPort:) 3333) !
+
+// make the proper returnAddress
+~returnAddr = NetAddr(~desc1but.netAddrInfo.ipAddress, ~desc1but.netAddrInfo.srcPort);
+
+// now fake sending a message from the proper return address via recvPort:
+thisProcess.recvOSCmessage(0, ~returnAddr, 6666, ['/button', 0]);
+// -&gt; should post:
+MKtl('osc1but') osc bt &gt; 0 | type: button</pre>
+<h3><a class='anchor' name='Adapting%20to%20changing%20ports%20and%20addresses'>Adapting to changing ports and addresses</a></h3>
+
+<p>When devices connect and reconnect to a network, they may get different IP addresses. Also devices and processes may get different port numbers when being disconnected and reconnected.
+<p>To handle such situations, one can change both addresses and ports in existing MKtls on the fly. For example, make <code class='code prettyprint lang-sc'>MKtl(\osc1but)</code> listen to messages from within SC:<pre class='code prettyprint lang-sc'>// our local address
+~localAddr = NetAddr.localAddr;
+
+~addrTo1But = NetAddr("127.0.0.1", 6666);
+m.device.updateSrcAddr(port: NetAddr.langPort);
+m.device.oscFuncDictionary;
+~addrTo1But.sendMsg('/button', 0);
+~addrTo1But.sendMsg('/button', 1);</pre>
+
+<p>Similarly, we can update the ip number as well:<pre class='code prettyprint lang-sc'>m.device.updateSrcAddr("10.0.0.1");
+
+// and then this faked message from that source arrives:
+thisProcess.recvOSCmessage(0, NetAddr("10.0.0.1", 57120), 6666, ['/button', 1]);</pre>
+
+<p>Finally, we can also change the receiving port after the fact:<pre class='code prettyprint lang-sc'>// external device now sends to port 7777
+m.device.updateRecvPort(7777);
+
+// send from NetAddr(10.0.0.1, 57120)
+m.device.updateSrcAddr("10.0.0.1", 57120);
+
+m.device.oscFuncDictionary;
+// this is ignored now:
+thisProcess.recvOSCmessage(0, NetAddr("10.0.0.1", 57120), 6666, ['/button', 1]);
+//and this is received:
+thisProcess.recvOSCmessage(0, NetAddr("10.0.0.1", 57120), 7777, ['/button', 1]);</pre>
+
+<p>This hopefully covers most complications that may occur when using OSC devices. For more information, see also <a href="./../Guides/OSC_communication.html">OSC Communication</a>.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Tutorials/Connecting_OSC_devices.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Tutorials/Connecting_OSC_devices.schelp</a><br>link::Tutorials/Connecting_OSC_devices::<br>sc version: 3.9dev</div></div></body></html>

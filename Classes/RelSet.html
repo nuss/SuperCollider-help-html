@@ -1,0 +1,106 @@
+<html><head><title>RelSet</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Utilities'>Utilities</a></div>
+<h1>RelSet<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>set an objects's param relatively</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/Tools/RelSet.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/Tools/RelSet.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/SoftSet.html">SoftSet</a>, <a href="./../Classes/Tdef.html">Tdef</a>, <a href="./../Classes/Pdef.html">Pdef</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*getSpec'>getSpec</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>RelSet is intended for encoder-style controllers, such as infinite MIDI knobs that only send relative values. RelSet can move a single param of an object by a normalized relative amount. One can choose to provide a spec for unmapping the object's current value, or one can let the object provide the spec. If spec is \none, or none can be found, RelSet will add the offset as is.
+<p>Technical Note: As this behavior is useful for many objects that have numerical parameters (such as Synth, Ndef, Tdef, Pdef), it is implemented as a class that can act like a method of such an object.<pre class='code prettyprint lang-sc'>// make an Ndef as a destination objects to use,
+// and a gui to show its params.
+Ndef(\a);
+Ndef(\a).gui.moveTo(0,400);
+
+// does nothing (no current value yet)
+RelSet(Ndef(\a), \freq, 0.05);
+
+// works when there is a value -
+// note that \freq has a global spec,
+// which is being looked up internally here.
+set(Ndef(\a), \freq, 200);  // set to something
+RelSet(Ndef(\a), \freq, 0.025); // step up
+RelSet(Ndef(\a), \freq, 1/127); // midi cc step size
+
+
+// put a sound there, and try the same steps
+Ndef(\a, { Pulse.ar(\freq.kr(100), \pwidth.kr(0.1)) * 0.1 }).play;
+set(Ndef(\a), \freq, 200);
+RelSet(Ndef(\a), \freq, 0.025);
+RelSet(Ndef(\a), \freq, 1/127);
+
+// set to the middle of range, and do brownian param drift
+Ndef(\a).set( \freq, 600);
+fork { 30.do { RelSet(Ndef(\a), \freq, 0.05.rand2); 0.2.wait }; };
+
+
+// second param, no global or local spec -&gt; uses unipolar
+set(Ndef(\a), \pwidth, 0.5);
+RelSet(Ndef(\a), \pwidth, 0.1.rand2);
+
+// add a global spec - that will be used
+Spec.add(\pwidth, [0.01, 0.99]); // dont go to full [0, 1])
+RelSet(Ndef(\a), \pwidth, 0.1.rand2);
+
+// add a local spec to Ndef(\a) - gui and RelSet will use it
+Ndef(\a).addSpec(\pwidth, [0.5, 0.01, \exp]); // from dark to bright
+
+RelSet(Ndef(\a), \pwidth, 0.1.rand2);
+
+// when a spec is given in the RelSet call,
+// the object need not know a spec for its parameter
+// (first remove the local spec so the gui shows the full range)
+Ndef(\a).addSpec(\pwidth, nil); // from dark to bright
+// then try this repeatedly
+RelSet(Ndef(\a), \pwidth, 0.1.rand2, [0.5, 0.99]);</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<div class='note'><span class='notelabel'>NOTE:</span> SoftSet only has class methods, to be used as pseudo methods with multiple classes.</div>
+<p><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>obj</span>, <span class='argstr'>paramName</span>, <span class='argstr'>relVal</span>, <span class='argstr'>spec</span>)</h3>
+<div class='method'><pre class='code prettyprint lang-sc'>RelSet(obj, paramName, relVal, spec) // is like
+obj.relSet (paramName, relVal, spec)</pre>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>obj<td class='argumentdesc'>
+<p>the object whose param to set<tr><td class='argumentname'>paramName<td class='argumentdesc'>
+<p>the name of the param to set<tr><td class='argumentname'>relVal<td class='argumentdesc'>
+<p>the relative value in unipolar [0, 1] range<tr><td class='argumentname'>spec<td class='argumentdesc'>
+<p>an optional spec by which to unmap the objects current value. if none provided, the object is asked for its value with getSpec(paramName)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true if set succeeded, false if not</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*getSpec' href='./../Overviews/Methods.html#getSpec'>getSpec</a> (<span class='argstr'>obj</span>, <span class='argstr'>paramName</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>obj<td class='argumentdesc'>
+<p>the object to ask for the spec<tr><td class='argumentname'>paramName<td class='argumentdesc'>
+<p>the name of the param for wich to obtain a spec</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a spec</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/RelSet.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/RelSet.schelp</a><br>link::Classes/RelSet::<br>sc version: 3.9dev</div></div></body></html>

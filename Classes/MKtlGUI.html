@@ -1,0 +1,111 @@
+<html><head><title>MKtlGUI</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a>, <a href='./../Browse.html#External Control'>External Control</a></div>
+<h1>MKtlGUI<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>gui class for MKtl objects</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/GUI/MKtlGUI.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/GUI/MKtlGUI.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/MKtl.html">MKtl</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*maxSize'>maxSize</a> </li>
+<li class='toc3'><a href='#*minViewSize'>minViewSize</a>  <a href='#*maxViewSize'>maxViewSize</a> </li>
+<li class='toc3'><a href='#*margin'>margin</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*dropLastElem'>dropLastElem</a> </li>
+<li class='toc3'><a href='#*showLabels'>showLabels</a> </li>
+<li class='toc3'><a href='#*splitLabel'>splitLabel</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-mktl'>mktl</a> </li>
+<li class='toc3'><a href='#-parent'>parent</a> </li>
+<li class='toc3'><a href='#-labelView'>labelView</a>  <a href='#-labelButton'>labelButton</a>  <a href='#-traceButton'>traceButton</a> </li>
+<li class='toc3'><a href='#-views'>views</a>  <a href='#-pagesSwitch'>pagesSwitch</a> </li>
+<li class='toc3'><a href='#-showLabels'>showLabels</a> </li>
+<li class='toc3'><a href='#-currentPage'>currentPage</a> </li>
+<li class='toc3'><a href='#-getNumPages'>getNumPages</a> </li>
+<li class='toc3'><a href='#-moveTo'>moveTo</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>MKtlGUI creates guis for MKtls and all their elements, using the style info provided in the MKtl's desc file.
+<p>Especially when one does not have the device at hand, one can continue developing for it using the MKtlGUI as a functional substitute.
+<p>First code examples:<pre class='code prettyprint lang-sc'>k = MKtl('nk', "korg-nanokontrol");
+g = MKtlGUI(mktl: k);
+
+g.traceButton.valueAction_(1);
+g.showLabels;
+g.showLabels(false);
+
+// switch page
+g.currentPage_(3);
+
+// put it somewhere
+g.moveTo(200, 200);</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*maxSize' href='./../Overviews/Methods.html#maxSize'>maxSize</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*maxSize' href='./../Overviews/Methods.html#maxSize'>maxSize</a> = value</h3>
+<div class='method'>
+<p>maximum window size</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*minViewSize' href='./../Overviews/Methods.html#minViewSize'>minViewSize</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*minViewSize' href='./../Overviews/Methods.html#minViewSize'>minViewSize</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*maxViewSize' href='./../Overviews/Methods.html#maxViewSize'>maxViewSize</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*maxViewSize' href='./../Overviews/Methods.html#maxViewSize'>maxViewSize</a> = value</h3>
+<div class='method'>
+<p>max and min sizes for single views on gui</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*margin' href='./../Overviews/Methods.html#margin'>margin</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*margin' href='./../Overviews/Methods.html#margin'>margin</a> = value</h3>
+<div class='method'>
+<p>the margin to use between views</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>, <span class='argstr'>mktl</span>)</h3>
+<div class='method'>
+<p>create a new MKtlGUI with<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>parent<td class='argumentdesc'>
+<p>a parent view - nil will create a window<tr><td class='argumentname'>bounds<td class='argumentdesc'>
+<p>bounds - nil will create bounds based on mktl desc<tr><td class='argumentname'>mktl<td class='argumentdesc'>
+<p>the mktl to show - required!</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*dropLastElem' href='./../Overviews/Methods.html#dropLastElem'>dropLastElem</a> (<span class='argstr'>str</span>, <span class='argstr'>sep: $_</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*showLabels' href='./../Overviews/Methods.html#showLabels'>showLabels</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*showLabels' href='./../Overviews/Methods.html#showLabels'>showLabels</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*splitLabel' href='./../Overviews/Methods.html#splitLabel'>splitLabel</a> (<span class='argstr'>label</span>, <span class='argstr'>maxLength: 5</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-mktl' href='./../Overviews/Methods.html#mktl'>mktl</a> </h3>
+<div class='method'>
+<p>the mktl it is showing</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-parent' href='./../Overviews/Methods.html#parent'>parent</a> </h3>
+<div class='method'>
+<p>its parent view</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-labelView' href='./../Overviews/Methods.html#labelView'>labelView</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-labelButton' href='./../Overviews/Methods.html#labelButton'>labelButton</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-traceButton' href='./../Overviews/Methods.html#traceButton'>traceButton</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-views' href='./../Overviews/Methods.html#views'>views</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-pagesSwitch' href='./../Overviews/Methods.html#pagesSwitch'>pagesSwitch</a> </h3>
+<div class='method'>
+<p>various views</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-showLabels' href='./../Overviews/Methods.html#showLabels'>showLabels</a> (<span class='argstr'>bool: true</span>)</h3>
+<div class='method'>
+<p>set whether to show labels or not</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-currentPage' href='./../Overviews/Methods.html#currentPage'>currentPage</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-currentPage' href='./../Overviews/Methods.html#currentPage'>currentPage</a> = <span class='argstr'>number: 0</span></h3>
+<div class='method'>
+<p>get and set current page to show on gui</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getNumPages' href='./../Overviews/Methods.html#getNumPages'>getNumPages</a> </h3>
+<div class='method'>
+<p>get the number of pages of the MKtl</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveTo' href='./../Overviews/Methods.html#moveTo'>moveTo</a> (<span class='argstr'>h</span>, <span class='argstr'>v</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>h<td class='argumentdesc'><tr><td class='argumentname'>v<td class='argumentdesc'>
+<p>move gui window to a specific location for setup layout.</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MKtlGUI.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/MKtlGUI.schelp</a><br>link::Classes/MKtlGUI::<br>sc version: 3.9dev</div></div></body></html>

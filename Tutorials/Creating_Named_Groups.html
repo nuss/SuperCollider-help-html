@@ -1,0 +1,115 @@
+<html><head><title>Creating Named Groups</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider TUTORIALS (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>Modality'>Libraries>Modality</a>, <a href='./../Browse.html#Tutorials'>Tutorials</a></div>
+<h1>Creating Named Groups<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Organize alternative groups of elements in an MKtl for particular purposes</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Classes/MKtlElement.html">MKtlElement</a>, <a href="./../Classes/MKtlElementGroup.html">MKtlElementGroup</a>, <a href="./../Reference/MKtl_description_files.html">MKtl description files</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#Background'>Background</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='Background'>Background</a></h2>
+
+<p>MKtl objects contain a hierarchical organisation of their interaction elements in MKtl.elementsGroup. This group contains and defines every element once, and one can access every element directly by its element key, or by its hierarchical address. At times multiple ways of grouping and naming these elements make sense, and MKtl supports multiple such orders.
+<p>The examples below show that for two simple cases.<h2><a class='anchor' name='Examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// make a nanokontrol2
+n = MKtl(\nk, "korg-*ol2");
+n.gui;
+n.trace;
+
+// the logical organization of elements and their direct names:
+n.postElements;
+
+
+// it contains five transport buttons in a group called \tr:
+n.elementGroup;
+n.elAt(\tr);
+
+// as these buttons are unique and have names,
+//they could also be accessible by that name directly:
+n.elAt(\tr, \play);
+// not there yet -
+n.elAt(\play);
+// add them to namedDict
+n.elAt(\tr, [\play, \stop, \rew, \fwd, \rec]).do { |el| n.addNamed(el.elemDesc.key, el); };
+n.namedDict.keys;
+// and now this access works:
+n.elAt(\stop);</pre>
+
+<p>The nanokontrol is actually structured like a mixer, so rather than grouping sliders, knobs and buttons in separate groups, one could also make a group of each of the 8 mixer channels, with each containing a knob, a slider and 3 buttons.<pre class='code prettyprint lang-sc'>(
+// nested - the top group is \mix,
+y = MKtlElementGroup(\mix, n,
+    8.collect { |i|
+        // inner group is a list of 8 channels, index 0-7
+        MKtlElementGroup(i, n,
+            // note the assocs which are needed for access by name later!
+            [     \kn -&gt; n.elAt(\kn, i),
+                \sl -&gt; n.elAt(\sl, i),
+                \bt_S -&gt; n.elAt(\bt, 0, i),
+                \bt_M -&gt; n.elAt(\bt, 1, i),
+                \bt_R -&gt; n.elAt(\bt, 2, i)
+            ]
+        )
+    };
+);
+n.addNamed(\mix, y);
+)
+
+// access variants
+n.elAt(\mix);
+// index 0 is channel 1...
+n.elAt(\mix, 0, 0);
+n.elAt(\mix, 0, \bt_R);
+n.elAt(\mix, 0, \bt_R);
+
+// same example, but make symbolic names for the channels as well,
+// and put the buttons in a nested group
+(
+y = MKtlElementGroup(\mix, n,
+    8.collect { |i|
+        var chanName = ("ch_" ++ (i + 1)).asSymbol;
+        chanName -&gt; MKtlElementGroup(chanName, n,
+            [     \kn -&gt; n.elAt(\kn, i),
+                \sl -&gt; n.elAt(\sl, i),
+
+                \bt -&gt; MKtlElementGroup(\bt, n,
+                    [\S, \M, \R].collect { |key|
+                        key -&gt; n.elAt(\bt, key, i)
+                    }
+                )
+            ]
+        )
+    };
+);
+n.addNamed(\mix, y);
+)
+
+// access variants
+n.namedDict[\mix];
+n.elAt(\mix);
+
+// and now access by name and index works at every level:
+n.elAt(\mix, 'ch_1');
+n.elAt(\mix, 0);
+n.elAt(\mix, 'ch_1', \bt);
+n.elAt(\mix, 'ch_1', \bt, \S);
+n.elAt(\mix, 'ch_1', \bt, 0);
+n.elAt(\bt, 0, 0);</pre>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Tutorials/Creating_Named_Groups.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Tutorials/Creating_Named_Groups.schelp</a><br>link::Tutorials/Creating_Named_Groups::<br>sc version: 3.9dev</div></div></body></html>

@@ -1,0 +1,98 @@
+<html><head><title>PKtl</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
+<h1>PKtl<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>a pattern for accessing MKtls and their elements</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/PKtl.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/MKtl/PKtl.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Pattern.html">Pattern</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/MKtl.html">MKtl</a>, <a href="./../Classes/MKtlElement.html">MKtlElement</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-namePat'>namePat</a>  <a href='#-elPats'>elPats</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>PKtl allows using MKtls in patterns. It can access all present MKtls by patterns of names, and the elements they contain by patterns of names or indices.
+<p>First code examples:<pre class='code prettyprint lang-sc'>// make two example MKtls - nanokontrol2s
+a = MKtl(\nkA, "*trol2"); a.gui;
+a.elAt(\kn).value_((1..8) / 10);
+a.elAt(\kn).value;
+
+b = MKtl(\nkB, "*trol2"); b.gui;
+b.elAt(\kn).value = 1!8;
+
+
+// use single element in pattern -  move first knob while playing
+Pdef(\test, Pbind(
+    \degree, (Pn(a.elAt(\kn, 0)) * 10).round(1),
+    \dur, 0.25
+)).trace.play
+
+// same with PKtl
+Pdef(\test, Pbind(
+    \degree, (PKtl(\nkA, \kn, 0) * 10).round(1),
+    \dur, 0.25
+)).trace.play
+
+// use all knobs as step sequencer
+Pdef(\test, Pbind(
+    \knVal, Pseq(a.elAt(\kn), inf),
+    \degree, (Pkey(\knVal) * 10).round(1),
+    \dur, 0.25
+)).trace.play
+
+a.elAt(\sl, 0).value = 1;
+// same with PKtl, and uses slider1 to set dur
+Pdef(\test, Pbind(
+    \knVal, PKtl(\nk2, \kn, Pseq((0..7), inf)),
+    \degree, (Pkey(\knVal) * 10).round(1),
+    \dur, 0.125 ** PKtl(\nkA, \sl, 0)
+)).trace.play
+
+// alternate between 3 step values from nkA, 3 from nkB
+Pdef(\test, Pbind(
+    \knVal, PKtl(
+        Pseq([\nkA, \nkB], inf).stutter(3),
+        \kn,
+        Pseq((0..7), inf)
+    ),
+    \degree, (Pkey(\knVal) * 10).round(0.1),
+    \dur, 0.125 ** PKtl(\nkA, \sl, 0)
+)).trace.play
+
+// change values on nkB knobs for testing
+b.elAt(\kn).value = (0..7).normalize(0.9, 1);</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>namePat</span> <span class='argstr'>... elPats</span>)</h3>
+<div class='method'>
+<p>create a new PKtl with<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>namePat<td class='argumentdesc'>
+<p>a pattern for MKtl names<tr><td class='argumentname'>... elPats<td class='argumentdesc'>
+<p>patterns for element access within MKtls</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-namePat' href='./../Overviews/Methods.html#namePat'>namePat</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-elPats' href='./../Overviews/Methods.html#elPats'>elPats</a> </h3>
+<div class='method'>
+<p>access pattern data</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/PKtl.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/PKtl.schelp</a><br>link::Classes/PKtl::<br>sc version: 3.9dev</div></div></body></html>

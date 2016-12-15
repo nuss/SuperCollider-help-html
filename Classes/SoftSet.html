@@ -1,0 +1,215 @@
+<html><head><title>SoftSet</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Utilities'>Utilities</a></div>
+<h1>SoftSet<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>set process parameters politely.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/Tools/SoftSet.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/Classes/Tools/SoftSet.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/PullSet.html">PullSet</a></div>
+<div id='related'>See also: <a href="./../Overviews/Modality.html">Modality</a>, <a href="./../Classes/RelSet.html">RelSet</a>, <a href="./../Classes/Ndef.html">Ndef</a>, <a href="./../Classes/Pdef.html">Pdef</a>, <a href="./../Classes/Tdef.html">Tdef</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*uni'>uni</a> </li>
+<li class='toc3'><a href='#*nextPair'>nextPair</a> </li>
+<li class='toc3'><a href='#*uniNextPair'>uniNextPair</a> </li>
+<li class='toc3'><a href='#*defaultWithin'>defaultWithin</a> </li>
+<li class='toc3'><a href='#*getSpec'>getSpec</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*multi'>multi</a> </li>
+<li class='toc3'><a href='#*multiUni'>multiUni</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>SoftSet is intended for letting a controller set a numerical parameter of an object politely. The common problem is that when a controller is newly assigned to a process parameter, the physical position can differ widely from the current param value in the process/object, which would create undesirable large parameter jumps when moving the controller.
+<p>SoftSet solves this by considering whether the new value is acceptable: if the new value is close enough to the current value in the object, or if the previous value of the controller is close enough to the current value of the process param (which implies that the object was last set from this controller, so the controller conceptually 'owns' it now), it is considered OK to set.
+<p>SoftSet returns a boolean whether the set message was accepted.<pre class='code prettyprint lang-sc'>// Some Basic Examples :
+
+// make an Ndef and set values for its parameters.
+Ndef(\a).clear;
+Ndef(\a).gui.moveTo(0, 400).skipjack.dt = 0.05;
+
+s.boot;
+
+// freq does not have a value yet, so you can set it
+SoftSet(Ndef(\a), \freq, 200);
+
+// try to set to a far away value - it will not change
+SoftSet(Ndef(\a), \freq, 2000);
+
+// close enough (within unipolar distance of 0.1) will set
+SoftSet(Ndef(\a), \freq, 219, within: 0.1);
+
+// now put in a sound process that uses \freq:
+Ndef(\a, { Ringz.ar(PinkNoise.ar, \freq.kr(440).lag(0.1), 0.3) }).play;
+
+
+// See examples below for how to use this in controllers,
+// but first see their different behaviors with sliders here:
+(
+var w = Window("SoftSet - compare 4 Variants", Rect(10,300, 400, 600)).front;
+var lastVal, lastValUni, dim = 380@40;
+w.addFlowLayout;
+
+StaticText(w, dim).string_("Set SoftSet classvar defaultWithin: this is the unipolar range within which a destination's parameter will be set.");
+EZSlider(w, dim, 'SoftSet-defaultWithin', [0.01, 0.2, \exp], { |sl|
+    SoftSet.defaultWithin = sl.value;
+}, 0.03, true, labelWidth: 150);
+
+
+StaticText(w, dim).string_("SoftSet(name, val) only depends on 'within' closeness - control connection is lost when jumps are too big (moving slider too fast)." );
+EZSlider(w, dim, 'SoftSet(name, val)', \freq, { |sl|
+    SoftSet(Ndef(\a), \freq, sl.value);
+}, labelWidth: 150);
+
+StaticText(w, dim).string_("SoftSet.uni(name, normVal) without a lastVal can also  lose connection with big jumps." );
+EZSlider(w, dim, 'SoftSet.uni()', nil, { |sl|
+    SoftSet.uni(Ndef(\a), \freq, sl.value);
+}, labelWidth: 150);
+
+StaticText(w, dim).string_("SoftSet(name, val, lastVal) remains connected even with big jumps, unless something else sets the param to a value outside 'within'." );
+EZSlider(w, dim, 'SoftSet with lastVal', \freq, { |sl|
+    [\last, lastVal, \new, sl.value].postln;
+    SoftSet(Ndef(\a), \freq, sl.value, lastVal: lastVal);
+    lastVal = sl.value;
+}, labelWidth: 150);
+
+StaticText(w, dim).string_("SoftSet.uni(name, val, ... lastVal) also remains tightly connected once value has been within range." );
+EZSlider(w, dim, 'Soft.uni with lastVal', nil, { |sl|
+    SoftSet.uni(Ndef(\a), \freq, sl.value, lastVal: lastValUni);
+    lastValUni = sl.value;
+}, labelWidth: 150);
+
+StaticText(w, dim).string_("Example destination: Ndef('a'), param: 'freq'" );
+NdefGui(Ndef(\a), 3, w, 380@40);
+)</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<div class='note'><span class='notelabel'>NOTE:</span> SoftSet only has class methods, to be used as pseudo methods with multiple classes.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>obj</span>, <span class='argstr'>paramName</span>, <span class='argstr'>value</span>, <span class='argstr'>within</span>, <span class='argstr'>lastVal</span>, <span class='argstr'>spec</span>)</h3>
+<div class='method'>
+<p>SoftSet an object's parameters from a simple value. Convenient with e.g. sliders that use an appropriate parameter range.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>obj<td class='argumentdesc'>
+<p>the object whose parameter is to be set<tr><td class='argumentname'>paramName<td class='argumentdesc'>
+<p>the name of the parameter to be set<tr><td class='argumentname'>value<td class='argumentdesc'>
+<p>the unipolar value to set it to, will be mapped by a spec<tr><td class='argumentname'>within<td class='argumentdesc'>
+<p>the range within which the value should match the current parameter value to allow the softset<tr><td class='argumentname'>lastVal<td class='argumentdesc'>
+<p>the last value which the controller has sent; this helps to determine whether the controller has done the last set of the param in question.<tr><td class='argumentname'>spec<td class='argumentdesc'>
+<p>a spec to use for calculation of the unipolar distance within which values should match.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a Boolean whether the set has been accepted.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*uni' href='./../Overviews/Methods.html#uni'>uni</a> (<span class='argstr'>obj</span>, <span class='argstr'>paramName</span>, <span class='argstr'>value</span>, <span class='argstr'>within</span>, <span class='argstr'>lastVal</span>)</h3>
+<div class='method'>
+<p>SoftSet an object's parameters from a unipolar value. Convenient with many controllers that use unipolar values. The mapping spec is done by the receiving object's spec for that param name.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>obj<td class='argumentdesc'>
+<p>the object whose parameter is to be set<tr><td class='argumentname'>paramName<td class='argumentdesc'>
+<p>the name of the parameter to be set<tr><td class='argumentname'>value<td class='argumentdesc'>
+<p>the unipolar value to set it to, will be mapped by a spec<tr><td class='argumentname'>within<td class='argumentdesc'>
+<p>the range within which the value should match the current parameter value to allow the softset<tr><td class='argumentname'>lastVal<td class='argumentdesc'>
+<p>the last value which the controller has sent; this helps to determine whether the controller has done the last set of the param in question.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a Boolean whether the set has been accepted.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*nextPair' href='./../Overviews/Methods.html#nextPair'>nextPair</a> (<span class='argstr'>obj</span>, <span class='argstr'>paramName</span>, <span class='argstr'>value</span>, <span class='argstr'>within</span>, <span class='argstr'>lastVal</span>, <span class='argstr'>spec</span>)</h3>
+<div class='method'>
+<p>same as *new, but does not do the setting yet. Instead it returns a pair of values if setting would be accepted, or nil if not. This is intended for collecting multiple name value pairs for a single set message.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a pair of values if setting would be accepted, nil if not</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*uniNextPair' href='./../Overviews/Methods.html#uniNextPair'>uniNextPair</a> (<span class='argstr'>obj</span>, <span class='argstr'>paramName</span>, <span class='argstr'>value</span>, <span class='argstr'>within</span>, <span class='argstr'>lastVal</span>)</h3>
+<div class='method'>
+<p>same as *new, but does not do the setting yet. Instead it returns a pair of values if setting would be accepted, or nil if not. This is intended for collecting multiple name value pairs for a single set message.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a pair of unipolar values if setting would be accepted, nil if not</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultWithin' href='./../Overviews/Methods.html#defaultWithin'>defaultWithin</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultWithin' href='./../Overviews/Methods.html#defaultWithin'>defaultWithin</a> = value</h3>
+<div class='method'>
+<p>gets and set a default value for unipolar distance within which softset is accepted.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*getSpec' href='./../Overviews/Methods.html#getSpec'>getSpec</a> (<span class='argstr'>obj</span>, <span class='argstr'>paramName</span>)</h3>
+<div class='method'>
+<p>ask an object for its spec for a given param name. this is used when no spec is given explicitly, and expects object to answer to getSpec.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a spec</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*multi' href='./../Overviews/Methods.html#multi'>multi</a> (<span class='argstr'>obj</span> <span class='argstr'>... pairs</span>)</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*multiUni' href='./../Overviews/Methods.html#multiUni'>multiUni</a> (<span class='argstr'>obj</span> <span class='argstr'>... pairs</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// tests: make an Ndef and set values for its parameters.
+
+// clear first, so no settings remembered
+Ndef(\a).clear;
+Ndef(\a).gui.moveTo(0, 400).skipjack.dt = 0.05;
+
+s.boot;
+Ndef(\a, { Ringz.ar(PinkNoise.ar, \freq.kr(440).lag(0.1), 0.3) }).play;
+
+// arguments to SoftSet.new are:
+//// the object to set,
+//// the paramName,
+//// the new value to set it to,
+//// within: the unipolar range within which to take over
+//// lastVal: the last value the controller has sent to the object
+//// spec: the spec to use for mapping
+
+// try a big jump - too far way, so does not set, and returns false
+SoftSet(Ndef(\a), \freq, 200, 0.025, nil, \freq);
+
+// freq 500 is close to initial 440, so should be ok
+SoftSet(Ndef(\a), \freq, 500, 0.025, nil, \freq);
+
+// but if I know the lastVal coming from this controller, it does set.
+// this is useful when the controller creates wide jumps,
+// e.g. when making wild movements. if one just relies on proximity,
+// one can 'lose' the control.
+SoftSet(Ndef(\a), \freq, 500, 0.025, lastVal: 200); //
+SoftSet(Ndef(\a), \freq, 1000, 0.025, lastVal: 500);
+
+// a within value of 0.025 is 40 steps for the entire controller range.
+// if you want a larger catching area, you can set it in the SoftSet call,
+/// or globally like this:
+SoftSet.defaultWithin = 0.1;
+
+// If no spec is given, the object is asked to provide one via obj.getSpec
+
+Ndef(\a).getSpec(\freq); // this finds the global default for freq;
+
+SoftSet(Ndef(\a), \freq, 500 + 50.rand2);
+
+// you can also give an Ndef a spec like this:
+// this requires the JITLibExtensions quark ATM.
+Ndef(\a).addSpec(\freq, [200, 2000]);
+// now the spec is there:
+Ndef(\a).getSpec(\freq, [200, 2000]);
+
+
+// set by unipolar value, let object handle the spec
+// this requires the object to understand getUni and getSpec calls.
+Ndef(\a).get(\freq);
+Ndef(\a).getUni(\freq);
+Ndef(\a).getSpec(\freq);
+SoftSet.uni(Ndef(\a), \freq, 0.45);
+
+// as within is 0.025 by default, this is always in range:
+SoftSet.uni(Ndef(\a), \freq, Ndef(\a).getUni(\freq) + 0.025.rand2);
+
+Ndef(\a).addSpec(\freq, \freq);  // back to global default
+
+
+// Later - implement a SoftSet method that supports multiple name/value pairs.</pre>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/SoftSet.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Modality-toolkit/Modality/HelpSource/Classes/SoftSet.schelp</a><br>link::Classes/SoftSet::<br>sc version: 3.9dev</div></div></body></html>
