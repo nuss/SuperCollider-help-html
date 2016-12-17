@@ -16,7 +16,7 @@
 <div id='label'>SuperCollider CLASSES</div>
 <div id='categories'><a href='./../Browse.html#Platform>OSX'>Platform>OSX</a></div>
 <h1>Speech</h1>
-<div id='summary'>lets you use the Apple speech synthesizer</div>
+<div id='summary'>[DEPRECATED] lets you use the Apple speech synthesizer</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Location: <b>NOT INSTALLED!</b></div>
@@ -29,7 +29,10 @@
 <ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
-<pre class='code prettyprint lang-sc'>"hi i'm talking with the default voice now, i guess".speak;</pre>
+<div class='warning'><span class='warninglabel'>WARNING:</span> Speech has been deprecated for a number of reasons:<ul>
+<li>The audio output is independent of the server, so it has major limitations when attempting to use it in SC compositions.<li>The core library should be small, and speech synthesis is too niche to merit inclusion.<li>It is OS X only, and implementing cross-platform compatibility is nontrivial.</ul>
+
+<p>Generally, the replacement is to use unixCmd to invoke a speech synthesizer yourself. There is also a third-party quark that simplifies this for you: <a href="https://github.com/adcxyz/say.">https://github.com/adcxyz/say.</a></div><pre class='code prettyprint lang-sc'>"hi i'm talking with the default voice now, i guess".speak;</pre>
 
 <p>Speech consists of an <a href="./../Classes/Array.html">Array</a> of SpeechChannels. By default Speech is initialized with only one channel, but can be set up to use up to 16 by providing an argument to init. Channels may be used through a SpeechChannel object or by setting the channel in Speech's methods (see examples below).
 <p>Speech is a function of the operating system and not the server. By consequence, <strong>it is not possible to use UGens to filter or record the output directly</strong>. You may be able to patch system output to system input (either by hardware of by software) to rout it to the server.<div class='note'><span class='notelabel'>NOTE:</span> Currently only supported on OS X. In SwingOSC there is the equivalent JSpeech.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
