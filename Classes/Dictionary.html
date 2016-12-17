@@ -64,7 +64,10 @@
 <li class='toc3'><a href='#-asSortedArray'>asSortedArray</a> </li>
 <li class='toc3'><a href='#-asKeyValuePairs'>asKeyValuePairs</a> </li>
 <li class='toc3'><a href='#-embedInStream'>embedInStream</a> </li>
-</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc3'><a href='#-flipKeys'>flipKeys</a> </li>
+<li class='toc3'><a href='#-detect'>detect</a> </li>
+<li class='toc3'><a href='#-detectKey'>detectKey</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-++'>++</a> </li>
 <li class='toc3'><a href='#-asArgsArray'>asArgsArray</a> </li>
@@ -75,14 +78,11 @@
 <li class='toc3'><a href='#-asSortedArgsArray'>asSortedArgsArray</a> </li>
 <li class='toc3'><a href='#-associationAtFail'>associationAtFail</a> </li>
 <li class='toc3'><a href='#-choose'>choose</a> </li>
-<li class='toc3'><a href='#-detect'>detect</a> </li>
-<li class='toc3'><a href='#-detectKey'>detectKey</a> </li>
 <li class='toc3'><a href='#-dopostln'>dopostln</a> </li>
 <li class='toc3'><a href='#-enpath'>enpath</a> </li>
 <li class='toc3'><a href='#-findKeysForValue'>findKeysForValue</a> </li>
 <li class='toc3'><a href='#-fixCollisionsFrom'>fixCollisionsFrom</a> </li>
 <li class='toc3'><a href='#-flattenArgsDict'>flattenArgsDict</a> </li>
-<li class='toc3'><a href='#-flipKeys'>flipKeys</a> </li>
 <li class='toc3'><a href='#-grow'>grow</a> </li>
 <li class='toc3'><a href='#-gui'>gui</a> </li>
 <li class='toc3'><a href='#-guiBody'>guiBody</a> </li>
@@ -347,7 +347,37 @@ d = (
 d.rout.((z:999));
 d.rout.((z:1, a:0));
 d.rout.(());</pre>
-</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-flipKeys' href='./../Overviews/Methods.html#flipKeys'>flipKeys</a> ( <span class='argstr'>... oldNewPairs</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extLib.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extLib.sc</a></div>
+<div class='method'>
+<p>Replace key <code class='code prettyprint lang-sc'>oldName</code> with key <code class='code prettyprint lang-sc'>newName</code><pre class='code prettyprint lang-sc'>a = (e: 9, i: 8);
+a.flipKeys(\e, \eee, \i, \iii);</pre>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... oldNewPairs<td class='argumentdesc'>
+<p>key-value pairs: <code class='code prettyprint lang-sc'>\oldName1, \newName1, \oldName2, \newName2, ..., \oldNameN, \newNameN</code></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this (a <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> or an <a href="./../Classes/Event.html">Event</a>)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-detect' href='./../Overviews/Methods.html#detect'>detect</a> (<span class='argstr'>function</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extLib.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extLib.sc</a></div>
+<div class='method'>
+<p>Answer the first item in the receiver for which function answers <code class='code prettyprint lang-sc'>true</code>. The function is passed two arguments, the key and a value (the object that is being checked in the function). The method is modelled after <a href="./../Classes/Collection.html#-detect">Collection: -detect</a>.<pre class='code prettyprint lang-sc'>a = (s: 7, h: 9);
+a.detect({ |val, key| val &lt; 9 });</pre>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>function<td class='argumentdesc'>
+<p>a <a href="./../Classes/Function.html">Function</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the object for which the function returns <code class='code prettyprint lang-sc'>true</code> or <code class='code prettyprint lang-sc'>nil</code> if no result was found</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-detectKey' href='./../Overviews/Methods.html#detectKey'>detectKey</a> (<span class='argstr'>function</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extLib.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extLib.sc</a></div>
+<div class='method'>
+<p>Like <a href="#-detect">-detect</a> but instead of the value (object) the key of the first object for which the function returns <code class='code prettyprint lang-sc'>true</code> is returned.<pre class='code prettyprint lang-sc'>a = (s: 7, h: 9);
+a.detectKey({ |val, key| val &lt; 9 });</pre>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>function<td class='argumentdesc'>
+<p>a <a href="./../Classes/Function.html">Function</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the key for which the function returns <code class='code prettyprint lang-sc'>true</code> or <code class='code prettyprint lang-sc'>nil</code> if no result was found</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-++' href='./../Overviews/Methods.html#++'>++</a> (<span class='argstr'>dict</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-asArgsArray' href='./../Overviews/Methods.html#asArgsArray'>asArgsArray</a> (<span class='argstr'>check: false</span>)</h3>
@@ -362,10 +392,6 @@ d.rout.(());</pre>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SynthTracker/extVarious-argsArray.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SynthTracker/extVarious-argsArray.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-associationAtFail' href='./../Overviews/Methods.html#associationAtFail'>associationAtFail</a> (<span class='argstr'>argKey</span>, <span class='argstr'>function</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-choose' href='./../Overviews/Methods.html#choose'>choose</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-detect' href='./../Overviews/Methods.html#detect'>detect</a> (<span class='argstr'>function</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extLib.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extLib.sc</a></div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-detectKey' href='./../Overviews/Methods.html#detectKey'>detectKey</a> (<span class='argstr'>function</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extLib.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extLib.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-dopostln' href='./../Overviews/Methods.html#dopostln'>dopostln</a> </h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Posting/extObject-dopost.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Posting/extObject-dopost.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-enpath' href='./../Overviews/Methods.html#enpath'>enpath</a> </h3>
@@ -375,8 +401,6 @@ d.rout.(());</pre>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-fixCollisionsFrom' href='./../Overviews/Methods.html#fixCollisionsFrom'>fixCollisionsFrom</a> (<span class='argstr'>index</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-flattenArgsDict' href='./../Overviews/Methods.html#flattenArgsDict'>flattenArgsDict</a> (<span class='argstr'>check: false</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SynthTracker/extVarious-argsArray.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SynthTracker/extVarious-argsArray.sc</a></div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-flipKeys' href='./../Overviews/Methods.html#flipKeys'>flipKeys</a> ( <span class='argstr'>... oldNewPairs</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extLib.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extLib.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-grow' href='./../Overviews/Methods.html#grow'>grow</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-gui' href='./../Overviews/Methods.html#gui'>gui</a> ( <span class='argstr'>... args</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/JITLib/GUI/extJITgui.sc'>/usr/local/share/SuperCollider/SCClassLibrary/JITLib/GUI/extJITgui.sc</a></div>
