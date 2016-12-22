@@ -26,14 +26,17 @@
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*ar'>ar</a> </li>
-<li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>A cubic-interpolating sound generator based on the difference equation:<pre>    x(n+2) = 1 - a * x(n+1)^2 + b * x(n)</pre>
 <p>This equation was discovered by French astronomer Michel Hénon while studying the orbits of stars in globular clusters.
+<p>for more information on chaos theory henon formulas:
+<p>"<a href="https://en.wikipedia.org/wiki/Chaos_theory"">https://en.wikipedia.org/wiki/Chaos_theory"</a>
+<p>"<a href="https://en.wikipedia.org/wiki/Hénon_map"">https://en.wikipedia.org/wiki/Hénon_map"</a>
 <p>sclang code translation:<pre class='code prettyprint lang-sc'>(
 var a = 1.4, b = 0.3, x0 = 0, x1 = 1, size = 64;
 plot(size.collect { var aux = 1 - (a * (x1 ** 2)) + (b * x0); x0 = x1; x1 = aux; aux });
@@ -48,26 +51,20 @@ plot(size.collect { var aux = 1 - (a * (x1 ** 2)) + (b * x0); x0 = x1; x1 = aux;
 <p>Equation variable<tr><td class='argumentname'>b<td class='argumentdesc'>
 <p>Equation variable<tr><td class='argumentname'>x0<td class='argumentdesc'>
 <p>Initial value of x<tr><td class='argumentname'>x1<td class='argumentdesc'>
-<p>Second value of x</table></div><h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
+<p>Second value of x</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 <pre class='code prettyprint lang-sc'>// default initial params
-{ HenonC.ar(MouseX.kr(20, SampleRate.ir)) * 0.2 }.play(s);
+{ HenonC.ar(MouseX.kr(20, SampleRate.ir)) * 0.2 !2}.scope(s);
 
 // mouse-control of params
-{ HenonC.ar(SampleRate.ir/4, MouseX.kr(1,1.4), MouseY.kr(0,0.3)) * 0.2 }.play(s);
+{ HenonC.ar(SampleRate.ir/4, MouseX.kr(1,1.4), MouseY.kr(0,0.3)) * 0.2 !2}.scope(s);
 
 // randomly modulate params
-(
-{ HenonC.ar(
-    SampleRate.ir/8,
-    LFNoise2.kr(1, 0.2, 1.2),
-    LFNoise2.kr(1, 0.15, 0.15)
-) * 0.2 }.play(s);
-)
+({ HenonC.ar(SampleRate.ir/8, LFNoise2.kr(1, 0.2, 1.2), LFNoise2.kr(1, 0.15, 0.15)) ! 2 * 0.02 }).scope(s);
 
 // as a frequency control
-{ SinOsc.ar(HenonC.ar(40, MouseX.kr(1,1.4), MouseY.kr(0,0.3))*800+900)*0.4 }.play(s);</pre>
+{ SinOsc.ar(HenonC.ar(40, MouseX.kr(1,1.4), MouseY.kr(0,0.3))*800+900) * 0.04 ! 2 }.scope(s);</pre>
 
-<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/HenonC.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/HenonC.schelp</a><br>link::Classes/HenonC::<br>sc version: 3.8dev</div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/HenonC.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/HenonC.schelp</a><br>link::Classes/HenonC::<br>sc version: 3.9dev</div></div></body></html>
