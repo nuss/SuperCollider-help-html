@@ -54,7 +54,6 @@
 <li class='toc3'><a href='#-free'>free</a> </li>
 <li class='toc3'><a href='#-scalesWhenResized'>scalesWhenResized</a> </li>
 <li class='toc3'><a href='#-url'>url</a> </li>
-<li class='toc3'><a href='#-accelerated'>accelerated</a> </li>
 <li class='toc3'><a href='#-interpolation'>interpolation</a> </li>
 </ul><li class='toc2'><a href='#saving%20and%20archiving'>saving and archiving</a></li>
 <ul class='toc'><li class='toc3'><a href='#-write'>write</a> </li>
@@ -109,41 +108,37 @@
 <p>Image enables the drawing of images in the SuperCollider GUI.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>multiple</span>, <span class='argstr'>height</span>)</h3>
 <div class='method'>
-<p>Creates a new Image instance. multiple stands here for multiple arguments.<h4>Arguments:</h4>
+<p>Creates a new Image instance. "multiple" here stands for multiple arguments.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>multiple<td class='argumentdesc'>
-<p>May be a...<ul>
-<li><a href="./../Classes/Number.html">Number</a> to create an <strong>empty</strong> image of size multiple as width and height<pre class='code prettyprint lang-sc'>i = Image.new(400);        // Create a 400x400 pixels Image.
+<p>Any of the following:<ul>
+<li><a href="./../Classes/Number.html">Number</a> to create an <strong>empty</strong> image of size multiple as width and height<pre class='code prettyprint lang-sc'>i = Image.new(400);        // Create a 400x400 pixel Image.
 i.dump;
 i.free;
 
-i = Image.new(400, 200);    // Create a 400x200 pixels Image.
+i = Image.new(400, 200);    // Create a 400x200 pixel Image.
 i.dump;
 i.free;</pre>
 
-<p><li><a href="./../Classes/Point.html">Point</a> to create an <strong>empty</strong> image of size multiple.x as width and multiple.y as height<pre class='code prettyprint lang-sc'>i = Image.new(400@200);    // Create a 400x200 pixels Image.
+<p><li><a href="./../Classes/Point.html">Point</a> to create an <strong>empty</strong> image of size multiple.x as width and multiple.y as height<pre class='code prettyprint lang-sc'>i = Image.new(400@200);    // Create a 400x200 pixel Image.
 i.dump;
 i.free;</pre>
 
-<p><li><a href="./../Classes/String.html">String</a> to create an image from a <strong>local file</strong> or from an <strong>URL</strong> (http://, ftp://, <a href="file:///)">file:///)</a><pre class='code prettyprint lang-sc'>//    Path string
+<p><li><a href="./../Classes/String.html">String</a> to create an image from a <strong>local file</strong><pre class='code prettyprint lang-sc'>//    Path string
 i = Image.new(SCDoc.helpSourceDir +/+ "images/Swamp.png"); // add a path to your image
 [i.width, i.height].postln;
 i.plot;
-i.free;
-//    URL string - NOT IMPLEMENTE YET
-i = Image.new("http://www.google.com/intl/en_ALL/images/logo.gif");
-i.plot;
-i.url;
 i.free;</pre>
 </ul>
-</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*color' href='./../Overviews/Methods.html#color'>color</a> ( <span class='argstr'>... args</span>)</h3>
+<tr><td class='argumentname'>height<td class='argumentdesc'>
+<p>If <strong>multiple</strong> is a number, then this argument indicates the height of the new image.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*color' href='./../Overviews/Methods.html#color'>color</a> ( <span class='argstr'>... args</span>)</h3>
 <div class='method'>
 <p>Creates a new Image instance filled with the specified color.<pre class='code prettyprint lang-sc'>i = Image.color(400, 200, Color.blue(0.9,0.1));
 i.plot(freeOnClose:true);</pre>
 <h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>args<td class='argumentdesc'>
-<p>multiple arguments. the last argument should be a valid <a href="./../Classes/Color.html">Color</a></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*open' href='./../Overviews/Methods.html#open'>open</a> (<span class='argstr'>path</span>)</h3>
+<tr><td class='argumentname'>... args<td class='argumentdesc'>
+<p>Multiple arguments. the last argument should be a valid <a href="./../Classes/Color.html">Color</a></table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*open' href='./../Overviews/Methods.html#open'>open</a> (<span class='argstr'>path</span>)</h3>
 <div class='method'>
 <p>Creates a new Image instance from the local file at <strong>path</strong>.<pre class='code prettyprint lang-sc'>(
 i = Image.open(SCDoc.helpSourceDir +/+ "images/Swamp.png");
@@ -277,9 +272,7 @@ a.close; w.close; i.free;
 i.url;
 i.plot;
 i.free;</pre>
-</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-accelerated' href='./../Overviews/Methods.html#accelerated'>accelerated</a>: METHOD NOT FOUND!</h3>
-<div class='method'>
-<p>if true, the receiver currently use the CoreImage model, possibly caching its data on GPU, if not the bitmap model. Set it to switch representation.<div class='warning'><span class='warninglabel'>WARNING:</span> this method should never be used directly unless you know perfectly what you are doing. Since the Image will switch internally and manage itself the syncronization between representations.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-interpolation' href='./../Overviews/Methods.html#interpolation'>interpolation</a></h3>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-interpolation' href='./../Overviews/Methods.html#interpolation'>interpolation</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-interpolation' href='./../Overviews/Methods.html#interpolation'>interpolation</a> = <span class='argstr'>mode</span></h3>
 <div class='method'>
 <p>get or set the level of interpolation used when rendering the image - it has not effect when the Image is accelerated. see <a href="#*interpolations">*interpolations</a> for a valid range of values.<pre class='code prettyprint lang-sc'>(
@@ -346,7 +339,8 @@ i.free;</pre>
 <table class='arguments'>
 <tr><td class='argumentname'>path<td class='argumentdesc'>
 <p>the location where to save it<tr><td class='argumentname'>format<td class='argumentdesc'>
-<p>(optional) format to use. see Image.formats for supported formats. If nil, it will get the format depending on the path extension.</table></div><h3><a class='anchor' name='rendering'>rendering</a></h3>
+<p>(optional) format to use. see Image.formats for supported formats. If nil, it will get the format depending on the path extension.<tr><td class='argumentname'>quality<td class='argumentdesc'>
+<p>The quality factor must be in the range 0 to 100 or -1. Specify 0 to obtain small compressed files, 100 for large uncompressed files, and -1 (the default) to use the default settings.</table></div><h3><a class='anchor' name='rendering'>rendering</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-plot' href='./../Overviews/Methods.html#plot'>plot</a> (<span class='argstr'>name</span>, <span class='argstr'>bounds</span>, <span class='argstr'>freeOnClose: false</span>, <span class='argstr'>background</span>, <span class='argstr'>showInfo: true</span>)</h3>
 <div class='method'>
 <p>plots the image in a Window.<pre class='code prettyprint lang-sc'>i = Image.new(SCDoc.helpSourceDir +/+ "images/Swamp.png");

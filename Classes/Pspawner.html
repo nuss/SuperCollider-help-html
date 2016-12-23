@@ -41,7 +41,7 @@
 <div class='method'>
 <p><h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>function<td class='argumentdesc'>
+<tr><td class='argumentname'>routineFunc<td class='argumentdesc'>
 <p>The function defines a <a href="./../Classes/Routine.html">Routine</a> that receives a <a href="./../Classes/Spawner.html">Spawner</a> as its sole argument. All control of subpatterns is through the spawner.
 <p><a href="./../Classes/Spawner.html">Spawner</a> responds to the messages:<dl>
 <dt>par<dd>Begin an event stream in parallel to the routine. If delta is non-zero, the pattern will begin that many beats after 'now', provided that now + delta is later than the next event that the Spawner will generate. The method returns the stream. This may be called from any object.<dt>seq<dd>Run the entire pattern and then return control to the routine.<dt>wait<dd>Wait <strong>dur</strong> seconds and then return control to the routine.<dt>suspend<dd>Find the stream in the Spawner and stop it, returns nil if the stream is not found, the stream otherwise.<dt>suspendAll<dd>Stop all substreams of the Spawner.</dl>
@@ -126,7 +126,7 @@ p = Pspawner({ | sp |
     sp.par(Pbind(*[octave: 7, degree: pat, dur: 1/6, db: -20]) );
     sp.wait(4);
     sp.par(Pbind(*[octave: 4, degree: pat, dur: 1/4]) );
-    
+
     sp.wait(8);
     sp.suspendAll;
 });
