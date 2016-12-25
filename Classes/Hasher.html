@@ -16,7 +16,7 @@
 <div id='label'>SuperCollider CLASSES</div>
 <div id='categories'><a href='./../Browse.html#UGens>Filters>Nonlinear'>UGens>Filters>Nonlinear</a>, <a href='./../Browse.html#UGens>Random'>UGens>Random</a></div>
 <h1>Hasher</h1>
-<div id='summary'>Randomized value.</div>
+<div id='summary'>Scrambled value with a hash function.</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/Noise.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/Noise.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
@@ -31,7 +31,7 @@
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>Returns a unique output value from zero to one for each input value according to a hash function. The same input value will always produce the same output value. The input need not be from 0 to 1.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>Returns a unique output value from -1 to +1 for each input value according to a hash function. The same input value will always produce the same output value. The input need not be in the range -1 to +1.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>in: 0</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*kr' href='./../Overviews/Methods.html#kr'>kr</a> (<span class='argstr'>in: 0</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
 <div class='method'>
@@ -46,6 +46,7 @@
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 <pre class='code prettyprint lang-sc'>{ Hasher.ar(Line.ar(0,1,1), 0.2) }.play;
 
+// Even adding a small amount to the input can result in a very different output. Compare these two examples:
 (
 {
     SinOsc.ar(
@@ -62,6 +63,7 @@
 }.play;
 )
 
+// Output stays constant while not moving the mouse.
 (
 {
     SinOsc.ar(
