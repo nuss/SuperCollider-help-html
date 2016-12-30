@@ -35,7 +35,7 @@
 
 <p>An onset detector for musical audio signals - detects the beginning of notes/drumbeats/etc. Outputs a control-rate trigger signal which is 1 when an onset is detected, and 0 otherwise.
 <p>For more details of all the processes involved, the different onset detection functions, and their evaluation, see:
-<p>D. Stowell and M. D. Plumbley. Adaptive whitening for improved real-time audio onset detection. <em>Proceedings of the International Computer Music Conference (ICMC'07)</em>, Copenhagen, Denmark, August 2007. [<a href="http://www.elec.qmul.ac.uk/digitalmusic/papers/2007/StowellPlumbley07-icmc.pdf]">http://www.elec.qmul.ac.uk/digitalmusic/papers/2007/StowellPlumbley07-icmc.pdf]</a><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>D. Stowell and M. D. Plumbley. Adaptive whitening for improved real-time audio onset detection. <em>Proceedings of the International Computer Music Conference (ICMC2007)</em>, Copenhagen, Denmark, August 2007. See <a href="http://www.elec.qmul.ac.uk/digitalmusic/papers/2007/StowellPlumbley07-icmc.pdf.">http://www.elec.qmul.ac.uk/digitalmusic/papers/2007/StowellPlumbley07-icmc.pdf.</a><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*kr' href='./../Overviews/Methods.html#kr'>kr</a> (<span class='argstr'>chain</span>, <span class='argstr'>threshold: 0.5</span>, <span class='argstr'>odftype: 'rcomplex'</span>, <span class='argstr'>relaxtime: 1</span>, <span class='argstr'>floor: 0.1</span>, <span class='argstr'>mingap: 10</span>, <span class='argstr'>medianspan: 11</span>, <span class='argstr'>whtype: 1</span>, <span class='argstr'>rawodf: 0</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
@@ -43,9 +43,11 @@
 <tr><td class='argumentname'>chain<td class='argumentdesc'>
 <p>an FFT chain.<tr><td class='argumentname'>threshold<td class='argumentdesc'>
 <p>the detection threshold, typically between 0 and 1, although in rare cases you may find values outside this range useful.<tr><td class='argumentname'>odftype<td class='argumentdesc'>
-<p>chooses which <em>onset detection function</em> is used. In many cases the default will be fine. The following choices are available:<dl>
+<p>chooses which <em>onset detection function</em> is used. In many cases the default will be fine. More choices are listed below.
+<p>The remaining args are all tweak factors, explained below in section Advanced features:<tr><td class='argumentname'>relaxtime<td class='argumentdesc'><tr><td class='argumentname'>floor<td class='argumentdesc'><tr><td class='argumentname'>mingap<td class='argumentdesc'><tr><td class='argumentname'>medianspan<td class='argumentdesc'><tr><td class='argumentname'>whtype<td class='argumentdesc'><tr><td class='argumentname'>rawodf<td class='argumentdesc'></table><h4>Discussion:</h4>
+
+<p>The following choices are available for <code class='code prettyprint lang-sc'>odftype</code> :<dl>
 <dt><code class='code prettyprint lang-sc'>\power</code><dd>generally OK, good for percussive input, and also very efficient<dt><code class='code prettyprint lang-sc'>\magsum</code><dd>generally OK, good for percussive input, and also very efficient<dt><code class='code prettyprint lang-sc'>\complex</code><dd>performs generally very well, but more CPU-intensive<dt><code class='code prettyprint lang-sc'>\rcomplex</code><dd>performs generally very well, and slightly more efficient than <code class='code prettyprint lang-sc'>\complex</code><dt><code class='code prettyprint lang-sc'>\phase</code><dd>generally good, especially for tonal input, medium efficiency<dt><code class='code prettyprint lang-sc'>\wphase</code><dd>generally very good, especially for tonal input, medium efficiency<dt><code class='code prettyprint lang-sc'>\mkl</code><dd>generally very good, medium efficiency, pretty different from the other methods</dl>
-</table><h4>Discussion:</h4>
 
 <p>For the FFT chain, you should typically use a frame size of 512 or 1024 (at 44.1 kHz sampling rate) and 50% hop size (which is the default setting in SC). For different sampling rates choose an FFT size to cover a similar time-span (around 10 to 20 ms).
 <p>The onset detection should work well for a general range of monophonic and polyphonic audio signals. The onset detection is purely based on signal analysis and does not make use of any "top-down" inferences such as tempo.

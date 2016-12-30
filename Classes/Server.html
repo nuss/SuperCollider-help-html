@@ -351,7 +351,8 @@ s.postln; // see: it is alice.</pre>
 <table class='arguments'>
 <tr><td class='argumentname'>onComplete<td class='argumentdesc'>
 <p>A function that is called when quit has completed.<tr><td class='argumentname'>onFailure<td class='argumentdesc'>
-<p>A function that is called when quit has failed.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-reboot' href='./../Overviews/Methods.html#reboot'>reboot</a> (<span class='argstr'>func</span>, <span class='argstr'>onFailure</span>)</h3>
+<p>A function that is called when quit has failed.<tr><td class='argumentname'>watchShutDown<td class='argumentdesc'>
+<p>a boolean to tell the server whether to watch status during shutdown.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-reboot' href='./../Overviews/Methods.html#reboot'>reboot</a> (<span class='argstr'>func</span>, <span class='argstr'>onFailure</span>)</h3>
 <div class='method'>
 <p>quit and restart the server application<h4>Arguments:</h4>
 <table class='arguments'>
@@ -600,14 +601,19 @@ x.free; // stop the synths
 <p>Allocates the necessary buffer, etc. for recording the server's output. (See <code class='code prettyprint lang-sc'>record</code> below.)<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>path<td class='argumentdesc'>
-<p>a <a href="./../Classes/String.html">String</a> representing the path and name of the output file.</table><h4>Discussion:</h4>
+<p>a <a href="./../Classes/String.html">String</a> representing the path and name of the output file.<tr><td class='argumentname'>numChannels<td class='argumentdesc'>
+<p>a <a href="./../Classes/String.html">String</a> the number of output channels to record.</table><h4>Discussion:</h4>
 
 <p>If you do not specify a path than a file will be created in your recordings folder (see the note above on this) called SC_thisDateAndTime. Changes to the header or sample format, or to the number of channels must be made <strong>before</strong> calling this.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-record' href='./../Overviews/Methods.html#record'>record</a> (<span class='argstr'>path</span>, <span class='argstr'>bus</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>node</span>, <span class='argstr'>duration</span>)</h3>
 <div class='method'>
 <p>Starts or resumes recording the output.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>path<td class='argumentdesc'>
-<p>this is optional, and is passed to <code class='code prettyprint lang-sc'>prepareForRecord</code> (above).</table><h4>Discussion:</h4>
+<p>this is optional, and is passed to <code class='code prettyprint lang-sc'>prepareForRecord</code> (above).<tr><td class='argumentname'>bus<td class='argumentdesc'>
+<p>the bus to record - defaults to 0<tr><td class='argumentname'>numChannels<td class='argumentdesc'>
+<p>the number of channels to record - defaults to server numChannels<tr><td class='argumentname'>node<td class='argumentdesc'>
+<p>the node to record - defaults to server rootnode<tr><td class='argumentname'>duration<td class='argumentdesc'>
+<p>duration to record - defaults to inf</table><h4>Discussion:</h4>
 
 <p>If you have not called prepareForRecord first (see above) then it will be invoked for you (but that adds a slight delay before recording starts for real).</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pauseRecording' href='./../Overviews/Methods.html#pauseRecording'>pauseRecording</a> </h3>
 <div class='method'>

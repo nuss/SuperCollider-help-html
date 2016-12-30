@@ -29,9 +29,7 @@
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
 <li class='toc3'><a href='#*response'>response</a> </li>
 <li class='toc2'><a href='#Subclassing%20and%20Internal%20Methods'>Subclassing and Internal Methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#*initClass'>initClass</a> </li>
-<li class='toc3'><a href='#*server'>server</a> </li>
-</ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 <li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*initSynthDefs'>initSynthDefs</a> </li>
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
@@ -41,30 +39,25 @@
 <li class='toc3'><a href='#-inBus'>inBus</a> </li>
 <li class='toc3'><a href='#-dbRange'>dbRange</a> </li>
 <li class='toc3'><a href='#-special'>special</a> </li>
-<li class='toc2'><a href='#Subclassing%20and%20Internal%20Methods'>Subclassing and Internal Methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-start'>start</a> </li>
-<li class='toc3'><a href='#-eventSeq'>eventSeq</a> </li>
-<li class='toc3'><a href='#-cmdPeriod'>cmdPeriod</a> </li>
-<li class='toc3'><a href='#-initFreqScope'>initFreqScope</a> </li>
-<li class='toc3'><a href='#-sendSynthDefs'>sendSynthDefs</a> </li>
+<li class='toc2'><a href='#instance%20variables'>instance variables</a></li>
+<ul class='toc'><li class='toc3'><a href='#-server'>server</a> </li>
+<li class='toc3'><a href='#-synth'>synth</a> </li>
+<li class='toc3'><a href='#-scope'>scope</a> </li>
+<li class='toc3'><a href='#-scopebuf'>scopebuf</a> </li>
+</ul><li class='toc2'><a href='#Internal%20Methods'>Internal Methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-initFreqScope'>initFreqScope</a> </li>
+<li class='toc3'><a href='#-doesNotUnderstand'>doesNotUnderstand</a> </li>
+<li class='toc3'><a href='#-start'>start</a> </li>
 <li class='toc3'><a href='#-allocBuffers'>allocBuffers</a> </li>
 <li class='toc3'><a href='#-freeBuffers'>freeBuffers</a> </li>
-<li class='toc3'><a href='#-node'>node</a> </li>
-<li class='toc3'><a href='#-scopebuf'>scopebuf</a> </li>
-<li class='toc3'><a href='#-fftbuf'>fftbuf</a> </li>
 <li class='toc3'><a href='#-bufSize'>bufSize</a> </li>
-</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
-<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-doOnServerQuit'>doOnServerQuit</a> </li>
+<li class='toc3'><a href='#-doOnServerQuit'>doOnServerQuit</a> </li>
 <li class='toc3'><a href='#-doOnServerTree'>doOnServerTree</a> </li>
-<li class='toc3'><a href='#-doesNotUnderstand'>doesNotUnderstand</a> </li>
-<li class='toc3'><a href='#-scope'>scope</a> </li>
-<li class='toc3'><a href='#-server'>server</a> </li>
 <li class='toc3'><a href='#-shmScopeAvailable'>shmScopeAvailable</a> </li>
 <li class='toc3'><a href='#-specialSynthArgs'>specialSynthArgs</a> </li>
 <li class='toc3'><a href='#-specialSynthDef'>specialSynthDef</a> </li>
-<li class='toc3'><a href='#-synth'>synth</a> </li>
-</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>FreqScopeView shows the frequency spectrum of a specified audio bus.<div class='note'><span class='notelabel'>NOTE:</span> The scope will remain active after a command-period. To turn it off you must use the 'active' method. Very important: You must run <code class='code prettyprint lang-sc'>kill()</code> when the parent window is closed to avoid problems. It also frees the buffers that the scope allocated and stops the FFT analysis synth. So:<pre class='code prettyprint lang-sc'>(
@@ -79,7 +72,8 @@ w.front;
 <table class='arguments'>
 <tr><td class='argumentname'>parent<td class='argumentdesc'>
 <p>The parent view.<tr><td class='argumentname'>bounds<td class='argumentdesc'>
-<p>An instance of <a href="./../Classes/Rect.html">Rect</a>, or a <a href="./../Classes/Point.html">Point</a> indicating <code class='code prettyprint lang-sc'>width@height</code>.</table><h4>Discussion:</h4>
+<p>An instance of <a href="./../Classes/Rect.html">Rect</a>, or a <a href="./../Classes/Point.html">Point</a> indicating <code class='code prettyprint lang-sc'>width@height</code>.<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>The server to be shown in scope.</table><h4>Discussion:</h4>
 
 <p>Example:<pre class='code prettyprint lang-sc'>// Start server
 s.boot;
@@ -124,18 +118,14 @@ Median.scopeResponse // nonlinear, and therefore interesting
 gain:MouseY.kr(4, 0))}.scopeResponse</pre>
 </div><h3><a class='anchor' name='Subclassing%20and%20Internal%20Methods'>Subclassing and Internal Methods</a></h3>
 
-<p>The following methods are usually not used directly or are called by a primitive. Programmers can still call or override these as needed.<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a> </h3>
-<div class='method'>
-<p>Sets the classvar, <code class='code prettyprint lang-sc'>server = Server.default</code>.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*server' href='./../Overviews/Methods.html#server'>server</a>: METHOD NOT FOUND!</h3>
-<div class='method'>
-<p>A classvar.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>The following methods are usually not used directly or are called by a primitive. Programmers can still call or override these as needed.<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initSynthDefs' href='./../Overviews/Methods.html#initSynthDefs'>initSynthDefs</a> </h3>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-kill' href='./../Overviews/Methods.html#kill'>kill</a> </h3>
 <div class='method'>
 <p>Very important. This must be run when the parent window is closed to avoid problems. It also frees the buffers that the scope allocated and stops the FFT analysis synth.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-active' href='./../Overviews/Methods.html#active'>active</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-active' href='./../Overviews/Methods.html#active'>active</a> = <span class='argstr'>activate</span></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-active' href='./../Overviews/Methods.html#active'>active</a> = <span class='argstr'>bool</span></h3>
 <div class='method'>
 <p>Turn the scope on or off.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -157,50 +147,41 @@ gain:MouseY.kr(4, 0))}.scopeResponse</pre>
 <p>Get/set the amplitude range.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>db<td class='argumentdesc'>
-<p>A <a href="./../Classes/Number.html">Number</a>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-special' href='./../Overviews/Methods.html#special'>special</a> (<span class='argstr'>defname</span>, <span class='argstr'>extraargs</span>)</h3>
+<p>A <a href="./../Classes/Number.html">Number</a>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-special' href='./../Overviews/Methods.html#special'>special</a> (<span class='argstr'>defname</span>, <span class='argstr'>extraArgs</span>)</h3>
 <div class='method'>
 <p>Put the scope into a special mode using a user-specified <a href="./../Classes/SynthDef.html">SynthDef</a>. Note that only very particular SynthDefs should be used, namely ones that are derived from the <code class='code prettyprint lang-sc'>\freqScope0</code> or <code class='code prettyprint lang-sc'>\freqScope1</code> SynthDefs. Most users will not need to use this method directly, but it can be used to provide a customised analysis shown in the scope.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>defname<td class='argumentdesc'>
 <p>Name of the <a href="./../Classes/SynthDef.html">SynthDef</a> you wish to use.<tr><td class='argumentname'>extraArgs<td class='argumentdesc'>
-<p>Extra arguments that you may wish to pass to the synth.</table></div><h3><a class='anchor' name='Subclassing%20and%20Internal%20Methods'>Subclassing and Internal Methods</a></h3>
+<p>Extra arguments that you may wish to pass to the synth.</table></div><h3><a class='anchor' name='instance%20variables'>instance variables</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-server' href='./../Overviews/Methods.html#server'>server</a> </h3>
+<div class='method'>
+<p>the server that is freqscoped</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-synth' href='./../Overviews/Methods.html#synth'>synth</a> </h3>
+<div class='method'>
+<p>the synth running the freqscope analysis</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-scope' href='./../Overviews/Methods.html#scope'>scope</a> </h3>
+<div class='method'>
+<p>the scopeview that shows the running analysis</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-scopebuf' href='./../Overviews/Methods.html#scopebuf'>scopebuf</a> </h3>
+<div class='method'>
+<p>the buffer used by the scope</div><h3><a class='anchor' name='Internal%20Methods'>Internal Methods</a></h3>
 
-<p>The following methods are usually not used directly or are called by a primitive. Programmers can still call or override these as needed.<h3 class='imethodname'><span class='methprefix'>-</span><a name='-start' href='./../Overviews/Methods.html#start'>start</a> </h3>
+<p>The following methods are usually not used directly or are called by a primitive. Programmers can still call or override these in subclasses as needed.<h3 class='imethodname'><span class='methprefix'>-</span><a name='-initFreqScope' href='./../Overviews/Methods.html#initFreqScope'>initFreqScope</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>, <span class='argstr'>argServer</span>)</h3>
 <div class='method'>
-<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-eventSeq' href='./../Overviews/Methods.html#eventSeq'>eventSeq</a>: METHOD NOT FOUND!</h3>
+<p>initialize and show on parent view</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-doesNotUnderstand' href='./../Overviews/Methods.html#doesNotUnderstand'>doesNotUnderstand</a> (<span class='argstr'>selector</span> <span class='argstr'>... args</span>)</h3>
 <div class='method'>
-<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-cmdPeriod' href='./../Overviews/Methods.html#cmdPeriod'>cmdPeriod</a>: METHOD NOT FOUND!</h3>
-<div class='method'>
-<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-initFreqScope' href='./../Overviews/Methods.html#initFreqScope'>initFreqScope</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>, <span class='argstr'>argServer</span>)</h3>
-<div class='method'>
-<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendSynthDefs' href='./../Overviews/Methods.html#sendSynthDefs'>sendSynthDefs</a>: METHOD NOT FOUND!</h3>
-<div class='method'>
-<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-allocBuffers' href='./../Overviews/Methods.html#allocBuffers'>allocBuffers</a> </h3>
-<div class='method'>
-<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-freeBuffers' href='./../Overviews/Methods.html#freeBuffers'>freeBuffers</a> </h3>
-<div class='method'>
-<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-node' href='./../Overviews/Methods.html#node'>node</a>: METHOD NOT FOUND!</h3>
-<div class='method'>
-<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-scopebuf' href='./../Overviews/Methods.html#scopebuf'>scopebuf</a> </h3>
-<div class='method'>
-<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-fftbuf' href='./../Overviews/Methods.html#fftbuf'>fftbuf</a>: METHOD NOT FOUND!</h3>
-<div class='method'>
-<p></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-bufSize' href='./../Overviews/Methods.html#bufSize'>bufSize</a> </h3>
+<p>redirects methods to scope view variable</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-start' href='./../Overviews/Methods.html#start'>start</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-allocBuffers' href='./../Overviews/Methods.html#allocBuffers'>allocBuffers</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-freeBuffers' href='./../Overviews/Methods.html#freeBuffers'>freeBuffers</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-bufSize' href='./../Overviews/Methods.html#bufSize'>bufSize</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-doOnServerQuit' href='./../Overviews/Methods.html#doOnServerQuit'>doOnServerQuit</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-doOnServerTree' href='./../Overviews/Methods.html#doOnServerTree'>doOnServerTree</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-shmScopeAvailable' href='./../Overviews/Methods.html#shmScopeAvailable'>shmScopeAvailable</a> </h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-specialSynthArgs' href='./../Overviews/Methods.html#specialSynthArgs'>specialSynthArgs</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-specialSynthArgs' href='./../Overviews/Methods.html#specialSynthArgs'>specialSynthArgs</a> = <span class='argstr'>args</span></h3>
+<div class='method'></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-specialSynthDef' href='./../Overviews/Methods.html#specialSynthDef'>specialSynthDef</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-specialSynthDef' href='./../Overviews/Methods.html#specialSynthDef'>specialSynthDef</a> = value</h3>
 <div class='method'>
 <p></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-doOnServerQuit' href='./../Overviews/Methods.html#doOnServerQuit'>doOnServerQuit</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-doOnServerTree' href='./../Overviews/Methods.html#doOnServerTree'>doOnServerTree</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-doesNotUnderstand' href='./../Overviews/Methods.html#doesNotUnderstand'>doesNotUnderstand</a> (<span class='argstr'>selector</span> <span class='argstr'>... args</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-scope' href='./../Overviews/Methods.html#scope'>scope</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-server' href='./../Overviews/Methods.html#server'>server</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-shmScopeAvailable' href='./../Overviews/Methods.html#shmScopeAvailable'>shmScopeAvailable</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-specialSynthArgs' href='./../Overviews/Methods.html#specialSynthArgs'>specialSynthArgs</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-specialSynthArgs' href='./../Overviews/Methods.html#specialSynthArgs'>specialSynthArgs</a> = <span class='argstr'>args</span></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-specialSynthDef' href='./../Overviews/Methods.html#specialSynthDef'>specialSynthDef</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-specialSynthDef' href='./../Overviews/Methods.html#specialSynthDef'>specialSynthDef</a> = value</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-synth' href='./../Overviews/Methods.html#synth'>synth</a> </h3>
-<h2><a class='anchor' name='examples'>Examples</a></h2>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 <pre class='code prettyprint lang-sc'>// Start server
 s.boot;
 
