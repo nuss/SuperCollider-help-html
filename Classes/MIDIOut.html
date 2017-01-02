@@ -59,7 +59,7 @@
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'><li class='toc2'><a href='#Using%20patterns%20for%20sending%20MIDI%20events'>Using patterns for sending MIDI events</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Linux%20specific:%20Connecting%20and%20disconnecting%20ports'>Linux specific: Connecting and disconnecting ports</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#OS%20X%20specific:%20Sending%20MIDI%20to%20other%20applications'>OS X specific: Sending MIDI to other applications</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#macOS%20specific:%20Sending%20MIDI%20to%20other%20applications'>macOS specific: Sending MIDI to other applications</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Sysex%20example'>Sysex example</a></li>
 <ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
@@ -70,7 +70,7 @@
 <table class='arguments'>
 <tr><td class='argumentname'>port<td class='argumentdesc'>
 <p>the index of the MIDIEndPoint in the <code class='code prettyprint lang-sc'>MIDIClient.destinations</code> array.<tr><td class='argumentname'>uid<td class='argumentdesc'><dl>
-<dt>Mac OSX / Windows<dd>uid is optional; if specified, it should be the uid of that port ie. MIDIClient.destinations[port].uid. If you don't provide a uid, the correct uid will be filled in for you (easier).<dt>Linux<dd>using the uid is optional as described below.</dl>
+<dt>macOS / Windows<dd>uid is optional; if specified, it should be the uid of that port ie. MIDIClient.destinations[port].uid. If you don't provide a uid, the correct uid will be filled in for you (easier).<dt>Linux<dd>using the uid is optional as described below.</dl>
 </table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newByName' href='./../Overviews/Methods.html#newByName'>newByName</a> (<span class='argstr'>deviceName</span>, <span class='argstr'>portName</span>, <span class='argstr'>dieIfNotFound: true</span>)</h3>
 <div class='method'>
 <p>Searches for the device by name. This is safer then depending on the index which will change if your studio setup changes.<pre class='code prettyprint lang-sc'>//list connected out ports with names:
@@ -86,7 +86,7 @@ MIDIClient.destinations;</pre>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*disconnect' href='./../Overviews/Methods.html#disconnect'>disconnect</a> (<span class='argstr'>outport: 0</span>, <span class='argstr'>device: 0</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Platform/linux/extMIDIOut.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Platform/linux/extMIDIOut.sc</a></div>
 <div class='method'>
-<p>Linux only. OS X does not need to connect. On Linux it is an optional feature (see below).</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>Linux only. macOS does not need to connect. On Linux it is an optional feature (see below).</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-latency' href='./../Overviews/Methods.html#latency'>latency</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-latency' href='./../Overviews/Methods.html#latency'>latency</a> = value</h3>
@@ -160,7 +160,7 @@ a = Pbind(\degree, Prand([1, 2, 3, [0, 5]], inf), \bend, Pwhite(0, 76, inf));
 <p>A connection can be made through:<pre class='code prettyprint lang-sc'>m.connect( 2 );</pre>
 
 <p>Note that by connecting in this way, you can connect more than one destination to the MIDI output. You can also use other tools to connect to a MIDIOut port of SC, e.g. through aconnect or QJackCtl (on the ALSA tab).
-<p>If you set the uid in MIDIOut, a direct connection is established and data will only be sent to that MIDI input port, and not to any other connections made to SC's MIDI output port (through the connect message or external tools).<h3><a class='anchor' name='OS%20X%20specific:%20Sending%20MIDI%20to%20other%20applications'>OS X specific: Sending MIDI to other applications</a></h3>
+<p>If you set the uid in MIDIOut, a direct connection is established and data will only be sent to that MIDI input port, and not to any other connections made to SC's MIDI output port (through the connect message or external tools).<h3><a class='anchor' name='macOS%20specific:%20Sending%20MIDI%20to%20other%20applications'>macOS specific: Sending MIDI to other applications</a></h3>
 
 <p>Open the Audio MIDI Setup application. Double-click on IAC Driver and check "device is online".
 <p>reinitialize:
