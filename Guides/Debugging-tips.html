@@ -24,6 +24,7 @@
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#Debugging%20synthdefs'>Debugging synthdefs</a></li>
 <ul class='toc'><li class='toc2'><a href='#SendTrig%20/%20OSCFunc'>SendTrig / OSCFunc</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Polling'>Polling</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Trace%20control%20signals%20using%20a%20control%20bus'>Trace control signals using a control bus</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Server-side%20trace'>Server-side trace</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#Debugging%20client-to-server%20communication'>Debugging client-to-server communication</a></li>
@@ -75,6 +76,27 @@ o.free;  // when done, you need to clean up the OSCFunc
 
 // plot as two channels: frequencies in the top graph, amps in the bottom
 l.flat.plot(numChannels: 2);</pre>
+<h3><a class='anchor' name='Polling'>Polling</a></h3>
+
+<p>Polling allows you to debug a SynthDef by printing samples of a UGen's output to the post window. To do this, use the .poll method (a shorthand for the Poll UGen), which prints 10 times per second by default.<pre class='code prettyprint lang-sc'>{ LFNoise1.kr.poll; }.play;   // default poll</pre>
+
+<p>This can be too fast, so you can specify how many times per second the value should be printed.<pre class='code prettyprint lang-sc'>{ LFNoise1.kr.poll(3); }.play;  // poll more slowly</pre>
+
+<p>You can also poll arrays<pre class='code prettyprint lang-sc'>{ [LFNoise1.kr, LFNoise1.kr].poll; }.play;  // poll an array</pre>
+
+<p>For more than one value or array at once, poll can become unwieldy, because so many values are printed to the screen that it is difficult to tell which is which. Labels help with this.<pre class='code prettyprint lang-sc'>{ LFNoise1.kr.poll(3, "a value"); LFNoise1.kr.poll(5, "another value"); }.play;</pre>
+
+<p>Debugging triggers doesn't work with regular polling, because the trigger will mostly occur in between polling intervals. The output itself can be supplied instead of the number of polls per second. This way, the value is only printed when there is a trigger, rather than at a regular interval.<pre class='code prettyprint lang-sc'>{ var trig = Dust.kr; trig.poll(trig); }.play;</pre>
+
+<p>You can debug a value that changes infrequently in a similar way, using the Changed UGen. This only prints the value when it just changed.
+<p>Note that it will skip changes that occur immediately after a previous change, because any trigger needs to revert back to zero before triggering again.<pre class='code prettyprint lang-sc'>{ var steps = LFNoise0.kr; steps.poll(Changed.kr(steps); }.play;</pre>
+
+<p>You can also use a seperate trigger. This is useful for having the most control over when a poll occurs.<pre class='code prettyprint lang-sc'>~synth={ arg t_trig; [LFNoise1.kr, LFNoise1.kr].poll(t_trig); }.play;
+
+// the t_ in t_trig is shorthand to cause ~synth.set(\t_trig, 1) to trigger instead of set permanently
+~synth.set(\t_trig, 1); // run this line a couple of times</pre>
+
+<p>All the examples above work the same for audio rate UGens.<pre class='code prettyprint lang-sc'>{ LFNoise1.ar.poll; }.play;</pre>
 <h3><a class='anchor' name='Trace%20control%20signals%20using%20a%20control%20bus'>Trace control signals using a control bus</a></h3>
 
 <p>Another technique to watch control values is to output the signal to a control-rate bus. Then you can access the bus using <a href="./../Classes/Bus.html#-get">Bus: -get</a> or <a href="./../Classes/Bus.html#-getSynchronous">Bus: -getSynchronous</a>. Saving the values into an Array or List is a little more straightforward with getSynchronous.<pre class='code prettyprint lang-sc'>b = Bus.control(s, 1);
