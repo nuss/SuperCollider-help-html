@@ -30,6 +30,7 @@
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Interaction%20with%20sample%20rate'>Interaction with sample rate</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>This is the same as <a href="./../Classes/Resonz.html">Resonz</a> , except that it is a constant skirt gain filter, meaning that the peak gain depends on the value of Q. Also, instead of the resonance parameter in Resonz, the bandwidth is specified in a 60dB ring decay time. One Ringz is equivalent to one component of the <a href="./../Classes/Klank.html">Klank</a> UGen.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
@@ -73,4 +74,21 @@
     })
 }.play
 )</pre>
-<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Ringz.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Ringz.schelp</a><br>link::Classes/Ringz::<br>sc version: 3.9dev</div></div></body></html>
+<h2><a class='anchor' name='Interaction%20with%20sample%20rate'>Interaction with sample rate</a></h2>
+
+<p>Ringz (and UGens that are based on it: <a href="./../Classes/Klank.html">Klank</a>, <a href="./../Classes/DynKlank.html">DynKlank</a> and <a href="./../Classes/Formlet.html">Formlet</a>) are "sample-rate independent" with respect to <em>impulses</em> at the input. That is, given single-sample impulses, the output signal at different sample rates should be the same frequency and amplitude.
+<p>This design has a side effect: If the input is not made of impulses, the output amplitude is proportional to the sample rate.<pre class='code prettyprint lang-sc'>(
+a = {
+    // rectangular pulse exciter (deterministic input)
+    var exc = EnvGen.ar(Env([1, 1, 0], [0.01, 0], \lin)),
+    sig = Ringz.ar(exc, 440, decaytime: 0.2),
+    rms = sqrt(Integrator.ar(sig.squared) * (0.2 / SampleRate.ir)),
+    end = DetectSilence.ar(sig, doneAction: 2);
+    rms.poll(end);
+    Silent.ar(1)
+}.play;
+)</pre>
+
+<p>At 44.1 kHz, this prints a RMS amplitude of 1.0758. At 88.2 kHz, the amplitude doubles.
+<p>Modal synthesis (simulating the vibrating modes of a struck surface) feeds a short, decaying burst of noise into Ringz-style resonators. This is a common use case that <em>is</em> subject to this amplitude effect.
+<p>If you will need the results to be compatible at different sample rates, make sure to scale the volume appropriately: if <code class='code prettyprint lang-sc'>sig</code> is the Ringz, Klank or Formlet signal, use <code class='code prettyprint lang-sc'>sig * (originalSampleRate / SampleRate.ir)</code> and substitute the right value in place of <code class='code prettyprint lang-sc'>originalSampleRate</code>.<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Ringz.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Ringz.schelp</a><br>link::Classes/Ringz::<br>sc version: 3.9dev</div></div></body></html>
