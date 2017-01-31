@@ -16,14 +16,16 @@
 <div id='label'>SuperCollider CLASSES</div>
 <div id='categories'><a href='./../Browse.html#Collections>Ordered'>Collections>Ordered</a></div>
 <h1>String</h1>
-<div id='summary'>array of characters</div>
+<div id='summary'>array of Chars</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/String.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/String.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/RawArray.html">RawArray</a> : <a href="../Classes/ArrayedCollection.html">ArrayedCollection</a> : <a href="../Classes/SequenceableCollection.html">SequenceableCollection</a> : <a href="../Classes/Collection.html">Collection</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/Char.html">Char</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Character%20encodings'>Character encodings</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*readNew'>readNew</a> </li>
 <li class='toc3'><a href='#*scDir'>scDir</a> </li>
 <li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
@@ -354,7 +356,7 @@
 <li class='toc3'><a href='#-zip'>zip</a> </li>
 </ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>String represents an array of characters.
+<p>String represents an array of <a href="./../Classes/Char.html">Chars</a>.
 <p>Strings can be written literally using double quotes:<pre class='code prettyprint lang-sc'>"my string".class</pre>
 
 <p>A sequence of string literals will be concatenated together:<pre class='code prettyprint lang-sc'>x = "hel" "lo";
@@ -362,7 +364,10 @@ y = "this is a\n"
     "multiline\n"
     "string";</pre>
 
-<p>A backslash is the escape character. See <a href="./../Reference/Literals.html#Escape%20character">Literals: Escape%20character</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>Backslash is the escape character. See <a href="./../Reference/Literals.html#Characters">Literals: Characters</a>.<h3><a class='anchor' name='Character%20encodings'>Character encodings</a></h3>
+
+<p>Note that, while Char does not support encodings aside from ASCII—such as multi-byte encodings like UTF-8 and UTF-16, or the full Latin-1 (ISO 8859-1) character set—Chars with negative values are perfectly legal, and may be strung together in strings that use these encodings.
+<p>The SuperCollider IDE uses UTF-8 (a superset of ASCII) to decode and display strings, which means that the string <code class='code prettyprint lang-sc'>"🎹🙄🎻😂🎚️🎛️🎤😍"</code> can be written in the editor, posted in the post window, and treated for the most part like any other string. However, because non-ASCII UTF-8 characters consist of two or more bytes, and a SuperCollider String's members are one-bit Chars, concepts of size and indexing may not behave intuitively. For instance, the "<code class='code prettyprint lang-sc'>size</code>" of the string above is 38, not 8, and the value of its first index is <code class='code prettyprint lang-sc'>-16</code>, which is not a valid ASCII value at all but rather the signed 8-bit representation of the first byte of the UTF-8 value of the piano keyboard emoji (🎹), <code class='code prettyprint lang-sc'>0xF09F8EB9</code>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*readNew' href='./../Overviews/Methods.html#readNew'>readNew</a> (<span class='argstr'>file</span>)</h3>
 <div class='method'>
 <p>Read the entire contents of a <a href="./../Classes/File.html">File</a> and return them as a new String.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*scDir' href='./../Overviews/Methods.html#scDir'>scDir</a> </h3>
@@ -393,7 +398,20 @@ y = "this is a\n"
 <p>Strings respond to .at in a manner similar to other indexed collections. Each element is a <a href="./../Classes/Char.html">Char</a>.<pre class='code prettyprint lang-sc'>"ABCDEFG".at(2)</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-ascii' href='./../Overviews/Methods.html#ascii'>ascii</a> </h3>
 <div class='method'>
-<p>Returns an Array of ascii numbers of the Strings's characters.<pre class='code prettyprint lang-sc'>"wertvoll".ascii</pre>
+<p>Returns an Array of ASCII values of the Strings's characters.<pre class='code prettyprint lang-sc'>"wertvoll".ascii // [ 119, 101, 114, 116, 118, 111, 108, 108 ]</pre>
+
+<p>Note that if a string contains multi-byte UTF-8 characters, this array will not be of the same length as the number of visible characters, nor will it necessarily be an array of valid 7-bit ASCII values.<pre class='code prettyprint lang-sc'>// "face with tears of joy" is Unicode codepoint U+1F602, which is encoded in UTF-8 as hex value 0xF09F9882
+a = "😂";
+
+// although this is one UTF-8 character, it must be stored as 4 Chars because Chars can only hold 1 byte each
+a.size // 4 (!)
+a.ascii // [ -16, -97, -104, -126 ]
+
+// "wrap(0, 255)" converts these numbers to their unsigned 8-bit values
+b = a.ascii.wrap(0, 255) // [ 240, 159, 152, 130 ]
+
+// if we represent these values in hexidecmial, it's the same as the UTF-8 above: 0xF09F9882
+b.collect(_.asHexString(2)) // [ F0, 9F, 98, 82 ]</pre>
 </div><h3><a class='anchor' name='Comparing%20strings'>Comparing strings</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-compare' href='./../Overviews/Methods.html#compare'>compare</a> (<span class='argstr'>aString</span>, <span class='argstr'>ignoreCase: false</span>)</h3>
 <div class='method'>
