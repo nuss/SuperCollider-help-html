@@ -16,7 +16,7 @@
 <div id='label'>SuperCollider CLASSES</div>
 <div id='categories'><a href='./../Browse.html#Server>Abstractions'>Server>Abstractions</a></div>
 <h1>Server</h1>
-<div id='summary'>Object representing an sc-server application</div>
+<div id='summary'>Object representing a server application</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Control/Server.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Control/Server.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
@@ -84,12 +84,21 @@
 <ul class='toc'><li class='toc3'><a href='#-dumpOSC'>dumpOSC</a> </li>
 <li class='toc3'><a href='#-queryAllNodes'>queryAllNodes</a> </li>
 <li class='toc3'><a href='#-peakCPU'>peakCPU</a>  <a href='#-avgCPU'>avgCPU</a> </li>
+<li class='toc3'><a href='#-latency'>latency</a> </li>
+<li class='toc3'><a href='#-sampleRate'>sampleRate</a> </li>
+<li class='toc3'><a href='#-actualSampleRate'>actualSampleRate</a> </li>
 <li class='toc3'><a href='#-numSynths'>numSynths</a> </li>
 <li class='toc3'><a href='#-numGroups'>numGroups</a> </li>
 <li class='toc3'><a href='#-numUGens'>numUGens</a> </li>
 <li class='toc3'><a href='#-numSynthDefs'>numSynthDefs</a> </li>
 <li class='toc3'><a href='#-pid'>pid</a> </li>
+<li class='toc3'><a href='#-addr'>addr</a> </li>
 <li class='toc3'><a href='#-hasShmInterface'>hasShmInterface</a> </li>
+<li class='toc3'><a href='#-serverBooting'>serverBooting</a> </li>
+<li class='toc3'><a href='#-serverRunning'>serverRunning</a> </li>
+<li class='toc3'><a href='#-unresponsive'>unresponsive</a> </li>
+<li class='toc3'><a href='#-isLocal'>isLocal</a> </li>
+<li class='toc3'><a href='#-remoteControlled'>remoteControlled</a> </li>
 </ul><li class='toc2'><a href='#Message%20Bundling'>Message Bundling</a></li>
 <ul class='toc'><li class='toc3'><a href='#-makeBundle'>makeBundle</a> </li>
 <li class='toc3'><a href='#-bind'>bind</a> </li>
@@ -101,6 +110,7 @@
 <ul class='toc'><li class='toc3'><a href='#-initTree'>initTree</a> </li>
 </ul><li class='toc2'><a href='#GUI%20methods'>GUI methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-makeGui'>makeGui</a> </li>
+<li class='toc3'><a href='#-makeWindow'>makeWindow</a> </li>
 <li class='toc3'><a href='#-scope'>scope</a> </li>
 <li class='toc3'><a href='#-freqscope'>freqscope</a> </li>
 <li class='toc3'><a href='#-meter'>meter</a> </li>
@@ -121,9 +131,7 @@
 <li class='toc3'><a href='#-sync'>sync</a> </li>
 </ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-actualSampleRate'>actualSampleRate</a> </li>
-<li class='toc3'><a href='#-addr'>addr</a> </li>
-<li class='toc3'><a href='#-aliveThreadIsRunning'>aliveThreadIsRunning</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-aliveThreadIsRunning'>aliveThreadIsRunning</a> </li>
 <li class='toc3'><a href='#-aliveThreadPeriod'>aliveThreadPeriod</a> </li>
 <li class='toc3'><a href='#-applicationRunning'>applicationRunning</a> </li>
 <li class='toc3'><a href='#-archiveAsCompileString'>archiveAsCompileString</a> </li>
@@ -157,12 +165,9 @@
 <li class='toc3'><a href='#-ifNotRunning'>ifNotRunning</a> </li>
 <li class='toc3'><a href='#-ifRunning'>ifRunning</a> </li>
 <li class='toc3'><a href='#-inProcess'>inProcess</a> </li>
-<li class='toc3'><a href='#-isLocal'>isLocal</a> </li>
 <li class='toc3'><a href='#-isRecording'>isRecording</a> </li>
-<li class='toc3'><a href='#-latency'>latency</a> </li>
 <li class='toc3'><a href='#-makeView'>makeView</a> </li>
 <li class='toc3'><a href='#-makeView2'>makeView2</a> </li>
-<li class='toc3'><a href='#-makeWindow'>makeWindow</a> </li>
 <li class='toc3'><a href='#-name'>name</a> </li>
 <li class='toc3'><a href='#-newAllocators'>newAllocators</a> </li>
 <li class='toc3'><a href='#-newBufferAllocators'>newBufferAllocators</a> </li>
@@ -182,17 +187,13 @@
 <li class='toc3'><a href='#-recordNode'>recordNode</a> </li>
 <li class='toc3'><a href='#-recordOnNodeID'>recordOnNodeID</a> </li>
 <li class='toc3'><a href='#-recorder'>recorder</a> </li>
-<li class='toc3'><a href='#-remoteControlled'>remoteControlled</a> </li>
 <li class='toc3'><a href='#-removeBusLinks'>removeBusLinks</a> </li>
 <li class='toc3'><a href='#-removeControlLinks'>removeControlLinks</a> </li>
-<li class='toc3'><a href='#-sampleRate'>sampleRate</a> </li>
 <li class='toc3'><a href='#-schedSync'>schedSync</a> </li>
 <li class='toc3'><a href='#-scopeBufferAllocator'>scopeBufferAllocator</a> </li>
 <li class='toc3'><a href='#-scopeWindow'>scopeWindow</a> </li>
 <li class='toc3'><a href='#-sendQuit'>sendQuit</a> </li>
 <li class='toc3'><a href='#-sendStatusMsg'>sendStatusMsg</a> </li>
-<li class='toc3'><a href='#-serverBooting'>serverBooting</a> </li>
-<li class='toc3'><a href='#-serverRunning'>serverRunning</a> </li>
 <li class='toc3'><a href='#-setControlBusValue'>setControlBusValue</a> </li>
 <li class='toc3'><a href='#-setControlBusValues'>setControlBusValues</a> </li>
 <li class='toc3'><a href='#-startAliveThread'>startAliveThread</a> </li>
@@ -201,12 +202,11 @@
 <li class='toc3'><a href='#-syncTasks'>syncTasks</a> </li>
 <li class='toc3'><a href='#-syncThread'>syncThread</a> </li>
 <li class='toc3'><a href='#-tree'>tree</a> </li>
-<li class='toc3'><a href='#-unresponsive'>unresponsive</a> </li>
 <li class='toc3'><a href='#-userSpecifiedClientID'>userSpecifiedClientID</a> </li>
 <li class='toc3'><a href='#-window'>window</a> </li>
 </ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>A Server object is a representation of a server application. It is used to control it from SuperCollider language. (See <a href="./../Guides/Server-Guide.html">Server Guide</a>, as well as <a href="./../Guides/ClientVsServer.html">Client vs Server</a> for more details on the distinction.) It forwards OSC messages and has a number of allocators that keep track of IDs for nodes, buses and buffers.
+<p>A Server object is a representation of a server application. It is used to control scsynth (or supernova) from the SuperCollider language. (See <a href="./../Guides/Server-Guide.html">Server Guide</a>, as well as <a href="./../Guides/ClientVsServer.html">Client vs Server</a> for more details on the distinction.) It forwards OSC messages and has a number of allocators that keep track of IDs for nodes, buses and buffers.
 <p>The server application represented by a Server object might be running on the same machine as the sclang, or it may be running on a remote machine.
 <p>Most of a Server's options are controlled through its instance of ServerOptions. See the <a href="./../Classes/ServerOptions.html">ServerOptions</a> helpfile for more detail.
 <p>A server also holds an instance of a <a href="./../Classes/Recorder.html">Recorder</a> (for recording output into a file) and a <a href="./../Classes/Volume.html">Volume</a> (master level).<div class='note'><span class='notelabel'>NOTE:</span> By default, there is always one default server, which is stored in the interpreter variable 's'. E.g. you can boot the defult server by calling <code class='code prettyprint lang-sc'>s.boot</code></div><pre class='code prettyprint lang-sc'>s.boot;
@@ -410,7 +410,14 @@ s.quit;</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-peakCPU' href='./../Overviews/Methods.html#peakCPU'>peakCPU</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-avgCPU' href='./../Overviews/Methods.html#avgCPU'>avgCPU</a> </h3>
 <div class='method'>
-<p>Get peak and average CPU usage.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-numSynths' href='./../Overviews/Methods.html#numSynths'>numSynths</a> </h3>
+<p>Get peak and average CPU usage.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-latency' href='./../Overviews/Methods.html#latency'>latency</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-latency' href='./../Overviews/Methods.html#latency'>latency</a> = value</h3>
+<div class='method'>
+<p>The current latency of the server. See <a href="./../Guides/ServerTiming.html">Server OSC timing</a> for details.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-sampleRate' href='./../Overviews/Methods.html#sampleRate'>sampleRate</a> </h3>
+<div class='method'>
+<p>An integer representing the nominal sample rate of the server; in other words, the sample rate that was requested of the server when it was booted.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-actualSampleRate' href='./../Overviews/Methods.html#actualSampleRate'>actualSampleRate</a> </h3>
+<div class='method'>
+<p>A floating-point number representing the current hardware sample rate, which may drift.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-numSynths' href='./../Overviews/Methods.html#numSynths'>numSynths</a> </h3>
 <div class='method'>
 <p>Get number of running <a href="./../Classes/Synth.html">Synth</a>s.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-numGroups' href='./../Overviews/Methods.html#numGroups'>numGroups</a> </h3>
 <div class='method'>
@@ -420,11 +427,23 @@ s.quit;</pre>
 <div class='method'>
 <p>Get number of loaded <a href="./../Classes/SynthDef.html">SynthDef</a>initions.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-pid' href='./../Overviews/Methods.html#pid'>pid</a> </h3>
 <div class='method'>
-<p>Get process ID of running server (if not internal).</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-hasShmInterface' href='./../Overviews/Methods.html#hasShmInterface'>hasShmInterface</a> </h3>
+<p>Get process ID of running server (if not internal).</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-addr' href='./../Overviews/Methods.html#addr'>addr</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addr' href='./../Overviews/Methods.html#addr'>addr</a> = <span class='argstr'>netAddr</span></h3>
 <div class='method'>
-<p>Returns true if a <a href="./../Classes/ServerShmInterface.html">ServerShmInterface</a> is available. See also <a href="./../Classes/Bus.html#Synchronous%20control%20bus%20methods">Bus: Synchronous%20control%20bus%20methods</a>.<h4>Discussion:</h4>
-
-<p>The shared memory interface is initialized after first server boot.</div><h3><a class='anchor' name='Message%20Bundling'>Message Bundling</a></h3>
+<p>The network address of the server as a <a href="./../Classes/NetAddr.html">NetAddr</a>.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-hasShmInterface' href='./../Overviews/Methods.html#hasShmInterface'>hasShmInterface</a> </h3>
+<div class='method'>
+<p>Returns true if a <a href="./../Classes/ServerShmInterface.html">ServerShmInterface</a> is available. See also <a href="./../Classes/Bus.html#Synchronous%20control%20bus%20methods">Bus: Synchronous%20control%20bus%20methods</a>. The shared memory interface is initialized after first server boot.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-serverBooting' href='./../Overviews/Methods.html#serverBooting'>serverBooting</a> </h3>
+<div class='method'>
+<p><code class='code prettyprint lang-sc'>true</code> if the server is booting, <code class='code prettyprint lang-sc'>false</code> otherwise.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-serverRunning' href='./../Overviews/Methods.html#serverRunning'>serverRunning</a> </h3>
+<div class='method'>
+<p><code class='code prettyprint lang-sc'>true</code> if the server is running, <code class='code prettyprint lang-sc'>false</code> otherwise.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-unresponsive' href='./../Overviews/Methods.html#unresponsive'>unresponsive</a> </h3>
+<div class='method'>
+<p><code class='code prettyprint lang-sc'>true</code> if the server is unresponsive (specifically, if it has failed to respond after <a href="./../Classes/ServerOptions.html#-pingsBeforeConsideredDead">ServerOptions: -pingsBeforeConsideredDead</a> ping attempts); <code class='code prettyprint lang-sc'>false</code> otherwise.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-isLocal' href='./../Overviews/Methods.html#isLocal'>isLocal</a> </h3>
+<div class='method'>
+<p><code class='code prettyprint lang-sc'>true</code> if the server is running on the same machine as sclang, <code class='code prettyprint lang-sc'>false</code> otherwise.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-remoteControlled' href='./../Overviews/Methods.html#remoteControlled'>remoteControlled</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-remoteControlled' href='./../Overviews/Methods.html#remoteControlled'>remoteControlled</a> = value</h3>
+<div class='method'>
+<p><code class='code prettyprint lang-sc'>true</code> if the server is not being controlled by the machine on which it is running, <code class='code prettyprint lang-sc'>false</code> otherwise. This value is the same as <code class='code prettyprint lang-sc'>isLocal</code> unless explicitly set.</div><h3><a class='anchor' name='Message%20Bundling'>Message Bundling</a></h3>
 
 <p>Server provides support for automatically bundling messages. This is quite convenient in object style, and ensures synchronous execution. See also <a href="./../Guides/Bundled-Messages.html">Bundled Server Messages</a><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeBundle' href='./../Overviews/Methods.html#makeBundle'>makeBundle</a> (<span class='argstr'>time</span>, <span class='argstr'>func</span>, <span class='argstr'>bundle</span>)</h3>
 <div class='method'>
@@ -530,7 +549,10 @@ ServerTree.remove(f);</pre>
 <div class='method'>
 <p>Create and show the server window. The window responds to a number of keyboard shortcuts:<table>
 <tr><td><strong>key</strong><td><strong>action</strong><tr><td><code>n</code><td>Post a representation of this Server's current node tree to the post window. (See <a href="#-queryAllNodes">-queryAllNodes</a>)<tr><td><code>N</code><td>As 'n' above but include controls.<tr><td><code>l</code><td>Show input/output level meters. (See <a href="#-meter">-meter</a>)<tr><td><code>p</code><td>Show graphical view of the node tree. (See <a href="#-plotTree">-plotTree</a>)<tr><td>(space)<td>Boot server if not already booted. (See <a href="#-boot">-boot</a>)<tr><td><code>s</code><td>Show scope window. (See <a href="#-scope">-scope</a>)<tr><td><code>f</code><td>Show frequency analyzer window. (See <a href="#-freqscope">-freqscope</a>)<tr><td><code>d</code><td>Toggle dumping of OSC messages.<tr><td><code>m</code><td>Toggle mute.<tr><td><code>0</code><td>Reset volume to 0 db.</table>
-</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-scope' href='./../Overviews/Methods.html#scope'>scope</a> (<span class='argstr'>numChannels</span>, <span class='argstr'>index: 0</span>, <span class='argstr'>bufsize: 4096</span>, <span class='argstr'>zoom: 1</span>, <span class='argstr'>rate: 'audio'</span>)</h3>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeWindow' href='./../Overviews/Methods.html#makeWindow'>makeWindow</a> (<span class='argstr'>w</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Control/ServerPlusGUI.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Control/ServerPlusGUI.sc</a></div>
+<div class='method'>
+<p>On most platforms, this is equivalent to <code class='code prettyprint lang-sc'>makeGui</code>. If you are running SuperCollider on Emacs, it makes a server view composed of Emacs widgets.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-scope' href='./../Overviews/Methods.html#scope'>scope</a> (<span class='argstr'>numChannels</span>, <span class='argstr'>index: 0</span>, <span class='argstr'>bufsize: 4096</span>, <span class='argstr'>zoom: 1</span>, <span class='argstr'>rate: 'audio'</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Control/server-scope.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Control/server-scope.sc</a></div>
 <div class='method'>
 <p>Open a scope window showing the output of the Server. see <a href="./../Classes/Stethoscope.html">Stethoscope</a> for further details.<h4>Arguments:</h4>
@@ -692,9 +714,6 @@ Routine.run {
 )</pre>
 </div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-actualSampleRate' href='./../Overviews/Methods.html#actualSampleRate'>actualSampleRate</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addr' href='./../Overviews/Methods.html#addr'>addr</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addr' href='./../Overviews/Methods.html#addr'>addr</a> = <span class='argstr'>netAddr</span></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-aliveThreadIsRunning' href='./../Overviews/Methods.html#aliveThreadIsRunning'>aliveThreadIsRunning</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-aliveThreadPeriod' href='./../Overviews/Methods.html#aliveThreadPeriod'>aliveThreadPeriod</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-aliveThreadPeriod' href='./../Overviews/Methods.html#aliveThreadPeriod'>aliveThreadPeriod</a> = <span class='argstr'>val</span></h3>
@@ -738,16 +757,11 @@ Routine.run {
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-ifNotRunning' href='./../Overviews/Methods.html#ifNotRunning'>ifNotRunning</a> (<span class='argstr'>func</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-ifRunning' href='./../Overviews/Methods.html#ifRunning'>ifRunning</a> (<span class='argstr'>func</span>, <span class='argstr'>failFunc</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-inProcess' href='./../Overviews/Methods.html#inProcess'>inProcess</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-isLocal' href='./../Overviews/Methods.html#isLocal'>isLocal</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-isRecording' href='./../Overviews/Methods.html#isRecording'>isRecording</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-latency' href='./../Overviews/Methods.html#latency'>latency</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-latency' href='./../Overviews/Methods.html#latency'>latency</a> = value</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeView' href='./../Overviews/Methods.html#makeView'>makeView</a> (<span class='argstr'>w</span>, <span class='argstr'>useRoundButton: true</span>, <span class='argstr'>onColor</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extServer-makeView.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extServer-makeView.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeView2' href='./../Overviews/Methods.html#makeView2'>makeView2</a> (<span class='argstr'>w</span>, <span class='argstr'>useRoundButton: true</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extServer-makeView.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extServer-makeView.sc</a></div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-makeWindow' href='./../Overviews/Methods.html#makeWindow'>makeWindow</a> (<span class='argstr'>w</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Control/ServerPlusGUI.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Control/ServerPlusGUI.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a> = <span class='argstr'>argName</span></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-newAllocators' href='./../Overviews/Methods.html#newAllocators'>newAllocators</a> </h3>
@@ -774,13 +788,10 @@ Routine.run {
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-recordOnNodeID' href='./../Overviews/Methods.html#recordOnNodeID'>recordOnNodeID</a> (<span class='argstr'>nodeID</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Server/extServer-recordOnNodeID.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Server/extServer-recordOnNodeID.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-recorder' href='./../Overviews/Methods.html#recorder'>recorder</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-remoteControlled' href='./../Overviews/Methods.html#remoteControlled'>remoteControlled</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-remoteControlled' href='./../Overviews/Methods.html#remoteControlled'>remoteControlled</a> = value</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeBusLinks' href='./../Overviews/Methods.html#removeBusLinks'>removeBusLinks</a> (<span class='argstr'>busIndex</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeControlLinks' href='./../Overviews/Methods.html#removeControlLinks'>removeControlLinks</a> (<span class='argstr'>nodeID</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc</a></div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sampleRate' href='./../Overviews/Methods.html#sampleRate'>sampleRate</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-schedSync' href='./../Overviews/Methods.html#schedSync'>schedSync</a> (<span class='argstr'>func</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-scopeBufferAllocator' href='./../Overviews/Methods.html#scopeBufferAllocator'>scopeBufferAllocator</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-scopeWindow' href='./../Overviews/Methods.html#scopeWindow'>scopeWindow</a></h3>
@@ -788,8 +799,6 @@ Routine.run {
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendQuit' href='./../Overviews/Methods.html#sendQuit'>sendQuit</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendQuit' href='./../Overviews/Methods.html#sendQuit'>sendQuit</a> = value</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-sendStatusMsg' href='./../Overviews/Methods.html#sendStatusMsg'>sendStatusMsg</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-serverBooting' href='./../Overviews/Methods.html#serverBooting'>serverBooting</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-serverRunning' href='./../Overviews/Methods.html#serverRunning'>serverRunning</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-setControlBusValue' href='./../Overviews/Methods.html#setControlBusValue'>setControlBusValue</a> (<span class='argstr'>busIndex</span>, <span class='argstr'>value</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-setControlBusValues' href='./../Overviews/Methods.html#setControlBusValues'>setControlBusValues</a> (<span class='argstr'>busIndex</span>, <span class='argstr'>valueArray</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-startAliveThread' href='./../Overviews/Methods.html#startAliveThread'>startAliveThread</a> (<span class='argstr'>delay: 0</span>)</h3>
@@ -799,7 +808,6 @@ Routine.run {
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-syncThread' href='./../Overviews/Methods.html#syncThread'>syncThread</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-tree' href='./../Overviews/Methods.html#tree'>tree</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-tree' href='./../Overviews/Methods.html#tree'>tree</a> = value</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-unresponsive' href='./../Overviews/Methods.html#unresponsive'>unresponsive</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-userSpecifiedClientID' href='./../Overviews/Methods.html#userSpecifiedClientID'>userSpecifiedClientID</a> </h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-window' href='./../Overviews/Methods.html#window'>window</a> </h3>
 <div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Server.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Server.schelp</a><br>link::Classes/Server::<br>sc version: 3.9dev</div></div></body></html>
