@@ -107,7 +107,7 @@ x.value.doSomething;    // retrieve value and use it</pre>
 <p>Refs cannot be used reliably to suppress multi-channel expansion within Events and Patterns. Instead, it is necessary to enclose the array of values in another array:<pre class='code prettyprint lang-sc'>(
     SynthDef(\multi, { | out, freq = #[100,200,300], amp = 0.1, pan = 0, sustain = 1|
         var audio, env;
-        env = EnvGen.kr(Env.perc(0.01, sustain), doneAction:2);
+        env = EnvGen.kr(Env.perc(0.01, sustain), doneAction: Done.freeSelf);
         audio = Mix(Saw.ar(freq));
         audio = Pan2.ar(audio * env, pan, amp);
         OffsetOut.ar(out, audio)

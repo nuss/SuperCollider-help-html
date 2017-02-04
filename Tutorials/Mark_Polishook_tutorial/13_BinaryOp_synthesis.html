@@ -97,7 +97,7 @@
 <h2><a class='anchor' name='Envelopes'>Envelopes</a></h2>
 
 <p>Dynamically modulate any parameter in a ugen (such as frequency, phase, or amplitude) with an envelope.<pre class='code prettyprint lang-sc'>// modulate amplitude
-{ SinOsc.ar(440, 0, 0.1) * EnvGen.kr(Env.sine(1), doneAction: 2) }.scope;</pre>
+{ SinOsc.ar(440, 0, 0.1) * EnvGen.kr(Env.sine(1), doneAction: Done.freeSelf) }.scope;</pre>
 
 <p>Setting the doneAction argument (control) to 2 insures that after the envelope reaches its endpoint, SuperCollider will release the memory it used for the instances of the SinOsc and the EnvGen.<h2><a class='anchor' name='Keyword%20arguments'>Keyword arguments</a></h2>
 
@@ -109,7 +109,7 @@ SynthDef("timeScale", { arg ts = 1;
         *
         EnvGen.kr(
             Env.sine(1),
-            doneAction: 2,
+            doneAction: Done.freeSelf,
             timeScale: ts    // scale the duration of an envelope
         )
     )
@@ -144,7 +144,7 @@ r.play</pre>
         }
     )
     *
-    EnvGen.kr(Env.perc(11, 6), doneAction: 2)
+    EnvGen.kr(Env.perc(11, 6), doneAction: Done.freeSelf)
 }.scope
 )</pre>
 <h2><a class='anchor' name='Envelopes'>Envelopes</a></h2>
@@ -166,7 +166,7 @@ r.play</pre>
             *
             EnvGen.kr(                    // put an envelope on each of the sine waves
                 Env.sine(2.0.rrand(17)),
-                doneAction: 0                 // deallocate envelopes only when the
+                doneAction: Done.none                 // deallocate envelopes only when the
                                     // entire sound is complete (why?)
             )
         }
@@ -174,7 +174,7 @@ r.play</pre>
     *                                // put an envelope over the whole patch
     EnvGen.kr(
         Env.perc(11, 6),
-        doneAction: 2,
+        doneAction: Done.freeSelf,
         levelScale: 0.75
     )
 

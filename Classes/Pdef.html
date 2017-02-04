@@ -97,7 +97,7 @@ Pdef(\x, Pbind(\freq, Pseq([1000, 1923, 245.2, 1718] / 1.2 + 0.1, inf)));</pre>
 <p>Store the pattern in a global dictionary under key, replacing its pattern with the new one. If the pattern is a <strong>function</strong>, Pdef creates a <a href="./../Classes/PlazyEnvir.html">PlazyEnvir</a> internally that dynamically creates the pattern returned from the function, applying the arguments from the inevent.
 <p>Using <strong>*new(key)</strong> you can access the pattern at that key (if none is given, a default silent event is created)<pre class='code prettyprint lang-sc'>(
 SynthDef(\Pdefhelp, { arg out, freq, sustain=1, amp=1, pan;
-    var env = EnvGen.kr(Env.perc(0.01, sustain), 1, doneAction:2);
+    var env = EnvGen.kr(Env.perc(0.01, sustain), 1, doneAction: Done.freeSelf);
     Out.ar(out, Pan2.ar(SinOsc.ar(freq, 0.5pi, amp * env), pan));
 }).add;
 )
@@ -226,7 +226,7 @@ Pdef(\y, Pdef(\stut) &lt;&gt; (pattern: Pdef(\x), stutter: Pseq([2, 2, 4, 3], in
 <pre class='code prettyprint lang-sc'>(
 SynthDef("Pdefhelp", { arg out, freq, sustain=1, amp=1, pan;
     var env, u=1;
-    env = EnvGen.kr(Env.perc(0.03, sustain), 1, doneAction:2);
+    env = EnvGen.kr(Env.perc(0.03, sustain), 1, doneAction: Done.freeSelf);
     3.do { var d; d = exprand(0.01, 1); u = SinOsc.ar(d * 300, u, rrand(0.1,1.2) * d, 1) };
     Out.ar(out, Pan2.ar(SinOsc.ar(u + 1 * freq, 0, amp * env), pan));
 
@@ -305,7 +305,7 @@ s.boot;
 SynthDef("gpdef",
     { arg out=0, freq=440, sustain=0.05, amp=0.1, pan;
         var env;
-        env = EnvGen.kr(Env.perc(0.01, sustain), doneAction:2) * amp;
+        env = EnvGen.kr(Env.perc(0.01, sustain), doneAction: Done.freeSelf) * amp;
         Out.ar(out, Pan2.ar(SinOsc.ar(freq, 0, env), pan))
     }).add;
 )

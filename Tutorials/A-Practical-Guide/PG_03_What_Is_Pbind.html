@@ -118,7 +118,7 @@ p.stop;</pre>
 <p>This leads to a key point: <strong>The names that you use for patterns in Pbind should correspond to the arguments in the SynthDef being played</strong>. The Pbind pattern names determine the names for values in the resulting Event, and those values are sent to the corresponding Synth control inputs.
 <p>The SynthDef to play is named by the <code class='code prettyprint lang-sc'>'instrument'</code> key. To play a pattern using a different Synth, simply name it in the pattern.<pre class='code prettyprint lang-sc'>SynthDef(\harpsi, { |outbus = 0, freq = 440, amp = 0.1, gate = 1|
     var out;
-    out = EnvGen.ar(Env.adsr, gate, doneAction: 2) * amp *
+    out = EnvGen.ar(Env.adsr, gate, doneAction: Done.freeSelf) * amp *
         Pulse.ar(freq, 0.25, 0.75);
     Out.ar(outbus, out ! 2);
 }).add;    // see below for more on .add
@@ -172,7 +172,7 @@ p.stop;</pre>
 <p>SynthDefs should have a couple of specific features to work well with patterns.<h3><a class='anchor' name='Synths%20should%20release%20themselves'>Synths should release themselves</a></h3>
 
 <p>The default event prototype relies on the synth to remove itself from the server when it's finished. This can be done in several ways:<ul>
-<li>(Most typical) A gated envelope with a releasing <code class='code prettyprint lang-sc'>doneAction</code> ( &gt;= 2) in the envelope generator (see <a href="./../../Reference/UGen-doneActions.html">UGen done-actions</a> for a complete list). The <code class='code prettyprint lang-sc'>\harpsi</code> SynthDef above uses this technique. A gated envelope specifies a release node or uses one of the predefined sustaining envelope types: <code class='code prettyprint lang-sc'>Env.asr</code>, <code class='code prettyprint lang-sc'>Env.adsr</code>, <code class='code prettyprint lang-sc'>Env.dadsr</code>. The <a href="./../../Classes/Env.html">Env</a> help file offers more detail on gated envelopes.<li><code class='code prettyprint lang-sc'>Linen.kr</code>, which is a shortcut for <code class='code prettyprint lang-sc'>EnvGen.kr(Env([0, susLevel, 0], [attackTime, releaseTime], \lin, releaseNode: 1), gate, doneAction: [2 or higher])</code>. The default SynthDef uses this. The <code class='code prettyprint lang-sc'>doneAction</code> should be at least 2 to release the node.<div class='note'><span class='notelabel'>NOTE:</span> If the release is controlled by a gate, the gate must be represented by the synth argument <code class='code prettyprint lang-sc'>gate</code>; standard event prototypes expect to be able to control the synth's release using this argument. Also, make sure the gate's default value is greater than 0. Otherwise, the envelope will never start and you will both hear nothing and watch synths pile up on the server.</div>
+<li>(Most typical) A gated envelope with a releasing <code class='code prettyprint lang-sc'>doneAction</code> ( &gt;= 2) in the envelope generator (see <a href="./../../Classes/Done.html">Done</a> for a complete list). The <code class='code prettyprint lang-sc'>\harpsi</code> SynthDef above uses this technique. A gated envelope specifies a release node or uses one of the predefined sustaining envelope types: <code class='code prettyprint lang-sc'>Env.asr</code>, <code class='code prettyprint lang-sc'>Env.adsr</code>, <code class='code prettyprint lang-sc'>Env.dadsr</code>. The <a href="./../../Classes/Env.html">Env</a> help file offers more detail on gated envelopes.<li><code class='code prettyprint lang-sc'>Linen.kr</code>, which is a shortcut for <code class='code prettyprint lang-sc'>EnvGen.kr(Env([0, susLevel, 0], [attackTime, releaseTime], \lin, releaseNode: 1), gate, doneAction: [2 or higher])</code>. The default SynthDef uses this. The <code class='code prettyprint lang-sc'>doneAction</code> should be at least 2 to release the node.<div class='note'><span class='notelabel'>NOTE:</span> If the release is controlled by a gate, the gate must be represented by the synth argument <code class='code prettyprint lang-sc'>gate</code>; standard event prototypes expect to be able to control the synth's release using this argument. Also, make sure the gate's default value is greater than 0. Otherwise, the envelope will never start and you will both hear nothing and watch synths pile up on the server.</div>
 <p><li>Fixed-duration envelopes (no gate).</ul>
 <h3><a class='anchor' name='Argument%20name%20prefixes'>Argument name prefixes</a></h3>
 
@@ -180,7 +180,7 @@ p.stop;</pre>
 SynthDef(\trig_demo, { |freq, gate = 1, t_trig = 1|    // t_trig here
     var    env = Decay2.kr(t_trig, 0.01, 0.1),
         sig = SinOsc.ar(freq, 0, env)
-            * Linen.kr(gate, 0.01, 0.1, 0.1, doneAction: 2);
+            * Linen.kr(gate, 0.01, 0.1, 0.1, doneAction: Done.freeSelf);
     Out.ar(0, sig ! 2)
 }).add;
 )

@@ -45,7 +45,7 @@
 <p>A trigger causes a jump to the startPos. A trigger occurs when a signal changes from negative value to positive value.<tr><td class='argumentname'>startPos<td class='argumentdesc'>
 <p>Sample frame to start playback.<tr><td class='argumentname'>loop<td class='argumentdesc'>
 <p>1 means true, 0 means false. This is modulateable.<tr><td class='argumentname'>doneAction<td class='argumentdesc'>
-<p>an integer representing an action to be executed when the buffer is finished playing. This can be used to free the enclosing synth, etc. See <a href="./../Reference/UGen-doneActions.html">UGen done-actions</a> for more detail. <code class='code prettyprint lang-sc'>doneAction</code> is only evaluated if loop is 0.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>an integer representing an action to be executed when the buffer is finished playing. This can be used to free the enclosing synth, etc. See <a href="./../Classes/Done.html">Done</a> for more detail. <code class='code prettyprint lang-sc'>doneAction</code> is only evaluated if loop is 0.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
@@ -57,11 +57,11 @@ b = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav"); // remember 
 
 SynthDef(\help_PlayBuf, {| out = 0, bufnum = 0 |
     Out.ar(out,
-        PlayBuf.ar(1, bufnum, BufRateScale.kr(bufnum), doneAction:2)
+        PlayBuf.ar(1, bufnum, BufRateScale.kr(bufnum), doneAction: Done.freeSelf)
     )
 }).play(s, [\out, 0, \bufnum, b]);</pre>
 
-<p>In the above example, note how the <code class='code prettyprint lang-sc'>doneAction:2</code> causes the synth to free itself when the buffer reaches its end.
+<p>In the above example, note how the <code class='code prettyprint lang-sc'>doneAction: Done.freeSelf</code> causes the synth to free itself when the buffer reaches its end.
 <p>Note again that the number of channels must be fixed for the SynthDef. It cannot vary depending on which buffer you use.<pre class='code prettyprint lang-sc'>// loop is true
 SynthDef(\help_PlayBuf, {| out = 0, bufnum = 0 |
     Out.ar(out,

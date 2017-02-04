@@ -50,7 +50,7 @@
 (
 SynthDef(\volumeCtl, { |out, amp = 1, gate = 1|
     var    sig = In.ar(out, 2) * amp;
-    sig = sig * EnvGen.kr(Env(#[1, 1, 0], #[1, 1], -3, releaseNode: 1), gate, doneAction: 2);
+    sig = sig * EnvGen.kr(Env(#[1, 1, 0], #[1, 1], -3, releaseNode: 1), gate, doneAction: Done.freeSelf);
     ReplaceOut.ar(out, sig)
 }).add;
 
@@ -89,7 +89,7 @@ p.stop;</pre>
 <p>The Pproto help file has several complex examples that are worth reading. Here is just one simple case that loads the standard a11wlk01.wav sound file and plays fragments from it.<pre class='code prettyprint lang-sc'>(
 SynthDef(\playbuf, { |bufnum, start, dur = 1, amp = 0.2, out|
     var    sig = PlayBuf.ar(1, bufnum, BufRateScale.ir(bufnum), 0, start);
-    sig = sig * amp * EnvGen.kr(Env.linen(0.01, dur, 0.01), doneAction: 2);
+    sig = sig * amp * EnvGen.kr(Env.linen(0.01, dur, 0.01), doneAction: Done.freeSelf);
     Out.ar(out, sig ! 2)
 }).add;
 )

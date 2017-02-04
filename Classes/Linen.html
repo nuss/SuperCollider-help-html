@@ -45,7 +45,7 @@
 <p>The duration of the attack portion.<tr><td class='argumentname'>susLevel<td class='argumentdesc'>
 <p>The level of the sustain portion.<tr><td class='argumentname'>releaseTime<td class='argumentdesc'>
 <p>The duration of the release portion.<tr><td class='argumentname'>doneAction<td class='argumentdesc'>
-<p>An integer representing an action to be executed when the envelope is finished. See <a href="./../Reference/UGen-doneActions.html">UGen done-actions</a> for more detail.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>An integer representing an action to be executed when the envelope is finished. See <a href="./../Classes/Done.html">Done</a> for more detail.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
@@ -56,7 +56,7 @@
 (
 SynthDef("help-Linen",{ arg out = 0;
     Out.ar(out,
-        Linen.kr(Impulse.kr(2), 0.01, 0.6, 1.0, doneAction: 0) * SinOsc.ar(440, 0, 0.1)
+        Linen.kr(Impulse.kr(2), 0.01, 0.6, 1.0, doneAction: Done.none) * SinOsc.ar(440, 0, 0.1)
     )
 }).play;
 )
@@ -65,7 +65,7 @@ SynthDef("help-Linen",{ arg out = 0;
 (
 SynthDef("help-Linen",{ arg out=0;
     Out.ar(out,
-        Linen.kr(Impulse.kr(0), 0.01, 0.6, 1.0, doneAction: 2) * SinOsc.ar(440, 0, 0.1)
+        Linen.kr(Impulse.kr(0), 0.01, 0.6, 1.0, doneAction: Done.freeSelf) * SinOsc.ar(440, 0, 0.1)
     )
 }).play;
 )
@@ -74,7 +74,7 @@ SynthDef("help-Linen",{ arg out=0;
 (
 x = SynthDef("help-Linen",{ arg gate = 1, out = 0; // use gate arg for release
     Out.ar(out,
-        Linen.kr(gate, 0.01, 0.6, 1.0, doneAction: 2) * SinOsc.ar(440, 0, 0.1)
+        Linen.kr(gate, 0.01, 0.6, 1.0, doneAction: Done.freeSelf) * SinOsc.ar(440, 0, 0.1)
     )
 }).play;
 )
@@ -86,7 +86,7 @@ SynthDef("help-Linen",{ arg out = 0, dur = 0.1;
     var gate;
     gate = Trig.kr(1.0, dur);
     Out.ar(out,
-        Linen.kr(gate, 0.01, 0.6, 1.0, doneAction: 2) * SinOsc.ar(440, 0, 0.1)
+        Linen.kr(gate, 0.01, 0.6, 1.0, doneAction: Done.freeSelf) * SinOsc.ar(440, 0, 0.1)
     )
 }).play(nil, [\out, 0, \dur, 2.0]);
 )
@@ -97,7 +97,7 @@ SynthDef("help-Linen",{ arg out = 0, dur = 0.1;
 (
 SynthDef("help-Linen",{ arg out=0,freq=440,attackTime=0.01,susLevel=0.6,releaseTime=0.1;
     Out.ar(out,
-        Linen.kr(Impulse.kr(0), attackTime, susLevel, releaseTime, doneAction: 2)
+        Linen.kr(Impulse.kr(0), attackTime, susLevel, releaseTime, doneAction: Done.freeSelf)
             * SinOsc.ar(freq, 0, 0.1)
     )
 }).add;
@@ -127,7 +127,7 @@ SynthDef("help-Linen",{ arg out = 0;
             // sustain level is polled at time of trigger
             FSinOsc.kr(0.1).range(0, 1),
             1.0,
-            doneAction: 0)
+            doneAction: Done.none)
 
             * SinOsc.ar(440, 0, 0.1)
     )

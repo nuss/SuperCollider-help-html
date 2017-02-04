@@ -505,6 +505,7 @@ a.clear;</pre>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-map' href='./../Overviews/Methods.html#map'>map</a> ( <span class='argstr'>... args</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-setn' href='./../Overviews/Methods.html#setn'>setn</a> ( <span class='argstr'>... args</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-mapn' href='./../Overviews/Methods.html#mapn'>mapn</a> ( <span class='argstr'>... args</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/deprecated/3.9/JITLib.sc'>/usr/local/share/SuperCollider/SCClassLibrary/deprecated/3.9/JITLib.sc</a></div>
 <div class='method'>
 <p>NodeProxy behaves like its <a href="./../Classes/NodeMap.html">NodeMap</a> and very similar to a <a href="./../Classes/Synth.html">Synth</a>.<div class='note'><span class='notelabel'>NOTE:</span> Now the methods map, setn, mapn, and xmap are there just for backward compatibility reasons. Everything is done by set.</div><pre class='code prettyprint lang-sc'>a = NodeProxy(s); a.play;
 a.source = { Splay.ar(Blip.ar(\freq.kr(18 ! 4))) * 0.2 };
@@ -698,6 +699,7 @@ p.source = { arg f=400, c = 400; PMOsc.ar(f , c, 4, 0, 0.1) };
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-xFadePerform' href='./../Overviews/Methods.html#xFadePerform'>xFadePerform</a> (<span class='argstr'>selector</span>, <span class='argstr'>args</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-xmap' href='./../Overviews/Methods.html#xmap'>xmap</a> ( <span class='argstr'>... args</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-xmapn' href='./../Overviews/Methods.html#xmapn'>xmapn</a> ( <span class='argstr'>... args</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/deprecated/3.9/JITLib.sc'>/usr/local/share/SuperCollider/SCClassLibrary/deprecated/3.9/JITLib.sc</a></div>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-xsetn' href='./../Overviews/Methods.html#xsetn'>xsetn</a> ( <span class='argstr'>... args</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-xunset' href='./../Overviews/Methods.html#xunset'>xunset</a> ( <span class='argstr'>... args</span>)</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
@@ -870,7 +872,7 @@ SynthDef("who", { arg freq, gate=1, out=0, ffreq=800, amp=0.1;
     var env;
     env = Env.asr(0.01, amp, 0.5);
     Out.ar(out, Pan2.ar(
-        Formant.ar(freq, ffreq, 300, EnvGen.kr(env, gate, doneAction:2)), Rand(-1.0, 1.0))
+        Formant.ar(freq, ffreq, 300, EnvGen.kr(env, gate, doneAction: Done.freeSelf)), Rand(-1.0, 1.0))
     )
 }).add;
 

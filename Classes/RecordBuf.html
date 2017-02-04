@@ -48,7 +48,7 @@
 <p>If zero, then recording stops, otherwise recording proceeds.<tr><td class='argumentname'>loop<td class='argumentdesc'>
 <p>If zero then don't loop, otherwise do. This is modulatable.<tr><td class='argumentname'>trigger<td class='argumentdesc'>
 <p>a trigger causes a jump to the start of the Buffer. A trigger occurs when a signal changes from negative value to positive value.<tr><td class='argumentname'>doneAction<td class='argumentdesc'>
-<p>an integer representing an action to be executed when the buffer is finished recording. This can be used to free the enclosing synth, etc. See <a href="./../Reference/UGen-doneActions.html">UGen done-actions</a> for more detail. <code class='code prettyprint lang-sc'>doneAction</code> is only evaluated if loop is 0.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>an integer representing an action to be executed when the buffer is finished recording. This can be used to free the enclosing synth, etc. See <a href="./../Classes/Done.html">Done</a> for more detail. <code class='code prettyprint lang-sc'>doneAction</code> is only evaluated if loop is 0.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
@@ -64,7 +64,7 @@ b = Buffer.alloc(s, 44100 * 4.0, 1); // a four second 1 channel Buffer
 SynthDef(\help_RecordBuf, { arg out = 0, bufnum = 0;
     var formant;
     formant = Formant.ar(XLine.kr(400,1000, 4), 2000, 800, 0.125);
-    RecordBuf.ar(formant, bufnum, doneAction: 2, loop: 0);
+    RecordBuf.ar(formant, bufnum, doneAction: Done.freeSelf, loop: 0);
 }).play(s,[\out, 0, \bufnum, b]);
 )
 
@@ -84,7 +84,7 @@ SynthDef(\help_RecordBuf_overdub, { arg out=0, bufnum=0;
     var formant;
     formant = Formant.ar(XLine.kr(200, 1000, 4), 2000, 800, 0.125);
     // mixes equally with existing data
-    RecordBuf.ar(formant, bufnum, 0, 0.3, 0.5, doneAction: 2, loop: 0);
+    RecordBuf.ar(formant, bufnum, 0, 0.3, 0.5, doneAction: Done.freeSelf, loop: 0);
 }).play(s, [\out, 0, \bufnum, b]);
 )
 

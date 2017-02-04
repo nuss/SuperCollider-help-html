@@ -244,7 +244,7 @@ x.free; b.free;</pre>
 <tr><td class='argumentname'>releaseTime<td class='argumentdesc'>
 <p>if not nil, it will override the envelope's decay or release time.</table><h4>Discussion:</h4>
 
-<p>If this Node is a Group this will release all Nodes within the Group.<pre class='code prettyprint lang-sc'>x = { arg gate=1; BrownNoise.ar(0.5) * EnvGen.kr(Env.cutoff(1), gate, doneAction:2) }.play;
+<p>If this Node is a Group this will release all Nodes within the Group.<pre class='code prettyprint lang-sc'>x = { arg gate=1; BrownNoise.ar(0.5) * EnvGen.kr(Env.cutoff(1), gate, doneAction: Done.freeSelf) }.play;
 x.release(5); // override the Env's specified 1 second release time</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-query' href='./../Overviews/Methods.html#query'>query</a> </h3>
 <div class='method'>
@@ -318,14 +318,14 @@ g === h;    // false</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-onFree' href='./../Overviews/Methods.html#onFree'>onFree</a> (<span class='argstr'>func</span>)</h3>
 <div class='method'>
 <p>Evaluate function when this Node is freed.<h4>Discussion:</h4>
-<pre class='code prettyprint lang-sc'>{PinkNoise.ar(1) * Line.kr(1,0,2,doneAction:2)}.play.onFree {"done".postln};</pre>
+<pre class='code prettyprint lang-sc'>{PinkNoise.ar(1) * Line.kr(1,0,2,doneAction: Done.freeSelf)}.play.onFree {"done".postln};</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-waitForFree' href='./../Overviews/Methods.html#waitForFree'>waitForFree</a> </h3>
 <div class='method'>
 <p>Wait until this Node is freed. Should be used inside a Routine or similar.<h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>(
 fork {
-    {SinOsc.ar(440!2) * Line.kr(0,1,5,doneAction:2)}.play.waitForFree;
-    {PinkNoise.ar(1) * Line.kr(1,0,2,doneAction:2)}.play.onFree {"done".postln};
+    {SinOsc.ar(440!2) * Line.kr(0,1,5,doneAction: Done.freeSelf)}.play.waitForFree;
+    {PinkNoise.ar(1) * Line.kr(1,0,2,doneAction: Done.freeSelf)}.play.onFree {"done".postln};
 }
 )</pre>
 <pre class='code prettyprint lang-sc'>(

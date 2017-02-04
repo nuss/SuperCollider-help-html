@@ -36,7 +36,7 @@
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>When the absolute value of the input signal remains below the threshold for a given window of time, output 1. Otherwise, output 0. If the output transitions from 0 to 1, doneAction is also evaluated.<pre class='code prettyprint lang-sc'>// this frees after the Decay has become quiet enough for a long enough time
-{ var signal = Decay.ar(Impulse.ar(0), 2, PinkNoise.ar(0.2)); DetectSilence.ar(signal, doneAction:2); signal }.play;</pre>
+{ var signal = Decay.ar(Impulse.ar(0), 2, PinkNoise.ar(0.2)); DetectSilence.ar(signal, doneAction: Done.freeSelf); signal }.play;</pre>
 
 <p>If the input signal starts with silence at the beginning of the synth's duration, then DetectSilence will wait indefinitely until the first sound before starting to monitor for silence. To avoid a hanging silent sound where the input may remain zero, you can add an <code class='code prettyprint lang-sc'>Impulse.ar(0)</code> to its input.
 <p>DetectSilence does not distinguish a DC-biased signal from a loud signal. If your signal has DC bias, you should wrap it in <a href="./../Classes/LeakDC.html">LeakDC</a>.<div class='warning'><span class='warninglabel'>WARNING:</span> DetectSilence can be tricky with multi-channel input! See below.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
@@ -52,7 +52,7 @@
 <p>The minimum duration for which input must fall below
 <p><code class='code prettyprint lang-sc'>amp</code> before this triggers.<tr><td class='argumentname'>doneAction<td class='argumentdesc'>
 <p>An integer representing the doneAction. See
-<p><a href="./../Reference/UGen-doneActions.html">UGen done-actions</a> for more detail.</table><h4>Returns:</h4>
+<p><a href="./../Classes/Done.html">Done</a> for more detail.</table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>This UGen outputs 1 if silence is detected, otherwise 0.</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
@@ -66,7 +66,7 @@
 SynthDef("detectSilence-help", { arg out;
     var z;
     z = SinOsc.ar(Rand(400, 700), 0, LFDNoise3.kr(8).max(0)).softclip * 0.3;
-    DetectSilence.ar(z, doneAction:2);
+    DetectSilence.ar(z, doneAction: Done.freeSelf);
     Out.ar(out, z);
 }).add;
 )

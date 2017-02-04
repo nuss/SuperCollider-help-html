@@ -39,7 +39,7 @@
 <ul class='toc'></ul><li class='toc2'><a href='#More%20examples'>More examples</a></li>
 <ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>Plays back break point envelopes. The envelopes are instances of the <a href="./../Classes/Env.html">Env</a> class. The envelope and the arguments for <code class='code prettyprint lang-sc'>levelScale</code> , <code class='code prettyprint lang-sc'>levelBias</code> , and <code class='code prettyprint lang-sc'>timeScale</code>are polled when the EnvGen is triggered and remain constant for the duration of the envelope.<pre class='code prettyprint lang-sc'>{ PinkNoise.ar(EnvGen.kr(Env.perc, doneAction: 2)) }.play</pre>
+<p>Plays back break point envelopes. The envelopes are instances of the <a href="./../Classes/Env.html">Env</a> class. The envelope and the arguments for <code class='code prettyprint lang-sc'>levelScale</code> , <code class='code prettyprint lang-sc'>levelBias</code> , and <code class='code prettyprint lang-sc'>timeScale</code>are polled when the EnvGen is triggered and remain constant for the duration of the envelope.<pre class='code prettyprint lang-sc'>{ PinkNoise.ar(EnvGen.kr(Env.perc, doneAction: Done.freeSelf)) }.play</pre>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>envelope</span>, <span class='argstr'>gate: 1</span>, <span class='argstr'>levelScale: 1</span>, <span class='argstr'>levelBias: 0</span>, <span class='argstr'>timeScale: 1</span>, <span class='argstr'>doneAction: 0</span>)</h3>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*kr' href='./../Overviews/Methods.html#kr'>kr</a> (<span class='argstr'>envelope</span>, <span class='argstr'>gate: 1</span>, <span class='argstr'>levelScale: 1</span>, <span class='argstr'>levelBias: 0</span>, <span class='argstr'>timeScale: 1</span>, <span class='argstr'>doneAction: 0</span>)</h3>
@@ -54,12 +54,12 @@
 <p>Scales the levels of the breakpoints.<tr><td class='argumentname'>levelBias<td class='argumentdesc'>
 <p>Offsets the levels of the breakpoints.<tr><td class='argumentname'>timeScale<td class='argumentdesc'>
 <p>Scales the durations of the segments.<tr><td class='argumentname'>doneAction<td class='argumentdesc'>
-<p>An integer representing an action to be executed when the env is finished playing. This can be used to free the enclosing synth, etc. See <a href="./../Reference/UGen-doneActions.html">UGen done-actions</a> for more detail.</table><h4>Discussion:</h4>
+<p>An integer representing an action to be executed when the env is finished playing. This can be used to free the enclosing synth, etc. See <a href="./../Classes/Done.html">Done</a> for more detail.</table><h4>Discussion:</h4>
 <div class='note'><span class='notelabel'>NOTE:</span> The actual minimum duration of a segment is not zero, but one sample step for audio rate and one block for control rate. This may result in asynchronicity when in two envelopes of different number of levels, the envelope times add up to the same total duration. Similarly, when modulating times, the new time is only updated at the end of the current segment - this may lead to asynchronicity of two envelopes with modulated times.</div><pre class='code prettyprint lang-sc'>// as amplitude envelope
 (
 {
     var env = Env([0, 1, 0.5, 1, 0], [0.01, 0.5, 0.02, 0.5]);
-    SinOsc.ar(470) * EnvGen.kr(env, doneAction: 2)
+    SinOsc.ar(470) * EnvGen.kr(env, doneAction: Done.freeSelf)
 }.play
 )
 
@@ -112,12 +112,12 @@
 }.play
 );
 
-// an envelope in a SynthDef can be used to limit the synth's lifetime (doneAction: 2)
+// an envelope in a SynthDef can be used to limit the synth's lifetime (doneAction: Done.freeSelf)
 
 (
 SynthDef(\env_help, { | out, gate = 0, freq = 440 |
     var z;
-    z = EnvGen.kr(Env.perc, doneAction: 2) * SinOsc.ar(freq, 0, 0.1);
+    z = EnvGen.kr(Env.perc, doneAction: Done.freeSelf) * SinOsc.ar(freq, 0, 0.1);
     Out.ar(out, z)
 }).add;
 )
@@ -180,7 +180,7 @@ Synth(\help_Env_newClear, [\gate, 1, \env, Env({ rrand(60, 70).midicps } ! 4, [1
 
 <p>If the gate of an EnvGen is set to -1 or below, then the envelope will cutoff immediately. The time for it to cutoff is the amount less than -1, with -1 being as fast as possible, -1.5 being a cutoff in 0.5 seconds, etc. The cutoff shape is linear.<pre class='code prettyprint lang-sc'>(
 SynthDef(\stealMe, { |out, gate = 1|
-    Out.ar(out, {BrownNoise.ar}.dup * EnvGen.kr(Env.asr, gate, doneAction:2))
+    Out.ar(out, {BrownNoise.ar}.dup * EnvGen.kr(Env.asr, gate, doneAction: Done.freeSelf))
 }).add;
 )
 
@@ -191,7 +191,7 @@ a.release(3); //  // cutoff in 3 seconds
 s.sendMsg(\s_new, \stealMe, 1001, 1, 0);
 s.sendMsg(\n_set, 1001, \gate, -1.1); // cutoff in 0.1 seconds</pre>
 
-<p>If the synthDef has an arg named "gate", the convenience method of Node can be used: <code class='code prettyprint lang-sc'>node.release(releaseTime)</code><pre class='code prettyprint lang-sc'>d = { arg gate=1; {BrownNoise.ar}.dup * EnvGen.kr(Env.asr, gate, doneAction:2) }.play;
+<p>If the synthDef has an arg named "gate", the convenience method of Node can be used: <code class='code prettyprint lang-sc'>node.release(releaseTime)</code><pre class='code prettyprint lang-sc'>d = { arg gate=1; {BrownNoise.ar}.dup * EnvGen.kr(Env.asr, gate, doneAction: Done.freeSelf) }.play;
 d.release(3);</pre>
 <h3><a class='anchor' name='Fast%20triggering%20tests'>Fast triggering tests</a></h3>
 <pre class='code prettyprint lang-sc'>(
@@ -249,7 +249,7 @@ SynthDef(\env, { arg i_outbus=0;
     // create a control argument array
     envctl = \env.kr( env.asArray );
 
-    ReplaceOut.kr(i_outbus, EnvGen.kr(envctl, doneAction: 2));
+    ReplaceOut.kr(i_outbus, EnvGen.kr(envctl, doneAction: Done.freeSelf));
 }).add;
 )
 

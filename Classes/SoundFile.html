@@ -115,7 +115,7 @@ f.close;
 <p>Where <strong>bufferSize</strong>, <strong>firstFrame</strong>, <strong>lastFrame</strong> are for buffer and playback position, and <strong>out</strong>, <strong>server</strong>, <strong>group</strong>, <strong>addAction</strong>, <strong>amp</strong> are synth parameters. Here is the default SynthDef used for stereo files:<pre class='code prettyprint lang-sc'>SynthDef(\diskIn2, { | bufnum, out, gate = 1, sustain, amp = 1, ar = 0, dr = 0.01 |
     Out.ar(out, DiskIn.ar(2, bufnum)
     * Linen.kr(gate, ar, 1, dr, 2)
-    * EnvGen.kr(Env.linen(0, sustain - ar - dr max: 0 ,dr),1, doneAction: 2) * amp)
+    * EnvGen.kr(Env.linen(0, sustain - ar - dr max: 0 ,dr),1, doneAction: Done.freeSelf) * amp)
 });</pre>
 
 <p>The control <strong>sustain</strong> determines playback duration based on the firstFrame and lastFrame. The control <strong>gate</strong> allows early termination of the playback<tr><td class='argumentname'>playNow<td class='argumentdesc'>

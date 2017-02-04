@@ -89,7 +89,7 @@ p.stop;</pre>
 SynthDef(\event_set, { |freq = 440, gate = 1, amp = 0.1, lagTime = 0.1,
         ffreq = 2000, detune = 1.005, out = 0|
     var    sig = Saw.ar(Lag.kr(freq, lagTime) * [1, detune]).sum * amp
-            * EnvGen.kr(Env.adsr, gate, doneAction: 2);
+            * EnvGen.kr(Env.adsr, gate, doneAction: Done.freeSelf);
     Out.ar(out, sig ! 2);
 }).add;
 )
@@ -155,7 +155,7 @@ a.free;</pre>
 <p>These event types uniquely have automatic cleanup event types associated with them. Playing one of these event types allocates a server resource. Later, the resource may be freed by changing the event type to the corresponding cleanup type and playing the event again. While the resource is active, the event can be used as a reference to the resource in other events or Synth messaging.<pre class='code prettyprint lang-sc'>// create a buffer
 b = (type: \allocRead, path: Platform.resourceDir +/+ "sounds/a11wlk01.wav").play;
 
-a = { PlayBuf.ar(1, b, doneAction: 2) }.play;
+a = { PlayBuf.ar(1, b, doneAction: Done.freeSelf) }.play;
 
 // remove buffer
 EventTypesWithCleanup.cleanup(b);</pre>

@@ -67,7 +67,7 @@ n.free;</pre>
 <p>The encapsulation of node objects results in a certain generalization, meaning that other compound objects can respond to the same messages and thus exploit polymorphism. They also provide a certain level of convenience, keeping track of indexes and IDs, etc.
 <p>In certain cases, such as for granular synthesis it is recommended to use messages directly, because there is no benefit to be gained from the node objects (i.e. no need to message them) and they add cpu load to the client side.<pre class='code prettyprint lang-sc'>(
 SynthDef("grain", {
-    Out.ar(0, Line.kr(0.1, 0, 0.01, doneAction:2) * FSinOsc.ar(12000))
+    Out.ar(0, Line.kr(0.1, 0, 0.01, doneAction: Done.freeSelf) * FSinOsc.ar(12000))
 }).send(s);
 )
 
@@ -93,7 +93,7 @@ n = Synth(\default, [\freq, 850]);</pre>
 <p>Argument lists generally appear as alternating pairs, with the control identifier preceding the value. Usually the control identifier is a name, as above, but it could also be an integer index. (Using integers is slightly faster for the server, but it makes the code harder to read and can introduce bugs if the SynthDef structure changes.) One way to find out control indices is to .add the SynthDef into a <a href="./../Classes/SynthDescLib.html">SynthDescLib</a>, then get the list of all controls out of the <a href="./../Classes/SynthDesc.html">SynthDesc</a>.<pre class='code prettyprint lang-sc'>(
 SynthDef(\controlList, { |freq = 440, amp = 0.1, detune = #[0.999, 1.001], gate = 1, out = 0|
     var    sig = Mix(Saw.ar(freq * (detune ++ [1]), amp)),
-        env = EnvGen.kr(Env.adsr, gate, doneAction: 2);
+        env = EnvGen.kr(Env.adsr, gate, doneAction: Done.freeSelf);
     Out.ar(0, (sig * env) ! 2);
 }).add;
 
