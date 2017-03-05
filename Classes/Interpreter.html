@@ -110,7 +110,8 @@ codeDump = nil; // reset to nil.</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-preProcessor' href='./../Overviews/Methods.html#preProcessor'>preProcessor</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-preProcessor' href='./../Overviews/Methods.html#preProcessor'>preProcessor</a> = value</h3>
 <div class='method'>
-<p>can be used to modify code before it is interpreted. Given appropriate delimiters, this can be used to implement little languages.<pre class='code prettyprint lang-sc'>// silly but simple: understand a Saw for every SinOsc
+<p>If this is set to a function, all interactively executed code is piped through it before parsing and interpreting. This is mostly used for developing domain-specific live coding languages that piggyback off the SuperCollider editing environment.
+<p>This function is called by <a href="./../Classes/Interpreter.html#-interpretPrintCmdLine">Interpreter: -interpretPrintCmdLine</a> with two arguments: the code string and the interpreter itself.<pre class='code prettyprint lang-sc'>// silly but simple: understand a Saw for every SinOsc
 this.preProcessor = { |code| code.replace("SinOsc", "Saw") };
 
 { SinOsc.ar(200) * 0.1 }.play;
