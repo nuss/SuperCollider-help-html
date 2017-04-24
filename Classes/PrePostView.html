@@ -1,0 +1,108 @@
+<html><head><title>PrePostView</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>JITLib'>Libraries>JITLib</a></div>
+<h1>PrePostView<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>a view that shows volume levels of an audio nodeproxy.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/classes/ProxyMeter/PrePostView.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/classes/ProxyMeter/PrePostView.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/ProxyMeter.html">ProxyMeter</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*preCol'>preCol</a> </li>
+<li class='toc3'><a href='#*postCol'>postCol</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*forMonitor'>forMonitor</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*preSatCol'>preSatCol</a> </li>
+<li class='toc3'><a href='#*satCol'>satCol</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-uv'>uv</a> </li>
+<li class='toc3'><a href='#-setAmps'>setAmps</a> </li>
+<li class='toc3'><a href='#-preAmp'>preAmp</a>  <a href='#-postAmp'>postAmp</a> </li>
+<li class='toc3'><a href='#-remove'>remove</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>PrePostView can show the raw audio level and the post-monitor audio level of a node proxy.  It is used by the ProxyMeter class to show these levels on top of MonitorGuis, e.g. in NdefGuis or ProxyMixer/NdefMixer.
+<p>One con customize its display color scheme.<pre class='code prettyprint lang-sc'>(
+Server.default = s = Server.local;
+s.makeWindow;
+s.boot;
+p = p ?? { ProxySpace.new }; p.push;
+
+m = ProxyMixer(p, 8);
+)
+    // make some proxies
+(
+~a = { Ringz.ar(Dust.ar([1, 1]), [600, 800], 0.05) };
+~b = { Dust.ar([20, 80, 320]) * 0.5 };
+~y = { SinOsc.ar(0.2).abs * PinkNoise.ar };
+~x = { SinOsc.ar(0.13).abs * BrownNoise.ar };
+
+~a.play(vol: 0.2);
+~b.play(vol: 0.1);
+~x.play(vol: 0.2);
+~y.play(vol: 0.1);
+)
+    // show pre- and post volume amps on the sliders
+ProxyMeter.addMixer(m);
+
+    // the default color scheme
+PrePostView.preCol;
+PrePostView.postCol;
+    // use a different one
+PrePostView.preCol = Color.green(1.0, 0.4);
+PrePostView.postCol = Color.red(1.0, 0.4);
+
+    // reset to default color scheme
+PrePostView.initClass;
+
+    // remove mixer again
+ProxyMeter.removeMixer(m);</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*preCol' href='./../Overviews/Methods.html#preCol'>preCol</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*preCol' href='./../Overviews/Methods.html#preCol'>preCol</a> = value</h3>
+<div class='method'>
+<p>get and set Color for the pre-volume level meter</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*postCol' href='./../Overviews/Methods.html#postCol'>postCol</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*postCol' href='./../Overviews/Methods.html#postCol'>postCol</a> = value</h3>
+<div class='method'>
+<p>get and set Color for the post-volume level meter</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>)</h3>
+<div class='method'>
+<p>make a new PrePostView </div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*forMonitor' href='./../Overviews/Methods.html#forMonitor'>forMonitor</a> (<span class='argstr'>monitorGui</span>)</h3>
+<div class='method'>
+<p>make a new PrePostView on top of a MonitorGui</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*preSatCol' href='./../Overviews/Methods.html#preSatCol'>preSatCol</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*preSatCol' href='./../Overviews/Methods.html#preSatCol'>preSatCol</a> = value</h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*satCol' href='./../Overviews/Methods.html#satCol'>satCol</a></h3>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*satCol' href='./../Overviews/Methods.html#satCol'>satCol</a> = value</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-uv' href='./../Overviews/Methods.html#uv'>uv</a> </h3>
+<div class='method'>
+<p>the userview used to display the levels</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-setAmps' href='./../Overviews/Methods.html#setAmps'>setAmps</a> (<span class='argstr'>pre: 0</span>, <span class='argstr'>post: 0</span>)</h3>
+<div class='method'>
+<p>set the levels to display on the view. range for both is [0.0, 1.0]  display is with amp warp, i.e. center of view is -12 dB, or 0.25.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-preAmp' href='./../Overviews/Methods.html#preAmp'>preAmp</a> </h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-postAmp' href='./../Overviews/Methods.html#postAmp'>postAmp</a> </h3>
+<div class='method'>
+<p>get the preAmp and postAmp level</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-remove' href='./../Overviews/Methods.html#remove'>remove</a> </h3>
+<div class='method'>
+<p>remove the view</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/PrePostView.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/PrePostView.schelp</a><br>link::Classes/PrePostView::<br>sc version: 3.9dev</div></div></body></html>

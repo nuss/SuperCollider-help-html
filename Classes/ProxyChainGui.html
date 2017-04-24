@@ -1,0 +1,122 @@
+<html><head><title>ProxyChainGui</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>JITLib'>Libraries>JITLib</a></div>
+<h1>ProxyChainGui<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>a gui for ProxyChain</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/classes/ProxyChain/ProxyChainGui.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/classes/ProxyChain/ProxyChainGui.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/JITGui.html">JITGui</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='subclasses'>Subclasses: <a href="../Classes/MasterFXGui.html">MasterFXGui</a></div>
+<div id='related'>See also: <a href="./../Classes/ProxyChain.html">ProxyChain</a>, <a href="./../Classes/Ndef.html">Ndef</a>, <a href="./../Classes/MasterFX.html">MasterFX</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-chain'>chain</a> </li>
+<li class='toc3'><a href='#-butZone'>butZone</a> </li>
+<li class='toc3'><a href='#-editGui'>editGui</a> </li>
+<li class='toc3'><a href='#-buttons'>buttons</a> </li>
+<li class='toc3'><a href='#-namedButtons'>namedButtons</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-guiFuncs'>guiFuncs</a> </li>
+</ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A Gui class for ProxyChain. For more example uses, see <a href="./../Classes/ProxyChain.html">ProxyChain</a>.<pre class='code prettyprint lang-sc'>        // prepare for making a proxy chain
+(
+q = ();
+q.numChans = 2;
+
+ProxyChain.add(
+    \dust, \mix -&gt; { |dens=20, dustdec=0.02, dustfreq= 600| 
+        Ringz.ar(Dust.ar(dens).lag(0.0001), dustfreq, dustdec) 
+    }
+);
+
+ProxyChain.add(    
+    \ringmod, \filter -&gt; { |in, randrate=5| 
+        in.asArray[0]     // force mono inputs
+        * SinOsc.ar(LFNoise0.kr([randrate, randrate]).exprange(300, 3000)).sum 
+    }, 
+    \dist, \filter -&gt; { |in, drive=10, amp=0.2| (in.asArray[0] * drive).clip2(0.5) * amp }
+);
+    // add specs for the controls used (for NodeProxyEditor).
+Spec.add(\dens, [0.1, 1000, \exp]);
+Spec.add(\dustamp, [0, 1, \amp]);
+Spec.add(\dustdec, [0.0001, 0.1, \exp]); 
+Spec.add(\dustfreq, \freq); 
+
+c = ProxyChain(\test, [\dust, \ringmod, \dist, \riseComb5 ]);
+
+s.boot;
+)</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>chain</span>, <span class='argstr'>numItems: 16</span>, <span class='argstr'>parent</span>, <span class='argstr'>bounds</span>, <span class='argstr'>makeSkip: true</span>, <span class='argstr'>options</span>)</h3>
+<div class='method'>
+<p>create a gui for the proxyChain given, with space for &lt;numItems&gt; parameters;  parents and bounds for gui placement, makeSkip flag;  and options to create extra buttons on left side.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>chain</span>, <span class='argstr'>numItems: 16</span>, <span class='argstr'>parent</span>, <span class='argstr'>bounds</span>, <span class='argstr'>makeSkip: true</span>, <span class='argstr'>options</span>)</h3>
+<div class='method'>
+<p>make a new ProxyCHainGui.<pre class='code prettyprint lang-sc'>g = ProxyChainGui.new(c, 12);
+c.key.postcs;
+c.proxy.key;
+
+    // define buttons more specifically
+(
+g = c.gui(20, 
+[     
+    [ \generators, \label ],      // a label only
+    [ \dust, \slotCtl, 0.25 ],         // a control for a slot, and initial volume
+
+    [ 'mono FX', \label ],  
+    [ \ringmod, \slotCtl, 0.5 ],     // initial mix level
+    [ \dist, \slotCtl ], 
+
+    [ 'multichan', \label ],          
+    [ \riseComb5, \slotCtl ],         // off (0) by default.
+    [],
+        // extras:
+        // e.g. open an extra NdefGui with more space for controls
+    [\phatEdit, \extra, { c.gui(40) } ],
+    
+        // or maybe bigger buttons for play and end 
+    [\play, \extra, { c.playN } ],     
+    [\end, \extra, { c.end } ],
+    
+]
+)
+)</pre>
+</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-chain' href='./../Overviews/Methods.html#chain'>chain</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-chain' href='./../Overviews/Methods.html#chain'>chain</a> = <span class='argstr'>chain</span></h3>
+<div class='method'>
+<p>the proxychain </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-butZone' href='./../Overviews/Methods.html#butZone'>butZone</a> </h3>
+<div class='method'>
+<p>the CompositeView where the buttons live</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-editGui' href='./../Overviews/Methods.html#editGui'>editGui</a> </h3>
+<div class='method'>
+<p>the NdefGui built into the view</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-buttons' href='./../Overviews/Methods.html#buttons'>buttons</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-buttons' href='./../Overviews/Methods.html#buttons'>buttons</a> = <span class='argstr'>specs</span></h3>
+<div class='method'>
+<p>all left-hand buttons for turning nodes on and off</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-namedButtons' href='./../Overviews/Methods.html#namedButtons'>namedButtons</a> </h3>
+<div class='method'>
+<p>all left-hand buttons which turn nodes on and off</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-guiFuncs' href='./../Overviews/Methods.html#guiFuncs'>guiFuncs</a> </h3>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/ProxyChainGui.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/ProxyChainGui.schelp</a><br>link::Classes/ProxyChainGui::<br>sc version: 3.9dev</div></div></body></html>

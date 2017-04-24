@@ -1,0 +1,151 @@
+<html><head><title>ParamGui</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+<script type='text/javascript'>var helpRoot='./..';</script>
+</head>
+<ul id='menubar'></ul>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div class='header'>
+<div id='label'>SuperCollider CLASSES (extension)</div>
+<div id='categories'><a href='./../Browse.html#Libraries>JITLib'>Libraries>JITLib</a></div>
+<h1>ParamGui<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>sketch for a better EnvirGui - e.g. for use with TdefGui/PdefGui.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/classes/ParamGui.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/classes/ParamGui.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/EnvirGui.html">EnvirGui</a> : <a href="../Classes/JITGui.html">JITGui</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/EnvirGui.html">EnvirGui</a>, <a href="./../Classes/TdefGui.html">TdefGui</a>, <a href="./../Classes/PdefGui.html">PdefGui</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-orderedNames'>orderedNames</a> </li>
+<li class='toc3'><a href='#-filterNames'>filterNames</a> </li>
+<li class='toc3'><a href='#-showNewNames'>showNewNames</a> </li>
+<li class='toc3'><a href='#-grabOrdered'>grabOrdered</a> </li>
+<li class='toc3'><a href='#-moveName'>moveName</a> </li>
+<li class='toc3'><a href='#-useHalo'>useHalo</a> </li>
+<li class='toc3'><a href='#-updateSliderSpecs'>updateSliderSpecs</a> </li>
+<li class='toc3'><a href='#-reorderWindow'>reorderWindow</a> </li>
+<li class='toc3'><a href='#-hideName'>hideName</a>  <a href='#-showName'>showName</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Only a sketch a the moment, some of the features may move to EnvirGui eventually.
+<p>ParamGui has the following advances over EnvirGui:<ul>
+<li>it can have an ordered list of param names: orderedNames<li>it can use the Tdef's Halo to access Tdef's own specs and orderedNames if there.<li>it can sync the specs and orderedNames with its object's halo.<li>it also has a little window for reordering param names.</ul>
+<pre class='code prettyprint lang-sc'>// Much of the code examples are not intended to be used directly as code, they will rather be available as buttons, shortcuts etc. from a later incarnation of ParamGui.
+
+(
+    // make a Tdef and a ParamGui for it:
+
+a = Tdef(\adc).set(\alf, 11, \zwalf, 12);
+b = ParamGui(Tdef(\adc).envir, 8).moveTo(10, 400);
+
+    // add specs to the Tdef object (requires Halo class):
+    // this is recommended future usage style.
+a.addSpec(\alf, [1, 11, \lin, 1]);
+a.addSpec(\zwalf, [1, 12, \exp, 0.01, 3.5]);
+
+    // tell paramgui to use the Tdefs halo:
+b.useHalo(a);
+)
+
+    // where spec lookup happens
+b.specs;
+b.getSpec(\alf);
+a.getHalo(\orderedNames); 
+a.getSpec;
+a.getHalo;
+
+
+    // more params, show and hide:
+
+b.showNewNames = false;
+
+a.set(\droi, 3, \fia, 4, \fuempf, 5);
+a.addSpec(\droi, [3, 300, \exp, 0.01, 30]);
+a.addSpec(\fia, [4, 400, \exp, 0.01, 40]);
+
+b.showNewNames = true;
+
+b.filterNames = [\zwalf];
+b.showNewNames = true;
+b.showNewNames = false;
+b.filterNames = nil;
+
+    // ordering names: 
+b.orderedNames
+a.set(\oans, 1, \zwoa, 2);
+
+b.orderedNames;
+b.grabOrdered; // take all keys from envir;
+b.useHalo(a, myNames: true); // true forces them back into the Halo
+b.orderedNames;
+b.moveName(\oans, 0);
+b.moveName(\zwoa, 1);
+b.moveName(\droi, 2);
+
+b.hideName(\alf);
+b.hideName(\zwalf);
+b.showName(\alf);
+b.filterNames = nil;
+
+    // utility window to order by drag and drop
+b.reorderWindow;
+
+    // Test reordering with TdefGui in a full window
+(
+
+a = Tdef(\ab).set(\alf, 11, \zwalf, 12);
+
+a.addSpec(\alf, [1, 11, \lin, 1]);
+a.addSpec(\zwalf, [1, 12, \exp, 0.01, 3.5]);
+a.set(\droi, 3, \fia, 4);
+a.addSpec(\droi, [3, 300, \exp, 0.01, 30]);
+a.addSpec(\fia, [4, 400, \exp, 0.01, 40]);
+
+b = TdefPresetGui(TdefPreset(Tdef(\ab)), 8, w);
+b.moveTo(10, 300);
+c = b.proxyGui;
+d = c.envirGui;
+
+)
+
+d.reorderWindow;</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-orderedNames' href='./../Overviews/Methods.html#orderedNames'>orderedNames</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-orderedNames' href='./../Overviews/Methods.html#orderedNames'>orderedNames</a> = value</h3>
+<div class='method'>
+<p>list of the param names to show in their desired order.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-filterNames' href='./../Overviews/Methods.html#filterNames'>filterNames</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-filterNames' href='./../Overviews/Methods.html#filterNames'>filterNames</a> = value</h3>
+<div class='method'>
+<p>list of param names that will not be shown</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-showNewNames' href='./../Overviews/Methods.html#showNewNames'>showNewNames</a></h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-showNewNames' href='./../Overviews/Methods.html#showNewNames'>showNewNames</a> = value</h3>
+<div class='method'>
+<p>get and set flag whether to show new names when added to the envir.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-grabOrdered' href='./../Overviews/Methods.html#grabOrdered'>grabOrdered</a> </h3>
+<div class='method'>
+<p>grab names from envir, sorted alphabetically.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-moveName' href='./../Overviews/Methods.html#moveName'>moveName</a> (<span class='argstr'>name</span>, <span class='argstr'>index</span>)</h3>
+<div class='method'>
+<p>move name to index in orderedNames.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-useHalo' href='./../Overviews/Methods.html#useHalo'>useHalo</a> (<span class='argstr'>haloObject</span>, <span class='argstr'>myNames: false</span>)</h3>
+<div class='method'>
+<p>use the Halo of the object passed in for sharing param specs and orderedNames. </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateSliderSpecs' href='./../Overviews/Methods.html#updateSliderSpecs'>updateSliderSpecs</a> (<span class='argstr'>editKeys</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/EnvirGui.html'>EnvirGui</a></div>
+<div class='method'>
+<p>set the controlspecs on the sliders to current specs.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-reorderWindow' href='./../Overviews/Methods.html#reorderWindow'>reorderWindow</a> (<span class='argstr'>alpha: 0.75</span>)</h3>
+<div class='method'>
+<p>open a window to bring orderedNames into the desired order by drag and drop.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-hideName' href='./../Overviews/Methods.html#hideName'>hideName</a> (<span class='argstr'>name</span>)</h3>
+<h3 class='imethodname'><span class='methprefix'>-</span><a name='-showName' href='./../Overviews/Methods.html#showName'>showName</a> (<span class='argstr'>name</span>)</h3>
+<div class='method'>
+<p>hide or show param with this name (add to / remove from filterNames)</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/ParamGui.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/ParamGui.schelp</a><br>link::Classes/ParamGui::<br>sc version: 3.9dev</div></div></body></html>
