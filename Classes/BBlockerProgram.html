@@ -53,8 +53,8 @@
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>Convenience class to create and store assembly programs for the BetaBlocker VChip. 
-<p>See <a href="http://tai-studio.org/index.php/chipinterpretations/">http://tai-studio.org/index.php/chipinterpretations/</a> for details.<div class='image'><img src='betablocker-01-small.png'/></div>
+<p>Convenience class to create and store assembly programs for the BetaBlocker VChip.
+<p>See <a href="http://tai-studio.org/portfolio/chip-interpretations.html">http://tai-studio.org/portfolio/chip-interpretations.html</a> for details.<div class='image'><img src='betablocker-01-small.png'/></div>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>program</span>)</h3>
 <div class='method'>
@@ -65,7 +65,7 @@ a = BBlockerProgram([\ORG, \INC, \JMP, 1]);</pre>
 <tr><td class='argumentname'>program<td class='argumentdesc'>
 <p>Mixed array of instructions (Symbols) and Integers (will be interpreted either as instructions or as values for unary instructions like <code class='code prettyprint lang-sc'>\JMP</code> or <code class='code prettyprint lang-sc'>\PHSL</code>).</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*instructions' href='./../Overviews/Methods.html#instructions'>instructions</a> </h3>
 <div class='method'>
-<p>all instructions </div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*descs' href='./../Overviews/Methods.html#descs'>descs</a> </h3>
+<p>all instructions</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*descs' href='./../Overviews/Methods.html#descs'>descs</a> </h3>
 <div class='method'>
 <p>all descriptions</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*printDescs' href='./../Overviews/Methods.html#printDescs'>printDescs</a> </h3>
 <div class='method'>
@@ -113,7 +113,7 @@ a = BBlockerProgram([\ORG, \INC, \JMP, 1]);</pre>
 <div class='method'>
 <p><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>compiled program as a LocalBuf object</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-play' href='./../Overviews/Methods.html#play'>play</a> (<span class='argstr'>rate</span>, <span class='argstr'>using</span>, <span class='argstr'>leak: false</span>, <span class='argstr'>vol: 0.1</span>)</h3>
+<p>compiled program as a LocalBuf object</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-play' href='./../Overviews/Methods.html#play'>play</a> (<span class='argstr'>rate: 20000</span>, <span class='argstr'>using</span>, <span class='argstr'>leak: false</span>, <span class='argstr'>vol: 0.1</span>, <span class='argstr'>force: true</span>)</h3>
 <div class='method'>
 <p>play program.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -121,9 +121,10 @@ a = BBlockerProgram([\ORG, \INC, \JMP, 1]);</pre>
 <p>rate of operation<tr><td class='argumentname'>using<td class='argumentdesc'>
 <p>instance of <a href="./../Classes/Server.html">Server</a> or <a href="./../Classes/Buffer.html">Buffer</a>. If a buffer is given, this is used to load the program into.<tr><td class='argumentname'>leak<td class='argumentdesc'>
 <p>if <code class='code prettyprint lang-sc'>true</code>, encapsulate output by a <a href="./../Classes/LeakDC.html">LeakDC</a>.<tr><td class='argumentname'>vol<td class='argumentdesc'>
-<p>attenuation</table><h4>Returns:</h4>
+<p>attenuation<tr><td class='argumentname'>force<td class='argumentdesc'>
+<p>force re-filling of collection with program (plus possible randomness)</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><a href="./../Classes/Synth.html">Synth</a> evaluating and playing the program.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>rate</span>, <span class='argstr'>using</span>, <span class='argstr'>leak: false</span>, <span class='argstr'>vol: 1</span>)</h3>
+<p><a href="./../Classes/Synth.html">Synth</a> evaluating and playing the program.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>rate: 20000</span>, <span class='argstr'>using</span>, <span class='argstr'>leak: false</span>, <span class='argstr'>vol: 1</span>, <span class='argstr'>force: false</span>)</h3>
 <div class='method'>
 <p>server playback.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -131,18 +132,20 @@ a = BBlockerProgram([\ORG, \INC, \JMP, 1]);</pre>
 <p>rate of operation<tr><td class='argumentname'>using<td class='argumentdesc'>
 <p>instance of <a href="./../Classes/Server.html">Server</a> or <a href="./../Classes/Buffer.html">Buffer</a>. If a buffer is given, this is used to load the program into.<tr><td class='argumentname'>leak<td class='argumentdesc'>
 <p>if <code class='code prettyprint lang-sc'>true</code>, encapsulate output by a <a href="./../Classes/LeakDC.html">LeakDC</a>.<tr><td class='argumentname'>vol<td class='argumentdesc'>
-<p>attenuation</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-fillUpRandom' href='./../Overviews/Methods.html#fillUpRandom'>fillUpRandom</a></h3>
+<p>attenuation<tr><td class='argumentname'>force<td class='argumentdesc'>
+<p>force re-filling of collection with program (plus possible randomness)</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-fillUpRandom' href='./../Overviews/Methods.html#fillUpRandom'>fillUpRandom</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-fillUpRandom' href='./../Overviews/Methods.html#fillUpRandom'>fillUpRandom</a> = value</h3>
 <div class='method'>
-<p>if <code class='code prettyprint lang-sc'>true</code>, fill remaining space in collection/<a href="./../Classes/Buffer.html">Buffer</a> with random numbers between <code class='code prettyprint lang-sc'>0</code> and <code class='code prettyprint lang-sc'>255</code>. </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-scope' href='./../Overviews/Methods.html#scope'>scope</a> (<span class='argstr'>rate</span>, <span class='argstr'>using</span>, <span class='argstr'>leak: false</span>, <span class='argstr'>vol: 0.1</span>)</h3>
+<p>if <code class='code prettyprint lang-sc'>true</code>, fill remaining space in collection/<a href="./../Classes/Buffer.html">Buffer</a> with random numbers between <code class='code prettyprint lang-sc'>0</code> and <code class='code prettyprint lang-sc'>255</code>.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-scope' href='./../Overviews/Methods.html#scope'>scope</a> (<span class='argstr'>rate: 20000</span>, <span class='argstr'>using</span>, <span class='argstr'>leak: false</span>, <span class='argstr'>vol: 0.1</span>, <span class='argstr'>force: true</span>)</h3>
 <div class='method'>
-<p>run program and scope it. <h4>Arguments:</h4>
+<p>run program and scope it.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>rate<td class='argumentdesc'>
 <p>rate of operation<tr><td class='argumentname'>using<td class='argumentdesc'>
 <p>instance of <a href="./../Classes/Server.html">Server</a> or <a href="./../Classes/Buffer.html">Buffer</a>. If a buffer is given, this is used to load the program into.<tr><td class='argumentname'>leak<td class='argumentdesc'>
 <p>if <code class='code prettyprint lang-sc'>true</code>, encapsulate output by a <a href="./../Classes/LeakDC.html">LeakDC</a>.<tr><td class='argumentname'>vol<td class='argumentdesc'>
-<p>attenuation</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-plot' href='./../Overviews/Methods.html#plot'>plot</a> (<span class='argstr'>rate</span>, <span class='argstr'>using</span>, <span class='argstr'>leak: false</span>, <span class='argstr'>duration: 1</span>)</h3>
+<p>attenuation<tr><td class='argumentname'>force<td class='argumentdesc'>
+<p>force re-filling of collection with program (plus possible randomness)</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-plot' href='./../Overviews/Methods.html#plot'>plot</a> (<span class='argstr'>rate: 20000</span>, <span class='argstr'>using</span>, <span class='argstr'>leak: false</span>, <span class='argstr'>duration: 1</span>, <span class='argstr'>force: true</span>)</h3>
 <div class='method'>
 <p>run program and plot its results.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -150,7 +153,8 @@ a = BBlockerProgram([\ORG, \INC, \JMP, 1]);</pre>
 <p>rate of operation<tr><td class='argumentname'>using<td class='argumentdesc'>
 <p>instance of <a href="./../Classes/Server.html">Server</a> or <a href="./../Classes/Buffer.html">Buffer</a>. If a buffer is given, this is used to load the program into.<tr><td class='argumentname'>leak<td class='argumentdesc'>
 <p>if <code class='code prettyprint lang-sc'>true</code>, encapsulate output by a <a href="./../Classes/LeakDC.html">LeakDC</a>.<tr><td class='argumentname'>duration<td class='argumentdesc'>
-<p>time to run in seconds.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-decompile' href='./../Overviews/Methods.html#decompile'>decompile</a> (<span class='argstr'>force: false</span>)</h3>
+<p>time to run in seconds.<tr><td class='argumentname'>force<td class='argumentdesc'>
+<p>force re-filling of collection with program (plus possible randomness)</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-decompile' href='./../Overviews/Methods.html#decompile'>decompile</a> (<span class='argstr'>force: false</span>)</h3>
 <div class='method'>
 <p>decompile content of collection.<h4>Arguments:</h4>
 <table class='arguments'>

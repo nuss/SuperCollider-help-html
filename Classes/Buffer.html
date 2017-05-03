@@ -122,7 +122,9 @@
 <li class='toc3'><a href='#-writeAction'>writeAction</a> </li>
 </ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>A buffer is most often used to hold sampled audio, such as a soundfile loaded into memory, but can be used to hold other types of data as well. It is a globally available array of floating-point numbers on the server. The Buffer class encapsulates a number of common tasks, OSC messages, and capabilities related to server-side buffers – see the examples lower down this document for many examples of using Buffers for sound playback and recording.
+<p>A Buffer object is a client-side abstraction for a server-side buffer. (SuperCollider's server-client architecture is a common source of confusion when working with Buffer objects, so please see <a href="./../Guides/ClientVsServer.html">Client vs Server</a>.)
+<p>A buffer is most often used to hold sampled audio, such as a soundfile loaded into memory, but can be used to hold other types of data as well. Technically speaking, a buffer on the server is a globally available, multichannel array of 32-bit floating-point numbers. It also has an associated sample rate, represented in Hertz as a 64-bit float.
+<p>The Buffer class encapsulates a number of common tasks, OSC messages, and capabilities related to server-side buffers – see the examples lower down this document for many examples of using Buffers for sound playback and recording.
 <p>Buffers are commonly used with <a href="./../Classes/PlayBuf.html">PlayBuf</a>, <a href="./../Classes/RecordBuf.html">RecordBuf</a>, <a href="./../Classes/DiskIn.html">DiskIn</a>, <a href="./../Classes/DiskOut.html">DiskOut</a>, <a href="./../Classes/BufWr.html">BufWr</a>, <a href="./../Classes/BufRd.html">BufRd</a>, and other UGens. (See their individual help files for more examples.) Buffers can be freed or altered even while being accessed. See <a href="./../Reference/Server-Architecture.html">Server Architecture</a> for some technical details.
 <p>Buffer objects should not be created or modified within a <a href="./../Classes/SynthDef.html">SynthDef</a>. If this is needed, see <a href="./../Classes/LocalBuf.html">LocalBuf</a>.<h3><a class='anchor' name='Buffer%20Numbers%20and%20Allocation'>Buffer Numbers and Allocation</a></h3>
 
@@ -453,7 +455,8 @@ b.free;</pre>
 <p>Returns the number of channels in the corresponding server-side buffer.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-sampleRate' href='./../Overviews/Methods.html#sampleRate'>sampleRate</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-sampleRate' href='./../Overviews/Methods.html#sampleRate'>sampleRate</a> = value</h3>
 <div class='method'>
-<p>Returns the sample rate of the corresponding server-side buffer.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-path' href='./../Overviews/Methods.html#path'>path</a></h3>
+<p>Returns the sample rate of the corresponding server-side buffer.
+<p>Changing this value only changes what the buffer thinks its sample rate is. It does not resample the buffer's content.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-path' href='./../Overviews/Methods.html#path'>path</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-path' href='./../Overviews/Methods.html#path'>path</a> = value</h3>
 <div class='method'>
 <p>Returns a string containing the path of a soundfile that has been loaded into the corresponding server-side buffer.</div><h3><a class='anchor' name='Explicit%20allocation'>Explicit allocation</a></h3>

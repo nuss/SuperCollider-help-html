@@ -14,77 +14,50 @@
 <div class='contents'>
 <div class='header'>
 <div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a>, <a href='./../Browse.html#UGens>Undocumented'>UGens>Undocumented</a></div>
+<div id='categories'><a href='./../Browse.html#UGens'>UGens</a></div>
 <h1>BBlockerBuf<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>MultiOut BetaBlocker VChip</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/BetablockerUGens/BetablockerUGens.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/BetablockerUGens/BetablockerUGens.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/MultiOutUGen.html">MultiOutUGen</a> : <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
+<div id='related'>See also: <a href="./../Classes/BBlockerBuf.html">BBlockerBuf</a>, <a href="./../Classes/BBlockerProgram.html">BBlockerProgram</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*ar'>ar</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
-<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-init'>init</a> </li>
-</ul></ul><li class='toc1'><a href='#Help%20template'>Help template</a></li>
-<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<p>BetaBlocker vortual chip implementation. The heap is realised as a Buffer and can possibly be shared with other instances. It triggers the computation of the underlying BetaBlocker engine at a given rate and returns an array consisting of the program counter and all 8 stack elements re-scaled to values between -1 and 1.<pre class='code prettyprint lang-sc'>(
+// bubbles
+{
+    var pC;    // program counter
+    var stack;
+
+    // create program
+    var program = BBlockerProgram([\ORG, \INC, \INC, \INC, \DUP, \INC, \JMP, 1]).asLocalBuf;
+
+    # pC ... stack = BBlockerBuf.ar(
+        freq: MouseX.kr(1000, 20000, -2),
+        bufnum: program,
+        startpoint: 0
+    );
+
+    Splay.ar(SinOsc.ar(stack.linexp(-1, 1, 100, 1000))) + (MouseY.kr(0, 1) * pC!2);
+
+}.scope
+)</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>freq</span>, <span class='argstr'>bufnum: 0</span>, <span class='argstr'>startpoint: 0</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>freq<td class='argumentdesc'>
+<p>evaluation frequency<tr><td class='argumentname'>bufnum<td class='argumentdesc'>
+<p>Pointer to the buffer where the heap is stored. Can be modulated at control-rate.<tr><td class='argumentname'>startpoint<td class='argumentdesc'>
+<p>Initial position of the program counter.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-init' href='./../Overviews/Methods.html#init'>init</a> ( <span class='argstr'>... theInputs</span>)</h3>
-<h2><a class='anchor' name='Help%20template'>Help template</a></h2>
-
-<p>Copy and paste the text below and save to HelpSource/Classes/BBlockerBuf.schelp<pre class='code prettyprint lang-sc'>TITLE:: BBlockerBuf
-summary:: (put short description here)
-categories:: Undocumented classes, UGens&gt;Undocumented
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
-
-DESCRIPTION::
-(put long description here)
-
-
-CLASSMETHODS::
-
-METHOD:: ar
-(describe method here)
-
-ARGUMENT:: freq
-(describe argument here)
-
-ARGUMENT:: bufnum
-(describe argument here)
-
-ARGUMENT:: startpoint
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-
-INSTANCEMETHODS::
-
-METHOD:: init
-(describe method here)
-
-ARGUMENT::  ... theInputs
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-
-EXAMPLES::
-
-code::
-(some example code)
-::
-</pre>
-<div class='doclink'>link::Classes/BBlockerBuf::<br>sc version: 3.9dev</div></div></body></html>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/BetablockerUGens/HelpSource/Classes/BBlockerBuf.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/BetablockerUGens/HelpSource/Classes/BBlockerBuf.schelp</a><br>link::Classes/BBlockerBuf::<br>sc version: 3.9dev</div></div></body></html>

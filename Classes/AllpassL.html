@@ -16,7 +16,7 @@
 <div id='label'>SuperCollider CLASSES</div>
 <div id='categories'><a href='./../Browse.html#UGens>Delays'>UGens>Delays</a></div>
 <h1>AllpassL</h1>
-<div id='summary'>All pass delay line with linear interpolation.</div>
+<div id='summary'>Schroeder allpass delay line with linear interpolation.</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/Delays.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/Delays.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/CombN.html">CombN</a> : <a href="../Classes/PureUGen.html">PureUGen</a> : <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
@@ -32,7 +32,12 @@
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>All pass delay line with linear interpolation. See also <a href="./../Classes/AllpassN.html">AllpassN</a> which uses no interpolation, and <a href="./../Classes/AllpassC.html">AllpassC</a> which uses cubic interpolation. Cubic interpolation is more computationally expensive than linear, but more accurate.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>A Schroeder allpass filter is given by the difference equations<pre class='code prettyprint lang-sc'>s(t) = x(t) + k * s(t - D)
+y(t) = -k * s(t) + s(t - D)</pre>
+
+<p>where <code class='code prettyprint lang-sc'>x(t)</code> is the input signal, <code class='code prettyprint lang-sc'>y(t)</code> is the output signal, <code class='code prettyprint lang-sc'>D</code> is the delay time, and <code class='code prettyprint lang-sc'>k</code> is the allpass coefficient.
+<p>In this UGen, <code class='code prettyprint lang-sc'>k</code> is computed as <code class='code prettyprint lang-sc'>k == 0.001 ** (delay / decay.abs) * decay.sign</code> (0.001 is -60 dBFS).
+<p>See also <a href="./../Classes/AllpassN.html">AllpassN</a> which uses no interpolation, and <a href="./../Classes/AllpassC.html">AllpassC</a> which uses cubic interpolation. Cubic interpolation is more computationally expensive than linear, but more accurate.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ar' href='./../Overviews/Methods.html#ar'>ar</a> (<span class='argstr'>in: 0</span>, <span class='argstr'>maxdelaytime: 0.2</span>, <span class='argstr'>delaytime: 0.2</span>, <span class='argstr'>decaytime: 1</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/CombN.html'>CombN</a></div>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*kr' href='./../Overviews/Methods.html#kr'>kr</a> (<span class='argstr'>in: 0</span>, <span class='argstr'>maxdelaytime: 0.2</span>, <span class='argstr'>delaytime: 0.2</span>, <span class='argstr'>decaytime: 1</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
@@ -53,7 +58,7 @@
 <pre class='code prettyprint lang-sc'>// Since the allpass delay has no audible effect as a resonator on
 // steady state sound ...
 
-{ AllpassC.ar(WhiteNoise.ar(0.1), 0.01, XLine.kr(0.0001, 0.01, 20), 0.2) }.play;
+{ AllpassL.ar(WhiteNoise.ar(0.1), 0.01, XLine.kr(0.0001, 0.01, 20), 0.2) }.play;
 
 // ...these examples add the input to the effected sound and compare variants so that you can hear
 // the effect of the phase comb:
