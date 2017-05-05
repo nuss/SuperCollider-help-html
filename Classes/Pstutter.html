@@ -21,7 +21,7 @@
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Streams/FilterPatterns.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Streams/FilterPatterns.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/FilterPattern.html">FilterPattern</a> : <a href="../Classes/Pattern.html">Pattern</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></div>
 <div id='subclasses'>Subclasses: <a href="../Classes/PdurStutter.html">PdurStutter</a></div>
-<div id='related'>See also: <a href="./../Classes/Pn.html">Pn</a></div>
+<div id='related'>See also: <a href="./../Classes/Pn.html">Pn</a>, <a href="./../Classes/Pattern.html#-stutter">Pattern: -stutter</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -37,14 +37,21 @@
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>repeat each element n times.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>repeat each element n times.<pre class='code prettyprint lang-sc'>(
+var a, b;
+a = Pstutter(2, Pwhite(-1.0, 1.0));
+x = a.asStream;
+8.do { x.next.postln };
+)</pre>
+
+<p>This is also a response to <a href="./../Classes/Pattern.html#-stutter">Pattern: -stutter</a><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>n</span>, <span class='argstr'>pattern</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>n<td class='argumentdesc'>
-<p>may be a pattern, so the number of times can vary each iteration.<tr><td class='argumentname'>pattern<td class='argumentdesc'>
-<p>the pattern</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>The number of repeats for each new element. n may be a pattern, so the number of times can vary each iteration.<tr><td class='argumentname'>pattern<td class='argumentdesc'>
+<p>the pattern to repeat.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
@@ -54,35 +61,59 @@
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-n' href='./../Overviews/Methods.html#n'>n</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-n' href='./../Overviews/Methods.html#n'>n</a> = value</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<pre class='code prettyprint lang-sc'>// the first argument can be a pattern, too:
+(
 var a, b;
-a = Pstutter(2, Pseq([1, 2, 3],inf));
+a = Pstutter(Prand([1, 2, 5], inf), Pwhite(-1.0, 1.0)); // repeat either once, twice, or five times
 x = a.asStream;
-13.do({ x.next.postln; });
+20.do { x.next.postln };
 )
 
-
-//Pstutter used as a sequence of pitches
-
+// using event patterns:
 (
 SynthDef(\help_sinegrain,
-    { arg out=0, freq=440, sustain=0.05;
+    { | out=0, freq=440, sustain=0.05 |
         var env;
-        env = EnvGen.kr(Env.perc(0.01, sustain, 0.2), doneAction: Done.freeSelf);
-        Out.ar(out, SinOsc.ar(freq, 0, env))
+        env = Env.perc(0.01, sustain, 0.2).kr(doneAction: Done.freeSelf);
+        Out.ar(out, SinOsc.ar(freq, 0.5pi, env))
     }).add;
 )
 
+(
+a = Pbind(
+    \instrument, \help_sinegrain,
+    \note, Pxrand([0, 5, 7, 9], inf),
+    \dur, 0.05,
+    \sustain, 0.1
+);
+Pstutter(Pseq([1, 2, 3, 4], inf), a).trace.play;
+)
+
+
+// Pstutter used as a sequence of pitches
 
 (
-c = Pstutter(3, Prand([1, 2, 3],inf)*4+65);
+c = Pstutter(3, Pxrand([1, 2, 3], inf) * 4 + 65);
 x = c.asStream;
-Routine({
-    loop({
+Routine {
+    loop {
         Synth(\help_sinegrain, [\freq, x.next.midicps]);
         0.12.wait;
-    })
-}).play;
-)</pre>
+    }
+}.play;
+)
+
+
+// Voss algorithm for pink noise
+// note that pattern.stutter(n) is a synonym for Pstutter(n, pattern)
+a = Pwhite();
+c = (2 ** (0..10)).sum { |n| a.stutter(n) };
+c.asStream.nextN(1000).plot
+
+
+// Voss-McCartney algorithm: balance calculation for realtime use
+a = Pwhite();
+c = (2 ** (0..10)).sum { |n| a.stutter(n.div(2).fin(1)) ++ a.stutter(n) };
+c.asStream.nextN(1000).plot</pre>
 
 <p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Pstutter.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Pstutter.schelp</a><br>link::Classes/Pstutter::<br>sc version: 3.9dev</div></div></body></html>

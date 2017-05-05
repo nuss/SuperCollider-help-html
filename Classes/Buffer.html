@@ -67,8 +67,10 @@
 <li class='toc3'><a href='#-allocRead'>allocRead</a>  <a href='#-allocReadMsg'>allocReadMsg</a> </li>
 <li class='toc3'><a href='#-allocReadChannel'>allocReadChannel</a>  <a href='#-allocReadChannelMsg'>allocReadChannelMsg</a> </li>
 </ul><li class='toc2'><a href='#Other%20methods'>Other methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-read'>read</a>  <a href='#-readMsg'>readMsg</a> </li>
-<li class='toc3'><a href='#-readChannel'>readChannel</a>  <a href='#-readChannelMsg'>readChannelMsg</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-read'>read</a> </li>
+<li class='toc3'><a href='#-readMsg'>readMsg</a> </li>
+<li class='toc3'><a href='#-readChannel'>readChannel</a> </li>
+<li class='toc3'><a href='#-readChannelMsg'>readChannelMsg</a> </li>
 <li class='toc3'><a href='#-cueSoundFile'>cueSoundFile</a>  <a href='#-cueSoundFileMsg'>cueSoundFileMsg</a> </li>
 <li class='toc3'><a href='#-write'>write</a>  <a href='#-writeMsg'>writeMsg</a> </li>
 <li class='toc3'><a href='#-free'>free</a>  <a href='#-freeMsg'>freeMsg</a> </li>
@@ -507,7 +509,6 @@ x = { PlayBuf.ar(1, b, BufRateScale.kr(b), loop: 1) * 0.5 }.play;
 x.free; b.free;</pre>
 </div><h3><a class='anchor' name='Other%20methods'>Other methods</a></h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-read' href='./../Overviews/Methods.html#read'>read</a> (<span class='argstr'>argpath</span>, <span class='argstr'>fileStartFrame: 0</span>, <span class='argstr'>numFrames: -1</span>, <span class='argstr'>bufStartFrame: 0</span>, <span class='argstr'>leaveOpen: false</span>, <span class='argstr'>action</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-readMsg' href='./../Overviews/Methods.html#readMsg'>readMsg</a> (<span class='argstr'>argpath</span>, <span class='argstr'>fileStartFrame: 0</span>, <span class='argstr'>numFrames: -1</span>, <span class='argstr'>bufStartFrame: 0</span>, <span class='argstr'>leaveOpen: false</span>, <span class='argstr'>completionMessage</span>)</h3>
 <div class='method'>
 <p>Read a soundfile into an already allocated buffer.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -518,10 +519,11 @@ x.free; b.free;</pre>
 <p>The index of the frame in the buffer at which to start reading. The default is 0, which is the beginning of the buffer.<tr><td class='argumentname'>leaveOpen<td class='argumentdesc'>
 <p>A boolean indicating whether or not the Buffer should be left 'open'. For use with DiskIn you will want this to be true, as the buffer will be used for streaming the soundfile in from disk. (For this the buffer must have been allocated with a multiple of (2 * synth block size). A common number is 32768 frames. cueSoundFile below, provides a simpler way of doing this.) The default is false which is the correct value for all other cases.<tr><td class='argumentname'>action<td class='argumentdesc'>
 <p>A Function to be evaluated once the file has been read and this Buffer's instance variables have been updated. The function will be passed this Buffer as an argument.<tr><td class='argumentname'>(completionMessage)<td class='argumentdesc'>
-<p>A valid OSC message or a Function which will return one. A Function will be passed this Buffer as an argument when evaluated.</table><h4>Discussion:</h4>
+<p>A valid OSC message or a Function which will return one. A Function will be passed this Buffer as an argument when evaluated.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-readMsg' href='./../Overviews/Methods.html#readMsg'>readMsg</a> (<span class='argstr'>argpath</span>, <span class='argstr'>fileStartFrame: 0</span>, <span class='argstr'>numFrames: -1</span>, <span class='argstr'>bufStartFrame: 0</span>, <span class='argstr'>leaveOpen: false</span>, <span class='argstr'>completionMessage</span>)</h3>
+<div class='method'>
+<p> construct the message for a read command. args are like those for read,  except that last arg is completionMessage.<h4>Discussion:</h4>
 
 <p>Note that if the number of frames in the file is greater than the number of frames in the buffer, it will be truncated. Note that readMsg will not auto-update instance variables. Call updateInfo in order to do this.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-readChannel' href='./../Overviews/Methods.html#readChannel'>readChannel</a> (<span class='argstr'>argpath</span>, <span class='argstr'>fileStartFrame: 0</span>, <span class='argstr'>numFrames: -1</span>, <span class='argstr'>bufStartFrame: 0</span>, <span class='argstr'>leaveOpen: false</span>, <span class='argstr'>channels</span>, <span class='argstr'>action</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-readChannelMsg' href='./../Overviews/Methods.html#readChannelMsg'>readChannelMsg</a> (<span class='argstr'>argpath</span>, <span class='argstr'>fileStartFrame: 0</span>, <span class='argstr'>numFrames: -1</span>, <span class='argstr'>bufStartFrame: 0</span>, <span class='argstr'>leaveOpen: false</span>, <span class='argstr'>channels</span>, <span class='argstr'>completionMessage</span>)</h3>
 <div class='method'>
 <p>As <a href="#-read">-read</a> above, but allows you to specify which channels to read.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -533,7 +535,9 @@ x.free; b.free;</pre>
 <p>A boolean indicating whether or not the Buffer should be left 'open'. For use with DiskIn you will want this to be true, as the buffer will be used for streaming the soundfile in from disk. (For this the buffer must have been allocated with a multiple of (2 * synth block size). A common number is 32768 frames. cueSoundFile below, provides a simpler way of doing this.) The default is false which is the correct value for all other cases.<tr><td class='argumentname'>channels<td class='argumentdesc'>
 <p>An Array of channels to be read from the soundfile. Indices start from zero. These will be read in the order provided. The number of channels requested must match this Buffer's numChannels.<tr><td class='argumentname'>action<td class='argumentdesc'>
 <p>A Function to be evaluated once the file has been read and this Buffer's instance variables have been updated. The function will be passed this Buffer as an argument.<tr><td class='argumentname'>(completionMessage)<td class='argumentdesc'>
-<p>A valid OSC message or a Function which will return one. A Function will be passed this Buffer as an argument when evaluated.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-cueSoundFile' href='./../Overviews/Methods.html#cueSoundFile'>cueSoundFile</a> (<span class='argstr'>path</span>, <span class='argstr'>startFrame</span>, <span class='argstr'>completionMessage</span>)</h3>
+<p>A valid OSC message or a Function which will return one. A Function will be passed this Buffer as an argument when evaluated.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-readChannelMsg' href='./../Overviews/Methods.html#readChannelMsg'>readChannelMsg</a> (<span class='argstr'>argpath</span>, <span class='argstr'>fileStartFrame: 0</span>, <span class='argstr'>numFrames: -1</span>, <span class='argstr'>bufStartFrame: 0</span>, <span class='argstr'>leaveOpen: false</span>, <span class='argstr'>channels</span>, <span class='argstr'>completionMessage</span>)</h3>
+<div class='method'>
+<p> as above for single channel, with last arg being completionMessage.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-cueSoundFile' href='./../Overviews/Methods.html#cueSoundFile'>cueSoundFile</a> (<span class='argstr'>path</span>, <span class='argstr'>startFrame</span>, <span class='argstr'>completionMessage</span>)</h3>
 <h3 class='imethodname'><span class='methprefix'>-</span><a name='-cueSoundFileMsg' href='./../Overviews/Methods.html#cueSoundFileMsg'>cueSoundFileMsg</a> (<span class='argstr'>path</span>, <span class='argstr'>startFrame: 0</span>, <span class='argstr'>completionMessage</span>)</h3>
 <div class='method'>
 <p>A convenience method to cue a soundfile into the buffer for use with a <a href="./../Classes/DiskIn.html">DiskIn</a>. The buffer must have been allocated with a multiple of (2 * the server's block size) frames. A common size is 32768 frames.<h4>Arguments:</h4>
@@ -756,8 +760,8 @@ c.free;</pre>
 <p>The name of the resulting window.<tr><td class='argumentname'>bounds<td class='argumentdesc'>
 <p>An instance of Rect determining the size of the resulting view.<tr><td class='argumentname'>minval<td class='argumentdesc'>
 <p>the minimum value in the plot<tr><td class='argumentname'>maxval<td class='argumentdesc'>
-<p>the maximum value in the plot<tr><td class='argumentname'>parent<td class='argumentdesc'>
-<p>a window to place the plot in. If nil, one will be created for you</table><h4>Discussion:</h4>
+<p>the maximum value in the plot<tr><td class='argumentname'>separately<td class='argumentdesc'>
+<p>a boolean whether to use separate display ranges or a single shared range.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>s.boot;
 b = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");
 b.plot;
