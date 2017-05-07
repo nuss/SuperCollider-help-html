@@ -51,9 +51,9 @@
 <p>The envelope is polled when the EnvGen is triggered. The Env inputs can be other UGens.<tr><td class='argumentname'>gate<td class='argumentdesc'>
 <p>This triggers the envelope and holds it open while &gt; 0. If the Env is fixed-length (e.g. Env.linen, Env.perc), the gate argument is used as a simple trigger. If it is an sustaining envelope (e.g. Env.adsr, Env.asr), the envelope is held open until the gate becomes 0, at which point is released.
 <p>If <strong>gate</strong> &lt; 0, force release with time <code class='code prettyprint lang-sc'>-1.0 - gate</code>. See <a href="#Forced%20release">Forced%20release</a> below.<tr><td class='argumentname'>levelScale<td class='argumentdesc'>
-<p>Scales the levels of the breakpoints.<tr><td class='argumentname'>levelBias<td class='argumentdesc'>
-<p>Offsets the levels of the breakpoints.<tr><td class='argumentname'>timeScale<td class='argumentdesc'>
-<p>Scales the durations of the segments.<tr><td class='argumentname'>doneAction<td class='argumentdesc'>
+<p>The levels of the breakpoints are multiplied by this value. This value can be modulated, but is only sampled at the start of a new envelope segment.<tr><td class='argumentname'>levelBias<td class='argumentdesc'>
+<p>This value is added as an offset to the levels of the breakpoints. This value can be modulated, but is only sampled at the start of a new envelope segment.<tr><td class='argumentname'>timeScale<td class='argumentdesc'>
+<p>The durations of the segments are multiplied by this value. This value can be modulated, but is only sampled at the start of a new envelope segment.<tr><td class='argumentname'>doneAction<td class='argumentdesc'>
 <p>An integer representing an action to be executed when the env is finished playing. This can be used to free the enclosing synth, etc. See <a href="./../Classes/Done.html">Done</a> for more detail.</table><h4>Discussion:</h4>
 <div class='note'><span class='notelabel'>NOTE:</span> The actual minimum duration of a segment is not zero, but one sample step for audio rate and one block for control rate. This may result in asynchronicity when in two envelopes of different number of levels, the envelope times add up to the same total duration. Similarly, when modulating times, the new time is only updated at the end of the current segment - this may lead to asynchronicity of two envelopes with modulated times.</div><pre class='code prettyprint lang-sc'>// as amplitude envelope
 (
