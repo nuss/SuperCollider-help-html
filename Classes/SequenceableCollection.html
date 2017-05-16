@@ -681,17 +681,22 @@ a.sortBy(\c);</pre>
 </div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-differentiate' href='./../Overviews/Methods.html#differentiate'>differentiate</a> </h3>
 <div class='method'>
 <p>Returns a collection with the pairwise difference between all elements.<pre class='code prettyprint lang-sc'>[3, 4, 1, 1].differentiate;</pre>
-</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-reduce' href='./../Overviews/Methods.html#reduce'>reduce</a> (<span class='argstr'>operator</span>)</h3>
+</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-reduce' href='./../Overviews/Methods.html#reduce'>reduce</a> (<span class='argstr'>operator</span>, <span class='argstr'>adverb</span>)</h3>
 <div class='method'>
-<p>Applies the method named by operator to the first and second elements of the collection - then applies the method to the result and to the third element of the collection - then applies the method to the result and to the fourth element of the collection - and so on, until the end of the array.<pre class='code prettyprint lang-sc'>[3, 4, 5, 6].reduce('*'); // this is the same as [3, 4, 5, 6].product
+<p>Applies the method named by operator to the first and second elements of the collection, and then applies the method to the result and to the third element of the collection, then applies the method to the result and to the fourth element of the collection, and so on, until the end of the array.
+<p>If the collection contains only one element, it is returned as the result. If the collection is empty, returns <code class='code prettyprint lang-sc'>nil</code>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>operator<td class='argumentdesc'>
+<p>May be a <a href="./../Classes/Function.html">Function</a> (taking two or three arguments) or a <a href="./../Classes/Symbol.html">Symbol</a> (method selector).<pre class='code prettyprint lang-sc'>[3, 4, 5, 6].reduce('*'); // this is the same as [3, 4, 5, 6].product
 [3, 4, 5, 6].reduce(\lcm); // Lowest common multiple of the whole set of numbers
 ["d", "e", (0..9), "h"].reduce('++'); // concatenation
 [3, 4, 5, 6].reduce({ |a, b| sin(a) * sin(b) }); // product of sines</pre>
-
-<p><h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>operator<td class='argumentdesc'>
-<p>may be a <a href="./../Classes/Function.html">Function</a> or a <a href="./../Classes/Symbol.html">Symbol</a>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-convertDigits' href='./../Overviews/Methods.html#convertDigits'>convertDigits</a> (<span class='argstr'>base: 10</span>)</h3>
+<tr><td class='argumentname'>adverb<td class='argumentdesc'>
+<p>An optional adverb to be used together with the operator (see <a href="./../Reference/Adverbs.html">Adverbs for Binary Operators</a>). If the operator is a functions, the adverb is passed as a third argument.<pre class='code prettyprint lang-sc'>// compare:
+[1, 2] *.x [10, 20, 30]
+[[1, 2], [10, 20, 30]].reduce('*', 'x')
+[[1, 2], [10, 20, 30], [1000, 2000]].reduce('+', 'x') // but you can combine more</pre>
+</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-convertDigits' href='./../Overviews/Methods.html#convertDigits'>convertDigits</a> (<span class='argstr'>base: 10</span>)</h3>
 <div class='method'>
 <p>Returns an integer resulting from interpreting the elements as digits to a given base (default 10). See also asDigits in <a href="./../Classes/Integer.html#asDigits">Integer: asDigits</a> for the complementary method.<pre class='code prettyprint lang-sc'>[1, 0, 0, 0].convertDigits;
 [1, 0, 0, 0].convertDigits(2);
