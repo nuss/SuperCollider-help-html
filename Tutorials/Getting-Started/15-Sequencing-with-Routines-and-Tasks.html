@@ -166,7 +166,7 @@ r = Task({
 <p>(Here we use quant simply to delay Task onset by one beat. This is because it takes some time for the synthdef to be ready for use on the server. Without it, the first note would not be heard.)<h2><a class='anchor' name='A%20note%20on%20server%20messaging%20and%20timing'>A note on server messaging and timing</a></h2>
 
 <p>Using Synth as in the preceding examples can result in small but sometimes noticeable timing inaccuracies. This is because it takes a short time to transmit OSC messages from your code to the server, and this time is not always constant. SuperCollider deals with this by giving you the option to send the message with a timestamp telling the server exactly when the message should take effect. A <strong>latency</strong> value is used to calculate the timestamp.
-<p>Latency works by adding itself to the current time on the clock. If all the messages go out with the same latency value, their timing will be precise relative to each other and to the clock. The <a href="./../../Guides/ServerTiming.html">Server OSC timing</a> help file explains in more detail how this works, but you don't really need to know all of that in order to use it. The main point is to use a consistent, small latency value for perfect timing. (A Server object has a latency variable that you can use for consistency.)
+<p>Latency works by adding itself to the current time on the clock. If all the messages go out with the same latency value, their timing will be precise relative to each other and to the clock. The <a href="./../../Guides/ServerTiming.html">Scheduling and Server timing</a> help file explains in more detail how this works, but you don't really need to know all of that in order to use it. The main point is to use a consistent, small latency value for perfect timing. (A Server object has a latency variable that you can use for consistency.)
 <p>Here's an example illustrating the kinds of inaccuracy you might hear. The inaccuracy may be more or less noticeable on different systems. It uses the \singrain SynthDef above and plays 10 notes per second.<pre class='code prettyprint lang-sc'>(
 t = Task({
     loop {
@@ -192,7 +192,7 @@ t = Task({
 t.stop;</pre>
 
 <p>See also:
-<p><a href="./../../Classes/Routine.html">Routine</a>, <a href="./../../Classes/Task.html">Task</a>, <a href="./../../Classes/Quant.html">Quant</a>, <a href="./../../Guides/ServerTiming.html">Server OSC timing</a>, <a href="./../../Guides/Bundled-Messages.html">Bundled Server Messages</a><h2><a class='anchor' name='Suggested%20Exercise'>Suggested Exercise</a></h2>
+<p><a href="./../../Classes/Routine.html">Routine</a>, <a href="./../../Classes/Task.html">Task</a>, <a href="./../../Classes/Quant.html">Quant</a>, <a href="./../../Guides/ServerTiming.html">Scheduling and Server timing</a>, <a href="./../../Guides/Bundled-Messages.html">Bundled Server Messages</a><h2><a class='anchor' name='Suggested%20Exercise'>Suggested Exercise</a></h2>
 
 <p>Make a more interesting SynthDef to replace the \smooth SynthDef. Use more arguments for greater variability. Then change the data streams in the 'Over the Rainbow' example and add new data streams to play a different tune, more expressively.
 <p>____________________
