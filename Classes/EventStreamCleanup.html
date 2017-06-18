@@ -72,22 +72,22 @@ x = f.(p, { |outval| outval[\note] &lt; 20 }); // always stop at 20
 Pn(x).play; // loop it.
 );</pre>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> </h3>
+<h3 class='method-code'><span class='method-prefix'>EventStreamCleanup.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a></h3>
 <div class='method'>
 <p>Create a new instance.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addFunction' href='./../Overviews/Methods.html#addFunction'>addFunction</a> (<span class='argstr'>event</span>, <span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addFunction' href='./../Overviews/Methods.html#addFunction'>addFunction</a>(<span class='argstr'>event</span>, <span class='argstr'>function</span>)</h3>
 <div class='method'>
 <p>Add a new cleanup function which will be called when the stream is made to end somewhere downstreams. This is called only in patterns that create resources that need to be released (e.g. <a href="./../Classes/Pmono.html">Pmono</a> or <a href="./../Classes/Pfx.html">Pfx</a>).<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>event<td class='argumentdesc'>
 <p>The outevent that is passed on downstreams and which communicates to any stream-ending pattern what needs to be done to release the resources. <strong>It must be yielded after update!</strong><tr><td class='argumentname'>function<td class='argumentdesc'>
-<p>The function that is called for cleanup. E.g. <code class='code prettyprint lang-sc'>{ group.free }</code>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-update' href='./../Overviews/Methods.html#update'>update</a> (<span class='argstr'>event</span>)</h3>
+<p>The function that is called for cleanup. E.g. <code class='code prettyprint lang-sc'>{ group.free }</code>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-update' href='./../Overviews/Methods.html#update'>update</a>(<span class='argstr'>event</span>)</h3>
 <div class='method'>
 <p>For every new event, the cleanup must be updated to receive information from any input stream further up. This method is called from all streams that may stop early (e.g. <a href="./../Classes/Pmono.html">Pmono</a> or <a href="./../Classes/Pfindur.html">Pfindur</a>).<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>event<td class='argumentdesc'>
-<p>The outevent from the input stream. <strong>It must be yielded after update!</strong></table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-exit' href='./../Overviews/Methods.html#exit'>exit</a> (<span class='argstr'>event</span>, <span class='argstr'>freeNodes: true</span>)</h3>
+<p>The outevent from the input stream. <strong>It must be yielded after update!</strong></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-exit' href='./../Overviews/Methods.html#exit'>exit</a>(<span class='argstr'>event</span>, <span class='argstr'>freeNodes: true</span>)</h3>
 <div class='method'>
 <p>Run all functions that have been collected over time, adding appropriate information to the event, in case it is passed on as an inevent.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -95,19 +95,19 @@ Pn(x).play; // loop it.
 <p>The inevent that is passed through to the outer stream<tr><td class='argumentname'>freeNodes<td class='argumentdesc'>
 <p>Used internally.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>An event. In embedInStream, this event must be returned (<code class='code prettyprint lang-sc'>^cleanup.exit(inevent)</code>)</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-functions' href='./../Overviews/Methods.html#functions'>functions</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-functions' href='./../Overviews/Methods.html#functions'>functions</a> = value</h3>
+<p>An event. In embedInStream, this event must be returned (<code class='code prettyprint lang-sc'>^cleanup.exit(inevent)</code>)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-functions' href='./../Overviews/Methods.html#functions'>functions</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-functions' href='./../Overviews/Methods.html#functions'>functions</a> = value</h3>
 <div class='method'>
-<p>A collections of cleanup functions.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-clear' href='./../Overviews/Methods.html#clear'>clear</a> </h3>
+<p>A collections of cleanup functions.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a></h3>
 <div class='method'>
-<p>Empty the cleanup functions, without evaluating them.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-terminate' href='./../Overviews/Methods.html#terminate'>terminate</a> (<span class='argstr'>freeNodes: true</span>)</h3>
+<p>Empty the cleanup functions, without evaluating them.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-terminate' href='./../Overviews/Methods.html#terminate'>terminate</a>(<span class='argstr'>freeNodes: true</span>)</h3>
 <div class='method'>
 <p>Run all functions that have been collected over time without adding information to an event.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>freeNodes<td class='argumentdesc'>
 <p>Used internally.</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addNodeCleanup' href='./../Overviews/Methods.html#addNodeCleanup'>addNodeCleanup</a> (<span class='argstr'>event</span>, <span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addNodeCleanup' href='./../Overviews/Methods.html#addNodeCleanup'>addNodeCleanup</a>(<span class='argstr'>event</span>, <span class='argstr'>function</span>)</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 <pre class='code prettyprint lang-sc'>// some code from the class library
 

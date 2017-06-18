@@ -95,7 +95,7 @@ var scdoc_title = 'CVCenter';
 <p><strong>What's a CV?</strong>
 <p>A <a href="./../Classes/CV.html">CV</a> models a value constrained by a <a href="./../Classes/ControlSpec.html">ControlSpec</a>. The value can be a single <a href="./../Classes/Float.html">Float</a> or an array of Floats. Whenever the <a href="./../Classes/CV.html">CV</a>'s value changes, it sends a changed message labeled 'synch'. This way dependants (such as GUI objects or server value) can be updated with <a href="./../Classes/SimpleController.html">SimpleController</a>s. A <a href="./../Classes/CV.html">CV</a>'s value can be read with the 'value' message.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3><a class='anchor' name='Basic%20usage'>Basic usage</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>cvs</span> <span class='argstr'>... setUpArgs</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>cvs</span> <span class='argstr'>... setUpArgs</span>)</h3>
 <div class='method'>
 <p>Initializes CVCenter by creating its classvars <code class='code prettyprint lang-sc'>all</code>, <code class='code prettyprint lang-sc'>cvWidgets</code> and more private ones.<div class='note'><span class='notelabel'>NOTE:</span> It shouldn't be necessary to initialize CVCenter with an explicit call to <strong>*new</strong>. Rather use <strong>*use</strong> whenever possible as (will call <strong>*new</strong> internally)</div><h4>Arguments:</h4>
 <table class='arguments'>
@@ -109,7 +109,7 @@ var scdoc_title = 'CVCenter';
 
 <p>For a detailed description of the above listet arguments see the descriptions of the according classvar-methods.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*front' href='./../Overviews/Methods.html#front'>front</a> (<span class='argstr'>tab</span> <span class='argstr'>... cvs</span>)</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*front' href='./../Overviews/Methods.html#front'>front</a>(<span class='argstr'>tab</span> <span class='argstr'>... cvs</span>)</h3>
 <div class='method'>
 <p>Creates and fronts the CVCenter GUI if it's closed or nil. Sends the GUI to front if it's in the background. If CVs are passed in as key/value pairs it adds them as widgets to the GUI under the given tab if given or the one that's currently in front.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -117,7 +117,7 @@ var scdoc_title = 'CVCenter';
 <p>a String or a Symbol, indicating the label of a tab. If none is provided the widgets will be added to "default" or any other tab that's currently in front. If an event containing the keys <code class='code prettyprint lang-sc'>\hi</code> and <code class='code prettyprint lang-sc'>\hi</code> gets passed in the widget will be a CVWidget2D.<tr><td class='argumentname'>... cvs<td class='argumentdesc'>
 <p>key/value pairs: <code class='code prettyprint lang-sc'>\wdgtName1, a CV, \wdgtName2, (lo: a CV, hi: a CV) ...  \wdgtNameN, a CV</code></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*use' href='./../Overviews/Methods.html#use'>use</a> (<span class='argstr'>key</span>, <span class='argstr'>spec</span>, <span class='argstr'>value</span>, <span class='argstr'>tab</span>, <span class='argstr'>slot</span>, <span class='argstr'>svItems</span>, <span class='argstr'>connectS</span>, <span class='argstr'>connectTF</span>)</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*use' href='./../Overviews/Methods.html#use'>use</a>(<span class='argstr'>key</span>, <span class='argstr'>spec</span>, <span class='argstr'>value</span>, <span class='argstr'>tab</span>, <span class='argstr'>slot</span>, <span class='argstr'>svItems</span>, <span class='argstr'>connectS</span>, <span class='argstr'>connectTF</span>)</h3>
 <div class='method'>
 <p>Use an arbitrary name for creating a new <a href="./../Classes/CVWidget.html">CVWidget</a> (a <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a> or a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>, depending on the argument <code class='code prettyprint lang-sc'>slot</code>).<div class='note'><span class='notelabel'>NOTE:</span> <strong>This is the recommended way for creating new widgets.</strong> This method should be convenient in most situations. It simply creates a new <a href="./../Classes/CVWidget.html">CVWidget</a> and returns the <a href="./../Classes/CV.html">CV</a>. As <a href="./../Classes/CV.html">CV</a> inherits from <code class='code prettyprint lang-sc'>Stream</code> this method may directly be used in <code class='code prettyprint lang-sc'>Pattern</code>s. Any reevaluation will leave a once created <a href="./../Classes/CV.html">CV</a> untouched.
 <p>You may omit the arguments <code class='code prettyprint lang-sc'>slot</code> and <code class='code prettyprint lang-sc'>tab</code> when creating a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> if its first slot has already been created. However, if the widget is used within patterns you always <strong>must</strong> provide the slot as execution of the pattern depends on the right CV to be returned (if omitted the widget would return an event, composed of the \lo and \hi key).</div><h4>Arguments:</h4>
@@ -129,7 +129,7 @@ var scdoc_title = 'CVCenter';
 <p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a> - the tab under which the widget will appear. If not provided the widget will be added under the tab that's currently in front.<tr><td class='argumentname'>slot<td class='argumentdesc'>
 <p>only needed if a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> shall be created. Either <code class='code prettyprint lang-sc'>\lo</code> or <code class='code prettyprint lang-sc'>\hi</code></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a <a href="./../Classes/CV.html">CV</a></div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*put' href='./../Overviews/Methods.html#put'>put</a> ( <span class='argstr'>... args</span>)</h3>
+<p>a <a href="./../Classes/CV.html">CV</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*put' href='./../Overviews/Methods.html#put'>put</a>( <span class='argstr'>... args</span>)</h3>
 <div class='method'>
 <p>Put new <a href="./../Classes/CV.html">CV</a>s into CVCenter<div class='note'><span class='notelabel'>NOTE:</span> It shouldn't be necessary to initialize CVCenter with an explicit call to <strong>*new</strong>. Rather use <strong>*use</strong> whenever possible as (<strong>*use</strong> uses <strong>*put</strong> internally)</div>
 <p><h4>Arguments:</h4>
@@ -150,7 +150,7 @@ x.free;
 CVCenter.removeAll; // remove widgets from CVCenter again</pre>
 
 <p>For more complex SynthDefs the cvcGui-method will take care for special requirements like arrayed controls and treat them adequately.
-<p>If the user has already created widgets in CVCenter and wants to connect controls of a running Synth or a NodeProxy to these the following method might be suitable:<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*connectToNode' href='./../Overviews/Methods.html#connectToNode'>connectToNode</a> (<span class='argstr'>node</span>, <span class='argstr'>kvArray</span>, <span class='argstr'>environment</span>)</h3>
+<p>If the user has already created widgets in CVCenter and wants to connect controls of a running Synth or a NodeProxy to these the following method might be suitable:<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*connectToNode' href='./../Overviews/Methods.html#connectToNode'>connectToNode</a>(<span class='argstr'>node</span>, <span class='argstr'>kvArray</span>, <span class='argstr'>environment</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
 <table class='arguments'>
@@ -186,8 +186,8 @@ CVCenter.connectToNode(x, [
 x.free;
 CVCenter.removeAll;</pre>
 <div class='note'><span class='notelabel'>NOTE:</span> If the user doesn't provide the object in a variable or the variable-name can't be determined fallback-actions will be created ( <code class='code prettyprint lang-sc'>s.sendBundle(s.latency, [...])</code>). However, these will address the object's nodeID. If the object gets removed and recreated with a new nodeID the actions will stop working.</div></div></div><h3><a class='anchor' name='Setup%20options%20(classvar%20getters%20and%20setters)'>Setup options (classvar getters and setters)</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*midiMode' href='./../Overviews/Methods.html#midiMode'>midiMode</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*midiMode' href='./../Overviews/Methods.html#midiMode'>midiMode</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*midiMode' href='./../Overviews/Methods.html#midiMode'>midiMode</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*midiMode' href='./../Overviews/Methods.html#midiMode'>midiMode</a> = value</h3>
 <div class='method'>
 <p>Different MIDI-devices may have different output modes: either values from 0-127 or an in-/decremental value (e.g. -1 or +1). These modes may be taken in account as follows:<table>
 <tr><td><code class='code prettyprint lang-sc'>0</code><td>the device outputs a values 0-127<tr><td><code class='code prettyprint lang-sc'>1</code><td>the device outputs in-/decremental values</table>
@@ -195,68 +195,68 @@ CVCenter.removeAll;</pre>
 <p><code class='code prettyprint lang-sc'>midiMode</code> can be set at runtime and will be reflected in all widgets, i.e. all currently connectected devices will be switched to the new mode immediately.
 <p>default: <code class='code prettyprint lang-sc'>0</code><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*midiResolution' href='./../Overviews/Methods.html#midiResolution'>midiResolution</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*midiResolution' href='./../Overviews/Methods.html#midiResolution'>midiResolution</a> = value</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*midiResolution' href='./../Overviews/Methods.html#midiResolution'>midiResolution</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*midiResolution' href='./../Overviews/Methods.html#midiResolution'>midiResolution</a> = value</h3>
 <div class='method'>
 <p>When <code class='code prettyprint lang-sc'>midiMode</code> has been set to 1, this method allows to set the resolution (= stepsize) of the connected hardware MIDI-sliders.
 <p>standard-value: 1 lower values -&gt; higher resolution (lower stepsize) higher values -&gt; lower resolution (bigger stepsize)
 <p>default: <code class='code prettyprint lang-sc'>1</code><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ctrlButtonBank' href='./../Overviews/Methods.html#ctrlButtonBank'>ctrlButtonBank</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*ctrlButtonBank' href='./../Overviews/Methods.html#ctrlButtonBank'>ctrlButtonBank</a> = value</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*ctrlButtonBank' href='./../Overviews/Methods.html#ctrlButtonBank'>ctrlButtonBank</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*ctrlButtonBank' href='./../Overviews/Methods.html#ctrlButtonBank'>ctrlButtonBank</a> = value</h3>
 <div class='method'>
 <p>Some MIDI-devices provide several banks of sliders. I.e. a device may be equipped with 16 hardware-sliders and 4 banks that can be switched. So, slider 1 in bank 2 is slider nr. 17, slider 3 in bank 3 is slider nr. 35. By default these sliders would have to be addressed in a <a href="./../Classes/CCResponder.html">CCResponder</a> as 16 (slider 17) and 34 (slider 35) which makes it hard to immediately get the right slider from what is displayed within the GUI. <code class='code prettyprint lang-sc'>ctrlButtonBank</code> translates the hardware-layout in a way that makes it easy to see the slider's bank and number: slider 17 becomes 2:1 (bank 2,  nr. 1).
 <p>default: <code class='code prettyprint lang-sc'>nil</code><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*midiMean' href='./../Overviews/Methods.html#midiMean'>midiMean</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*midiMean' href='./../Overviews/Methods.html#midiMean'>midiMean</a> = value</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*midiMean' href='./../Overviews/Methods.html#midiMean'>midiMean</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*midiMean' href='./../Overviews/Methods.html#midiMean'>midiMean</a> = value</h3>
 <div class='method'>
 <p>Devices which output a in-/decremtal may output a standard value + in-/decrement. <code class='code prettyprint lang-sc'>midiMean</code> gets automatically subtracted from this value, so in-/decrement remains. Applies only if midiMode is set to <code class='code prettyprint lang-sc'>1</code>.
 <p>default: <code class='code prettyprint lang-sc'>64</code><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*softWithin' href='./../Overviews/Methods.html#softWithin'>softWithin</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*softWithin' href='./../Overviews/Methods.html#softWithin'>softWithin</a> = value</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*softWithin' href='./../Overviews/Methods.html#softWithin'>softWithin</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*softWithin' href='./../Overviews/Methods.html#softWithin'>softWithin</a> = value</h3>
 <div class='method'>
 <p>If <code class='code prettyprint lang-sc'>midiMode</code> has been set to <code class='code prettyprint lang-sc'>0</code> moving a widget-slider will set the CV to a new value. However, if a MIDI-slider is connected to that widget, moving the MIDI-slider will set the CV's value immediatly to the value that is stored in the MIDI-slider i.e. a "jump" will happen. <code class='code prettyprint lang-sc'>softWithin</code> will ease this behavior by setting the CV's value only if the slider gets within <code class='code prettyprint lang-sc'>softWithin/2</code>. Applies only if midiMode is set to <code class='code prettyprint lang-sc'>0</code>.
 <p>default: <code class='code prettyprint lang-sc'>0.1</code><h4>Returns:</h4>
 <div class='returnvalue'>
 <p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3><a class='anchor' name='Convenience%20methods'>Convenience methods</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*at' href='./../Overviews/Methods.html#at'>at</a> (<span class='argstr'>key</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>key</span>)</h3>
 <div class='method'>
 <p>Return the <a href="./../Classes/CV.html">CV</a> at the given key. If the key belongs to a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> an <a href="./../Classes/Event.html">Event</a> will rather be returned, containing 2 CVs: <code class='code prettyprint lang-sc'>\lo</code> and <code class='code prettyprint lang-sc'>\hi</code>. If your code relies on a CV being returned by this method, make sure you call the right slot (e.G.: <code class='code prettyprint lang-sc'>CVCenter.at(\myKey).lo</code>).<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>key<td class='argumentdesc'>
 <p>a <a href="./../Classes/Symbol.html">Symbol</a> or a <a href="./../Classes/String.html">String</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a <a href="./../Classes/CV.html">CV</a> resp. an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*removeAt' href='./../Overviews/Methods.html#removeAt'>removeAt</a> (<span class='argstr'>key</span>)</h3>
+<p>a <a href="./../Classes/CV.html">CV</a> resp. an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*removeAt' href='./../Overviews/Methods.html#removeAt'>removeAt</a>(<span class='argstr'>key</span>)</h3>
 <div class='method'>
 <p>Remove a given widget including its <a href="./../Classes/CV.html">CV</a>(s). . Existing OSC- or MIDI-connections will be resolved automatically.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>key<td class='argumentdesc'>
 <p>a <a href="./../Classes/Symbol.html">Symbol</a> or <a href="./../Classes/String.html">String</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*removeAll' href='./../Overviews/Methods.html#removeAll'>removeAll</a> ( <span class='argstr'>... keys</span>)</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*removeAll' href='./../Overviews/Methods.html#removeAll'>removeAll</a>( <span class='argstr'>... keys</span>)</h3>
 <div class='method'>
 <p>Remove given <a href="./../Classes/CVWidget.html">CVWidget</a>s including their <a href="./../Classes/CV.html">CV</a>s or all. Existing OSC- or MIDI-connections will be resolved automatically.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>... keys<td class='argumentdesc'>
 <p>widget-keys, given as <a href="./../Classes/String.html">String</a>s or <a href="./../Classes/Symbol.html">Symbol</a>s. If no keys are given <strong>all</strong> widgets will be removed.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*removeAtTab' href='./../Overviews/Methods.html#removeAtTab'>removeAtTab</a> (<span class='argstr'>label</span>)</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*removeAtTab' href='./../Overviews/Methods.html#removeAtTab'>removeAtTab</a>(<span class='argstr'>label</span>)</h3>
 <div class='method'>
 <p>Remove <a href="./../Classes/CVWidget.html">CVWidget</a>s under a given tab and remove the tab.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>label<td class='argumentdesc'>
 <p>The name of the tab as <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*removeTab' href='./../Overviews/Methods.html#removeTab'>removeTab</a> (<span class='argstr'>label</span>)</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*removeTab' href='./../Overviews/Methods.html#removeTab'>removeTab</a>(<span class='argstr'>label</span>)</h3>
 <div class='method'>
 <p>Remove <a href="./../Classes/CVWidget.html">CVWidget</a>s under a given tab and remove the tab.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>label<td class='argumentdesc'>
 <p>The name of the tab as <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*addActionAt' href='./../Overviews/Methods.html#addActionAt'>addActionAt</a> (<span class='argstr'>key</span>, <span class='argstr'>name</span>, <span class='argstr'>action</span>, <span class='argstr'>slot</span>, <span class='argstr'>active: true</span>)</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*addActionAt' href='./../Overviews/Methods.html#addActionAt'>addActionAt</a>(<span class='argstr'>key</span>, <span class='argstr'>name</span>, <span class='argstr'>action</span>, <span class='argstr'>slot</span>, <span class='argstr'>active: true</span>)</h3>
 <div class='method'>
 <p>Add an action given in <code class='code prettyprint lang-sc'>action</code> to a widget's CV given in <code class='code prettyprint lang-sc'>key</code> under the name <code class='code prettyprint lang-sc'>name</code><h4>Arguments:</h4>
 <table class='arguments'>
@@ -267,7 +267,7 @@ CVCenter.removeAll;</pre>
 <p>a <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a> - either <code class='code prettyprint lang-sc'>\hi</code> or <code class='code prettyprint lang-sc'>\lo</code>. Only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a><tr><td class='argumentname'>active<td class='argumentdesc'>
 <p>a <a href="./../Classes/Boolean.html">Boolean</a> - activate or deactivate the action. default: <code class='code prettyprint lang-sc'>true</code></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*removeActionAt' href='./../Overviews/Methods.html#removeActionAt'>removeActionAt</a> (<span class='argstr'>key</span>, <span class='argstr'>name</span>, <span class='argstr'>slot</span>)</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*removeActionAt' href='./../Overviews/Methods.html#removeActionAt'>removeActionAt</a>(<span class='argstr'>key</span>, <span class='argstr'>name</span>, <span class='argstr'>slot</span>)</h3>
 <div class='method'>
 <p>Remove an action from a widget's CV given in <code class='code prettyprint lang-sc'>key</code> under the name <code class='code prettyprint lang-sc'>name</code><h4>Arguments:</h4>
 <table class='arguments'>
@@ -276,7 +276,7 @@ CVCenter.removeAll;</pre>
 <p>a <a href="./../Classes/Symbol.html">Symbol</a> or a <a href="./../Classes/String.html">String</a> - the name under which the action is stored.<tr><td class='argumentname'>slot<td class='argumentdesc'>
 <p>a <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a> - either <code class='code prettyprint lang-sc'>\hi</code> or <code class='code prettyprint lang-sc'>\lo</code>. Only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*activateActionAt' href='./../Overviews/Methods.html#activateActionAt'>activateActionAt</a> (<span class='argstr'>key</span>, <span class='argstr'>name</span>, <span class='argstr'>activate</span>, <span class='argstr'>slot</span>)</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*activateActionAt' href='./../Overviews/Methods.html#activateActionAt'>activateActionAt</a>(<span class='argstr'>key</span>, <span class='argstr'>name</span>, <span class='argstr'>activate</span>, <span class='argstr'>slot</span>)</h3>
 <div class='method'>
 <p>Activates or deactivates an action at <code class='code prettyprint lang-sc'>key</code> (representing the widget) and <code class='code prettyprint lang-sc'>name</code> (the name under which the action is stored)<h4>Arguments:</h4>
 <table class='arguments'>
@@ -288,72 +288,72 @@ CVCenter.removeAll;</pre>
 <tr><td class='argumentname'>slot<td class='argumentdesc'>
 <p>a <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a> - either <code class='code prettyprint lang-sc'>\hi</code> or <code class='code prettyprint lang-sc'>\lo</code>. Only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*snapShots' href='./../Overviews/Methods.html#snapShots'>snapShots</a> </h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*snapShots' href='./../Overviews/Methods.html#snapShots'>snapShots</a></h3>
 <div class='method'>
 <p>Returns currently saved snapshots - an <a href="./../Classes/Event.html">Event</a> holding snapshots under the timestamp or custom name when they were saved as key and an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> of keys and values of all current <a href="./../Classes/CVWidget.html">CVWidget</a>s resp. their internal <a href="./../Classes/CV.html">CV</a>(s) as values<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*saveSnapshot' href='./../Overviews/Methods.html#saveSnapshot'>saveSnapshot</a> (<span class='argstr'>dialog: false</span>)</h3>
+<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*saveSnapshot' href='./../Overviews/Methods.html#saveSnapshot'>saveSnapshot</a>(<span class='argstr'>dialog: false</span>)</h3>
 <div class='method'>
 <p>Save a snapshot of all values of all <a href="./../Classes/CVWidget.html">CVWidget</a>s currently held in CVCenter. The snapshot will immediatly appear in the 'select snapshot' dropdown at the bottom of the CVCenter GUI. Selecting a snapshot will set the CVWidgets contained in the snapshot to its coresponding value in the snapshot.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>dialog<td class='argumentdesc'>
 <p>a <a href="./../Classes/Boolean.html">Boolean</a> denoting whether the snapshot name can be set in a dialog (default: <code class='code prettyprint lang-sc'>false</code> - the snapshot's name will be the current timestamp)</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*deleteSnapshots' href='./../Overviews/Methods.html#deleteSnapshots'>deleteSnapshots</a> </h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*deleteSnapshots' href='./../Overviews/Methods.html#deleteSnapshots'>deleteSnapshots</a></h3>
 <div class='method'>
 <p>Deletes all currently saved snapshots<h4>Returns:</h4>
 <div class='returnvalue'>
 <p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3><a class='anchor' name='Setting%20GUI-properties'>Setting GUI-properties</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*bounds' href='./../Overviews/Methods.html#bounds'>bounds</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*bounds' href='./../Overviews/Methods.html#bounds'>bounds</a> = <span class='argstr'>rect</span></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*bounds' href='./../Overviews/Methods.html#bounds'>bounds</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*bounds' href='./../Overviews/Methods.html#bounds'>bounds</a> = <span class='argstr'>rect</span></h3>
 <div class='method'>
 <p>Get or set the current bounds of the CVCenter GUI.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>rect<td class='argumentdesc'>
 <p>A <code class='code prettyprint lang-sc'>Rect</code>.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*alwaysOnTop' href='./../Overviews/Methods.html#alwaysOnTop'>alwaysOnTop</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*alwaysOnTop' href='./../Overviews/Methods.html#alwaysOnTop'>alwaysOnTop</a> = <span class='argstr'>bool</span></h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*alwaysOnTop' href='./../Overviews/Methods.html#alwaysOnTop'>alwaysOnTop</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*alwaysOnTop' href='./../Overviews/Methods.html#alwaysOnTop'>alwaysOnTop</a> = <span class='argstr'>bool</span></h3>
 <div class='method'>
 <p>Determine whether CVCenter resp. its childviews should always be on top of other views.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>bool<td class='argumentdesc'>
 <p>a <a href="./../Classes/Boolean.html">Boolean</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*numMsSlotsPerColumn' href='./../Overviews/Methods.html#numMsSlotsPerColumn'>numMsSlotsPerColumn</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*numMsSlotsPerColumn' href='./../Overviews/Methods.html#numMsSlotsPerColumn'>numMsSlotsPerColumn</a> = value</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*numMsSlotsPerColumn' href='./../Overviews/Methods.html#numMsSlotsPerColumn'>numMsSlotsPerColumn</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*numMsSlotsPerColumn' href='./../Overviews/Methods.html#numMsSlotsPerColumn'>numMsSlotsPerColumn</a> = value</h3>
 <div class='method'>
 <p>A special method that allows the user to determine how many slots a multislider-widget shall display in 1 columns at max (even though this value refers to the maximum number od slots in one column a multislider-widget will always stretch over at least 2 colums). If this number gets exceeded a multislider widget will automatically stretch over 3 columns. default: <code class='code prettyprint lang-sc'>15</code>.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>(value)<td class='argumentdesc'>
 <p>an <a href="./../Classes/Integer.html">Integer</a> indicating how many slots shall be displayed within one column. default: <code class='code prettyprint lang-sc'>15</code></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*isClosed' href='./../Overviews/Methods.html#isClosed'>isClosed</a> </h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*isClosed' href='./../Overviews/Methods.html#isClosed'>isClosed</a></h3>
 <div class='method'>
 <p>Returns true if no childviews exists (i.e. <a href="#*childViews">*childViews</a> is empty) and the main window is closed (closing the main window should automatically close all childviews as well).<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a <a href="./../Classes/Boolean.html">Boolean</a></div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*guiMoveTo' href='./../Overviews/Methods.html#guiMoveTo'>guiMoveTo</a> (<span class='argstr'>point</span>)</h3>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiMoveTo' href='./../Overviews/Methods.html#guiMoveTo'>guiMoveTo</a>(<span class='argstr'>point</span>)</h3>
 <div class='method'>
 <p>Moves the GUI to a given position on screen.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>point<td class='argumentdesc'>
 <p>a <a href="./../Classes/Point.html">Point</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*guiMoveTo' href='./../Overviews/Methods.html#guiMoveTo'>guiMoveTo</a> (<span class='argstr'>point</span>)</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiMoveTo' href='./../Overviews/Methods.html#guiMoveTo'>guiMoveTo</a>(<span class='argstr'>point</span>)</h3>
 <div class='method'>
 <p>Moves the GUI to a given position on screen.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>point<td class='argumentdesc'>
 <p>a <a href="./../Classes/Point.html">Point</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*guiChangeDimensions' href='./../Overviews/Methods.html#guiChangeDimensions'>guiChangeDimensions</a> (<span class='argstr'>point</span>)</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiChangeDimensions' href='./../Overviews/Methods.html#guiChangeDimensions'>guiChangeDimensions</a>(<span class='argstr'>point</span>)</h3>
 <div class='method'>
 <p>Set the GUI's dimension to the given value.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>point<td class='argumentdesc'>
 <p>a <a href="./../Classes/Point.html">Point</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*renameTab' href='./../Overviews/Methods.html#renameTab'>renameTab</a> (<span class='argstr'>oldName</span>, <span class='argstr'>newName</span>)</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*renameTab' href='./../Overviews/Methods.html#renameTab'>renameTab</a>(<span class='argstr'>oldName</span>, <span class='argstr'>newName</span>)</h3>
 <div class='method'>
 <p>Set a tab-name from <code class='code prettyprint lang-sc'>oldName</code> to <code class='code prettyprint lang-sc'>newName</code><h4>Arguments:</h4>
 <table class='arguments'>
@@ -361,14 +361,14 @@ CVCenter.removeAll;</pre>
 <p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a><tr><td class='argumentname'>newName<td class='argumentdesc'>
 <p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*widgetsAtTab' href='./../Overviews/Methods.html#widgetsAtTab'>widgetsAtTab</a> (<span class='argstr'>label</span>)</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*widgetsAtTab' href='./../Overviews/Methods.html#widgetsAtTab'>widgetsAtTab</a>(<span class='argstr'>label</span>)</h3>
 <div class='method'>
 <p>Get an <a href="./../Classes/Array.html">Array</a> containing all widgets (names) under the give tab.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>label<td class='argumentdesc'>
 <p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a> representing the name of the selected tab</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>an <a href="./../Classes/Array.html">Array</a></div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*widgetConnectGUI' href='./../Overviews/Methods.html#widgetConnectGUI'>widgetConnectGUI</a> (<span class='argstr'>key</span>, <span class='argstr'>connectSliders</span>, <span class='argstr'>connectTextFields</span>)</h3>
+<p>an <a href="./../Classes/Array.html">Array</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*widgetConnectGUI' href='./../Overviews/Methods.html#widgetConnectGUI'>widgetConnectGUI</a>(<span class='argstr'>key</span>, <span class='argstr'>connectSliders</span>, <span class='argstr'>connectTextFields</span>)</h3>
 <div class='method'>
 <p>Drawing sliders in a widget while they're moved from outside (e.g. when they're set from some other application outside SuperCollider via OSC) may cost a lot of CPU power. Via this method the connection to sliders and number boxes can be suspended and hence CPU power may be freed for other processes.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -378,14 +378,14 @@ CVCenter.removeAll;</pre>
 <p>a <a href="./../Classes/Boolean.html">Boolean</a> or <code class='code prettyprint lang-sc'>nil</code>, telling CVCenter to connect or disconnect the number box(es) for the widget denoted by the argument <code class='code prettyprint lang-sc'>key</code></table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3><a class='anchor' name='Saving%20and%20loading%20setups'>Saving and loading setups</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*saveSetup' href='./../Overviews/Methods.html#saveSetup'>saveSetup</a> (<span class='argstr'>path</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*saveSetup' href='./../Overviews/Methods.html#saveSetup'>saveSetup</a>(<span class='argstr'>path</span>)</h3>
 <div class='method'>
 <p>Save all widgets and tabs resp. their actions, connected MIDI- and OSC-responders into a setup-file on disk. A once stored setup can be loaded again with <code class='code prettyprint lang-sc'>loadSetup</code> and all its responders can get reinitialized automatically.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>path<td class='argumentdesc'>
 <p>optional - expects the full path to the location where the setup shall be stored disk. If given no file-save dialog will be displayed.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*loadSetup' href='./../Overviews/Methods.html#loadSetup'>loadSetup</a> (<span class='argstr'>path</span>, <span class='argstr'>addToExisting: false</span>, <span class='argstr'>autoConnectOSC: true</span>, <span class='argstr'>oscConnectToIP: true</span>, <span class='argstr'>oscRestrictToPort: false</span>, <span class='argstr'>activateCalibration: false</span>, <span class='argstr'>resetCalibration: false</span>, <span class='argstr'>autoConnectMIDI: true</span>, <span class='argstr'>midiConnectSrc: false</span>, <span class='argstr'>midiConnectChannel: false</span>, <span class='argstr'>midiConnectCtrl: true</span>, <span class='argstr'>loadActions: true</span>, <span class='argstr'>midiSrcID</span>, <span class='argstr'>oscIPAddress</span>, <span class='argstr'>loadShortcuts: true</span>, <span class='argstr'>loadSnapshots: true</span>, <span class='argstr'>connectSliders</span>, <span class='argstr'>connectNumBoxes</span>)</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*loadSetup' href='./../Overviews/Methods.html#loadSetup'>loadSetup</a>(<span class='argstr'>path</span>, <span class='argstr'>addToExisting: false</span>, <span class='argstr'>autoConnectOSC: true</span>, <span class='argstr'>oscConnectToIP: true</span>, <span class='argstr'>oscRestrictToPort: false</span>, <span class='argstr'>activateCalibration: false</span>, <span class='argstr'>resetCalibration: false</span>, <span class='argstr'>autoConnectMIDI: true</span>, <span class='argstr'>midiConnectSrc: false</span>, <span class='argstr'>midiConnectChannel: false</span>, <span class='argstr'>midiConnectCtrl: true</span>, <span class='argstr'>loadActions: true</span>, <span class='argstr'>midiSrcID</span>, <span class='argstr'>oscIPAddress</span>, <span class='argstr'>loadShortcuts: true</span>, <span class='argstr'>loadSnapshots: true</span>, <span class='argstr'>connectSliders</span>, <span class='argstr'>connectNumBoxes</span>)</h3>
 <div class='method'>
 <p>Loads a saved setup and creates the CVCenter GUI with all widgets stored in the setup. For the user's convenience arguments for this method are defined explicitely, allowing the IDE to automatically list their names when the method's name gets typed. Also one may use the dialog provided by <a href="./../Classes/CVCenterLoadDialog.html">CVCenterLoadDialog</a> that allows selecting options by checkboxes and dropdown-lists.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -407,29 +407,29 @@ CVCenter.removeAll;</pre>
 <p>If set to true currently active shortcuts in CVCenter, CVWidgets and CVWidgetEditors will be replaced by the shortcuts saved with the setup. By default saving a setup will always save all currently active shortcuts. default: <code class='code prettyprint lang-sc'>true</code></table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3><a class='anchor' name='More%20classvars%20and%20internal%20values'>More classvars and internal values</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*setup' href='./../Overviews/Methods.html#setup'>setup</a> </h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*setup' href='./../Overviews/Methods.html#setup'>setup</a></h3>
 <div class='method'>
 <p>returns the current setup:<ul>
 <li><code class='code prettyprint lang-sc'>midiMode</code><li><code class='code prettyprint lang-sc'>midiResolution</code><li><code class='code prettyprint lang-sc'>midiMean</code><li><code class='code prettyprint lang-sc'>ctrlButtonBank</code><li><code class='code prettyprint lang-sc'>softWithin</code></ul>
 <h4>Returns:</h4>
 <div class='returnvalue'>
-<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a> </h3>
+<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*all' href='./../Overviews/Methods.html#all'>all</a></h3>
 <div class='method'>
 <p><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>, containing all CVs added to CVCenter</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*cvWidgets' href='./../Overviews/Methods.html#cvWidgets'>cvWidgets</a> </h3>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>, containing all CVs added to CVCenter</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*cvWidgets' href='./../Overviews/Methods.html#cvWidgets'>cvWidgets</a></h3>
 <div class='method'>
 <p>all widgets (currently either <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a>s or <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>s) displayed within the main GUI of CVCenter<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>, containing all <a href="./../Classes/CVWidget.html">CVWidget</a>s</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*window' href='./../Overviews/Methods.html#window'>window</a> </h3>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>, containing all <a href="./../Classes/CVWidget.html">CVWidget</a>s</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*window' href='./../Overviews/Methods.html#window'>window</a></h3>
 <div class='method'>
 <p>The main window of CVCenter<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>an instance of <a href="./../Classes/Window.html">Window</a></div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*tabs' href='./../Overviews/Methods.html#tabs'>tabs</a> </h3>
+<p>an instance of <a href="./../Classes/Window.html">Window</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*tabs' href='./../Overviews/Methods.html#tabs'>tabs</a></h3>
 <div class='method'>
 <p>A <a href="./../Classes/TabbedView2.html">TabbedView2</a>, containing the widgets<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a <a href="./../Classes/TabbedView2.html">TabbedView2</a></div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*childViews' href='./../Overviews/Methods.html#childViews'>childViews</a> </h3>
+<p>a <a href="./../Classes/TabbedView2.html">TabbedView2</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*childViews' href='./../Overviews/Methods.html#childViews'>childViews</a></h3>
 <div class='method'>
 <p>An <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> keeping the parent windows of detached tabs: Any tab may be detached in this version of CVCenter as the GUI is now based on <a href="./../Classes/TabbedView2.html">TabbedView2</a> instead of <a href="./../Classes/TabbedView.html">TabbedView</a>. Moreover, tabs can be dragged between childviews (or the main window and a childview) by clicking its label and holding cmd (Mac) or ctrl (Linux, Windows). The structure of <code class='code prettyprint lang-sc'>childViews</code> is the following:<pre class='code prettyprint lang-sc'>IdentityDictionary[
     parent window 1 (a TopView) -&gt; (
@@ -478,33 +478,33 @@ CVCenter.removeAll;</pre>
 ]</pre>
 <h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*shortcuts' href='./../Overviews/Methods.html#shortcuts'>shortcuts</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*shortcuts' href='./../Overviews/Methods.html#shortcuts'>shortcuts</a> = value</h3>
+<p>a <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*shortcuts' href='./../Overviews/Methods.html#shortcuts'>shortcuts</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*shortcuts' href='./../Overviews/Methods.html#shortcuts'>shortcuts</a> = value</h3>
 <div class='method'>
 <p>An <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> containing all currently defined shortcuts for CVCenter. Though this is a getter/setter it is recomended to add/remove shortcuts via the GUI within the <a href="./../Classes/CVCenterPreferences.html">preferences-interface</a> (changes will become active after recompilation of the class-library) or the <a href="./../Classes/CVCenterShortcutsEditor.html">shortcuts-interface</a> (changes become active immediatly but get reset after recompilation of the class-library).
 <p>See <a href="./../Classes/KeyDownActions.html">KeyDownActions</a> for more information about the internal structure of the <code class='code prettyprint lang-sc'>shortcuts</code> dictionary resp. the workings of shortcuts in general. Also have a look at the list of <a href="#Shortcuts">default shortcuts</a> that can be modified by the user at any time.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*scv' href='./../Overviews/Methods.html#scv'>scv</a> </h3>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*scv' href='./../Overviews/Methods.html#scv'>scv</a></h3>
 <div class='method'>
 <p>An <a href="./../Classes/Event.html">Event</a> containing various objects that do not necessarily belong to CVCenter but are related to it. E.g. when a shortcut opens a window that window may be added to scv so other shortcuts can refer to it later. Basically <code class='code prettyprint lang-sc'>scv</code> has been introduced as the concept of configurable shortcuts seperate shortcut-actions from CVCenter. Hence, variables in these actions can't get initialized belonging to CVCenter automatically. However, a classvar holding a dictionary that can be filled up later solves the problem.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*guix' href='./../Overviews/Methods.html#guix'>guix</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*guix' href='./../Overviews/Methods.html#guix'>guix</a> = value</h3>
+<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guix' href='./../Overviews/Methods.html#guix'>guix</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guix' href='./../Overviews/Methods.html#guix'>guix</a> = value</h3>
 <div class='method'>
 <p>The x-position at which the GUI will be created - has no direct effect besides when being set ahead from initializing CVCenter.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*guiy' href='./../Overviews/Methods.html#guiy'>guiy</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*guiy' href='./../Overviews/Methods.html#guiy'>guiy</a> = value</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiy' href='./../Overviews/Methods.html#guiy'>guiy</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiy' href='./../Overviews/Methods.html#guiy'>guiy</a> = value</h3>
 <div class='method'>
 <p>The y-position at which the GUI will be created - has no direct effect besides when being set ahead from initializing CVCenter.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*guiwidth' href='./../Overviews/Methods.html#guiwidth'>guiwidth</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*guiwidth' href='./../Overviews/Methods.html#guiwidth'>guiwidth</a> = value</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiwidth' href='./../Overviews/Methods.html#guiwidth'>guiwidth</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiwidth' href='./../Overviews/Methods.html#guiwidth'>guiwidth</a> = value</h3>
 <div class='method'>
 <p>The GUI-width - has no direct effect besides when being set ahead from initializing CVCenter.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*guiheight' href='./../Overviews/Methods.html#guiheight'>guiheight</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*guiheight' href='./../Overviews/Methods.html#guiheight'>guiheight</a> = value</h3>
+<p><code class='code prettyprint lang-sc'>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiheight' href='./../Overviews/Methods.html#guiheight'>guiheight</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiheight' href='./../Overviews/Methods.html#guiheight'>guiheight</a> = value</h3>
 <div class='method'>
 <p>The GUI-height - has no direct effect besides when being set ahead from initializing CVCenter.<h4>Returns:</h4>
 <div class='returnvalue'>

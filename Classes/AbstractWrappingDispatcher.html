@@ -46,41 +46,41 @@ var scdoc_title = 'AbstractWrappingDispatcher';
 <p>AbstractWrappingDispatcher extends AbstractDispatcher to provide the facility to wrap response functions in specialised objects (instances of subclasses of <a href="./../Classes/AbstractMessageMatcher.html">AbstractMessageMatcher</a> to efficiently support matching of multiple parameters. Its subclasses <a href="./../Classes/OSCMessageDispatcher.html">OSCMessageDispatcher</a> and <a href="./../Classes/MIDIMessageDispatcher.html">MIDIMessageDispatcher</a> match using a flat dictionary lookup of the 'most significant' parameter, and only attempt to match other parameters if an initial match is found. This approach is faster than others (such as multi-level dictionaries) for most configurations.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-wrappedFuncs' href='./../Overviews/Methods.html#wrappedFuncs'>wrappedFuncs</a> </h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-wrappedFuncs' href='./../Overviews/Methods.html#wrappedFuncs'>wrappedFuncs</a></h3>
 <div class='method'>
 <p>Get a dictionary of all currently wrapped functions, stored using their owning responder funcs as keys.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>An <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-add' href='./../Overviews/Methods.html#add'>add</a> (<span class='argstr'>funcProxy</span>)</h3>
+<p>An <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-add' href='./../Overviews/Methods.html#add'>add</a>(<span class='argstr'>funcProxy</span>)</h3>
 <div class='method'>
 <p>Add a responder func to this dispatcher. Subclasses should extend this to do any necessary bookkeeping. Generally this method should add this dispatcher as a dependant of the responder func, so that it can respond to any changes.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>funcProxy<td class='argumentdesc'>
-<p>An instance of a subclass of <a href="./../Classes/AbstractResponderFunc.html">AbstractResponderFunc</a> to add.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-remove' href='./../Overviews/Methods.html#remove'>remove</a> (<span class='argstr'>funcProxy</span>)</h3>
+<p>An instance of a subclass of <a href="./../Classes/AbstractResponderFunc.html">AbstractResponderFunc</a> to add.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remove' href='./../Overviews/Methods.html#remove'>remove</a>(<span class='argstr'>funcProxy</span>)</h3>
 <div class='method'>
 <p>Remove a responder func from this dispatcher.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>funcProxy<td class='argumentdesc'>
-<p>An instance of a subclass of <a href="./../Classes/AbstractResponderFunc.html">AbstractResponderFunc</a> to remove.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-updateFuncForFuncProxy' href='./../Overviews/Methods.html#updateFuncForFuncProxy'>updateFuncForFuncProxy</a> (<span class='argstr'>funcProxy</span>)</h3>
+<p>An instance of a subclass of <a href="./../Classes/AbstractResponderFunc.html">AbstractResponderFunc</a> to remove.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-updateFuncForFuncProxy' href='./../Overviews/Methods.html#updateFuncForFuncProxy'>updateFuncForFuncProxy</a>(<span class='argstr'>funcProxy</span>)</h3>
 <div class='method'>
 <p>This method is called within <a href="#-update">-update</a> to update any changes to one of this dispatcher's responder funcs' function(s). Users should not call this method directly, but subclasses may need to extend this method to do additional bookkeeping.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>funcProxy<td class='argumentdesc'>
-<p>An instance of a subclass of <a href="./../Classes/AbstractResponderFunc.html">AbstractResponderFunc</a>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-wrapFunc' href='./../Overviews/Methods.html#wrapFunc'>wrapFunc</a> </h3>
+<p>An instance of a subclass of <a href="./../Classes/AbstractResponderFunc.html">AbstractResponderFunc</a>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-wrapFunc' href='./../Overviews/Methods.html#wrapFunc'>wrapFunc</a></h3>
 <div class='method'>
-<p>Subclasses should override this method to implement wrapping of functions by instances of appropriate subclasses of <a href="./../Classes/AbstractMessageMatcher.html">AbstractMessageMatcher</a>.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-getKeysForFuncProxy' href='./../Overviews/Methods.html#getKeysForFuncProxy'>getKeysForFuncProxy</a> (<span class='argstr'>funcProxy</span>)</h3>
+<p>Subclasses should override this method to implement wrapping of functions by instances of appropriate subclasses of <a href="./../Classes/AbstractMessageMatcher.html">AbstractMessageMatcher</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getKeysForFuncProxy' href='./../Overviews/Methods.html#getKeysForFuncProxy'>getKeysForFuncProxy</a>(<span class='argstr'>funcProxy</span>)</h3>
 <div class='method'>
 <p>Subclasses should override this to return an Array containing all the keys at which the specified responder func's functions are stored in this dispatchers active dictionary.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>funcProxy<td class='argumentdesc'>
 <p>An instance of a subclass of <a href="./../Classes/AbstractResponderFunc.html">AbstractResponderFunc</a>.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>An <a href="./../Classes/Array.html">Array</a>.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-update' href='./../Overviews/Methods.html#update'>update</a> (<span class='argstr'>funcProxy</span>, <span class='argstr'>what</span>)</h3>
+<p>An <a href="./../Classes/Array.html">Array</a>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-update' href='./../Overviews/Methods.html#update'>update</a>(<span class='argstr'>funcProxy</span>, <span class='argstr'>what</span>)</h3>
 <div class='method'>
 <p>Subclasses of <a href="./../Classes/AbstractResponderFunc.html">AbstractResponderFunc</a> should call update on their dispatcher whenever their function (or something else significant) changes.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>funcProxy<td class='argumentdesc'>
 <p>An instance of a subclass of <a href="./../Classes/AbstractResponderFunc.html">AbstractResponderFunc</a>.<tr><td class='argumentname'>what<td class='argumentdesc'>
-<p>A <a href="./../Classes/Symbol.html">Symbol</a> indicating what has changed. Currently the only thing supported is <code class='code prettyprint lang-sc'>\function</code>.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-free' href='./../Overviews/Methods.html#free'>free</a> </h3>
+<p>A <a href="./../Classes/Symbol.html">Symbol</a> indicating what has changed. Currently the only thing supported is <code class='code prettyprint lang-sc'>\function</code>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-free' href='./../Overviews/Methods.html#free'>free</a></h3>
 <div class='method'>
 <p>This method removes this dispatcher from its responder func's dependants dictionaries, and deactivates it. Users should only call this method if you are finished with this dispatcher.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/AbstractWrappingDispatcher.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/AbstractWrappingDispatcher.schelp</a><br>link::Classes/AbstractWrappingDispatcher::<br></div></div></body></html>

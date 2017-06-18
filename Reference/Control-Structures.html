@@ -38,7 +38,7 @@ var scdoc_title = 'Control Structures';
 <ul class='toc'></ul><li class='toc1'><a href='#Inline%20optimization'>Inline optimization</a></li>
 <ul class='toc'></ul></ul></div>
 <p>Control structures in SuperCollider are implemented via message sends. Here are a few of those available. See <a href="./../Reference/Syntax-Shortcuts.html">Syntax Shortcuts</a> for the various ways expressions can be written.<h2><a class='anchor' name='Basic%20Control%20Structures'>Basic Control Structures</a></h2>
-<h3 class='imethodname'><span class='methprefix'>&nbsp;</span><a name='.if' href='./../Overviews/Methods.html#if'>if</a> </h3>
+<h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='if' href='./../Overviews/Methods.html#if'>if</a></h3>
 <div class='method'>
 <p>Conditional execution is implemented via the <code class='code prettyprint lang-sc'>if</code> message. The <code class='code prettyprint lang-sc'>if</code> message is sent to an expression which must return a <a href="./../Classes/Boolean.html">Boolean</a> value. In addition it takes two arguments: a function to execute if the expression is true and another optional function to execute if the expression is false. The <code class='code prettyprint lang-sc'>if</code> message returns the value of the function which is executed. If the falseFunc is not present and the expression is false then the result of the if message is nil.<h4>Discussion:</h4>
 
@@ -62,7 +62,7 @@ var x;
 if (x.isNil, { x = 99 });
 x.postln;
 )</pre>
-</div><h3 class='imethodname'><span class='methprefix'>&nbsp;</span><a name='.while' href='./../Overviews/Methods.html#while'>while</a> </h3>
+</div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='while' href='./../Overviews/Methods.html#while'>while</a></h3>
 <div class='method'>
 <p>The while message implements conditional execution of a loop. If the testFunc answers true when evaluated, then the bodyFunc is evaluated and the process is repeated. Once the testFunc returns false, the loop terminates.<h4>Discussion:</h4>
 
@@ -75,7 +75,7 @@ i = 0;
 while ( { i &lt; 5 }, { i = i + 1; "boing".postln });
 )</pre>
 
-<p>while expressions are also optimized by the compiler if they do not contain variable declarations in the testFunc and the bodyFunc.</div><h3 class='imethodname'><span class='methprefix'>&nbsp;</span><a name='.for' href='./../Overviews/Methods.html#for'>for</a> </h3>
+<p>while expressions are also optimized by the compiler if they do not contain variable declarations in the testFunc and the bodyFunc.</div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='for' href='./../Overviews/Methods.html#for'>for</a></h3>
 <div class='method'>
 <p>The for message implements iteration over an integer series from a starting value to an end value stepping by one each time. A function is evaluated each iteration and is passed the iterated numeric value as an argument.<h4>Discussion:</h4>
 
@@ -84,7 +84,7 @@ while ( { i &lt; 5 }, { i = i + 1; "boing".postln });
 <p>--or--<pre class='code prettyprint lang-sc'>startValue.for ( endValue, function )</pre>
 
 <p>Example<pre class='code prettyprint lang-sc'>for (3, 7, { arg i; i.postln }); // prints values 3 through 7</pre>
-</div><h3 class='imethodname'><span class='methprefix'>&nbsp;</span><a name='.forBy' href='./../Overviews/Methods.html#forBy'>forBy</a> </h3>
+</div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='forBy' href='./../Overviews/Methods.html#forBy'>forBy</a></h3>
 <div class='method'>
 <p>The forBy selector implements iteration over an integer series with a variable step size. A function is evaluated each iteration and is passed the iterated numeric value as an argument.<h4>Discussion:</h4>
 
@@ -93,7 +93,7 @@ while ( { i &lt; 5 }, { i = i + 1; "boing".postln });
 <p>--or--<pre class='code prettyprint lang-sc'>startValue.forBy ( endValue, stepValue, function );</pre>
 
 <p>Example<pre class='code prettyprint lang-sc'>forBy (0, 8, 2, { arg i; i.postln }); // prints values 0 through 8 by 2's</pre>
-</div><h3 class='imethodname'><span class='methprefix'>&nbsp;</span><a name='.do' href='./../Overviews/Methods.html#do'>do</a> </h3>
+</div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='do' href='./../Overviews/Methods.html#do'>do</a></h3>
 <div class='method'>
 <p>Do is used to iterate over a <a href="./../Classes/Collection.html">Collection</a>. Positive Integers also respond to <code class='code prettyprint lang-sc'>do</code> by iterating from zero up to their value. Collections iterate, calling the function for each object they contain. Other kinds of Objects respond to do by passing themselves to the function one time. The function is called with two arguments, the item, and an iteration counter.<h4>Discussion:</h4>
 
@@ -115,7 +115,7 @@ while ( { i &lt; 5 }, { i = i + 1; "boing".postln });
 
 Routine({ var i=10; while { i &gt; 0 } { i.yield; i = i - 5.0.rand } }).do({ arg item; item.postln });</pre>
 <div class='note'><span class='notelabel'>NOTE:</span> The syntax <code class='code prettyprint lang-sc'>(8..20).do</code> uses an optimization to avoid generating an array that is used only for iteration (but which would be discarded thereafter). The return value of <code class='code prettyprint lang-sc'>(8..20).do({ |item| item.postln })</code> is 8, the starting value.<pre class='code prettyprint lang-sc'>(8..20) do: { |item| item.postln } // is not optimized, and returns the array.</pre>
-</div></div><h3 class='imethodname'><span class='methprefix'>&nbsp;</span><a name='.switch' href='./../Overviews/Methods.html#switch'>switch</a> </h3>
+</div></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='switch' href='./../Overviews/Methods.html#switch'>switch</a></h3>
 <div class='method'>
 <p>Object implements a switch method which allows for conditional evaluation with multiple cases. These are implemented as pairs of test objects (tested using if this == test.value) and corresponding functions to be evaluated if true. The switch statement will be inlined if the test objects are all Floats, Integers, Symbols, Chars, nil, false, true and if the functions have no variable or argument declarations. The inlined switch uses a hash lookup (which is faster than nested if statements), so it should be very fast and scale to any number of clauses.<h4>Discussion:</h4>
 
@@ -156,7 +156,7 @@ x = switch (z.choose)
     {0}   { \true };
 x.postln;
 )</pre>
-</div><h3 class='imethodname'><span class='methprefix'>&nbsp;</span><a name='.case' href='./../Overviews/Methods.html#case'>case</a> </h3>
+</div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='case' href='./../Overviews/Methods.html#case'>case</a></h3>
 <div class='method'>
 <p>Function implements a case method which allows for conditional evaluation with multiple cases. Since the receiver represents the first case this can be simply written as pairs of test functions and corresponding functions to be evaluated if true. Case is inlined and is therefore just as efficient as nested if statements.<h4>Discussion:</h4>
 

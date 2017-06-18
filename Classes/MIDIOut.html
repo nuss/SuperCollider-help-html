@@ -68,65 +68,65 @@ var scdoc_title = 'MIDIOut';
 <ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>a MIDIOut is bound to a specific <a href="./../Classes/MIDIEndPoint.html">MIDIEndPoint</a> as defined by the operating system.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>port</span>, <span class='argstr'>uid</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>MIDIOut.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>port</span>, <span class='argstr'>uid</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>port<td class='argumentdesc'>
 <p>the index of the MIDIEndPoint in the <code class='code prettyprint lang-sc'>MIDIClient.destinations</code> array.<tr><td class='argumentname'>uid<td class='argumentdesc'><dl>
 <dt>macOS / Windows<dd>uid is optional; if specified, it should be the uid of that port ie. MIDIClient.destinations[port].uid. If you don't provide a uid, the correct uid will be filled in for you (easier).<dt>Linux<dd>using the uid is optional as described below.</dl>
-</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newByName' href='./../Overviews/Methods.html#newByName'>newByName</a> (<span class='argstr'>deviceName</span>, <span class='argstr'>portName</span>, <span class='argstr'>dieIfNotFound: true</span>)</h3>
+</table></div><h3 class='method-code'><span class='method-prefix'>MIDIOut.</span><a class='method-name' name='*newByName' href='./../Overviews/Methods.html#newByName'>newByName</a>(<span class='argstr'>deviceName</span>, <span class='argstr'>portName</span>, <span class='argstr'>dieIfNotFound: true</span>)</h3>
 <div class='method'>
 <p>Searches for the device by name. This is safer then depending on the index which will change if your studio setup changes.<pre class='code prettyprint lang-sc'>//list connected out ports with names:
 MIDIClient.init;
 MIDIClient.destinations;</pre>
-</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*findPort' href='./../Overviews/Methods.html#findPort'>findPort</a> (<span class='argstr'>deviceName</span>, <span class='argstr'>portName</span>)</h3>
+</div><h3 class='method-code'><span class='method-prefix'>MIDIOut.</span><a class='method-name' name='*findPort' href='./../Overviews/Methods.html#findPort'>findPort</a>(<span class='argstr'>deviceName</span>, <span class='argstr'>portName</span>)</h3>
 <div class='method'>
 <p>Searches for a connected MIDIEndPoint by name.<pre class='code prettyprint lang-sc'>//list connected out ports with names:
 MIDIClient.init;
 MIDIClient.destinations;</pre>
-</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*connect' href='./../Overviews/Methods.html#connect'>connect</a> (<span class='argstr'>outport: 0</span>, <span class='argstr'>device: 0</span>)</h3>
+</div><h3 class='method-code'><span class='method-prefix'>MIDIOut.</span><a class='method-name' name='*connect' href='./../Overviews/Methods.html#connect'>connect</a>(<span class='argstr'>outport: 0</span>, <span class='argstr'>device: 0</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Platform/linux/SystemOverwrites/extMIDIOut.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Platform/linux/SystemOverwrites/extMIDIOut.sc</a></div>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*disconnect' href='./../Overviews/Methods.html#disconnect'>disconnect</a> (<span class='argstr'>outport: 0</span>, <span class='argstr'>device: 0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>MIDIOut.</span><a class='method-name' name='*disconnect' href='./../Overviews/Methods.html#disconnect'>disconnect</a>(<span class='argstr'>outport: 0</span>, <span class='argstr'>device: 0</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Platform/linux/SystemOverwrites/extMIDIOut.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Platform/linux/SystemOverwrites/extMIDIOut.sc</a></div>
 <div class='method'>
 <p>Linux only. MacOS does not need to connect. On Linux it is an optional feature (see below).</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sysex' href='./../Overviews/Methods.html#sysex'>sysex</a> (<span class='argstr'>packet</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sysex' href='./../Overviews/Methods.html#sysex'>sysex</a>(<span class='argstr'>packet</span>)</h3>
 <div class='method'>
 <p>Sends a sysex command represented as an <a href="./../Classes/Int8Array.html">Int8Array</a> to the device.<div class='note'><span class='notelabel'>NOTE:</span> On Windows, the function call must contain a full sysex message. In other words, it must start with 0xF0 (240 or -16) and end with 0xF7 (247 or -9).</div><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>packet<td class='argumentdesc'>
-<p>An Int8Array of data bytes to be sent.</table></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-latency' href='./../Overviews/Methods.html#latency'>latency</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-latency' href='./../Overviews/Methods.html#latency'>latency</a> = value</h3>
+<p>An Int8Array of data bytes to be sent.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-latency' href='./../Overviews/Methods.html#latency'>latency</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-latency' href='./../Overviews/Methods.html#latency'>latency</a> = value</h3>
 <div class='method'>
 <p>This sets the latency with which a midi event is sent out. Per default this is set to 0.2, in order to be equal to the Server.latency.<div class='note'><span class='notelabel'>NOTE:</span> On Linux there seems to be an ALSA or kernel bug if the latency is larger than 0, for some Linux kernels. If MIDIOut does not seem to work, set the latency to 0.</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-allNotesOff' href='./../Overviews/Methods.html#allNotesOff'>allNotesOff</a> (<span class='argstr'>chan</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-bend' href='./../Overviews/Methods.html#bend'>bend</a> (<span class='argstr'>chan</span>, <span class='argstr'>val: 8192</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connect' href='./../Overviews/Methods.html#connect'>connect</a> (<span class='argstr'>device: 0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-allNotesOff' href='./../Overviews/Methods.html#allNotesOff'>allNotesOff</a>(<span class='argstr'>chan</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bend' href='./../Overviews/Methods.html#bend'>bend</a>(<span class='argstr'>chan</span>, <span class='argstr'>val: 8192</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-connect' href='./../Overviews/Methods.html#connect'>connect</a>(<span class='argstr'>device: 0</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Platform/linux/SystemOverwrites/extMIDIOut.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Platform/linux/SystemOverwrites/extMIDIOut.sc</a></div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-continue' href='./../Overviews/Methods.html#continue'>continue</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-control' href='./../Overviews/Methods.html#control'>control</a> (<span class='argstr'>chan</span>, <span class='argstr'>ctlNum: 7</span>, <span class='argstr'>val: 64</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disconnect' href='./../Overviews/Methods.html#disconnect'>disconnect</a> (<span class='argstr'>cuid</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-continue' href='./../Overviews/Methods.html#continue'>continue</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-control' href='./../Overviews/Methods.html#control'>control</a>(<span class='argstr'>chan</span>, <span class='argstr'>ctlNum: 7</span>, <span class='argstr'>val: 64</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-disconnect' href='./../Overviews/Methods.html#disconnect'>disconnect</a>(<span class='argstr'>cuid</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Platform/linux/SystemOverwrites/extMIDIOut.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Platform/linux/SystemOverwrites/extMIDIOut.sc</a></div>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-midiClock' href='./../Overviews/Methods.html#midiClock'>midiClock</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-noteOff' href='./../Overviews/Methods.html#noteOff'>noteOff</a> (<span class='argstr'>chan</span>, <span class='argstr'>note: 60</span>, <span class='argstr'>veloc: 64</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-noteOn' href='./../Overviews/Methods.html#noteOn'>noteOn</a> (<span class='argstr'>chan</span>, <span class='argstr'>note: 60</span>, <span class='argstr'>veloc: 64</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-polyTouch' href='./../Overviews/Methods.html#polyTouch'>polyTouch</a> (<span class='argstr'>chan</span>, <span class='argstr'>note: 60</span>, <span class='argstr'>val: 64</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-port' href='./../Overviews/Methods.html#port'>port</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-port' href='./../Overviews/Methods.html#port'>port</a> = value</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-program' href='./../Overviews/Methods.html#program'>program</a> (<span class='argstr'>chan</span>, <span class='argstr'>num: 1</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-reset' href='./../Overviews/Methods.html#reset'>reset</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-smpte' href='./../Overviews/Methods.html#smpte'>smpte</a> (<span class='argstr'>frames: 0</span>, <span class='argstr'>seconds: 0</span>, <span class='argstr'>minutes: 0</span>, <span class='argstr'>hours: 0</span>, <span class='argstr'>frameRate: 3</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-songPtr' href='./../Overviews/Methods.html#songPtr'>songPtr</a> (<span class='argstr'>songPtr</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-songSelect' href='./../Overviews/Methods.html#songSelect'>songSelect</a> (<span class='argstr'>song</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-start' href='./../Overviews/Methods.html#start'>start</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-stop' href='./../Overviews/Methods.html#stop'>stop</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-touch' href='./../Overviews/Methods.html#touch'>touch</a> (<span class='argstr'>chan</span>, <span class='argstr'>val: 64</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-uid' href='./../Overviews/Methods.html#uid'>uid</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-uid' href='./../Overviews/Methods.html#uid'>uid</a> = value</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-write' href='./../Overviews/Methods.html#write'>write</a> (<span class='argstr'>len</span>, <span class='argstr'>hiStatus</span>, <span class='argstr'>loStatus</span>, <span class='argstr'>a: 0</span>, <span class='argstr'>b: 0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiClock' href='./../Overviews/Methods.html#midiClock'>midiClock</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-noteOff' href='./../Overviews/Methods.html#noteOff'>noteOff</a>(<span class='argstr'>chan</span>, <span class='argstr'>note: 60</span>, <span class='argstr'>veloc: 64</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-noteOn' href='./../Overviews/Methods.html#noteOn'>noteOn</a>(<span class='argstr'>chan</span>, <span class='argstr'>note: 60</span>, <span class='argstr'>veloc: 64</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-polyTouch' href='./../Overviews/Methods.html#polyTouch'>polyTouch</a>(<span class='argstr'>chan</span>, <span class='argstr'>note: 60</span>, <span class='argstr'>val: 64</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-port' href='./../Overviews/Methods.html#port'>port</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-port' href='./../Overviews/Methods.html#port'>port</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-program' href='./../Overviews/Methods.html#program'>program</a>(<span class='argstr'>chan</span>, <span class='argstr'>num: 1</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reset' href='./../Overviews/Methods.html#reset'>reset</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-smpte' href='./../Overviews/Methods.html#smpte'>smpte</a>(<span class='argstr'>frames: 0</span>, <span class='argstr'>seconds: 0</span>, <span class='argstr'>minutes: 0</span>, <span class='argstr'>hours: 0</span>, <span class='argstr'>frameRate: 3</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-songPtr' href='./../Overviews/Methods.html#songPtr'>songPtr</a>(<span class='argstr'>songPtr</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-songSelect' href='./../Overviews/Methods.html#songSelect'>songSelect</a>(<span class='argstr'>song</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-start' href='./../Overviews/Methods.html#start'>start</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stop' href='./../Overviews/Methods.html#stop'>stop</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-touch' href='./../Overviews/Methods.html#touch'>touch</a>(<span class='argstr'>chan</span>, <span class='argstr'>val: 64</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-uid' href='./../Overviews/Methods.html#uid'>uid</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-uid' href='./../Overviews/Methods.html#uid'>uid</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-write' href='./../Overviews/Methods.html#write'>write</a>(<span class='argstr'>len</span>, <span class='argstr'>hiStatus</span>, <span class='argstr'>loStatus</span>, <span class='argstr'>a: 0</span>, <span class='argstr'>b: 0</span>)</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 <pre class='code prettyprint lang-sc'>MIDIClient.init;
 

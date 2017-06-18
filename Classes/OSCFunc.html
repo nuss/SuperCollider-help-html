@@ -46,17 +46,17 @@ var scdoc_title = 'OSCFunc';
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>OSCFunc (and its subclass <a href="./../Classes/OSCdef.html">OSCdef</a>) registers one or more functions to respond to an incoming OSC message which matches a specified OSC Address. Many of its methods are inherited from its superclass <a href="./../Classes/AbstractResponderFunc.html">AbstractResponderFunc</a>. OSCFunc supports pattern matching of wildcards etc. in incoming messages. For efficiency reasons you must specify that an OSCFunc will employ pattern matching by creating it with the <a href="#*newMatching">*newMatching</a> method, or by passing a matching dispatcher to <a href="#*new">*new</a>. For details on the Open Sound Control protocol, see <a href="http://opensoundcontrol.org/spec-1_0">http://opensoundcontrol.org/spec-1_0</a><div class='note'><span class='notelabel'>NOTE:</span> Use of the older classes OSCresponder, OSCresponderNode, and OSCpathResponder can be unsafe, since responders in user and class code can override each other unintentionally. OSCFunc and <a href="./../Classes/OSCdef.html">OSCdef</a> are faster, safer, have more logical argument order, and support pattern matching and custom listening ports. Thus they are the recommended way of registering for incoming OSC messages as of SC 3.5. (See below for an example demonstrating OSCpathResponder-type arg matching.)</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultDispatcher' href='./../Overviews/Methods.html#defaultDispatcher'>defaultDispatcher</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultDispatcher' href='./../Overviews/Methods.html#defaultDispatcher'>defaultDispatcher</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>OSCFunc.</span><a class='method-name' name='*defaultDispatcher' href='./../Overviews/Methods.html#defaultDispatcher'>defaultDispatcher</a></h3>
+<h3 class='method-code'><span class='method-prefix'>OSCFunc.</span><a class='method-name' name='*defaultDispatcher' href='./../Overviews/Methods.html#defaultDispatcher'>defaultDispatcher</a> = value</h3>
 <div class='method'>
 <p>Get or set the default dispatcher object for OSCFuncs (this is what you get if you pass nil as the dispatcher argument to <a href="#*new">*new</a>). This object will decide if any of its registered OSCFuncs should respond to an incoming OSC message.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>By default this will be an <a href="./../Classes/OSCMessageDispatcher.html">OSCMessageDispatcher</a>, but it can be set to any instance of an appropriate subclass of <a href="./../Classes/AbstractDispatcher.html">AbstractDispatcher</a>.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultMatchingDispatcher' href='./../Overviews/Methods.html#defaultMatchingDispatcher'>defaultMatchingDispatcher</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*defaultMatchingDispatcher' href='./../Overviews/Methods.html#defaultMatchingDispatcher'>defaultMatchingDispatcher</a> = value</h3>
+<p>By default this will be an <a href="./../Classes/OSCMessageDispatcher.html">OSCMessageDispatcher</a>, but it can be set to any instance of an appropriate subclass of <a href="./../Classes/AbstractDispatcher.html">AbstractDispatcher</a>.</div></div><h3 class='method-code'><span class='method-prefix'>OSCFunc.</span><a class='method-name' name='*defaultMatchingDispatcher' href='./../Overviews/Methods.html#defaultMatchingDispatcher'>defaultMatchingDispatcher</a></h3>
+<h3 class='method-code'><span class='method-prefix'>OSCFunc.</span><a class='method-name' name='*defaultMatchingDispatcher' href='./../Overviews/Methods.html#defaultMatchingDispatcher'>defaultMatchingDispatcher</a> = value</h3>
 <div class='method'>
 <p>Get or set the default matching dispatcher object for OSCFuncs (this is what you get if when you create an OSCFunc using <a href="#*newMatching">*newMatching</a>). This object will decide if any of its registered OSCFuncs should respond to an incoming OSC message using pattern matching.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>By default this will be an <a href="./../Classes/OSCMessagePatternDispatcher.html">OSCMessagePatternDispatcher</a>, but it can be set to any instance of an appropriate subclass of <a href="./../Classes/AbstractDispatcher.html">AbstractDispatcher</a>.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>func</span>, <span class='argstr'>path</span>, <span class='argstr'>srcID</span>, <span class='argstr'>recvPort</span>, <span class='argstr'>argTemplate</span>, <span class='argstr'>dispatcher</span>)</h3>
+<p>By default this will be an <a href="./../Classes/OSCMessagePatternDispatcher.html">OSCMessagePatternDispatcher</a>, but it can be set to any instance of an appropriate subclass of <a href="./../Classes/AbstractDispatcher.html">AbstractDispatcher</a>.</div></div><h3 class='method-code'><span class='method-prefix'>OSCFunc.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>func</span>, <span class='argstr'>path</span>, <span class='argstr'>srcID</span>, <span class='argstr'>recvPort</span>, <span class='argstr'>argTemplate</span>, <span class='argstr'>dispatcher</span>)</h3>
 <div class='method'>
 <p>Create a new, enabled OSCFunc.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -68,7 +68,7 @@ var scdoc_title = 'OSCFunc';
 <p>An optional <a href="./../Classes/Array.html">Array</a> composed of instances of <a href="./../Classes/Integer.html">Integer</a> or <a href="./../Classes/Function.html">Function</a> (or objects which respond to the method <a href="./../Overviews/Methods.html#matchItem">Methods: matchItem</a>) used to match the arguments of an incoming OSC message. If a Function, it will be evaluated with the corresponding message arg as an argument, and should return a <a href="./../Classes/Boolean.html">Boolean</a> indicating whether the argument matches and this OSCFunc should respond (providing all other arguments match). Template values of nil will match any incoming argument value.<tr><td class='argumentname'>dispatcher<td class='argumentdesc'>
 <p>An optional instance of an appropriate subclass of <a href="./../Classes/AbstractDispatcher.html">AbstractDispatcher</a>. This can be used to allow for customised dispatching. Normally this should not be needed.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>A new instance of OSCFunc.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newMatching' href='./../Overviews/Methods.html#newMatching'>newMatching</a> (<span class='argstr'>func</span>, <span class='argstr'>path</span>, <span class='argstr'>srcID</span>, <span class='argstr'>recvPort</span>, <span class='argstr'>argTemplate</span>)</h3>
+<p>A new instance of OSCFunc.</div></div><h3 class='method-code'><span class='method-prefix'>OSCFunc.</span><a class='method-name' name='*newMatching' href='./../Overviews/Methods.html#newMatching'>newMatching</a>(<span class='argstr'>func</span>, <span class='argstr'>path</span>, <span class='argstr'>srcID</span>, <span class='argstr'>recvPort</span>, <span class='argstr'>argTemplate</span>)</h3>
 <div class='method'>
 <p>A convenience method to create a new, enabled OSCFunc whose dispatcher will perform pattern matching on incoming OSC messages to see if their address patterns match this object's path.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -79,7 +79,7 @@ var scdoc_title = 'OSCFunc';
 <p>An optional <a href="./../Classes/Integer.html">Integer</a> indicating the port on which messages will be received.<tr><td class='argumentname'>argTemplate<td class='argumentdesc'>
 <p>An optional <a href="./../Classes/Array.html">Array</a> composed of instances of <a href="./../Classes/Integer.html">Integer</a> or <a href="./../Classes/Function.html">Function</a> (or objects which respond to the method <a href="./../Overviews/Methods.html#matchItem">Methods: matchItem</a>) used to match the arguments of an incoming OSC message. If a Function, it will be evaluated with the corresponding message arg as an argument, and should return a <a href="./../Classes/Boolean.html">Boolean</a> indicating whether the argument matches and this OSCFunc should respond (providing all other arguments match). Template values of nil will match any incoming argument value.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>A new instance of OSCFunc.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*trace' href='./../Overviews/Methods.html#trace'>trace</a> (<span class='argstr'>bool: true</span>, <span class='argstr'>hideStatusMsg: false</span>)</h3>
+<p>A new instance of OSCFunc.</div></div><h3 class='method-code'><span class='method-prefix'>OSCFunc.</span><a class='method-name' name='*trace' href='./../Overviews/Methods.html#trace'>trace</a>(<span class='argstr'>bool: true</span>, <span class='argstr'>hideStatusMsg: false</span>)</h3>
 <div class='method'>
 <p>A convenience method which dumps all incoming OSC messages.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -87,17 +87,17 @@ var scdoc_title = 'OSCFunc';
 <p>A <a href="./../Classes/Boolean.html">Boolean</a> indicating whether dumping is on or off.<tr><td class='argumentname'>hideStatusMsg<td class='argumentdesc'>
 <p>A <a href="./../Classes/Boolean.html">Boolean</a> indicating whether server status messages are excluded from the dump or not.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-path' href='./../Overviews/Methods.html#path'>path</a> </h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-path' href='./../Overviews/Methods.html#path'>path</a></h3>
 <div class='method'>
 <p>Get the path of this OSCFunc's OSC Address.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>A <a href="./../Classes/String.html">String</a></div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-recvPort' href='./../Overviews/Methods.html#recvPort'>recvPort</a> </h3>
+<p>A <a href="./../Classes/String.html">String</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-recvPort' href='./../Overviews/Methods.html#recvPort'>recvPort</a></h3>
 <div class='method'>
 <p>Get this OSCFunc's receiving port.<h4>Returns:</h4>
 <div class='returnvalue'>
 <p>An <a href="./../Classes/Integer.html">Integer</a></div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-argTemplate' href='./../Overviews/Methods.html#argTemplate'>argTemplate</a> </h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-argTemplate' href='./../Overviews/Methods.html#argTemplate'>argTemplate</a></h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 <pre class='code prettyprint lang-sc'>n = NetAddr("127.0.0.1", NetAddr.langPort); // local machine
 

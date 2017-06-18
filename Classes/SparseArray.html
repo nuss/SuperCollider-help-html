@@ -73,7 +73,7 @@ var scdoc_title = 'SparseArray';
 <p>A sparse array is a data structure that acts in exactly the same manner as an Array. However, data is represented differently in memory, in a way that makes it much more efficient to store very large arrays in which many values are the same.
 <p>Take for example an array consisting of a million zeroes, with a 1 appended to the end; SparseArray would compress this array by storing zero as a default value, and only explicitly storing the single value that differs, therefore offering a much more economical use of memory.
 <p>The benefits of using SparseArray typically arise when creating collections containing many millions of slots.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*newClear' href='./../Overviews/Methods.html#newClear'>newClear</a> (<span class='argstr'>size</span>, <span class='argstr'>default</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>SparseArray.</span><a class='method-name' name='*newClear' href='./../Overviews/Methods.html#newClear'>newClear</a>(<span class='argstr'>size</span>, <span class='argstr'>default</span>)</h3>
 <div class='method'>
 <p>Create a new SparseArray of the specified <strong>size</strong>, with each slot's value being <strong>default</strong>.<pre class='code prettyprint lang-sc'>g = SparseArray.newClear(20, 3);
 g.postcs;</pre>
@@ -82,7 +82,7 @@ g.postcs;</pre>
 <table class='arguments'>
 <tr><td class='argumentname'>size<td class='argumentdesc'>
 <p>Number of slots in the desired array. Note that slots are not explicitly created, so the speed of creation is not related to the array size.<tr><td class='argumentname'>default<td class='argumentdesc'>
-<p>The default value, i.e. the value that all slots should take at first.</table></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*reduceArray' href='./../Overviews/Methods.html#reduceArray'>reduceArray</a> (<span class='argstr'>array</span>, <span class='argstr'>default</span>)</h3>
+<p>The default value, i.e. the value that all slots should take at first.</table></div><h3 class='method-code'><span class='method-prefix'>SparseArray.</span><a class='method-name' name='*reduceArray' href='./../Overviews/Methods.html#reduceArray'>reduceArray</a>(<span class='argstr'>array</span>, <span class='argstr'>default</span>)</h3>
 <div class='method'>
 <p>Create a new SparseArray holding the same data as <strong>array</strong>.<pre class='code prettyprint lang-sc'>a = [4, 7, 4, 4, 4, 4, 4, 4, 9, 9, 8];
 g = SparseArray.reduceArray(a, 4);
@@ -94,58 +94,58 @@ g.postcs;</pre>
 <p>Any <a href="./../Classes/ArrayedCollection.html">ArrayedCollection</a>.<tr><td class='argumentname'>default<td class='argumentdesc'>
 <p>The default value, i.e. the value that all slots should take at first. For best memory efficiency, you should supply the most common value found in the collection.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-put' href='./../Overviews/Methods.html#put'>put</a> (<span class='argstr'>index</span>, <span class='argstr'>obj</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-put' href='./../Overviews/Methods.html#put'>put</a>(<span class='argstr'>index</span>, <span class='argstr'>obj</span>)</h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/Order.html'>Order</a></div>
 <div class='method'>
 <p>Put a value at the desired index. This works just like all ArrayedCollection types. Behind the scenes the class will ensure the compact representation (deciding whether to store the value explicitly or implicitly).<pre class='code prettyprint lang-sc'>g = SparseArray.newClear(10, 3);
 g.put(4, \horse);
 g.put(6, [4,5,6]);
 g[1] = \hello; // Common compact notation</pre>
-</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-at' href='./../Overviews/Methods.html#at'>at</a> (<span class='argstr'>index</span>)</h3>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>index</span>)</h3>
 <div class='method'>
 <p>Retrieve the value at index.<pre class='code prettyprint lang-sc'>g = SparseArray.newClear(20, 3);
 g.put(4, \horse);
 g.at(4);
 g[4];</pre>
-</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-asArray' href='./../Overviews/Methods.html#asArray'>asArray</a> </h3>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asArray' href='./../Overviews/Methods.html#asArray'>asArray</a></h3>
 <div class='method'>
 <p>Convert to an ordinary <a href="./../Classes/Array.html">Array</a>.<pre class='code prettyprint lang-sc'>g = SparseArray.newClear(20, 3);
 g.postcs;
 g.asArray;</pre>
 </div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-++' href='./../Overviews/Methods.html#++'>++</a> (<span class='argstr'>coll</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-atSeries' href='./../Overviews/Methods.html#atSeries'>atSeries</a> (<span class='argstr'>first</span>, <span class='argstr'>second</span>, <span class='argstr'>last</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-clear' href='./../Overviews/Methods.html#clear'>clear</a> (<span class='argstr'>size</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-collect' href='./../Overviews/Methods.html#collect'>collect</a> (<span class='argstr'>function</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-compress' href='./../Overviews/Methods.html#compress'>compress</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-copy' href='./../Overviews/Methods.html#copy'>copy</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-default' href='./../Overviews/Methods.html#default'>default</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-default' href='./../Overviews/Methods.html#default'>default</a> = value</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-defaultSize' href='./../Overviews/Methods.html#defaultSize'>defaultSize</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-defaultSize' href='./../Overviews/Methods.html#defaultSize'>defaultSize</a> = value</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-do' href='./../Overviews/Methods.html#do'>do</a> (<span class='argstr'>function</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-firstGap' href='./../Overviews/Methods.html#firstGap'>firstGap</a> (<span class='argstr'>from: 0</span>, <span class='argstr'>to</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-indexOf' href='./../Overviews/Methods.html#indexOf'>indexOf</a> (<span class='argstr'>item</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-lastIndex' href='./../Overviews/Methods.html#lastIndex'>lastIndex</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-maxItem' href='./../Overviews/Methods.html#maxItem'>maxItem</a> (<span class='argstr'>function</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-minItem' href='./../Overviews/Methods.html#minItem'>minItem</a> (<span class='argstr'>function</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-pop' href='./../Overviews/Methods.html#pop'>pop</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-pos' href='./../Overviews/Methods.html#pos'>pos</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-putIfNotDefault' href='./../Overviews/Methods.html#putIfNotDefault'>putIfNotDefault</a> (<span class='argstr'>i</span>, <span class='argstr'>item</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-putSeries' href='./../Overviews/Methods.html#putSeries'>putSeries</a> (<span class='argstr'>first</span>, <span class='argstr'>second</span>, <span class='argstr'>last</span>, <span class='argstr'>value</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-reject' href='./../Overviews/Methods.html#reject'>reject</a> (<span class='argstr'>function</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeAt' href='./../Overviews/Methods.html#removeAt'>removeAt</a> (<span class='argstr'>index</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-select' href='./../Overviews/Methods.html#select'>select</a> (<span class='argstr'>function</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-size' href='./../Overviews/Methods.html#size'>size</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sparseAddAll' href='./../Overviews/Methods.html#sparseAddAll'>sparseAddAll</a> (<span class='argstr'>coll</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sparseCollect' href='./../Overviews/Methods.html#sparseCollect'>sparseCollect</a> (<span class='argstr'>function</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sparseReject' href='./../Overviews/Methods.html#sparseReject'>sparseReject</a> (<span class='argstr'>function</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sparseRemove' href='./../Overviews/Methods.html#sparseRemove'>sparseRemove</a> (<span class='argstr'>item</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sparseRemoveAt' href='./../Overviews/Methods.html#sparseRemoveAt'>sparseRemoveAt</a> (<span class='argstr'>index</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sparseSelect' href='./../Overviews/Methods.html#sparseSelect'>sparseSelect</a> (<span class='argstr'>function</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sparseSum' href='./../Overviews/Methods.html#sparseSum'>sparseSum</a> (<span class='argstr'>function</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-sum' href='./../Overviews/Methods.html#sum'>sum</a> (<span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-++' href='./../Overviews/Methods.html#++'>++</a>(<span class='argstr'>coll</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-atSeries' href='./../Overviews/Methods.html#atSeries'>atSeries</a>(<span class='argstr'>first</span>, <span class='argstr'>second</span>, <span class='argstr'>last</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a>(<span class='argstr'>size</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-collect' href='./../Overviews/Methods.html#collect'>collect</a>(<span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-compress' href='./../Overviews/Methods.html#compress'>compress</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-copy' href='./../Overviews/Methods.html#copy'>copy</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-default' href='./../Overviews/Methods.html#default'>default</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-default' href='./../Overviews/Methods.html#default'>default</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defaultSize' href='./../Overviews/Methods.html#defaultSize'>defaultSize</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defaultSize' href='./../Overviews/Methods.html#defaultSize'>defaultSize</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-do' href='./../Overviews/Methods.html#do'>do</a>(<span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-firstGap' href='./../Overviews/Methods.html#firstGap'>firstGap</a>(<span class='argstr'>from: 0</span>, <span class='argstr'>to</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-indexOf' href='./../Overviews/Methods.html#indexOf'>indexOf</a>(<span class='argstr'>item</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lastIndex' href='./../Overviews/Methods.html#lastIndex'>lastIndex</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-maxItem' href='./../Overviews/Methods.html#maxItem'>maxItem</a>(<span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-minItem' href='./../Overviews/Methods.html#minItem'>minItem</a>(<span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pop' href='./../Overviews/Methods.html#pop'>pop</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pos' href='./../Overviews/Methods.html#pos'>pos</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-putIfNotDefault' href='./../Overviews/Methods.html#putIfNotDefault'>putIfNotDefault</a>(<span class='argstr'>i</span>, <span class='argstr'>item</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-putSeries' href='./../Overviews/Methods.html#putSeries'>putSeries</a>(<span class='argstr'>first</span>, <span class='argstr'>second</span>, <span class='argstr'>last</span>, <span class='argstr'>value</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reject' href='./../Overviews/Methods.html#reject'>reject</a>(<span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeAt' href='./../Overviews/Methods.html#removeAt'>removeAt</a>(<span class='argstr'>index</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-select' href='./../Overviews/Methods.html#select'>select</a>(<span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-size' href='./../Overviews/Methods.html#size'>size</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sparseAddAll' href='./../Overviews/Methods.html#sparseAddAll'>sparseAddAll</a>(<span class='argstr'>coll</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sparseCollect' href='./../Overviews/Methods.html#sparseCollect'>sparseCollect</a>(<span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sparseReject' href='./../Overviews/Methods.html#sparseReject'>sparseReject</a>(<span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sparseRemove' href='./../Overviews/Methods.html#sparseRemove'>sparseRemove</a>(<span class='argstr'>item</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sparseRemoveAt' href='./../Overviews/Methods.html#sparseRemoveAt'>sparseRemoveAt</a>(<span class='argstr'>index</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sparseSelect' href='./../Overviews/Methods.html#sparseSelect'>sparseSelect</a>(<span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sparseSum' href='./../Overviews/Methods.html#sparseSum'>sparseSum</a>(<span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sum' href='./../Overviews/Methods.html#sum'>sum</a>(<span class='argstr'>function</span>)</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 
 <p>Here we compare speed of Array vs SparseArray.<pre class='code prettyprint lang-sc'>// Let's create a standard array, big but with only a couple of unusual values hidden in there
