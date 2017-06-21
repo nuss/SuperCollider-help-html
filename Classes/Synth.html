@@ -229,8 +229,8 @@ x.free;</pre>
 <p>a Function which will be evaluated with the value passed as an argument when the reply is received.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>s.boot;
 (
-SynthDef("help-Synth-get", { arg freq = 440;
-    Out.ar(0, SinOsc.ar(freq, 0, 0.1));
+SynthDef("help-Synth-get", { | out, freq = 440|
+    Out.ar(out, SinOsc.ar(freq, 0, 0.1));
 }).add;
 )
 x = Synth("help-Synth-get");
@@ -262,8 +262,8 @@ x.free;</pre>
 <div class='note'><span class='notelabel'>NOTE:</span> The synthdef has to be .add'ed, so that it is stored in the <a href="./../Classes/SynthDescLib.html">SynthDescLib</a>.</div>
 <p>Example:<pre class='code prettyprint lang-sc'>(
 s.waitForBoot({
-    SynthDef(\helpSeti, { |freqs = #[100,150,200,250]|
-        Out.ar(0, SinOsc.ar(freqs.poll,0,0.1).sum ! 2)
+    SynthDef(\helpSeti, { |out, freqs = #[100,150,200,250]|
+        Out.ar(out, SinOsc.ar(freqs.poll,0,0.1).sum ! 2)
     }).add;
     s.sync;
     x = Synth(\helpSeti);

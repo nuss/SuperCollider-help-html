@@ -58,25 +58,37 @@ var scdoc_title = 'GVerb';
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>SynthDef(\test, {arg roomsize, revtime, damping, inputbw, spread = 15, drylevel, earlylevel,
-        taillevel;
-    var a = Resonz.ar(
-        Array.fill(4, {Dust.ar(2)}), 1760 * [1, 2, 4, 8], 0.01).sum * 10;
-//    var a = SoundIn.ar(0);
-//    var a = PlayBuf.ar(1, 0);
-    Out.ar(0, GVerb.ar(
-        a,
-        roomsize,
-        revtime,
-        damping,
-        inputbw,
-        spread,
-        drylevel.dbamp,
-        earlylevel.dbamp,
-        taillevel.dbamp,
-        roomsize, 0.3) + a)}).add
+<pre class='code prettyprint lang-sc'>(
+SynthDef(\test, { |out, roomsize, revtime, damping, inputbw, spread = 15, drylevel, earlylevel,
+    taillevel|
 
-s.boot;
+    var a = Resonz.ar(
+        Array.fill(4, { Dust.ar(2) }),
+        1760 * [1, 2, 4, 8],
+        0.01
+    ).sum * 10;
+
+    //    var a = SoundIn.ar(0);
+    //    var a = PlayBuf.ar(1, 0);
+
+    Out.ar(out,
+        GVerb.ar(
+            a,
+            roomsize,
+            revtime,
+            damping,
+            inputbw,
+            spread,
+            drylevel.dbamp,
+            earlylevel.dbamp,
+            taillevel.dbamp,
+            roomsize, 0.3)
+        + a
+    )
+}).add
+)
+
+
 s.scope(2);
 
 // bathroom

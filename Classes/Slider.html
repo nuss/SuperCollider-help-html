@@ -191,7 +191,7 @@ c = NumberBox(w, Rect(20, 20, 150, 20));
 a = Slider(w, Rect(200, 60, 20, 150))
     .action_({
         c.value_(a.value)
-        });
+    });
 a.action.value;
 )</pre>
 <h3><a class='anchor' name='Use%20a%20Spec%20to%20round%20and%20map%20the%20output%20range'>Use a Spec to round and map the output range</a></h3>
@@ -208,7 +208,6 @@ a = Slider(w, Rect(20, 50, 150, 20))
         // round the float so it will fit in the NumberBox
         });
 a.action.value;
-
 )</pre>
 <h3><a class='anchor' name='Change%20the%20stepsize%20of%20the%20slider,%20selected%20via%20a%20PopUpMenu'>Change the stepsize of the slider, selected via a PopUpMenu</a></h3>
 <pre class='code prettyprint lang-sc'>(
@@ -222,16 +221,16 @@ d = PopUpMenu(w, Rect(20, 60, 100, 20))
     .items_(a)
     .action_({
         b.step_((a.at(d.value)).asFloat);
-        });
+    });
 StaticText(w, Rect(130, 60, 100, 20)).string_("change step");
 c = NumberBox(w, Rect(20, 20, 100, 20));
 )</pre>
 <h3><a class='anchor' name='Use%20the%20slider%20view%20to%20accept%20key%20actions'>Use the slider view to accept key actions</a></h3>
 <pre class='code prettyprint lang-sc'>( // select the slider, type something and watch the post window
 w = Window.new;
-c = Slider(w,Rect(0,0,100,30));
-c.keyDownAction = { arg view,char,modifiers,unicode,keycode;
-[char,modifiers,unicode,keycode].postln;
+c = Slider(w, Rect(0,0,100,30));
+c.keyDownAction = { |view, char, modifiers, unicode, keycode|
+    [char, modifiers, unicode, keycode].postln
 };
 w.front;
 )</pre>
@@ -256,33 +255,32 @@ a.removeAction(f);
 // or remove all, of course
 a.action = nil;</pre>
 <h3><a class='anchor' name='Use%20Slider%20for%20triggering%20sounds'>Use Slider for triggering sounds</a></h3>
-<pre class='code prettyprint lang-sc'>(
-s.waitForBoot({
-    SynthDef(\pluck,{arg freq=55;
-        Out.ar(0,
-        Pluck.ar(WhiteNoise.ar(0.06),
-            EnvGen.kr(Env.perc(0,4), 1.0, doneAction: Done.freeSelf),
-            freq.reciprocal,
-            freq.reciprocal,
-            10,
-        coef:0.1)
-        );
-    }).add;
+<pre class='code prettyprint lang-sc'>    (
+        s.waitForBoot({
+            
+            SynthDef(\pluck, { |out, freq=55|
+                Out.ar(out,
+                    Pluck.ar(WhiteNoise.ar(0.06),
+                        EnvGen.kr(Env.perc(0,4), 1.0, doneAction: Done.freeSelf),
+                        freq.reciprocal,
+                        freq.reciprocal,
+                        10,
+                        coef:0.1)
+                );
+            }).add;
 
 
-    w = Window.new("Hold arrow keys to trigger sound",Rect(300,Window.screenBounds.height-300,400,100)).front;
-    a = Slider(w, Rect(50, 20, 300, 40))
-        .value_(0.5)
-        .step_(0.05)
-        .focus
-        .action_({
-            // trigger a synth with varying frequencies
-            Synth(\pluck, [\freq,55+(1100*a.value)]);
-            w.view.background_(Gradient(Color.rand,Color.rand));
-        })
-});
+            w = Window.new("Hold arrow keys to trigger sound",
+                Rect(300, Window.screenBounds.height - 300, 400, 100)).front;
+            a = Slider(w, Rect(50, 20, 300, 40)).value_(0.5).step_(0.05).focus
+            .action_({
+                // trigger a synth with varying frequencies
+                Synth(\pluck, [\freq, 55 + (1100 * a.value)]);
+                w.view.background_(Gradient(Color.rand,Color.rand));
+            })
+        });
 
-)</pre>
+    )</pre>
 <h3><a class='anchor' name='Change%20background%20color%20of%20Window'>Change background color of Window</a></h3>
 <pre class='code prettyprint lang-sc'>(
 w = Window("RGB fader", Rect(100, 500, 400, 400))

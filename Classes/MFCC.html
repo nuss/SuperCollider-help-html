@@ -37,7 +37,7 @@ var scdoc_title = 'MFCC';
 <ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>Generates a set of MFCCs; these are obtained from a band-based frequency representation (using the Mel scale by default), and then a discrete cosine transform (DCT). The DCT is an efficient approximation for principal components analysis, so that it allows a compression, or reduction of dimensionality, of the data, in this case reducing 42 band readings to a smaller set of MFCCs. A small number of features (the coefficients) end up describing the spectrum. The MFCCs are commonly used as timbral descriptors.
-<p>Output values are somewhat normalised for the range 0.0 to 1.0, but there are no guarantees on exact conformance to this. Commonly, the first coefficient will be the highest value.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>Output values are somewhat normalised for the range 0.0 to 1.0, but there are no guarantees on exact conformance to this. Commonly, the first coefficient will be the highest value.<div class='note'><span class='notelabel'>NOTE:</span> Drafts of an MFCC UGen were prepared by both Dan Stowell and Nick Collins; their various ideas are combined here in a cross platform compatible UGen. Mel scale spacing with triangular crossfade overlap is used by default for the bands, approximately tracking the human critical band spacing and bandwidth. Variants such as BFCC (Bark) and EFCC (ERB) given similar results in practice; the Mel scale as used here is the standard as adapted from the speech recognition literature and now applied in music information retrieval.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>MFCC.</span><a class='method-name' name='*kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>chain</span>, <span class='argstr'>numcoeff: 13</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
@@ -54,37 +54,34 @@ var scdoc_title = 'MFCC';
 
 
 // assumes hop of half fftsize, fine
-b = Buffer.alloc(s, 1024, 1); // for sampling rates 44100 and 48000
-//b = Buffer.alloc(s, 2048, 1); // for sampling rates 88200 and 96000
 
 d = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");
 
 
 (
 x = {
-var in, fft, array;
+    var in, fft, array;
 
-//in = PlayBuf.ar(1, d, BufRateScale.kr(d), 1, 0, 1);
+    //in = PlayBuf.ar(1, d, BufRateScale.kr(d), 1, 0, 1);
 
-in = SoundIn.ar(0);
+    in = SoundIn.ar(0);
+    fft = FFT(LocalBuf(1, 1024), in);  // for sampling rates 44100 and 48000
+    //fft = FFT(LocalBuf(1, 2048), in);  // for sampling rates 88200 and 96000
 
-fft = FFT(b, in);
+    array = MFCC.kr(fft);
 
-array = MFCC.kr(fft);
+    array.size.postln;
 
-array.size.postln;
-
-Out.kr(0, array);
-
-Out.ar(0,Pan2.ar(in));
+    Out.kr(0, array); // control bus out
+    Out.ar(0, Pan2.ar(in)); // audio bus out
 }.play
 )
 
 
-c = Bus.new('control', 0, 13);
+c = Bus(\control, 0, 13);
 
 // poll coefficients
-c.getn(13, { arg val; { val.plot; }.defer });
+c.getn(13, { |val| { val.plot }.defer });
 
 
 // Continuous graphical display of MFCC values; free routine before closing window
@@ -105,14 +102,13 @@ w.front;
 
 r = {
 
-inf.do{
+    inf.do {
 
-c.getn(13, { arg val; { ms.value_(val * 0.9) }.defer });
+        c.getn(13, { |val| { ms.value_(val * 0.9) }.defer });
+        0.04.wait; // 25 frames per second
+    }
 
-0.04.wait; // 25 frames per second
-};
-
-}.fork;
+}.fork
 
 )
 
@@ -125,8 +121,7 @@ c.free;
 x.free;
 w.close;
 )</pre>
-
-<p>Research notes: Drafts of an MFCC UGen were prepared by both Dan Stowell and Nick Collins; their various ideas are combined here in a cross platform compatible UGen. Mel scale spacing with triangular crossfade overlap is used by default for the bands, approximately tracking the human critical band spacing and bandwidth. Variants such as BFCC (Bark) and EFCC (ERB) given similar results in practice; the Mel scale as used here is the standard as adapted from the speech recognition literature and now applied in music information retrieval.<pre class='code prettyprint lang-sc'>// Calculating Mel Scale Bands; allow up to 42 coefficients, so up to 42 bands
+<pre class='code prettyprint lang-sc'>// Calculating Mel Scale Bands; allow up to 42 coefficients, so up to 42 bands
 // first part of this code adapted from Dan Stowell and Jamie Bullock Mel scale implementation
 // could later add Bark and ERB options, and possibility of buffer of data to be passed to the UGen for alternative freq warpings
 (
@@ -147,18 +142,18 @@ freq_bands = 42;
 
 //whichbandscale = 0; // 0 = mel; 1 = bark (CB) 2 = ERB
 //
-//lintoscale = {arg freq;
-//switch(whichbandscale,0,{1127 * log(1 + (freq / 700))}, 1, {}, 2, {}).value
+//lintoscale = { |freq|
+//switch(whichbandscale, 0, { 1127 * log(1 + (freq / 700))}, 1, { }, 2, { }).value
 //};
-//scaletolin = {arg scalepos;
-//switch(whichbandscale, 0, {700 * (exp(scalepos / 1127.0) -1);}, 1, {}, 2, {}).value
+//scaletolin = { |scalepos|
+//switch(whichbandscale, 0, {700 * (exp(scalepos / 1127.0) -1) }, 1, { }, 2, { }).value
 //};
 
-lintoscale = {arg freq;
-1127 * log(1 + (freq / 700))
+lintoscale = { |freq|
+    1127 * log(1 + (freq / 700))
 };
-scaletolin = {arg scalepos;
-700 * (exp(scalepos / 1127.0) -1);
+scaletolin = { |scalepos|
+    700 * (exp(scalepos / 1127.0) -1)
 };
 
 mel_freq_max = lintoscale.value(freq_max); // 1127 * log(1 + (freq_max / 700));
@@ -167,9 +162,9 @@ freq_bw_mel = (mel_freq_max - mel_freq_min) / freq_bands;
 
 [mel_freq_max, mel_freq_min, freq_bw_mel].postln;
 
-mel_peak = Array.fill(freq_bands + 2, {0.0});
-lin_peak = Array.fill(freq_bands + 2, {0.0});
-fft_peak = Array.fill(freq_bands + 2, {0.0});
+mel_peak = Array.fill(freq_bands + 2, { 0.0 });
+lin_peak = Array.fill(freq_bands + 2, { 0.0 });
+fft_peak = Array.fill(freq_bands + 2, { 0.0 });
 
 freqperbin = sr / fftsize; // SR/N
 
@@ -177,11 +172,11 @@ mel_peak[0] = mel_freq_min;
 lin_peak[0] = freq_min; // === 700 * (exp(mel_peak[0] / 1127) - 1);
 fft_peak[0] = (lin_peak[0] / freqperbin).asInteger;
 
-for(1, freq_bands + 1,{|n|
+for(1, freq_bands + 1, { |n|
 
- mel_peak[n] = mel_peak[n - 1] + freq_bw_mel;
- lin_peak[n] = scaletolin.value(mel_peak[n]); // 700 * (exp(mel_peak[n] / 1127.0) -1);
- fft_peak[n] = ((lin_peak[n] / freqperbin).asInteger).min(halffftsize); // fft size //rounds down here
+    mel_peak[n] = mel_peak[n - 1] + freq_bw_mel;
+    lin_peak[n] = scaletolin.value(mel_peak[n]); // 700 * (exp(mel_peak[n] / 1127.0) -1);
+    fft_peak[n] = ((lin_peak[n] / freqperbin).asInteger).min(halffftsize); // fft size //rounds down here
 
 });
 
@@ -191,25 +186,25 @@ for(1, freq_bands + 1,{|n|
 
 //  [2 / (lin_peak[freq_bands + 1] - lin_peak[freq_bands-1]), 1.0 / (2 / (lin_peak[2] - lin_peak[0]))].postln;
 
-fftbinstart = Array.fill(freq_bands, {0});
-fftbinend = Array.fill(freq_bands, {0});
-fftbincumul = Array.fill(freq_bands+1, {0});
+fftbinstart = Array.fill(freq_bands, { 0 });
+fftbinend = Array.fill(freq_bands, { 0 });
+fftbincumul = Array.fill(freq_bands + 1, { 0 });
 fftbinmult = [];
 
 pos = 0;
 
 freq_bands.do {|i|
 
-    //var normmult=1.0; // preserve power, don't modify band power by area
+    //var normmult = 1.0; // preserve power, don't modify band power by area
     var startbin, endbin, numbins, averager;
 
-    if(i == 0,{
-    startbin = 0;
-    endbin = fft_peak[i + 1] - 1;
-    },{
-    startbin = fft_peak[i - 1] + 1;
-    endbin = fft_peak[i + 1] - 1;
-    });
+    if(i == 0) {
+        startbin = 0;
+        endbin = fft_peak[i + 1] - 1;
+    } {
+        startbin = fft_peak[i - 1] + 1;
+        endbin = fft_peak[i + 1] - 1;
+    };
 
     numbins = endbin - startbin + 1;
     averager = 1.0 / numbins;
@@ -223,7 +218,7 @@ freq_bands.do {|i|
 
     fftbinmult = fftbinmult ++ (Array.series(tmp + 1, 1.0 / (tmp + 1), 1.0 / (tmp + 1)));
 
-    tmp= endbin- (fft_peak[i]);
+    tmp = endbin - fft_peak[i];
 
     fftbinmult = fftbinmult ++ (Array.series(tmp, 1.0 + ((-1.0) / (tmp + 1)), (-1.0) / (tmp + 1)));
 
@@ -251,12 +246,17 @@ a = (26.81 / (1 + (1960 / ((100, 200..22000))))) - 0.53;
 a.plot;
 
 // ERBs (rough calculation, only really valid under 6000Hz, real scale goes up to 42 rather than 37 in 22000 Hz)
-a = Array.fill(220,{|i| var f; f = i * 100; 11.17 * log((f + 312) / (f + 14675)) + 43.0});
+(
+a = Array.fill(220, {|i| 
+    var f = i * 100; 
+    11.17 * log((f + 312) / (f + 14675)) + 43.0 
+})
+)
 a.plot
 
 // generating DCT coefficients
 // don't generate i=0 coefficient since it
-a = Array.fill(42, {|i| cos(pi / 42.0 * ((0..41) + 0.5) * (i + 1))});
+a = Array.fill(42, {|i| cos(pi / 42.0 * ((0..41) + 0.5) * (i + 1)) });
 Post &lt;&lt; a.flatten &lt;&lt; nl;</pre>
 
 <p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/MFCC.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/MFCC.schelp</a><br>link::Classes/MFCC::<br></div></div></body></html>

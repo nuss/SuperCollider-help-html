@@ -56,19 +56,7 @@ var scdoc_title = 'LFSaw';
 // used as both Oscillator and LFO:
 { LFSaw.ar(LFSaw.kr(4, 0, 200, 400), 0, 0.1) }.play</pre>
 
-<p>Display special behaviour of initial phase parameter:<pre class='code prettyprint lang-sc'>// 0.15 seconds of 3-channel buffer
-b = Buffer.alloc(s, s.sampleRate * 0.15, 3);
-
-(
-// generate Signal
-m = SynthDef ("help-lfsawphase", {|rate = 20|
-    var l;
-    l = LFSaw.ar(rate, [0, 1, 2]); // three channels, three phases
-    RecordBuf.ar(l, b, doneAction: Done.freeSelf, loop: 0);
-    Out.ar(0, l * -20.dbamp);
-}).play(s);
-)
-
-b.plot;    // see the difference</pre>
+<p>Display the special behaviour of the initial phase parameter:<pre class='code prettyprint lang-sc'> // three channels, three phases
+{ LFSaw.ar(20, [0, 1, 2]) }.plot(0.1)</pre>
 
 <p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/LFSaw.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/LFSaw.schelp</a><br>link::Classes/LFSaw::<br></div></div></body></html>

@@ -181,11 +181,11 @@ p.stop;</pre>
 <h3><a class='anchor' name='Argument%20name%20prefixes'>Argument name prefixes</a></h3>
 
 <p>One other subtle point about synth argument names. In a SynthDef, argument names can have the prefix <code class='code prettyprint lang-sc'>t_</code> to indicate a "trigger control," or <code class='code prettyprint lang-sc'>i_</code> for an "initial rate" control (meaning that it holds the value set when the Synth is first played). This is described in <a href="./../../Classes/SynthDef.html">SynthDef</a> help. Pbind and its cousins should leave out the prefixes, e.g.:<pre class='code prettyprint lang-sc'>(
-SynthDef(\trig_demo, { |freq, gate = 1, t_trig = 1|    // t_trig here
+SynthDef(\trig_demo, { |out, freq = 440, gate = 1, t_trig = 1|    // t_trig here
     var    env = Decay2.kr(t_trig, 0.01, 0.1),
         sig = SinOsc.ar(freq, 0, env)
             * Linen.kr(gate, 0.01, 0.1, 0.1, doneAction: Done.freeSelf);
-    Out.ar(0, sig ! 2)
+    Out.ar(out, sig ! 2)
 }).add;
 )
 

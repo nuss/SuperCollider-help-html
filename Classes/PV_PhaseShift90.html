@@ -50,13 +50,13 @@ var scdoc_title = 'PV_PhaseShift90';
 <pre class='code prettyprint lang-sc'>s.boot;
 
 (
-{ arg out=0, bufnum=0;
+{ |out=0, bufnum=0|
     var in, fft, fft2, shifted;
     in = SinOsc.ar(500, 0, 0.1);
     fft = FFT(LocalBuf(2048), in);
     fft2 = FFT(LocalBuf(2048), in);
     shifted = PV_PhaseShift90(fft);
-    Out.ar(0, [IFFT(fft2), IFFT(shifted)]);
+    Out.ar(out, [IFFT(fft2), IFFT(shifted)]);
 }.scope
 )</pre>
 <div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/PV_PhaseShift90.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/PV_PhaseShift90.schelp</a><br>link::Classes/PV_PhaseShift90::<br></div></div></body></html>

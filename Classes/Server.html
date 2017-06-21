@@ -599,11 +599,11 @@ ServerTree.remove(f);</pre>
 
 // something to record
 (
-SynthDef("bubbles", {
-    var f, zout;
+SynthDef("bubbles", { |out|
+    var f, sound;
     f = LFSaw.kr(0.4, 0, 24, LFSaw.kr([8,7.23], 0, 3, 80)).midicps; // glissando function
-    zout = CombN.ar(SinOsc.ar(f, 0, 0.04), 0.2, 0.2, 4); // echoing sine wave
-    Out.ar(0, zout);
+    sound = CombN.ar(SinOsc.ar(f, 0, 0.04), 0.2, 0.2, 4); // echoing sine wave
+    Out.ar(out, sound);
 }).add;
 )
 

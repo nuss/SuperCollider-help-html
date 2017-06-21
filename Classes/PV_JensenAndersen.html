@@ -54,12 +54,13 @@ var scdoc_title = 'PV_JensenAndersen';
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 <pre class='code prettyprint lang-sc'>(
-SynthDef(\fftod, { var source1, detect;
-        source1 = SoundIn.ar(0);
-        detect = PV_JensenAndersen.ar(FFT(LocalBuf(2048), source1),
-            threshold:MouseX.kr(0.1,1.0));
-        Out.ar(0, SinOsc.ar([440,445], 0, Decay.ar(0.1*detect, 0.1)));
-    }).play(s);
+SynthDef(\fftod, { |out|
+    var source1, detect, chain;
+    source1 = SoundIn.ar(0);
+    chain = FFT(LocalBuf(2048), source1);
+    detect = PV_JensenAndersen.ar(chain, threshold:MouseX.kr(0.1, 1.0));
+    Out.ar(out, SinOsc.ar([440, 445], 0, Decay.ar(0.1 * detect, 0.1)));
+}).play(s);
 )</pre>
 
 <p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/PV_JensenAndersen.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/PV_JensenAndersen.schelp</a><br>link::Classes/PV_JensenAndersen::<br></div></div></body></html>

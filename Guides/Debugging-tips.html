@@ -125,11 +125,11 @@ l.array.plot;  // to view the results graphically</pre>
 
 <p>The <code class='code prettyprint lang-sc'>/n_trace</code> message causes the server to print a list of all the UGens in the node as well as their input and output values.
 <p>It takes some practice to read a synthdef trace, but it's the ultimate source of information when a synthdef is not behaving as expected. Signal flow can be identified by looking at the numbers at inputs and outputs. When a UGen's output feeds into another's input, the values will be the same at both ends.
-<p>For a concrete example, let's look at a synthdef that doesn't work. The intent is to generate a detuned sawtooth wave and run it through a set of parallel resonant filters whose cut-off frequencies are modulating randomly. We run the synth and generate the trace (reproduced below).<pre class='code prettyprint lang-sc'>SynthDef(\resonz, { |freq = 440|
+<p>For a concrete example, let's look at a synthdef that doesn't work. The intent is to generate a detuned sawtooth wave and run it through a set of parallel resonant filters whose cut-off frequencies are modulating randomly. We run the synth and generate the trace (reproduced below).<pre class='code prettyprint lang-sc'>SynthDef(\resonz, { |out, freq = 440|
     var    sig, ffreq;
     sig = Saw.ar([freq, freq+1], 0.2);
     ffreq = LFNoise1.kr(2, 1, 0.5);
-    Out.ar(0, Resonz.ar(sig, (800, 1000..1800) * ffreq, 0.1))
+    Out.ar(out, Resonz.ar(sig, (800, 1000..1800) * ffreq, 0.1))
 }).send(s);
 
 a = Synth(\resonz);
@@ -204,11 +204,11 @@ a.free;
 <p>Two problems leap out from the trace: first, there are six channels of the output (there should be 1), and second, all the outputs are well outside the audio range -1..1. The first is because we use multichannel expansion to produce an array of Resonz filters, but we don't mix them down into a single channel.
 <p>Note that there are no out of range signals prior to each Resonz. Looking at the Resonz inputs, we see that the frequency input is negative, which will blow up most digital filters.
 <p>The resonance frequency derives from multiplying an array by a LFNoise1. Tracing back (the red, italicized numbers), the LFNoise1 is outputting a negative number, where we expected it to be 0.5..1.5. But, the mul and add inputs are reversed!
-<p>If you look very carefully at the trace, you will see another problem relating to multichannel expansion. The two components of the detuned sawtooth go into alternate Resonz'es, where we expected both to go, combined, into every Resonz. To fix it, the sawtooths need to be mixed as well.<pre class='code prettyprint lang-sc'>SynthDef(\resonz, { |freq = 440|
+<p>If you look very carefully at the trace, you will see another problem relating to multichannel expansion. The two components of the detuned sawtooth go into alternate Resonz'es, where we expected both to go, combined, into every Resonz. To fix it, the sawtooths need to be mixed as well.<pre class='code prettyprint lang-sc'>SynthDef(\resonz, { |out, freq = 440|
     var    sig, ffreq;
     sig = Mix.ar(Saw.ar([freq, freq+1], 0.2));
     ffreq = LFNoise1.kr(2, 0.5, 1);
-    Out.ar(0, Mix.ar(Resonz.ar(sig, (800, 1000..1800) * ffreq, 0.1)))
+    Out.ar(out, Mix.ar(Resonz.ar(sig, (800, 1000..1800) * ffreq, 0.1)))
 }).send(s);
 
 a = Synth(\resonz);

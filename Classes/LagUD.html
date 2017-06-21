@@ -50,10 +50,10 @@ var scdoc_title = 'LagUD';
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>( // used to lag pitch
-SynthDef( \lagud_help,
-{    arg freq=300,lagup=1, lagdown=5;
-    Out.ar( 0,
+<pre class='code prettyprint lang-sc'>// used to lag pitch
+(
+SynthDef(\lagud_help, { |out, freq=300, lagup=1, lagdown=5|
+    Out.ar(out,
         SinOsc.ar( // sine wave
             LagUD.kr( // lag the frequency
                 freq,
@@ -66,9 +66,10 @@ SynthDef( \lagud_help,
     );
 }).add;
 )
-x = Synth.new( \lagud_help ); // create the synth
-x.set( \freq, 500 ); // set the frequency to a higher value (takes 1 second)
-x.set( \freq, 100 ); // set the frequency to a lower value (takes 5 seconds)
+
+x = Synth(\lagud_help); // create the synth
+x.set(\freq, 500); // set the frequency to a higher value (takes 1 second)
+x.set(\freq, 100); // set the frequency to a lower value (takes 5 seconds)
 x.free;</pre>
 
 <p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/LagUD.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/LagUD.schelp</a><br>link::Classes/LagUD::<br></div></div></body></html>

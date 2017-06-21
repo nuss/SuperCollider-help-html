@@ -51,7 +51,8 @@ var scdoc_title = 'Convolution2L';
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>(// allocate three buffers
+<pre class='code prettyprint lang-sc'>// allocate three buffers
+(
 b = Buffer.alloc(s, 2048);
 c = Buffer.alloc(s, 2048);
 d = Buffer.alloc(s, 2048);
@@ -62,19 +63,17 @@ d.zero;
 )
 
 (
-50.do({ |it| c.set(20*it+10, 1.0.rand); });
-3.do({ |it| b.set(400*it+100, 1); });
-20.do({ |it| d.set(40*it+20, 1); });
+50.do { |it| c.set(20 * it + 10, 1.0.rand) };
+3.do { |it| b.set(400 * it + 100, 1) };
+20.do { |it| d.set(40 * it + 20, 1) };
 )</pre>
 
 <p><pre class='code prettyprint lang-sc'>(
-SynthDef(\conv_test, { arg kernel, t_trig=0;
-    var input;
-
-    input=Impulse.ar(1);
-
-    // must have power of two framesize
-    Out.ar(0, Convolution2L.ar(input, kernel, t_trig, 2048, 1, 0.5));
+SynthDef(\conv_test, { |out, kernel, t_trig=0|
+    var input = Impulse.ar(1);
+    var framesize = 2048; // must have power of two
+    var result = Convolution2L.ar(input, kernel, t_trig, framesize, 1, 0.5);
+    Out.ar(out, result);
 }).add
 )
 
@@ -87,7 +86,7 @@ x.set(\kernel, d);
 x.set(\t_trig, 1); // after this trigger, the change will take effect.
 
 d.zero;
-40.do({ |it| d.set(20*it+10, 1); });// changing the buffers' contents
+40.do { |it| d.set(20 * it + 10, 1) };// changing the buffers' contents
 x.set(\t_trig, 1); // after this trigger, the change will take effect.
 
 x.set(\kernel, b);
@@ -96,13 +95,11 @@ x.set(\t_trig, 1); // after this trigger, the change will take effect.
 x.free;</pre>
 <pre class='code prettyprint lang-sc'>// longer crossfade
 (
-SynthDef( \conv_test2, { arg kernel, t_trig=0;
-    var input;
-
-    input=Impulse.ar(1);
-
-    // must have power of two framesize
-    Out.ar(0, Convolution2L.ar(input, kernel, t_trig, 2048, 5, 0.5));
+SynthDef(\conv_test2, { |out, kernel, t_trig=0|
+    var input = Impulse.ar(1);
+    var framesize = 2048; // must have power of two
+    var result = Convolution2L.ar(input, kernel, t_trig, 2048, 5, 0.5);
+    Out.ar(out, result);
 }).add
 )
 
@@ -115,7 +112,9 @@ x.set(\kernel, d);
 x.set(\t_trig, 1); // after this trigger, the change will take effect.
 
 d.zero;
-40.do({ |it| d.set(20*it+10, 1); });// changing the buffers' contents
+
+40.do { |it| d.set(20 * it + 10, 1) };// changing the buffers' contents
+
 x.set(\t_trig, 1); // after this trigger, the change will take effect.
 
 x.set(\kernel, b);
@@ -127,34 +126,30 @@ x.free;</pre>
 b = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");
 
 (
-    { var input, kernel;
-
-    input= SoundIn.ar(0);
-
-    // must have power of two framesize
+{
+    var input = SoundIn.ar(0);
+    var framesize = 2048; // must have power of two
     Convolution2L.ar(input, b, 0, 512, 1, 0.5);
-    }.play;
-
+}.play
 )</pre>
 <pre class='code prettyprint lang-sc'>// another example
 
 (
 // must have power of two framesize- FFT size will be sorted by Convolution2 to be double this
 // maximum is currently a=8192 for FFT of size 16384
-a=2048;
+a = 2048;
 // kernel buffer
 g = Buffer.alloc(s, a, 1);
 )
 
 (
 g.set(0, 1.0);
-100.do({arg i; g.set(a.rand, (i+1).reciprocal)});
+100.do { |i| g.set(a.rand, (i + 1).reciprocal) };
 )
 
 (
 // random impulse response
-
-    {
+{
     var input, inputAmp, threshhold, gate;
 
     input = SoundIn.ar(0);
@@ -162,10 +157,11 @@ g.set(0, 1.0);
     threshhold = 0.02;    // noise gating threshold
     gate = Lag.kr(inputAmp &gt; threshhold, 0.01);
 
-    Convolution2L.ar(input*gate, g, 0, a, 1, 0.5);
-    }.play;
+    Convolution2L.ar(input * gate, g, 0, a, 1, 0.5);
+}.play
+)
 
-)</pre>
+g.free;</pre>
 <pre class='code prettyprint lang-sc'>// one last example
 (
 b = Buffer.alloc(s, 512, 1);
@@ -173,13 +169,12 @@ b.sine1(1.0/[1, 2, 3, 4, 5, 6], true, true, true);
 )
 
 (
-    { var input, kernel;
+{
+    var input = SoundIn.ar(0);
+    var framesize = 512;
+    Convolution2L.ar(input, b, 0, framesize, 1, 0.5);
+}.play
+)
 
-    input=SoundIn.ar(0);
-
-    // must have power of two framesize
-    Convolution2L.ar(input, b, 0, 512, 1, 0.5);
-    }.play;
-
-)</pre>
+b.free;</pre>
 <div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Convolution2L.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Convolution2L.schelp</a><br>link::Classes/Convolution2L::<br></div></div></body></html>

@@ -50,10 +50,10 @@ var midi, dur;
 midi = Pseq([60, 72, 71, 67, 69, 71, 72, 60, 69, 67], 1).asStream;
 dur = Pseq([2, 2, 1, 0.5, 0.5, 1, 1, 2, 2, 3], 1).asStream;
 
-SynthDef(\smooth, { |freq = 440, sustain = 1, amp = 0.5|
+SynthDef(\smooth, { |out, freq = 440, sustain = 1, amp = 0.5|
     var sig;
     sig = SinOsc.ar(freq, 0, amp) * EnvGen.kr(Env.linen(0.05, sustain, 0.1), doneAction: Done.freeSelf);
-    Out.ar(0, sig ! 2)
+    Out.ar(out, sig ! 2)
 }).add;
 
 r = Task({
@@ -90,10 +90,10 @@ p.nextN(15);    // get 15 values from the pattern's stream</pre>
 <p>This is just a taste, meant to illustrate the kinds of flexibility you can get with patterns. As with any rich and adaptable structure, the best way is to start with simple cases and gradually extend into more complicated setups.<h2><a class='anchor' name='Playing%20notes%20with%20a%20pattern:%20Pbind'>Playing notes with a pattern: Pbind</a></h2>
 
 <p>Not only can patterns produce data for notes, but they can also play the notes themselves. 'Over the Rainbow' again.<pre class='code prettyprint lang-sc'>(
-SynthDef(\smooth, { |freq = 440, sustain = 1, amp = 0.5|
+SynthDef(\smooth, { |out, freq = 440, sustain = 1, amp = 0.5|
     var sig;
     sig = SinOsc.ar(freq, 0, amp) * EnvGen.kr(Env.linen(0.05, sustain, 0.1), doneAction: Done.freeSelf);
-    Out.ar(0, sig ! 2)
+    Out.ar(out, sig ! 2)
 }).add;
 )
 
@@ -118,7 +118,7 @@ p = Pbind(
 <p>An introductory tutorial cannot cover all the possibilities. Learning a set of core pattern classes is important; the <a href="./../../Tutorials/A-Practical-Guide/PG_01_Introduction.html">Practical Guide to Patterns</a> help file series is a more comprehensive introduction. Pattern manipulations, and ways to combine or nest patterns, open up the field to nearly every compositional need.
 <p>For example, we can generate a rhythmic (but not necessarily metric) bassline by choosing randomly from a set of Pbind sequences. (Some of these will use Pmono, which is a variant of Pbind designed to play monophonic synth lines.) While this is a bigger block of code, its structure is fairly simple and it brings together several concepts introduced in the sequencing tutorials. Note that the quant argument to play is used to keep a couple of distinct sequences together on the beat.
 <p>Don't be intimidated by the bassline pattern. At a higher level, it reduces to <strong>Pxrand([a, b, c, d], inf)</strong>, which simply chooses items randomly without repeating any of them twice in a row. It happens that each item is an event pattern that plays a series of notes, but this doesn't matter to Pxrand. It just chooses an item, plays it through to the end, and then chooses the next, and so forth. Viewed this way, the pattern is an elegant expression of the idea of selecting phrases. The code representation is straightforward to relate to a musical conception.<pre class='code prettyprint lang-sc'>(
-SynthDef(\bass, { |freq = 440, gate = 1, amp = 0.5, slideTime = 0.17, ffreq = 1100, width = 0.15,
+SynthDef(\bass, { |out, freq = 440, gate = 1, amp = 0.5, slideTime = 0.17, ffreq = 1100, width = 0.15,
         detune = 1.005, preamp = 4|
     var    sig,
         env = Env.adsr(0.01, 0.3, 0.4, 0.1);
@@ -126,7 +126,7 @@ SynthDef(\bass, { |freq = 440, gate = 1, amp = 0.5, slideTime = 0.17, ffreq = 11
     sig = Mix(VarSaw.ar([freq, freq * detune], 0, width, preamp)).distort * amp
         * EnvGen.kr(env, gate, doneAction: Done.freeSelf);
     sig = LPF.ar(sig, ffreq);
-    Out.ar(0, sig ! 2)
+    Out.ar(out, sig ! 2)
 }).add;
 
 TempoClock.default.tempo = 132/60;
@@ -159,11 +159,11 @@ p = Pxrand([
 
 // totally cheesy, but who could resist?
 (
-SynthDef(\kik, { |preamp = 1, amp = 1|
+SynthDef(\kik, { |out, preamp = 1, amp = 1|
     var    freq = EnvGen.kr(Env([400, 66], [0.08], -3)),
         sig = SinOsc.ar(freq, 0.5pi, preamp).distort * amp
             * EnvGen.kr(Env([0, 1, 0.8, 0], [0.01, 0.1, 0.2]), doneAction: Done.freeSelf);
-    Out.ar(0, sig ! 2);
+    Out.ar(out, sig ! 2);
 }).add;
 
 // before you play:
