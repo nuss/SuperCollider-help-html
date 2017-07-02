@@ -6,25 +6,26 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Collection';
+var scdoc_sc_version = '3.9dev';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
 <script src='./../prettify.js' type='text/javascript'></script>
 <script src='./../lang-sc.js' type='text/javascript'></script>
 </head>
-<ul id='menubar'></ul>
 <body onload='fixTOC();prettyPrint()'>
 <div class='contents'>
+<div id='menubar'></div>
 <div class='header'>
 <div id='label'>
-<span id='folder'>SuperCollider 3.9dev Classes</span>
+<span id='folder'>Classes</span>
  | <span id='categories'><a href='./../Browse.html#Collections'>Collections</a></span>
-</div><h1>Collection</h1>
+</div><h1>Collection<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+</h1>
 <div id='summary'>Abstract superclass of all collections</div>
 </div>
 <div class='subheader'>
-<div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/Collection.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/Collection.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
-<div id='subclasses'>Subclasses: <a href="../Classes/Array2D.html">Array2D</a>, <a href="../Classes/Bag.html">Bag</a>, <a href="../Classes/Interval.html">Interval</a>, <a href="../Classes/MultiLevelIdentityDictionary.html">MultiLevelIdentityDictionary</a>, <a href="../Classes/Pair.html">Pair</a>, <a href="../Classes/Range.html">Range</a>, <a href="../Classes/SequenceableCollection.html">SequenceableCollection</a>, <a href="../Classes/Set.html">Set</a>, <a href="../Classes/TwoWayIdentityDictionary.html">TwoWayIdentityDictionary</a></div>
+<div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/Collection.sc' title='/usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/Collection.sc'>Collection.sc</a></div><div id='subclasses'>Subclasses: <a href="../Classes/Array2D.html">Array2D</a>, <a href="../Classes/Bag.html">Bag</a>, <a href="../Classes/Interval.html">Interval</a>, <a href="../Classes/MultiLevelIdentityDictionary.html">MultiLevelIdentityDictionary</a>, <span id='hiddensubclasses' style='display:none;'><a href="../Classes/Pair.html">Pair</a>, <a href="../Classes/Range.html">Range</a>, <a href="../Classes/SequenceableCollection.html">SequenceableCollection</a>, <a href="../Classes/Set.html">Set</a>, <a href="../Classes/TwoWayIdentityDictionary.html">TwoWayIdentityDictionary</a></span><a class='subclass_toggle' href='#' onclick='javascript:showAllSubclasses(this); return false'>&hellip;&nbsp;see&nbsp;all</a></div>
 <div id='related'>See also: <a href="./../Classes/List.html">List</a>, <a href="./../Classes/Array.html">Array</a>, <a href="./../Classes/Dictionary.html">Dictionary</a>, <a href="./../Classes/Bag.html">Bag</a>, <a href="./../Classes/Set.html">Set</a>, <a href="./../Classes/SortedList.html">SortedList</a></div>
 </div>
 <div id='toc'>
@@ -83,6 +84,11 @@ var scdoc_title = 'Collection';
 <li class='toc3'><a href='#-asList'>asList</a> </li>
 <li class='toc3'><a href='#-asSet'>asSet</a> </li>
 <li class='toc3'><a href='#-asSortedList'>asSortedList</a> </li>
+<li class='toc3'><a href='#-asDict'>asDict</a> </li>
+<li class='toc3'><a href='#-asAssociations'>asAssociations</a> </li>
+<li class='toc3'><a href='#-asPairs'>asPairs</a> </li>
+<li class='toc3'><a href='#-asEvent'>asEvent</a> </li>
+<li class='toc3'><a href='#-asDictWith'>asDictWith</a> </li>
 <li class='toc3'><a href='#-powerset'>powerset</a> </li>
 <li class='toc3'><a href='#-flopDict'>flopDict</a> </li>
 <li class='toc3'><a href='#-histo'>histo</a> </li>
@@ -104,11 +110,7 @@ var scdoc_title = 'Collection';
 <li class='toc3'><a href='#-=='>==</a> </li>
 <li class='toc3'><a href='#-@'>@</a> </li>
 <li class='toc3'><a href='#-asArray'>asArray</a> </li>
-<li class='toc3'><a href='#-asAssociations'>asAssociations</a> </li>
 <li class='toc3'><a href='#-asCollection'>asCollection</a> </li>
-<li class='toc3'><a href='#-asDict'>asDict</a> </li>
-<li class='toc3'><a href='#-asDictWith'>asDictWith</a> </li>
-<li class='toc3'><a href='#-asPairs'>asPairs</a> </li>
 <li class='toc3'><a href='#-asPenFunction'>asPenFunction</a> </li>
 <li class='toc3'><a href='#-asPerformDict'>asPerformDict</a> </li>
 <li class='toc3'><a href='#-asSMPTE'>asSMPTE</a> </li>
@@ -401,7 +403,27 @@ r.next; // nil.</pre>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asSortedList' href='./../Overviews/Methods.html#asSortedList'>asSortedList</a>(<span class='argstr'>function</span>)</h3>
 <div class='method'>
 <p>Answer a <a href="./../Classes/SortedList.html">SortedList</a> to which all items in the receiver have been added.<pre class='code prettyprint lang-sc'>List[2, 1, 4, 3].asSortedList;</pre>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-powerset' href='./../Overviews/Methods.html#powerset'>powerset</a></h3>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asDict' href='./../Overviews/Methods.html#asDict'>asDict</a>(<span class='argstr'>mergeFunc</span>, <span class='argstr'>class</span>)</h3>
+<div class='method'>
+<p>Answer a corresponding dictionary. This is part of the <a href="./../Reference/Key-Value-Pairs.html">Key Value Pairs</a> interface.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>mergeFunc<td class='argumentdesc'>
+<p>Use this function to decide what to do with duplicate keys.<tr><td class='argumentname'>class<td class='argumentdesc'>
+<p>The class of the dictionary to be returned. By default this is an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asAssociations' href='./../Overviews/Methods.html#asAssociations'>asAssociations</a>(<span class='argstr'>class</span>)</h3>
+<div class='method'>
+<p>Answer an array of <a href="./../Classes/Association.html">Association</a>s. If the first item of the list is already an associiation, return itself. This is part of the <a href="./../Reference/Key-Value-Pairs.html">Key Value Pairs</a> interface.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>class<td class='argumentdesc'>
+<p>The class of the collection to be returned. By default this is an <a href="./../Classes/Array.html">Array</a>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asPairs' href='./../Overviews/Methods.html#asPairs'>asPairs</a>(<span class='argstr'>class</span>)</h3>
+<div class='method'>
+<p>Answer an array with alternating key value pairs, like <code class='code prettyprint lang-sc'>[\freq, 1848, \amp, 0.2]</code>. This is part of the <a href="./../Reference/Key-Value-Pairs.html">Key Value Pairs</a> interface.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>class<td class='argumentdesc'>
+<p>The class of the collection to be returned. By default this is an <a href="./../Classes/Array.html">Array</a>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asEvent' href='./../Overviews/Methods.html#asEvent'>asEvent</a>(<span class='argstr'>mergeFunc</span>)</h3>
+<div class='method'>
+<p>Answer an <a href="./../Classes/Event.html">Event</a>: with the key value pairs. See <a href="./../Reference/Key-Value-Pairs.html">Key Value Pairs</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asDictWith' href='./../Overviews/Methods.html#asDictWith'>asDictWith</a>(<span class='argstr'>mergeFunc</span>, <span class='argstr'>class</span>)</h3>
+<div class='method'>
+<p>used internally by <code class='code prettyprint lang-sc'>asDict</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-powerset' href='./../Overviews/Methods.html#powerset'>powerset</a></h3>
 <div class='method'>
 <p>Returns all possible combinations of the collection's elements.<pre class='code prettyprint lang-sc'>Set[1, 2, 3].powerset;
 
@@ -472,11 +494,7 @@ Set[1, 5].isSubsetOf(a); // false</pre>
 <h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-==' href='./../Overviews/Methods.html#=='>==</a>(<span class='argstr'>aCollection</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-@' href='./../Overviews/Methods.html#@'>@</a>(<span class='argstr'>index</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asArray' href='./../Overviews/Methods.html#asArray'>asArray</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asAssociations' href='./../Overviews/Methods.html#asAssociations'>asAssociations</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asCollection' href='./../Overviews/Methods.html#asCollection'>asCollection</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asDict' href='./../Overviews/Methods.html#asDict'>asDict</a>(<span class='argstr'>mergeFunc</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asDictWith' href='./../Overviews/Methods.html#asDictWith'>asDictWith</a>(<span class='argstr'>mergeFunc</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asPairs' href='./../Overviews/Methods.html#asPairs'>asPairs</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asPenFunction' href='./../Overviews/Methods.html#asPenFunction'>asPenFunction</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SVGFile/extVarious-SVGFile.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SVGFile/extVarious-SVGFile.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asPerformDict' href='./../Overviews/Methods.html#asPerformDict'>asPerformDict</a>( <span class='argstr'>... methods</span>)</h3>
