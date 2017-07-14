@@ -77,7 +77,7 @@ var scdoc_sc_version = '3.9dev';
 <h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='thisThread' href='./../Overviews/Methods.html#thisThread'>thisThread</a></h3>
 <div class='method'>
 <p>The global pseudo-variable <code class='code prettyprint lang-sc'>thisThread</code> always represents the current Thread, i.e. the context in which the current code is running. It can be either the <a href="./../Classes/Process.html#-mainThread">main Thread</a> or the <a href="./../Classes/Routine.html">Routine</a> running the current code.
-<p>See also: <a href="./../Classes/Clock.html#Scheduling%20and%20Threads">Clock: Scheduling%20and%20Threads</a>.<pre class='code prettyprint lang-sc'>// example
+<p>See also: <a href="./../Classes/Clock.html#Scheduling%20and%20Threads">Clock: Scheduling and Threads</a>.<pre class='code prettyprint lang-sc'>// example
 thisThread.beats;
 thisThread.seconds;
 thisThread.clock;</pre>
@@ -110,7 +110,7 @@ thisThread.clock;</pre>
 <li>When code is run from the code editor, the command line, or in response to OSC and MIDI messages, the <a href="./../Classes/Process.html#-mainThread">main Thread</a>'s logical time is set to the current <strong>physical time</strong> (see <a href="./../Classes/Process.html#*elapsedTime">Process: *elapsedTime</a>).<li>When code <strong>scheduled</strong> on a <a href="./../Classes/Clock.html">Clock</a> is run, the <a href="./../Classes/Process.html#-mainThread">main Thread</a>'s logical time is set to the time the code was scheduled for.<li>Child Threads <strong>inherit</strong> logical time from their <a href="#-parent">parents</a> - whenever a Thread (Routine) is started or resumed, its logical time is set to that of the parent Thread.</ul>
 
 <p>However, a Thread's logical time may also be set <strong>manually</strong> (using this method or <a href="#-seconds">-seconds</a>). It may be useful to change the <strong>current</strong> Thread's time in order to manipulate behavior of streams that use the current logical time for their operation (e.g. streams created by <a href="./../Classes/Pstep.html">Pstep</a> and <a href="./../Classes/Pseg.html">Pseg</a> patterns). This will affect all code running within the current Thread, as well as any child Threads, due to logical time inheritance. Note however that changing <strong>another</strong> Thread's time will have no effect, because the time will be overridden by inheritance as soon as the Thread is run; likewise, any changes to the current Thread's time only have effect until the Thread is suspended (it <a href="./../Classes/Object.html#-yield">yields</a>) and resumed again.
-<p>See also: <a href="./../Classes/Clock.html#Scheduling%20and%20Threads">Clock: Scheduling%20and%20Threads</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-seconds' href='./../Overviews/Methods.html#seconds'>seconds</a></h3>
+<p>See also: <a href="./../Classes/Clock.html#Scheduling%20and%20Threads">Clock: Scheduling and Threads</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-seconds' href='./../Overviews/Methods.html#seconds'>seconds</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-seconds' href='./../Overviews/Methods.html#seconds'>seconds</a> = <span class='argstr'>inSeconds</span></h3>
 <div class='method'>
 <p>Get or set the current logical time of the Thread in seconds.
@@ -124,7 +124,7 @@ thisThread.clock;</pre>
 <li>When code is run from the code editor, the command line, or in response to OSC and MIDI messages, the <a href="./../Classes/Process.html#-mainThread">main Thread</a>'s clock is set to <a href="./../Classes/SystemClock.html">SystemClock</a>.<li>When code <strong>scheduled</strong> on a Clock is run, that clock becomes the <a href="./../Classes/Process.html#-mainThread">main Thread</a>'s clock.<li>Child Threads <strong>inherit</strong> the associated clock from their <a href="#-parent">parents</a>.</ul>
 
 <p>A Thread's associated clock may also be set <strong>manually</strong> using this method. Setting the <strong>current</strong> Thread's clock is useful to manipulate further behavior of the Thread or its child Threads, but the clock will be reset the next time the Thread is resumed, due to clock inheritance. For the same reason, setting <strong>another</strong> Thread's clock will have no effect on code running on it.
-<p>See also: <a href="./../Classes/Clock.html#Scheduling%20and%20Threads">Clock: Scheduling%20and%20Threads</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isPlaying' href='./../Overviews/Methods.html#isPlaying'>isPlaying</a></h3>
+<p>See also: <a href="./../Classes/Clock.html#Scheduling%20and%20Threads">Clock: Scheduling and Threads</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isPlaying' href='./../Overviews/Methods.html#isPlaying'>isPlaying</a></h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>true if it is playing.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-state' href='./../Overviews/Methods.html#state'>state</a></h3>
