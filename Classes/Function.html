@@ -70,6 +70,7 @@ var scdoc_sc_version = '3.9dev';
 <ul class='toc'><li class='toc3'><a href='#-play'>play</a> </li>
 <li class='toc3'><a href='#-scope'>scope</a> </li>
 <li class='toc3'><a href='#-plot'>plot</a> </li>
+<li class='toc3'><a href='#-asBuffer'>asBuffer</a> </li>
 </ul><li class='toc2'><a href='#Conversion'>Conversion</a></li>
 <ul class='toc'><li class='toc3'><a href='#-asSynthDef'>asSynthDef</a> </li>
 <li class='toc3'><a href='#-asDefName'>asDefName</a> </li>
@@ -368,7 +369,7 @@ SynthDef(\help_FuncPlay, { Out.ar(0, SinOsc.ar(440, 0, 0.3))}).play;</pre>
 <p>A zoom value for the scope's X axis. Larger values show more. The default is 1.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plot' href='./../Overviews/Methods.html#plot'>plot</a>(<span class='argstr'>duration: 0.01</span>, <span class='argstr'>server</span>, <span class='argstr'>bounds</span>, <span class='argstr'>minval</span>, <span class='argstr'>maxval</span>, <span class='argstr'>separately: false</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Math/PlotView.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Math/PlotView.sc</a></div>
 <div class='method'>
-<p>Calculates duration in seconds worth of the output of this function, and plots it in a GUI window. Unlike play and scope it will not work with explicit Out Ugens, so your function should return a UGen or an Array of them. The plot will be calculated in realtime.<pre class='code prettyprint lang-sc'>{ SinOsc.ar(440) }.plot(0.01, bounds: Window.screenBounds);
+<p>Calculates duration in seconds worth of the output of this function asynchronously, and plots it in a GUI window. Unlike play and scope it will not work with explicit Out Ugens, so your function should return a UGen or an Array of them. The plot will be calculated in realtime.<pre class='code prettyprint lang-sc'>{ SinOsc.ar(440) }.plot(0.01, bounds: Window.screenBounds);
 
 { {|i| SinOsc.ar(1 + i)}.dup(7) }.plot(1);</pre>
 <h4>Arguments:</h4>
@@ -379,7 +380,21 @@ SynthDef(\help_FuncPlay, { Out.ar(0, SinOsc.ar(440, 0, 0.3))}).play;</pre>
 <p>An instance of Rect or Point indicating the bounds of the plot window.<tr><td class='argumentname'>minval<td class='argumentdesc'>
 <p>the minimum value in the plot. Defaults to -1.0.<tr><td class='argumentname'>maxval<td class='argumentdesc'>
 <p>the maximum value in the plot. Defaults to 1.0.<tr><td class='argumentname'>separately<td class='argumentdesc'>
-<p>For multi channel signals, set whether to use separate value display ranges or not. a window to place the plot in. If nil, one will be created for you.</table></div><h3><a class='anchor' name='Conversion'>Conversion</a></h3>
+<p>For multi channel signals, set whether to use separate value display ranges or not. a window to place the plot in. If nil, one will be created for you.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asBuffer' href='./../Overviews/Methods.html#asBuffer'>asBuffer</a>(<span class='argstr'>duration: 0.01</span>, <span class='argstr'>server</span>, <span class='argstr'>action</span>, <span class='argstr'>fadeTime: 0</span>)</h3>
+<div class='method'>
+<p>Calculates duration in seconds worth of the output of this function asynchronously, and returns it in a <a href="./../Classes/Buffer.html">Buffer</a> of the number of channels. This method immediately returns a buffer, which takes <code class='code prettyprint lang-sc'>duration</code> seconds to become filled with data asynchronously. Then the action function is called.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>duration<td class='argumentdesc'>
+<p>The duration of the function to plot in seconds. The default is 0.01.<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>The server on which the function is calculated. The default is <code class='code prettyprint lang-sc'>Server.default</code>.<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>A function that is called when the buffer is filled. It is passed the buffer as argument.<tr><td class='argumentname'>fadeTime<td class='argumentdesc'>
+<p>A fade in and out time in seconds. Only when greater than zero, an envelope is applied to the signal to avoid clicks (default: 0).</table><h4>Discussion:</h4>
+<pre class='code prettyprint lang-sc'>// record a buffer
+b = { Blip.ar(XLine.kr(10000, 4, 3) * [1, 1.2], 20) * 0.1 }.asBuffer(3, fadeTime:0.1)
+b.plot; // after 3 seconds, you can see it.
+// play the soundfile back
+{ PlayBuf.ar(b.numChannels, b, LFNoise2.kr(2 ! 8).exprange(0.15, 1), loop:1).sum }.play;</pre>
+</div><h3><a class='anchor' name='Conversion'>Conversion</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asSynthDef' href='./../Overviews/Methods.html#asSynthDef'>asSynthDef</a>(<span class='argstr'>rates</span>, <span class='argstr'>prependArgs</span>, <span class='argstr'>outClass: 'Out'</span>, <span class='argstr'>fadeTime</span>, <span class='argstr'>name</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Control/asDefName.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Control/asDefName.sc</a></div>
 <div class='method'>

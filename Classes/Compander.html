@@ -25,7 +25,8 @@ var scdoc_sc_version = '3.9dev';
 <div id='summary'>Compressor, expander, limiter, gate, ducker</div>
 </div>
 <div class='subheader'>
-<div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/Compander.sc' title='/usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/Compander.sc'>Compander.sc</a></div></div>
+<div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/Compander.sc' title='/usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/Compander.sc'>Compander.sc</a></div><div id='related'>See also: <a href="./../Classes/Normalizer.html">Normalizer</a>, <a href="./../Classes/CompanderD.html">CompanderD</a>, <a href="./../Classes/Limiter.html">Limiter</a></div>
+</div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
@@ -43,88 +44,122 @@ var scdoc_sc_version = '3.9dev';
 <tr><td class='argumentname'>in<td class='argumentdesc'>
 <p>The signal to be compressed / expanded / gated.<tr><td class='argumentname'>control<td class='argumentdesc'>
 <p>The signal whose amplitude determines the gain applied to the input signal. Often the same as in (for standard gating or compression) but should be different for ducking.<tr><td class='argumentname'>thresh<td class='argumentdesc'>
-<p>Control signal amplitude threshold, which determines the break point between slopeBelow and slopeAbove. Usually 0..1. The control signal amplitude is calculated using RMS.<tr><td class='argumentname'>slopeBelow<td class='argumentdesc'>
-<p>Slope of the amplitude curve below the threshold. If this slope &gt; 1.0, the amplitude will drop off more quickly the softer the control signal gets; when the control signal is close to 0 amplitude, the output should be exactly zero -- hence, noise gating. Values &lt; 1.0 are possible, but it means that a very low-level control signal will cause the input signal to be amplified, which would raise the noise floor.<tr><td class='argumentname'>slopeAbove<td class='argumentdesc'>
-<p>Same thing, but above the threshold. Values &lt; 1.0 achieve compression (louder signals are attenuated); &gt; 1.0, you get expansion (louder signals are made even louder). For 3:1 compression, you would use a value of 1/3 here.<tr><td class='argumentname'>clampTime<td class='argumentdesc'>
-<p>The amount of time it takes for the amplitude adjustment to kick in fully. This is usually pretty small, not much more than 10 milliseconds (the default value). I often set it as low as 2 milliseconds (0.002).<tr><td class='argumentname'>relaxTime<td class='argumentdesc'>
-<p>The amount of time for the amplitude adjustment to be released. Usually a bit longer than clampTime; if both times are too short, you can get some (possibly unwanted) artifacts.<tr><td class='argumentname'>mul<td class='argumentdesc'><tr><td class='argumentname'>add<td class='argumentdesc'></table><h4>Discussion:</h4>
+<p>Usually between 0 and 1. Amplitude threshold of the control signal, which determines the break point between slopeBelow and slopeAbove. The control signal amplitude is calculated using RMS.<tr><td class='argumentname'>slopeBelow<td class='argumentdesc'>
+<p>Slope of applied amplitude curve if control signal amplitude is below <code class='code prettyprint lang-sc'>thresh</code>. If &gt; 1.0, the amplitude drops off more quickly the softer the control signal gets; when the control signal is close to 0 amplitude, the output should be exactly zero -- hence, noise gating. Values &lt; 1.0 are possible, but it means that a very low-level control signal will cause the input signal to be amplified, which would raise the noise floor.<tr><td class='argumentname'>slopeAbove<td class='argumentdesc'>
+<p>Slope of applied amplitude curve if control signal amplitude is above <code class='code prettyprint lang-sc'>thresh</code>. Values &lt; 1.0 achieve compression (louder signals are attenuated) whereas values &gt; 1.0 expand (louder signals are made even louder). A value of <code class='code prettyprint lang-sc'>1/3</code> achieves a 3:1 compression.<tr><td class='argumentname'>clampTime<td class='argumentdesc'>
+<p>time (in seconds) it takes for the amplitude adjustment to kick in fully after the control signal is above <code class='code prettyprint lang-sc'>thresh</code>. Usually a small value around 10ms (0.01), often set as low as 2ms (0.002).<tr><td class='argumentname'>relaxTime<td class='argumentdesc'>
+<p>time (in seconds) for the amplitude adjustment to be released (control signal below <code class='code prettyprint lang-sc'>thresh</code>). Usually longer than <code class='code prettyprint lang-sc'>clampTime</code>; depending on the input and control signal, setting both times too short results in (possibly unwanted) artifacts.<tr><td class='argumentname'>mul<td class='argumentdesc'>
+<p>output is multiplied by this value.<tr><td class='argumentname'>add<td class='argumentdesc'>
+<p>value added to the output.</table><h4>Discussion:</h4>
 
-<p>If any of this is confusing, see <a href="http://en.wikipedia.org/wiki/Audio_level_compression">http://en.wikipedia.org/wiki/Audio_level_compression</a></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>See for example <a href="http://en.wikipedia.org/wiki/Audio_level_compression">http://en.wikipedia.org/wiki/Audio_level_compression</a> for a more in-depth explanation.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>(
-// example signal to process
-play({
-    var z;
-    z = Decay2.ar(
-        Impulse.ar(8, 0,LFSaw.kr(0.3, 0, -0.3, 0.3)),
-        0.001, 0.3, Mix.ar(Pulse.ar([80,81], 0.3)))
-})
+
+<p>Clean signal (for reference)<pre class='code prettyprint lang-sc'>(
+{
+    Decay2.ar(
+        Impulse.ar(8, 0, LFSaw.kr(0.3, 1, -0.3, 0.3)),
+        0.001,
+        0.3
+    )
+    * Mix.ar(Pulse.ar([80, 81], 0.3))
+}.play;
 )</pre>
-<pre class='code prettyprint lang-sc'>(
-// noise gate
-play({
+
+<p>Noise gate<pre class='code prettyprint lang-sc'>(
+{
     var z;
+
+    // signal (clean)
     z = Decay2.ar(
-        Impulse.ar(8, 0,LFSaw.kr(0.3, 0, -0.3, 0.3)),
-        0.001, 0.3, Mix.ar(Pulse.ar([80,81], 0.3)));
+        Impulse.ar(8, 0, LFSaw.kr(0.3, 1, -0.3, 0.3)),
+        0.001,
+        0.3
+    )
+    * Mix.ar(Pulse.ar([80, 81], 0.3));
+
+    // apply gate (mouse x sets treshold)
     Compander.ar(z, z,
-        thresh: MouseX.kr(0.1, 1),
+        thresh: MouseX.kr(0.001, 1),
         slopeBelow: 10,
-        slopeAbove: 1,
-        clampTime: 0.01,
-        relaxTime: 0.01
-    );
-})
+        slopeAbove:  1,
+        clampTime:   0.01,
+        relaxTime:   0.01
+    )
+}.play;
 )</pre>
-<pre class='code prettyprint lang-sc'>(
-// compressor
-play({
+
+<p>Compressor<pre class='code prettyprint lang-sc'>(
+{
     var z;
+
+    // signal (clean)
     z = Decay2.ar(
-        Impulse.ar(8, 0,LFSaw.kr(0.3, 0, -0.3, 0.3)),
-        0.001, 0.3, Mix.ar(Pulse.ar([80,81], 0.3)));
+        Impulse.ar(8, 0, LFSaw.kr(0.3, 1, -0.3, 0.3)),
+        0.001,
+        0.3
+    )
+    * Mix.ar(Pulse.ar([80, 81], 0.3));
+
+    // apply compression  (mouse x sets amount)
     Compander.ar(z, z,
-        thresh: MouseX.kr(0.1, 1),
+        thresh: MouseX.kr(0.01, 1),
         slopeBelow: 1,
         slopeAbove: 0.5,
-        clampTime: 0.01,
-        relaxTime: 0.01
-    );
-})
+        clampTime:  0.01,
+        relaxTime:  0.01
+    )
+}.play;
 )</pre>
-<pre class='code prettyprint lang-sc'>(
-// limiter
-play({
+
+<p>Limiter<pre class='code prettyprint lang-sc'>(
+{
     var z;
+
+    // signal (clean)
     z = Decay2.ar(
-        Impulse.ar(8, 0,LFSaw.kr(0.3, 0, -0.3, 0.3)),
-        0.001, 0.3, Mix.ar(Pulse.ar([80,81], 0.3)));
+        Impulse.ar(8, 0, LFSaw.kr(0.3, 1, -0.3, 0.3)),
+        0.001,
+        0.3
+    )
+    * Mix.ar(Pulse.ar([80, 81], 0.3));
+
+
+    // apply limiter (mouse x sets amount)
     Compander.ar(z, z,
-        thresh: MouseX.kr(0.1, 1),
+        thresh: MouseX.kr(0.01, 1),
         slopeBelow: 1,
         slopeAbove: 0.1,
-        clampTime: 0.01,
-        relaxTime: 0.01
-    );
-})
+        clampTime:  0.01,
+        relaxTime:  0.01
+    )
+}.play;
 )</pre>
-<pre class='code prettyprint lang-sc'>(
-// sustainer
-play({
+
+<p>Sustainer<pre class='code prettyprint lang-sc'>(
+// note the pops at the beginning of signal due to lack of lookahead
+{
     var z;
+
+    // signal (clean)
     z = Decay2.ar(
-        Impulse.ar(8, 0,LFSaw.kr(0.3, 0, -0.3, 0.3)),
-        0.001, 0.3, Mix.ar(Pulse.ar([80,81], 0.3)));
+        Impulse.ar(8, 0, LFSaw.kr(0.3, 1, -0.3, 0.3)),
+        0.001,
+        0.3
+    )
+    * Mix.ar(Pulse.ar([80, 81], 0.3));
+
+    // apply sustainer
     Compander.ar(z, z,
         thresh: MouseX.kr(0.1, 1),
         slopeBelow: 0.1,
         slopeAbove: 1,
-        clampTime: 0.01,
-        relaxTime: 0.01
-    )*0.1;
-})
+        clampTime:  0.01,
+        relaxTime:  0.01
+    ) * 0.1
+}.play;
 )</pre>
 
 <p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Compander.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Compander.schelp</a><br>link::Classes/Compander::<br></div></div></body></html>
