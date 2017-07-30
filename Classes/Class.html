@@ -26,15 +26,17 @@ var scdoc_sc_version = '3.9dev';
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Core/Kernel.sc' title='/usr/local/share/SuperCollider/SCClassLibrary/Common/Core/Kernel.sc'>Kernel.sc</a></div><div id='subclasses'>Subclasses: <a href="../Classes/Meta_Object.html">Meta_Object</a></div>
+<div id='related'>See also: <a href="./../Guides/WritingClasses.html">Writing Classes</a>, <a href="./../Reference/Classes.html">Classes</a></div>
 </div>
 <div id='toc'>
 <ul class='toc'><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*allClasses'>allClasses</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*initClassTree'>initClassTree</a> </li>
 <li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 <li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*classesInited'>classesInited</a> </li>
 <li class='toc3'><a href='#*findAllReferences'>findAllReferences</a> </li>
-<li class='toc3'><a href='#*initClassTree'>initClassTree</a> </li>
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-browse'>browse</a> </li>
 <li class='toc3'><a href='#-findMethod'>findMethod</a> </li>
@@ -91,12 +93,44 @@ var scdoc_sc_version = '3.9dev';
 <h3 class='method-code'><span class='method-prefix'>Class.</span><a class='method-name' name='*allClasses' href='./../Overviews/Methods.html#allClasses'>allClasses</a></h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>an <a href="./../Classes/Array.html">Array</a> of all Classes</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>an <a href="./../Classes/Array.html">Array</a> of all Classes</div></div><h3 class='method-code'><span class='method-prefix'>Class.</span><a class='method-name' name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/Object.html'>Object</a></div>
+<div class='method'>
+<p>When SuperCollider starts up, just after it has compiled the library, it initializes all the classes from Object down, a depth first traversal of subclasses.
+<p>This method can be overloaded in any class that requires initialization of classvars or other resources.<div class='note'><span class='notelabel'>NOTE:</span> Each class will be initialized once, thus each class' <code class='code prettyprint lang-sc'>initClass</code> is called exactly once during the initialization phase.</div></div><h3 class='method-code'><span class='method-prefix'>Class.</span><a class='method-name' name='*initClassTree' href='./../Overviews/Methods.html#initClassTree'>initClassTree</a>(<span class='argstr'>aClass</span>)</h3>
+<div class='method'>
+<p>used in <a href="#*initClass">*initClass</a> to assure the initialisation of <code class='code prettyprint lang-sc'>aClass</code> before using it. Wherever necessary, it recursively initializes all classes required by <code class='code prettyprint lang-sc'>aClass</code>.
+<p>In some cases it is required that another class and its resources are initialized before you initialize your own. This can be accomplished by<pre class='code prettyprint lang-sc'>YourClass {
+    *initClass {
+        // initialize OtherClass before continuing
+        Class.initClassTree(OtherClass);
+
+        ..
+
+        // use OtherClass
+
+        ..
+    }
+
+    ..
+
+}</pre>
+
+<p>Pre-initialized data such as <a href="./../Classes/SynthDef.html">SynthDef</a>s should be deferred to <a href="./../Classes/StartUp.html">StartUp</a><pre class='code prettyprint lang-sc'>YourClass {
+    *initClass {
+        StartUp.add {
+            ..
+        }
+    }
+
+    ..
+
+}</pre>
+</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>Class.</span><a class='method-name' name='*classesInited' href='./../Overviews/Methods.html#classesInited'>classesInited</a></h3>
 <h3 class='method-code'><span class='method-prefix'>Class.</span><a class='method-name' name='*classesInited' href='./../Overviews/Methods.html#classesInited'>classesInited</a> = value</h3>
 <h3 class='method-code'><span class='method-prefix'>Class.</span><a class='method-name' name='*findAllReferences' href='./../Overviews/Methods.html#findAllReferences'>findAllReferences</a>(<span class='argstr'>aSymbol</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Class.</span><a class='method-name' name='*initClassTree' href='./../Overviews/Methods.html#initClassTree'>initClassTree</a>(<span class='argstr'>aClass</span>)</h3>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-browse' href='./../Overviews/Methods.html#browse'>browse</a></h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Core/KernelPlusGUI.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Core/KernelPlusGUI.sc</a></div>
