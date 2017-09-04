@@ -37,6 +37,7 @@ var scdoc_sc_version = '3.9dev';
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#info'>info</a></li>
 <ul class='toc'><li class='toc3'><a href='#-remote'>remote</a>  <a href='#-url'>url</a> </li>
+<li class='toc3'><a href='#-remoteAsHttpUrl'>remoteAsHttpUrl</a> </li>
 <li class='toc3'><a href='#-remoteLatest'>remoteLatest</a> </li>
 <li class='toc3'><a href='#-localPath'>localPath</a> </li>
 <li class='toc3'><a href='#-tag'>tag</a> </li>
@@ -73,7 +74,22 @@ var scdoc_sc_version = '3.9dev';
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-url' href='./../Overviews/Methods.html#url'>url</a> = value</h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>url of the first remote that it finds.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remoteLatest' href='./../Overviews/Methods.html#remoteLatest'>remoteLatest</a></h3>
+<p>url of the first remote that it finds.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remoteAsHttpUrl' href='./../Overviews/Methods.html#remoteAsHttpUrl'>remoteAsHttpUrl</a></h3>
+<div class='method'>
+<p>Detects if the remote URI starts with <code class='code prettyprint lang-sc'>"git@"</code> or <code class='code prettyprint lang-sc'>"git:"</code> and remodels it to a valid <code class='code prettyprint lang-sc'>"https"</code> URI. Otherwise, it returns the unaltered remote.<pre class='code prettyprint lang-sc'>// git-style remote URI's are transformed to https
+Git().url_("git@github.com:foo/bar.git").remoteAsHttpUrl;
+Git().url_("git://github.com/foo/bar").remoteAsHttpUrl;
+Git().url_("git@foo.net:foo/bar.git").remoteAsHttpUrl;
+
+// http and https are left untouched
+Git().url_("https://foo.org/bar").remoteAsHttpUrl;
+Git().url_("http://foo.org/bar").remoteAsHttpUrl;
+
+// unknown URI styles are left untouched
+Git().url_("fooBar").remoteAsHttpUrl;</pre>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>remote URI formatted for <code class='code prettyprint lang-sc'>http</code> respectively <code class='code prettyprint lang-sc'>https</code> requests.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remoteLatest' href='./../Overviews/Methods.html#remoteLatest'>remoteLatest</a></h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>hash of latest commit on the remote</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-localPath' href='./../Overviews/Methods.html#localPath'>localPath</a></h3>

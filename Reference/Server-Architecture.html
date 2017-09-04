@@ -93,11 +93,11 @@ scsynth -N score.osc _ out.aiff 48000 AIFF int24
 <p>Messages are similar in format to Open Sound Control messages, except that pattern matching of the command name is not performed. When streamed via TCP, messages are each preceded by a 32 bit integer giving the length in bytes of the message. UDP datagrams contain this length information already.<h3><a class='anchor' name='Types'>Types</a></h3>
 
 <p>All values are in network byte order.<table>
-<tr><td>long<td>a 64 bit integer. Used for time stamps only.<tr><td>int<td>a 32 bit integer.<tr><td>float<td>a 32 bit single precision floating point number.<tr><td>double<td>a 64 bit double precision floating point number.<tr><td>string<td>a string of 8 bit ASCII characters, zero padded to a multiple of 4 bytes.<tr><td>bytes<td>a buffer of data preceded by a 32 bit length field and padded to a multiple of 4 bytes.</table>
+<tr><td>long<td>a 64 bit integer. Used for time stamps only.<tr><td>int<td>a 32 bit integer.<tr><td>float<td>a 32 bit single precision floating point number.<tr><td>double<td>a 64 bit double precision floating point number.<tr><td>string<td>an OSC format string: 8 bit ASCII characters, zero padded to a multiple of 4 bytes.<tr><td>bytes<td>a buffer of data preceded by a 32 bit length field and padded to a multiple of 4 bytes.</table>
 <h3><a class='anchor' name='Tags'>Tags</a></h3>
 
 <p>Command arguments have single character tags which occur in a tag string to identify their types.<table>
-<tr><td>'i'<td>an int.<tr><td>'f'<td>a float<tr><td>'s'<td>a string<tr><td>'b'<td>bytes</table>
+<tr><td>'i'<td>an int<tr><td>'f'<td>a float<tr><td>'s'<td>a string<tr><td>'b'<td>bytes<tr><td>'d'<td>a double<tr><td>'t'<td>a timestamp</table>
 <h3><a class='anchor' name='Command'>Command</a></h3>
 
 <p>a Command consists of:<table>
@@ -113,7 +113,7 @@ scsynth -N score.osc _ out.aiff 48000 AIFF int24
 <li>one Bundle or one Command.</ul>
 
 <p><dt>using TCP<dd><ul>
-<li>int - the length in bytes of the following message.<li>one Bundle or one Command.</ul>
+<li>int32 - the length in bytes of the following message.<li>one Bundle or one Command.</ul>
 </dl>
 <h2><a class='anchor' name='Glossary'>Glossary</a></h2>
 <dl>

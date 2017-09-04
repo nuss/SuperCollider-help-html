@@ -1,0 +1,193 @@
+<!doctype html><html lang='en'><head><title>Fomus | SuperCollider 3.9dev Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Fomus';
+var scdoc_sc_version = '3.9dev';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div id='menubar'></div>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#MusicNotation'>MusicNotation</a></span>
+</div><h1>Fomus<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>SuperCollider bindings to Fomus Music Notation</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Fomus/Classes/Fomus.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/Fomus/Classes/Fomus.sc'>Fomus.sc</a></div><div id='related'>See also: <a href="./../Event Stream">Event Stream</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'><li class='toc2'><a href='#Introduction'>Introduction</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Website'>Website</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Dependencies'>Dependencies</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-eventList'>eventList</a> </li>
+<li class='toc3'><a href='#-fileName'>fileName</a> </li>
+<li class='toc3'><a href='#-lilyPath'>lilyPath</a> </li>
+<li class='toc3'><a href='#-lilyViewPath'>lilyViewPath</a> </li>
+<li class='toc3'><a href='#-qt'>qt</a> </li>
+<li class='toc3'><a href='#-add'>add</a> </li>
+<li class='toc3'><a href='#-asString'>asString</a> </li>
+<li class='toc3'><a href='#-header'>header</a> </li>
+<li class='toc3'><a href='#-write'>write</a> </li>
+<li class='toc3'><a href='#-ly'>ly</a> </li>
+<li class='toc3'><a href='#-midi'>midi</a> </li>
+<li class='toc3'><a href='#-xml'>xml</a> </li>
+<li class='toc3'><a href='#-show'>show</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-newTag'>newTag</a> </li>
+<li class='toc3'><a href='#-put'>put</a> </li>
+<li class='toc3'><a href='#-qtString'>qtString</a> </li>
+<li class='toc3'><a href='#-timeTag'>timeTag</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'><li class='toc2'><a href='#Microtonal%20Chords'>Microtonal Chords</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Another%20example'>Another example</a></li>
+<ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+<h3><a class='anchor' name='Introduction'>Introduction</a></h3>
+
+<p>SuperFomus tries to integrate the SuperCollider language and the automatic music notation system FOMUS (FOrmat MUSic).<h3><a class='anchor' name='Website'>Website</a></h3>
+
+<p><a href="https://github.com/smoge/superfomus">https://github.com/smoge/superfomus</a><h3><a class='anchor' name='Dependencies'>Dependencies</a></h3>
+
+<p>You will need FOMUS and LilyPond:<ul>
+<li>LilyPond <a href="http://lilypond.org/">http://lilypond.org/</a><li>Fomus <a href="http://sourceforge.net/projects/fomus/">http://sourceforge.net/projects/fomus/</a></ul>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>Fomus.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>noteList</span>, <span class='argstr'>n</span>)</h3>
+<div class='method'>
+<p>Create a new instance with or without content. <code class='code prettyprint lang-sc'>noteList</code> can be a Event, an Array of Events or a Stream.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>noteList<td class='argumentdesc'>
+<p>an Event, an Array of Events or a Stream.<tr><td class='argumentname'>n<td class='argumentdesc'>
+<p>Just needed for Streams. In case you are including a Stream, you will need to indicate how many Event will be imported.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-eventList' href='./../Overviews/Methods.html#eventList'>eventList</a></h3>
+<div class='method'>
+<p>List of all Events.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fileName' href='./../Overviews/Methods.html#fileName'>fileName</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fileName' href='./../Overviews/Methods.html#fileName'>fileName</a> = value</h3>
+<div class='method'>
+<p>Base filename, suffix will be added. Default is <code class='code prettyprint lang-sc'>"~/Desktop/SuperFomus"</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lilyPath' href='./../Overviews/Methods.html#lilyPath'>lilyPath</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lilyPath' href='./../Overviews/Methods.html#lilyPath'>lilyPath</a> = value</h3>
+<div class='method'>
+<p>Path to LilyPond binary. Default <code class='code prettyprint lang-sc'>"/usr/bin/lilypond"</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lilyViewPath' href='./../Overviews/Methods.html#lilyViewPath'>lilyViewPath</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lilyViewPath' href='./../Overviews/Methods.html#lilyViewPath'>lilyViewPath</a> = value</h3>
+<div class='method'>
+<p>Path to PDF viewer. Default <code class='code prettyprint lang-sc'>"/usr/bin/xpdf"</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-qt' href='./../Overviews/Methods.html#qt'>qt</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-qt' href='./../Overviews/Methods.html#qt'>qt</a> = value</h3>
+<div class='method'>
+<p>Boolean to indicate whether or not you want to use quarter-tone.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-add' href='./../Overviews/Methods.html#add'>add</a>(<span class='argstr'>that</span>, <span class='argstr'>n: 1</span>)</h3>
+<div class='method'>
+<p>Can be an Event, an Array of Events or a Stream.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>stuffIn<td class='argumentdesc'>
+<p>an Event, an Array of Events or a Stream.<tr><td class='argumentname'>n<td class='argumentdesc'>
+<p>Just needed for Streams. In case you are including a Stream, you will need to indicate how many Events will be imported.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asString' href='./../Overviews/Methods.html#asString'>asString</a></h3>
+<div class='method'>
+<p>All Events in FOMUS representation.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>String</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-header' href='./../Overviews/Methods.html#header'>header</a></h3>
+<div class='method'>
+<p>FOMUS header<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>String</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-write' href='./../Overviews/Methods.html#write'>write</a></h3>
+<div class='method'>
+<p>Write the FOMUS text file.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-ly' href='./../Overviews/Methods.html#ly'>ly</a></h3>
+<div class='method'>
+<p>Generate a LilyPond file and show the resulting PDF</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midi' href='./../Overviews/Methods.html#midi'>midi</a></h3>
+<div class='method'>
+<p>Generate a MIDI file.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-xml' href='./../Overviews/Methods.html#xml'>xml</a></h3>
+<div class='method'>
+<p>Generate a MusicXML file.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-show' href='./../Overviews/Methods.html#show'>show</a></h3>
+<div class='method'>
+<p>Show the PDF with PDF viewer.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-newTag' href='./../Overviews/Methods.html#newTag'>newTag</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-put' href='./../Overviews/Methods.html#put'>put</a>(<span class='argstr'>that</span>, <span class='argstr'>n: 1</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-qtString' href='./../Overviews/Methods.html#qtString'>qtString</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-timeTag' href='./../Overviews/Methods.html#timeTag'>timeTag</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-timeTag' href='./../Overviews/Methods.html#timeTag'>timeTag</a> = value</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+
+<p>You can include Events, Array of Events and Streams. This means that you can generate your data as Events:<pre class='code prettyprint lang-sc'>[ ( 'midinote': 60,   'dur': 0.25  )
+, ( 'midinote': 66.5, 'dur': 0.5   )
+, ( 'midinote': 70,   'dur': 0.125 )
+]</pre>
+
+<p>Or you can create a Pattern, turn it into a Stream, and specify how many events should be created by this Stream:<pre class='code prettyprint lang-sc'>add(Stream, number-of-elements)</pre>
+
+<p>First of all, create your Fomus object, with or without initial content:<pre class='code prettyprint lang-sc'>f = Fomus()</pre>
+
+<p>These are the default options. Change if needed. Working path and filename (optional):<pre class='code prettyprint lang-sc'>f.fileName = "~/Desktop/SuperFomus"</pre>
+
+<p>Where is LilyPond binary:<pre class='code prettyprint lang-sc'>f.lilyPath = "/usr/bin/lilypond"</pre>
+
+<p>Application to show the pdf file:<pre class='code prettyprint lang-sc'>f.lilyViewPath = "/usr/bin/xpdf"</pre>
+
+<p>Do we want to round to quatertone of halftones as <code class='code prettyprint lang-sc'>Boolean</code><pre class='code prettyprint lang-sc'>f.qt = true</pre>
+
+<p>Let's create a Pattern:<pre class='code prettyprint lang-sc'>// Pattern adapted from James Harkins' "A Practical Guide to Patterns":
+s.boot
+
+p = Pbind(
+  \midinote, Pif(Pwhite(0.0, 1.0, inf) &lt; 0.7, Pwhite(60, 80.5, inf), Pwhite(45, 55.5, inf)),
+  \dur, Prand([0.125, 0.25, 0.5], inf)
+);
+
+p.play</pre>
+
+<p>Add the next 40 Events in our Fomus object:<pre class='code prettyprint lang-sc'>f.add(p.asStream, 40)</pre>
+
+<p>Make and show a Lilypond Score<pre class='code prettyprint lang-sc'>f.ly</pre>
+
+<p>If you want to round to halftones<pre class='code prettyprint lang-sc'>f.qt = false
+f.ly</pre>
+
+<p>Make a MIDI file<pre class='code prettyprint lang-sc'>f.midi</pre>
+
+<p>Make a MusicXML file<pre class='code prettyprint lang-sc'>f.xml</pre>
+<h3><a class='anchor' name='Microtonal%20Chords'>Microtonal Chords</a></h3>
+<pre class='code prettyprint lang-sc'>(
+a = 12.collect({|i|
+  ( 'midinote': (
+      (63 + rrand(-6,6.5) + [0,8,13]) ++
+      (60 + rrand(-6,6.5) + [0,5,6,9]) ),
+    'dur': 1 )
+});
+
+f = Fomus();
+f.add(a);
+f.ly;
+)</pre>
+<div class='image'><img src='example1.svg'/></div>
+<h3><a class='anchor' name='Another%20example'>Another example</a></h3>
+<pre class='code prettyprint lang-sc'>(
+p = Pbind(
+        \midinote, Prand((60,60.5..80), inf),
+  \dur, Prand([0.125, 0.25, 0.5], inf)
+);
+
+//p.play;
+
+f = Fomus(p.asStream, 30);
+f.ly;
+f.midi;
+f.xml;
+)</pre>
+<div class='image'><img src='example2.svg'/></div>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Fomus/HelpSource/Classes/Fomus.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Fomus/HelpSource/Classes/Fomus.schelp</a><br>link::Classes/Fomus::<br></div></div></body></html>
