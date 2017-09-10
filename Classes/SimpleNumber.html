@@ -496,18 +496,21 @@ var scdoc_sc_version = '3.9dev';
 <div class='method'>
 <p>Converts this into an audiorate input.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asTimeString' href='./../Overviews/Methods.html#asTimeString'>asTimeString</a>(<span class='argstr'>precision: 0.001</span>, <span class='argstr'>maxDays: 365</span>, <span class='argstr'>dropDaysIfPossible: true</span>)</h3>
 <div class='method'>
-<p>Compile a time string.<h4>Arguments:</h4>
+<p>Produces a time string in the format <code class='code prettyprint lang-sc'>ddd:hh:mm:ss.sss</code>, interpreting the receiver as time in seconds. See <a href="./../String#-asSecs">String: -asSecs</a> for the inverse function.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>precision<td class='argumentdesc'>
-<p>how accurate<tr><td class='argumentname'>maxDays<td class='argumentdesc'>
-<p>the maximum number of days<tr><td class='argumentname'>dropDaysIfPossible<td class='argumentdesc'>
-<p>a <a href="./../Classes/Boolean.html">Boolean</a></table><h4>Returns:</h4>
-<div class='returnvalue'>
-<p>a string corresponding to the hours:minutes:seconds based on the receiver as number of seconds</div><h4>Discussion:</h4>
+<p>accuracy of the millisecond format; the string will always be formatted with 3 decimal places for milliseconds. Minimum value: 0.001.<tr><td class='argumentname'>maxDays<td class='argumentdesc'>
+<p>maximum number of days<tr><td class='argumentname'>dropDaysIfPossible<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a>. If set to <code class='code prettyprint lang-sc'>true</code>, and the number of days in the formatted string would be 0, that section is instead ommitted and the string is formatted as <code class='code prettyprint lang-sc'>hh:mm:ss.sss</code>.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>(
 var start;
 start = Main.elapsedTime;
-{ loop({(Main.elapsedTime - start).asTimeString.postln; 0.05.wait}) }.fork;
+{
+    loop {
+        (Main.elapsedTime - start).asTimeString.postln;
+        0.05.wait
+    }
+}.fork;
 )</pre>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asPoint' href='./../Overviews/Methods.html#asPoint'>asPoint</a></h3>
 <div class='method'><h4>Returns:</h4>
