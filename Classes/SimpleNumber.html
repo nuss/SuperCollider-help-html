@@ -52,11 +52,13 @@ var scdoc_sc_version = '3.9dev';
 <li class='toc3'><a href='#-gcd'>gcd</a> </li>
 <li class='toc3'><a href='#-round'>round</a> </li>
 <li class='toc3'><a href='#-roundUp'>roundUp</a> </li>
+<li class='toc3'><a href='#-trunc'>trunc</a> </li>
+<li class='toc3'><a href='#-softRound'>softRound</a> </li>
+<li class='toc3'><a href='#-snap'>snap</a> </li>
 <li class='toc3'><a href='#-thresh'>thresh</a> </li>
 <li class='toc3'><a href='#-min'>min</a> </li>
 <li class='toc3'><a href='#-max'>max</a> </li>
 <li class='toc3'><a href='#-wrap2'>wrap2</a> </li>
-<li class='toc3'><a href='#-trunc'>trunc</a> </li>
 <li class='toc3'><a href='#-atan2'>atan2</a> </li>
 <li class='toc3'><a href='#-hypot'>hypot</a> </li>
 <li class='toc3'><a href='#-log'>log</a> </li>
@@ -311,7 +313,43 @@ var scdoc_sc_version = '3.9dev';
 <div class='method'>
 <p>Round to multiple of aNumber</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-roundUp' href='./../Overviews/Methods.html#roundUp'>roundUp</a>(<span class='argstr'>aNumber: 1</span>, <span class='argstr'>adverb</span>)</h3>
 <div class='method'>
-<p>round up to a multiply of aNumber</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-thresh' href='./../Overviews/Methods.html#thresh'>thresh</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
+<p>Round up to a multiple of aNumber. For roundDown use <a href="./../Classes/SimpleNumber.html#-trunc">trunc</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-trunc' href='./../Overviews/Methods.html#trunc'>trunc</a>(<span class='argstr'>aNumber: 1</span>, <span class='argstr'>adverb</span>)</h3>
+<div class='method'>
+<p>Truncate to multiple of aNumber (e.g. it rounds numbers down to a multiple of aNumber).</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-softRound' href='./../Overviews/Methods.html#softRound'>softRound</a>(<span class='argstr'>resolution: 1</span>, <span class='argstr'>margin: 0.05</span>, <span class='argstr'>strength: 1</span>)</h3>
+<div class='method'>
+<p>Rounds the value to a multiple of <strong>resolution</strong>. By using <strong>margin</strong> and <strong>strength</strong> you can control which values will be rounded, and by how much.
+<p>Conceptually this is the equivalent of MIDI quantization in a DAW/MIDI sequencer. In particular it allows a certain sloppiness close to the <strong>resolution</strong> value.
+<p>Note: this method expects values &gt;= 0.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>resolution<td class='argumentdesc'>
+<p>Round this value to a multiple of resolution. E.g. if you chose 1, then all values would be rounded to the nearest integer.<tr><td class='argumentname'>margin<td class='argumentdesc'>
+<p>Values that are within ±<strong>margin</strong> from a multiple of <strong>resolution</strong> will be left as they are.
+<p>E.g. if you chose a resolution value of 0.5 and a margin of 0.01, then the values 0.501 and 0.499 would be left as they are, but the value 0.502 would become 0.5.
+<p>This should be a value between 0 and <strong>resolution</strong>.<tr><td class='argumentname'>strength<td class='argumentdesc'>
+<p>Determines the degree to which this number will be changed.
+<p>If strength is 1, then this function will return the nearest resolution. If it is 0, then value of this number will be left unchanged.
+<p>E.g. If the resolution was 1 and strength was 0.5, then the value 0.6 would become 0.8.</table><h4>Discussion:</h4>
+<pre class='code prettyprint lang-sc'>((0..10) / 5).collect { |num| [num, num.softRound(1, 0, 1)] };
+((0..10) / 5).collect { |num| [num, num.softRound(1, 0.3, 1)] };
+((0..10) / 5).collect { |num| [num, num.softRound(1, 0, 0.5)] };</pre>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-snap' href='./../Overviews/Methods.html#snap'>snap</a>(<span class='argstr'>resolution: 1</span>, <span class='argstr'>margin: 0.05</span>, <span class='argstr'>strength: 1</span>)</h3>
+<div class='method'>
+<p>Rounds the values <strong>margin</strong> distance from resolution to a multiple of resolution. By using <strong>margin</strong> and <strong>strength</strong> you can control when values will be rounded, and by how much.
+<p>Conceptually this is the equivalent of 'snap' in a graphics program. Values within a certain distance (<strong>margin</strong>) from a grid line are snapped to it. All other values are unchanged.
+<p>Note: this method expects values &gt;= 0.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>resolution<td class='argumentdesc'>
+<p>Snap this value to a multiple of resolution. E.g. if you chose 1, then all values would be rounded to the nearest integer.<tr><td class='argumentname'>margin<td class='argumentdesc'>
+<p>Only values that are greater ±<strong>margin</strong> from a multiple of <strong>resolution</strong> value will be changed. Values that are less than <strong>margin</strong> will be unchanged.
+<p>E.g. if you chose a resolution value of 0.5 and a margin of 0.01, then the values 0.501 and 0.499 would be snapped to 0.5, but the value 0.502 would be unchanged.
+<p>This should be a value between 0 and <strong>resolution</strong>.<tr><td class='argumentname'>strength<td class='argumentdesc'>
+<p>Determines the degree to which this number will be changed.
+<p>If strength is 1, then this function will return the nearest resolution. If it is 0, then value of this number will be left unchanged.
+<p>E.g. If the resolution was 1 and strength was 0.5, then the value 0.6 would become 0.8.</table><h4>Discussion:</h4>
+<pre class='code prettyprint lang-sc'>((0..10) / 5).collect { |num| [num, num.snap(1, 0, 1)] };
+((0..10) / 5).collect { |num| [num, num.snap(1, 0.3, 1)] };
+((0..10) / 5).collect { |num| [num, num.snap(1, 0, 0.5)] };</pre>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-thresh' href='./../Overviews/Methods.html#thresh'>thresh</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
 <div class='method'>
 <p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-min' href='./../Overviews/Methods.html#min'>min</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
 <div class='method'>
@@ -319,9 +357,7 @@ var scdoc_sc_version = '3.9dev';
 <div class='method'>
 <p>Maximum</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-wrap2' href='./../Overviews/Methods.html#wrap2'>wrap2</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
 <div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-trunc' href='./../Overviews/Methods.html#trunc'>trunc</a>(<span class='argstr'>aNumber: 1</span>, <span class='argstr'>adverb</span>)</h3>
-<div class='method'>
-<p>Truncate to multiple of aNumber</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-atan2' href='./../Overviews/Methods.html#atan2'>atan2</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-atan2' href='./../Overviews/Methods.html#atan2'>atan2</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
 <div class='method'>
 <p>Arctangent of (this/aNumber)</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-hypot' href='./../Overviews/Methods.html#hypot'>hypot</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
 <div class='method'>
@@ -696,8 +732,9 @@ l = [0, 1, 5, 9, 11]; // pentatonic scale
 3000.1.equalWithPrecision(3000.0, 0, 0.01); // true
 3.1.equalWithPrecision(3.0, 0, 0.01); // false</pre>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-quantize' href='./../Overviews/Methods.html#quantize'>quantize</a>(<span class='argstr'>quantum: 1</span>, <span class='argstr'>tolerance: 0.05</span>, <span class='argstr'>strength: 1</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/deprecated/3.9/deprecated-3.9.sc'>/usr/local/share/SuperCollider/SCClassLibrary/deprecated/3.9/deprecated-3.9.sc</a></div>
 <div class='method'>
-<p>round the receiver to the quantum.<h4>Arguments:</h4>
+<p>Deprecated. Round the receiver to the quantum. If you're looking for MIDI quantization type features use <code class='code prettyprint lang-sc'>SimpleNumber#-softRound</code><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>quantum<td class='argumentdesc'>
 <p>amount.<tr><td class='argumentname'>tolerance<td class='argumentdesc'>

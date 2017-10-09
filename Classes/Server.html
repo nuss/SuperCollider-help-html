@@ -50,8 +50,11 @@ var scdoc_sc_version = '3.9dev';
 <li class='toc3'><a href='#*scsynth'>scsynth</a> </li>
 </ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 <li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#*freeAllRemote'>freeAllRemote</a> </li>
+<ul class='toc'><li class='toc3'><a href='#*bufferAllocClass'>bufferAllocClass</a> </li>
+<li class='toc3'><a href='#*busAllocClass'>busAllocClass</a> </li>
+<li class='toc3'><a href='#*freeAllRemote'>freeAllRemote</a> </li>
 <li class='toc3'><a href='#*fromName'>fromName</a> </li>
+<li class='toc3'><a href='#*nodeAllocClass'>nodeAllocClass</a> </li>
 <li class='toc3'><a href='#*program'>program</a> </li>
 <li class='toc3'><a href='#*resumeThreads'>resumeThreads</a> </li>
 <li class='toc3'><a href='#*set'>set</a> </li>
@@ -79,6 +82,7 @@ var scdoc_sc_version = '3.9dev';
 <li class='toc3'><a href='#-ping'>ping</a> </li>
 <li class='toc3'><a href='#-options'>options</a> </li>
 <li class='toc3'><a href='#-defaultGroup'>defaultGroup</a> </li>
+<li class='toc3'><a href='#-defaultGroups'>defaultGroups</a> </li>
 <li class='toc3'><a href='#-volume'>volume</a> </li>
 <li class='toc3'><a href='#-mute'>mute</a> </li>
 <li class='toc3'><a href='#-unmute'>unmute</a> </li>
@@ -138,6 +142,7 @@ var scdoc_sc_version = '3.9dev';
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-aliveThreadIsRunning'>aliveThreadIsRunning</a> </li>
 <li class='toc3'><a href='#-aliveThreadPeriod'>aliveThreadPeriod</a> </li>
+<li class='toc3'><a href='#-allClientIDs'>allClientIDs</a> </li>
 <li class='toc3'><a href='#-applicationRunning'>applicationRunning</a> </li>
 <li class='toc3'><a href='#-archiveAsCompileString'>archiveAsCompileString</a> </li>
 <li class='toc3'><a href='#-archiveAsObject'>archiveAsObject</a> </li>
@@ -153,17 +158,19 @@ var scdoc_sc_version = '3.9dev';
 <li class='toc3'><a href='#-bufferAllocator'>bufferAllocator</a> </li>
 <li class='toc3'><a href='#-cachedBufferAt'>cachedBufferAt</a> </li>
 <li class='toc3'><a href='#-cachedBuffersDo'>cachedBuffersDo</a> </li>
-<li class='toc3'><a href='#-calcOffset'>calcOffset</a> </li>
 <li class='toc3'><a href='#-calculateViewBounds'>calculateViewBounds</a> </li>
 <li class='toc3'><a href='#-clientID'>clientID</a> </li>
 <li class='toc3'><a href='#-closeBundle'>closeBundle</a> </li>
 <li class='toc3'><a href='#-cmdPeriod'>cmdPeriod</a> </li>
 <li class='toc3'><a href='#-connectSharedMemory'>connectSharedMemory</a> </li>
 <li class='toc3'><a href='#-controlBusAllocator'>controlBusAllocator</a> </li>
+<li class='toc3'><a href='#-defaultGroupID'>defaultGroupID</a> </li>
 <li class='toc3'><a href='#-disconnectSharedMemory'>disconnectSharedMemory</a> </li>
 <li class='toc3'><a href='#-dumpMode'>dumpMode</a> </li>
 <li class='toc3'><a href='#-emacsbuf'>emacsbuf</a> </li>
 <li class='toc3'><a href='#-freeAllBuffers'>freeAllBuffers</a> </li>
+<li class='toc3'><a href='#-freeDefaultGroups'>freeDefaultGroups</a> </li>
+<li class='toc3'><a href='#-freeMyDefaultGroup'>freeMyDefaultGroup</a> </li>
 <li class='toc3'><a href='#-getControlBusValue'>getControlBusValue</a> </li>
 <li class='toc3'><a href='#-getControlBusValues'>getControlBusValues</a> </li>
 <li class='toc3'><a href='#-guiClass'>guiClass</a> </li>
@@ -171,6 +178,7 @@ var scdoc_sc_version = '3.9dev';
 <li class='toc3'><a href='#-ifRunning'>ifRunning</a> </li>
 <li class='toc3'><a href='#-inProcess'>inProcess</a> </li>
 <li class='toc3'><a href='#-isRecording'>isRecording</a> </li>
+<li class='toc3'><a href='#-makeDefaultGroups'>makeDefaultGroups</a> </li>
 <li class='toc3'><a href='#-makeView'>makeView</a> </li>
 <li class='toc3'><a href='#-makeView2'>makeView2</a> </li>
 <li class='toc3'><a href='#-name'>name</a> </li>
@@ -182,6 +190,7 @@ var scdoc_sc_version = '3.9dev';
 <li class='toc3'><a href='#-nextBufferNumber'>nextBufferNumber</a> </li>
 <li class='toc3'><a href='#-nodeAllocator'>nodeAllocator</a> </li>
 <li class='toc3'><a href='#-notified'>notified</a> </li>
+<li class='toc3'><a href='#-numClients'>numClients</a> </li>
 <li class='toc3'><a href='#-onBootAdd'>onBootAdd</a> </li>
 <li class='toc3'><a href='#-onBootRemove'>onBootRemove</a> </li>
 <li class='toc3'><a href='#-onQuitAdd'>onQuitAdd</a> </li>
@@ -192,11 +201,14 @@ var scdoc_sc_version = '3.9dev';
 <li class='toc3'><a href='#-recordNode'>recordNode</a> </li>
 <li class='toc3'><a href='#-recordOnNodeID'>recordOnNodeID</a> </li>
 <li class='toc3'><a href='#-recorder'>recorder</a> </li>
+<li class='toc3'><a href='#-remove'>remove</a> </li>
 <li class='toc3'><a href='#-removeBusLinks'>removeBusLinks</a> </li>
 <li class='toc3'><a href='#-removeControlLinks'>removeControlLinks</a> </li>
 <li class='toc3'><a href='#-schedSync'>schedSync</a> </li>
 <li class='toc3'><a href='#-scopeBufferAllocator'>scopeBufferAllocator</a> </li>
 <li class='toc3'><a href='#-scopeWindow'>scopeWindow</a> </li>
+<li class='toc3'><a href='#-sendDefaultGroups'>sendDefaultGroups</a> </li>
+<li class='toc3'><a href='#-sendDefaultGroupsForClientIDs'>sendDefaultGroupsForClientIDs</a> </li>
 <li class='toc3'><a href='#-sendQuit'>sendQuit</a> </li>
 <li class='toc3'><a href='#-sendStatusMsg'>sendStatusMsg</a> </li>
 <li class='toc3'><a href='#-setControlBusValue'>setControlBusValue</a> </li>
@@ -282,9 +294,15 @@ s.postln; // see: it is alice.</pre>
 <div class='method'>
 <p>Switches the server program to scsynth. This is the default server.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Server.</span><a class='method-name' name='*bufferAllocClass' href='./../Overviews/Methods.html#bufferAllocClass'>bufferAllocClass</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Server.</span><a class='method-name' name='*bufferAllocClass' href='./../Overviews/Methods.html#bufferAllocClass'>bufferAllocClass</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>Server.</span><a class='method-name' name='*busAllocClass' href='./../Overviews/Methods.html#busAllocClass'>busAllocClass</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Server.</span><a class='method-name' name='*busAllocClass' href='./../Overviews/Methods.html#busAllocClass'>busAllocClass</a> = value</h3>
 <h3 class='method-code'><span class='method-prefix'>Server.</span><a class='method-name' name='*freeAllRemote' href='./../Overviews/Methods.html#freeAllRemote'>freeAllRemote</a>(<span class='argstr'>includeLocal: true</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Server/extServer-freeAllRemote.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Server/extServer-freeAllRemote.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>Server.</span><a class='method-name' name='*fromName' href='./../Overviews/Methods.html#fromName'>fromName</a>(<span class='argstr'>name</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Server.</span><a class='method-name' name='*nodeAllocClass' href='./../Overviews/Methods.html#nodeAllocClass'>nodeAllocClass</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Server.</span><a class='method-name' name='*nodeAllocClass' href='./../Overviews/Methods.html#nodeAllocClass'>nodeAllocClass</a> = value</h3>
 <h3 class='method-code'><span class='method-prefix'>Server.</span><a class='method-name' name='*program' href='./../Overviews/Methods.html#program'>program</a></h3>
 <h3 class='method-code'><span class='method-prefix'>Server.</span><a class='method-name' name='*program' href='./../Overviews/Methods.html#program'>program</a> = value</h3>
 <h3 class='method-code'><span class='method-prefix'>Server.</span><a class='method-name' name='*resumeThreads' href='./../Overviews/Methods.html#resumeThreads'>resumeThreads</a></h3>
@@ -377,9 +395,10 @@ s.postln; // see: it is alice.</pre>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-options' href='./../Overviews/Methods.html#options'>options</a> = value</h3>
 <div class='method'>
 <p>Get or set this Server's <a href="./../Classes/ServerOptions.html">ServerOptions</a> object. Changes to options only take effect when the server is rebooted.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defaultGroup' href='./../Overviews/Methods.html#defaultGroup'>defaultGroup</a></h3>
-<div class='method'><h4>Returns:</h4>
-<div class='returnvalue'>
-<p>this Server's default group.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-volume' href='./../Overviews/Methods.html#volume'>volume</a></h3>
+<div class='method'>
+<p>Return the default group on this Server for this client ID. This will be the same object as <code class='code prettyprint lang-sc'>server.defaultGroups[server.clientID]</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defaultGroups' href='./../Overviews/Methods.html#defaultGroups'>defaultGroups</a></h3>
+<div class='method'>
+<p>Return an array mapping client IDs to their associated default groups as <a href="./../Classes/Group.html">Group</a> objects.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-volume' href='./../Overviews/Methods.html#volume'>volume</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-volume' href='./../Overviews/Methods.html#volume'>volume</a> = <span class='argstr'>newVolume</span></h3>
 <div class='method'>
 <p>Get an instance of Volume that runs after the default group, or sets the Volume of the Server's output to level. Level is in db.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mute' href='./../Overviews/Methods.html#mute'>mute</a></h3>
@@ -539,7 +558,7 @@ s.bind {
 
 <p>The class <a href="./../Classes/ServerTree.html">ServerTree</a> can be used to store functions which will be evaluated after the server is booted, after all nodes are freed, and after cmd-. is pressed. This allows, for example, for one to create a persistent basic node structure. ServerTree is evaluated in the method initTree after the default group is created, so its existence can be relied upon.<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-initTree' href='./../Overviews/Methods.html#initTree'>initTree</a></h3>
 <div class='method'>
-<p>This method initializes the <a href="./../Reference/default_group.html">default_group</a> and runs <a href="./../Classes/ServerTree.html">ServerTree</a>.<h4>Discussion:</h4>
+<p>This method initializes the <a href="./../Reference/default_group.html">Default Group</a> and runs <a href="./../Classes/ServerTree.html">ServerTree</a>.<h4>Discussion:</h4>
 
 <p>This method is called automatically when you boot a Server from the language. N.B. If you started a server app from the command line you will have to call initTree manually if you need this functionality.<pre class='code prettyprint lang-sc'>s.quit;
 f = {Group.new(s.defaultGroup); "Other code can be evaluated too".postln;};
@@ -594,7 +613,7 @@ ServerTree.remove(f);</pre>
 <p>The following methods are for convenience use. For recording with sample accurate start and stop times you should make your own nodes. See the <a href="./../Classes/DiskOut.html">DiskOut</a> helpfile for more info. For non-realtime recording, see the <a href="./../Guides/Non-Realtime-Synthesis.html">Non-Realtime Synthesis (NRT)</a> helpfile.
 <p>This functionality is also available through the recording button on the server windows. Pressing it once calls record, and pressing it again calls stopRecording (see below). When doing so the file created will be in your recordings folder and be named for the current date and time. The default location of the recordings folder varies from platform to platform but is always stored in <code class='code prettyprint lang-sc'>thisProcess.platform.recordingsDir</code>. Setting this variable allows you to change the default.<div class='note'><span class='notelabel'>NOTE:</span> record creates the recording synth after the Server's default group and uses In.ar. Thus if you add nodes after the recording synth their output will not be captured. To avoid this, either use Node objects (which use the default node as their target) or (when using messaging style) use a target nodeID of 1.<pre class='code prettyprint lang-sc'>s.sendMsg("/s_new", "default", s.nextNodeID, 1,1);</pre>
 </div>
-<p>For more detail on this subject see <a href="./../Guides/Order-of-execution.html">Order of execution</a>, <a href="./../Reference/default_group.html">default_group</a>, and <a href="./../Guides/NodeMessaging.html">Node Messaging</a>.
+<p>For more detail on this subject see <a href="./../Guides/Order-of-execution.html">Order of execution</a>, <a href="./../Reference/default_group.html">Default Group</a>, and <a href="./../Guides/NodeMessaging.html">Node Messaging</a>.
 <p>See <a href="./../Classes/SoundFile.html">SoundFile</a> for information on the various sample and header formats. Not all sample and header formats are compatible. Note that the sampling rate of the output file will be the same as that of the server app. This can be set using the Server's <a href="./../Classes/ServerOptions.html">ServerOptions</a>.
 <p>Example:<pre class='code prettyprint lang-sc'>s.boot; // start the server
 
@@ -722,6 +741,7 @@ Routine.run {
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-aliveThreadIsRunning' href='./../Overviews/Methods.html#aliveThreadIsRunning'>aliveThreadIsRunning</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-aliveThreadPeriod' href='./../Overviews/Methods.html#aliveThreadPeriod'>aliveThreadPeriod</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-aliveThreadPeriod' href='./../Overviews/Methods.html#aliveThreadPeriod'>aliveThreadPeriod</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-allClientIDs' href='./../Overviews/Methods.html#allClientIDs'>allClientIDs</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-applicationRunning' href='./../Overviews/Methods.html#applicationRunning'>applicationRunning</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-archiveAsCompileString' href='./../Overviews/Methods.html#archiveAsCompileString'>archiveAsCompileString</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-archiveAsObject' href='./../Overviews/Methods.html#archiveAsObject'>archiveAsObject</a></h3>
@@ -742,7 +762,6 @@ Routine.run {
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bufferAllocator' href='./../Overviews/Methods.html#bufferAllocator'>bufferAllocator</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cachedBufferAt' href='./../Overviews/Methods.html#cachedBufferAt'>cachedBufferAt</a>(<span class='argstr'>bufnum</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cachedBuffersDo' href='./../Overviews/Methods.html#cachedBuffersDo'>cachedBuffersDo</a>(<span class='argstr'>func</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-calcOffset' href='./../Overviews/Methods.html#calcOffset'>calcOffset</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-calculateViewBounds' href='./../Overviews/Methods.html#calculateViewBounds'>calculateViewBounds</a></h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Control/ServerPlusGUI.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Control/ServerPlusGUI.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clientID' href='./../Overviews/Methods.html#clientID'>clientID</a></h3>
@@ -751,10 +770,13 @@ Routine.run {
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cmdPeriod' href='./../Overviews/Methods.html#cmdPeriod'>cmdPeriod</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-connectSharedMemory' href='./../Overviews/Methods.html#connectSharedMemory'>connectSharedMemory</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-controlBusAllocator' href='./../Overviews/Methods.html#controlBusAllocator'>controlBusAllocator</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defaultGroupID' href='./../Overviews/Methods.html#defaultGroupID'>defaultGroupID</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-disconnectSharedMemory' href='./../Overviews/Methods.html#disconnectSharedMemory'>disconnectSharedMemory</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dumpMode' href='./../Overviews/Methods.html#dumpMode'>dumpMode</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-emacsbuf' href='./../Overviews/Methods.html#emacsbuf'>emacsbuf</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-freeAllBuffers' href='./../Overviews/Methods.html#freeAllBuffers'>freeAllBuffers</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-freeDefaultGroups' href='./../Overviews/Methods.html#freeDefaultGroups'>freeDefaultGroups</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-freeMyDefaultGroup' href='./../Overviews/Methods.html#freeMyDefaultGroup'>freeMyDefaultGroup</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getControlBusValue' href='./../Overviews/Methods.html#getControlBusValue'>getControlBusValue</a>(<span class='argstr'>busIndex</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getControlBusValues' href='./../Overviews/Methods.html#getControlBusValues'>getControlBusValues</a>(<span class='argstr'>busIndex</span>, <span class='argstr'>busChannels</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-guiClass' href='./../Overviews/Methods.html#guiClass'>guiClass</a></h3>
@@ -763,6 +785,7 @@ Routine.run {
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-ifRunning' href='./../Overviews/Methods.html#ifRunning'>ifRunning</a>(<span class='argstr'>func</span>, <span class='argstr'>failFunc</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-inProcess' href='./../Overviews/Methods.html#inProcess'>inProcess</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isRecording' href='./../Overviews/Methods.html#isRecording'>isRecording</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-makeDefaultGroups' href='./../Overviews/Methods.html#makeDefaultGroups'>makeDefaultGroups</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-makeView' href='./../Overviews/Methods.html#makeView'>makeView</a>(<span class='argstr'>w</span>, <span class='argstr'>useRoundButton: true</span>, <span class='argstr'>onColor</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extServer-makeView.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extServer-makeView.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-makeView2' href='./../Overviews/Methods.html#makeView2'>makeView2</a>(<span class='argstr'>w</span>, <span class='argstr'>useRoundButton: true</span>)</h3>
@@ -777,6 +800,7 @@ Routine.run {
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-nextBufferNumber' href='./../Overviews/Methods.html#nextBufferNumber'>nextBufferNumber</a>(<span class='argstr'>n</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-nodeAllocator' href='./../Overviews/Methods.html#nodeAllocator'>nodeAllocator</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-notified' href='./../Overviews/Methods.html#notified'>notified</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numClients' href='./../Overviews/Methods.html#numClients'>numClients</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-onBootAdd' href='./../Overviews/Methods.html#onBootAdd'>onBootAdd</a>(<span class='argstr'>object</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Control/extSystemActions.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Control/extSystemActions.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-onBootRemove' href='./../Overviews/Methods.html#onBootRemove'>onBootRemove</a>(<span class='argstr'>object</span>)</h3>
@@ -793,6 +817,7 @@ Routine.run {
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-recordOnNodeID' href='./../Overviews/Methods.html#recordOnNodeID'>recordOnNodeID</a>(<span class='argstr'>nodeID</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Server/extServer-recordOnNodeID.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Server/extServer-recordOnNodeID.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-recorder' href='./../Overviews/Methods.html#recorder'>recorder</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remove' href='./../Overviews/Methods.html#remove'>remove</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeBusLinks' href='./../Overviews/Methods.html#removeBusLinks'>removeBusLinks</a>(<span class='argstr'>busIndex</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeControlLinks' href='./../Overviews/Methods.html#removeControlLinks'>removeControlLinks</a>(<span class='argstr'>nodeID</span>)</h3>
@@ -801,6 +826,8 @@ Routine.run {
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scopeBufferAllocator' href='./../Overviews/Methods.html#scopeBufferAllocator'>scopeBufferAllocator</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scopeWindow' href='./../Overviews/Methods.html#scopeWindow'>scopeWindow</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scopeWindow' href='./../Overviews/Methods.html#scopeWindow'>scopeWindow</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sendDefaultGroups' href='./../Overviews/Methods.html#sendDefaultGroups'>sendDefaultGroups</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sendDefaultGroupsForClientIDs' href='./../Overviews/Methods.html#sendDefaultGroupsForClientIDs'>sendDefaultGroupsForClientIDs</a>(<span class='argstr'>clientIDs</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sendQuit' href='./../Overviews/Methods.html#sendQuit'>sendQuit</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sendQuit' href='./../Overviews/Methods.html#sendQuit'>sendQuit</a> = value</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sendStatusMsg' href='./../Overviews/Methods.html#sendStatusMsg'>sendStatusMsg</a></h3>
