@@ -1,0 +1,302 @@
+<!doctype html><html lang='en'><head><title>Sampler | SuperCollider 3.9dev Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Sampler';
+var scdoc_sc_version = '3.9dev';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC();prettyPrint()'>
+<div class='contents'>
+<div id='menubar'></div>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#SuperSampler'>SuperSampler</a></span>
+</div><h1>Sampler<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>A sampler synthesizer that knows what it's doing.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/SuperSampler/Sampler.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/SuperSampler/Sampler.sc'>Sampler.sc</a></div><div id='related'>See also: <a href="./../Classes/SampleDescript.html">SampleDescript</a>, <a href="./../Classes/SampleDB">SampleDB</a></div>
+</div>
+<div id='toc'>
+<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*allSampler'>allSampler</a> </li>
+<li class='toc3'><a href='#*playArgs'>playArgs</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*defaultOutputBus'>defaultOutputBus</a> </li>
+<li class='toc3'><a href='#*defaultTexture'>defaultTexture</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-key'>key</a> </li>
+<li class='toc3'><a href='#-db'>db</a> </li>
+<li class='toc3'><a href='#-filenames'>filenames</a> </li>
+<li class='toc3'><a href='#-setKeyRanges'>setKeyRanges</a> </li>
+<li class='toc3'><a href='#-keynums'>keynums</a> </li>
+<li class='toc3'><a href='#-samples'>samples</a> </li>
+<li class='toc3'><a href='#-dbs'>dbs</a> </li>
+<li class='toc3'><a href='#-load'>load</a> </li>
+<li class='toc3'><a href='#-keyRanges'>keyRanges</a> </li>
+<li class='toc3'><a href='#-playArgs'>playArgs</a> </li>
+<li class='toc3'><a href='#-playEnv'>playEnv</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-averageDuration'>averageDuration</a> </li>
+<li class='toc3'><a href='#-averageMFCC'>averageMFCC</a> </li>
+<li class='toc3'><a href='#-averageTemporalCentroid'>averageTemporalCentroid</a> </li>
+<li class='toc3'><a href='#-bufServer'>bufServer</a> </li>
+<li class='toc3'><a href='#-free'>free</a> </li>
+<li class='toc3'><a href='#-kdTreeNode'>kdTreeNode</a> </li>
+<li class='toc3'><a href='#-name'>name</a> </li>
+<li class='toc3'><a href='#-numActiveBuffer'>numActiveBuffer</a> </li>
+<li class='toc3'><a href='#-playSample'>playSample</a> </li>
+<li class='toc3'><a href='#-setKeynums'>setKeynums</a> </li>
+<li class='toc3'><a href='#-setThresh'>setThresh</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Make sure you have installed SC3 plugins and SCMIR before using SuperSampler.
+<p><a href="http://composerprogrammer.com/code.html">http://composerprogrammer.com/code.html</a>
+<p>Sampler is a sampling synthesizer that applies SampleDescript for sound quality detection, and using detected information to determine playback bahavier. Most features of Sampler is done automatically for you.
+<p>For example, it detects the beginning of your sound samples, if there are more than one onset, it separates each onsets as different samples. There are lots of other figures you may want to experiment.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>Sampler.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>samplerName</span>, <span class='argstr'>dbname: 'default'</span>)</h3>
+<div class='method'>
+<p>Create a new Sampler.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>samplerName<td class='argumentdesc'>
+<p>Name of Sampler.<tr><td class='argumentname'>dbname<td class='argumentdesc'>
+<p>Name of Sampler database. Each database may contain different Sampler libraries.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this Sampler</div></div><h3 class='method-code'><span class='method-prefix'>Sampler.</span><a class='method-name' name='*allSampler' href='./../Overviews/Methods.html#allSampler'>allSampler</a></h3>
+<div class='method'>
+<p>Returns a dictionary of all samplers created.</div><h3 class='method-code'><span class='method-prefix'>Sampler.</span><a class='method-name' name='*playArgs' href='./../Overviews/Methods.html#playArgs'>playArgs</a>(<span class='argstr'>args</span>)</h3>
+<div class='method'>
+<p>Play a SamplerArguments instance. Use this method if you want to play an exactly the same sound you have created before.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>args<td class='argumentdesc'>
+<p>A SamplerArguments to play;</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Sampler.</span><a class='method-name' name='*defaultOutputBus' href='./../Overviews/Methods.html#defaultOutputBus'>defaultOutputBus</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Sampler.</span><a class='method-name' name='*defaultOutputBus' href='./../Overviews/Methods.html#defaultOutputBus'>defaultOutputBus</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>Sampler.</span><a class='method-name' name='*defaultTexture' href='./../Overviews/Methods.html#defaultTexture'>defaultTexture</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Sampler.</span><a class='method-name' name='*defaultTexture' href='./../Overviews/Methods.html#defaultTexture'>defaultTexture</a> = value</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-init' href='./../Overviews/Methods.html#init'>init</a>(<span class='argstr'>samplerName</span>, <span class='argstr'>dbname</span>)</h3>
+<div class='method'>
+<p>Create a new Sampler and add it to SamplerDB.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>samplerName<td class='argumentdesc'>
+<p>Name of Sampler.<tr><td class='argumentname'>dbname<td class='argumentdesc'>
+<p>Name of SamplerDB this Sampler belongs to. If the name of SamplerDB is not created, it will create a new SamplerDB class.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-key' href='./../Overviews/Methods.html#key'>key</a>(<span class='argstr'>keynums</span>, <span class='argstr'>syncmode: 'keeplength'</span>, <span class='argstr'>dur</span>, <span class='argstr'>amp: 1</span>, <span class='argstr'>ampenv</span>, <span class='argstr'>pan: 0</span>, <span class='argstr'>panenv</span>, <span class='argstr'>bendenv</span>, <span class='argstr'>texture</span>, <span class='argstr'>expand</span>, <span class='argstr'>grainRate: 20</span>, <span class='argstr'>grainDur: 0.15</span>, <span class='argstr'>out</span>, <span class='argstr'>midiChannel: 0</span>, <span class='argstr'>play: true</span>)</h3>
+<div class='method'>
+<p>Play samples by giving key numbers. If no key number provided, it chooses a random MIDI key number. Defaults are also provided by SamplerArguments class.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>keynums<td class='argumentdesc'>
+<p>The MIDI key numbers to play, can be a single number, an array of numbers, or a function that generate the number. Negative key numbers reverses the buffer to play. It's default is a random number between 0-127.<tr><td class='argumentname'>syncmode<td class='argumentdesc'>
+<p>The strategy to syncronize different samples:
+<p>\keeplength: keep the length of all playing sound, align all at peak point of the sample with the longest attack time. This is the default strategy.
+<p>\percussive: make a percussive sound, starts all sounds from peak point.
+<p>[\parkat, time]: the peak point of the sound will be set to the scheduled time.
+<p>\nosorting: just play every sample as it is, like conventional sampler synthesizer.<tr><td class='argumentname'>dur<td class='argumentdesc'>
+<p>Duration<tr><td class='argumentname'>amp<td class='argumentdesc'>
+<p>Overall amplitude, a multiplier.<tr><td class='argumentname'>ampenv<td class='argumentdesc'>
+<p>An Envelop for amplitude, in normalized XY format. Each node in the Envelope is describe as a pair of time and amplitude in the array.<tr><td class='argumentname'>pan<td class='argumentdesc'>
+<p>Overall panning. O is the center, -1 is left and 1 is right.<tr><td class='argumentname'>panenv<td class='argumentdesc'>
+<p>An Envelop for panning, in normalized XY format. Each node in the Envelope is describe as a pair of time and panning in the array.<tr><td class='argumentname'>bendenv<td class='argumentdesc'>
+<p>An Envelop for bending pitch in the sound in normalized XY format. Each node in the Envelope is describe as a pair of time and pitch bending in the array.<tr><td class='argumentname'>texture<td class='argumentdesc'>
+<p>The number of sample sounds to be played in the same time. If nil, it will play every triggered sounds.<tr><td class='argumentname'>expand<td class='argumentdesc'>
+<p>Stretch the played samples with insertion algorithm using granular synthesis. The value will be the expected time to be stretched.
+<p>Granulation runs only when this value is not nil.<tr><td class='argumentname'>grainRate<td class='argumentdesc'>
+<p>The grain rate for stratching granular synthesizer.<tr><td class='argumentname'>grainDur<td class='argumentdesc'>
+<p>The grain duration for stratching granular synthesizer.<tr><td class='argumentname'>out<td class='argumentdesc'>
+<p>Output Bus<tr><td class='argumentname'>midiChannel<td class='argumentdesc'>
+<p>A midiChannel for storing the playing UGens in SamplerQuery class, supporting live response.<tr><td class='argumentname'>play<td class='argumentdesc'>
+<p>If true, play this sound.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a instance of SamplerArguments class</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-db' href='./../Overviews/Methods.html#db'>db</a>(<span class='argstr'>samplerName</span>)</h3>
+<div class='method'>
+<p>Return an array of Samplers in the same SamplerDB database<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>samplerName<td class='argumentdesc'>
+<p>The name of the Sampler to return.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a Sampler with the name, or a list of Samplers if not specified.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-filenames' href='./../Overviews/Methods.html#filenames'>filenames</a></h3>
+<div class='method'>
+<p>Get filenames loaded to this Sampler.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An array of filenames.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setKeyRanges' href='./../Overviews/Methods.html#setKeyRanges'>setKeyRanges</a>(<span class='argstr'>strategy: 'keynumRadious'</span>, <span class='argstr'>infoArray</span>)</h3>
+<div class='method'>
+<p>Reset range response to each key related to the anchor key number.
+<p>In Sampler, every loaded sound files is anchored to a MIDI key number. When the method .key is used, a range of MIDI key numbers are determined for each sampler to respond to the key number played.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>strategy<td class='argumentdesc'>
+<p>Determine the method to arrange the responded MIDI key numbers for each sample:
+<p>\keynumRadious: Give a range radious in infoArray from each anchor keynums as responsive range.
+<p>\fullrange: Every sample is responded in full range of midi key number.
+<p>\keynumOnly: Only respond to the anchored key number.<tr><td class='argumentname'>infoArray<td class='argumentdesc'>
+<p>Information array provided to respond to the strategy.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keynums' href='./../Overviews/Methods.html#keynums'>keynums</a></h3>
+<div class='method'>
+<p>Anchor key numbers for each sample.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An array of key numbers setted as anchor for each sample in the list.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-samples' href='./../Overviews/Methods.html#samples'>samples</a></h3>
+<div class='method'>
+<p>All samples are stored here. Samples in SuperSampler is stored as classs of SampleDescript. You can extract sample informations stored in the class.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An array of SampleDescript classes.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dbs' href='./../Overviews/Methods.html#dbs'>dbs</a></h3>
+<div class='method'>
+<p>The database storing this Sampler. The name \default is assigned if not specified.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A SamplerDB class.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-load' href='./../Overviews/Methods.html#load'>load</a>(<span class='argstr'>soundfiles</span>, <span class='argstr'>server</span>, <span class='argstr'>filenameAsKeynum: false</span>, <span class='argstr'>normalize: false</span>, <span class='argstr'>startThresh: 0.01</span>, <span class='argstr'>endThresh: 0.01</span>, <span class='argstr'>action</span>)</h3>
+<div class='method'>
+<p>Load sound files into a Sampler. All sound files will be analyzed and stored as SampleDescript class, and load into buffers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>soundfiles<td class='argumentdesc'>
+<p>A list of soundfiles to load.<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>The server to load all samples into buffers.<tr><td class='argumentname'>filenameAsKeynum<td class='argumentdesc'>
+<p>Use key numbers provided in the file names as anchored key number for each file.<tr><td class='argumentname'>normalize<td class='argumentdesc'>
+<p>This is a argument for SCMIR, making SCMIR to normalize it's data for analyzation.<tr><td class='argumentname'>startThresh<td class='argumentdesc'>
+<p>Threshold for starting time detection, it's a multiplier to the peak amplitude of this sound sample.<tr><td class='argumentname'>endThresh<td class='argumentdesc'>
+<p>Threshold for ending time detection, it's a multiplier to the peak amplitude of this sound sample.<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>A function that triggers after the sampler is loaded.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keyRanges' href='./../Overviews/Methods.html#keyRanges'>keyRanges</a></h3>
+<div class='method'>
+<p>Ranges of responding MIDI key numbers of each samples.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An array of MIDI key numbers indicating the upper and lower key numbers with each key ranges. In a format like this:
+<p>|-------- Each Sample -------------| |-----Each Sample---
+<p>|----Section----| |----Section----| |----Section----|
+<p>[[[upper, lower], [upper, lower]..], [[upper, lower], [upper, lower]...], ....]</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-playArgs' href='./../Overviews/Methods.html#playArgs'>playArgs</a>(<span class='argstr'>args</span>)</h3>
+<div class='method'>
+<p>Play a SamplerArguments instance. Use this method if you want to play an exactly the same sound you have created before.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>args<td class='argumentdesc'>
+<p>A SamplerArguments to play;</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-playEnv' href='./../Overviews/Methods.html#playEnv'>playEnv</a>(<span class='argstr'>env</span>, <span class='argstr'>keynums</span>, <span class='argstr'>dur</span>, <span class='argstr'>amp: 1</span>, <span class='argstr'>pan: 0</span>, <span class='argstr'>maxtexture: 5</span>, <span class='argstr'>out</span>, <span class='argstr'>midiChannel: 0</span>)</h3>
+<div class='method'>
+<p>The Sampler will fit it's sound into the provided Envelope automatically.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>env<td class='argumentdesc'>
+<p>The amplitude envelope to play. It can be an instance of Env class or an breakpoint envelope, such as [x1, y1, x2, y2, ..]<tr><td class='argumentname'>keynums<td class='argumentdesc'>
+<p>The MIDI key numbers assigned to play. It can also be an array of nubwers or a function generating the number. It's defaulted a random number between 0-127.<tr><td class='argumentname'>dur<td class='argumentdesc'>
+<p>Duration of the sound to play. The sound will start from 1/2 of this value before the peak of the sample, not the beginning of the sound file.<tr><td class='argumentname'>amp<td class='argumentdesc'>
+<p>Amplitude multiplier.<tr><td class='argumentname'>pan<td class='argumentdesc'>
+<p>Panning, from -1 (left) to 1 (right).<tr><td class='argumentname'>maxtexture<td class='argumentdesc'>
+<p>The maxinum number of sounds to be played simultaneously base on the amplitude value in the envelope. More sounds would be played at the peak of the envelope.<tr><td class='argumentname'>out<td class='argumentdesc'>
+<p>Output Bus<tr><td class='argumentname'>midiChannel<td class='argumentdesc'>
+<p>A midiChannel for storing the playing UGens in SamplerQuery class, supporting live response.</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-averageDuration' href='./../Overviews/Methods.html#averageDuration'>averageDuration</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-averageMFCC' href='./../Overviews/Methods.html#averageMFCC'>averageMFCC</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-averageTemporalCentroid' href='./../Overviews/Methods.html#averageTemporalCentroid'>averageTemporalCentroid</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bufServer' href='./../Overviews/Methods.html#bufServer'>bufServer</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-free' href='./../Overviews/Methods.html#free'>free</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-kdTreeNode' href='./../Overviews/Methods.html#kdTreeNode'>kdTreeNode</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numActiveBuffer' href='./../Overviews/Methods.html#numActiveBuffer'>numActiveBuffer</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-playSample' href='./../Overviews/Methods.html#playSample'>playSample</a>(<span class='argstr'>samplesArray</span>, <span class='argstr'>syncmode: 'keeplength'</span>, <span class='argstr'>detune: 0</span>, <span class='argstr'>dur</span>, <span class='argstr'>amp: 1</span>, <span class='argstr'>ampenv</span>, <span class='argstr'>pan: 0</span>, <span class='argstr'>panenv</span>, <span class='argstr'>bendenv</span>, <span class='argstr'>texture</span>, <span class='argstr'>expand</span>, <span class='argstr'>grainRate: 20</span>, <span class='argstr'>grainDur: 0.15</span>, <span class='argstr'>out</span>, <span class='argstr'>midiChannel: 0</span>, <span class='argstr'>play: true</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setKeynums' href='./../Overviews/Methods.html#setKeynums'>setKeynums</a>(<span class='argstr'>keynumArray</span>, <span class='argstr'>resetKeyRanges</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setThresh' href='./../Overviews/Methods.html#setThresh'>setThresh</a>(<span class='argstr'>startThresh: 0.01</span>, <span class='argstr'>endThresh: 0.01</span>, <span class='argstr'>loadToBuffer: true</span>)</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>//The default database when loaded into SamplerDB is \default
+//Sound files to load has to be in an array.
+(
+s.waitForBoot{
+    Sampler(\reel).load([Quarks.folder ++ "/SuperSampler/Testcode/Sounds/Reel Palindruome_44.1kHz_int16.aiff"]);
+}
+)
+
+Sampler(\reel).key;  //play a random keynote
+Sampler(\reel).key(40);
+
+Sampler(\reel).key(40, dur: 0.3);
+
+
+//play chord with different strategies
+Sampler(\reel).key([30, 40, 50, 60, 70]);
+Sampler(\reel).key([70, 30, 50, 40, 60], [\peakat, 3]);
+Sampler(\reel).key([30, 40, 50, 60, 70], \percussive);
+Sampler(\reel).key([70, 30, 50, 40, 60], \stratchshort);
+Sampler(\reel).key([30, 40, 50, 60, 70], \nosorting);
+
+
+// Loading multiple sounds into one Sampler
+(
+s.waitForBoot{
+    var tub = (Quarks.folder ++ "/SuperSampler/Testcode/Sounds/Tubular/*.aiff").pathMatch;
+    Sampler(\tublar).load(tub, filenameAsKeynum: true);  //using filename as anchored pitch
+}
+)
+
+Sampler(\tublar).key;
+
+Sampler(\tublar).key(30);
+Sampler(\tublar).key(-60); //negative number plays the sound backward.
+Sampler(\tublar).key([-60, 60]);
+Sampler(\tublar).key([-60, 60], [\peakat, 6]);
+Sampler(\tublar).key([-60, 60], [\peakat, 1]);
+
+Sampler(\tublar).key([-60, 60], panenv: Env([-1, 1, -1]));
+Sampler(\tublar).key([-60, 60], panenv: [0, -1, 0.5, 1, 1, -1]); //same as the env above
+
+Sampler(\tublar).key([-60, 60], ampenv: Env([3, 1, 3]));
+
+Sampler(\tublar).key([-60, 60, -50, 50], bendenv: [0, 1, 0.2, 1, 1, 3]);
+
+Sampler(\tublar).key(100, expand: 10); //granular expanding
+
+
+
+
+//load John cage speech in different database
+(
+s.waitForBoot{
+Sampler(\cage, \speak).load([Quarks.folder ++ "/SuperSampler/Testcode/Sounds/cage.wav"]);
+};
+)
+
+Sampler(\cage).keynums;
+Sampler(\cage).setKeynums([[20, 30, 40, 50, 60, 70, 80, 90, 100]]);
+
+Sampler(\cage).key;
+
+// retrive envelop from John Cage speaking
+~cageenv = Sampler(\cage).samples[0].env.normalize(1);
+~cageenv.plot;
+~cageenv.test;
+//invert and reverse envelop for composition purpose
+~cageenv.invert.plot;
+~cageenv.reverse.plot;
+
+
+(
+s.waitForBoot{
+    Sampler(\nickel).load([Quarks.folder ++ "/SuperSampler/Testcode/Sounds/Nickel 2.wav"]);
+}
+)
+
+Sampler(\nickel).playEnv(Env(), {rrand(10, 30)});
+Sampler(\nickel).playEnv(~cageenv, {rrand(10, 30)});
+
+
+// Using SamplerDB to play all sounds
+
+SamplerDB(\default).key;
+
+SamplerDB(\default).playEnv(Env());
+
+(
+SamplerDB(\default).playEnv(env: ~cageenv);
+Sampler(\cage).samples[0].play;
+)</pre>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/SuperSampler/HelpSource/Classes/Sampler.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/SuperSampler/HelpSource/Classes/Sampler.schelp</a><br>link::Classes/Sampler::<br></div></div></body></html>

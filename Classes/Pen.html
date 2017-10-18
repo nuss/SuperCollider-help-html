@@ -77,11 +77,7 @@ var scdoc_sc_version = '3.9dev';
 <li class='toc3'><a href='#*blendMode'>blendMode</a> </li>
 <li class='toc3'><a href='#*lineDash'>lineDash</a> </li>
 <li class='toc3'><a href='#*drawImage'>drawImage</a> </li>
-</ul><li class='toc2'><a href='#Animation'>Animation</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Matrix%20example'>Matrix example</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Transparency%20layer%20example'>Transparency layer example</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Blending%20modes'>Blending modes</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 <li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*addCurve'>addCurve</a> </li>
 <li class='toc3'><a href='#*addQuadCurve'>addQuadCurve</a> </li>
@@ -100,13 +96,8 @@ var scdoc_sc_version = '3.9dev';
 <li class='toc3'><a href='#*font'>font</a> </li>
 <li class='toc3'><a href='#*nonimpl'>nonimpl</a> </li>
 <li class='toc3'><a href='#*pop'>pop</a> </li>
-<li class='toc3'><a href='#*prAddAnnularWedge'>prAddAnnularWedge</a> </li>
-<li class='toc3'><a href='#*prAddArc'>prAddArc</a> </li>
 <li class='toc3'><a href='#*prBegin'>prBegin</a> </li>
-<li class='toc3'><a href='#*prDrawImage'>prDrawImage</a> </li>
 <li class='toc3'><a href='#*prEnd'>prEnd</a> </li>
-<li class='toc3'><a href='#*prSetFont'>prSetFont</a> </li>
-<li class='toc3'><a href='#*prTileImage'>prTileImage</a> </li>
 <li class='toc3'><a href='#*push'>push</a> </li>
 <li class='toc3'><a href='#*rotateDeg'>rotateDeg</a> </li>
 <li class='toc3'><a href='#*roundedRect'>roundedRect</a> </li>
@@ -122,7 +113,12 @@ var scdoc_sc_version = '3.9dev';
 <li class='toc3'><a href='#*transformToRect'>transformToRect</a> </li>
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
-</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'><li class='toc2'><a href='#Animation'>Animation</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Matrix%20example'>Matrix example</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Transparency%20layer%20example'>Transparency layer example</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Blending%20modes'>Blending modes</a></li>
+<ul class='toc'></ul></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>A class which allows you to draw custom graphics on a UserView or Window.
 <p>The following methods must be called within a <a href="./../Classes/Window.html#-drawFunc">Window: -drawFunc</a> or a <a href="./../Classes/UserView.html#-drawFunc">UserView: -drawFunc</a> function, and will only be visible once the window or the view is refreshed. Each call to <a href="./../Classes/Window.html#-refresh">Window: -refresh</a> or <a href="./../Classes/UserView.html#-refresh">UserView: -refresh</a> will 'overwrite' all previous drawing by executing the currently defined function, unless <a href="./../Classes/UserView.html#-clearOnRefresh">UserView: -clearOnRefresh</a> is set to <code class='code prettyprint lang-sc'>false</code><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
@@ -616,9 +612,9 @@ w.drawFunc = { |v|
 <p>example:<pre class='code prettyprint lang-sc'>(
 w = Window.new.front;
 w.view.background_(Color.white);
-StaticText(w, Rect(0,0,180,20))
+StaticText(w, Rect(0,0,200,20))
     .string_(" Change Line Cap &amp; Join Styles: ");
-y = PopUpMenu(w, Rect(180,0,130,20))
+y = PopUpMenu(w, Rect(200,0,130,20))
     .items_(["Butt - Miter", "Round - Round", "Square - Bevel"])
     .action_({w.refresh});
 w.drawFunc = {
@@ -650,17 +646,70 @@ w.refresh;
 <div class='method'>
 <p>Draw a bitmap image using the Image class.<h4>Discussion:</h4>
 
-<p>example:<pre class='code prettyprint lang-sc'>w = Window.new.front;
+<p>example:<pre class='code prettyprint lang-sc'>(
+w = Window.new.front;
 w.view.background = Color.red;
 i = Image.open(SCDoc.helpSourceDir +/+ "images/Swamp.png");
 w.drawFunc_({
     Pen.drawImage( Point(140, 140), i, operation: 'sourceOver', opacity:1);
 });
+)</pre>
+</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*addCurve' href='./../Overviews/Methods.html#addCurve'>addCurve</a>(<span class='argstr'>start</span>, <span class='argstr'>c1</span>, <span class='argstr'>c2</span>, <span class='argstr'>end</span>, <span class='argstr'>div: 10</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-addCurve.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-addCurve.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*addQuadCurve' href='./../Overviews/Methods.html#addQuadCurve'>addQuadCurve</a>(<span class='argstr'>start</span>, <span class='argstr'>c1</span>, <span class='argstr'>end</span>, <span class='argstr'>div: 10</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-addCurve.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-addCurve.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*addRoundedRect' href='./../Overviews/Methods.html#addRoundedRect'>addRoundedRect</a>(<span class='argstr'>aRect</span>, <span class='argstr'>radiusX</span>, <span class='argstr'>radiusY</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*addWedge_Deg' href='./../Overviews/Methods.html#addWedge_Deg'>addWedge_Deg</a>(<span class='argstr'>center</span>, <span class='argstr'>radius</span>, <span class='argstr'>startAngle</span>, <span class='argstr'>sweepLength</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*arrow' href='./../Overviews/Methods.html#arrow'>arrow</a>(<span class='argstr'>start</span>, <span class='argstr'>end</span>, <span class='argstr'>width: 5</span>, <span class='argstr'>arrowAngle: 1.5707963267949</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-arrow.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-arrow.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*arrow_round' href='./../Overviews/Methods.html#arrow_round'>arrow_round</a>(<span class='argstr'>start</span>, <span class='argstr'>end</span>, <span class='argstr'>width: 5</span>, <span class='argstr'>arrowAngle: 1.5707963267949</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-arrow.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-arrow.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*circle' href='./../Overviews/Methods.html#circle'>circle</a>(<span class='argstr'>rect</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc</a></div>
+</h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*color' href='./../Overviews/Methods.html#color'>color</a> = <span class='argstr'>aColor</span></h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*cross' href='./../Overviews/Methods.html#cross'>cross</a>(<span class='argstr'>center</span>, <span class='argstr'>radius: 5</span>, <span class='argstr'>shape: '+'</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-arrow.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-arrow.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*drawIcon' href='./../Overviews/Methods.html#drawIcon'>drawIcon</a>(<span class='argstr'>symbol: 'play'</span>, <span class='argstr'>rect</span> <span class='argstr'>... args</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extDrawIcon.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extDrawIcon.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*drawSpline' href='./../Overviews/Methods.html#drawSpline'>drawSpline</a>(<span class='argstr'>start</span>, <span class='argstr'>c1</span>, <span class='argstr'>c2</span>, <span class='argstr'>end</span>, <span class='argstr'>strokeColor</span>, <span class='argstr'>controlColor</span>, <span class='argstr'>div: 10</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-addCurve.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-addCurve.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*extrudedCircle' href='./../Overviews/Methods.html#extrudedCircle'>extrudedCircle</a>(<span class='argstr'>rect</span>, <span class='argstr'>width: 2</span>, <span class='argstr'>angle</span>, <span class='argstr'>inverse: false</span>, <span class='argstr'>colors</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*extrudedRect' href='./../Overviews/Methods.html#extrudedRect'>extrudedRect</a>(<span class='argstr'>rect</span>, <span class='argstr'>radius</span>, <span class='argstr'>width: 2</span>, <span class='argstr'>angle</span>, <span class='argstr'>inverse: false</span>, <span class='argstr'>colors</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc</a></div>
+</h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*fillColor' href='./../Overviews/Methods.html#fillColor'>fillColor</a> = <span class='argstr'>aColor</span></h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*font' href='./../Overviews/Methods.html#font'>font</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*font' href='./../Overviews/Methods.html#font'>font</a> = <span class='argstr'>aFont</span></h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*nonimpl' href='./../Overviews/Methods.html#nonimpl'>nonimpl</a>(<span class='argstr'>methodName</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*pop' href='./../Overviews/Methods.html#pop'>pop</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*prBegin' href='./../Overviews/Methods.html#prBegin'>prBegin</a>(<span class='argstr'>aView</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*prEnd' href='./../Overviews/Methods.html#prEnd'>prEnd</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*push' href='./../Overviews/Methods.html#push'>push</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*rotateDeg' href='./../Overviews/Methods.html#rotateDeg'>rotateDeg</a>(<span class='argstr'>angle: 0</span>, <span class='argstr'>x: 0</span>, <span class='argstr'>y: 0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*roundedRect' href='./../Overviews/Methods.html#roundedRect'>roundedRect</a>(<span class='argstr'>rect</span>, <span class='argstr'>radius</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*splineCurve' href='./../Overviews/Methods.html#splineCurve'>splineCurve</a>(<span class='argstr'>point1</span>, <span class='argstr'>point2</span>, <span class='argstr'>cpoint1</span>, <span class='argstr'>cpoint2</span>, <span class='argstr'>div: 10</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Interpolation/extPen-splineCurve.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Interpolation/extPen-splineCurve.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*string' href='./../Overviews/Methods.html#string'>string</a>(<span class='argstr'>aString</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*stringAtPoint' href='./../Overviews/Methods.html#stringAtPoint'>stringAtPoint</a>(<span class='argstr'>string</span>, <span class='argstr'>point</span>, <span class='argstr'>font</span>, <span class='argstr'>color</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*stringCenteredIn' href='./../Overviews/Methods.html#stringCenteredIn'>stringCenteredIn</a>(<span class='argstr'>string</span>, <span class='argstr'>rect</span>, <span class='argstr'>font</span>, <span class='argstr'>color</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*stringInRect' href='./../Overviews/Methods.html#stringInRect'>stringInRect</a>(<span class='argstr'>string</span>, <span class='argstr'>rect</span>, <span class='argstr'>font</span>, <span class='argstr'>color</span>, <span class='argstr'>alignment</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*stringLeftJustIn' href='./../Overviews/Methods.html#stringLeftJustIn'>stringLeftJustIn</a>(<span class='argstr'>string</span>, <span class='argstr'>rect</span>, <span class='argstr'>font</span>, <span class='argstr'>color</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*stringRightJustIn' href='./../Overviews/Methods.html#stringRightJustIn'>stringRightJustIn</a>(<span class='argstr'>string</span>, <span class='argstr'>rect</span>, <span class='argstr'>font</span>, <span class='argstr'>color</span>)</h3>
+</h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*strokeColor' href='./../Overviews/Methods.html#strokeColor'>strokeColor</a> = <span class='argstr'>aColor</span></h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*tileImage' href='./../Overviews/Methods.html#tileImage'>tileImage</a>(<span class='argstr'>target</span>, <span class='argstr'>image</span>, <span class='argstr'>source</span>, <span class='argstr'>operation: 'sourceOver'</span>, <span class='argstr'>opacity: 1</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*transformToRect' href='./../Overviews/Methods.html#transformToRect'>transformToRect</a>(<span class='argstr'>rect</span>, <span class='argstr'>fromRect</span>, <span class='argstr'>keepRatio: false</span>, <span class='argstr'>scale: 1</span>, <span class='argstr'>move: 0.5</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-transformToRect.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-transformToRect.sc</a></div>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 
-examples::
-Simple rotating and scaling:
-code::
-(
+<p>Simple rotating and scaling:<pre class='code prettyprint lang-sc'>(
     w = Window("Pen Rotation and Scaling", Rect(128, 64, 360, 360));
     w.drawFunc = {
         Pen.use {
@@ -738,7 +787,7 @@ w.drawFunc = {
 { while { run } { w.refresh; 1.0.rand.wait } }.fork(AppClock)
 
 )</pre>
-</div><h3><a class='anchor' name='Animation'>Animation</a></h3>
+<h3><a class='anchor' name='Animation'>Animation</a></h3>
 
 <p>Uses random seed to 'store' data By reseting the seed each time the same random values and shapes are generated for each 'frame' These can then be subjected to cumulative rotation, etc., by simply incrementing the phase var.<pre class='code prettyprint lang-sc'>(
 // By James McCartney
@@ -1050,7 +1099,7 @@ OS 10.5 and &gt; Only
 (
     var blendMode=0, blendString="Normal";
     w = Window.new.front;
-    m = SCPopUpMenu(w, Rect(10, w.view.bounds.height - 30, 150, 20));
+    m = PopUpMenu(w, Rect(10, w.view.bounds.height - 30, 150, 20));
     m.items = [
         "0 - Normal",
         "1 - Multiply",
@@ -1090,62 +1139,4 @@ OS 10.5 and &gt; Only
     w.refresh;
 )</pre>
 
-<p><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*addCurve' href='./../Overviews/Methods.html#addCurve'>addCurve</a>(<span class='argstr'>start</span>, <span class='argstr'>c1</span>, <span class='argstr'>c2</span>, <span class='argstr'>end</span>, <span class='argstr'>div: 10</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-addCurve.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-addCurve.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*addQuadCurve' href='./../Overviews/Methods.html#addQuadCurve'>addQuadCurve</a>(<span class='argstr'>start</span>, <span class='argstr'>c1</span>, <span class='argstr'>end</span>, <span class='argstr'>div: 10</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-addCurve.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-addCurve.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*addRoundedRect' href='./../Overviews/Methods.html#addRoundedRect'>addRoundedRect</a>(<span class='argstr'>aRect</span>, <span class='argstr'>radiusX</span>, <span class='argstr'>radiusY</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*addWedge_Deg' href='./../Overviews/Methods.html#addWedge_Deg'>addWedge_Deg</a>(<span class='argstr'>center</span>, <span class='argstr'>radius</span>, <span class='argstr'>startAngle</span>, <span class='argstr'>sweepLength</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*arrow' href='./../Overviews/Methods.html#arrow'>arrow</a>(<span class='argstr'>start</span>, <span class='argstr'>end</span>, <span class='argstr'>width: 5</span>, <span class='argstr'>arrowAngle: 1.5707963267949</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-arrow.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-arrow.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*arrow_round' href='./../Overviews/Methods.html#arrow_round'>arrow_round</a>(<span class='argstr'>start</span>, <span class='argstr'>end</span>, <span class='argstr'>width: 5</span>, <span class='argstr'>arrowAngle: 1.5707963267949</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-arrow.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-arrow.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*circle' href='./../Overviews/Methods.html#circle'>circle</a>(<span class='argstr'>rect</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc</a></div>
-</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*color' href='./../Overviews/Methods.html#color'>color</a> = <span class='argstr'>aColor</span></h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*cross' href='./../Overviews/Methods.html#cross'>cross</a>(<span class='argstr'>center</span>, <span class='argstr'>radius: 5</span>, <span class='argstr'>shape: '+'</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-arrow.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-arrow.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*drawIcon' href='./../Overviews/Methods.html#drawIcon'>drawIcon</a>(<span class='argstr'>symbol: 'play'</span>, <span class='argstr'>rect</span> <span class='argstr'>... args</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extDrawIcon.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extDrawIcon.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*drawSpline' href='./../Overviews/Methods.html#drawSpline'>drawSpline</a>(<span class='argstr'>start</span>, <span class='argstr'>c1</span>, <span class='argstr'>c2</span>, <span class='argstr'>end</span>, <span class='argstr'>strokeColor</span>, <span class='argstr'>controlColor</span>, <span class='argstr'>div: 10</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-addCurve.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-addCurve.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*extrudedCircle' href='./../Overviews/Methods.html#extrudedCircle'>extrudedCircle</a>(<span class='argstr'>rect</span>, <span class='argstr'>width: 2</span>, <span class='argstr'>angle</span>, <span class='argstr'>inverse: false</span>, <span class='argstr'>colors</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*extrudedRect' href='./../Overviews/Methods.html#extrudedRect'>extrudedRect</a>(<span class='argstr'>rect</span>, <span class='argstr'>radius</span>, <span class='argstr'>width: 2</span>, <span class='argstr'>angle</span>, <span class='argstr'>inverse: false</span>, <span class='argstr'>colors</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc</a></div>
-</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*fillColor' href='./../Overviews/Methods.html#fillColor'>fillColor</a> = <span class='argstr'>aColor</span></h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*font' href='./../Overviews/Methods.html#font'>font</a></h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*font' href='./../Overviews/Methods.html#font'>font</a> = <span class='argstr'>aFont</span></h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*nonimpl' href='./../Overviews/Methods.html#nonimpl'>nonimpl</a>(<span class='argstr'>methodName</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*pop' href='./../Overviews/Methods.html#pop'>pop</a></h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*prAddAnnularWedge' href='./../Overviews/Methods.html#prAddAnnularWedge'>prAddAnnularWedge</a>(<span class='argstr'>center</span>, <span class='argstr'>innerRadius</span>, <span class='argstr'>outerRadius</span>, <span class='argstr'>startAngle</span>, <span class='argstr'>sweepLength</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*prAddArc' href='./../Overviews/Methods.html#prAddArc'>prAddArc</a>(<span class='argstr'>center</span>, <span class='argstr'>radius</span>, <span class='argstr'>startAngle</span>, <span class='argstr'>arcAngle</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*prBegin' href='./../Overviews/Methods.html#prBegin'>prBegin</a>(<span class='argstr'>aView</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*prDrawImage' href='./../Overviews/Methods.html#prDrawImage'>prDrawImage</a>(<span class='argstr'>target</span>, <span class='argstr'>image</span>, <span class='argstr'>source</span>, <span class='argstr'>operation</span>, <span class='argstr'>opacity</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*prEnd' href='./../Overviews/Methods.html#prEnd'>prEnd</a></h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*prSetFont' href='./../Overviews/Methods.html#prSetFont'>prSetFont</a>(<span class='argstr'>aFont</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*prTileImage' href='./../Overviews/Methods.html#prTileImage'>prTileImage</a>(<span class='argstr'>target</span>, <span class='argstr'>image</span>, <span class='argstr'>source</span>, <span class='argstr'>operation</span>, <span class='argstr'>opacity</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*push' href='./../Overviews/Methods.html#push'>push</a></h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*rotateDeg' href='./../Overviews/Methods.html#rotateDeg'>rotateDeg</a>(<span class='argstr'>angle: 0</span>, <span class='argstr'>x: 0</span>, <span class='argstr'>y: 0</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*roundedRect' href='./../Overviews/Methods.html#roundedRect'>roundedRect</a>(<span class='argstr'>rect</span>, <span class='argstr'>radius</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-roundedRect.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*splineCurve' href='./../Overviews/Methods.html#splineCurve'>splineCurve</a>(<span class='argstr'>point1</span>, <span class='argstr'>point2</span>, <span class='argstr'>cpoint1</span>, <span class='argstr'>cpoint2</span>, <span class='argstr'>div: 10</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Interpolation/extPen-splineCurve.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Interpolation/extPen-splineCurve.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*string' href='./../Overviews/Methods.html#string'>string</a>(<span class='argstr'>aString</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*stringAtPoint' href='./../Overviews/Methods.html#stringAtPoint'>stringAtPoint</a>(<span class='argstr'>string</span>, <span class='argstr'>point</span>, <span class='argstr'>font</span>, <span class='argstr'>color</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*stringCenteredIn' href='./../Overviews/Methods.html#stringCenteredIn'>stringCenteredIn</a>(<span class='argstr'>string</span>, <span class='argstr'>rect</span>, <span class='argstr'>font</span>, <span class='argstr'>color</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*stringInRect' href='./../Overviews/Methods.html#stringInRect'>stringInRect</a>(<span class='argstr'>string</span>, <span class='argstr'>rect</span>, <span class='argstr'>font</span>, <span class='argstr'>color</span>, <span class='argstr'>alignment</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*stringLeftJustIn' href='./../Overviews/Methods.html#stringLeftJustIn'>stringLeftJustIn</a>(<span class='argstr'>string</span>, <span class='argstr'>rect</span>, <span class='argstr'>font</span>, <span class='argstr'>color</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*stringRightJustIn' href='./../Overviews/Methods.html#stringRightJustIn'>stringRightJustIn</a>(<span class='argstr'>string</span>, <span class='argstr'>rect</span>, <span class='argstr'>font</span>, <span class='argstr'>color</span>)</h3>
-</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*strokeColor' href='./../Overviews/Methods.html#strokeColor'>strokeColor</a> = <span class='argstr'>aColor</span></h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*tileImage' href='./../Overviews/Methods.html#tileImage'>tileImage</a>(<span class='argstr'>target</span>, <span class='argstr'>image</span>, <span class='argstr'>source</span>, <span class='argstr'>operation: 'sourceOver'</span>, <span class='argstr'>opacity: 1</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Pen.</span><a class='method-name' name='*transformToRect' href='./../Overviews/Methods.html#transformToRect'>transformToRect</a>(<span class='argstr'>rect</span>, <span class='argstr'>fromRect</span>, <span class='argstr'>keepRatio: false</span>, <span class='argstr'>scale: 1</span>, <span class='argstr'>move: 0.5</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-transformToRect.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Drawing/extPen-transformToRect.sc</a></div>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Pen.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Pen.schelp</a><br>link::Classes/Pen::<br></div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Pen.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Pen.schelp</a><br>link::Classes/Pen::<br></div></div></body></html>
