@@ -137,8 +137,8 @@ var scdoc_sc_version = '3.9.0-beta1';
 <p>Buffer objects should not be created or modified within a <a href="./../Classes/SynthDef.html">SynthDef</a>. If this is needed, see <a href="./../Classes/LocalBuf.html">LocalBuf</a>.<h3><a class='anchor' name='Buffer%20Numbers%20and%20Allocation'>Buffer Numbers and Allocation</a></h3>
 
 <p>Although the number of buffers on a server is set at the time it is booted, memory must still be allocated within the server app before they can hold values. (At boot time all buffers have a size of 0.)
-<p><a href="./../Classes/Server.html">Server</a>-side buffers are identified by number, starting from 0. When using Buffer objects, buffer numbers are automatically allocated from the Server's bufferAllocator, unless you explicitly supply one. When you call <code class='code prettyprint lang-sc'>.free</code> on a Buffer object it will release the buffer's memory on the server, and free the buffer number for future reallocation. See <a href="./../Classes/ServerOptions.html">ServerOptions</a> for details on setting the number of available buffers.
-<p>Normally you should not need to supply a buffer number. You should only do so if you are sure you know what you are doing. Similarly, in normal use you should not need to access the buffer number, since instances of Buffer can be used directly as <a href="./../Classes/UGen.html">UGen</a> inputs or <a href="./../Classes/Synth.html">Synth</a> args.<h3><a class='anchor' name='Multichannel%20Buffers'>Multichannel Buffers</a></h3>
+<p><a href="./../Classes/Server.html">Server</a>-side buffers are identified by number, starting from 0. When using Buffer objects, buffer numbers are automatically allocated from the Server's bufferAllocator. When you call <code class='code prettyprint lang-sc'>.free</code> on a Buffer object it will release the buffer's memory on the server, and free the buffer number for future reallocation. See <a href="./../Classes/ServerOptions.html">ServerOptions</a> for details on setting the number of available buffers.
+<p>Normally you should not need to supply a buffer number (see <a href="./../Classes/Buffer.html#*alloc">Buffer: *alloc</a>). You should only do so if you are sure you know what you are doing. Similarly, in normal use you should not need to access the buffer number, since instances of Buffer can be used directly as <a href="./../Classes/UGen.html">UGen</a> inputs or <a href="./../Classes/Synth.html">Synth</a> args.<h3><a class='anchor' name='Multichannel%20Buffers'>Multichannel Buffers</a></h3>
 
 <p>Multichannel buffers interleave their data. Thus the actual number of available values when requesting or setting values by index using methods such as <code class='code prettyprint lang-sc'>set, setn, get, getn</code>, etc., is equal to <code class='code prettyprint lang-sc'>numFrames * numChannels</code>. Indices start at 0 and go up to <code class='code prettyprint lang-sc'>(numFrames * numChannels) - 1</code>. In a two channel buffer for instance, index 0 will be the first value of the first channel, index 1 will be the first value of the second channel, index 2 will be the second value of the first channel, and so on.
 <p>In some cases it is simpler to use multiple single channel buffers instead of a single multichannel one.<h3><a class='anchor' name='Completion%20Messages%20and%20Action%20Functions'>Completion Messages and Action Functions</a></h3>
@@ -158,7 +158,7 @@ var scdoc_sc_version = '3.9.0-beta1';
 <p>The number of frames to allocate. Actual memory use will correspond to numFrames * numChannels.<tr><td class='argumentname'>numChannels<td class='argumentdesc'>
 <p>The number of channels for the Buffer. The default is 1.<tr><td class='argumentname'>completionMessage<td class='argumentdesc'>
 <p>A valid OSC message or a Function which will return one. A Function will be passed this Buffer as an argument when evaluated.<tr><td class='argumentname'>bufnum<td class='argumentdesc'>
-<p>An explicitly specified buffer number. Generally this is not needed.</table><h4>Discussion:</h4>
+<p>An explicitly specified buffer number. Supplying a number bypasses the server's buffer allocator, which can lead to conflicts. The best practice is to leave this unset and let the buffer number allocator choose the next available bufnum.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>// Allocate 8 second stereo buffer
 s.boot;
 b = Buffer.alloc(s, s.sampleRate * 8.0, 2);
@@ -173,7 +173,7 @@ b.free;</pre>
 <p>The number of frames to allocate in each buffer. Actual memory use will correspond to numFrames * numChannels.<tr><td class='argumentname'>numChannels<td class='argumentdesc'>
 <p>The number of channels for each buffer. The default is 1.<tr><td class='argumentname'>completionMessage<td class='argumentdesc'>
 <p>A valid OSC message or a Function which will return one. A Function will be passed each Buffer and its index in the array as arguments when evaluated.<tr><td class='argumentname'>bufnum<td class='argumentdesc'>
-<p>An explicitly specified buffer number for the initial buffer. Generally this is not needed.</table><h4>Discussion:</h4>
+<p>An explicitly specified buffer number. Supplying a number bypasses the server's buffer allocator, which can lead to conflicts. The best practice is to leave this unset and let the buffer number allocator choose the next available bufnum.</table><h4>Discussion:</h4>
 
 <p>N.B. You must treat the array of Buffers as a group. Freeing them individually or reusing them can result in allocation errors. You should free all Buffers in the array at the same time by iterating over it with do.<pre class='code prettyprint lang-sc'>s.boot;
 // allocate an array of Buffers and fill them with different harmonics
@@ -199,7 +199,7 @@ b.do(_.free);</pre>
 <p>The first frame of the soundfile to read. The default is 0, which is the beginning of the file.<tr><td class='argumentname'>numFrames<td class='argumentdesc'>
 <p>The number of frames to read. The default is -1, which will read the whole file.<tr><td class='argumentname'>action<td class='argumentdesc'>
 <p>A Function to be evaluated once the file has been read and this Buffer's instance variables have been updated. The function will be passed this Buffer as an argument.<tr><td class='argumentname'>bufnum<td class='argumentdesc'>
-<p>An explicitly specified buffer number. Generally this is not needed.</table><h4>Discussion:</h4>
+<p>An explicitly specified buffer number. Supplying a number bypasses the server's buffer allocator, which can lead to conflicts. The best practice is to leave this unset and let the buffer number allocator choose the next available bufnum.</table><h4>Discussion:</h4>
 
 <p>N.B. You cannot rely on the buffer's instance variables being instantly updated, as there is a small amount of latency involved. action will be evaluated upon receipt of the reply to the query, so use this in cases where access to instance variables is needed.<pre class='code prettyprint lang-sc'>// read a soundfile
 s.boot;
@@ -237,7 +237,7 @@ x.free; b.free;</pre>
 <p>The number of frames to read. The default is -1, which will read the whole file.<tr><td class='argumentname'>channels<td class='argumentdesc'>
 <p>An Array of channels to be read from the soundfile. Indices start from zero. These will be read in the order provided.<tr><td class='argumentname'>action<td class='argumentdesc'>
 <p>A Function to be evaluated once the file has been read and this Buffer's instance variables have been updated. The function will be passed this Buffer as an argument.<tr><td class='argumentname'>bufnum<td class='argumentdesc'>
-<p>An explicitly specified buffer number. Generally this is not needed.</table><h4>Discussion:</h4>
+<p>An explicitly specified buffer number. Supplying a number bypasses the server's buffer allocator, which can lead to conflicts. The best practice is to leave this unset and let the buffer number allocator choose the next available bufnum.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>s.boot;
 // first a standard read so we can see what's in the file
 b = Buffer.read(s, Platform.resourceDir +/+ "sounds/SinedPink.aiff");
@@ -268,7 +268,7 @@ b.free;</pre>
 <p>A String representing the path of the soundfile to be read.<tr><td class='argumentname'>startFrame<td class='argumentdesc'>
 <p>The first frame of the soundfile to read. The default is 0, which is the beginning of the file.<tr><td class='argumentname'>numFrames<td class='argumentdesc'>
 <p>The number of frames to read. The default is -1, which will read the whole file.<tr><td class='argumentname'>bufnum<td class='argumentdesc'>
-<p>An explicitly specified buffer number. Generally this is not needed.<tr><td class='argumentname'>completionMessage<td class='argumentdesc'>
+<p>An explicitly specified buffer number. Supplying a number bypasses the server's buffer allocator, which can lead to conflicts. The best practice is to leave this unset and let the buffer number allocator choose the next available bufnum.<tr><td class='argumentname'>completionMessage<td class='argumentdesc'>
 <p>A valid OSC message or a Function which will return one. A Function will be passed this Buffer as an argument when evaluated.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>// with a completion message
 s.boot;
@@ -382,7 +382,7 @@ b.free;</pre>
 <p>The first frame of the soundfile to read. The default is 0, which is the beginning of the file.<tr><td class='argumentname'>numFrames<td class='argumentdesc'>
 <p>The number of frames to read. The default is -1, which will read the whole file.<tr><td class='argumentname'>action<td class='argumentdesc'>
 <p>A Function to be evaluated once the file has been read and this Buffer's instance variables have been updated. The function will be passed this Buffer as an argument.<tr><td class='argumentname'>bufnum<td class='argumentdesc'>
-<p>An explicitly specified buffer number. Generally this is not needed.</table><h4>Discussion:</h4>
+<p>An explicitly specified buffer number. Supplying a number bypasses the server's buffer allocator, which can lead to conflicts. The best practice is to leave this unset and let the buffer number allocator choose the next available bufnum.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>s.boot;
 (
 b = Buffer.loadDialog(s, action: { arg buffer;
@@ -399,7 +399,7 @@ x.free; b.free;</pre>
 <p>The server on which to allocate the buffer. The default is the default Server.<tr><td class='argumentname'>numFrames<td class='argumentdesc'>
 <p>The number of frames to allocate. Actual memory use will correspond to numFrames * numChannels.<tr><td class='argumentname'>numChannels<td class='argumentdesc'>
 <p>The number of channels for the Buffer. The default is 1.<tr><td class='argumentname'>bufnum<td class='argumentdesc'>
-<p>An explicitly specified buffer number. Generally this is not needed.</table><h4>Discussion:</h4>
+<p>An explicitly specified buffer number. Supplying a number bypasses the server's buffer allocator, which can lead to conflicts. The best practice is to leave this unset and let the buffer number allocator choose the next available bufnum.</table><h4>Discussion:</h4>
 <pre class='code prettyprint lang-sc'>s.boot;
 b = Buffer.new(s, 44100 * 8.0, 2);
 c = Buffer.new(s, 44100 * 4.0, 2);

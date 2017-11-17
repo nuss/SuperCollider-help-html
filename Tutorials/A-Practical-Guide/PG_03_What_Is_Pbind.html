@@ -33,7 +33,7 @@ var scdoc_sc_version = '3.9.0-beta1';
 <ul class='toc'><li class='toc2'><a href='#Rests'>Rests</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Useful%20Pbind%20variant:%20Pmono'>Useful Pbind variant: Pmono</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#Connecting%20Event%20values%20to%20SynthDef%20inputs'>Connecting Event values to SynthDef inputs</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#"Rest"%20events'>"Rest" events</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Rest%20events'>Rest events</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Writing%20SynthDefs%20for%20patterns'>Writing SynthDefs for patterns</a></li>
 <ul class='toc'><li class='toc2'><a href='#Synths%20should%20release%20themselves'>Synths should release themselves</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Argument%20name%20prefixes'>Argument name prefixes</a></li>
@@ -88,7 +88,7 @@ p.next(Event.new);    // shorter: p.next(())
 
 <p>Rests may be indicated in three ways.<ul>
 <li><strong>Recommended</strong><ul>
-<li><em>Rest:</em> A <a href="./../../Classes/Rest.html">Rest</a> object that converts the event being processed into a rest.</ul>
+<li><em>Rest:</em> An instance of <a href="./../../Classes/Rest.html">Rest</a> that marks the event as a rest.</ul>
 
 <p><li><strong>Legacy</strong><ul>
 <li><em>Symbol as pitch:</em> A symbol, such as <strong>\rest</strong>, <strong>\r</strong> or even the empty symbol <strong>\</strong>, in a key related to pitch (degree, note, midinote, freq) causes the event to be silent.<li><em>\type, \rest:</em> Setting the event's \type to \rest also silences the event.</ul>
@@ -147,10 +147,10 @@ SynthDef(...).store;
 SynthDef(...).add;</pre>
 
 <p>.load(s) --&gt; .store
-<p>.send(s) --&gt; .add<h2><a class='anchor' name='"Rest"%20events'>"Rest" events</a></h2>
+<p>.send(s) --&gt; .add<h2><a class='anchor' name='Rest%20events'>Rest events</a></h2>
 
-<p>Beginning with version 3.5, rests may be indicated using the <a href="./../../Classes/Rest.html">Rest</a> class. Advantages:<ul>
-<li>Rests may be given in any Pbind key-value pair. (Previously, rests could be indicated only in \type, \degree, \note, \midinote or \freq.)<li>A rest have a duration, e.g. <code class='code prettyprint lang-sc'>Rest(0.5)</code>, and used in a duration stream (\dur or \delta).<li>Addresses some problems with the former convention (to be discussed in brief below).</ul>
+<p>Beginning with version 3.5, rests may be indicated using instances of <a href="./../../Classes/Rest.html">Rest</a>.<ul>
+<li>Rests may be given in any Pbind key-value pair. (Previously, rests could be indicated only in \type, \degree, \note, \midinote or \freq.)<li>A rest has a value, e.g. <code class='code prettyprint lang-sc'>Rest(0.5)</code>, and will pass transparently through calculations.<li>Addresses some problems with the former convention (to be discussed in brief below).</ul>
 
 <p>Ligeti's "touches bloquées" technique could be written this way (see <a href="./../../Tutorials/A-Practical-Guide/PG_06e_Language_Control.html">Pattern Guide 06e: Language Control</a> for an explanation of the conditional <a href="./../../Classes/Pif.html">Pif</a>):<pre class='code prettyprint lang-sc'>(
 // first, pitches ascending by 1-3 semitones, until 2 octaves are reached
@@ -162,15 +162,15 @@ p = Pbind(
     \arpeg, Pseq(pitches[ .. pitches.size - 2] ++ pitches.reverse[ .. pitches.size - 2], inf),
         // if the note is found in the mask array, replace it with Rest
         // then that note does not sound
-    \note, Pif(Pfunc { |event| mask.includes(event[\arpeg]) }, Rest, Pkey(\arpeg)),
+    \note, Pif(Pfunc { |event| mask.includes(event[\arpeg]) }, Rest(0), Pkey(\arpeg)),
     \octave, 4,
     \dur, 0.125
 ).play;
 )
 
 p.stop;</pre>
-
-<p>Prior to 3.5, the convention to include a rest in the middle of an event pattern is to set the <code class='code prettyprint lang-sc'>\freq</code> key to a <a href="./../../Classes/Symbol.html">Symbol</a>. Commonly this is <code class='code prettyprint lang-sc'>\rest</code>, but a backslash by itself is enough to suppress the note on the server. (This usage is still supported in 3.5, but not recommended.)
+<div class='note'><span class='notelabel'>NOTE:</span> In 3.9, it is no longer supported to use the Rest class in patterns. All rests need to have a value, e.g. <code class='code prettyprint lang-sc'>Rest(0)</code>. Rest objects now support math operators. That is, you can now write <code class='code prettyprint lang-sc'>Pseq([1, 2, Rest(0)], inf) * 2</code> <em>and</em> <code class='code prettyprint lang-sc'>[1, 2, Rest(0)] * 2</code>. (Prior to 3.9, the former usage was supported, but only in Pbind, and the latter usage was not supported at all.)</div>
+<p>The older convention for rests is to set the <code class='code prettyprint lang-sc'>\freq</code> key to a <a href="./../../Classes/Symbol.html">Symbol</a>. Commonly this is <code class='code prettyprint lang-sc'>\rest</code>, but a backslash by itself is enough to suppress the note on the server. (This usage is still supported, but not recommended because it is limited to pitch-related keys only.)
 <p>If it's the <code class='code prettyprint lang-sc'>\freq</code> key that determines whether the event as a rest or not, why does it work to use it with <code class='code prettyprint lang-sc'>\note</code>? As noted, keys like <code class='code prettyprint lang-sc'>\degree</code>, <code class='code prettyprint lang-sc'>\note</code>, and <code class='code prettyprint lang-sc'>\midinote</code> are automatically converted into frequency. The math operations that perform the conversion preserve Symbols intact -- e.g., <code class='code prettyprint lang-sc'>\rest + 1 == \rest</code> . So the <code class='code prettyprint lang-sc'>\rest</code> value is passed all the way through the chain of conversions so that <code class='code prettyprint lang-sc'>\freq</code> in the event ends up receiving <code class='code prettyprint lang-sc'>\rest</code>.
 <p>Note that it doesn't matter if the SynthDef has a <code class='code prettyprint lang-sc'>freq</code> argument. It's the event, on the <em>client</em> side, that looks to this key to determine whether to play the note or not. If it is a rest, the server is not involved at all.<h2><a class='anchor' name='Writing%20SynthDefs%20for%20patterns'>Writing SynthDefs for patterns</a></h2>
 
