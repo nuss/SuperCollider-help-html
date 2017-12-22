@@ -14,7 +14,19 @@ var scdoc_sc_version = '3.9.0-beta1';
 <script src='./../lang-sc.js' type='text/javascript'></script>
 </head>
 <body onload='fixTOC();prettyPrint()'>
-<div class='contents'>
+<div id='toc'>
+<div id='toctitle'>Layout Management: table of contents</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#How%20a%20layout%20does%20its%20job'>How a layout does its job</a></li>
+<ul class='toc'><li class='toc2'><a href='#Intrinsic%20view%20sizes'>Intrinsic view sizes</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Automatic%20and%20dynamic%20space%20distribution'>Automatic and dynamic space distribution</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#User%20customization'>User customization</a></li>
+<ul class='toc'><li class='toc2'><a href='#Stretch%20factors'>Stretch factors</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Size%20constraints'>Size constraints</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Alignment'>Alignment</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#View%20vs.%20layout%20hierarchies'>View vs. layout hierarchies</a></li>
+<ul class='toc'><li class='toc2'><a href='#View%20constructed%20with%20a%20parent'>View constructed with a parent</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#View%20explicitly%20inserted%20into%20a%20layout'>View explicitly inserted into a layout</a></li>
+<ul class='toc'></ul></ul></ul></div><div class='contents'>
 <div id='menubar'></div>
 <div class='header'>
 <div id='label'>
@@ -26,18 +38,7 @@ var scdoc_sc_version = '3.9.0-beta1';
 <div class='subheader'>
 <div id='related'>See also: <a href="./../Classes/HLayout.html">HLayout</a>, <a href="./../Classes/VLayout.html">VLayout</a>, <a href="./../Classes/GridLayout.html">GridLayout</a>, <a href="./../Classes/StackLayout.html">StackLayout</a></div>
 </div>
-<div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#How%20a%20layout%20does%20its%20job'>How a layout does its job</a></li>
-<ul class='toc'><li class='toc2'><a href='#Intrinsic%20view%20sizes'>Intrinsic view sizes</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Automatic%20and%20dynamic%20space%20distribution'>Automatic and dynamic space distribution</a></li>
-<ul class='toc'></ul></ul><li class='toc1'><a href='#User%20customization'>User customization</a></li>
-<ul class='toc'><li class='toc2'><a href='#Stretch%20factors'>Stretch factors</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Size%20constraints'>Size constraints</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Alignment'>Alignment</a></li>
-<ul class='toc'></ul></ul><li class='toc1'><a href='#View%20vs.%20layout%20hierarchies'>View vs. layout hierarchies</a></li>
-<ul class='toc'><li class='toc2'><a href='#View%20constructed%20with%20a%20parent'>View constructed with a parent</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#View%20explicitly%20inserted%20into%20a%20layout'>View explicitly inserted into a layout</a></li>
-<ul class='toc'></ul></ul></ul></div>
+
 <p>The purpose of layouts is to distribute the amount of space given to the view on which they are installed among the children of that view. Each subclass of Layout has a specific pattern of space distribution (a line, a 2D grid, etc.). See their documentation for details.
 <p>A layout is installed on a view to manage the space the view occupies and distribute it among its child views. These child views can in turn have other layouts installed, managing the space given to them. But a layout can also manage other layouts directly - one layout can directly occupy a place in another layout's distribution pattern. A basic unit on which a layout operates is therefore abstractly called an item and can be a view or another layout.<div class='note'><span class='notelabel'>NOTE:</span> While layouts can form a hierarchy on their own, in terms of view hierarchy all views managed by those layouts are direct children of the view on which the top layout is installed.</div>
 <p>The following is an example of a VLayout, organizing a series of TextFields in a vertical line, and its last item is a HLayout, organizing a series of Buttons in a horizontal line.<pre class='code prettyprint lang-sc'>(

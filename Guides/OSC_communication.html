@@ -14,7 +14,15 @@ var scdoc_sc_version = '3.9.0-beta1';
 <script src='./../lang-sc.js' type='text/javascript'></script>
 </head>
 <body onload='fixTOC();prettyPrint()'>
-<div class='contents'>
+<div id='toc'>
+<div id='toctitle'>OSC Communication: table of contents</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#Sending%20OSC%20to%20another%20application'>Sending OSC to another application</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Receiving%20OSC%20from%20another%20application'>Receiving OSC from another application</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Receiving%20from%20an%20application%20that%20is%20sending%20from%20a%20variable%20port'>Receiving from an application that is sending from a variable port</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Testing%20incoming%20traffic'>Testing incoming traffic</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Custom%20OSC%20message%20processing'>Custom OSC message processing</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#OSC%20type%20tags%20and%20sclang'>OSC type tags and sclang</a></li>
+<ul class='toc'></ul></ul></div><div class='contents'>
 <div id='menubar'></div>
 <div class='header'>
 <div id='label'>
@@ -26,14 +34,7 @@ var scdoc_sc_version = '3.9.0-beta1';
 <div class='subheader'>
 <div id='related'>See also: <a href="./../Classes/NetAddr.html">NetAddr</a>, <a href="./../Classes/OSCFunc.html">OSCFunc</a></div>
 </div>
-<div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#Sending%20OSC%20to%20another%20application'>Sending OSC to another application</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Receiving%20OSC%20from%20another%20application'>Receiving OSC from another application</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Receiving%20from%20an%20application%20that%20is%20sending%20from%20a%20variable%20port'>Receiving from an application that is sending from a variable port</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Testing%20incoming%20traffic'>Testing incoming traffic</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Custom%20OSC%20message%20processing'>Custom OSC message processing</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#OSC%20type%20tags%20and%20sclang'>OSC type tags and sclang</a></li>
-<ul class='toc'></ul></ul></div>
+
 <p>OSC communication between programs is often done to send messages from one application to another, possibly with the applications running on different computers. In SuperCollider this communication is done by creating a <a href="./../Classes/NetAddr.html">NetAddr</a> of the target application and creating an <a href="./../Classes/OSCFunc.html">OSCFunc</a> to listen to another application. The underlying protocol of OSC is either UDP or TCP.<h2><a class='anchor' name='Sending%20OSC%20to%20another%20application'>Sending OSC to another application</a></h2>
 
 <p>To establish communication to another application, you need to know on which port that application is listening. For example if an application is listening on port 7771, we can create a NetAddr and send it a message:<pre class='code prettyprint lang-sc'>b = NetAddr.new("127.0.0.1", 7771);    // create the NetAddr

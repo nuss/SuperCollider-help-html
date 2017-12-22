@@ -14,7 +14,9 @@ var scdoc_sc_version = '3.9.0-beta1';
 <script src='./../lang-sc.js' type='text/javascript'></script>
 </head>
 <body onload='fixTOC();prettyPrint()'>
-<div class='contents'>
+<div id='toc'>
+<div id='toctitle'>Synchronous and Asynchronous Execution: table of contents</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'></ul></div><div class='contents'>
 <div id='menubar'></div>
 <div class='header'>
 <div id='label'>
@@ -25,8 +27,7 @@ var scdoc_sc_version = '3.9.0-beta1';
 </div>
 <div class='subheader'>
 </div>
-<div id='toc'>
-<ul class='toc'></ul></div>
+
 <p>Using a program such as SuperCollider introduces a number of issues regarding timing and order of execution. Realtime audio synthesis requires that samples are calculated and played back at a certain rate and on a certain schedule, in order to avoid dropouts, glitches, etc. Other tasks, such as loading a sample into memory, might take arbitrary amounts of time, and may not be needed within a definite timeframe. This is the difference between synchronous and asynchronous tasks.
 <p>Problems can arise when synchronous tasks are dependent upon the completion of asynchronous ones. For instance trying to play a sample that may or may not have been completely loaded yet.
 <p>In SC2 this was relatively simple to handle. One scheduled synchronous tasks during synthesis, i.e. within the scope of a <code class='code prettyprint lang-sc'>Synth.play</code>. Asynchronous tasks were executed in order, outside of synthesis. Thus one would first create buffers, load samples into them, and then start synthesis and play them back. The interpreter made sure that each step was only done when the necessary previous step had been completed.

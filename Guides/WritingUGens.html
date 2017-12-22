@@ -14,7 +14,20 @@ var scdoc_sc_version = '3.9.0-beta1';
 <script src='./../lang-sc.js' type='text/javascript'></script>
 </head>
 <body onload='fixTOC();prettyPrint()'>
-<div class='contents'>
+<div id='toc'>
+<div id='toctitle'>Writing Unit Generators: table of contents</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#Pseudo-UGens'>Pseudo-UGens</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Basics%20of%20UGens'>Basics of UGens</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#FAUST'>FAUST</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Example%20Plugins'>Example Plugins</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Anatomy%20of%20a%20UGen'>Anatomy of a UGen</a></li>
+<ul class='toc'><li class='toc2'><a href='#The%20Entry%20Point'>The Entry Point</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#The%20Calculation%20Function'>The Calculation Function</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Building%20Unit%20Generator%20Plugins'>Building Unit Generator Plugins</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Coding%20Guidelines'>Coding Guidelines</a></li>
+<ul class='toc'><li class='toc2'><a href='#Thread%20Safety'>Thread Safety</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Deadlock%20Prevention'>Deadlock Prevention</a></li>
+<ul class='toc'></ul></ul></ul></div><div class='contents'>
 <div id='menubar'></div>
 <div class='header'>
 <div id='label'>
@@ -26,19 +39,7 @@ var scdoc_sc_version = '3.9.0-beta1';
 <div class='subheader'>
 <div id='related'>See also: <a href="./../Reference/ServerPluginAPI.html">Server Plugin API</a></div>
 </div>
-<div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#Pseudo-UGens'>Pseudo-UGens</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Basics%20of%20UGens'>Basics of UGens</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#FAUST'>FAUST</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Example%20Plugins'>Example Plugins</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Anatomy%20of%20a%20UGen'>Anatomy of a UGen</a></li>
-<ul class='toc'><li class='toc2'><a href='#The%20Entry%20Point'>The Entry Point</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#The%20Calculation%20Function'>The Calculation Function</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Building%20Unit%20Generator%20Plugins'>Building Unit Generator Plugins</a></li>
-<ul class='toc'></ul></ul><li class='toc1'><a href='#Coding%20Guidelines'>Coding Guidelines</a></li>
-<ul class='toc'><li class='toc2'><a href='#Thread%20Safety'>Thread Safety</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Deadlock%20Prevention'>Deadlock Prevention</a></li>
-<ul class='toc'></ul></ul></ul></div>
+
 <p>SuperCollider has a vast library of unit generators that can be assembled in unlimited ways, but sometimes even those aren't sufficient. You may have a need for an unusual signal processing algorithm, or you're running into efficiency problems that can be solved by condensing parts of your SynthDef into a single UGen.
 <p>UGens are defined in server plugins written in C++. Server plugins are not to be confused with quarks, which extend the SuperCollider language. UGens exist more or less independently of the interpreter and you don't need much familiarity with SC to write them.
 <p>Writing UGens is not too difficult, but it's arguably far less convenient and intuitive than the high-level tools that SuperCollider provides. You'll need a build system and a good amount of boilerplate code -- even fairly basic signal processing operations can require a lot of code. You don't have an instant live coding environment, and mistakes can easily crash the server. SuperCollider's UGens are stable and well-tested, and custom UGens are best viewed as a last resort for when the limitations of SC are impassable.<h2><a class='anchor' name='Pseudo-UGens'>Pseudo-UGens</a></h2>
