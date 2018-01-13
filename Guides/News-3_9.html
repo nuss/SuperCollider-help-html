@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>News in 3.9 | SuperCollider 3.9.0-rc2 Help</title>
+<!doctype html><html lang='en'><head><title>News in 3.9 | SuperCollider 3.9.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
@@ -6,7 +6,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'News in 3.9';
-var scdoc_sc_version = '3.9.0-rc2';
+var scdoc_sc_version = '3.9.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -16,7 +16,8 @@ var scdoc_sc_version = '3.9.0-rc2';
 <body onload='fixTOC();prettyPrint()'>
 <div id='toc'>
 <div id='toctitle'>News in 3.9: table of contents</div>
-<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#General:%20Added'>General: Added</a></li>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#Known%20Issues'>Known Issues</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#General:%20Added'>General: Added</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#General:%20Changed'>General: Changed</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#General:%20Fixed'>General: Fixed</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#scsynth%20and%20supernova:%20Added'>scsynth and supernova: Added</a></li>
@@ -51,8 +52,18 @@ var scdoc_sc_version = '3.9.0-rc2';
 <div id='related'>See also: <a href="./../Guides/News-3_8.html">News in 3.8</a>, <a href="./../Guides/News-3_7.html">News in 3.7</a></div>
 </div>
 
-<p>We are proud to announce the arrival of SuperCollider 3.9.0-beta1! Apologies for being so far behind schedule; we hope the improvements you'll find here will more than make up for it. In 3.9.0, determined contributors have fixed some of SuperCollider's major cross-platform compatibility demons, addressed longstanding issues in the IDE and language, and added new features and bugfixes across the board.
-<p>Many thanks to all who contributed to this release: adcxyz, awson, bagong, brianlheim, cappelnord, carlocapocasa, crucialfelix, danstowell, defaultxr, dyfer, elifieldsteel, gagnonlg, ghost, gusano, jamshark70, jd-m, jleben, jmckernon, joshpar, jreus, LFSaw, llloret, LucaDanieli, Magicking, miguel-negrao, muellmusik, patrickdupuis, porres, privong, redFrik, samaaron, scztt, simdax, smoge, smrg-lm, snappizz, telephon, thormagnusson, tiagomoraismorgado88, timsutton, vivid-synth, vividsnow, yurivict, and many more in the SC community who helped in ways other than participation on GitHub.<h2><a class='anchor' name='General:%20Added'>General: Added</a></h2>
+<p>We are proud to announce the arrival of SuperCollider 3.9.0! Apologies for being so far behind schedule; we hope the improvements you'll find here will more than make up for it. In 3.9.0, determined contributors have fixed some of SuperCollider's major cross-platform compatibility demons, addressed longstanding issues in the IDE and language, and added new features and bugfixes across the board.
+<p>Many thanks to all who contributed to this release: adcxyz, awson, bagong, brianlheim, cappelnord, carlocapocasa, crucialfelix, danstowell, defaultxr, dyfer, elifieldsteel, gagnonlg, ghost, gusano, jamshark70, jd-m, jleben, jmckernon, joshpar, jreus, LFSaw, llloret, LucaDanieli, Magicking, miguel-negrao, muellmusik, patrickdupuis, porres, privong, redFrik, samaaron, scztt, simdax, smoge, smrg-lm, snappizz, telephon, thormagnusson, tiagomoraismorgado88, timsutton, vivid-synth, vividsnow, yurivict, and many more in the SC community who helped in ways other than participation on GitHub.<h2><a class='anchor' name='Known%20Issues'>Known Issues</a></h2>
+
+<p>The IDE server status display turns yellow after a few seconds when opening <code class='code prettyprint lang-sc'>s.makeGui</code>. This does not cause any usability issues.
+<p>Only the first pages of the HTML files produced by SCDoc are printed in web browsers.
+<p>The help browser does not remember the last position open in a document when navigating through history, and just jumps to the top of the file.
+<p>Supernova loads plugins from "Extensions/plugins" rather than "Extensions".
+<p><code class='code prettyprint lang-sc'>LevelIndicator.style()</code> is broken, which leads to confusing warning messages.
+<p><code class='code prettyprint lang-sc'>File.copy</code> crashes the interpreter if the destination file exists.
+<p>On Windows, SerialPort is not available.
+<p>On Windows, Supernova is not available.
+<p>On Windows, the command-line sclang interpreter is not available.<h2><a class='anchor' name='General:%20Added'>General: Added</a></h2>
 
 <p>scvim has seen numerous enhancements now that an actively maintained fork has been merged in.
 <p>SuperCollider can now be built on Windows using the MSYS2 toolchain, thanks in particular to @awson and @bagong.
@@ -80,14 +91,12 @@ var scdoc_sc_version = '3.9.0-rc2';
 <p>The <code class='code prettyprint lang-sc'>doneAction</code> argument to DetectSilence can now be modulated.
 <p>UnaryOpUGen now supports the bitwise not operator <code class='code prettyprint lang-sc'>bitNot</code>. It used to simply fail silently.<h2><a class='anchor' name='UGens:%20Changed'>UGens: Changed</a></h2>
 
-<p><strong>Breaking change:</strong> The application binary interface (ABI) for server plugins has changed. This has an important impact: **plugin binaries compiled for SuperCollider 3.8 will not work with SuperCollider 3.9** and vice versa. Please recompile your plugins.
+<p><strong>Breaking change:</strong> The application binary interface (ABI) for server plugins has changed. This has an important impact: <strong>plugin binaries compiled for SuperCollider 3.8 will not work with SuperCollider 3.9</strong> and vice versa. Please recompile your plugins.
 <p><strong>Breaking change:</strong> <code class='code prettyprint lang-sc'>FOS.ar</code> with control-rate coefficient inputs incorrectly initialized its coefficients at 0 and ramped to the correct values over the first control period. This has been fixed. To restore old behavior, multiply each coefficient by <code class='code prettyprint lang-sc'>Line.ar(0, 1, ControlDur.ir)</code>.<h2><a class='anchor' name='UGens:%20Deprecated'>UGens: Deprecated</a></h2>
 
 <p><code class='code prettyprint lang-sc'>Donce</code>, a demand-rate UGen with no identifiable purpose, is deprecated. It was most likely used in the production of electronic donce music.<h2><a class='anchor' name='UGens:%20Fixed'>UGens: Fixed</a></h2>
 
-<p>A number of UGens were discovered to have serious initialization bugs where the UGen would output an initial sample of garbage memory. This can create audio explosions if the buggy UGen's output is fed into certain filter UGens like LPF or Delay1. These bugs have been fixed, affecting:<ul>
-<li>BeatTrack<li>BeatTrack2<li>CoinGate<li>Convolution<li>Convolution2<li>Convolution2L<li>Convolution3<li>DetectSilence<li>DiskIn<li>DiskOut<li>IFFT<li>KeyTrack<li>LFGauss<li>PartConv<li>PV_JensenAndersen<li>PV_HainsworthFoote<li>RunningSum<li>StereoConvolution2L<li>Unpack1FFT</ul>
-
+<p>A number of UGens were discovered to have serious initialization bugs where the UGen would output an initial sample of garbage memory. This can create audio explosions if the buggy UGen's output is fed into certain filter UGens like LPF or Delay1. These bugs have been fixed, affecting BeatTrack, BeatTrack2, CoinGate, Convolution, Convolution2, Convolution2L, Convolution3, DetectSilence, DiskIn, DiskOut, IFFT, KeyTrack, LFGauss, PartConv, PV_JensenAndersen, PV_HainsworthFoote, RunningSum, StereoConvolution2L, and Unpack1FFT.
 <p>Fixed a bug with <code class='code prettyprint lang-sc'>TGrains</code> ignoring the <code class='code prettyprint lang-sc'>amp</code> parameter.
 <p><code class='code prettyprint lang-sc'>Dibrown</code> no longer ignores the <code class='code prettyprint lang-sc'>length</code> argument.
 <p><code class='code prettyprint lang-sc'>Pitch</code> no longer ignores the <code class='code prettyprint lang-sc'>median</code> argument.
@@ -106,7 +115,7 @@ var scdoc_sc_version = '3.9.0-rc2';
 
 <p>Fixed help files failing to open on Windows if the user's name contains a non-ASCII character.
 <p>Fixed non-ASCII characters breaking the Visual Studio debugger.
-<p>Fixed a crash in <code class='code prettyprint lang-sc'>Object:perform</code> when the selector is an Array whose first element is not a Symbol, e.g. `0.perform.
+<p>Fixed a crash in <code class='code prettyprint lang-sc'>Object:perform</code> when the selector is an Array whose first element is not a Symbol, e.g. <code class='code prettyprint lang-sc'>0.perform([0])</code>.
 <p><code class='code prettyprint lang-sc'>thisProcess.nowExecutingPath</code> is no longer corrupted by <code class='code prettyprint lang-sc'>Routine:stop</code>.
 <p><code class='code prettyprint lang-sc'>TextView:selectedString_</code> now works when the selection size is zero.
 <p>Fixed a crash when a method or class/instance variable is named "<code class='code prettyprint lang-sc'>none</code>".
@@ -124,6 +133,7 @@ var scdoc_sc_version = '3.9.0-rc2';
 <p>For consistency with other <code class='code prettyprint lang-sc'>Platform</code> class methods, <code class='code prettyprint lang-sc'>Platform.recordingsDir</code> may be used instead of <code class='code prettyprint lang-sc'>thisProcess.platform.recordingsDir</code>.
 <p><code class='code prettyprint lang-sc'>SequenceableCollection</code> has two new instance methods: <code class='code prettyprint lang-sc'>flatten2</code> and <code class='code prettyprint lang-sc'>flatBelow</code>. Additionally, <code class='code prettyprint lang-sc'>flatten</code> is faster now.
 <p>The <code class='code prettyprint lang-sc'>~callback</code> function is now available for all <code class='code prettyprint lang-sc'>Event</code> types instead of just "on" events.
+<p>Event types now include a <code class='code prettyprint lang-sc'>parentEvent</code>, which provides default values..
 <p>New aliases for done actions, e.g. <code class='code prettyprint lang-sc'>Done.freeSelf == 2</code>, are introduced for better readability. See the <code class='code prettyprint lang-sc'>Done</code> helpfile for details.
 <p>A new class, <code class='code prettyprint lang-sc'>Recorder</code>, allows recording independently of the <code class='code prettyprint lang-sc'>Server</code> object.
 <p><code class='code prettyprint lang-sc'>SequenceableCollection:reduce</code> supports an adverb argument.
@@ -138,7 +148,8 @@ var scdoc_sc_version = '3.9.0-rc2';
 <p>Added <code class='code prettyprint lang-sc'>Collection:asEvent</code> for easy conversion to an <code class='code prettyprint lang-sc'>Event</code>.
 <p><code class='code prettyprint lang-sc'>DeprecatedError</code> now shows you the file path of the deprecated method.
 <p>Added two new methods to <code class='code prettyprint lang-sc'>SimpleNumber</code>: <code class='code prettyprint lang-sc'>snap</code> and <code class='code prettyprint lang-sc'>softRound</code>.
-<p><code class='code prettyprint lang-sc'>ReadableNodeIDAllocator</code> offers a new optional replacement for <code class='code prettyprint lang-sc'>PowerOfTwoAllocator</code> that assigns node IDs in a way more readable to humans when working with multiclient setups.<h2><a class='anchor' name='Class%20library:%20Changed'>Class library: Changed</a></h2>
+<p><code class='code prettyprint lang-sc'>ReadableNodeIDAllocator</code> offers a new optional replacement for <code class='code prettyprint lang-sc'>PowerOfTwoAllocator</code> that assigns node IDs in a way more readable to humans when working with multiclient setups.
+<p>A new "booted" stage has been added to Server objects that have been booted but may not be running yet, accessible via <code class='code prettyprint lang-sc'>Server:hasBooted</code> and <code class='code prettyprint lang-sc'>Server.allBootedServers</code>.<h2><a class='anchor' name='Class%20library:%20Changed'>Class library: Changed</a></h2>
 
 <p><strong>Breaking change:</strong> Rests in the patterns system have been restructured. Instead of using the <code class='code prettyprint lang-sc'>isRest</code> event property, events are considered rests if one of their properties is a <code class='code prettyprint lang-sc'>Rest</code> object. You must use instances of <code class='code prettyprint lang-sc'>Rest</code> rather than the rest class itself -- use of <code class='code prettyprint lang-sc'>Rest</code> instead of <code class='code prettyprint lang-sc'>Rest()</code> is now deprecated.
 <p><strong>Breaking change:</strong> Fixed <code class='code prettyprint lang-sc'>Dictionary:==</code> only comparing the values of the two dictionaries, not the keys.
@@ -152,7 +163,8 @@ var scdoc_sc_version = '3.9.0-rc2';
 <p>The argument to <code class='code prettyprint lang-sc'>Pattern:fin</code> has a default of 1 for consistency with <code class='code prettyprint lang-sc'>Object:fin</code>.
 <p><code class='code prettyprint lang-sc'>Complex:reciprocal</code> is faster now.
 <p><code class='code prettyprint lang-sc'>Buffer:write</code> takes floating point arguments, truncating them to integers.
-<p>Conversion methods among collection types has been improved and documented.<h2><a class='anchor' name='Class%20library:%20Deprecated'>Class library: Deprecated</a></h2>
+<p>Conversion methods among collection types has been improved and documented.
+<p><code class='code prettyprint lang-sc'>clientID</code> is now protected from being changed while the server is running.<h2><a class='anchor' name='Class%20library:%20Deprecated'>Class library: Deprecated</a></h2>
 
 <p><code class='code prettyprint lang-sc'>OSCresponder</code>, <code class='code prettyprint lang-sc'>OSCresponderNode</code>, and <code class='code prettyprint lang-sc'>OSCpathResponder</code> now emit deprecation messages, and will be removed after at least a year. Use <code class='code prettyprint lang-sc'>OSCFunc</code> or <code class='code prettyprint lang-sc'>OSCdef</code> instead.
 <p><code class='code prettyprint lang-sc'>Speech</code> is deprecated, and will be removed in 3.10. The rationale is that its audio output is independent of the server (severely limiting use in compositions), it depends on a proprietary macOS API with no prospect of cross-platform compatibility, and it is too niche to justify inclusion in the core library.
@@ -163,7 +175,8 @@ var scdoc_sc_version = '3.9.0-rc2';
 <p><code class='code prettyprint lang-sc'>Watcher</code> is an old alias for <code class='code prettyprint lang-sc'>SkipJack</code> provided for backward compatibility. It is officially deprecated and will be removed in 3.10.
 <p><code class='code prettyprint lang-sc'>Server:recordNode</code> is deprecated. Use <code class='code prettyprint lang-sc'>Recorder:recordNode</code> instead (e.g. <code class='code prettyprint lang-sc'>s.recorder.recordNode</code>).
 <p>The <code class='code prettyprint lang-sc'>Server.set</code> class variable is deprecated. Use <code class='code prettyprint lang-sc'>Server.all</code> instead.
-<p><code class='code prettyprint lang-sc'>SimpleNumber:quantize</code> is deprecated. Use <code class='code prettyprint lang-sc'>SimpleNumber:snap</code> instead.<h2><a class='anchor' name='Class%20library:%20Removed'>Class library: Removed</a></h2>
+<p><code class='code prettyprint lang-sc'>SimpleNumber:quantize</code> is deprecated. Use <code class='code prettyprint lang-sc'>SimpleNumber:snap</code> instead.
+<p><code class='code prettyprint lang-sc'>Server:userSpecifiedClientID</code> is deprecated. Use <code class='code prettyprint lang-sc'>Server:clientID</code> instead.<h2><a class='anchor' name='Class%20library:%20Removed'>Class library: Removed</a></h2>
 
 <p>Removed non-functional stub methods and classes related to Image: the classes ImageFilter and ImageKernel, and the Image instance methods lockFocus, unlockFocus, applyFilters, filters, filteredWith, addFilter, removeFilter, flatten, invert, crop, applyKernel.
 <p><code class='code prettyprint lang-sc'>Module</code>, an unmaintained and unused class for serialization of Synths, has been moved to a quark.
@@ -193,7 +206,11 @@ var scdoc_sc_version = '3.9.0-rc2';
 <p><code class='code prettyprint lang-sc'>History</code> now outputs a correct timestamp on Windows.
 <p>Fixed Volume control failing to be persistent when rebooting the server.
 <p>Fixed <code class='code prettyprint lang-sc'>SimpleNumber:asTimeString</code> producing nonsensical results with the "precision" argument.
-<p><code class='code prettyprint lang-sc'>Server:clientID</code> can now be changed, allowing multiple clients connect to the same server.<h2><a class='anchor' name='IDE%20&%20SCDoc:%20Added'>IDE &amp; SCDoc: Added</a></h2>
+<p><code class='code prettyprint lang-sc'>Server:clientID</code> can now be changed, allowing multiple clients connect to the same server.
+<p>History and HistoryGui have been cleaned up.
+<p>Fixed duplicate node IDs involving <code class='code prettyprint lang-sc'>Server.initTree</code>.
+<p>Fixed supernova crashing when too many controls are used.
+<p><code class='code prettyprint lang-sc'>Volume</code> now respects lag time when it is instantiated or destroyed.<h2><a class='anchor' name='IDE%20&%20SCDoc:%20Added'>IDE &amp; SCDoc: Added</a></h2>
 
 <p>Entries in the Documents docklet can be reordered, and document tabs will automatically reorder to reflect this.
 <p>"Edit &gt; Preferences &gt; Editor &gt; Display" has a new option that allows replacing tabs with a dropdown whose items are alphabetically ordered. This makes navigation easier in some performance contexts.<h2><a class='anchor' name='IDE%20&%20SCDoc:%20Changed'>IDE &amp; SCDoc: Changed</a></h2>
@@ -202,11 +219,11 @@ var scdoc_sc_version = '3.9.0-rc2';
 <p>Changed "occurrences" to "matches" in the status bar in the Find and Replace features.
 <p>Many minor improvements were made to the look and feel of the documentation.<h2><a class='anchor' name='IDE%20&%20SCDoc:%20Fixed'>IDE &amp; SCDoc: Fixed</a></h2>
 
-<p>Fixed SCDoc refusing to index any further documents if one document has a malformed <code class='code prettyprint lang-sc'>copymethod\:\:</code> command.
+<p>Fixed SCDoc refusing to index any further documents if one document has a malformed <code class='code prettyprint lang-sc'>copymethod</code> command.
 <p>Some Linux systems had unreadable font colors in the autocomplete tooltips. This has been (finally) fixed.
 <p>Fixed a bug where <code class='code prettyprint lang-sc'>Document:selectedString_</code> had no effect.
 <p>New tabs are now inserted to the right of the current tab instead of all the way at the end.
-<p>The help browser now has keyboard shortcuts for navigating back and forward. These shortcuts are OS-dependent and given to us by.
+<p>The help browser now has keyboard shortcuts for navigating back and forward. These shortcuts are OS-dependent and given to us by Qt.
 <p>Fixed the "Find in page..." feature in the help viewer skipping every other occurrence.
 <p>Fixed HTML checkboxes appearing in the upper left of the help viewer.
 <p>Fixed the right-click menu for the tabs appearing in the wrong place in macOS.<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Guides/News-3_9.schelp'>/usr/local/share/SuperCollider/HelpSource/Guides/News-3_9.schelp</a><br>link::Guides/News-3_9::<br></div></div></body></html>
