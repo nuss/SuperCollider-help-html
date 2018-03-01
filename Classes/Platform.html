@@ -66,6 +66,9 @@ var scdoc_sc_version = '3.9.1';
 </ul><li class='toc2'><a href='#Startup%20files'>Startup files</a></li>
 <ul class='toc'><li class='toc3'><a href='#-startupFiles'>startupFiles</a> </li>
 <li class='toc3'><a href='#-loadStartupFiles'>loadStartupFiles</a> </li>
+</ul><li class='toc2'><a href='#System%20commands'>System commands</a></li>
+<ul class='toc'><li class='toc3'><a href='#-killAll'>killAll</a> </li>
+<li class='toc3'><a href='#-killProcessByID'>killProcessByID</a> </li>
 </ul><li class='toc2'><a href='#Features'>Features</a></li>
 <ul class='toc'><li class='toc3'><a href='#-declareFeature'>declareFeature</a> </li>
 <li class='toc3'><a href='#-hasFeature'>hasFeature</a> </li>
@@ -80,7 +83,6 @@ var scdoc_sc_version = '3.9.1';
 <li class='toc3'><a href='#-initPlatform'>initPlatform</a> </li>
 <li class='toc3'><a href='#-isPathSeparator'>isPathSeparator</a> </li>
 <li class='toc3'><a href='#-isSleeping'>isSleeping</a> </li>
-<li class='toc3'><a href='#-killAll'>killAll</a> </li>
 <li class='toc3'><a href='#-writeClientCSS'>writeClientCSS</a> </li>
 </ul></ul></ul></div><div class='contents'>
 <div id='menubar'></div>
@@ -196,7 +198,24 @@ var scdoc_sc_version = '3.9.1';
 <div class='method'>
 <p>files to be loaded on startup</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loadStartupFiles' href='./../Overviews/Methods.html#loadStartupFiles'>loadStartupFiles</a></h3>
 <div class='method'>
-<p>(re)load startup files</div><h3><a class='anchor' name='Features'>Features</a></h3>
+<p>(re)load startup files</div><h3><a class='anchor' name='System%20commands'>System commands</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-killAll' href='./../Overviews/Methods.html#killAll'>killAll</a>(<span class='argstr'>cmdLineArgs</span>)</h3>
+<div class='method'>
+<p>kill all processes as defined by cmdLineArgs.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>cmdLineArgs<td class='argumentdesc'>
+<p>a string containing one or several process names.<pre class='code prettyprint lang-sc'>// e.g. kill all possibly running servers (scsynth or supernova)
+thisProcess.platform.killAll("scsynth supernova");</pre>
+</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-killProcessByID' href='./../Overviews/Methods.html#killProcessByID'>killProcessByID</a>(<span class='argstr'>pid</span>)</h3>
+<div class='method'>
+<p>kill a single process as identified by its process ID.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>pid<td class='argumentdesc'>
+<p>an Integer which is the pid of the process to kill.<pre class='code prettyprint lang-sc'>// start a server program from the cmdLine for testing
+~pid = unixCmd(Server.program + s.options.asOptionsString(57100));
+// kill just that server program by its pid:
+thisProcess.platform.killProcessByID(~pid);</pre>
+</table></div><h3><a class='anchor' name='Features'>Features</a></h3>
 
 <p>Features are abstract symbols that can be declared by extension authors and be checked during runtime in user code. Apart from explicitly declared features, class and primitive names are implicitly declared.<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-declareFeature' href='./../Overviews/Methods.html#declareFeature'>declareFeature</a>(<span class='argstr'>aFeature</span>)</h3>
 <div class='method'>
@@ -223,6 +242,5 @@ thisProcess.platform.hasFeature('superCrazyCompositionSystem');</pre>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-initPlatform' href='./../Overviews/Methods.html#initPlatform'>initPlatform</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isPathSeparator' href='./../Overviews/Methods.html#isPathSeparator'>isPathSeparator</a>(<span class='argstr'>char</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isSleeping' href='./../Overviews/Methods.html#isSleeping'>isSleeping</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-killAll' href='./../Overviews/Methods.html#killAll'>killAll</a>(<span class='argstr'>cmdLineArgs</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-writeClientCSS' href='./../Overviews/Methods.html#writeClientCSS'>writeClientCSS</a></h3>
 <div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Platform.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Platform.schelp</a><br>link::Classes/Platform::<br></div></div></body></html>
