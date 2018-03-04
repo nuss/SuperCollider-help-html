@@ -23,7 +23,8 @@ var scdoc_sc_version = '3.9.1';
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
+<ul class='toc'><li class='toc2'><a href='#Identitying%20the%20time%20a%20message%20was%20sent'>Identitying the time a message was sent</a></li>
+<ul class='toc'></ul></ul></ul></div><div class='contents'>
 <div id='menubar'></div>
 <div class='header'>
 <div id='label'>
@@ -82,17 +83,17 @@ o.free;
 // Since SendReply can only respond to the host, this shows how
 // to send data to a separate target through sclang.
 (
-SynthDef(\amplitudeAnalysis, {|in=0, rate=60| 
-    var input = SoundIn.ar(in); 
+SynthDef(\amplitudeAnalysis, {|in=0, rate=60|
+    var input = SoundIn.ar(in);
     var amp = Amplitude.kr(input);
     var freq = Pitch.kr(input);
-    var trig = Impulse.kr(rate); 
-    SendReply.kr(trig, '/analysis', [amp, freq[0], freq[1]]); 
+    var trig = Impulse.kr(rate);
+    SendReply.kr(trig, '/analysis', [amp, freq[0], freq[1]]);
 }).add;
 )
 
 // example target address - insert your target host &amp; port here
-~testNetAddr = NetAddr("127.0.0.1", 5000); 
+~testNetAddr = NetAddr("127.0.0.1", 5000);
 ~mySynth = Synth(\amplitudeAnalysis);
 
 (
@@ -104,5 +105,15 @@ OSCdef(\listener, {|msg|
 )
 
 ~mySynth.set(\rate, 10); // slow it down...</pre>
+<h3><a class='anchor' name='Identitying%20the%20time%20a%20message%20was%20sent'>Identitying the time a message was sent</a></h3>
 
-<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/SendReply.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/SendReply.schelp</a><br>link::Classes/SendReply::<br></div></div></body></html>
+<p>Sometimes, we need to know when a message was sent. Because <code class='code prettyprint lang-sc'>SendReply</code> can send only messages (which have no timestamp) and no bundles (which have), we can't use the <code class='code prettyprint lang-sc'>time</code> argument of the <a href="./../Classes/OSCdef.html">OSCdef</a>'s function. Instead, you can send a time stamp with the data, by using the <a href="./../Classes/Sweep.html">Sweep</a> UGen.<pre class='code prettyprint lang-sc'>(
+{ SendReply.ar(Impulse.ar(4), "/reply", [Sweep.ar, SinOsc.ar(0.3)]); 0 }.play;
+OSCdef(\x, { |msg|
+    var time, value;
+    time = msg[3];
+    value = msg[4];
+    "value % occurred at time %".format(value, time).postln;
+}, "/reply");
+)</pre>
+<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/SendReply.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/SendReply.schelp</a><br>link::Classes/SendReply::<br></div></div></body></html>
