@@ -41,6 +41,8 @@ var scdoc_sc_version = '3.9.1';
 <li class='toc3'><a href='#-zoomToFrac'>zoomToFrac</a> </li>
 <li class='toc3'><a href='#-zoomAllOut'>zoomAllOut</a> </li>
 <li class='toc3'><a href='#-zoomSelection'>zoomSelection</a> </li>
+<li class='toc3'><a href='#-xZoom'>xZoom</a> </li>
+<li class='toc3'><a href='#-yZoom'>yZoom</a> </li>
 <li class='toc3'><a href='#-scrollPos'>scrollPos</a> </li>
 <li class='toc3'><a href='#-scrollTo'>scrollTo</a> </li>
 <li class='toc3'><a href='#-scroll'>scroll</a> </li>
@@ -84,11 +86,10 @@ var scdoc_sc_version = '3.9.1';
 <li class='toc3'><a href='#-rmsColor'>rmsColor</a> </li>
 <li class='toc3'><a href='#-timeCursorEditable'>timeCursorEditable</a> </li>
 <li class='toc3'><a href='#-waveColors'>waveColors</a> </li>
-<li class='toc3'><a href='#-xZoom'>xZoom</a> </li>
-<li class='toc3'><a href='#-yZoom'>yZoom</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'><li class='toc2'><a href='#Basic%20example'>Basic example</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Step%20by%20step%20examples'>Step by step examples</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Adding%20a%20scroll%20bar'>Adding a scroll bar</a></li>
 <ul class='toc'></ul></ul></ul></div><div class='contents'>
 <div id='menubar'></div>
 <div class='header'>
@@ -164,8 +165,7 @@ var scdoc_sc_version = '3.9.1';
 <p> Whether to open a progress window. Defaults to <code class='code prettyprint lang-sc'>true</code>.</table></div></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-data' href='./../Overviews/Methods.html#data'>data</a> = <span class='argstr'>data</span></h3>
 <div class='method'>
-<p> Gets the display data, or sets custom data instead of a sound file.
-<p> It is not possible to get the data.
+<p> Sets custom data instead of a sound file. This is a setter only; it is not possible to get the data. If you need access to the data, you must keep it in your own variable.
 <p> Setting this property assumes 1 channel and sample rate of 44100 Hz. Use <a href="#-setData">-setData</a> instead if you want more control.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>data<td class='argumentdesc'>
@@ -217,13 +217,23 @@ var scdoc_sc_version = '3.9.1';
 <p> Zooms to a specific selection.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>selection<td class='argumentdesc'>
-<p> The index of the selection; an Integer between 0 an 63.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scrollPos' href='./../Overviews/Methods.html#scrollPos'>scrollPos</a></h3>
+<p> The index of the selection; an Integer between 0 an 63.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-xZoom' href='./../Overviews/Methods.html#xZoom'>xZoom</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-xZoom' href='./../Overviews/Methods.html#xZoom'>xZoom</a> = <span class='argstr'>seconds</span></h3>
 <div class='method'>
-<p> The scrolling position of the view, as a fraction of the total scrolling range.<h4>Returns:</h4>
+<p> The number of seconds of audio to display in the view. E.g., to zoom out by a factor of 2, <code class='code prettyprint lang-sc'>view.xZoom = dataDuration / 2</code>. (You are responsible for keeping track of the data duration.)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A Float, in seconds of audio displayed.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-yZoom' href='./../Overviews/Methods.html#yZoom'>yZoom</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-yZoom' href='./../Overviews/Methods.html#yZoom'>yZoom</a> = <span class='argstr'>factor</span></h3>
+<div class='method'>
+<p> Vertical scaling. <code class='code prettyprint lang-sc'>yZoom = 1</code> sets ±1.0 to the top and bottom of the view. If <code class='code prettyprint lang-sc'>yZoom = 2</code>, the view covers ±0.5.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A Float scaling factor.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scrollPos' href='./../Overviews/Methods.html#scrollPos'>scrollPos</a></h3>
+<div class='method'>
+<p> The scrolling position of the view, as a fraction of the total scrolling range. The total scrolling range is <code class='code prettyprint lang-sc'>totalDuration - xZoom</code>.<h4>Returns:</h4>
 <div class='returnvalue'>
 <p>A Float in the range of 0.0 to 1.0.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scrollTo' href='./../Overviews/Methods.html#scrollTo'>scrollTo</a>(<span class='argstr'>fraction</span>)</h3>
 <div class='method'>
-<p> Scrolls to a fraction of the total scrolling range.<h4>Arguments:</h4>
+<p> Scrolls to a fraction of the total scrolling range. The total scrolling range is <code class='code prettyprint lang-sc'>totalDuration - xZoom</code>.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>fraction<td class='argumentdesc'>
 <p> A Float in the range of 0.0 to 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scroll' href='./../Overviews/Methods.html#scroll'>scroll</a>(<span class='argstr'>fraction</span>)</h3>
@@ -405,10 +415,6 @@ var scdoc_sc_version = '3.9.1';
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-timeCursorEditable' href='./../Overviews/Methods.html#timeCursorEditable'>timeCursorEditable</a> = <span class='argstr'>flag</span></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-waveColors' href='./../Overviews/Methods.html#waveColors'>waveColors</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-waveColors' href='./../Overviews/Methods.html#waveColors'>waveColors</a> = <span class='argstr'>colors</span></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-xZoom' href='./../Overviews/Methods.html#xZoom'>xZoom</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-xZoom' href='./../Overviews/Methods.html#xZoom'>xZoom</a> = <span class='argstr'>seconds</span></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-yZoom' href='./../Overviews/Methods.html#yZoom'>yZoom</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-yZoom' href='./../Overviews/Methods.html#yZoom'>yZoom</a> = <span class='argstr'>factor</span></h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 <h3><a class='anchor' name='Basic%20example'>Basic example</a></h3>
 <pre class='code prettyprint lang-sc'>// To zoom in/out: Shift + right-click + mouse-up/down
@@ -568,5 +574,56 @@ a.scroll(12);       // scroll is in viewFrames.
 a.zoom(4);
 
 w.close;</pre>
+<h3><a class='anchor' name='Adding%20a%20scroll%20bar'>Adding a scroll bar</a></h3>
+
+<p>Zooming and scrolling by mouse, directly in a SoundFileView, may not be immediately intuitive. (Most users wouldn't guess to shift-right-click!) You can add a <a href="./../Classes/RangeSlider.html">RangeSlider</a> to act as a scrollbar.
+<p>Notes:<ul>
+<li>If the user shift-right-clicks, the only way to track the SoundFileView's display changes is by using mouse actions: <a href="./../Classes/View.html#-mouseDownAction">View: -mouseDownAction</a> and <a href="./../Classes/View.html#-mouseUpAction">View: -mouseUpAction</a> to know which button is pressed, and <a href="./../Classes/View.html#-mouseMoveAction">View: -mouseMoveAction</a> to read the new scrolling and zooming values.<li><a href="./../Classes/SoundFileView.html#-xZoom">SoundFileView: -xZoom</a> is in seconds, while the range slider is normalized to a 0-1 range. So <code class='code prettyprint lang-sc'>xZoom == slider.range * duration</code>, and <code class='code prettyprint lang-sc'>slider.range == xZoom / duration</code>.<li><a href="./../Classes/SoundFileView.html#-scrollPos">SoundFileView: -scrollPos</a> is normalized to the "total scrolling range," where 1.0 is scrolled fully to the right. We have to subtract the displayed area: <code class='code prettyprint lang-sc'>slider.lo = sfv.scrollPos / (1 - slider.size)</code>, with some refinements to avoid division by 0.</ul>
+<pre class='code prettyprint lang-sc'>f = SoundFile.openRead(Platform.resourceDir +/+ "sounds/a11wlk01.wav");
+f.readData(d = Signal.newClear(f.numFrames * f.numChannels));
+f.close;
+
+(
+var w = Window("test", Rect(700, 200, 600, 300)),
+file, sfv, sfZoom, mouseButton,
+dur = d.size / f.sampleRate / f.numChannels;
+
+w.layout = VLayout(
+    sfv = SoundFileView(),
+    sfZoom = RangeSlider().orientation_(\horizontal)
+);
+
+sfZoom.lo_(0).range_(1)
+.action_({ |view|
+    var divisor, rangeStart;
+    rangeStart = view.lo;
+    divisor = 1 - sfZoom.range;
+    if(divisor &lt; 0.0001) {
+        rangeStart = 0;
+        divisor = 1;
+    };
+    sfv.xZoom_(sfZoom.range * dur)
+    .scrollTo(rangeStart / divisor)
+});
+
+sfv.setData(d, startFrame: 0, channels: f.numChannels, samplerate: f.sampleRate);
+
+sfv.mouseDownAction_({ |view, x, y, mod, buttonNumber|
+    mouseButton = buttonNumber;
+})
+.mouseUpAction_({ |view, x, y, mod|
+    mouseButton = nil;
+})
+.mouseMoveAction_({ |view, x, y, mod|
+    var rangeSize, rangeStart;
+    if(mouseButton == 1) {
+        rangeSize = view.xZoom / dur;
+        rangeStart = view.scrollPos * (1 - rangeSize);
+        sfZoom.lo_(rangeStart).range_(rangeSize);
+    };
+});
+
+w.front;
+)</pre>
 
 <p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/SoundFileView.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/SoundFileView.schelp</a><br>link::Classes/SoundFileView::<br></div></div></body></html>
