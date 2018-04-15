@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Assignment Statements | SuperCollider 3.9.2 Help</title>
+<!doctype html><html lang='en'><head><title>Assignment Statements | SuperCollider 3.9.3 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
@@ -6,7 +6,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Assignment Statements';
-var scdoc_sc_version = '3.9.2';
+var scdoc_sc_version = '3.9.3';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -37,6 +37,29 @@ var scdoc_sc_version = '3.9.2';
 
 <p>examples:<pre class='code prettyprint lang-sc'>x = [1, 2, 3, 4].rotate(1);
 c = a + b;</pre>
+
+<p>A variable can be assigned a value at any time, including during declaration.<pre class='code prettyprint lang-sc'>(
+// assignment in declaration
+var one = 1;
+var two = 2;
+var four = two + 2;
+
+// reassign
+two = two + one;
+two = "and now for something completely different"
+two = nil;
+
+)</pre>
+
+<p>In some cases, chains of reassignment are useful:<pre class='code prettyprint lang-sc'>(
+{
+    var sig;
+    sig = SinOsc.ar(LFNoise0.kr(10).exprange(1, 1000));
+    sig = SinOsc.ar(310, sig * 3);
+    sig = SinOsc.ar(230, sig * 0.4);
+    sig * 0.2
+}.play
+)</pre>
 <h2><a class='anchor' name='Multiple%20Assignment'>Multiple Assignment</a></h2>
 
 <p>A multiple assignment statement assigns the elements of a <a href="./../Classes/Collection.html">Collection</a> which is the result of an expression on the right hand side, to a list of variables on the left hand side. A multiple assignment statement is preceded by the symbol <code class='code prettyprint lang-sc'>#</code>. If the last variable on the left is preceded by three dots, then the entire remainder of the collection is assigned to that variable. There must be at least one variable name before the ellipsis.
