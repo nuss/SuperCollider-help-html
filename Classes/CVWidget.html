@@ -64,7 +64,6 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'><li class='toc3'><a href='#-window'>window</a> </li>
 <li class='toc3'><a href='#-guiEnv'>guiEnv</a> </li>
 <li class='toc3'><a href='#-focusElements'>focusElements</a> </li>
-<li class='toc3'><a href='#-msSize'>msSize</a> </li>
 <li class='toc3'><a href='#-cvArray'>cvArray</a> </li>
 <li class='toc3'><a href='#-front'>front</a> </li>
 <li class='toc3'><a href='#-editor'>editor</a> </li>
@@ -83,7 +82,10 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-isCVCWidget'>isCVCWidget</a> </li>
 <li class='toc3'><a href='#-isClosed'>isClosed</a> </li>
 </ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
-</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-msSize'>msSize</a> </li>
+<li class='toc3'><a href='#-size'>size</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'><li class='toc2'><a href='#basic%20usage'>basic usage</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#reusable%20widgets'>reusable widgets</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#Shortcuts'>Shortcuts</a></li>
@@ -540,11 +542,7 @@ flow.nextLine;
 <div class='method'>
 <p>CVWidgets cannot gain focus themselves. However, their elements (buttons, slider, textfields etc.) can. <code class='code prettyprint lang-sc'>focusElements</code> returns a collection of elements which, when focused (indicated by the green border), function as the widget's shortcut transmitters.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>an <a href="./../Classes/Array.html">Array</a> of GUI elements</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-msSize' href='./../Overviews/Methods.html#msSize'>msSize</a></h3>
-<div class='method'>
-<p>Though this is an instance var defined in CVWidget it applies to CVWidgetMS only: It returns the number of slots of the multi-slider of a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a>.<h4>Returns:</h4>
-<div class='returnvalue'>
-<p>an <a href="./../Classes/Integer.html">Integer</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cvArray' href='./../Overviews/Methods.html#cvArray'>cvArray</a></h3>
+<p>an <a href="./../Classes/Array.html">Array</a> of GUI elements</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cvArray' href='./../Overviews/Methods.html#cvArray'>cvArray</a></h3>
 <div class='method'>
 <p><a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> only.<h4>Returns:</h4>
 <div class='returnvalue'>
@@ -625,7 +623,10 @@ flow.nextLine;
 <p><h4>Returns:</h4>
 <div class='returnvalue'>
 <p><code class='code prettyprint lang-sc'>true</code> if the widget has been closed, otherwise <code class='code prettyprint lang-sc'>false</code></div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-msSize' href='./../Overviews/Methods.html#msSize'>msSize</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-size' href='./../Overviews/Methods.html#size'>size</a></h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
 <h3><a class='anchor' name='basic%20usage'>basic usage</a></h3>
 <pre class='code prettyprint lang-sc'>// create a CVWidget2D
 ~twoDee = CVWidget2D.new.front;
@@ -704,7 +705,7 @@ Server.default.waitForBoot{ ~noise = {
 
 // set various properties of the widgets
 (
-~ms.msSize.do({ |i|
+~ms.size.do({ |i|
     ~ms.setMidiMode(1, i).setCtrlButtonBank(16, i)
 });
 ~ms.addAction(\setFreq, { |cv| ~noise.set(\freq, cv.value) });
