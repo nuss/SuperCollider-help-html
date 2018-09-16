@@ -1,0 +1,193 @@
+<!doctype html><html lang='en'><head><title>CodeView | SuperCollider 3.9.3 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script>
+var helpRoot = './..';
+var scdoc_title = 'CodeView';
+var scdoc_sc_version = '3.9.3';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC();prettyPrint()'>
+<div id='toc'>
+<div id='toctitle'>CodeView:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Text'>Text</a></li>
+<ul class='toc'><li class='toc3'><a href='#-open'>open</a> </li>
+<li class='toc3'><a href='#-string'>string</a> </li>
+</ul><li class='toc2'><a href='#Editor%20behavior'>Editor behavior</a></li>
+<ul class='toc'><li class='toc3'><a href='#-matchChars'>matchChars</a> </li>
+<li class='toc3'><a href='#-modKeyHandler'>modKeyHandler</a> </li>
+<li class='toc3'><a href='#-keyUpAction'>keyUpAction</a> </li>
+<li class='toc3'><a href='#-tabWidth'>tabWidth</a> </li>
+<li class='toc3'><a href='#-tokens'>tokens</a> </li>
+<li class='toc3'><a href='#-debug'>debug</a> </li>
+</ul><li class='toc2'><a href='#Font%20&%20color%20schemes'>Font &amp; color schemes</a></li>
+<ul class='toc'><li class='toc3'><a href='#-font'>font</a> </li>
+<li class='toc3'><a href='#-oneDarkColorScheme'>oneDarkColorScheme</a>  <a href='#-oneLightColorScheme'>oneLightColorScheme</a> </li>
+<li class='toc3'><a href='#-darkColorScheme'>darkColorScheme</a>  <a href='#-lightColorScheme'>lightColorScheme</a> </li>
+<li class='toc3'><a href='#-colorScheme'>colorScheme</a> </li>
+<li class='toc3'><a href='#-customTokens'>customTokens</a> </li>
+<li class='toc3'><a href='#-customColors'>customColors</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-brightDarkColorScheme'>brightDarkColorScheme</a> </li>
+<li class='toc3'><a href='#-editable'>editable</a> </li>
+<li class='toc3'><a href='#-interpretArgs'>interpretArgs</a> </li>
+<li class='toc3'><a href='#-makeCompleteWindow'>makeCompleteWindow</a> </li>
+<li class='toc3'><a href='#-paperLightColorScheme'>paperLightColorScheme</a> </li>
+<li class='toc3'><a href='#-parent'>parent</a> </li>
+<li class='toc3'><a href='#-select'>select</a> </li>
+<li class='toc3'><a href='#-selectionSize'>selectionSize</a> </li>
+<li class='toc3'><a href='#-selectionStart'>selectionStart</a> </li>
+<li class='toc3'><a href='#-setString'>setString</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div class='contents'>
+<div id='menubar'></div>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#GUI'>GUI</a>&#8201;&gt;&#8201;<a href='./../Browse.html#GUI>Views'>Views</a></span>
+</div><h1>CodeView<span id='superclasses'> : <a href="../Classes/SCViewHolder.html">SCViewHolder</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>a view displaying editable SC code</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CodeView/CodeView.sc' title='/home/stefan/.local/share/SuperCollider/Extensions/CodeView/CodeView.sc'>CodeView.sc</a></div><div id='related'>See also: <a href="./../Classes/TextView.html">TextView</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A work-in-progress extension of TextView for editing SuperCollider code.
+<p>Features include:<ul>
+<li>Syntax highlighting...<ul>
+<li>upon file/string load (this may take a little while depending on how long your code is)<li>in real time as you type<li>four built-in color schemes, or make your own<li>smart SC class highlighting<li>support for custom token definitions</ul>
+
+<p><li>Code evaluation, a la SCIDE...<ul>
+<li>shift-enter to evaluate current line or selection<li>cmd-enter to evaluate paren block, or entire file, or selection<li>cmd-. to stop everything</ul>
+
+<p><li>Look up documentation...<ul>
+<li>cmd-D opens up help for the token your cursor is on<li>if you are on a literal, opens help for that literal, etc.</ul>
+
+<p><li>Indentation...<ul>
+<li>(TODO adjustible-width) soft tabs<li>preserves indentation on newline<li>auto-indents somewhat intelligently<li>tab / shift-tab to indent / deindent single line or selected lines</ul>
+
+<p><li>Matching characters...<ul>
+<li>auto-insert matching ", ', ], }, )<li>customize which characters to match<li>auto-delete matching characters</ul>
+
+<p><li>Key commands...<ul>
+<li>supports custom key commands<li>(TODO implement various useful shortcuts from SCIDE)</ul>
+</ul>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>CodeView.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>)</h3>
+<div class='method'>
+<p>Color scheme defaults to oneDarkColorScheme.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Text'>Text</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-open' href='./../Overviews/Methods.html#open'>open</a>(<span class='argstr'>path</span>)</h3>
+<div class='method'>
+<p>Opens a file at <strong>path</strong> and loads text from it.
+<p>If loading the text from the file succeeds, it will replace any current contents of the view.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-string' href='./../Overviews/Methods.html#string'>string</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-string' href='./../Overviews/Methods.html#string'>string</a> = <span class='argstr'>string</span></h3>
+<div class='method'>
+<p>Get/set the text contained in the view.</div><h3><a class='anchor' name='Editor%20behavior'>Editor behavior</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-matchChars' href='./../Overviews/Methods.html#matchChars'>matchChars</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-matchChars' href='./../Overviews/Methods.html#matchChars'>matchChars</a> = value</h3>
+<div class='method'>
+<p>Characters to match, as <a href="./../Classes/Array.html">Array</a> of Arrays <strong>[[beginChar, endChar], ...]</strong>. Defaults to:<pre class='code prettyprint lang-sc'>[
+  [$", $"],
+  [$', $'],
+  [$[, $]],
+  [$(, $)],
+  [${, $}]
+]</pre>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-modKeyHandler' href='./../Overviews/Methods.html#modKeyHandler'>modKeyHandler</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-modKeyHandler' href='./../Overviews/Methods.html#modKeyHandler'>modKeyHandler</a> = value</h3>
+<div class='method'>
+<p>Called on key down, if there's no default assignment for that key combination. Allows you to implement custom keybindings / handling. Passed arguments <strong>view, char, mod, unicode, keycode, key</strong>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keyUpAction' href='./../Overviews/Methods.html#keyUpAction'>keyUpAction</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keyUpAction' href='./../Overviews/Methods.html#keyUpAction'>keyUpAction</a> = value</h3>
+<div class='method'>
+<p>Set the action to be performed when key is lifted. Passed arguments <strong>view, char, mod, unicode, keycode, key</strong>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-tabWidth' href='./../Overviews/Methods.html#tabWidth'>tabWidth</a></h3>
+<div class='method'>
+<p>Width of each soft tab in spaces. Currently not editable.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-tokens' href='./../Overviews/Methods.html#tokens'>tokens</a></h3>
+<div class='method'>
+<p>Syntax tokens for colorizer. Currently not editable.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-debug' href='./../Overviews/Methods.html#debug'>debug</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-debug' href='./../Overviews/Methods.html#debug'>debug</a> = value</h3>
+<div class='method'>
+<p>Set to <strong>true</strong> to post the key handler arguments. Useful for developing features.</div><h3><a class='anchor' name='Font%20&%20color%20schemes'>Font &amp; color schemes</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-font' href='./../Overviews/Methods.html#font'>font</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-font' href='./../Overviews/Methods.html#font'>font</a> = <span class='argstr'>afont</span></h3>
+<div class='method'>
+<p>Get/set the <a href="./../Classes/Font.html">Font</a> of the view.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-oneDarkColorScheme' href='./../Overviews/Methods.html#oneDarkColorScheme'>oneDarkColorScheme</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-oneLightColorScheme' href='./../Overviews/Methods.html#oneLightColorScheme'>oneLightColorScheme</a></h3>
+<div class='method'>
+<p>Based on Atom's default color schemes.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-darkColorScheme' href='./../Overviews/Methods.html#darkColorScheme'>darkColorScheme</a>: METHOD NOT FOUND!</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lightColorScheme' href='./../Overviews/Methods.html#lightColorScheme'>lightColorScheme</a>: METHOD NOT FOUND!</h3>
+<div class='method'>
+<p>The light is greenish and earthy, kind of nice.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-colorScheme' href='./../Overviews/Methods.html#colorScheme'>colorScheme</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-colorScheme' href='./../Overviews/Methods.html#colorScheme'>colorScheme</a> = <span class='argstr'>value</span></h3>
+<div class='method'>
+<p>Use to directly define your own color schemes. This takes a Dictionary of colors. For example, here is the oneLightColorScheme implementation:<pre class='code prettyprint lang-sc'>c = CodeView().front;
+c.colorScheme_((
+  background: Color.new255(250, 250, 250),
+  text: Color.new255(56, 58, 66),
+  selectionBackground: Color.new255(229, 229, 230),
+  selectionText: Color.new255(56, 58, 66),
+  keyword: Color.new255(168, 28, 166),
+  envvar: Color.new255(230, 85, 68),
+  class: Color.new255(194, 133, 0),
+  number: Color.new255(156, 109, 0),
+  symbol: Color.new255(0, 131, 190),
+  key: Color.new255(0, 131, 190).darken(Color.gray(0.5)),
+  string: Color.new255(77, 162, 75),
+  comment: Color.new255(160, 161, 167),
+  punctuation: Color.new255(100, 120, 140)
+));</pre>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-customTokens' href='./../Overviews/Methods.html#customTokens'>customTokens</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-customTokens' href='./../Overviews/Methods.html#customTokens'>customTokens</a> = <span class='argstr'>value</span></h3>
+<div class='method'>
+<p>Takes a Dictionary of token names / regexp strings to colorize.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-customColors' href='./../Overviews/Methods.html#customColors'>customColors</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-customColors' href='./../Overviews/Methods.html#customColors'>customColors</a> = <span class='argstr'>value</span></h3>
+<div class='method'>
+<p>Takes a Dictionary of names corresponding to customTokens, and their associated colors.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-brightDarkColorScheme' href='./../Overviews/Methods.html#brightDarkColorScheme'>brightDarkColorScheme</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-editable' href='./../Overviews/Methods.html#editable'>editable</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-editable' href='./../Overviews/Methods.html#editable'>editable</a> = <span class='argstr'>bool</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-interpretArgs' href='./../Overviews/Methods.html#interpretArgs'>interpretArgs</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-interpretArgs' href='./../Overviews/Methods.html#interpretArgs'>interpretArgs</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-makeCompleteWindow' href='./../Overviews/Methods.html#makeCompleteWindow'>makeCompleteWindow</a>(<span class='argstr'>bounds</span>, <span class='argstr'>parentWindow</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-paperLightColorScheme' href='./../Overviews/Methods.html#paperLightColorScheme'>paperLightColorScheme</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-parent' href='./../Overviews/Methods.html#parent'>parent</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-select' href='./../Overviews/Methods.html#select'>select</a>(<span class='argstr'>start</span>, <span class='argstr'>size</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-selectionSize' href='./../Overviews/Methods.html#selectionSize'>selectionSize</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-selectionStart' href='./../Overviews/Methods.html#selectionStart'>selectionStart</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setString' href='./../Overviews/Methods.html#setString'>setString</a>(<span class='argstr'>aString</span>, <span class='argstr'>start</span>, <span class='argstr'>size</span>)</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// New CodeView
+c = CodeView(bounds: Rect(0, 0, 600, 900)).front;
+
+// Set the text
+c.string = "/* testing 1 2 3 */\ns.boot;\na = Synth(\\default);\na.release;";
+
+// Open a .scd file
+FileDialog({ |path| c.open(path) }, stripResult:true);
+
+// Change the color scheme
+c.oneLightColorScheme;
+c.oneDarkColorScheme;
+c.lightColorScheme;
+c.darkColorScheme;
+
+// Change the font
+c.font = Font.monospace.size_(10);</pre>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CodeView/HelpSource/Classes/CodeView.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CodeView/HelpSource/Classes/CodeView.schelp</a><br>link::Classes/CodeView::<br></div></div></body></html>

@@ -1,0 +1,606 @@
+<!doctype html><html lang='en'><head><title>Sieve | SuperCollider 3.9.3 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Sieve';
+var scdoc_sc_version = '3.9.3';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC();prettyPrint()'>
+<div id='toc'>
+<div id='toctitle'>Sieve:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*newEmpty'>newEmpty</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*new_i'>new_i</a> </li>
+<li class='toc3'><a href='#*new_o'>new_o</a> </li>
+<li class='toc3'><a href='#*new_oi'>new_oi</a> </li>
+<li class='toc3'><a href='#*union'>union</a> </li>
+<li class='toc3'><a href='#*union_i'>union_i</a> </li>
+<li class='toc3'><a href='#*union_o'>union_o</a> </li>
+<li class='toc3'><a href='#*union_oi'>union_oi</a> </li>
+<li class='toc3'><a href='#*sect'>sect</a> </li>
+<li class='toc3'><a href='#*sect_i'>sect_i</a> </li>
+<li class='toc3'><a href='#*sect_o'>sect_o</a> </li>
+<li class='toc3'><a href='#*sect_oi'>sect_oi</a> </li>
+<li class='toc3'><a href='#*symdif'>symdif</a> </li>
+<li class='toc3'><a href='#*symdif_i'>symdif_i</a> </li>
+<li class='toc3'><a href='#*symdif_o'>symdif_o</a> </li>
+<li class='toc3'><a href='#*symdif_oi'>symdif_oi</a> </li>
+<li class='toc3'><a href='#*dif'>dif</a> </li>
+<li class='toc3'><a href='#*dif_i'>dif_i</a> </li>
+<li class='toc3'><a href='#*dif_o'>dif_o</a> </li>
+<li class='toc3'><a href='#*dif_oi'>dif_oi</a> </li>
+<li class='toc3'><a href='#*limit'>limit</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-union'>union</a> </li>
+<li class='toc3'><a href='#-|'>|</a> </li>
+<li class='toc3'><a href='#-union_i'>union_i</a> </li>
+<li class='toc3'><a href='#-|*'>|*</a> </li>
+<li class='toc3'><a href='#-union_o'>union_o</a> </li>
+<li class='toc3'><a href='#-union_oi'>union_oi</a> </li>
+<li class='toc3'><a href='#-sect'>sect</a> </li>
+<li class='toc3'><a href='#-&'>&amp;</a> </li>
+<li class='toc3'><a href='#-sect_i'>sect_i</a> </li>
+<li class='toc3'><a href='#-&*'>&amp;*</a> </li>
+<li class='toc3'><a href='#-sect_o'>sect_o</a> </li>
+<li class='toc3'><a href='#-sect_oi'>sect_oi</a> </li>
+<li class='toc3'><a href='#-symdif'>symdif</a> </li>
+<li class='toc3'><a href='#---'>--</a> </li>
+<li class='toc3'><a href='#-symdif_i'>symdif_i</a> </li>
+<li class='toc3'><a href='#---*'>--*</a> </li>
+<li class='toc3'><a href='#-symdif_o'>symdif_o</a> </li>
+<li class='toc3'><a href='#-symdif_oi'>symdif_oi</a> </li>
+<li class='toc3'><a href='#-dif'>dif</a> </li>
+<li class='toc3'><a href='#--'>-</a> </li>
+<li class='toc3'><a href='#-dif_i'>dif_i</a> </li>
+<li class='toc3'><a href='#--*'>-*</a> </li>
+<li class='toc3'><a href='#-dif_o'>dif_o</a> </li>
+<li class='toc3'><a href='#-dif_oi'>dif_oi</a> </li>
+<li class='toc3'><a href='#-plot'>plot</a> </li>
+<li class='toc3'><a href='#-size'>size</a> </li>
+<li class='toc3'><a href='#-toPoints'>toPoints</a> </li>
+<li class='toc3'><a href='#-toIntervals'>toIntervals</a> </li>
+<li class='toc3'><a href='#-shift'>shift</a> </li>
+<li class='toc3'><a href='#->>'>&gt;&gt;</a> </li>
+<li class='toc3'><a href='#-shiftTo'>shiftTo</a> </li>
+<li class='toc3'><a href='#->>!'>&gt;&gt;!</a> </li>
+<li class='toc3'><a href='#-shiftToZero'>shiftToZero</a> </li>
+<li class='toc3'><a href='#-weakCopy'>weakCopy</a> </li>
+<li class='toc3'><a href='#-copy'>copy</a> </li>
+<li class='toc3'><a href='#-copyWith'>copyWith</a> </li>
+<li class='toc3'><a href='#-copyApplyTo'>copyApplyTo</a> </li>
+<li class='toc3'><a href='#-=='>==</a> </li>
+<li class='toc3'><a href='#-segmentGreaterEqual'>segmentGreaterEqual</a> </li>
+<li class='toc3'><a href='#->=!'>&gt;=!</a> </li>
+<li class='toc3'><a href='#-segmentGreater'>segmentGreater</a> </li>
+<li class='toc3'><a href='#->!'>&gt;!</a> </li>
+<li class='toc3'><a href='#-segmentLessEqual'>segmentLessEqual</a> </li>
+<li class='toc3'><a href='#-<=!'>&lt;=!</a> </li>
+<li class='toc3'><a href='#-segmentLess'>segmentLess</a> </li>
+<li class='toc3'><a href='#-<!'>&lt;!</a> </li>
+<li class='toc3'><a href='#-segmentBetweenEqual'>segmentBetweenEqual</a> </li>
+<li class='toc3'><a href='#-<>=!'>&lt;&gt;=!</a> </li>
+<li class='toc3'><a href='#-segmentBetween'>segmentBetween</a> </li>
+<li class='toc3'><a href='#-<>!'>&lt;&gt;!</a> </li>
+<li class='toc3'><a href='#-checkSymmetricPeriods'>checkSymmetricPeriods</a> </li>
+<li class='toc3'><a href='#-checkCharacteristicPeriod'>checkCharacteristicPeriod</a> </li>
+<li class='toc3'><a href='#-plotCharacteristicPeriod'>plotCharacteristicPeriod</a> </li>
+<li class='toc3'><a href='#-list'>list</a> </li>
+<li class='toc3'><a href='#-offset'>offset</a> </li>
+<li class='toc3'><a href='#-mode'>mode</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#Examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div class='contents'>
+<div id='menubar'></div>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>Sieves and Psieve Patterns'>Sieves and Psieve Patterns</a> | <a href='./../Browse.html#Streams-Patterns-Events'>Streams-Patterns-Events</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Streams-Patterns-Events>Sieves and Psieve Patterns'>Sieves and Psieve Patterns</a></span>
+</div><h1>Sieve<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Container class for sieve lists</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Sieves/Sieve.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Sieves/Sieve.sc'>Sieve.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Tutorials/Sieves_and_Psieve_patterns.html">Sieves and Psieve patterns</a>, <a href="./../Classes/Psieve.html">Psieve</a>, <a href="./../Classes/PSVunion.html">PSVunion</a>, <a href="./../Classes/PSVunion_i.html">PSVunion_i</a>, <a href="./../Classes/PSVunion_o.html">PSVunion_o</a>, <a href="./../Classes/PSVunion_oi.html">PSVunion_oi</a>, <a href="./../Classes/PSVsect.html">PSVsect</a>, <a href="./../Classes/PSVsect_i.html">PSVsect_i</a>, <a href="./../Classes/PSVsect_o.html">PSVsect_o</a>, <a href="./../Classes/PSVsect_oi.html">PSVsect_oi</a>, <a href="./../Classes/PSVsymdif.html">PSVsymdif</a>, <a href="./../Classes/PSVsymdif_i.html">PSVsymdif_i</a>, <a href="./../Classes/PSVsymdif_o.html">PSVsymdif_o</a>, <a href="./../Classes/PSVsymdif_oi.html">PSVsymdif_oi</a>, <a href="./../Classes/PSVdif.html">PSVdif</a>, <a href="./../Classes/PSVdif_i.html">PSVdif_i</a>, <a href="./../Classes/PSVdif_o.html">PSVdif_o</a>, <a href="./../Classes/PSVdif_oi.html">PSVdif_oi</a>, <a href="./../Classes/PSVop.html">PSVop</a>, <a href="./../Classes/PSVop_i.html">PSVop_i</a>, <a href="./../Classes/PSVop_o.html">PSVop_o</a>, <a href="./../Classes/PSVop_oi.html">PSVop_oi</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Container for a list of ascending integers as 'points' or 'intervals'. For an introduction and more examples see <a href="./../Tutorials/Sieves_and_Psieve_patterns.html">Sieves and Psieve patterns</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*newEmpty' href='./../Overviews/Methods.html#newEmpty'>newEmpty</a></h3>
+<div class='method'>
+<p>Creates a new empty Sieve object.</div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>gen</span>, <span class='argstr'>limit</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points'.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>gen<td class='argumentdesc'>
+<p>A generator. Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples.<tr><td class='argumentname'>limit<td class='argumentdesc'>
+<p>An integer limit, which is included when reached. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*new_i' href='./../Overviews/Methods.html#new_i'>new_i</a>(<span class='argstr'>gen</span>, <span class='argstr'>limit</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals'.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>gen<td class='argumentdesc'>
+<p>A generator. Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals.<tr><td class='argumentname'>limit<td class='argumentdesc'>
+<p>If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*new_o' href='./../Overviews/Methods.html#new_o'>new_o</a>(<span class='argstr'>gen</span>, <span class='argstr'>offset</span>, <span class='argstr'>limit</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points' with offset.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>gen<td class='argumentdesc'>
+<p>A generator. Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples.<tr><td class='argumentname'>offset<td class='argumentdesc'>
+<p>An Integer.<tr><td class='argumentname'>limit<td class='argumentdesc'>
+<p>An integer limit, which is included when reached. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*new_oi' href='./../Overviews/Methods.html#new_oi'>new_oi</a>(<span class='argstr'>gen</span>, <span class='argstr'>offset</span>, <span class='argstr'>limit</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals' with offset.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>gen<td class='argumentdesc'>
+<p>A generator. Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals.<tr><td class='argumentname'>offset<td class='argumentdesc'>
+<p>An Integer.<tr><td class='argumentname'>limit<td class='argumentdesc'>
+<p>If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*union' href='./../Overviews/Methods.html#union'>union</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points', generated by the union of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*union_i' href='./../Overviews/Methods.html#union_i'>union_i</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals', generated by the union of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*union_o' href='./../Overviews/Methods.html#union_o'>union_o</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points' with offsets, generated by the union of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating generators and integer offsets plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*union_oi' href='./../Overviews/Methods.html#union_oi'>union_oi</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals' with offsets, generated by the union of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating generators and integer offsets plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*sect' href='./../Overviews/Methods.html#sect'>sect</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points', generated by the intersection of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*sect_i' href='./../Overviews/Methods.html#sect_i'>sect_i</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals', generated by the intersection of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*sect_o' href='./../Overviews/Methods.html#sect_o'>sect_o</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points' with offsets, generated by the intersection of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating generators and integer offsets plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*sect_oi' href='./../Overviews/Methods.html#sect_oi'>sect_oi</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals' with offsets, generated by the intersection of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating generators and integer offsets plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*symdif' href='./../Overviews/Methods.html#symdif'>symdif</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points', generated by the symmetrical difference of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*symdif_i' href='./../Overviews/Methods.html#symdif_i'>symdif_i</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals', generated by the symmetrical difference of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*symdif_o' href='./../Overviews/Methods.html#symdif_o'>symdif_o</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points' with offsets, generated by the symmetrical difference of sets integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating generators and integer offsets plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*symdif_oi' href='./../Overviews/Methods.html#symdif_oi'>symdif_oi</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals' with offsets, generated by the symmetrical difference of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating generators and integer offsets plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*dif' href='./../Overviews/Methods.html#dif'>dif</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points', generated by the difference of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*dif_i' href='./../Overviews/Methods.html#dif_i'>dif_i</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals', generated by the difference of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*dif_o' href='./../Overviews/Methods.html#dif_o'>dif_o</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points' with offsets, generated by the difference of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating generators and integer offsets plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*dif_oi' href='./../Overviews/Methods.html#dif_oi'>dif_oi</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals' with offsets, generated by the difference of sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating generators and integer offsets plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*limit' href='./../Overviews/Methods.html#limit'>limit</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Sieve.</span><a class='method-name' name='*limit' href='./../Overviews/Methods.html#limit'>limit</a> = value</h3>
+<div class='method'>
+<p>Get the global limit of Class Sieve. Set the global limit of Class Sieve to an integer value.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-union' href='./../Overviews/Methods.html#union'>union</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points', generated by the union of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-|' href='./../Overviews/Methods.html#|'>|</a>(<span class='argstr'>gen</span>)</h3>
+<div class='method'>
+<p>Binary operator for instance method <strong>union</strong>. Creates a new Sieve object in mode 'points', generated by the union of the receiver and a generator.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>gen<td class='argumentdesc'>
+<p>A generator. Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. Returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-union_i' href='./../Overviews/Methods.html#union_i'>union_i</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals', generated by the union of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-|*' href='./../Overviews/Methods.html#|*'>|*</a>(<span class='argstr'>gen</span>)</h3>
+<div class='method'>
+<p>Binary operator for instance method <strong>union_i</strong>. Creates a new Sieve object in mode 'intervals', generated by the union of the receiver and a generator.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>gen<td class='argumentdesc'>
+<p>A generator. Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. Integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-union_o' href='./../Overviews/Methods.html#union_o'>union_o</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points' with offsets, generated by the union of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating integer offsets and generators plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-union_oi' href='./../Overviews/Methods.html#union_oi'>union_oi</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals' with offsets, generated by the union of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating integer offsets and generators plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sect' href='./../Overviews/Methods.html#sect'>sect</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points', generated by the intersection of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-&' href='./../Overviews/Methods.html#&amp;'>&amp;</a>(<span class='argstr'>gen</span>)</h3>
+<div class='method'>
+<p>Binary operator for instance method <strong>sect</strong>. Creates a new Sieve object in mode 'points', generated by the intersection of the receiver and a generator.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>gen<td class='argumentdesc'>
+<p>A generator. Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. Returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sect_i' href='./../Overviews/Methods.html#sect_i'>sect_i</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals', generated by the intersection of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-&*' href='./../Overviews/Methods.html#&amp;*'>&amp;*</a>(<span class='argstr'>gen</span>)</h3>
+<div class='method'>
+<p>Binary operator for instance method <strong>sect_i</strong>. Creates a new Sieve object in mode 'intervals', generated by the intersection of the receiver and a generator.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>gen<td class='argumentdesc'>
+<p>A generator. Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. Integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sect_o' href='./../Overviews/Methods.html#sect_o'>sect_o</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points' with offsets, generated by the intersection of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating integer offsets and generators plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sect_oi' href='./../Overviews/Methods.html#sect_oi'>sect_oi</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals' with offsets, generated by the intersection of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating integer offsets and generators plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-symdif' href='./../Overviews/Methods.html#symdif'>symdif</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points', generated by the symmetrical difference of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='---' href='./../Overviews/Methods.html#--'>--</a>(<span class='argstr'>gen</span>)</h3>
+<div class='method'>
+<p>Binary operator for instance method <strong>symdif</strong>. Creates a new Sieve object in mode 'points', generated by the symmetric difference of the receiver and a generator.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>gen<td class='argumentdesc'>
+<p>A generator. Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. Returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-symdif_i' href='./../Overviews/Methods.html#symdif_i'>symdif_i</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals', generated by the symmetrical difference of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='---*' href='./../Overviews/Methods.html#--*'>--*</a>(<span class='argstr'>gen</span>)</h3>
+<div class='method'>
+<p>Binary operator for instance method <strong>symdif_i</strong>. Creates a new Sieve object in mode 'intervals', generated by the symmetric difference of the receiver and a generator.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>gen<td class='argumentdesc'>
+<p>A generator. Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. Integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-symdif_o' href='./../Overviews/Methods.html#symdif_o'>symdif_o</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points' with offsets, generated by the symmetrical difference of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating integer offsets and generators plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-symdif_oi' href='./../Overviews/Methods.html#symdif_oi'>symdif_oi</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals' with offsets, generated by the symmetrical difference of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating integer offsets and generators plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals are collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dif' href='./../Overviews/Methods.html#dif'>dif</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points', generated by the difference of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='--' href='./../Overviews/Methods.html#-'>-</a>(<span class='argstr'>gen</span>)</h3>
+<div class='method'>
+<p>Binary operator for instance method <strong>dif</strong>. Creates a new Sieve object in mode 'points', generated by the difference of the receiver and a generator.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>gen<td class='argumentdesc'>
+<p>A generator. Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. Returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dif_i' href='./../Overviews/Methods.html#dif_i'>dif_i</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals', generated by the difference of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Generators and an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='--*' href='./../Overviews/Methods.html#-*'>-*</a>(<span class='argstr'>gen</span>)</h3>
+<div class='method'>
+<p>Binary operator for instance method <strong>dif_i</strong>. Creates a new Sieve object in mode 'intervals', generated by the difference of the receiver and a generator.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>gen<td class='argumentdesc'>
+<p>A generator. Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. Integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dif_o' href='./../Overviews/Methods.html#dif_o'>dif_o</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'points' with offsets, generated by the difference of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating integer offsets and generators plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce zero and its positive multiples. If no limit is passed, returned integers might go up to default limit 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dif_oi' href='./../Overviews/Methods.html#dif_oi'>dif_oi</a>( <span class='argstr'>... data</span>)</h3>
+<div class='method'>
+<p>Creates a new Sieve object in mode 'intervals' with offsets, generated by the difference of the receiver and sets of integers.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... data<td class='argumentdesc'>
+<p>Alternating integer offsets and generators plus an optional integer limit, wrapped into a Ref, which is included when reached.  Allowed generators: Integers, Streams or Patterns producing intervals or Sieves itself. Integers and Stream/Pattern output must be strictly positive.  Integers as generators produce constant intervals. If no limit is passed, integer intervals might be collected up to default summation limit of 65536.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plot' href='./../Overviews/Methods.html#plot'>plot</a></h3>
+<div class='method'>
+<p>Plot the Sieve's list.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-size' href='./../Overviews/Methods.html#size'>size</a></h3>
+<div class='method'>
+<p>The Sieve's list size.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-toPoints' href='./../Overviews/Methods.html#toPoints'>toPoints</a></h3>
+<div class='method'>
+<p>Convert the Sieve to mode 'points' and set first point to offset.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-toIntervals' href='./../Overviews/Methods.html#toIntervals'>toIntervals</a></h3>
+<div class='method'>
+<p>Convert the Sieve to mode 'intervals' and set offset to first point.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-shift' href='./../Overviews/Methods.html#shift'>shift</a>(<span class='argstr'>addOffset</span>)</h3>
+<div class='method'>
+<p>Shift the Sieve's list by <strong>addOffset</strong>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>addOffset<td class='argumentdesc'>
+<p>An Integer.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='->>' href='./../Overviews/Methods.html#&gt;&gt;'>&gt;&gt;</a>(<span class='argstr'>addOffset</span>)</h3>
+<div class='method'>
+<p>Binary operator for instance method <strong>shift</strong>. Shift the Sieve's list by <strong>addOffset</strong>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>addOffset<td class='argumentdesc'>
+<p>An Integer.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-shiftTo' href='./../Overviews/Methods.html#shiftTo'>shiftTo</a>(<span class='argstr'>targetOffset</span>)</h3>
+<div class='method'>
+<p>Shift the Sieve's list to <strong>targetOffset</strong>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>targetOffset<td class='argumentdesc'>
+<p>An Integer.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='->>!' href='./../Overviews/Methods.html#&gt;&gt;!'>&gt;&gt;!</a>(<span class='argstr'>targetOffset</span>)</h3>
+<div class='method'>
+<p>Binary operator for instance method <strong>shiftTo</strong>. Shift the Sieve's list to <strong>targetOffset</strong>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>targetOffset<td class='argumentdesc'>
+<p>An Integer.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-shiftToZero' href='./../Overviews/Methods.html#shiftToZero'>shiftToZero</a></h3>
+<div class='method'>
+<p>Shift the Sieve's list to offset zero.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-weakCopy' href='./../Overviews/Methods.html#weakCopy'>weakCopy</a></h3>
+<div class='method'>
+<p>Returns a new Sieve with same list object.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-copy' href='./../Overviews/Methods.html#copy'>copy</a></h3>
+<div class='method'>
+<p>Returns a new Sieve with copied list object.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-copyWith' href='./../Overviews/Methods.html#copyWith'>copyWith</a>(<span class='argstr'>seqCollection</span>, <span class='argstr'>withCheck: true</span>)</h3>
+<div class='method'>
+<p>Takes over mode and offset from receiver and passes an appropriate SequenceableCollection.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>seqCollection<td class='argumentdesc'>
+<p>SequenceableCollection.<tr><td class='argumentname'>withCheck<td class='argumentdesc'>
+<p>Boolean. Determines if <strong>seqCollection</strong> is checked according to mode. Defaults to true.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-copyApplyTo' href='./../Overviews/Methods.html#copyApplyTo'>copyApplyTo</a>(<span class='argstr'>operator</span>, <span class='argstr'>withCheck: true</span>)</h3>
+<div class='method'>
+<p>Apply operator (Symbol of method or Function) to the Sieve's list and pass the result to a new Sieve with copied mode and offset.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>operator<td class='argumentdesc'>
+<p>Symbol of method or Function.<tr><td class='argumentname'>withCheck<td class='argumentdesc'>
+<p>Boolean. Determines if result of the operation is checked according to mode. Defaults to true.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-==' href='./../Overviews/Methods.html#=='>==</a>(<span class='argstr'>that</span>)</h3>
+<div class='method'>
+<p>Equality check. Sieves of different mode are equal iff the lists resulting from conversion are equal.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>that<td class='argumentdesc'>
+<p>Object to compare.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-segmentGreaterEqual' href='./../Overviews/Methods.html#segmentGreaterEqual'>segmentGreaterEqual</a>(<span class='argstr'>lo</span>)</h3>
+<div class='method'>
+<p>Returns a new Sieve of mode 'points' with Integers greater than or equal <strong>lo</strong>. <h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>lo<td class='argumentdesc'>
+<p>Integer.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='->=!' href='./../Overviews/Methods.html#&gt;=!'>&gt;=!</a>(<span class='argstr'>lo</span>)</h3>
+<div class='method'>
+<p>Binary operator for <strong>segmentGreaterEqual</strong>. <h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>lo<td class='argumentdesc'>
+<p>Integer.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-segmentGreater' href='./../Overviews/Methods.html#segmentGreater'>segmentGreater</a>(<span class='argstr'>lo</span>)</h3>
+<div class='method'>
+<p>Returns a new Sieve of mode 'points' with Integers greater than <strong>lo</strong>. <h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>lo<td class='argumentdesc'>
+<p>Integer.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='->!' href='./../Overviews/Methods.html#&gt;!'>&gt;!</a>(<span class='argstr'>lo</span>)</h3>
+<div class='method'>
+<p>Binary operator for <strong>segmentGreater</strong>. <h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>lo<td class='argumentdesc'>
+<p>Integer.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-segmentLessEqual' href='./../Overviews/Methods.html#segmentLessEqual'>segmentLessEqual</a>(<span class='argstr'>hi</span>)</h3>
+<div class='method'>
+<p>Returns a new Sieve of mode 'points' with Integers less than or equal <strong>hi</strong>. <h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>hi<td class='argumentdesc'>
+<p>Integer.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-<=!' href='./../Overviews/Methods.html#&lt;=!'>&lt;=!</a>(<span class='argstr'>hi</span>)</h3>
+<div class='method'>
+<p>Binary operator for <strong>segmentLessEqual</strong>. <h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>hi<td class='argumentdesc'>
+<p>Integer.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-segmentLess' href='./../Overviews/Methods.html#segmentLess'>segmentLess</a>(<span class='argstr'>hi</span>)</h3>
+<div class='method'>
+<p>Returns a new Sieve of mode 'points' with Integers less than <strong>hi</strong>. <h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>hi<td class='argumentdesc'>
+<p>Integer.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-<!' href='./../Overviews/Methods.html#&lt;!'>&lt;!</a>(<span class='argstr'>hi</span>)</h3>
+<div class='method'>
+<p>Binary operator for <strong>segmentLess</strong>. <h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>hi<td class='argumentdesc'>
+<p>Integer.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-segmentBetweenEqual' href='./../Overviews/Methods.html#segmentBetweenEqual'>segmentBetweenEqual</a>(<span class='argstr'>lo</span>, <span class='argstr'>hi</span>)</h3>
+<div class='method'>
+<p>Returns a new Sieve of mode 'points' with Integers greater than or equal <strong>lo</strong> and less than or equal <strong>hi</strong>.  This method is more efficient than applying <strong>segmentGreaterEqual</strong> plus <strong>segmentLessEqual</strong>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>lo<td class='argumentdesc'>
+<p>Integer.<tr><td class='argumentname'>hi<td class='argumentdesc'>
+<p>Integer.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-<>=!' href='./../Overviews/Methods.html#&lt;&gt;=!'>&lt;&gt;=!</a>(<span class='argstr'>bounds</span>)</h3>
+<div class='method'>
+<p>Binary operator for <strong>segmentBetweenEqual</strong>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bounds<td class='argumentdesc'>
+<p>Must be an array with integers lo and hi.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-segmentBetween' href='./../Overviews/Methods.html#segmentBetween'>segmentBetween</a>(<span class='argstr'>lo</span>, <span class='argstr'>hi</span>)</h3>
+<div class='method'>
+<p>Returns a new Sieve of mode 'points' with Integers greater than <strong>lo</strong> and less than <strong>hi</strong>.  This method is more efficient than applying <strong>segmentGreater</strong> plus <strong>segmentLess</strong>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>lo<td class='argumentdesc'>
+<p>Integer.<tr><td class='argumentname'>hi<td class='argumentdesc'>
+<p>Integer.</table></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-<>!' href='./../Overviews/Methods.html#&lt;&gt;!'>&lt;&gt;!</a>(<span class='argstr'>bounds</span>)</h3>
+<div class='method'>
+<p>Binary operator for <strong>segmentBetween</strong>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bounds<td class='argumentdesc'>
+<p>Must be an array with integers lo and hi.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-checkSymmetricPeriods' href='./../Overviews/Methods.html#checkSymmetricPeriods'>checkSymmetricPeriods</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Sieves/periods.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Sieves/periods.sc</a></div>
+<div class='method'>
+<p>Checks the list of a Sieve for symmetric periods and returns an array <strong>[periods, symmetries, completions]</strong>, where periods is the clumped list of <strong>periods</strong>, <strong>symmetries</strong> a corresponding array of Symbols and <strong>completions</strong> a corresponding array of Booleans, indicating if periods are complete. <strong>periods</strong> can contains Symbols <strong>'sym'</strong>, <strong>'asym'</strong>, <strong>'quasisym'</strong> and <strong>'identic'</strong>.  See <a href="./../Tutorials/Sieves_and_Psieve_patterns.html#3b">Sieves and Psieve patterns: 3b</a> for a characterisation of these types. It is assumed that the receiver has a periodic list, changes between periodic and aperiodic segments are not detected, so also aperiodic prefixes of periodic lists.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-checkCharacteristicPeriod' href='./../Overviews/Methods.html#checkCharacteristicPeriod'>checkCharacteristicPeriod</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Sieves/periods.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Sieves/periods.sc</a></div>
+<div class='method'>
+<p>Checks the first complete period based on the data returned by <strong>checkSymmetricPeriods</strong>. It returns an array <strong>[characteristicPeriod, offset, oddEven, symmetry]</strong>, where <strong>characteristicPeriod</strong> denotes the first complete period, <strong>offset</strong> the index at which it starts in the receiver's list, <strong>oddEven</strong> one of the Symbols 'odd' and 'even' and <strong>symmetry</strong> the  symmetry type as in <strong>checkSymmetricPeriods</strong>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plotCharacteristicPeriod' href='./../Overviews/Methods.html#plotCharacteristicPeriod'>plotCharacteristicPeriod</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Sieves/periods.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Sieves/periods.sc</a></div>
+<div class='method'>
+<p>Plots the characteristic period returned by <strong>checkCharacteristicPeriod</strong>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-list' href='./../Overviews/Methods.html#list'>list</a></h3>
+<div class='method'>
+<p>Get the Sieve's list.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-offset' href='./../Overviews/Methods.html#offset'>offset</a></h3>
+<div class='method'>
+<p>Get the Sieve's offset.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mode' href='./../Overviews/Methods.html#mode'>mode</a></h3>
+<div class='method'>
+<p>Get the Sieve's mode.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='Examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// instantiation with 'new'
+
+Sieve.new(1000)
+
+Sieve.new(4, 20)
+
+Sieve.new_i(4, 20)
+
+Sieve.new_o(4, 1, 20)
+
+Sieve.new_oi(4, 1, 20)
+
+
+
+// instantiation with union
+// collecting multiples resp. shifted multiples
+// limit must be wrapped into a Ref object
+
+Sieve.union(4, 7, `20)
+
+Sieve.union_i(4, 7, `20)
+
+Sieve.union_o(4, 1, 7, -1, `20)
+
+Sieve.union_oi(4, 1, 7, -1, `20)
+
+
+
+// instantiation with intersection
+// collecting least common multiples (lcms) resp. shifted lcms
+
+Sieve.sect(4, 3, `30)
+
+Sieve.sect_i(4, 3, `30)
+
+Sieve.sect_o(4, -1, 3, 0, `30)
+
+Sieve.sect_oi(4, -1, 3, 0, `30)
+
+
+
+// instantiation with symmetrical difference
+// equals union without intersection, thus multiples without lcms
+
+Sieve.symdif(4, 3, `30)
+
+Sieve.symdif_i(4, 3, `30)
+
+Sieve.symdif_o(4, -1, 3, 0, `30)
+
+Sieve.symdif_oi(4, -1, 3, 0, `30)
+
+
+// all take more arguments
+
+Sieve.union(4, 5, 7, `30)
+
+Sieve.symdif(4, 5, 7, `30)
+
+
+
+// difference is not symmetrical, but subtrahends can be swapped
+
+Sieve.dif(4, 3, 7, `30)
+
+Sieve.dif(3, 4, 7, `30)
+
+Sieve.dif(3, 7, 4, `30)
+
+
+
+// corresponding instance methods and its binary operators
+
+a = Sieve(4, 30);
+
+b = Sieve(3, 30);
+
+a.union(b)
+
+a|b
+
+a.union_i(b)
+
+a|*b
+
+
+// here first arg is offset of receiver
+
+a.union_o(0, b, 100)
+
+a.union_oi(0, b, 100)
+
+
+a.sect(8)
+
+a &amp; 8
+
+a.sect_i(8)
+
+a &amp;* 8
+
+
+a.sect_o(1, b, 5)
+
+a.sect_oi(1, b, 5)
+
+
+a.symdif(b)
+
+a -- b
+
+a.symdif_i(b)
+
+a --* b
+
+
+a.dif(b)
+
+a - b
+
+a.dif_i(b)
+
+a -* b</pre>
+
+<p>For conversion, segmentation and transformation examples see <a href="./../Tutorials/Sieves_and_Psieve_patterns.html">Sieves and Psieve patterns</a>.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/Sieve.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/Sieve.schelp</a><br>link::Classes/Sieve::<br></div></div></body></html>

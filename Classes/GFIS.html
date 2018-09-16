@@ -1,0 +1,484 @@
+<!doctype html><html lang='en'><head><title>GFIS | SuperCollider 3.9.3 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script>
+var helpRoot = './..';
+var scdoc_title = 'GFIS';
+var scdoc_sc_version = '3.9.3';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC();prettyPrint()'>
+<div id='toc'>
+<div id='toctitle'>GFIS:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'><li class='toc2'><a href='#References'>References</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*ar'>ar</a> </li>
+<li class='toc3'><a href='#*kr'>kr</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#Examples%201:%20The%20sine%20map%20model'>Examples 1: The sine map model</a></li>
+<ul class='toc'><li class='toc2'><a href='#Ex.%201a:%20Time-varying%20the%20factor%20r'>Ex. 1a: Time-varying the factor r</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%201b:%20Time-varying%20init%20values'>Ex. 1b: Time-varying init values</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%201c:%20Time-varying%20init%20values%20and%20factor%20r'>Ex. 1c: Time-varying init values and factor r</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%201d:%20Producing%20pitch%20by%20periodically%20oscillating%20parameters'>Ex. 1d: Producing pitch by periodically oscillating parameters</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Examples%202:%20The%20waveshaping%20model%20-%20iteration%20via%20buffered%20data'>Examples 2: The waveshaping model - iteration via buffered data</a></li>
+<ul class='toc'><li class='toc2'><a href='#Ex.%202a:%20Time-varying%20init%20values'>Ex. 2a: Time-varying init values</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%202b:%20Time-varying%20index%20deviation'>Ex. 2b: Time-varying index deviation</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%202c:%20Time-varying%20init%20values%20and%20index%20deviation'>Ex. 2c: Time-varying init values and index deviation</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Examples%203:%20GFIS%20as%20controller%20/%20modulator%20/%20engine%20for%20other%20synthesis'>Examples 3: GFIS as controller / modulator / engine for other synthesis</a></li>
+<ul class='toc'><li class='toc2'><a href='#Ex.%203a:%20FM'>Ex. 3a: FM</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%203b:%20Buffer%20modulation%20phase%20controlled%20by%20GFIS'>Ex. 3b: Buffer modulation phase controlled by GFIS</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%203c:%20Iterated%20GFIS'>Ex. 3c: Iterated GFIS</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Ex.%204:%20The%20nOut%20arg'>Ex. 4: The nOut arg</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Ex.%205:%20Comparison%20FIS%20/%20GFIS'>Ex. 5: Comparison FIS / GFIS</a></li>
+<ul class='toc'></ul></ul></div><div class='contents'>
+<div id='menubar'></div>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>Nonlinear'>Nonlinear</a></span>
+</div><h1>GFIS<span id='superclasses'> : <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>generalized functional iteration synthesis pseudo ugen</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Nonlinear/GFIS.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Nonlinear/GFIS.sc'>GFIS.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Guides/Introduction_to_miSCellaneous.html">Introduction to miSCellaneous</a>, <a href="./../Classes/Fb1.html">Fb1</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>The GFIS class implements functional iteration synthesis as pseudo ugen loosely based on the description by Agostino Di Scipio ([1], [2]), who used the abbreviation FIS and pointed to its rich potential. Yari Marimoto has written a plugin implementation of the main sine-map iteration model, which is included in the trnsnd quark under the same name. The GFIS pseudo ugen implementation allows settings which go beyond functional iteration in a strict sense. 
+<p>Principle idea of synthesis: given a parametrized nonlinear function, time-variance of init values and/or parameter sets with fixed iteration depth n can produce interesting waveforms. Due to the highly nonlinear dynamics involved, a great amount of unpredictability invites to experiment and exploration – depending on the characteristics of the time-varying signal, results span from brittle noisy textures to drones with rich spectral movements. The cited papers mainly describe strict iteration with sine and mention iterated waveshaping, but as the GFIS class implementation just takes an arbitrary Function it's easy to blur the concept, e.g. by altering the Function and/or the parametrization depending on the iteration level and/or applying iteration on multichannel signals, crossing their data etc. Also interesting – and probably not widely explored – is the use of functional iteration as controller / modulator / engine for other synthesis methods.<div class='warning'><span class='warninglabel'>WARNING:</span> Be careful with amplitudes, in general higher numbers of iteration produce signals with more energy and due to the nonlinear dynamics signals can suddenly become loud! Also go sure that your function doesn't allow blowup with iteration (this at least doesn't happen with the standard examples of the sine map model).</div><h3><a class='anchor' name='References'>References</a></h3>
+<ol>
+<li>Di Scipio, Agostino (1999). "Synthesis Of Environmental Sound Textures by Iterated Nonlinear Functions" in: Proceedings of the 2nd COST G-6 Workshop on Digital Audio Effects (DAFx99), NTNU, Trondheim, December 9-11, 1999.<li>Di Scipio, Agostino (2001). "Iterated Nonlinear Functions as a Sound-Generating Engine" Leonardo, Vol. 34, No. 3 (2001), pp. 249-254, MIT Press.</ol>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>GFIS.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>func</span>, <span class='argstr'>init</span>, <span class='argstr'>n: 1</span>, <span class='argstr'>nOut</span>, <span class='argstr'>leakDC: true</span>, <span class='argstr'>leakCoef: 0.995</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>Function used to establish the iteration by applying it <strong>n</strong> times at build time of the synthdef graph. The Function should take two arguments: the signal and an optional index. It should return the signal used for iteration. The signal can be multichannel, then the Function might take that into account and refer to single channels of the signal arg – but the Function might also ignore it and rely on multichannel expansion, see examples.
+<p>Note that UGens written within <strong>func</strong> are instantiated <strong>n</strong> times, this is usually not what you want for iterating the same parametrical function, with determined signals it's a waste of CPU and for random UGens the result is different. For the strict interpretation of FIS define the parameter signal outside and refer to it from inside <strong>func</strong>.<tr><td class='argumentname'>init<td class='argumentdesc'>
+<p>Init value for the iteration, can also be a SequenceableCollection.<tr><td class='argumentname'>n<td class='argumentdesc'>
+<p>Integer, the maximum iteration number, it determines how often the Function is used for building the synthdef graph, hence this value is not modulatable. <tr><td class='argumentname'>nOut<td class='argumentdesc'>
+<p>Integer or SequenceableCollection of Integers. An Integer determines the iteration level of the returned signal. That way you can define a maximum iteration number <strong>n</strong> and switch between lower ones, however <strong>n</strong> iterations are permanently calculated. In general switching will cause clicks, so this is an option for testing primarily. A SequenceableCollection of level indices will produce a multichannel signal, which in turn allows defining smooth transitions between signals of different iteration levels.<tr><td class='argumentname'>leakDC<td class='argumentdesc'>
+<p>Boolean. Determines if a LeakDC is applied to the output. If the parameter signal doesn't change (which can e.g. happen with a LFDNoise UGen) the result will in general be a DC offset, hence DC leaking is recommended. Defaults to true.<tr><td class='argumentname'>leakCoef<td class='argumentdesc'>
+<p>Number, the <strong>leakDC</strong> coefficient. Defaults to 0.995.</table></div><h3 class='method-code'><span class='method-prefix'>GFIS.</span><a class='method-name' name='*kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>func</span>, <span class='argstr'>init</span>, <span class='argstr'>n: 1</span>, <span class='argstr'>nOut</span>, <span class='argstr'>leakDC: true</span>, <span class='argstr'>leakCoef: 0.995</span>)</h3>
+<div class='method'></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>GFIS.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>outRate</span>, <span class='argstr'>func</span>, <span class='argstr'>init</span>, <span class='argstr'>n: 1</span>, <span class='argstr'>nOut</span>, <span class='argstr'>leakDC: true</span>, <span class='argstr'>leakCoef: 0.995</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='Examples%201:%20The%20sine%20map%20model'>Examples 1: The sine map model</a></h2>
+
+<p>These examples use an iterated sine map as described by Agostino Di Scipio. For the sine map sin(r * x) values of r varying between 2 and 4 are interesting. Driven by LFNoise parametrizations as in the first examples we get noise textures.<pre class='code prettyprint lang-sc'>(
+s = Server.local;
+Server.default = s;
+s.boot;
+)</pre>
+
+<p><a class='anchor' name='Ex.%201a'>&nbsp;</a><h3><a class='anchor' name='Ex.%201a:%20Time-varying%20the%20factor%20r'>Ex. 1a: Time-varying the factor r</a></h3>
+<pre class='code prettyprint lang-sc'>(
+y = {
+    var r = LFDNoise3.ar(10).range(3.5, 4);
+    GFIS.ar({ |x| sin(r * x) }, 0.3, 9) * 0.1 ! 2
+}.play
+)
+
+y.release
+
+
+// this is not "classical" FIS:
+// for each iteration a different parametrization is taken !
+// As LFDNoise UGens aren't coupled, pulsations are less unique
+
+(
+y = {
+    GFIS.ar({ |x| sin(LFDNoise3.ar(10).range(3.5, 4) * x) }, 0.3, 9) * 0.1 ! 2
+}.play
+)
+
+y.release
+
+
+
+// less iterations
+
+(
+y = {
+    var r = LFDNoise3.ar(10).range(3.5, 4);
+    GFIS.ar({ |x| sin(r * x) }, 0.3, 7) * 0.1 ! 2
+}.play
+)
+
+y.release
+
+
+
+// different init value
+
+(
+y = {
+    var r = LFDNoise3.ar(10).range(3.5, 4);
+    GFIS.ar({ |x| sin(r * x) }, 0.85, 7) * 0.1 ! 2
+}.play
+)
+
+y.release
+
+
+
+// higher iteration gives sections with more high frequencies in the spectrum
+// even higher numbers soon lead to (interrupted) white noise
+
+(
+y = {
+    var r = LFDNoise3.ar(3).range(3.5, 4);
+    GFIS.ar({ |x| sin(r * x) }, 0.3, 12) * 0.03 ! 2
+}.play
+)
+
+y.release
+
+
+// higher iteration numbers can partially be "equilibrated" with lower r
+// this leads to different sounds, here a more "airy" noise
+
+(
+y = {
+    var r = LFDNoise3.ar(7).range(2.9, 3.1);
+    GFIS.ar({ |x| sin(r * x) }, 0.3, 15) * 0.1 ! 2
+}.play
+)
+
+y.release
+
+
+// granular-like noise burst textures
+
+(
+y = {
+    var r = LFDNoise3.ar(50).range(2.5, 3);
+    GFIS.ar({ |x| sin(r * x) }, 0.3, 15) * 0.1 ! 2
+}.play
+)
+
+y.release</pre>
+
+<p><a class='anchor' name='Ex.%201b'>&nbsp;</a><h3><a class='anchor' name='Ex.%201b:%20Time-varying%20init%20values'>Ex. 1b: Time-varying init values</a></h3>
+<pre class='code prettyprint lang-sc'>// mono
+
+(
+y = {
+    var i = LFDNoise3.ar(7).range(0.2, 0.9);
+    GFIS.ar({ |x| sin(3.2 * x) }, i, 10) * 0.1 ! 2
+}.play
+)
+
+y.release
+
+
+// stereo init is propagated to a stereo signal
+
+(
+y = {
+    var i = LFDNoise3.ar(7).range(0.2, 0.9) * [1, 1.01];
+    GFIS.ar({ |x| sin(3.2 * x) }, i, 10) * 0.1
+}.play
+)
+
+y.release</pre>
+
+<p><a class='anchor' name='Ex.%201c'>&nbsp;</a><h3><a class='anchor' name='Ex.%201c:%20Time-varying%20init%20values%20and%20factor%20r'>Ex. 1c: Time-varying init values and factor r</a></h3>
+<pre class='code prettyprint lang-sc'>(
+y = {
+    var i = LFDNoise3.ar(7).range(0.2, 0.9) * [1, 1.01];
+    var r = LFDNoise3.ar(2).range(3.2, 3.6) * [1, 1.01];
+    GFIS.ar({ |x| sin(r * x) }, i, 9) * 0.1
+}.play
+)
+
+y.release</pre>
+
+<p><a class='anchor' name='Ex.%201d'>&nbsp;</a><h3><a class='anchor' name='Ex.%201d:%20Producing%20pitch%20by%20periodically%20oscillating%20parameters'>Ex. 1d: Producing pitch by periodically oscillating parameters</a></h3>
+<pre class='code prettyprint lang-sc'>// variants of phase glitter
+// note that here again the "lazy" FIS with different oscillators per iteration is used
+
+(
+y = {
+    var osc = SinOsc.ar(30);
+    GFIS.ar({ |x| sin((osc + LFDNoise3.ar(0.15)).linlin(-2, 2, 3.2, 4) * x) }, [0.5, 0.505], 9) * 0.1
+}.play
+)
+
+y.release
+
+(
+y = {
+    var osc = SinOsc.ar([30, 30.5]);
+    GFIS.ar({ |x| sin((osc + LFDNoise3.ar(0.15)).linlin(-2, 2, 3.2, 4) * x) }, 0.5, 9) * 0.1
+}.play
+)
+
+y.release
+
+
+(
+y = {
+    var osc = SinOsc.ar([30, 30.5]);
+    GFIS.ar({ |x| sin((osc + LFDNoise3.ar(0.15)).linlin(-2, 2, 3.2, 4) * x) }, [0.5, 0.505], 9) * 0.1
+}.play
+)
+
+y.release
+
+
+// harmonics as different oscillation frequencies per iteration
+
+(
+y = {
+    var oscMod = SinOsc.ar(0.1).range(30.01, 30.3);
+    GFIS.ar({ |x, i| 
+        sin((SinOsc.ar([30, oscMod] * (i+1)) + LFDNoise3.ar(0.15)).linlin(-2, 2, 3, 4) * x) 
+    }, [0.5, 0.502], 7) * 0.1
+}.play
+)
+
+y.release
+
+
+
+// Pulse as oscillator
+
+(
+y = {
+    var factors = Demand.ar(
+        TDuty.ar(Dxrand([4, 5, 7], inf)), 
+        0, 
+        Dseq([Dseq([1.3, 1.4], 2), 0.5], inf)
+    ).lag(0.7);
+    var osc = Pulse.ar([70, 70 * factors]).lag(0.001);
+    LPF.ar(
+        GFIS.ar({ |x| 
+            sin((osc + LFDNoise3.ar(0.15)).linlin(-2, 2, 3.2, 4) * x) 
+        }, [0.5, 0.505], 9) * 0.1,
+        9000
+    )
+}.play
+)
+
+
+y.release</pre>
+
+<p><a class='anchor' name='Ex.%202'>&nbsp;</a><h2><a class='anchor' name='Examples%202:%20The%20waveshaping%20model%20-%20iteration%20via%20buffered%20data'>Examples 2: The waveshaping model - iteration via buffered data</a></h2>
+<pre class='code prettyprint lang-sc'>// a Buffer can be filled with an arbitrary mathematical function or audio data
+
+// load audio
+
+b = Buffer.read(s, Platform.miSCellaneousDirs[0] +/+ "Sounds" +/+ "kitchen_sounds_1.wav");
+
+
+// load to array
+
+b.loadToFloatArray(action: { |array| a = array; "done".postln });
+
+
+// take short snippet, normalize between 0 and 1
+// that's most practical when we map to buffer index later on
+
+// the sound of the snippet is quite irrelevant
+// more oscillations in general produce more noise with iteration
+// start trying with sine-like forms
+
+d = a[3150..3300].normalize;
+
+d.plot;
+
+
+// fill new buffer for iteration
+
+c = Buffer.loadCollection(s, d)</pre>
+
+<p><a class='anchor' name='Ex.%202a'>&nbsp;</a><h3><a class='anchor' name='Ex.%202a:%20Time-varying%20init%20values'>Ex. 2a: Time-varying init values</a></h3>
+<pre class='code prettyprint lang-sc'>// result of BufRd is used as index for the next BufRd
+// needs Buffer c prepared above
+
+(
+y = {
+    GFIS.ar(
+        { |x| BufRd.ar(1, c, c.numFrames * x) },
+        (LFDNoise3.ar(3) * [1, 1.1]).range(0.5, 0.51), 7
+    ) * 0.2
+}.play
+)
+
+y.release</pre>
+
+<p><a class='anchor' name='Ex.%202b'>&nbsp;</a><h3><a class='anchor' name='Ex.%202b:%20Time-varying%20index%20deviation'>Ex. 2b: Time-varying index deviation</a></h3>
+<pre class='code prettyprint lang-sc'>// needs Buffer c prepared above
+
+(
+y = {
+    var add = LFDNoise3.ar(0.3) * [0.05, 0.0505];
+    GFIS.ar(
+        { |x| BufRd.ar(1, c, c.numFrames * (x + add)) }, 
+        0.5, 7
+    ) * 0.2
+}.play
+)
+
+y.release</pre>
+
+<p><a class='anchor' name='Ex.%202c'>&nbsp;</a><h3><a class='anchor' name='Ex.%202c:%20Time-varying%20init%20values%20and%20index%20deviation'>Ex. 2c: Time-varying init values and index deviation</a></h3>
+<pre class='code prettyprint lang-sc'>// needs Buffer c prepared above
+
+(
+y = {
+    var add = LFDNoise3.ar(0.3) * [0.05, 0.0505];
+    GFIS.ar(
+        { |x| BufRd.ar(1, c, c.numFrames * (x + add)) }, 
+        (LFDNoise3.ar(0.3) * [1, 1.01]).range(0.5, 0.505), 7
+    ) * 0.2
+}.play
+)
+
+y.release</pre>
+
+<p><a class='anchor' name='Ex.%203'>&nbsp;</a><h2><a class='anchor' name='Examples%203:%20GFIS%20as%20controller%20/%20modulator%20/%20engine%20for%20other%20synthesis'>Examples 3: GFIS as controller / modulator / engine for other synthesis</a></h2>
+
+<p>This can transfer the instable characteristics to other sound worlds.
+<p><a class='anchor' name='Ex.%203a'>&nbsp;</a><h3><a class='anchor' name='Ex.%203a:%20FM'>Ex. 3a: FM</a></h3>
+<pre class='code prettyprint lang-sc'>(
+y = {
+    var mod = GFIS.ar({ |x| sin(LFDNoise3.ar(1).range(2.9, 4) * x) }, 0.3, 7);
+    SinOsc.ar(mod * [50, 51] * 70 + 300) * LFDNoise3.ar(2).range(0.2, 0.05)
+}.play
+)
+
+y.release</pre>
+
+<p><a class='anchor' name='Ex.%203b'>&nbsp;</a><h3><a class='anchor' name='Ex.%203b:%20Buffer%20modulation%20phase%20controlled%20by%20GFIS'>Ex. 3b: Buffer modulation phase controlled by GFIS</a></h3>
+<pre class='code prettyprint lang-sc'>p = Platform.resourceDir +/+ "sounds/a11wlk01.wav";
+b = Buffer.read(s, p);
+
+(
+y = {
+    var pos = 0.5; // other pos offset will give totally different sounds
+    var osc = GFIS.ar({ |x| sin(LFDNoise3.ar(10).range(3.2, 4) * x) }, 0.3, 6) * 0.1;
+    // GFIS involves a LeakDC, but not BufRd
+    LeakDC.ar(BufRd.ar(1, b, b.numFrames * (osc * [0.0120, 0.0125] * 5 + pos), interpolation: 4)) * 0.1
+}.play
+)
+
+y.release</pre>
+
+<p><a class='anchor' name='Ex.%203c'>&nbsp;</a><h3><a class='anchor' name='Ex.%203c:%20Iterated%20GFIS'>Ex. 3c: Iterated GFIS</a></h3>
+<pre class='code prettyprint lang-sc'>// augmentation of nonlinearity:
+// GFIS itself used as time-varying control of another GFIS
+
+b = Buffer.read(s, Platform.miSCellaneousDirs[0] +/+ "Sounds" +/+ "kitchen_sounds_1.wav");
+
+// load to array and fill new buffer for iteration
+
+b.loadToFloatArray(action: { |array| a = array; "done".postln });
+
+d = a[3150..3300].normalize;
+
+c = Buffer.loadCollection(s, d);
+
+
+(
+y = {
+    var r = LFDNoise3.ar(3).range(2.7, 3.4);
+    var add = GFIS.ar({ |x| sin(r * x) }, 0.5, 3) * [0.05, 0.055];
+    GFIS.ar(
+        { |x| BufRd.ar(1, c, c.numFrames * (x + add)) }, 
+        0.5, 7
+    ) * 0.2
+}.play
+)
+
+y.release</pre>
+
+<p><a class='anchor' name='Ex.%204'>&nbsp;</a><h2><a class='anchor' name='Ex.%204:%20The%20nOut%20arg'>Ex. 4: The nOut arg</a></h2>
+<pre class='code prettyprint lang-sc'>// nOut allows for switching between iteration levels up to maximum n
+
+(
+y = {
+    |nOut = 10|
+    GFIS.ar({ |x| sin(LFDNoise1.ar(20).range(3, 3.5) * x) }, [0.2, 0.3], 10, nOut) * 0.1
+}.play
+)
+
+
+y.set(\nOut, 9)
+
+y.set(\nOut, 8)
+
+y.release
+
+
+// it can be passed an array of levels, 
+// the resulting multichannel signal can e.g. be used for crossfaded switching with DXMix
+
+// switch between 3 mono signals and double them
+
+(
+y = {
+    var src = GFIS.ar({ |x| sin(LFDNoise3.ar(30).range(3, 4) * x) }, 0.2, 9, [5, 7, 9]) * 0.1;
+    DXMix.ar(Dseq([0, 1, 2], inf), `src, fadeTime: 0.01, stepTime: 0.02, fadeMode: 1) ! 2
+}.play
+)
+
+y.release;
+
+// switch between 3 stereo signals
+
+(
+y = {
+    var src = GFIS.ar({ |x| sin(LFDNoise3.ar(30).range(3, 4) * x) }, [0.2, 0.21], 9, [5, 7, 9]) * 0.1;
+    DXMix.ar(Dseq([0, 1, 2], inf), `src, fadeTime: 0.01, stepTime: 0.02, fadeMode: 1)
+}.play
+)
+
+y.release;</pre>
+
+<p><a class='anchor' name='Ex.%205'>&nbsp;</a><h2><a class='anchor' name='Ex.%205:%20Comparison%20FIS%20/%20GFIS'>Ex. 5: Comparison FIS / GFIS</a></h2>
+
+<p> <pre class='code prettyprint lang-sc'>// FIS is contained in the trnsnd quark
+// first example of its helpfile
+
+{ FIS.ar(LinExp.ar(LFTri.ar(0.1), -1, 1, 1, 4), LFNoise2.ar(300).range(0, 1), 3, 0.1) }.play;
+
+// the same with GFIS requires definition of varying params outside func 
+ (
+y = {
+    var r = LinExp.ar(LFTri.ar(0.1), -1, 1, 1, 4);
+    var i = LFNoise2.ar(300).range(0, 1);
+    GFIS.ar({ |x| sin(r * x) }, i, 3, 3, false) * 0.1
+}.play
+)
+
+y.release
+
+// proof of concept, difference is silent as it should
+
+(
+z = {
+    var r = LinExp.ar(LFTri.ar(0.1), -1, 1, 1, 4);
+    var i = LFNoise2.ar(300).range(0, 1);
+    GFIS.ar({ |x| sin(r * x) }, i, 3, 3, false) * 0.1 - FIS.ar(r, i, 3, 0.1)
+}.play
+)
+
+z.release</pre>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/GFIS.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/GFIS.schelp</a><br>link::Classes/GFIS::<br></div></div></body></html>

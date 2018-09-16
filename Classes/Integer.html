@@ -64,7 +64,9 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-indexOfPrime'>indexOfPrime</a> </li>
 </ul><li class='toc2'><a href='#Misc'>Misc</a></li>
 <ul class='toc'><li class='toc3'><a href='#-pidRunning'>pidRunning</a> </li>
-</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc3'><a href='#-lcmByGcd'>lcmByGcd</a> </li>
+<li class='toc3'><a href='#-lcmByFactors'>lcmByFactors</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-*'>*</a> </li>
 <li class='toc3'><a href='#-+'>+</a> </li>
@@ -86,6 +88,7 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-controlFlag'>controlFlag</a> </li>
 <li class='toc3'><a href='#-differentialManchesterEncode'>differentialManchesterEncode</a> </li>
 <li class='toc3'><a href='#-differentialManchesterEncodeNegative'>differentialManchesterEncodeNegative</a> </li>
+<li class='toc3'><a href='#-enum'>enum</a> </li>
 <li class='toc3'><a href='#-exit'>exit</a> </li>
 <li class='toc3'><a href='#-fold'>fold</a> </li>
 <li class='toc3'><a href='#-generate'>generate</a> </li>
@@ -106,6 +109,7 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-optionFlag'>optionFlag</a> </li>
 <li class='toc3'><a href='#-schedBundle'>schedBundle</a> </li>
 <li class='toc3'><a href='#-shiftFlag'>shiftFlag</a> </li>
+<li class='toc3'><a href='#-toSieve'>toSieve</a> </li>
 <li class='toc3'><a href='#-wrap'>wrap</a> </li>
 </ul></ul></ul></div><div class='contents'>
 <div id='menubar'></div>
@@ -119,7 +123,8 @@ var scdoc_sc_version = '3.9.3';
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Math/Integer.sc' title='/usr/local/share/SuperCollider/SCClassLibrary/Common/Math/Integer.sc'>Integer.sc</a></div></div>
-<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>A 32 bit integer. Integer inherits most of its behaviour from its superclass.<div class='note'><span class='notelabel'>NOTE:</span> A 32 bit signed integer can represent values in the range -2147483648 to 2147483647. Adding up further returns in a wrapped result, so that and 2147483647+1= -2147483648. For a larger range, one can use <a href="./../Classes/Float.html">Float</a>, which is 64 bit and supports many (but not all) numerical methods that int does.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
@@ -285,7 +290,19 @@ p.pidRunning; // cat will stay alive
 ("kill" + p).unixCmd
 p.pidRunning;</pre>
 
-<p></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lcmByGcd' href='./../Overviews/Methods.html#lcmByGcd'>lcmByGcd</a>( <span class='argstr'>... args</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Sieves/lcmExtensions.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Sieves/lcmExtensions.sc</a></div>
+<div class='method'>
+<p>Calculates the least common multiple by using the greatest common divisor. This can avoid problems with large numbers. See <a href="./../Tutorials/Sieves_and_Psieve_patterns.html#4b">Sieves and Psieve patterns: 4b</a><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... args<td class='argumentdesc'>
+<p>Integers</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lcmByFactors' href='./../Overviews/Methods.html#lcmByFactors'>lcmByFactors</a>( <span class='argstr'>... args</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Sieves/lcmExtensions.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Sieves/lcmExtensions.sc</a></div>
+<div class='method'>
+<p>Calculates the least common multiple by prime factors. This can avoid problems with large numbers. Returns an array with lcm as first item, an array with prime factors of lcm as second item and an array of receiver's and all arguments' prime factors. See <a href="./../Tutorials/Sieves_and_Psieve_patterns.html#4b">Sieves and Psieve patterns: 4b</a><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... args<td class='argumentdesc'>
+<p>Integers</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-*' href='./../Overviews/Methods.html#*'>*</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-+' href='./../Overviews/Methods.html#+'>+</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
@@ -320,6 +337,8 @@ p.pidRunning;</pre>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redTools/RedDifferentialManchesterCode.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redTools/RedDifferentialManchesterCode.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-differentialManchesterEncodeNegative' href='./../Overviews/Methods.html#differentialManchesterEncodeNegative'>differentialManchesterEncodeNegative</a>(<span class='argstr'>numBits: 8</span>, <span class='argstr'>phase: 1</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redTools/RedDifferentialManchesterCode.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redTools/RedDifferentialManchesterCode.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-enum' href='./../Overviews/Methods.html#enum'>enum</a>(<span class='argstr'>pool</span>, <span class='argstr'>function: true</span>, <span class='argstr'>evalAtZero: false</span>, <span class='argstr'>type: 0</span>, <span class='argstr'>order: true</span>, <span class='argstr'>maxNum: inf</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Enumeration/extInteger.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Enumeration/extInteger.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-exit' href='./../Overviews/Methods.html#exit'>exit</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fold' href='./../Overviews/Methods.html#fold'>fold</a>(<span class='argstr'>lo</span>, <span class='argstr'>hi</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-generate' href='./../Overviews/Methods.html#generate'>generate</a>(<span class='argstr'>function</span>)</h3>
@@ -346,5 +365,7 @@ p.pidRunning;</pre>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Control/schedBundle.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Control/schedBundle.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-shiftFlag' href='./../Overviews/Methods.html#shiftFlag'>shiftFlag</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/extView.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/extView.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-toSieve' href='./../Overviews/Methods.html#toSieve'>toSieve</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Sieves/toSieve.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Sieves/toSieve.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-wrap' href='./../Overviews/Methods.html#wrap'>wrap</a>(<span class='argstr'>lo</span>, <span class='argstr'>hi</span>)</h3>
 <div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Integer.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Integer.schelp</a><br>link::Classes/Integer::<br></div></div></body></html>
