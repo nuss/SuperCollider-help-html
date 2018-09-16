@@ -1,0 +1,231 @@
+<!doctype html><html lang='en'><head><title>StoredList | SuperCollider 3.9.3 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script>
+var helpRoot = './..';
+var scdoc_title = 'StoredList';
+var scdoc_sc_version = '3.9.3';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC();prettyPrint()'>
+<div id='toc'>
+<div id='toctitle'>StoredList:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*boundsAround'>boundsAround</a> </li>
+<li class='toc3'><a href='#*verbose'>verbose</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-id'>id</a> </li>
+<li class='toc3'><a href='#-list'>list</a> </li>
+<li class='toc3'><a href='#-names'>names</a>  <a href='#-values'>values</a> </li>
+<li class='toc3'><a href='#-prettyList'>prettyList</a> </li>
+<li class='toc3'><a href='#-at'>at</a> </li>
+<li class='toc3'><a href='#-add'>add</a> </li>
+<li class='toc3'><a href='#-removeAt'>removeAt</a> </li>
+<li class='toc3'><a href='#-indexOf'>indexOf</a> </li>
+<li class='toc2'><a href='#Storage'>Storage</a></li>
+<ul class='toc'><li class='toc3'><a href='#-addToDisk'>addToDisk</a> </li>
+<li class='toc3'><a href='#-write'>write</a> </li>
+<li class='toc3'><a href='#-dir'>dir</a> </li>
+<li class='toc3'><a href='#-filename'>filename</a> </li>
+<li class='toc3'><a href='#-read'>read</a> </li>
+<li class='toc3'><a href='#-storePath'>storePath</a> </li>
+<li class='toc3'><a href='#-backupDir'>backupDir</a> </li>
+<li class='toc3'><a href='#-suffix'>suffix</a> </li>
+<li class='toc3'><a href='#-fileExt'>fileExt</a> </li>
+<li class='toc3'><a href='#-local'>local</a> </li>
+<li class='toc3'><a href='#-backup'>backup</a> </li>
+<li class='toc3'><a href='#-dirpath'>dirpath</a>  <a href='#-dirname'>dirname</a> </li>
+<li class='toc3'><a href='#-deleteDialog'>deleteDialog</a> </li>
+<li class='toc3'><a href='#-storeDialog'>storeDialog</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div class='contents'>
+<div id='menubar'></div>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Collection'>Collection</a></span>
+</div><h1>StoredList<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>store and recall named lists of settings in known locations</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/classes/StoredList.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/classes/StoredList.sc'>StoredList.sc</a></div><div id='related'>See also: <a href="./../Classes/ProxyPreset.html">ProxyPreset</a>, <a href="./../Classes/ProxyChainPreset.html">ProxyChainPreset</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A StoredList is typically used for storing settings to disk, and recalling them later. These are often parameter lists of processes like Ndefs, Pdefs, Tdefs. StoredList are used in PxChainPreset for now, and may be adapted for ProxyPreset as well.
+<p>First code examples:<pre class='code prettyprint lang-sc'>z = StoredList(\myTestID);
+
+// a storedList has these internal items:
+z.id.postcs; // this come from an ndef name
+z.list;
+
+// add two named settings:
+z.add(\base, [\amp, 0.25, \freq, 300]);
+z.add(\var1, [\amp, 0.50, \freq, 600]);
+
+// the current list
+z.list
+// or printed more readably
+z.prettyList
+
+// adding by an existing name replaces list at that name
+z.add(\base, [\amp, 0.25, \freq, 444]);
+z.add(\var1, [\amp, 0.50, \freq, 666]);
+z.prettyList
+
+// get names and values separately
+z.names
+z.values
+
+// access by index or name (or array)
+z.at(0)
+z.at(100) // nil outside index range
+z.at(\base); // by name
+z.at(\nope)  // nil when unknown name
+z.at([\base, 1, \nope]); // also by array, also mixed
+
+z.removeAt(\otto); // nil
+z.removeAt(4); // nil
+z.removeAt(0)  // removes base
+z.removeAt(\var1)
+z.list // empty now
+
+z.add(\base, [\amp, 0.25, \freq, 300]);
+z.add(\var1, [\amp, 0.50, \freq, 600]);
+
+/// storage to disk - by default, this is in Platform.userAppSupportDir
+z.write;
+// posts:
+StoredList('myTestID'): stored 2 settings at:
+"/Users/adc/Library/Application Support/SuperCollider/settings/myTestID.pxpreset.scd"
+
+z.filename
+z.dir
+z.storePath
+z.storePath.openOS
+
+// add more settings
+z.add(\base2, [\amp, 0.25, \freq, 444]);
+z.add(\var2, [\amp, 0.50, \freq, 666]);
+z.list.size;
+z.write;
+
+// the currently written settings:
+z.dir.openOS;
+// previous settings are always backed up here:
+z.backupDir.openOS;
+
+// a different storedList object with the same id
+// will read and store the same settings!
+y = StoredList(\myTestID);
+y.read;
+y.list;
+y.storePath == z.storePath
+y.prettyList;</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>StoredList.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>id</span>, <span class='argstr'>list</span>, <span class='argstr'>suffix: ".pxpreset"</span>)</h3>
+<div class='method'>
+<p>create a new storedList object, with<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>id<td class='argumentdesc'>
+<p>a symbol as id<tr><td class='argumentname'>list<td class='argumentdesc'>
+<p>an optional list of associations<tr><td class='argumentname'>suffix<td class='argumentdesc'>
+<p>a suffix used for storing as file</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>StoredList.</span><a class='method-name' name='*boundsAround' href='./../Overviews/Methods.html#boundsAround'>boundsAround</a>(<span class='argstr'>loc</span>, <span class='argstr'>winSize</span>, <span class='argstr'>flip: true</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>StoredList.</span><a class='method-name' name='*verbose' href='./../Overviews/Methods.html#verbose'>verbose</a></h3>
+<h3 class='method-code'><span class='method-prefix'>StoredList.</span><a class='method-name' name='*verbose' href='./../Overviews/Methods.html#verbose'>verbose</a> = value</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-id' href='./../Overviews/Methods.html#id'>id</a></h3>
+<div class='method'>
+<p>the id of the storedList</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-list' href='./../Overviews/Methods.html#list'>list</a></h3>
+<div class='method'>
+<p>the list of stored settings</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-names' href='./../Overviews/Methods.html#names'>names</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-values' href='./../Overviews/Methods.html#values'>values</a></h3>
+<div class='method'>
+<p>get names and values of stored settings separately</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prettyList' href='./../Overviews/Methods.html#prettyList'>prettyList</a></h3>
+<div class='method'>
+<p>readable post of list, as also used for storage</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>nameOrIndex</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>nameOrIndex<td class='argumentdesc'>
+<p>access items in the list by name, index or array of names/indices</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-add' href='./../Overviews/Methods.html#add'>add</a>(<span class='argstr'>name</span>, <span class='argstr'>setting</span>)</h3>
+<div class='method'>
+<p>add a setting to the list by name</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeAt' href='./../Overviews/Methods.html#removeAt'>removeAt</a>(<span class='argstr'>name</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>remoce a setting by name or index</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-indexOf' href='./../Overviews/Methods.html#indexOf'>indexOf</a>(<span class='argstr'>name</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>get index in list for given name</table></div><h3><a class='anchor' name='Storage'>Storage</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addToDisk' href='./../Overviews/Methods.html#addToDisk'>addToDisk</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addToDisk' href='./../Overviews/Methods.html#addToDisk'>addToDisk</a> = value</h3>
+<div class='method'>
+<p>get and set flag whether to write changes to disk</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-write' href='./../Overviews/Methods.html#write'>write</a>(<span class='argstr'>path</span>)</h3>
+<div class='method'>
+<p>write a setting to disk<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>an optional path - default is auto-created <code class='code prettyprint lang-sc'>storePath</code>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dir' href='./../Overviews/Methods.html#dir'>dir</a></h3>
+<div class='method'>
+<p>the directory in which to write and read. consists of : <code class='code prettyprint lang-sc'>dirpath +/+ dirname</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-filename' href='./../Overviews/Methods.html#filename'>filename</a></h3>
+<div class='method'>
+<p>the filename where settings list will be written and read. consists of : <code class='code prettyprint lang-sc'>&lt;id&gt;.&lt;suffix&gt;.&lt;fileExt&gt;</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-read' href='./../Overviews/Methods.html#read'>read</a>(<span class='argstr'>path</span>, <span class='argstr'>keep: false</span>, <span class='argstr'>doneFunc</span>)</h3>
+<div class='method'>
+<p>read settings list into the StoredList object.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>(optional) path of stored file<tr><td class='argumentname'>keep<td class='argumentdesc'>
+<p>flag whether to append or clear list first<tr><td class='argumentname'>doneFunc<td class='argumentdesc'>
+<p>action to perform when read successfully</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-storePath' href='./../Overviews/Methods.html#storePath'>storePath</a></h3>
+<div class='method'>
+<p>dir +/+ filename</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-backupDir' href='./../Overviews/Methods.html#backupDir'>backupDir</a></h3>
+<div class='method'>
+<p>the directory where to put backups</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-suffix' href='./../Overviews/Methods.html#suffix'>suffix</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-suffix' href='./../Overviews/Methods.html#suffix'>suffix</a> = value</h3>
+<div class='method'>
+<p>a suffix to append to the filename.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fileExt' href='./../Overviews/Methods.html#fileExt'>fileExt</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fileExt' href='./../Overviews/Methods.html#fileExt'>fileExt</a> = value</h3>
+<div class='method'>
+<p>the file extension to use for filename.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-local' href='./../Overviews/Methods.html#local'>local</a></h3>
+<div class='method'>
+<p>tell a StoredList to store locally.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-backup' href='./../Overviews/Methods.html#backup'>backup</a>(<span class='argstr'>path</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>move current stored file to backup folder; this happens automatically when saving.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dirpath' href='./../Overviews/Methods.html#dirpath'>dirpath</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dirpath' href='./../Overviews/Methods.html#dirpath'>dirpath</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dirname' href='./../Overviews/Methods.html#dirname'>dirname</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dirname' href='./../Overviews/Methods.html#dirname'>dirname</a> = value</h3>
+<div class='method'>
+<p>the constituents of <code class='code prettyprint lang-sc'>.dir</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-deleteDialog' href='./../Overviews/Methods.html#deleteDialog'>deleteDialog</a>(<span class='argstr'>loc</span>)</h3>
+<div class='method'>
+<p>open a dialog for deleting settings</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-storeDialog' href='./../Overviews/Methods.html#storeDialog'>storeDialog</a>(<span class='argstr'>name</span>, <span class='argstr'>newset</span>, <span class='argstr'>loc</span>)</h3>
+<div class='method'>
+<p>open a dialog for naming and storing a new setting</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// tests for store/delete
+z = StoredList(\myTestID);
+z.storeDialog('testName', [\asd -&gt; \xyz]);
+z.storeDialog('testName', [\asd -&gt; \xyz], 150@150);
+
+Button(nil, Rect(300, 300, 100, 100)).front.states_([["test"]])
+.action = { |bt| z.storeDialog('?', [\fgh -&gt; \uvw], bt.bounds.center) };
+
+Button(nil, Rect(300, 300, 100, 100)).front.states_([["test"]])
+.action = { |bt| z.deleteDialog(bt.bounds.center) };</pre>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/StoredList.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/StoredList.schelp</a><br>link::Classes/StoredList::<br></div></div></body></html>
