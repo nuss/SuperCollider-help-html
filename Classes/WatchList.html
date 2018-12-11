@@ -1,0 +1,220 @@
+<!doctype html><html lang='en'><head><title>WatchList | SuperCollider 3.9.3 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script>
+var helpRoot = './..';
+var scdoc_title = 'WatchList';
+var scdoc_sc_version = '3.9.3';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC();prettyPrint()'>
+<div id='toc'>
+<div id='toctitle'>WatchList:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#basic%20creation'>basic creation</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+</ul><li class='toc2'><a href='#convenience%20creation'>convenience creation</a></li>
+<ul class='toc'><li class='toc3'><a href='#*envir'>envir</a> </li>
+<li class='toc3'><a href='#*proxy'>proxy</a> </li>
+<li class='toc3'><a href='#*spaceAr'>spaceAr</a> </li>
+<li class='toc3'><a href='#*spaceKr'>spaceKr</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-list'>list</a> </li>
+<li class='toc3'><a href='#-object'>object</a> </li>
+<li class='toc3'><a href='#-getFunc'>getFunc</a> </li>
+<li class='toc3'><a href='#-keepGone'>keepGone</a> </li>
+<li class='toc3'><a href='#-update'>update</a> </li>
+<li class='toc3'><a href='#-skip'>skip</a> </li>
+<li class='toc3'><a href='#-clear'>clear</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div class='contents'>
+<div id='menubar'></div>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Classes'>Classes</a></span>
+</div><h1>WatchList<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>a dynamic list of items.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/WatchList.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/WatchList.sc'>WatchList.sc</a></div><div id='related'>See also: <a href="./../Classes/List.html">List</a>, <a href="./../Classes/ProxySpace.html">ProxySpace</a>, <a href="./../Classes/Ndef.html">Ndef</a>, <a href="./../Overviews/JITLib.html">JITLib</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A WatchList tracks dynamic collections of items and keeps them in a list in historical order. Examples of such collections include:
+<p>* keys in an Environment, e.g. a ProxySpace;
+<p>* parameter names (controlKeys) of processes like Ndef, Tdef, Pdef
+<p>The main argument for historical order is that this is more location-stable that e.g. alphabetic order. When adding processes and parameters by live coding, the locations of parameters on physical controllers remain the same (as long as there is space for more), creating less distraction than changing orders based on alphabet (or order of \control.kr calls when rewriting an Ndef).<div class='note'><span class='notelabel'>NOTE:</span> ToDo : selection of subsets by offset and size</div>
+<p>First code examples:<pre class='code prettyprint lang-sc'>// a dict to watch
+a = ();
+b = WatchList.envir(a);
+g = ParamGui(a, 8); g.orderedNames = b.list;
+h = ParamGui(a, 8).moveTo(100, 800);
+
+
+a.put(\x, 1);
+b.list;
+a.put(\y, 1);
+b.list;
+a.put(\a, 123); // changes order
+b.list;
+
+// WatchList keeps old items in list
+a.put(\x, nil);
+b.list;
+// ParamGui does not show empty keys yet, but should
+a.put(\x, [1, 2, 3]); // old order comes back
+a.put(\bc, [3, 2, 1]);</pre>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='basic%20creation'>basic creation</a></h3>
+<h3 class='method-code'><span class='method-prefix'>WatchList.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>object</span>, <span class='argstr'>getFunc</span>, <span class='argstr'>keepGone: true</span>, <span class='argstr'>skip: true</span>, <span class='argstr'>halo: true</span>)</h3>
+<div class='method'>
+<p>basic creation of a new WatchList.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>object<td class='argumentdesc'>
+<p>the object to watch<tr><td class='argumentname'>getFunc<td class='argumentdesc'>
+<p>the function fr getting a list of items from object<tr><td class='argumentname'>keepGone<td class='argumentdesc'>
+<p>not used yet: flag whether to keep or remove old names.<tr><td class='argumentname'>skip<td class='argumentdesc'>
+<p>flag whether to add a skipjack for watching<tr><td class='argumentname'>halo<td class='argumentdesc'>
+<p>flag whether to add watchlist to object halo</table></div><h3><a class='anchor' name='convenience%20creation'>convenience creation</a></h3>
+
+<p>create watchlists for some typical objects with proper getFuncs. arguments are the same as above minus getFunc: object, keepGone, skip, halo<h3 class='method-code'><span class='method-prefix'>WatchList.</span><a class='method-name' name='*envir' href='./../Overviews/Methods.html#envir'>envir</a>(<span class='argstr'>envir</span>, <span class='argstr'>keepGone: true</span>, <span class='argstr'>skip: true</span>, <span class='argstr'>halo: true</span>)</h3>
+<div class='method'>
+<p>for environments, gets keys</div><h3 class='method-code'><span class='method-prefix'>WatchList.</span><a class='method-name' name='*proxy' href='./../Overviews/Methods.html#proxy'>proxy</a>(<span class='argstr'>proxy</span>, <span class='argstr'>keepGone: true</span>, <span class='argstr'>skip: true</span>, <span class='argstr'>halo: true</span>)</h3>
+<div class='method'>
+<p>for nodeproxies, Ndef, Tdef, Pdef</div><h3 class='method-code'><span class='method-prefix'>WatchList.</span><a class='method-name' name='*spaceAr' href='./../Overviews/Methods.html#spaceAr'>spaceAr</a>(<span class='argstr'>space</span>, <span class='argstr'>keepGone: true</span>, <span class='argstr'>skip: true</span>, <span class='argstr'>halo: true</span>)</h3>
+<div class='method'>
+<p>for proxyspaces, gets ar proxies</div><h3 class='method-code'><span class='method-prefix'>WatchList.</span><a class='method-name' name='*spaceKr' href='./../Overviews/Methods.html#spaceKr'>spaceKr</a>(<span class='argstr'>space</span>, <span class='argstr'>keepGone: true</span>, <span class='argstr'>skip: true</span>, <span class='argstr'>halo: true</span>)</h3>
+<div class='method'>
+<p>for proxyspaces, gets ar proxies</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-list' href='./../Overviews/Methods.html#list'>list</a></h3>
+<div class='method'>
+<p>the list of items in order</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-object' href='./../Overviews/Methods.html#object'>object</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-object' href='./../Overviews/Methods.html#object'>object</a> = <span class='argstr'>obj</span></h3>
+<div class='method'>
+<p>get and set the object to watch</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getFunc' href='./../Overviews/Methods.html#getFunc'>getFunc</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getFunc' href='./../Overviews/Methods.html#getFunc'>getFunc</a> = value</h3>
+<div class='method'>
+<p>the func by which to ask the object for its items</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keepGone' href='./../Overviews/Methods.html#keepGone'>keepGone</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keepGone' href='./../Overviews/Methods.html#keepGone'>keepGone</a> = value</h3>
+<div class='method'>
+<p>(unused) flag whether to keep old names in list or not.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-update' href='./../Overviews/Methods.html#update'>update</a></h3>
+<div class='method'>
+<p>update the list</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-skip' href='./../Overviews/Methods.html#skip'>skip</a></h3>
+<div class='method'>
+<p>skipjack to update list automagically</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a>(<span class='argstr'>update: true</span>)</h3>
+<div class='method'>
+<p>clear the list</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// example for using WatchLists for a proxyspace and its proxies
+
+p = ProxySpace.push(s);
+
+d = WatchList.spaceAr(p);
+e = WatchList.spaceKr(p);
+f = WatchList.proxy();
+
+// add these one by one
+~a.ar;
+~z.ar;
+~b.ar;
+d.list;
+
+~k.kr;
+~j.kr;
+~i.kr;
+
+// alphabetic
+p.arProxyNames
+p.krProxyNames
+
+// historic
+d.list
+e.list
+
+f.object = ~a;
+~a = { SinOscFB.ar(\freq.kr(300) + [0, \detune.kr]) * \amp.kr(0.2, 0.1) };
+f.list;
+
+// this has alphabetic order - could be adapted for WatchLists
+ProxyMixer(p);
+
+// use WatchLists for controller - works without gui too.
+// needs modality quark
+//
+
+m = MKtl(\nk2, "*trol2"); m.gui;
+
+m.elementsDict.do(_.action_(MFunc()));
+
+(
+// sliders set volume
+m.elAt(\sl).do { |el, i|
+    el.action.add(\arVol, { |el|
+        var arkey = d.list[i];
+        if (arkey.notNil) {
+            p[arkey].softVol_(el.value.squared, lastVal: el.prevValue.squared)
+        }
+    })
+};
+// S button stops
+m.elAt(\bt, \S).do { |el, i|
+    el.action.add(\arPlay, { |el|
+        var proxy, arkey = d.list[i];
+        if (arkey.notNil) {
+            p[arkey].stop;
+            "% stops.\n".postf(arkey.cs);
+        };
+    });
+};
+// M button plays
+m.elAt(\bt, \M).do { |el, i|
+    el.action.add(\arPlay, { |el|
+        var arkey = d.list[i];
+        if (arkey.notNil) {
+            p[arkey].play;
+            "% plays.\n".postf(arkey.cs);
+        };
+    });
+};
+
+// R button chooses proxy for edit
+m.elAt(\bt, \R).do { |el, i|
+    el.action.add(\arEdit, { |el|
+        var arkey = d.list[i];
+        if (arkey.notNil) {
+            f.object_(p[arkey]);
+            "% knobs edit %\n.".postf(m, arkey.cs);
+        };
+    });
+};
+
+// knobs edit parameters of selected proxy
+m.elAt(\kn).do { |el, i|
+    el.action.add(\setParam, { |el|
+        var ctlkey = f.list[i];
+        if (ctlkey.notNil) {
+            f.object.softSet(ctlkey, el.value,
+                mapped: false, lastVal: el.prevValue);
+        };
+    });
+};
+)
+
+// now add processes:
+// they will be added to the bottom of the list
+// add parameters on "front" proxies - params are added to the end
+// note: this order is lost when switching front proxy
+// would require making a separate watchlist for each proxy</pre>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/WatchList.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/WatchList.schelp</a><br>link::Classes/WatchList::<br></div></div></body></html>
