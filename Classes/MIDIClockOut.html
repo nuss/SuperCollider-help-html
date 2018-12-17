@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>MIDIClockOut | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>MIDIClockOut | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'MIDIClockOut';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>MIDIClockOut:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -40,8 +44,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc1'><a href='#Slaving%20Ableton'>Slaving Ableton</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Song%20Position%20Ptr'>Song Position Ptr</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Player%20compatibility'>Player compatibility</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -86,7 +90,7 @@ var scdoc_sc_version = '3.9.3';
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gotoBeatAtBeat' href='./../Overviews/Methods.html#gotoBeatAtBeat'>gotoBeatAtBeat</a>(<span class='argstr'>beat</span>, <span class='argstr'>atBeat</span>)</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>m = MIDIClockOut.new;
+<textarea class='editor'>m = MIDIClockOut.new;
 
 m.play
 
@@ -99,12 +103,12 @@ Tempo.bpm = 80
 // change tempo using the slider
 Tempo.default.gui
 
-m.stop</pre>
+m.stop</textarea>
 
 <p>Command-period will send a midi clock stop and stop sending further clocks.
 <p>Changing song position pointer is not yet supported, though its possible.
 <p>Sending to other applications in OS X
-<p>First see MIDIOut regarding IAC busses<pre class='code prettyprint lang-sc'>m = MIDIClockOut( "IAC Driver", "IAC Bus 1");
+<p>First see MIDIOut regarding IAC busses<textarea class='editor'>m = MIDIClockOut( "IAC Driver", "IAC Bus 1");
 
 m.play
 
@@ -115,13 +119,13 @@ Tempo.bpm = 60
 Tempo.bpm = 20
 
 
-m.stop</pre>
+m.stop</textarea>
 <h2><a class='anchor' name='Slaving%20Ableton'>Slaving Ableton</a></h2>
 
 <p>In Ableton Live enable the IAC Bus as an input. On that input, enable Sync
 <p>In the main arrange page you should see the midi clock light on the left side blinking on the beat. Click EXT to slave to that external.
 <p>Turn on the Ableton metronome
-<p>open the tempo gui:<pre class='code prettyprint lang-sc'>Tempo.default.gui</pre>
+<p>open the tempo gui:<textarea class='editor'>Tempo.default.gui</textarea>
 
 <p>and turn on that metronome too. You should be able to hear the exact time difference.
 <p>In Ableton's preferences you can adjust the MIDI Clock Sync Delay. I found 68.0ms to be about right.
@@ -129,7 +133,7 @@ m.stop</pre>
 
 <p>Currently it starts playing at 0 and keeps on going. No relocate yet. I'm thinking about the best way to handle this in a global SC fashion. Something like TempoClock where there is a default global timeline and that can be relocated and will send notifications for interested parties that also need to relocate themselves. MIDIClockOut would then listen for those notifications. The main problem is that TempoClock doesn't like to be relocated to a different beat.<h2><a class='anchor' name='Player%20compatibility'>Player compatibility</a></h2>
 
-<p>It will behave like a player if placed inside a player structure (it will play when told to, stop when told to)<pre class='code prettyprint lang-sc'>(
+<p>It will behave like a player if placed inside a player structure (it will play when told to, stop when told to)<textarea class='editor'>(
 p = PlayerMixer([
         Patch({ arg tempo;
             Impulse.ar( tempo )
@@ -141,5 +145,6 @@ p = PlayerMixer([
     ]);
 
 p.play(atTime: 1)
-)</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/MIDIClockOut.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/MIDIClockOut.schelp</a><br>link::Classes/MIDIClockOut::<br></div></div></body></html>
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/MIDIClockOut.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/MIDIClockOut.schelp</a><br>link::Classes/MIDIClockOut::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>Interface | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Interface | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Interface';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Interface:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -52,8 +56,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc1'><a href='#GUI'>GUI</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#MIDI'>MIDI</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#onPlay%20onStop%20onFree'>onPlay onStop onFree</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -92,22 +96,22 @@ var scdoc_sc_version = '3.9.3';
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-onCC' href='./../Overviews/Methods.html#onCC'>onCC</a> = value</h3>
 <div class='method'>
 <p>the control change handler is installed (via <a href="./../Classes/CCResponder.html">CCResponder</a>) when play starts and unistalled when play stops.
-<p>It can be a simple function:<pre class='code prettyprint lang-sc'>interface.onCC = { arg src,chan,num,value;
+<p>It can be a simple function:<textarea class='editor'>interface.onCC = { arg src,chan,num,value;
     [num,value].postln;
-};</pre>
+};</textarea>
 
-<p>a CCResponder that responds on a specific number. (note: tell it NOT to install itself, because the Interface will install and uninstall it when play starts or stops)<pre class='code prettyprint lang-sc'>    onCC = CCResponder(num,{ },install: false);</pre>
+<p>a CCResponder that responds on a specific number. (note: tell it NOT to install itself, because the Interface will install and uninstall it when play starts or stops)<textarea class='editor'>    onCC = CCResponder(num,{ },install: false);</textarea>
 
-<p>or a custom class:<pre class='code prettyprint lang-sc'>onCC = KorgMicroKontrolCC(
+<p>or a custom class:<textarea class='editor'>onCC = KorgMicroKontrolCC(
                 [\slider,0,{  }],
                 [\slider,1,{  }],
                 [\encoder,0,{  }],
                 [\encoder,1,{  }],
                 [\x,{ }],
                 [\y, { }]
-            );</pre>
+            );</textarea>
 
-<p>whatever it is will be asked to respond to 'value' :<pre class='code prettyprint lang-sc'>    thing.value(src,chan,num,value);</pre>
+<p>whatever it is will be asked to respond to 'value' :<textarea class='editor'>    thing.value(src,chan,num,value);</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-guiFunction' href='./../Overviews/Methods.html#guiFunction'>guiFunction</a></h3>
 <div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-guiBodyFunction' href='./../Overviews/Methods.html#guiBodyFunction'>guiBodyFunction</a></h3>
 <div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keyDownAction' href='./../Overviews/Methods.html#keyDownAction'>keyDownAction</a></h3>
@@ -149,7 +153,7 @@ var scdoc_sc_version = '3.9.3';
 <table class='arguments'>
 <tr><td class='argumentname'>stream<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 
 m = Interface({
     // an environment is in place here
@@ -419,7 +423,7 @@ Interface({ arg sample;
 })
 .gui
 
-)</pre>
+)</textarea>
 <h2><a class='anchor' name='GUI'>GUI</a></h2>
 
 <p>You can set a custom gui function.  This can use any combination of .gui style and normal Views  The Interface can be placed on any other windows of any style.  You may decline to customize your gui.<h2><a class='anchor' name='MIDI'>MIDI</a></h2>
@@ -428,7 +432,7 @@ Interface({ arg sample;
 <p>KeyDown/KeyUp  keyDownAction  keyUpAction  (only when guied, only when focus is within the MetaPatch's views)
 <p>Interface is great for having no gui at all. Personally I use the gui stuff to set up parameters for performing, and then when performing I use no gui, only MIDI controllers and key commands.
 <p>The function that builds the player is actually an <a href="./../Classes/InterfaceDef.html">InterfaceDef</a>. These can be created and stored in the same fashion as Instr and kept in the same folder. You can then address them by name, supply paramaters as you do for Patch and you will get an Interface which will use the gui and midi functions from the InterfaceDef.<h2><a class='anchor' name='onPlay%20onStop%20onFree'>onPlay onStop onFree</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 
 Interface({
 
@@ -453,5 +457,6 @@ Interface({
     "freeing".postln;
 }).play
 
-)</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/Interface.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/Interface.schelp</a><br>link::Classes/Interface::<br></div></div></body></html>
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/Interface.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/Interface.schelp</a><br>link::Classes/Interface::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>KrNumberEditor | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>KrNumberEditor | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'KrNumberEditor';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>KrNumberEditor:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -34,8 +38,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#Internals'>Internals</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Lag'>Lag</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -51,7 +55,7 @@ var scdoc_sc_version = '3.9.3';
 <h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>A number box and a slider control for editing a float value.
-<p>This is the default control for any modulateable control input (ControlSpec). It is most commonly seen in Patches where it shows up as the default control for many parameters. When you move the slider, it sends messages to the Patch's Synth.<pre class='code prettyprint lang-sc'>k = KrNumberEditor(440,\freq);
+<p>This is the default control for any modulateable control input (ControlSpec). It is most commonly seen in Patches where it shows up as the default control for many parameters. When you move the slider, it sends messages to the Patch's Synth.<textarea class='editor'>k = KrNumberEditor(440,\freq);
 k.gui
 
 k.value = 100
@@ -59,7 +63,7 @@ k.value = 100
 k.rand
 
 // 0..1  mapped to the \freq range
-k.setUnmappedValue(0.5)</pre>
+k.setUnmappedValue(0.5)</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>KrNumberEditor.</span><a class='method-name' name='*defaultLag' href='./../Overviews/Methods.html#defaultLag'>defaultLag</a></h3>
 <h3 class='method-code'><span class='method-prefix'>KrNumberEditor.</span><a class='method-name' name='*defaultLag' href='./../Overviews/Methods.html#defaultLag'>defaultLag</a> = value</h3>
@@ -94,13 +98,14 @@ k.setUnmappedValue(0.5)</pre>
 
 <p>if a KrNumberEditor is in a Patch, and that Patch is playing on a server, the message to the server happens when the KrNumberEditor gets the .changed message and sends .update to all its depedants. This includes any NumberEditorGui and also any UpdatingScalarPatchOut, which is what actually sends the message to the server.<h2><a class='anchor' name='Lag'>Lag</a></h2>
 
-<p>KrNumberEditors support lag. This means that the control messages received by the Synth are smoothed by a Lag.kr You can set lag to nil for no Lag.<pre class='code prettyprint lang-sc'>k = KrNumberEditor(0,\loop);
-k.lag = nil;</pre>
+<p>KrNumberEditors support lag. This means that the control messages received by the Synth are smoothed by a Lag.kr You can set lag to nil for no Lag.<textarea class='editor'>k = KrNumberEditor(0,\loop);
+k.lag = nil;</textarea>
 
-<p>Alternatively see <a href="./../Classes/NoLagControlSpec.html">NoLagControlSpec</a>, whose defaultControl sets the lag to nil.<pre class='code prettyprint lang-sc'>k = KrNumberEditor(0, NoLagControlSpec(0,1) );</pre>
+<p>Alternatively see <a href="./../Classes/NoLagControlSpec.html">NoLagControlSpec</a>, whose defaultControl sets the lag to nil.<textarea class='editor'>k = KrNumberEditor(0, NoLagControlSpec(0,1) );</textarea>
 
-<p>the keys \binary, \loop (as looked up in the Spec dictionary) are registred as NoLagControlSpec, and thus don't use any lag at all.<pre class='code prettyprint lang-sc'>// \loop is defined by default as a no lag control spec
-\loop.asSpec.defaultControl.insp</pre>
+<p>the keys \binary, \loop (as looked up in the Spec dictionary) are registred as NoLagControlSpec, and thus don't use any lag at all.<textarea class='editor'>// \loop is defined by default as a no lag control spec
+\loop.asSpec.defaultControl.insp</textarea>
 
 <p>I would prefer to just have a lag preference in ControlSpec (clients that do lag eg. sliders can tell from the spec if they should do lag or not).
-<p>You can register others, or use a NoLagControlSpec when writing the Instr.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/KrNumberEditor.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/KrNumberEditor.schelp</a><br>link::Classes/KrNumberEditor::<br></div></div></body></html>
+<p>You can register others, or use a NoLagControlSpec when writing the Instr.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/KrNumberEditor.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/KrNumberEditor.schelp</a><br>link::Classes/KrNumberEditor::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

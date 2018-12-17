@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>PpolyPar | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>PpolyPar | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'PpolyPar';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>PpolyPar:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -31,8 +35,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.2c:%20PpolyPar%20with%20more%20effect%20synths%20and%20streamed%20setting'>Ex.2c: PpolyPar with more effect synths and streamed setting</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.2d:%20PpolyPar%20with%20more%20effect%20synths,%20streamed%20setting%20and%20more%20than%20one%20setting%20stream%20per%20synth'>Ex.2d: PpolyPar with more effect synths, streamed setting and more than one setting stream per synth</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.2e:%20PpolyPar%20with%20effect%20chain%20and%20streamed%20fx%20repatching'>Ex.2e: PpolyPar with effect chain and streamed fx repatching</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -61,14 +65,14 @@ var scdoc_sc_version = '3.9.3';
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 s = Server.local;
 Server.default = s;
 s.boot;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.1a'>&nbsp;</a><h3><a class='anchor' name='Ex.1a:%20PpolyPar%20with%20different%20instruments'>Ex.1a: PpolyPar with different instruments</a></h3>
-<pre class='code prettyprint lang-sc'>// basic SynthDefs, EnvGate invents a gate arg which is necessary for release
+<textarea class='editor'>// basic SynthDefs, EnvGate invents a gate arg which is necessary for release
 
 (
 SynthDef(\saw, { |freq = 400, freqlag = 0.0, amp = 0.1, amplag = 0.01|
@@ -105,10 +109,10 @@ p = PpolyPar([[
 ).play;
 )
 
-p.stop;</pre>
+p.stop;</textarea>
 
 <p><a class='anchor' name='Ex.1b'>&nbsp;</a><h3><a class='anchor' name='Ex.1b:%20PpolyPar%20with%20different%20instruments%20and%20overlapping%20settings'>Ex.1b: PpolyPar with different instruments and overlapping settings</a></h3>
-<pre class='code prettyprint lang-sc'>// SynthDefs from Ex. 1a
+<textarea class='editor'>// SynthDefs from Ex. 1a
 
 (
 // Function to create midinote patterns in different ranges
@@ -138,10 +142,10 @@ p = PpolyPar([[
 ).play
 )
 
-p.stop;</pre>
+p.stop;</textarea>
 
 <p><a class='anchor' name='Ex.1c'>&nbsp;</a><h3><a class='anchor' name='Ex.1c:%20PpolyPar%20with%20different%20instruments,%20overlapping%20settings%20with%20array%20dispatch'>Ex.1c: PpolyPar with different instruments, overlapping settings with array dispatch</a></h3>
-<pre class='code prettyprint lang-sc'>// SynthDefs from Ex. 1a
+<textarea class='editor'>// SynthDefs from Ex. 1a
 
 (
 // Similar to Ex. 1b, but the midinote pattern will cause the stream to generate arrays of two elements,
@@ -171,10 +175,10 @@ p = PpolyPar([[
 ).play
 )
 
-p.stop;</pre>
+p.stop;</textarea>
 
 <p><a class='anchor' name='Ex.2a'>&nbsp;</a><h3><a class='anchor' name='Ex.2a:%20PpolyPar%20with%20one%20effect%20synth'>Ex.2a: PpolyPar with one effect synth</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 // With t_gate a percussive envelope will be triggered,
 // so articulation can be achieved within a monophonic stream.
 // This is similar to Pbind, though only if envelopes are shorter than entry time differences.
@@ -243,10 +247,10 @@ p = PpolyPar([[
 
 p.stop;
 
-b.free;</pre>
+b.free;</textarea>
 
 <p><a class='anchor' name='Ex.2b'>&nbsp;</a><h3><a class='anchor' name='Ex.2b:%20PpolyPar%20with%20more%20effect%20synths'>Ex.2b: PpolyPar with more effect synths</a></h3>
-<pre class='code prettyprint lang-sc'>// SynthDefs from Ex. 2a
+<textarea class='editor'>// SynthDefs from Ex. 2a
 
 (
 b = Bus.audio(s, 2);
@@ -289,10 +293,10 @@ p.stop;
 (
 b.free;
 c.free;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.2c'>&nbsp;</a><h3><a class='anchor' name='Ex.2c:%20PpolyPar%20with%20more%20effect%20synths%20and%20streamed%20setting'>Ex.2c: PpolyPar with more effect synths and streamed setting</a></h3>
-<pre class='code prettyprint lang-sc'>// SynthDefs from Ex. 2a
+<textarea class='editor'>// SynthDefs from Ex. 2a
 
 (
 b = Bus.audio(s, 2);
@@ -338,10 +342,10 @@ p.stop;
 (
 b.free;
 c.free;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.2d'>&nbsp;</a><h3><a class='anchor' name='Ex.2d:%20PpolyPar%20with%20more%20effect%20synths,%20streamed%20setting%20and%20more%20than%20one%20setting%20stream%20per%20synth'>Ex.2d: PpolyPar with more effect synths, streamed setting and more than one setting stream per synth</a></h3>
-<pre class='code prettyprint lang-sc'>// SynthDefs from Ex. 2a
+<textarea class='editor'>// SynthDefs from Ex. 2a
 
 (
 b = Bus.audio(s, 2);
@@ -396,10 +400,10 @@ p.stop;
 (
 b.free;
 c.free;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.2e'>&nbsp;</a><h3><a class='anchor' name='Ex.2e:%20PpolyPar%20with%20effect%20chain%20and%20streamed%20fx%20repatching'>Ex.2e: PpolyPar with effect chain and streamed fx repatching</a></h3>
-<pre class='code prettyprint lang-sc'>// SynthDefs from Ex. 2a
+<textarea class='editor'>// SynthDefs from Ex. 2a
 
 (
 b = Bus.audio(s, 2);
@@ -454,5 +458,6 @@ p.stop;
 (
 b.free;
 c.free;
-)</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PpolyPar.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PpolyPar.schelp</a><br>link::Classes/PpolyPar::<br></div></div></body></html>
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PpolyPar.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PpolyPar.schelp</a><br>link::Classes/PpolyPar::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

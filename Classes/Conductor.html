@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>Conductor | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Conductor | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Conductor';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Conductor:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -88,8 +92,8 @@ var scdoc_sc_version = '3.9.3';
 </ul><li class='toc2'><a href='#Conductor%20Internals'>Conductor Internals</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -108,10 +112,10 @@ var scdoc_sc_version = '3.9.3';
 <div class='method'>
 <p>Create a new Conductor object, containing a <a href="./../Classes/NullPreset.html">NullPreset</a> and a <a href="./../Classes/ConductorPlayer.html">ConductorPlayer</a> instance.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a <code class='code prettyprint lang-sc'>Conductor</code></div></div><h3 class='method-code'><span class='method-prefix'>Conductor.</span><a class='method-name' name='*make' href='./../Overviews/Methods.html#make'>make</a>(<span class='argstr'>func</span>)</h3>
+<p>a <code>Conductor</code></div></div><h3 class='method-code'><span class='method-prefix'>Conductor.</span><a class='method-name' name='*make' href='./../Overviews/Methods.html#make'>make</a>(<span class='argstr'>func</span>)</h3>
 <div class='method'>
 <p>The first argument of the function is set to the Conductor being constructed. Subsequent arguments are initalized as <a href="./../Classes/CV.html">CV</a>s; arguments with default values are set to instances of the class the default value specifies.
-<p>Below, the first line defines a Conductor with four <a href="./../Classes/CV.html">CV</a>s assigned to the arguments a,b,c,d. The second line displays that Conductor.<pre class='code prettyprint lang-sc'>(
+<p>Below, the first line defines a Conductor with four <a href="./../Classes/CV.html">CV</a>s assigned to the arguments a,b,c,d. The second line displays that Conductor.<textarea class='editor'>(
 c = Conductor.make { | conductor, a, b, c, d |  };
 c.show;
 )
@@ -120,17 +124,17 @@ c.show;
 (
 c = Conductor.make { | conductor, a, b, c, d | d.value_(1/(1..128)) };
 c.show;
-)</pre>
+)</textarea>
 <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>func<td class='argumentdesc'>
 <p>a <a href="./../Classes/Function.html">Function</a>. See explanation above.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a <code class='code prettyprint lang-sc'>Conductor</code></div></div><h3 class='method-code'><span class='method-prefix'>Conductor.</span><a class='method-name' name='*specs' href='./../Overviews/Methods.html#specs'>specs</a></h3>
+<p>a <code>Conductor</code></div></div><h3 class='method-code'><span class='method-prefix'>Conductor.</span><a class='method-name' name='*specs' href='./../Overviews/Methods.html#specs'>specs</a></h3>
 <h3 class='method-code'><span class='method-prefix'>Conductor.</span><a class='method-name' name='*specs' href='./../Overviews/Methods.html#specs'>specs</a> = value</h3>
 <div class='method'>
-<p><code class='code prettyprint lang-sc'>Conductor.specs</code> is a dictionary of <a href="./../Classes/ControlSpec.html">ControlSpec</a>s. When an argument in the make function is initialized to a <a href="./../Classes/CV.html">CV</a>, its identifier is looked up in this dictionary. If that does not provide a <a href="./../Classes/ControlSpec.html">ControlSpec</a>, the same identifier stripped of all of its numeric characters is used once again look-up.
-<p>The specs dictionary is provided with the following defaults: <code class='code prettyprint lang-sc'>amp, audiobus, beats, bipolar, boostcut, controlbus, db, dbamp, delay, detune, dur, fadeTime, fin, freq, i_out, in, lofreq, longdelay, midfreq, midi, midinote, midivelocity, out, pan, phase, rate, ratio, rq, unipolar, widefreq</code><pre class='code prettyprint lang-sc'>// define a conductor using the default controlspecs
+<p><code>Conductor.specs</code> is a dictionary of <a href="./../Classes/ControlSpec.html">ControlSpec</a>s. When an argument in the make function is initialized to a <a href="./../Classes/CV.html">CV</a>, its identifier is looked up in this dictionary. If that does not provide a <a href="./../Classes/ControlSpec.html">ControlSpec</a>, the same identifier stripped of all of its numeric characters is used once again look-up.
+<p>The specs dictionary is provided with the following defaults: <code>amp, audiobus, beats, bipolar, boostcut, controlbus, db, dbamp, delay, detune, dur, fadeTime, fin, freq, i_out, in, lofreq, longdelay, midfreq, midi, midinote, midivelocity, out, pan, phase, rate, ratio, rq, unipolar, widefreq</code><textarea class='editor'>// define a conductor using the default controlspecs
 (
 Conductor.specs[\spT] = ControlSpec(-60, 700, 'linear', 0, 33);
 a = Conductor.make{ | con, freq1, db, pan, dur, spT3, s3pT, sp3T|
@@ -144,7 +148,7 @@ a.show;
 (
 a.play;
 a[\freq].value = 700;
-)</pre>
+)</textarea>
 <h4>Returns:</h4>
 <div class='returnvalue'>
 <p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> of <a href="./../Classes/ControlSpec.html">ControlSpec</a>s</div></div><h3 class='method-code'><span class='method-prefix'>Conductor.</span><a class='method-name' name='*makeCV' href='./../Overviews/Methods.html#makeCV'>makeCV</a>(<span class='argstr'>name</span>, <span class='argstr'>value</span>)</h3>
@@ -218,7 +222,7 @@ a[\freq].value = 700;
 <p></div></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-action' href='./../Overviews/Methods.html#action'>action</a>_(<span class='argstr'>playFunc</span>, <span class='argstr'>stopFunc</span>, <span class='argstr'>pauseFunc</span>, <span class='argstr'>resumeFunc</span>)</h3>
 <div class='method'>
-<p>Adds an <a href="./../Classes/ActionPlayer.html">ActionPlayer</a> which responds to <code class='code prettyprint lang-sc'>play</code>, <code class='code prettyprint lang-sc'>stop</code>, <code class='code prettyprint lang-sc'>pause</code>, and <code class='code prettyprint lang-sc'>resume</code> by evaluating the corresponding function with the Conductor as <a href="./../Classes/Environment.html#.currentEnvironment">currentEnvironment</a>.<pre class='code prettyprint lang-sc'>// action_ can control any kind of user program,
+<p>Adds an <a href="./../Classes/ActionPlayer.html">ActionPlayer</a> which responds to <code>play</code>, <code>stop</code>, <code>pause</code>, and <code>resume</code> by evaluating the corresponding function with the Conductor as <a href="./../Classes/Environment.html#.currentEnvironment">currentEnvironment</a>.<textarea class='editor'>// action_ can control any kind of user program,
 
 (
 c = Conductor.make { |conductor, freq, db, dur |
@@ -241,7 +245,7 @@ c = Conductor.make { |conductor, freq, db, dur |
 };
 
 c.show;
-)</pre>
+)</textarea>
 <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>playFunc<td class='argumentdesc'>
@@ -253,11 +257,11 @@ c.show;
 <tr><td class='argumentname'>func<td class='argumentdesc'>
 <p>a <a href="./../Classes/Function.html">Function</a><tr><td class='argumentname'>clock<td class='argumentdesc'>
 <p>a <a href="./../Classes/Clock.html">Clock</a>: e.g. a <a href="./../Classes/TempoClock.html">TempoClock</a>, <a href="./../Classes/AppClock.html">AppClock</a> or <a href="./../Classes/SystemClock.html">SystemClock</a> instance<tr><td class='argumentname'>quant<td class='argumentdesc'>
-<p>a <a href="./../Classes/Quant.html">Quant</a> object: a <a href="./../Classes/SimpleNumber.html">SimpleNumber</a>, an <a href="./../Classes/Array.html">Array</a> or <code class='code prettyprint lang-sc'>nil</code>
+<p>a <a href="./../Classes/Quant.html">Quant</a> object: a <a href="./../Classes/SimpleNumber.html">SimpleNumber</a>, an <a href="./../Classes/Array.html">Array</a> or <code>nil</code>
 <p>(See also: <a href="./../Classes/Quant.html#Automatic%20instantiation">Quant: Automatic instantiation</a>)</table></div></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pattern' href='./../Overviews/Methods.html#pattern'>pattern</a>_(<span class='argstr'>pat</span>, <span class='argstr'>clock</span>, <span class='argstr'>event</span>, <span class='argstr'>quant</span>)</h3>
 <div class='method'>
-<p>Adds a <a href="./../Classes/PatternPlayer.html">PatternPlayer</a> which plays the <a href="./../Classes/Pattern.html">Pattern</a> with the specified event, clock and quantization.<pre class='code prettyprint lang-sc'>// but convenience methods such as pattern_  are more concise
+<p>Adds a <a href="./../Classes/PatternPlayer.html">PatternPlayer</a> which plays the <a href="./../Classes/Pattern.html">Pattern</a> with the specified event, clock and quantization.<textarea class='editor'>// but convenience methods such as pattern_  are more concise
 (
 c = Conductor.make { |conductor, freq, db, dur |
     freq.spec_(\freq);
@@ -271,18 +275,18 @@ c = Conductor.make { |conductor, freq, db, dur |
 };
 
 c.show;
-)</pre>
+)</textarea>
 <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>pat<td class='argumentdesc'>
 <p>a <a href="./../Classes/Pattern.html">Pattern</a><tr><td class='argumentname'>clock<td class='argumentdesc'>
 <p>a <a href="./../Classes/Clock.html">Clock</a>: e.g. a <a href="./../Classes/TempoClock.html">TempoClock</a>, <a href="./../Classes/AppClock.html">AppClock</a> or <a href="./../Classes/SystemClock.html">SystemClock</a> instance<tr><td class='argumentname'>event<td class='argumentdesc'>
 <p>an <a href="./../Classes/Event.html">Event</a><tr><td class='argumentname'>quant<td class='argumentdesc'>
-<p>a <a href="./../Classes/Quant.html">Quant</a> object: a <a href="./../Classes/SimpleNumber.html">SimpleNumber</a>, an <a href="./../Classes/Array.html">Array</a> or <code class='code prettyprint lang-sc'>nil</code>
+<p>a <a href="./../Classes/Quant.html">Quant</a> object: a <a href="./../Classes/SimpleNumber.html">SimpleNumber</a>, an <a href="./../Classes/Array.html">Array</a> or <code>nil</code>
 <p>(See also: <a href="./../Classes/Quant.html#Automatic%20instantiation">Quant: Automatic instantiation</a>)</table></div></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-nodeProxy' href='./../Overviews/Methods.html#nodeProxy'>nodeProxy</a>_(<span class='argstr'>nodeProxy</span>, <span class='argstr'>args</span>, <span class='argstr'>bus</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>group</span>, <span class='argstr'>multi: false</span>)</h3>
 <div class='method'>
-<p>Adds a <a href="./../Classes/NodeProxyPlayer.html">NodeProxyPlayer</a>, which uses the following <code class='code prettyprint lang-sc'>bus</code>, <code class='code prettyprint lang-sc'>numChannels</code>, and <code class='code prettyprint lang-sc'>group</code> if specified, otherwise uses default values. See <a href="./../Classes/NodeProxy.html">NodeProxy</a> for details.<pre class='code prettyprint lang-sc'>(
+<p>Adds a <a href="./../Classes/NodeProxyPlayer.html">NodeProxyPlayer</a>, which uses the following <code>bus</code>, <code>numChannels</code>, and <code>group</code> if specified, otherwise uses default values. See <a href="./../Classes/NodeProxy.html">NodeProxy</a> for details.<textarea class='editor'>(
 a = Conductor.make({ | con, freq1, freq2, widefreq3, db|
     ~np = NodeProxy.audio(Server.default, 2);
     con.nodeProxy_(~np, [freq1: freq1, freq2: freq2, widefreq3: widefreq3, db: db]);
@@ -293,7 +297,7 @@ a = Conductor.make({ | con, freq1, freq2, widefreq3, db|
 });
 
 a.show
-)</pre>
+)</textarea>
 <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>nodeProxy<td class='argumentdesc'>
@@ -305,7 +309,7 @@ a.show
 <p>a <a href="./../Classes/Boolean.html">Boolean</a>, indicating whether the NodeProxy shall keep old playback links and add a new one or not</table></div></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-synth' href='./../Overviews/Methods.html#synth'>synth</a>_(<span class='argstr'>ev</span>, <span class='argstr'>cvs</span>)</h3>
 <div class='method'>
-<p>Control a <a href="./../Classes/Synth.html">Synth</a> through a Conductor<pre class='code prettyprint lang-sc'>// Controlling a synth
+<p>Control a <a href="./../Classes/Synth.html">Synth</a> through a Conductor<textarea class='editor'>// Controlling a synth
 (
 Conductor.make({ arg conductor, freq, volIndB;
     freq.spec_(\freq);
@@ -321,7 +325,7 @@ Conductor.make({ arg conductor, freq, volIndB;
         [freq: freq, amp: [volIndB, volIndB.dbamp], pan: -1]
     );
 }).show
-)</pre>
+)</textarea>
 <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>ev<td class='argumentdesc'>
@@ -329,7 +333,7 @@ Conductor.make({ arg conductor, freq, volIndB;
 <p>an <a href="./../Classes/Array.html">Array</a>, denoting the controls used in the Conductor</table></div></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-group' href='./../Overviews/Methods.html#group'>group</a>_(<span class='argstr'>ev</span>, <span class='argstr'>cvs</span>)</h3>
 <div class='method'>
-<p><a href="./../Classes/CV.html">CV</a>s assigned to a group affect all of the synths within the group. In the following example the CV only alters playing synths, new synths use the default value:<pre class='code prettyprint lang-sc'>(
+<p><a href="./../Classes/CV.html">CV</a>s assigned to a group affect all of the synths within the group. In the following example the CV only alters playing synths, new synths use the default value:<textarea class='editor'>(
 SynthDef("pm1", { | out, freq, amp, pan, gate = 1,
 ratio1 = 1, index1 = 1, a1 = 0.01, d1 = 0.2, s1 = 0.5, r1 = 1,
 ratio2 = 1, index2 = 1, a2 = 0.01, d2 = 0.2, s2 = 0.5, r2 = 1
@@ -358,15 +362,15 @@ Conductor.make{ | con, index2, ratio1, ratio2 |
         ratio1: ratio1, ratio2: ratio2, index2: index2
     ]))
 }.show
-)</pre>
+)</textarea>
 
-<p>The argument <code class='code prettyprint lang-sc'>cvs</code> is an interleaved array of keys and <a href="./../Classes/CV.html">CV</a>s (or value). CVs can also be altered before being sent to the server and combinations of CVs can determine the value to be sent:<dl>
-<dt>value<dd><code class='code prettyprint lang-sc'>[freq: 440]</code><dt>CV<dd><code class='code prettyprint lang-sc'>[freq: aCV]</code><dt>alteredCV<dd><code class='code prettyprint lang-sc'>[freq: [aCV, aCV.midicps]]</code><dt>combination<dd><code class='code prettyprint lang-sc'>[freq: [[aCV, bCV], aCV.midicps + bCV]]</code><dt>function<dd><code class='code prettyprint lang-sc'>[freq: [aCV, { aCV.midicps.value + 33.rand }]</code></dl>
+<p>The argument <code>cvs</code> is an interleaved array of keys and <a href="./../Classes/CV.html">CV</a>s (or value). CVs can also be altered before being sent to the server and combinations of CVs can determine the value to be sent:<dl>
+<dt>value<dd><code>[freq: 440]</code><dt>CV<dd><code>[freq: aCV]</code><dt>alteredCV<dd><code>[freq: [aCV, aCV.midicps]]</code><dt>combination<dd><code>[freq: [[aCV, bCV], aCV.midicps + bCV]]</code><dt>function<dd><code>[freq: [aCV, { aCV.midicps.value + 33.rand }]</code></dl>
 
-<p>The <a href="./../Classes/Event.html">Event</a>s use the same keys as note events in patterns. The keys <code class='code prettyprint lang-sc'>server</code>, <code class='code prettyprint lang-sc'>group</code>, and <code class='code prettyprint lang-sc'>addAction</code> and, for <a href="./../Classes/Synth.html">Synth</a>s, <code class='code prettyprint lang-sc'>instrument</code> determine the <a href="./../Classes/Group.html">Group</a> or <a href="./../Classes/Synth.html">Synth</a>. As in <a href="./../Classes/Pattern.html">Pattern</a>s, the default values for these keys are:<pre class='code prettyprint lang-sc'>server: Server.default,
+<p>The <a href="./../Classes/Event.html">Event</a>s use the same keys as note events in patterns. The keys <code>server</code>, <code>group</code>, and <code>addAction</code> and, for <a href="./../Classes/Synth.html">Synth</a>s, <code>instrument</code> determine the <a href="./../Classes/Group.html">Group</a> or <a href="./../Classes/Synth.html">Synth</a>. As in <a href="./../Classes/Pattern.html">Pattern</a>s, the default values for these keys are:<textarea class='editor'>server: Server.default,
 group: 1,
 addAction: 0,
-instrument: \default</pre>
+instrument: \default</textarea>
 
 <p>Usually the node ID of the group or synth is dynamically allocated, but the key id can be set to set the id directly. For group events, a new group or collection of groups is created with the specified id(s). For synth events, no synths are created, but the control values determined by the event are sent to the specified id(s).<h4>Arguments:</h4>
 <table class='arguments'>
@@ -379,7 +383,7 @@ instrument: \default</pre>
 <table class='arguments'>
 <tr><td class='argumentname'>ev<td class='argumentdesc'>
 <p>an <a href="./../Classes/Event.html">Event</a>, specifiing<table>
-<tr><td><code class='code prettyprint lang-sc'>server</code><td>aServer (defaults to Server.default),<tr><td><code class='code prettyprint lang-sc'>index</code><td>(optional)</table>
+<tr><td><code>server</code><td>aServer (defaults to Server.default),<tr><td><code>index</code><td>(optional)</table>
 <tr><td class='argumentname'>cvs<td class='argumentdesc'>
 <p>an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/CV.html">CV</a>s that are used to determine the value of consecutive <a href="./../Classes/Bus.html">Bus</a>es</table></div></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-buffer' href='./../Overviews/Methods.html#buffer'>buffer</a> = <span class='argstr'>ev</span></h3>
@@ -388,16 +392,16 @@ instrument: \default</pre>
 <table class='arguments'>
 <tr><td class='argumentname'>ev<td class='argumentdesc'>
 <p>an <a href="./../Classes/Event.html">Event</a>, designed primarily for small waveform buffers, specifiing:<table>
-<tr><td><code class='code prettyprint lang-sc'>server</code><td>aServer (defaults to Server.default)<tr><td><code class='code prettyprint lang-sc'>cv</code><td>a CV that determines the values in the buffer<tr><td><code class='code prettyprint lang-sc'>msg</code><td>a symbol that determines how the values are used to fill the buffer. Is is one of: <code class='code prettyprint lang-sc'>\sine1</code>, <code class='code prettyprint lang-sc'>\cheby</code>, <code class='code prettyprint lang-sc'>\wave</code>, or <code class='code prettyprint lang-sc'>\signal</code><tr><td><code class='code prettyprint lang-sc'>display</code><td>anotherCV. An optional CV used to display the contents of the buffer (as received from the server)<tr><td><code class='code prettyprint lang-sc'>size</code><td>integer (defaults to 512 and should not exceed 1024)</table>
+<tr><td><code>server</code><td>aServer (defaults to Server.default)<tr><td><code>cv</code><td>a CV that determines the values in the buffer<tr><td><code>msg</code><td>a symbol that determines how the values are used to fill the buffer. Is is one of: <code>\sine1</code>, <code>\cheby</code>, <code>\wave</code>, or <code>\signal</code><tr><td><code>display</code><td>anotherCV. An optional CV used to display the contents of the buffer (as received from the server)<tr><td><code>size</code><td>integer (defaults to 512 and should not exceed 1024)</table>
 </table></div><h3><a class='anchor' name='Value%20related%20methods'>Value related methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-value' href='./../Overviews/Methods.html#value'>value</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-value' href='./../Overviews/Methods.html#value'>value</a> = <span class='argstr'>kvs</span></h3>
 <div class='method'>
 <p>If called as a getter it returns an <a href="./../Classes/Array.html">Array</a> of the values of all components identified by <a href="#-valueKeys">-valueKeys</a>.
-<p>If called as a setter (with a trailing underscore) it iterates over the <a href="./../Classes/Array.html">Array</a> defined in the argument <code class='code prettyprint lang-sc'>kvs</code> assigning the value to be the value of the corresponding component identified by <a href="#-valueKeys">valueKeys</a><h4>Arguments:</h4>
+<p>If called as a setter (with a trailing underscore) it iterates over the <a href="./../Classes/Array.html">Array</a> defined in the argument <code>kvs</code> assigning the value to be the value of the corresponding component identified by <a href="#-valueKeys">valueKeys</a><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>kvs<td class='argumentdesc'>
-<p>an <a href="./../Classes/Array.html">Array</a> of key/value pairs. E.g.:<pre class='code prettyprint lang-sc'>[[\a, 0], [\b, 0], [\c, 0], [\d, 0], [\preset, [[], nil]]]</pre>
+<p>an <a href="./../Classes/Array.html">Array</a> of key/value pairs. E.g.:<textarea class='editor'>[[\a, 0], [\b, 0], [\c, 0], [\d, 0], [\preset, [[], nil]]]</textarea>
 </table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>an <a href="./../Classes/Array.html">Array</a> of key/value pairs</div></div><h3><a class='anchor' name='Settings,%20Preset%20and%20Interpolator%20related%20methods'>Settings, Preset and Interpolator related methods</a></h3>
@@ -409,13 +413,13 @@ instrument: \default</pre>
 <p>Allow a single set of settings to be saved to file and restored from file.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-path' href='./../Overviews/Methods.html#path'>path</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-path' href='./../Overviews/Methods.html#path'>path</a> = <span class='argstr'>path</span></h3>
 <div class='method'>
-<p>Stores the pathname of the file that saves the Conductor's settings and attempts to load those settings.<pre class='code prettyprint lang-sc'>c = Conductor.make { | conductor, a, b, c, d |  };
+<p>Stores the pathname of the file that saves the Conductor's settings and attempts to load those settings.<textarea class='editor'>c = Conductor.make { | conductor, a, b, c, d |  };
 
 // set the path
 c.path_("~/Desktop".standardizePath);
 
 // get the path
-c.path;</pre>
+c.path;</textarea>
 
 <p><h4>Arguments:</h4>
 <table class='arguments'>
@@ -424,7 +428,7 @@ c.path;</pre>
 <div class='returnvalue'>
 <p>a <a href="./../Classes/String.html">String</a> containing a path to a location on the local harddisk</div></div><h3><a class='anchor' name='Presets'>Presets</a></h3>
 
-<p>A <a href="./../Classes/CVPreset.html">CVPreset</a> saves 'presets' for an array of <a href="./../Classes/CV.html">CV</a>s or other objects that respond to <code class='code prettyprint lang-sc'>input</code> and <code class='code prettyprint lang-sc'>input_</code>.</h3>
+<p>A <a href="./../Classes/CVPreset.html">CVPreset</a> saves 'presets' for an array of <a href="./../Classes/CV.html">CV</a>s or other objects that respond to <code>input</code> and <code>input_</code>.</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-presetKeys' href='./../Overviews/Methods.html#presetKeys'>presetKeys</a>_(<span class='argstr'>keys</span>, <span class='argstr'>argPreset</span>)</h3>
 <div class='method'>
 <p>The objects at the keys will have their settings saved and restored by preset, which defaults to the object in the preset instance variable.<h4>Arguments:</h4>
@@ -445,7 +449,7 @@ c.path;</pre>
 <p>a <a href="./../Classes/CVPreset.html">CVPreset</a></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-useInterpolator' href='./../Overviews/Methods.html#useInterpolator'>useInterpolator</a></h3>
 <div class='method'>
 <p>Creates a <a href="./../Classes/CVInterpolator.html">CVInterpolator</a>, sets <a href="#-valueKeys">valueKeys</a> to be both <a href="#-presetKeys">presetKeys</a> and <a href="#-interpKeys">interpKeys</a>
-<p>An example:<pre class='code prettyprint lang-sc'>(
+<p>An example:<textarea class='editor'>(
 a = Conductor.make { | con, cv1, cv2, cv3 |
     // set the value range of cv1
     cv1.sp(440, 20, 20000, 0, 'exp');
@@ -481,7 +485,7 @@ a = Conductor.make { | con, cv1, cv2, cv3 |
         }
     });
 }.show
-)</pre>
+)</textarea>
 </div><h3><a class='anchor' name='Adding%20new%20CVs'>Adding new CVs</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addCV' href='./../Overviews/Methods.html#addCV'>addCV</a>(<span class='argstr'>name</span>, <span class='argstr'>val</span>, <span class='argstr'>argGui</span>)</h3>
 <div class='method'>
@@ -490,8 +494,8 @@ a = Conductor.make { | con, cv1, cv2, cv3 |
 <tr><td class='argumentname'>name<td class='argumentdesc'>
 <p>a <a href="./../Classes/Symbol.html">Symbol</a>, denoting the name under which the CV will be added to the Conductor<tr><td class='argumentname'>val<td class='argumentdesc'>
 <p>a <a href="./../Classes/Float.html">Float</a> or an <a href="./../Classes/Integer.html">Integer</a>, setting the initial value of the CV<tr><td class='argumentname'>argGui<td class='argumentdesc'>
-<p>a <a href="./../Classes/Symbol.html">Symbol</a>, denoting the name of the view in which the CVshall appear. The view can be determined by calling <a href="./../Classes/Conductor.html#-gui">Conductor: -gui</a>.<pre class='code prettyprint lang-sc'>c = Conductor.make { | conductor, a, b, c, d |  };
-c.gui // -&gt; ConductorGUI[ (win -&gt; a Window) ]</pre>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a>, denoting the name of the view in which the CVshall appear. The view can be determined by calling <a href="./../Classes/Conductor.html#-gui">Conductor: -gui</a>.<textarea class='editor'>c = Conductor.make { | conductor, a, b, c, d |  };
+c.gui // -&gt; ConductorGUI[ (win -&gt; a Window) ]</textarea>
 </table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>a <a href="./../Classes/CV.html">CV</a></div></div><h3><a class='anchor' name='MIDI%20related%20methods'>MIDI related methods</a></h3>
@@ -505,13 +509,13 @@ c.gui // -&gt; ConductorGUI[ (win -&gt; a Window) ]</pre>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiKBD' href='./../Overviews/Methods.html#midiKBD'>midiKBD</a>_(<span class='argstr'>noteOnFunction</span>, <span class='argstr'>midiChan</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/extConductor.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/extConductor.sc</a></div>
 <div class='method'>
-<p>The function receives a key number and velocity value and returns an object that responds to release (typically a <a href="./../Classes/Synth.html">Synth</a>). If <code class='code prettyprint lang-sc'>midiChan</code> is <code class='code prettyprint lang-sc'>nil</code>, it responds to MIDI key commands from all channels in "omni" mode. See also: <a href="./../Guides/UsingMIDI.html">Using MIDI</a>.<h4>Arguments:</h4>
+<p>The function receives a key number and velocity value and returns an object that responds to release (typically a <a href="./../Classes/Synth.html">Synth</a>). If <code>midiChan</code> is <code>nil</code>, it responds to MIDI key commands from all channels in "omni" mode. See also: <a href="./../Guides/UsingMIDI.html">Using MIDI</a>.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>noteOnFunction<td class='argumentdesc'>
-<p>a <a href="./../Classes/Function.html">Function</a>, triggered when a key is played. E.g.:<pre class='code prettyprint lang-sc'>{ |veloc, num, chan, src|
+<p>a <a href="./../Classes/Function.html">Function</a>, triggered when a key is played. E.g.:<textarea class='editor'>{ |veloc, num, chan, src|
     notes[num] = Synth(\default, [\freq, num.midicps,
         \amp, veloc * 0.00315]);
-}</pre>
+}</textarea>
 <tr><td class='argumentname'>midiChan<td class='argumentdesc'>
 <p>an <a href="./../Classes/Integer.html">Integer</a>, denoting a MIDI channel</table></div><h3><a class='anchor' name='GUI%20related%20methods'>GUI related methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-show' href='./../Overviews/Methods.html#show'>show</a>(<span class='argstr'>argName</span>, <span class='argstr'>x: 128</span>, <span class='argstr'>y: 64</span>, <span class='argstr'>w: 900</span>, <span class='argstr'>h: 160</span>)</h3>
@@ -659,10 +663,10 @@ c.gui // -&gt; ConductorGUI[ (win -&gt; a Window) ]</pre>
 <li><a href="./../Classes/ConductorPlayer.html">ConductorPlayer</a>, which can play, stop, pause, and resume an arbitrary collection of <a href="./../Classes/Task.html">Task</a>s, <a href="./../Classes/Synth.html">Synth</a>s, <a href="./../Classes/Pattern.html">Pattern</a>s, and <a href="./../Classes/NodeProxy.html">NodeProxy</a>s as well as allocate and deallocate resources such as <a href="./../Classes/Buffer.html">Buffer</a>s and <a href="./../Classes/Bus.html">Bus</a>es.
 <p>By default a Conductor has a single player, but it can be readily configured to have several.<li><a href="./../Classes/CV.html">CV</a>, which defines a control value or array of control values constrained to a specific range of values by a <a href="./../Classes/ControlSpec.html">ControlSpec</a>. The value of a CV can be set directly or as an input ranging from 0 to 1 rescaled to the CV's range. CVs provide methods to connect to GUI elements, server nodes, buses, and buffers and may be used directly in Pattern definitions. <a href="./../Classes/SV.html">SV</a> (symbolic value), <a href="./../Classes/EV.html">EV</a> (envelope value), and <a href="./../Classes/TV.html">TV</a> (text value) are classes derived from CV which provide similar interfaces.
 <p>Typically, a Conductor has multiple CV's.<li><a href="./../Classes/ConductorGUI.html">ConductorGUI</a>, which defines the GUI representation of the Conductor.<li><a href="./../Classes/CVPreset.html">CVPreset</a>, which saves the values of a user specified collection of components into selectable presets. <a href="./../Classes/CVInterpolator.html">CVInterpolator</a> is a preset that also provides the ability to interpolate between presets.<li><strong>Conductor</strong> - one Conductor can be a component of another, providing hierarchical control. Conductor has the instance variables player, gui, and preset which respectively default to a <a href="./../Classes/ConductorPlayer.html">ConductorPlayer</a>, a <a href="./../Classes/ConductorGUI.html">ConductorGUI</a>, and a <a href="./../Classes/CVPreset.html">CVPreset</a>.
-<p>The messages <code class='code prettyprint lang-sc'>spec_(specName, default)</code> and <code class='code prettyprint lang-sc'>sp(default, lo, hi, step, warp)</code> can be used to set the range of values a <a href="./../Classes/CV.html">CV</a> can assume. CVs may be given a single value or an <a href="./../Classes/Array.html">Array</a> of values as default value. See examples below.</ol>
+<p>The messages <code>spec_(specName, default)</code> and <code>sp(default, lo, hi, step, warp)</code> can be used to set the range of values a <a href="./../Classes/CV.html">CV</a> can assume. CVs may be given a single value or an <a href="./../Classes/Array.html">Array</a> of values as default value. See examples below.</ol>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 a = Conductor.new; // create the conductor
 a.addCV(\cv1);    // add some CVs
 a.addCV(\cv2);
@@ -786,5 +790,6 @@ c.useInterpolator;
 
 //    c.usePresets;
 d = c.show;
-)</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/HelpSource/Classes/Conductor.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/HelpSource/Classes/Conductor.schelp</a><br>link::Classes/Conductor::<br></div></div></body></html>
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/HelpSource/Classes/Conductor.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/HelpSource/Classes/Conductor.schelp</a><br>link::Classes/Conductor::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

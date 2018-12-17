@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>DXMix | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>DXMix | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'DXMix';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>DXMix:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -33,8 +37,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.6:%20Multichannel%20expansion'>Ex.6: Multichannel expansion</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.7:%20Stopping%20and%20doneAction'>Ex.7: Stopping and doneAction</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.8:%20Saving%20CPU'>Ex.8: Saving CPU</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -84,15 +88,15 @@ var scdoc_sc_version = '3.9.3';
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='Examples'>Examples</a></h2>
 
-<p><a class='anchor' name='Ex.1'>&nbsp;</a><pre class='code prettyprint lang-sc'>(
+<p><a class='anchor' name='Ex.1'>&nbsp;</a><textarea class='editor'>(
 // load with extended resources
 s = Server.local;
 Server.default = s;
 s.options.numWireBufs = 256; 
 s.reboot;
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Ex.1:%20Basic%20usage:%20simple%20crossfade'>Ex.1: Basic usage: simple crossfade</a></h3>
-<pre class='code prettyprint lang-sc'>// crossfading between 2 mono sources
+<textarea class='editor'>// crossfading between 2 mono sources
 // the array of channels to crossfade must be put into a Ref
 
 (
@@ -159,10 +163,10 @@ x = {
 }.play
 )
 
-x.release</pre>
+x.release</textarea>
 
 <p><a class='anchor' name='Ex.2'>&nbsp;</a><h3><a class='anchor' name='Ex.2:%20Basic%20usage:%20fades%20and%20steps'>Ex.2: Basic usage: fades and steps</a></h3>
-<pre class='code prettyprint lang-sc'>// in Ex.1 we always used fadeMode's default 0, where only fades are polled
+<textarea class='editor'>// in Ex.1 we always used fadeMode's default 0, where only fades are polled
 // You might instead want to alternate steps (sections of no fade) with fades:
 
 // fadeMode = 0: only fadeTimes are used, no steps
@@ -279,10 +283,10 @@ x = {
 }.play
 )
 
-x.release</pre>
+x.release</textarea>
 
 <p><a class='anchor' name='Ex.3'>&nbsp;</a><h3><a class='anchor' name='Ex.3:%20Width%20and%20offset%20arguments%20for%20channel%20span'>Ex.3: Width and offset arguments for channel span</a></h3>
-<pre class='code prettyprint lang-sc'>// The width parameter determines the number of channels, which are 
+<textarea class='editor'>// The width parameter determines the number of channels, which are 
 // maximally affected by the crossfade, it uses the convention of PanAz's width arg. 
 // The graphics below explain the overlap scheme of DXMix and cousins,
 // for DXMix the indices denote the channels to be mixed,
@@ -320,9 +324,9 @@ x.release
 // which are then equally weighted. Squared brackets enclose the active channel numbers.
 // So the succession of two rows describes one fade.
 
-// width = 2:</pre>
+// width = 2:</textarea>
 <div class='image'><img src='attachments/DXMix/sliding_ex_1.png'/></div>
-<pre class='code prettyprint lang-sc'>// For an arbitrary integer width n the number of active channels lies between n-1 and n, 
+<textarea class='editor'>// For an arbitrary integer width n the number of active channels lies between n-1 and n, 
 // here a scheme of the number of affected channels:
 
 
@@ -357,11 +361,11 @@ width        number of channels affected    with
 // So from width &gt; 2 onwards there's a "left side" of the channel span, which hasn't been generated so far, 
 // thus the full width is not reached before an entrance phase which increases with the width value.
 
-// width = 3:</pre>
+// width = 3:</textarea>
 <div class='image'><img src='attachments/DXMix/sliding_ex_2.png'/></div>
-<pre class='code prettyprint lang-sc'>// width = 4:</pre>
+<textarea class='editor'>// width = 4:</textarea>
 <div class='image'><img src='attachments/DXMix/sliding_ex_3.png'/></div>
-<pre class='code prettyprint lang-sc'>// If one wants to start width full width there's the possibility to do this by 
+<textarea class='editor'>// If one wants to start width full width there's the possibility to do this by 
 // passing an initOutOffset argument.
 
 // Here we start with initOutOffset = 1, fadeMode = 1 (step first),
@@ -387,9 +391,9 @@ x = {
 x.release
 
 
-// overlap scheme with width = 3 and initOutOffset = 1:</pre>
+// overlap scheme with width = 3 and initOutOffset = 1:</textarea>
 <div class='image'><img src='attachments/DXMix/sliding_ex_4.png'/></div>
-<pre class='code prettyprint lang-sc'>// Here we start with initOutOffset = 0.5, fadeMode = 1 (step first),
+<textarea class='editor'>// Here we start with initOutOffset = 0.5, fadeMode = 1 (step first),
 // channels with indices 0 and 4 (base tone and 5th partial) are equally weighted.
 
 (
@@ -411,9 +415,9 @@ x = {
 x.release
 
 
-// overlap scheme with width = 3 and initOutOffset = 0.5:</pre>
+// overlap scheme with width = 3 and initOutOffset = 0.5:</textarea>
 <div class='image'><img src='attachments/DXMix/sliding_ex_5.png'/></div>
-<pre class='code prettyprint lang-sc'>// It might also be desirable to start with a fade from silence.
+<textarea class='editor'>// It might also be desirable to start with a fade from silence.
 // This can be done with a negative initOutOffset:
 
 (
@@ -432,9 +436,9 @@ x = {
 x.release
 
 
-// overlap scheme with width = 2 and initOutOffset = -1:</pre>
+// overlap scheme with width = 2 and initOutOffset = -1:</textarea>
 <div class='image'><img src='attachments/DXMix/sliding_ex_6.png'/></div>
-<pre class='code prettyprint lang-sc'>// width can also be modulated (suited rather for lfos, only enabled from SC 3.9 onwards)
+<textarea class='editor'>// width can also be modulated (suited rather for lfos, only enabled from SC 3.9 onwards)
 
 (
 x = {
@@ -493,10 +497,10 @@ x = {
 }.play
 )
 
-x.release</pre>
+x.release</textarea>
 
 <p><a class='anchor' name='Ex.4'>&nbsp;</a><h3><a class='anchor' name='Ex.4:%20Switching%20between%20PlayBufs'>Ex.4: Switching between PlayBufs</a></h3>
-<pre class='code prettyprint lang-sc'>// This can go towards granulation
+<textarea class='editor'>// This can go towards granulation
 
 // load sound file
 
@@ -521,10 +525,10 @@ x = {
 }.play
 )
 
-x.release</pre>
+x.release</textarea>
 
 <p><a class='anchor' name='Ex.5'>&nbsp;</a><h3><a class='anchor' name='Ex.5:%20Granulation'>Ex.5: Granulation</a></h3>
-<pre class='code prettyprint lang-sc'>// granulation by fast fading between channels
+<textarea class='editor'>// granulation by fast fading between channels
 // here single channels contain PlayBufs with ordered rates
 
 // load sound file
@@ -607,10 +611,10 @@ x = {
 }.play
 )
 
-x.release</pre>
+x.release</textarea>
 
 <p><a class='anchor' name='Ex.6'>&nbsp;</a><h3><a class='anchor' name='Ex.6:%20Multichannel%20expansion'>Ex.6: Multichannel expansion</a></h3>
-<pre class='code prettyprint lang-sc'>// If a multiple demand rate ugen is implicitely needed, it must be wrapped into a Function
+<textarea class='editor'>// If a multiple demand rate ugen is implicitely needed, it must be wrapped into a Function
 
 // Because of the array passed to fadeTime, we need two Dseqs to poll from.
 // As only one demand rate ugen is passed as 'in' arg, it must be wrapped into a Function.
@@ -784,10 +788,10 @@ x = {
 }.play
 )
 
-x.release</pre>
+x.release</textarea>
 
 <p><a class='anchor' name='Ex.7'>&nbsp;</a><h3><a class='anchor' name='Ex.7:%20Stopping%20and%20doneAction'>Ex.7: Stopping and doneAction</a></h3>
-<pre class='code prettyprint lang-sc'>// The done action is invoked after maxFadeNum.
+<textarea class='editor'>// The done action is invoked after maxFadeNum.
 
 (
 x = {
@@ -807,10 +811,10 @@ x = {
 }.play
 )
 
-x.release</pre>
+x.release</textarea>
 
 <p><a class='anchor' name='Ex.8'>&nbsp;</a><h3><a class='anchor' name='Ex.8:%20Saving%20CPU'>Ex.8: Saving CPU</a></h3>
-<pre class='code prettyprint lang-sc'>// This might be a topic if you're running many fades in parallel and 
+<textarea class='editor'>// This might be a topic if you're running many fades in parallel and 
 // fadeTimes are not extremely short (and hence audio rate doesn't make a difference).
 
 // Here my machine needs ca. 2 % CPU for fadeRate = \kr
@@ -876,5 +880,6 @@ x = {
 }.play
 )
 
-x.release</pre>
-<div class='note'><span class='notelabel'>NOTE:</span> Also see <a href="./../Classes/DXEnvFan.html#Ex.2">DXEnvFan, Ex.2</a> and <a href="./../Classes/DXEnvFan.html#Ex.4">DXEnvFan, Ex.4</a> for CPU aspects. Note that the use of the options allowTypeSeq and zeroThr also needs more CPU. Rescaling, which is necessary for SC versions before 3.9 with audio rate, is also more CPU-costy.</div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/DXMix.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/DXMix.schelp</a><br>link::Classes/DXMix::<br></div></div></body></html>
+x.release</textarea>
+<div class='note'><span class='notelabel'>NOTE:</span> Also see <a href="./../Classes/DXEnvFan.html#Ex.2">DXEnvFan, Ex.2</a> and <a href="./../Classes/DXEnvFan.html#Ex.4">DXEnvFan, Ex.4</a> for CPU aspects. Note that the use of the options allowTypeSeq and zeroThr also needs more CPU. Rescaling, which is necessary for SC versions before 3.9 with audio rate, is also more CPU-costy.</div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/DXMix.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/DXMix.schelp</a><br>link::Classes/DXMix::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

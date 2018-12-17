@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>KeyCodeResponder | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>KeyCodeResponder | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'KeyCodeResponder';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>KeyCodeResponder:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -61,8 +65,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-guiClass'>guiClass</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -128,8 +132,8 @@ var scdoc_sc_version = '3.9.3';
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dict' href='./../Overviews/Methods.html#dict'>dict</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dict' href='./../Overviews/Methods.html#dict'>dict</a> = value</h3>
 <div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-normal' href='./../Overviews/Methods.html#normal'>normal</a>( <span class='argstr'>... associations</span>)</h3>
-<div class='method'><pre class='code prettyprint lang-sc'>k.normal(keycode -&gt; function);
-k.normal(keycode -&gt; fuction, keycode2 -&gt; function2 , ... keycodeN -&gt; functionN );</pre>
+<div class='method'><textarea class='editor'>k.normal(keycode -&gt; function);
+k.normal(keycode -&gt; fuction, keycode2 -&gt; function2 , ... keycodeN -&gt; functionN );</textarea>
 
 <p>note the association ( key -&gt; value )<h4>Arguments:</h4>
 <table class='arguments'>
@@ -173,7 +177,7 @@ k.normal(keycode -&gt; fuction, keycode2 -&gt; function2 , ... keycodeN -&gt; fu
 <div class='method'></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 
-<p>Use this to post the keycodes<pre class='code prettyprint lang-sc'>(
+<p>Use this to post the keycodes<textarea class='editor'>(
 
 KeyCodeResponder.tester
 
@@ -229,9 +233,9 @@ v = GUI.slider.new(w,Rect(10,10,100,100));
 v.keyDownAction = k;
 v.focus;
 
-)</pre>
+)</textarea>
 
-<p>Any player's gui can have its keyDownAction set<pre class='code prettyprint lang-sc'>(
+<p>Any player's gui can have its keyDownAction set<textarea class='editor'>(
 
 p = Patch({ arg freq=440; SinOsc.ar(freq,mul: 0.1) });
 g = p.gui;
@@ -239,18 +243,18 @@ g.keyDownAction =  {
     "you touched me".postln;
 };
 
-)</pre>
+)</textarea>
 
 <p>focus on the slider. notice that every key stroke is passed, the slider does not swallow them.
-<p>or you can use KeyCodeResponder<pre class='code prettyprint lang-sc'>kcr = KeyCodeResponder.new;
+<p>or you can use KeyCodeResponder<textarea class='editor'>kcr = KeyCodeResponder.new;
 kcr.option( 36 -&gt; { "option 36".postln });
 kcr.shift( 36 -&gt; { "shift 36".postln });
 aPatchGui = aPatch.gui;
-aPatchGui.keyDownAction = kcr;</pre>
+aPatchGui.keyDownAction = kcr;</textarea>
 
 <p>This means that when ever the player is focused (any of its controls is in focus), these keys will be active providing that the view that is actually in focus doesn't handle the key event (it should have a nil keyDownAction function or pass nil).
 <p>You can concatenate KeyCodeResponders using ++
-<p>global keydowns not yet tested....<pre class='code prettyprint lang-sc'>(
+<p>global keydowns not yet tested....<textarea class='editor'>(
 KeyCodeResponder.clear;
 /*
 this will fire on shift-'r'
@@ -271,29 +275,30 @@ KeyCodeResponder.register(c,true,nil,nil,nil,{ "shift, yes/no caps".postcln });
 Sheet({ arg f; ActionButton(f).focus });
 
 
-)</pre>
+)</textarea>
 
 <p>This is very useful when using CAPS-LOCK to switch interface modes etc.
-<p>Only one function per deny/require mask combination is possible per keycode:<pre class='code prettyprint lang-sc'>(
+<p>Only one function per deny/require mask combination is possible per keycode:<textarea class='editor'>(
 // hit shift - r
 c = if( GUI.id === \cocoa, 15, 82 ); // keycode : 'r' key (15 on CocoaGUI, 82 on SwingOSC)
 KeyCodeResponder.register(c,true,nil,nil,nil,{ "shift r".postcln });
 KeyCodeResponder.register(c,true,nil,nil,nil,{ "overwrote the previous one".postcln });
 Sheet({ arg f; ActionButton(f).focus });
 
-)</pre>
+)</textarea>
 
-<p>The simpler, older method is :<pre class='code prettyprint lang-sc'>    KeyCodeResponder.registerKeycode(2,28,{      });// *</pre>
+<p>The simpler, older method is :<textarea class='editor'>    KeyCodeResponder.registerKeycode(2,28,{      });// *</textarea>
 
-<p>whereby that modifier and only that modifier will fire the funtion. see View for modifier values or use this :<pre class='code prettyprint lang-sc'>(
+<p>whereby that modifier and only that modifier will fire the funtion. see View for modifier values or use this :<textarea class='editor'>(
 
     KeyCodeResponder.tester
 
-)</pre>
+)</textarea>
 
-<p>// using characters<pre class='code prettyprint lang-sc'>KeyCodeResponder.registerChar(0,$q,{  }); // q no modifier</pre>
+<p>// using characters<textarea class='editor'>KeyCodeResponder.registerChar(0,$q,{  }); // q no modifier</textarea>
 
 <p>Gotcha: it is easy to forget that you registered a function with KeyCodeResponder that holds a reference to a large object. Garbage Collection will not remove the object until you have released your reference.
-<p>solution:<pre class='code prettyprint lang-sc'>// place this at the top of your performance code to start with a clean slate
-KeyCodeResponder.clear;</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/KeyCodeResponder.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/KeyCodeResponder.schelp</a><br>link::Classes/KeyCodeResponder::<br></div></div></body></html>
+<p>solution:<textarea class='editor'>// place this at the top of your performance code to start with a clean slate
+KeyCodeResponder.clear;</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/KeyCodeResponder.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/KeyCodeResponder.schelp</a><br>link::Classes/KeyCodeResponder::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

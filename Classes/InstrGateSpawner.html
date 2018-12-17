@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>InstrGateSpawner | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>InstrGateSpawner | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'InstrGateSpawner';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>InstrGateSpawner:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -26,8 +30,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Compared%20to%20Pbind'>Compared to Pbind</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -44,7 +48,7 @@ var scdoc_sc_version = '3.9.3';
 
 <p>a Pbind-like spawner that plays an Instr with streams supplied to its inputs.
 <p>In contrast to InstrSpawner, this schedules in beats.
-<p>During iteration, each argument is passed the InstrGateSpawner. Two useful things can be done with this: asking the .beat and the current .delta  till the next event.<pre class='code prettyprint lang-sc'>(
+<p>During iteration, each argument is passed the InstrGateSpawner. Two useful things can be done with this: asking the .beat and the current .delta  till the next event.<textarea class='editor'>(
     Tempo.bpm = 140.0;
     InstrGateSpawner({ arg freq=440,rq=0.1,width=0.5,fenv,fenvmod=1000,envadsr,dur=0.1,tempo;
         var gate;
@@ -74,7 +78,7 @@ var scdoc_sc_version = '3.9.3';
     ],
         0.25
     ).play
-)</pre>
+)</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
@@ -110,7 +114,7 @@ var scdoc_sc_version = '3.9.3';
 <p>Pbind streams each item, whether it is going to change or not (a float will not change, an Env will not change). so InstrGateSpawner has much more simple/efficient event handling,  not using an environment  streamed items are placed directly into the OSC message to be sent  only using the features that are needed for the ugenFunc  no lag, offsetChannel etc.  But as computers and SC get faster, this speed advantage is less significant.
 <p>allows easy patching of players into the inputs allows easy patching of Samples and allocates them seamlessly. beat is passed into each stream item  this solves a common 'sync' problem with event stream's note-by-note streaming.  but you could use the same solution in a Pfunc and just query the clock to find out the current beat. the usual flexibility of players with regards to saving
 <p>cons:  can't do Pseq([ Pbind, Pbind ] )  it isn't a pattern, doesn't end with a nil, so you can't sequence sections with it.  but it is possible to use CropPlayer and Pseq or PlayerSeqTrack.  can't use pattern filters  can't switch ugenFuncs dynamically
-<p>compare with the first example from Pbind help<pre class='code prettyprint lang-sc'>(
+<p>compare with the first example from Pbind help<textarea class='editor'>(
 SynthDef(\cfstring1.postln, { arg i_out, freq = 360, gate = 1, pan, amp=0.1;
     var out, eg, fc, osc, a, b, w;
     fc = LinExp.kr(LFNoise1.kr(Rand(0.25,0.4)), -1,1,500,2000);
@@ -149,6 +153,7 @@ InstrGateSpawner({ arg freq = 360,  pan=0, amp=0.1,dur=0.2,tempo;
     0.2
 ).play
 
-)</pre>
+)</textarea>
 
-<p>the server usage is identical as should be expected, but the client side (using top) is about half the cpu. on another day, the test shows equal usage ! and then a minute later Pbind does show more usage. top is not really a good measure. simply because there is a lot less code running, InstrGateSpawner must be faster. they both have advantages in their way of working, and can both be used side by side.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/InstrGateSpawner.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/InstrGateSpawner.schelp</a><br>link::Classes/InstrGateSpawner::<br></div></div></body></html>
+<p>the server usage is identical as should be expected, but the client side (using top) is about half the cpu. on another day, the test shows equal usage ! and then a minute later Pbind does show more usage. top is not really a good measure. simply because there is a lot less code running, InstrGateSpawner must be faster. they both have advantages in their way of working, and can both be used side by side.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/InstrGateSpawner.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/InstrGateSpawner.schelp</a><br>link::Classes/InstrGateSpawner::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

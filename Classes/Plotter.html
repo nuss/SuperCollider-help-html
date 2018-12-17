@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>Plotter | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Plotter | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Plotter';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Plotter:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -74,8 +78,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-updatePlots'>updatePlots</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Changing%20global%20defaults'>Changing global defaults</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes</span>
@@ -97,7 +101,7 @@ var scdoc_sc_version = '3.9.3';
 
 <p>Plotter extends other classes with methods. To see what classes implements plot, see <a href="./../Overviews/Methods.html#plot">Methods: plot</a><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='plot' href='./../Overviews/Methods.html#plot'>plot</a>(args)</h3>
 <div class='method'>
-<p><pre class='code prettyprint lang-sc'>// plot array
+<p><textarea class='editor'>// plot array
 [1, 6, 2, -5, 2].plot;
 (0..100).normalize(0, 8pi).sin.plot;
 
@@ -112,11 +116,11 @@ var scdoc_sc_version = '3.9.3';
 Buffer.read(s, Platform.resourceDir +/+ "sounds/SinedPink.aiff").plot;
 
 // Env
-Env.perc(0.4, 0.6).plot;</pre>
+Env.perc(0.4, 0.6).plot;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='plotGraph' href='./../Overviews/Methods.html#plotGraph'>plotGraph</a>(n,from,to,...)</h3>
 <div class='method'>
-<p><pre class='code prettyprint lang-sc'>{ |x| sin(x) }.plotGraph(300,0,2*pi);
-{ |x| sin(1/x)*x }.plotGraph(from:0.0001,to:0.2);</pre>
+<p><textarea class='editor'>{ |x| sin(x) }.plotGraph(300,0,2*pi);
+{ |x| sin(1/x)*x }.plotGraph(from:0.0001,to:0.2);</textarea>
 </div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>Plotter.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>name</span>, <span class='argstr'>bounds</span>, <span class='argstr'>parent</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
@@ -125,10 +129,10 @@ Env.perc(0.4, 0.6).plot;</pre>
 <p>Plot window title.<tr><td class='argumentname'>bounds<td class='argumentdesc'>
 <p>The window bounds (a <a href="./../Classes/Rect.html">Rect</a>).<tr><td class='argumentname'>parent<td class='argumentdesc'>
 <p>Either a <a href="./../Classes/Window.html">Window</a> / <a href="./../Classes/View.html">View</a> may be passed in - then the plot is embedded. Otherwise a new <a href="./../Classes/Window.html">Window</a> is created.</table><h4>Discussion:</h4>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 a = Plotter("the plot", Rect(600, 30, 800, 250));
 a.value = (0..1000).normalize(0, 14pi).curdle(0.01).scramble.flat.sin;
-)</pre>
+)</textarea>
 </div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Accessing%20Instance%20Variables'>Accessing Instance Variables</a></h3>
@@ -145,18 +149,19 @@ a.value = (0..1000).normalize(0, 14pi).curdle(0.01).scramble.flat.sin;
 <table class='arguments'>
 <tr><td class='argumentname'>(symbol)<td class='argumentdesc'>
 <p>Available modes:<table>
-<tr><td><code class='code prettyprint lang-sc'>\linear</code><td>connecting data points with linear interpolation<tr><td><code class='code prettyprint lang-sc'>\points</code><td>draw data points only<tr><td><code class='code prettyprint lang-sc'>\plines</code><td>combination of lines and points<tr><td><code class='code prettyprint lang-sc'>\levels</code><td>horizontal lines<tr><td><code class='code prettyprint lang-sc'>\steps</code><td>connecting data points with step interpolation</table>
+<tr><td><code>\linear</code><td>connecting data points with linear interpolation<tr><td><code>\points</code><td>draw data points only<tr><td><code>\plines</code><td>combination of lines and points<tr><td><code>\levels</code><td>horizontal lines<tr><td><code>\steps</code><td>connecting data points with step interpolation<tr><td><code>\bars</code><td>bar graph with filled bars</table>
 
 <p></table><h4>Discussion:</h4>
-<pre class='code prettyprint lang-sc'>a = (0..20).scramble.plot;
+<textarea class='editor'>a = (0..20).scramble.plot;
 a.plotMode = \points; a.refresh;
 a.plotMode = \plines; a.refresh;
 a.plotMode = \levels; a.refresh;
 a.plotMode = \steps; a.refresh;
-a.plotMode = \linear; a.refresh;</pre>
+a.plotMode = \linear; a.refresh;
+a.plotMode = \bars; a.refresh;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setProperties' href='./../Overviews/Methods.html#setProperties'>setProperties</a>( <span class='argstr'>... pairs</span>)</h3>
 <div class='method'>
-<p>Set properties of all plot views. Defaults are taken from <code class='code prettyprint lang-sc'>GUI.skin.at(\plot);</code><h4>Arguments:</h4>
+<p>Set properties of all plot views. Defaults are taken from <code>GUI.skin.at(\plot);</code><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>... pairs<td class='argumentdesc'>
 <p>A list of symbol,value pairs. Supported properties:<ul>
@@ -164,7 +169,7 @@ a.plotMode = \linear; a.refresh;</pre>
 
 <p></table><h4>Discussion:</h4>
 
-<p>Example:<pre class='code prettyprint lang-sc'>(
+<p>Example:<textarea class='editor'>(
 a = { (0..30).scramble }.dup(2).plot;
 a.setProperties(
     \fontColor, Color.red,
@@ -176,32 +181,32 @@ a.setProperties(
 a.refresh;
 );
 
-GUI.skin.at(\plot); // defaults</pre>
+GUI.skin.at(\plot); // defaults</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-editMode' href='./../Overviews/Methods.html#editMode'>editMode</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-editMode' href='./../Overviews/Methods.html#editMode'>editMode</a> = value</h3>
 <div class='method'>
-<p>If the edit mode is set to true, the data may be edited via cursor.<pre class='code prettyprint lang-sc'>a = (0..20).plot;
+<p>If the edit mode is set to true, the data may be edited via cursor.<textarea class='editor'>a = (0..20).plot;
 a.editMode = true; // now edit the data by clicking into the plot..
-a.value; // the value</pre>
+a.value; // the value</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resolution' href='./../Overviews/Methods.html#resolution'>resolution</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resolution' href='./../Overviews/Methods.html#resolution'>resolution</a> = value</h3>
 <div class='method'>
-<p>Set the number of data points displayed maximally per pixel (default: 1)<pre class='code prettyprint lang-sc'>a = (0..200).scramble.plot;
+<p>Set the number of data points displayed maximally per pixel (default: 1)<textarea class='editor'>a = (0..200).scramble.plot;
 a.resolution = 8; a.refresh; // resizing the window shows interpolation
-a.resolution = 1; a.refresh;</pre>
+a.resolution = 1; a.refresh;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findSpecs' href='./../Overviews/Methods.html#findSpecs'>findSpecs</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findSpecs' href='./../Overviews/Methods.html#findSpecs'>findSpecs</a> = value</h3>
 <div class='method'>
-<p>If true (default: <code class='code prettyprint lang-sc'>true</code>), specs are derived from new data (using min and max values) automatically.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-superpose' href='./../Overviews/Methods.html#superpose'>superpose</a></h3>
+<p>If true (default: <code>true</code>), specs are derived from new data (using min and max values) automatically.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-superpose' href='./../Overviews/Methods.html#superpose'>superpose</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-superpose' href='./../Overviews/Methods.html#superpose'>superpose</a> = <span class='argstr'>flag</span></h3>
 <div class='method'>
-<p>If set to true, plotter displays channels on top of each other (keyboard shortcut: s)<pre class='code prettyprint lang-sc'>a = { (0..30).scramble }.dup(2).plot;
-a.superpose = true; a.refresh;</pre>
+<p>If set to true, plotter displays channels on top of each other (keyboard shortcut: s)<textarea class='editor'>a = { (0..30).scramble }.dup(2).plot;
+a.superpose = true; a.refresh;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-value' href='./../Overviews/Methods.html#value'>value</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-value' href='./../Overviews/Methods.html#value'>value</a> = <span class='argstr'>arrays</span></h3>
 <div class='method'>
-<p>Return or set the data values. Data may be numerical arrays of up to 3 dimensions.<pre class='code prettyprint lang-sc'>a = [1, 4, 2, 7, 4].dup(2).plot;
-a.value;</pre>
+<p>Return or set the data values. Data may be numerical arrays of up to 3 dimensions.<textarea class='editor'>a = [1, 4, 2, 7, 4].dup(2).plot;
+a.value;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-data' href='./../Overviews/Methods.html#data'>data</a></h3>
 <div class='method'>
 <p>Reference to the current internal data.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cursorPos' href='./../Overviews/Methods.html#cursorPos'>cursorPos</a></h3>
@@ -213,19 +218,19 @@ a.value;</pre>
 <p>the single subplots (a <a href="./../Classes/Plot.html">Plot</a>).</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-specs' href='./../Overviews/Methods.html#specs'>specs</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-specs' href='./../Overviews/Methods.html#specs'>specs</a> = <span class='argstr'>argSpecs</span></h3>
 <div class='method'>
-<p>Set or get the spec for the y-axis (codomain).<pre class='code prettyprint lang-sc'>a = { (40..3000).scramble }.dup(2).plot;
-a.specs = \freq.asSpec; a.refresh;</pre>
+<p>Set or get the spec for the y-axis (codomain).<textarea class='editor'>a = { (40..3000).scramble }.dup(2).plot;
+a.specs = \freq.asSpec; a.refresh;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-domainSpecs' href='./../Overviews/Methods.html#domainSpecs'>domainSpecs</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-domainSpecs' href='./../Overviews/Methods.html#domainSpecs'>domainSpecs</a> = <span class='argstr'>argSpecs</span></h3>
 <div class='method'>
-<p>Set or get the spec for the x-axis (domain).<pre class='code prettyprint lang-sc'>a = { (40..300).scramble }.dup(2).plot;
-a.domainSpecs = \freq.asSpec; a.refresh;</pre>
+<p>Set or get the spec for the x-axis (domain).<textarea class='editor'>a = { (40..300).scramble }.dup(2).plot;
+a.domainSpecs = \freq.asSpec; a.refresh;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-editFunc' href='./../Overviews/Methods.html#editFunc'>editFunc</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-editFunc' href='./../Overviews/Methods.html#editFunc'>editFunc</a> = value</h3>
 <div class='method'>
-<p>Supply a function which is evaluated when editing data. The function is called with the arguments: <code class='code prettyprint lang-sc'>plotter</code>, <code class='code prettyprint lang-sc'>plotIndex</code>, <code class='code prettyprint lang-sc'>index</code>, <code class='code prettyprint lang-sc'>val</code>, <code class='code prettyprint lang-sc'>x</code>, <code class='code prettyprint lang-sc'>y</code>.<h4>Discussion:</h4>
+<p>Supply a function which is evaluated when editing data. The function is called with the arguments: <code>plotter</code>, <code>plotIndex</code>, <code>index</code>, <code>val</code>, <code>x</code>, <code>y</code>.<h4>Discussion:</h4>
 
-<p>Example:<pre class='code prettyprint lang-sc'>(
+<p>Example:<textarea class='editor'>(
 a = { (0..10).scramble.normalize }.dup(2).plot;
 a.editMode = true;
 a.editFunc = { |...args| args.postln };
@@ -245,7 +250,7 @@ a.parent.onClose = { x.release };
 
 (
 a = { (0..10).scramble.normalize(300, 400) }.dup.plot;
-a.specs = \freq; a.plotMode = \levels;
+a.specs = \freq; a.plotMode = \bars;
 a.editMode = true;
 x = {
     var phase = SinOsc.ar(\rate.kr(a.value[1]));
@@ -256,7 +261,7 @@ a.editFunc = { |plotter, plotIndex, i, val|
     x.setn(\rate, a.value[1]);
 };
 a.parent.onClose = { x.release };
-);</pre>
+);</textarea>
 </div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bounds' href='./../Overviews/Methods.html#bounds'>bounds</a></h3>
@@ -298,7 +303,7 @@ a.parent.onClose = { x.release };
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-updatePlotSpecs' href='./../Overviews/Methods.html#updatePlotSpecs'>updatePlotSpecs</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-updatePlots' href='./../Overviews/Methods.html#updatePlots'>updatePlots</a></h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>// embedding in another GUI
+<textarea class='editor'>// embedding in another GUI
 (
 w = Window("plot panel", Rect(20, 30, 520, 450));
 Slider.new(w, Rect(10, 10, 490, 20)).resize_(2).action_ { |v|
@@ -394,10 +399,10 @@ Env.new({ 1.0.rand2 }! 8, { 1.0.rand } ! 7, \sin).plot;
 b = Buffer.read(s, Platform.resourceDir +/+ "sounds/SinedPink.aiff");
         // Platform.resourceDir +/+ "sounds/SinedPink.aiff" contains SinOsc on left, PinkNoise on right
 b.plot;
-b.free;</pre>
+b.free;</textarea>
 <h2><a class='anchor' name='Changing%20global%20defaults'>Changing global defaults</a></h2>
 
-<p>The default styles are kept (and may be overridden) in <code class='code prettyprint lang-sc'>GUI.skin.at(\plot)</code>. See also <a href="./../Classes/GUI.html">GUI</a> help.<pre class='code prettyprint lang-sc'>// specify plot layout
+<p>The default styles are kept (and may be overridden) in <code>GUI.skin.at(\plot)</code>. See also <a href="./../Classes/GUI.html">GUI</a> help.<textarea class='editor'>// specify plot layout
 (
 GUI.skin.plot.gridLinePattern = FloatArray[1, 0];
 GUI.skin.plot.fontColor = Color(0.5, 1, 0);
@@ -418,5 +423,6 @@ GUI.skin.plot.put(\plotColor, { Color.rand(0.0, 0.8) } ! 8);
 [(0..100), (20..120), (40..140)].squared.flop.bubble.plot;
 
 // reset the defaults:
-Plot.initClass;</pre>
-<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Plotter.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Plotter.schelp</a><br>link::Classes/Plotter::<br></div></div></body></html>
+Plot.initClass;</textarea>
+<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Plotter.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Plotter.schelp</a><br>link::Classes/Plotter::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

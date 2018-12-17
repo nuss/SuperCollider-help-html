@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>kitchen studies | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>kitchen studies | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'kitchen studies';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>kitchen studies:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -24,8 +28,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc1'><a href='#Part%204%20–%20spectral%20complements%20(FFT)'>Part 4 – spectral complements (FFT)</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Part%205%20–%20frequency%20shift%20with%20feedback'>Part 5 – frequency shift with feedback</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Part%206%20–%20band%20pass'>Part 6 – band pass</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Tutorials (extension)</span>
@@ -44,7 +48,7 @@ var scdoc_sc_version = '3.9.3';
 </div><div class='note'><span class='notelabel'>NOTE:</span> <ul>
 <li><strong>Running the code examples:</strong> First run the code from chapter <a href="#Preparations">Preparations</a> - i.e. start server with extended ressources and evaluate the following block of code. Then you can run the example code of each part (but not in parallel). See the comments of <a href="#1">Part 1</a>, many of them explain principles, which are used in all other parts too. Similary, gui conventions are pretty much the same for all six parts, see the note on <a href="#0">common VarGui features</a> below.<li><strong>Types of variables:</strong> For employing the VarGui interface environmental variables and PLx patterns are used. With VarGui every EventStreamPlayer derived from a passed Pattern is run in a separate newly generated Environment, where variables are being set and Streams from Pfuncs and PLx patterns are reading from. See <a href="./../Tutorials/Event_patterns_and_Functions.html">Event patterns and Functions</a>, <a href="./../Tutorials/PLx_suite.html">PLx suite</a> and <a href="./../Classes/VarGui.html">VarGui</a>. For certain live replacements though, environmental variables in topEnvironment are chosen and for the sake of clarity some interpreter variables are used too. As a result of these two exceptions the six code blocks, as they are, cannot be run in parallel. As each one is producing dense and rich sound structures it was supposed that combining them in realtime would not be the first option anyway (but it could of course be done by rewriting these variables).<li><strong>Buffers:</strong> All examples below expect mono buffers like the delivered kitchen sound. Buffer paths refering to the included sample suppose that you have moved miSCellaneous lib into the user extensions directory directly (not into a subfolder), if not so or you have moved the sample file somewhere else you'd have to change paths accordingly.<li><strong>Versions:</strong> For the published version of <em>kitchen studies</em> I worked on OS 10.6 / SC 3.6.5 and OS 10.8.5 / SC 3.8.0, slight differences in sound might occur with other hardware, operating systems and SC versions.</ul>
 </div><h2><a class='anchor' name='Preparations'>Preparations</a></h2>
-<pre class='code prettyprint lang-sc'>// start server with extended ressources
+<textarea class='editor'>// start server with extended ressources
 
 (
 s.options.numPrivateAudioBusChannels = 2048;
@@ -148,7 +152,7 @@ d.attRel = { |dict, granDur, att, rel, absEnv = 1|
         }
     }
 };
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='0'>&nbsp;</a><div class='note'><span class='notelabel'>NOTE:</span> <strong>Common features of dedicated VarGuis</strong>
 <p>The slider section always contains two blocks, the lower one is for parameters of the buffer position synth and the upper one is for parameters of the PbindFx. Within the lower block the relative buffer position is determined by parameters 'posLo' and 'posHi'. As the percussive event within the the loaded kitchen sound appears around position 0.3, most position defaults describe a relatively small section around this value. The deviation of position as well as the rate of movement through the buffer are determined by a mantissa-exponent representation each. Finally four types of movement are defined: 0 = forward, 1 = backward, 2 = forward and backward, 3 = random with cubic interpolation.
@@ -156,7 +160,7 @@ d.attRel = { |dict, granDur, att, rel, absEnv = 1|
 <p>Amplitude parameters 'amp' occur with grain synths as well as with effect synths, in the latter case they appear with the fx name as suffix in the gui. Their meaning is not the same in all cases, mostly they are understood as amplitudes of the fx-processed signal ("pre-mix"), but they can be applied to the mix too ("post-mix"). In the case of a combined fx/no-fx sequencing a more fine-tuned amplitude control can be achieved with applying a separate gain fx, which is used instead of no effect. For the the sake of clarity this is only done within the last part.
 <p>The EventStreamPlayer derived from the PbindFx (e0 on the right side) and the buffer position synth can be started separately by pressing the green buttons. Note that patches can also be controlled by setting certain PL proxy pattern sources as shown at the bottom of part 1. Regarding the compositional process of <em>kitchen studies</em>, the final sounding result very much depends on the decision which parameters are controlled by pattern sequencing and which ones are controlled by gui-tunable parameters. Such decisions happened during a long process of experimenting which usually started with gui control for all parameters. However for the final version no live-control with sliders has been recorded, parameters were either fixed or algorithmically controlled by patterns.</div>
 <p><a class='anchor' name='1'>&nbsp;</a><h2><a class='anchor' name='Part%201%20–%20comb%20delay%20plus%20separate%20delay%20modulation'>Part 1 – comb delay plus separate delay modulation</a></h2>
-<pre class='code prettyprint lang-sc'>// This granulation combines two effects in sequence.
+<textarea class='editor'>// This granulation combines two effects in sequence.
 // The same effect chain (fxOrder = [1, 2]) is used for all grains but parameters change.
 
 (
@@ -320,9 +324,9 @@ v.performWithEnvir(\gui, w)
 
 // after stopping free leakDC synth
 
-x.free</pre>
+x.free</textarea>
 <h2><a class='anchor' name='Part%202%20–%20rectangular%20comb%20(FFT)'>Part 2 – rectangular comb (FFT)</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 // rectangular comb, FFT processing per grain
 
 SynthDef(\pv_rectComb, { |out = 0, in, numTeeth = 0, width = 0.5, phase = 0, mix = 1,
@@ -466,9 +470,9 @@ v.performWithEnvir(\gui, w)
 
 // after stopping free leakDC synth
 
-x.free</pre>
+x.free</textarea>
 <h2><a class='anchor' name='Part%203%20–%20resampling'>Part 3 – resampling</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 // fx with "post-mix" amplitude
 
 SynthDef(\resample, { |out = 0, in, mix = 0.5, amp = 1, resampleRate = 44100|
@@ -582,9 +586,9 @@ v.performWithEnvir(\gui, w)
 
 // after stopping free leakDC synth
 
-x.free</pre>
+x.free</textarea>
 <h2><a class='anchor' name='Part%204%20–%20spectral%20complements%20(FFT)'>Part 4 – spectral complements (FFT)</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 // emphasizes / supresses bin range and / or complement
 // uses pseudo ugens PV_BinRange and PV_BinGap
 
@@ -745,9 +749,9 @@ v.performWithEnvir(\gui, w)
 
 // after stopping free leakDC synth
 
-x.free</pre>
+x.free</textarea>
 <h2><a class='anchor' name='Part%205%20–%20frequency%20shift%20with%20feedback'>Part 5 – frequency shift with feedback</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 // frequency shift with feedback
 // "post-mix" fx amplitude
 
@@ -873,9 +877,9 @@ v.performWithEnvir(\gui, w)
 
 // after stopping free leakDC synth
 
-x.free</pre>
+x.free</textarea>
 <h2><a class='anchor' name='Part%206%20–%20band%20pass'>Part 6 – band pass</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 // band pass
 // "post-mix" fx amplitude
 
@@ -1023,5 +1027,6 @@ v.performWithEnvir(\gui, w)
 
 // after stopping free leakDC synth
 
-x.free</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/kitchen_studies.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/kitchen_studies.schelp</a><br>link::Tutorials/kitchen_studies::<br></div></div></body></html>
+x.free</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/kitchen_studies.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/kitchen_studies.schelp</a><br>link::Tutorials/kitchen_studies::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

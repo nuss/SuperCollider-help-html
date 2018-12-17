@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>Color | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Color | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Color';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Color:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -100,8 +104,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-webHex'>webHex</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#X-windows%20colors'>X-windows colors</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes</span>
@@ -117,7 +121,7 @@ var scdoc_sc_version = '3.9.3';
 <p><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>An object which stores red, green, blue, and alpha values in instance variables, and provides numerous class and instance methods for creating and manipulating these values.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>red: 0</span>, <span class='argstr'>green: 0</span>, <span class='argstr'>blue: 0</span>, <span class='argstr'>alpha: 1</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>red: 0.0</span>, <span class='argstr'>green: 0.0</span>, <span class='argstr'>blue: 0.0</span>, <span class='argstr'>alpha: 1.0</span>)</h3>
 <div class='method'>
 <p>Create a new instance with float values.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -135,7 +139,7 @@ var scdoc_sc_version = '3.9.3';
 <p>An <a href="./../Classes/Integer.html">Integer</a> between 0 and 255.<tr><td class='argumentname'>alpha<td class='argumentdesc'>
 <p>An <a href="./../Classes/Integer.html">Integer</a> between 0 and 255.</table></div><h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*fromArray' href='./../Overviews/Methods.html#fromArray'>fromArray</a>(<span class='argstr'>array</span>)</h3>
 <div class='method'>
-<p>Same as <code class='code prettyprint lang-sc'>Color.new(*array)</code>.<h4>Arguments:</h4>
+<p>Same as <code>Color.new(*array)</code>.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>array<td class='argumentdesc'>
 <p>An instance of <a href="./../Classes/Array.html">Array</a>. 1-4 values between 0 and 1. See <a href="#*new">*new</a>.</table></div><h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*fromHexString' href='./../Overviews/Methods.html#fromHexString'>fromHexString</a>(<span class='argstr'>string</span>)</h3>
@@ -145,31 +149,31 @@ var scdoc_sc_version = '3.9.3';
 <tr><td class='argumentname'>string<td class='argumentdesc'>
 <p>A <a href="./../Classes/String.html">String</a>.</table><h4>Discussion:</h4>
 
-<p>The string should be a 6 character web color, or a 3 character CSS style color. A preceding # is optional.<pre class='code prettyprint lang-sc'>Color.fromHexString("#FF6600");</pre>
+<p>The string should be a 6 character web color, or a 3 character CSS style color. A preceding # is optional.<textarea class='editor'>Color.fromHexString("#FF6600");</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*black' href='./../Overviews/Methods.html#black'>black</a></h3>
 <div class='method'>
 <p>Nothing is darker.</div><h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*white' href='./../Overviews/Methods.html#white'>white</a></h3>
 <div class='method'>
 <p>Nothing is lighter.</div><h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*clear' href='./../Overviews/Methods.html#clear'>clear</a></h3>
 <div class='method'>
-<p>Nothing is more clear.</div><h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*gray' href='./../Overviews/Methods.html#gray'>gray</a>(<span class='argstr'>gray: 0.5</span>, <span class='argstr'>alpha: 1</span>)</h3>
+<p>Nothing is more clear.</div><h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*gray' href='./../Overviews/Methods.html#gray'>gray</a>(<span class='argstr'>gray: 0.5</span>, <span class='argstr'>alpha: 1.0</span>)</h3>
 <div class='method'>
 <p>American shades of grey.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>gray<td class='argumentdesc'>
 <p>Shades between 0 (black) and 1 (white) as <a href="./../Classes/Float.html">Float</a>.<tr><td class='argumentname'>alpha<td class='argumentdesc'>
-<p>Transparency of gray between 0 and 1 as <a href="./../Classes/Float.html">Float</a>.</table></div><h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*grey' href='./../Overviews/Methods.html#grey'>grey</a>(<span class='argstr'>grey: 0.5</span>, <span class='argstr'>alpha: 1</span>)</h3>
+<p>Transparency of gray between 0 and 1 as <a href="./../Classes/Float.html">Float</a>.</table></div><h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*grey' href='./../Overviews/Methods.html#grey'>grey</a>(<span class='argstr'>grey: 0.5</span>, <span class='argstr'>alpha: 1.0</span>)</h3>
 <div class='method'>
 <p>British shades of grey.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>grey<td class='argumentdesc'>
 <p>Shades between 0 (black) and 1 (white) as <a href="./../Classes/Float.html">Float</a>.<tr><td class='argumentname'>alpha<td class='argumentdesc'>
-<p>Transparency of grey between 0 and 1 as <a href="./../Classes/Float.html">Float</a>.</table></div><h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*red' href='./../Overviews/Methods.html#red'>red</a>(<span class='argstr'>val: 1</span>, <span class='argstr'>alpha: 1</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*green' href='./../Overviews/Methods.html#green'>green</a>(<span class='argstr'>val: 1</span>, <span class='argstr'>alpha: 1</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*blue' href='./../Overviews/Methods.html#blue'>blue</a>(<span class='argstr'>val: 1</span>, <span class='argstr'>alpha: 1</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*cyan' href='./../Overviews/Methods.html#cyan'>cyan</a>(<span class='argstr'>val: 1</span>, <span class='argstr'>alpha: 1</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*magenta' href='./../Overviews/Methods.html#magenta'>magenta</a>(<span class='argstr'>val: 1</span>, <span class='argstr'>alpha: 1</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*yellow' href='./../Overviews/Methods.html#yellow'>yellow</a>(<span class='argstr'>val: 1</span>, <span class='argstr'>alpha: 1</span>)</h3>
+<p>Transparency of grey between 0 and 1 as <a href="./../Classes/Float.html">Float</a>.</table></div><h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*red' href='./../Overviews/Methods.html#red'>red</a>(<span class='argstr'>val: 1.0</span>, <span class='argstr'>alpha: 1.0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*green' href='./../Overviews/Methods.html#green'>green</a>(<span class='argstr'>val: 1.0</span>, <span class='argstr'>alpha: 1.0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*blue' href='./../Overviews/Methods.html#blue'>blue</a>(<span class='argstr'>val: 1.0</span>, <span class='argstr'>alpha: 1.0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*cyan' href='./../Overviews/Methods.html#cyan'>cyan</a>(<span class='argstr'>val: 1.0</span>, <span class='argstr'>alpha: 1.0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*magenta' href='./../Overviews/Methods.html#magenta'>magenta</a>(<span class='argstr'>val: 1.0</span>, <span class='argstr'>alpha: 1.0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*yellow' href='./../Overviews/Methods.html#yellow'>yellow</a>(<span class='argstr'>val: 1.0</span>, <span class='argstr'>alpha: 1.0</span>)</h3>
 <div class='method'>
 <p>Create a new red, green, blue, cyan, magenta or yellow Color.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -177,7 +181,7 @@ var scdoc_sc_version = '3.9.3';
 <p>An instance of <a href="./../Classes/Float.html">Float</a> between 0 and 1, where 1 is the bright, fully saturated color, and 0 is black.<tr><td class='argumentname'>alpha<td class='argumentdesc'>
 <p>Transparency between 0 and 1 as <a href="./../Classes/Float.html">Float</a>.</table></div><h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*rand' href='./../Overviews/Methods.html#rand'>rand</a>(<span class='argstr'>lo: 0.3</span>, <span class='argstr'>hi: 0.9</span>)</h3>
 <div class='method'>
-<p>A random RGB Color where the colors are randomly chosen between <code class='code prettyprint lang-sc'>lo</code> and <code class='code prettyprint lang-sc'>hi</code>. See <a href="./../Classes/Color.html#new">Color: new</a>.<h4>Arguments:</h4>
+<p>A random RGB Color where the colors are randomly chosen between <code>lo</code> and <code>hi</code>. See <a href="./../Classes/Color.html#new">Color: new</a>.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>lo<td class='argumentdesc'>
 <p>An instance of <a href="./../Classes/Float.html">Float</a> between 0 and 1.<tr><td class='argumentname'>hi<td class='argumentdesc'>
@@ -199,15 +203,15 @@ var scdoc_sc_version = '3.9.3';
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*sortedWebColors' href='./../Overviews/Methods.html#sortedWebColors'>sortedWebColors</a>(<span class='argstr'>index</span>, <span class='argstr'>table</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*web' href='./../Overviews/Methods.html#web'>web</a>(<span class='argstr'>name</span>, <span class='argstr'>alpha: 1</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*web' href='./../Overviews/Methods.html#web'>web</a>(<span class='argstr'>name</span>, <span class='argstr'>alpha: 1.0</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*web16' href='./../Overviews/Methods.html#web16'>web16</a>(<span class='argstr'>name</span>, <span class='argstr'>alpha: 1</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*web16' href='./../Overviews/Methods.html#web16'>web16</a>(<span class='argstr'>name</span>, <span class='argstr'>alpha: 1.0</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*webNameIndex' href='./../Overviews/Methods.html#webNameIndex'>webNameIndex</a>(<span class='argstr'>name: 'white'</span>, <span class='argstr'>table</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*xwindows' href='./../Overviews/Methods.html#xwindows'>xwindows</a>(<span class='argstr'>name</span>, <span class='argstr'>alpha: 1</span>, <span class='argstr'>includeGrayShades: false</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*xwindows' href='./../Overviews/Methods.html#xwindows'>xwindows</a>(<span class='argstr'>name</span>, <span class='argstr'>alpha: 1.0</span>, <span class='argstr'>includeGrayShades: false</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*xwindowsBW' href='./../Overviews/Methods.html#xwindowsBW'>xwindowsBW</a>(<span class='argstr'>name</span>, <span class='argstr'>alpha: 1</span>, <span class='argstr'>includeGrayShades: true</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Color.</span><a class='method-name' name='*xwindowsBW' href='./../Overviews/Methods.html#xwindowsBW'>xwindowsBW</a>(<span class='argstr'>name</span>, <span class='argstr'>alpha: 1.0</span>, <span class='argstr'>includeGrayShades: true</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc</a></div>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-red' href='./../Overviews/Methods.html#red'>red</a></h3>
@@ -219,22 +223,22 @@ var scdoc_sc_version = '3.9.3';
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-alpha' href='./../Overviews/Methods.html#alpha'>alpha</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-alpha' href='./../Overviews/Methods.html#alpha'>alpha</a> = value</h3>
 <div class='method'>
-<p>Get/set one of the instance variables, <code class='code prettyprint lang-sc'>red</code>, <code class='code prettyprint lang-sc'>green</code>, <code class='code prettyprint lang-sc'>blue</code>, or <code class='code prettyprint lang-sc'>alpha</code>.<h4>Returns:</h4>
+<p>Get/set one of the instance variables, <code>red</code>, <code>green</code>, <code>blue</code>, or <code>alpha</code>.<h4>Returns:</h4>
 <div class='returnvalue'>
 <p>An instance of <a href="./../Classes/Float.html">Float</a> between 0 and 1.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-hexString' href='./../Overviews/Methods.html#hexString'>hexString</a></h3>
 <div class='method'>
-<p>Returns a <a href="./../Classes/String.html">String</a> containing a 6 character web color code, preceded by a #.<pre class='code prettyprint lang-sc'>Color(1.0, 0.4).hexString;</pre>
+<p>Returns a <a href="./../Classes/String.html">String</a> containing a 6 character web color code, preceded by a #.<textarea class='editor'>Color(1.0, 0.4).hexString;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-==' href='./../Overviews/Methods.html#=='>==</a>(<span class='argstr'>that</span>)</h3>
 <div class='method'>
-<p>Binary operator.<pre class='code prettyprint lang-sc'>// returns true
-Color.new255(0, 0, 255, 255) == Color.new(0, 0, 1, 1)</pre>
+<p>Binary operator.<textarea class='editor'>// returns true
+Color.new255(0, 0, 255, 255) == Color.new(0, 0, 1, 1)</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scaleByAlpha' href='./../Overviews/Methods.html#scaleByAlpha'>scaleByAlpha</a></h3>
 <div class='method'>
-<p>Returns a Color, where <code class='code prettyprint lang-sc'>red</code>, <code class='code prettyprint lang-sc'>green</code>, and <code class='code prettyprint lang-sc'>blue</code> are scaled by the <code class='code prettyprint lang-sc'>alpha</code> value, and alpha is set to 1.<pre class='code prettyprint lang-sc'>// returns true:
-Color(1, 0.5, 1, 0.5).scaleByAlpha == Color(0.5, 0.25, 0.5, 1)</pre>
+<p>Returns a Color, where <code>red</code>, <code>green</code>, and <code>blue</code> are scaled by the <code>alpha</code> value, and alpha is set to 1.<textarea class='editor'>// returns true:
+Color(1, 0.5, 1, 0.5).scaleByAlpha == Color(0.5, 0.25, 0.5, 1)</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-blend' href='./../Overviews/Methods.html#blend'>blend</a>(<span class='argstr'>that</span>, <span class='argstr'>blend: 0.5</span>)</h3>
 <div class='method'>
-<p>Interpolates the <code class='code prettyprint lang-sc'>red</code>, <code class='code prettyprint lang-sc'>green</code>, <code class='code prettyprint lang-sc'>blue</code>, and <code class='code prettyprint lang-sc'>alpha</code> values of two Colors, linearly weighting between the first and the second.<h4>Arguments:</h4>
+<p>Interpolates the <code>red</code>, <code>green</code>, <code>blue</code>, and <code>alpha</code> values of two Colors, linearly weighting between the first and the second.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>that<td class='argumentdesc'>
 <p>A second Color.<tr><td class='argumentname'>blend<td class='argumentdesc'>
@@ -248,81 +252,81 @@ Color(1, 0.5, 1, 0.5).scaleByAlpha == Color(0.5, 0.25, 0.5, 1)</pre>
 <p>High-clips the RGB variation here.<tr><td class='argumentname'>alphaVal<td class='argumentdesc'>
 <p>Varies the alpha value +/- this amount, and clips it between 0 and 1.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-complementary' href='./../Overviews/Methods.html#complementary'>complementary</a></h3>
 <div class='method'>
-<p>Returns the complementary color.<pre class='code prettyprint lang-sc'>// returns true:
-Color(1, 0.5, 1, 0.5).complementary == Color(0.0, 0.5, 0.0, 0.5)</pre>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-multiply' href='./../Overviews/Methods.html#multiply'>multiply</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1</span>)</h3>
+<p>Returns the complementary color.<textarea class='editor'>// returns true:
+Color(1, 0.5, 1, 0.5).complementary == Color(0.0, 0.5, 0.0, 0.5)</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-multiply' href='./../Overviews/Methods.html#multiply'>multiply</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>aColor<td class='argumentdesc'>
 <p>An instance of Color.<tr><td class='argumentname'>opacity<td class='argumentdesc'>
-<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-divide' href='./../Overviews/Methods.html#divide'>divide</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1</span>)</h3>
+<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-divide' href='./../Overviews/Methods.html#divide'>divide</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>aColor<td class='argumentdesc'>
 <p>An instance of Color.<tr><td class='argumentname'>opacity<td class='argumentdesc'>
-<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-subtract' href='./../Overviews/Methods.html#subtract'>subtract</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1</span>)</h3>
+<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-subtract' href='./../Overviews/Methods.html#subtract'>subtract</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>aColor<td class='argumentdesc'>
 <p>An instance of Color.<tr><td class='argumentname'>opacity<td class='argumentdesc'>
-<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-add' href='./../Overviews/Methods.html#add'>add</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1</span>)</h3>
+<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-add' href='./../Overviews/Methods.html#add'>add</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>aColor<td class='argumentdesc'>
 <p>An instance of Color.<tr><td class='argumentname'>opacity<td class='argumentdesc'>
-<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-symmetricDifference' href='./../Overviews/Methods.html#symmetricDifference'>symmetricDifference</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1</span>)</h3>
+<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-symmetricDifference' href='./../Overviews/Methods.html#symmetricDifference'>symmetricDifference</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>aColor<td class='argumentdesc'>
 <p>An instance of Color.<tr><td class='argumentname'>opacity<td class='argumentdesc'>
-<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-screen' href='./../Overviews/Methods.html#screen'>screen</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1</span>)</h3>
+<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-screen' href='./../Overviews/Methods.html#screen'>screen</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>aColor<td class='argumentdesc'>
 <p>An instance of Color.<tr><td class='argumentname'>opacity<td class='argumentdesc'>
-<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lighten' href='./../Overviews/Methods.html#lighten'>lighten</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1</span>)</h3>
+<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lighten' href='./../Overviews/Methods.html#lighten'>lighten</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>aColor<td class='argumentdesc'>
 <p>An instance of Color.<tr><td class='argumentname'>opacity<td class='argumentdesc'>
-<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-darken' href='./../Overviews/Methods.html#darken'>darken</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1</span>)</h3>
+<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-darken' href='./../Overviews/Methods.html#darken'>darken</a>(<span class='argstr'>aColor</span>, <span class='argstr'>opacity: 1.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>aColor<td class='argumentdesc'>
 <p>An instance of Color.<tr><td class='argumentname'>opacity<td class='argumentdesc'>
-<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-hueBlend' href='./../Overviews/Methods.html#hueBlend'>hueBlend</a>(<span class='argstr'>aColor</span>, <span class='argstr'>blend: 0</span>)</h3>
+<p>A value between 0 and 1. Default value is 1.0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-hueBlend' href='./../Overviews/Methods.html#hueBlend'>hueBlend</a>(<span class='argstr'>aColor</span>, <span class='argstr'>blend: 0.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>aColor<td class='argumentdesc'>
 <p>An instance of Color.<tr><td class='argumentname'>blend<td class='argumentdesc'>
-<p>A value between 0 and 1. Default value is 0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-saturationBlend' href='./../Overviews/Methods.html#saturationBlend'>saturationBlend</a>(<span class='argstr'>aColor</span>, <span class='argstr'>blend: 0</span>)</h3>
+<p>A value between 0 and 1. Default value is 0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-saturationBlend' href='./../Overviews/Methods.html#saturationBlend'>saturationBlend</a>(<span class='argstr'>aColor</span>, <span class='argstr'>blend: 0.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>aColor<td class='argumentdesc'>
 <p>An instance of Color.<tr><td class='argumentname'>blend<td class='argumentdesc'>
-<p>A value between 0 and 1. Default value is 0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-valueBlend' href='./../Overviews/Methods.html#valueBlend'>valueBlend</a>(<span class='argstr'>aColor</span>, <span class='argstr'>blend: 0</span>)</h3>
+<p>A value between 0 and 1. Default value is 0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-valueBlend' href='./../Overviews/Methods.html#valueBlend'>valueBlend</a>(<span class='argstr'>aColor</span>, <span class='argstr'>blend: 0.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>aColor<td class='argumentdesc'>
 <p>An instance of Color.<tr><td class='argumentname'>blend<td class='argumentdesc'>
 <p>A value between 0 and 1. Default value is 0.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asHSV' href='./../Overviews/Methods.html#asHSV'>asHSV</a></h3>
 <div class='method'>
-<p>Returns an array with <code class='code prettyprint lang-sc'>[hue, saturation, value, alpha]</code>, as values between 0 and 1.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asArray' href='./../Overviews/Methods.html#asArray'>asArray</a></h3>
+<p>Returns an array with <code>[hue, saturation, value, alpha]</code>, as values between 0 and 1.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asArray' href='./../Overviews/Methods.html#asArray'>asArray</a></h3>
 <div class='method'>
-<p>Returns an array with <code class='code prettyprint lang-sc'>[red, green, blue, alpha]</code>, as values between 0 and 1.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-storeArgs' href='./../Overviews/Methods.html#storeArgs'>storeArgs</a></h3>
+<p>Returns an array with <code>[red, green, blue, alpha]</code>, as values between 0 and 1.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-storeArgs' href='./../Overviews/Methods.html#storeArgs'>storeArgs</a></h3>
 <div class='method'>
-<p>Returns an array with <code class='code prettyprint lang-sc'>[red, green, blue, alpha]</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setStroke' href='./../Overviews/Methods.html#setStroke'>setStroke</a></h3>
+<p>Returns an array with <code>[red, green, blue, alpha]</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setStroke' href='./../Overviews/Methods.html#setStroke'>setStroke</a></h3>
 <div class='method'>
-<p>For use with <a href="./../Classes/Pen.html">Pen</a>. Sets the <code class='code prettyprint lang-sc'>stroke</code> of <a href="./../Classes/Pen.html">Pen</a> to this.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setFill' href='./../Overviews/Methods.html#setFill'>setFill</a></h3>
+<p>For use with <a href="./../Classes/Pen.html">Pen</a>. Sets the <code>stroke</code> of <a href="./../Classes/Pen.html">Pen</a> to this.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setFill' href='./../Overviews/Methods.html#setFill'>setFill</a></h3>
 <div class='method'>
-<p>For use with <a href="./../Classes/Pen.html">Pen</a>. Sets the <code class='code prettyprint lang-sc'>fill</code> of <a href="./../Classes/Pen.html">Pen</a> to this.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-set' href='./../Overviews/Methods.html#set'>set</a></h3>
+<p>For use with <a href="./../Classes/Pen.html">Pen</a>. Sets the <code>fill</code> of <a href="./../Classes/Pen.html">Pen</a> to this.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-set' href='./../Overviews/Methods.html#set'>set</a></h3>
 <div class='method'>
-<p>For use with <a href="./../Classes/Pen.html">Pen</a>. Sets the <code class='code prettyprint lang-sc'>stroke</code> and <code class='code prettyprint lang-sc'>fill</code> of <a href="./../Classes/Pen.html">Pen</a> to this.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-round' href='./../Overviews/Methods.html#round'>round</a>(<span class='argstr'>val: 0.01</span>)</h3>
+<p>For use with <a href="./../Classes/Pen.html">Pen</a>. Sets the <code>stroke</code> and <code>fill</code> of <a href="./../Classes/Pen.html">Pen</a> to this.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-round' href='./../Overviews/Methods.html#round'>round</a>(<span class='argstr'>val: 0.01</span>)</h3>
 <div class='method'>
 <p>Round the color.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 </h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-alphaCopy' href='./../Overviews/Methods.html#alphaCopy'>alphaCopy</a> = <span class='argstr'>alpha: 1</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-alphaCopy' href='./../Overviews/Methods.html#alphaCopy'>alphaCopy</a> = <span class='argstr'>alpha: 1.0</span></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extGradient-fill.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extGradient-fill.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asColor' href='./../Overviews/Methods.html#asColor'>asColor</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SVGFile/extVarious-SVGFile.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SVGFile/extVarious-SVGFile.sc</a></div>
@@ -365,7 +369,7 @@ Color(1, 0.5, 1, 0.5).complementary == Color(0.0, 0.5, 0.0, 0.5)</pre>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/SC-Utilities/colors/extColor.sc'>/home/stefan/.local/share/SuperCollider/Extensions/SC-Utilities/colors/extColor.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lightness' href='./../Overviews/Methods.html#lightness'>lightness</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-penFill' href='./../Overviews/Methods.html#penFill'>penFill</a>(<span class='argstr'>rect</span>, <span class='argstr'>alpha: 1</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-penFill' href='./../Overviews/Methods.html#penFill'>penFill</a>(<span class='argstr'>rect</span>, <span class='argstr'>alpha: 1.0</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extGradient-fill.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extGradient-fill.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-roundHex' href='./../Overviews/Methods.html#roundHex'>roundHex</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc</a></div>
@@ -384,7 +388,7 @@ Color(1, 0.5, 1, 0.5).complementary == Color(0.0, 0.5, 0.0, 0.5)</pre>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-webHex' href='./../Overviews/Methods.html#webHex'>webHex</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extColor-web.sc</a></div>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 w = Window.new.front;
 w.view.background_(Color.white);
 w.drawFunc = {
@@ -405,9 +409,9 @@ w.drawFunc = {
     }
 };
 w.refresh;
-)</pre>
+)</textarea>
 <h2><a class='anchor' name='X-windows%20colors'>X-windows colors</a></h2>
-<pre class='code prettyprint lang-sc'>'alice blue' -&gt; Color.new255(240, 248, 255),
+<textarea class='editor'>'alice blue' -&gt; Color.new255(240, 248, 255),
 'AliceBlue' -&gt; Color.new255(240, 248, 255),
 'antique white' -&gt; Color.new255(250, 235, 215),
 'AntiqueWhite' -&gt; Color.new255(250, 235, 215),
@@ -1144,6 +1148,7 @@ w.refresh;
 'yellow2' -&gt; Color.new255(238, 238, 0),
 'yellow3' -&gt; Color.new255(205, 205, 0),
 'yellow4' -&gt; Color.new255(139, 139, 0),
-'YellowGreen' -&gt; Color.new255(154, 205, 50)</pre>
+'YellowGreen' -&gt; Color.new255(154, 205, 50)</textarea>
 
-<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Color.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Color.schelp</a><br>link::Classes/Color::<br></div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Color.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Color.schelp</a><br>link::Classes/Color::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

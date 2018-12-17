@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>NumberEditor | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>NumberEditor | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'NumberEditor';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>NumberEditor:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -36,8 +40,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-guiClass'>guiClass</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -55,7 +59,7 @@ var scdoc_sc_version = '3.9.3';
 <p>This is the default control for a StaticSpec.
 <p>If used in a Patch, it will return its initial value when the patch starts, but will not be modulateable after that. See <a href="./../Classes/KrNumberEditor.html">KrNumberEditor</a> for modulateable.
 <p>NumberEditor can also be used in <a href="./../Classes/Pbind.html">Pbind</a>, since it returns its float value in response to .next or .value<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>NumberEditor.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>value: 1</span>, <span class='argstr'>spec: 'amp'</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>NumberEditor.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>value: 1.0</span>, <span class='argstr'>spec: 'amp'</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>value<td class='argumentdesc'>
@@ -96,7 +100,7 @@ var scdoc_sc_version = '3.9.3';
 <div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-guiClass' href='./../Overviews/Methods.html#guiClass'>guiClass</a></h3>
 <div class='method'></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>// an Editor is not a gui, it is a holder of a value
+<textarea class='editor'>// an Editor is not a gui, it is a holder of a value
 (
 n = NumberEditor(2.3,[0,10]);
 n.value = 5.6;
@@ -116,10 +120,10 @@ n.dump;
 n=NumberEditor(440.0,\freq);
 n.gui;
 n.dump;
-)</pre>
+)</textarea>
 
 <p>control-drag up/down in the number box scales the value shift-control-drag for finer control
-<p>option click on the number box to reset the value to the spec's default<pre class='code prettyprint lang-sc'>(
+<p>option click on the number box to reset the value to the spec's default<textarea class='editor'>(
     f=Window.new.front;
     f.flow({ arg f;
 
@@ -137,9 +141,9 @@ n.dump;
 
 // programatically set it
 n.value = 100 // onscreen slider does not move yet
-n.changed; // now the slider moves</pre>
+n.changed; // now the slider moves</textarea>
 
-<p>Note that if this slider is used in a Patch then it sends the .set message to the synth on the server only when .changed is invoked this is because neither the Patch nor the NumberEditor does the sending its a separate utility object that is a registered dependent of the NumberEditor<pre class='code prettyprint lang-sc'>// controlling the display size in various ways
+<p>Note that if this slider is used in a Patch then it sends the .set message to the synth on the server only when .changed is invoked this is because neither the Patch nor the NumberEditor does the sending its a separate utility object that is a registered dependent of the NumberEditor<textarea class='editor'>// controlling the display size in various ways
 (
 Sheet({ arg f;
     f.startRow;
@@ -168,8 +172,8 @@ Sheet({ arg f;
     NumberEditor(440.0,\freq).gui(f,20@100,true);    // verticle, with slider
     NumberEditor(440.0,\freq).gui(f,20@100,true);    // verticle, with slider
 })
-)</pre>
-<pre class='code prettyprint lang-sc'>(
+)</textarea>
+<textarea class='editor'>(
 w = Window.new.front;
 w.flow { |f|
 
@@ -192,9 +196,9 @@ w.flow { |f|
     NumberEditor(440,\freq).gui(f,30@150);
 
 }
-)</pre>
+)</textarea>
 
-<p>Putting them on a Sheet<pre class='code prettyprint lang-sc'>(
+<p>Putting them on a Sheet<textarea class='editor'>(
 w = Sheet({ arg h;
     c = Array.fill(10,{ arg i;
         var n;
@@ -205,9 +209,9 @@ w = Sheet({ arg h;
     });
 });
 
-)</pre>
+)</textarea>
 
-<p>Putting them on a PageLayout<pre class='code prettyprint lang-sc'>(
+<p>Putting them on a PageLayout<textarea class='editor'>(
 w = PageLayout.new;
 c = Array.fill(10,{ arg i;
     var n;
@@ -217,9 +221,9 @@ c = Array.fill(10,{ arg i;
     n
 });
 w.front;
-)</pre>
+)</textarea>
 
-<p>Putting them on normal windows<pre class='code prettyprint lang-sc'>// broken ! didn't take the incoming bounds origin
+<p>Putting them on normal windows<textarea class='editor'>// broken ! didn't take the incoming bounds origin
 (
 w = GUI.window.new;
 w.front;
@@ -230,9 +234,9 @@ c = Array.fill(10,{ arg i;
     n
 });
 
-)</pre>
+)</textarea>
 
-<p>using a PageLayout on a window<pre class='code prettyprint lang-sc'>(
+<p>using a PageLayout on a window<textarea class='editor'>(
 
 w = GUI.window.new;
 w.front;
@@ -245,9 +249,9 @@ c = Array.fill(10,{ arg i;
     n
 });
 
-)</pre>
+)</textarea>
 
-<p>put them on a FlowView<pre class='code prettyprint lang-sc'>(
+<p>put them on a FlowView<textarea class='editor'>(
 
 w = GUI.window.new;
 w.front;
@@ -260,8 +264,8 @@ c = Array.fill(10,{ arg i;
     n
 });
 
-)</pre>
-<pre class='code prettyprint lang-sc'>//verticle not working yet
+)</textarea>
+<textarea class='editor'>//verticle not working yet
 (
 w = GUI.window.new;
 w.front;
@@ -300,5 +304,6 @@ c = Array.fill(10,{ arg i;
     n
 });
 
-)</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/NumberEditor.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/NumberEditor.schelp</a><br>link::Classes/NumberEditor::<br></div></div></body></html>
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/NumberEditor.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/NumberEditor.schelp</a><br>link::Classes/NumberEditor::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

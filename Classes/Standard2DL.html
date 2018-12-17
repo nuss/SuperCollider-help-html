@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>Standard2DL | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Standard2DL | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Standard2DL';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Standard2DL:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -23,8 +27,8 @@ var scdoc_sc_version = '3.9.3';
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -37,12 +41,12 @@ var scdoc_sc_version = '3.9.3';
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/BhobUGens/classes/bhobChaos.sc' title='/usr/local/share/SuperCollider/Extensions/SC3plugins/BhobUGens/classes/bhobChaos.sc'>bhobChaos.sc</a></div><div id='related'>See also: <a href="./../Classes/Standard2DN.html">Standard2DN</a>, <a href="./../Classes/Standard2DC.html">Standard2DC</a></div>
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
-<pre class='code prettyprint lang-sc'>x(n+1) = (x(n) + y(n+1)) % 2pi
-y(n+1) = (y(n) + ksin(x(n))) % 2pi</pre>
+<textarea class='editor'>x(n+1) = (x(n) + y(n+1)) % 2pi
+y(n+1) = (y(n) + ksin(x(n))) % 2pi</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>Standard2DL.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>minfreq: 11025</span>, <span class='argstr'>maxfreq: 22050</span>, <span class='argstr'>k: 1.4</span>, <span class='argstr'>x0: 4.9789799812499</span>, <span class='argstr'>y0: 5.7473416156381</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Standard2DL.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>minfreq: 11025</span>, <span class='argstr'>maxfreq: 22050</span>, <span class='argstr'>k: 1.4</span>, <span class='argstr'>x0: 4.9789799812499</span>, <span class='argstr'>y0: 5.7473416156381</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0.0</span>)</h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/Standard2DN.html'>Standard2DN</a></div>
-<h3 class='method-code'><span class='method-prefix'>Standard2DL.</span><a class='method-name' name='*kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>minfreq: 40</span>, <span class='argstr'>maxfreq: 100</span>, <span class='argstr'>k: 1.4</span>, <span class='argstr'>x0: 4.9789799812499</span>, <span class='argstr'>y0: 5.7473416156381</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Standard2DL.</span><a class='method-name' name='*kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>minfreq: 40</span>, <span class='argstr'>maxfreq: 100</span>, <span class='argstr'>k: 1.4</span>, <span class='argstr'>x0: 4.9789799812499</span>, <span class='argstr'>y0: 5.7473416156381</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0.0</span>)</h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/Standard2DN.html'>Standard2DN</a></div>
 <div class='method'>
 <p><h4>Arguments:</h4>
@@ -55,12 +59,13 @@ y(n+1) = (y(n) + ksin(x(n))) % 2pi</pre>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>{ Standard2DL.ar(220, 11025, mul:0.3) }.play(s);
+<textarea class='editor'>{ Standard2DL.ar(220, 11025, mul:0.3) }.play(s);
 
 // mouse-controlled param
 { Standard2DL.ar(11025, 44100, MouseX.kr(0.9,4), mul:0.3) }.play(s);
 
 // as a frequency control
-{ SinOsc.ar(Standard2DL.ar(10, 20, MouseX.kr(0.9,4))*800+900)*0.4 }.play(s);</pre>
+{ SinOsc.ar(Standard2DL.ar(10, 20, MouseX.kr(0.9,4))*800+900)*0.4 }.play(s);</textarea>
 
-<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/BhobUGens/HelpSource/Classes/Standard2DL.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/BhobUGens/HelpSource/Classes/Standard2DL.schelp</a><br>link::Classes/Standard2DL::<br></div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/BhobUGens/HelpSource/Classes/Standard2DL.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/BhobUGens/HelpSource/Classes/Standard2DL.schelp</a><br>link::Classes/Standard2DL::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

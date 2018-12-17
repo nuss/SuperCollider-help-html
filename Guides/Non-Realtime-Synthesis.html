@@ -1,25 +1,29 @@
-<!doctype html><html lang='en'><head><title>Non-Realtime Synthesis (NRT) | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Non-Realtime Synthesis (NRT) | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Non-Realtime Synthesis (NRT)';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Non-Realtime Synthesis (NRT):</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#Non-Realtime%20Synthesis'>Non-Realtime Synthesis</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Analysis%20using%20a%20Non-Realtime%20server'>Analysis using a Non-Realtime server</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Guides</span>
@@ -33,7 +37,7 @@ var scdoc_sc_version = '3.9.3';
 <h2><a class='anchor' name='Non-Realtime%20Synthesis'>Non-Realtime Synthesis</a></h2>
 
 <p>SuperCollider 3 supports non-realtime synthesis through the use of binary files of OSC commands.
-<p>First create an OSC command file (i.e. a score)<pre class='code prettyprint lang-sc'>f = File("Cmds.osc","w");
+<p>First create an OSC command file (i.e. a score)<textarea class='editor'>f = File("Cmds.osc","w");
 
 // start a sine oscillator at 0.2 seconds.
 c = [ 0.2, [\s_new, \NRTsine, 1001, 0, 0]].asRawOSC;
@@ -60,17 +64,17 @@ SynthDef("NRTsine", { |out, freq = 440|
          SinOsc.ar(freq, 0, 0.2)
     )
 }).writeDefFile;
-)</pre>
+)</textarea>
 
-<p>then on the command line (i.e. in Terminal):<pre class='code prettyprint lang-sc'>./scsynth -N Cmds.osc _ NRTout.aiff 44100 AIFF int16</pre>
+<p>then on the command line (i.e. in Terminal):<textarea class='editor'>./scsynth -N Cmds.osc _ NRTout.aiff 44100 AIFF int16</textarea>
 
-<p>The command line arguments are:<pre class='code prettyprint lang-sc'>    -N &lt;cmd-filename&gt; &lt;input-filename&gt; &lt;output-filename&gt; &lt;sample-rate&gt; &lt;header-format&gt; &lt;sample-format&gt;     &lt;...other scsynth arguments&gt;</pre>
+<p>The command line arguments are:<textarea class='editor'>    -N &lt;cmd-filename&gt; &lt;input-filename&gt; &lt;output-filename&gt; &lt;sample-rate&gt; &lt;header-format&gt; &lt;sample-format&gt;     &lt;...other scsynth arguments&gt;</textarea>
 
 <p>If you do not need an input sound file, then put "_" for the file name as in the example above.
 <p>For details on other valid arguments to the scsynth app see Server-Architecture.
-<p>This could be executed in SC as:<pre class='code prettyprint lang-sc'>"./scsynth -N Cmds.osc _ NRTout.aiff 44100 AIFF int16 -o 1".unixCmd; // -o 1 is mono output</pre>
+<p>This could be executed in SC as:<textarea class='editor'>"./scsynth -N Cmds.osc _ NRTout.aiff 44100 AIFF int16 -o 1".unixCmd; // -o 1 is mono output</textarea>
 
-<p>A more powerful option is to use the <a href="./../Classes/Score.html">Score</a> object, which has convenience methods to create OSC command files and do nrt synthesis.<pre class='code prettyprint lang-sc'>(
+<p>A more powerful option is to use the <a href="./../Classes/Score.html">Score</a> object, which has convenience methods to create OSC command files and do nrt synthesis.<textarea class='editor'>(
 x = [
 
 [0.0, [ \s_new, \NRTsine, 1000, 0, 0,  \freq, 1413 ]],
@@ -96,12 +100,12 @@ x = [
 
 [3.0, [\c_set, 0, 0]]
 ];
-)</pre>
+)</textarea>
 
-<p>You can then use <code class='code prettyprint lang-sc'>Score.write</code> to convert the above to the OSC command file as follows:<pre class='code prettyprint lang-sc'>Score.write(x, "score-test.osc");
-"./scsynth -N score-test.osc _ score-test.aiff 44100 AIFF int16 -o 1".unixCmd;</pre>
+<p>You can then use <code>Score.write</code> to convert the above to the OSC command file as follows:<textarea class='editor'>Score.write(x, "score-test.osc");
+"./scsynth -N score-test.osc _ score-test.aiff 44100 AIFF int16 -o 1".unixCmd;</textarea>
 
-<p>Score also provides methods to do nrt synthesis directly:<pre class='code prettyprint lang-sc'>(
+<p>Score also provides methods to do nrt synthesis directly:<textarea class='editor'>(
 var f, o;
 g = [
     [0.1, [\s_new, \NRTsine, 1000, 0, 0, \freq, 440]],
@@ -111,12 +115,12 @@ g = [
     ];
 o = ServerOptions.new.numOutputBusChannels = 1; // mono output
 Score.recordNRT(g, "help-oscFile.osc", "helpNRT.aiff", options: o); // synthesize
-)</pre>
+)</textarea>
 <h2><a class='anchor' name='Analysis%20using%20a%20Non-Realtime%20server'>Analysis using a Non-Realtime server</a></h2>
 
 <p>An NRT server may also be used to extract analytical data from a sound file. The main issues are:<dl>
 <dt>Suppressing audio file output<dd>In macOS and Linux environments, use <code>/dev/null</code> for the output file path. In Windows, use <code>NUL</code>.<dt>Retrieving analytical data.<dd>The easiest way is to allocate a buffer at the beginning of the NRT score, and use BufWr to fill the buffer. At the end of the score, write the buffer into a temporary file. Then you can use SoundFile on the language side to access the data. See the example.</dl>
-<pre class='code prettyprint lang-sc'>// Example: Extract onsets into a buffer.
+<textarea class='editor'>// Example: Extract onsets into a buffer.
 
 (
 fork {
@@ -173,6 +177,7 @@ fork {
 
     data.postln;  // these are your onsets!
 };
-)</pre>
+)</textarea>
 
-<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Guides/Non-Realtime-Synthesis.schelp'>/usr/local/share/SuperCollider/HelpSource/Guides/Non-Realtime-Synthesis.schelp</a><br>link::Guides/Non-Realtime-Synthesis::<br></div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Guides/Non-Realtime-Synthesis.schelp'>/usr/local/share/SuperCollider/HelpSource/Guides/Non-Realtime-Synthesis.schelp</a><br>link::Guides/Non-Realtime-Synthesis::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

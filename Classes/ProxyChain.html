@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>ProxyChain | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>ProxyChain | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'ProxyChain';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>ProxyChain:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -59,8 +63,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-clear'>clear</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -76,9 +80,9 @@ var scdoc_sc_version = '3.9.3';
 
 <p>A ProxyChain is a wrapper around a nodeproxy which keeps an ordered collection of sound functions, which can be individually added to or removed from the proxy signal chain, by name.
 <p>The ProxyChain class keeps a global dictionary of such sound functions, and a ProxyChain can also have local sound functions.
-<p>Like Ndef, Pdef, Tdef, the ProxyChain class keeps all named instances in a class variable <code class='code prettyprint lang-sc'>ProxyChain.all</code> where they can be accessed by name: <code class='code prettyprint lang-sc'>ProxyChain('chain1')</code>.<h3><a class='anchor' name='First%20Examples'>First Examples</a></h3>
+<p>Like Ndef, Pdef, Tdef, the ProxyChain class keeps all named instances in a class variable <code>ProxyChain.all</code> where they can be accessed by name: <code>ProxyChain('chain1')</code>.<h3><a class='anchor' name='First%20Examples'>First Examples</a></h3>
 
-<p>Basic code-only usage first:<pre class='code prettyprint lang-sc'>// add a sound source
+<p>Basic code-only usage first:<textarea class='editor'>// add a sound source
 ProxyChain.add(
     \dust, \mix -&gt; { |dens=20, dustdec=0.02, dustfreq= 600|
         Ringz.ar(Dust.ar(dens).lag(0.0001), dustfreq, dustdec)
@@ -140,9 +144,9 @@ ProxyChain(\test).remove(\comb)
 ProxyChain(\test).remove(\dust)
 
 // make a gui to see its state:
-ProxyChain(\test).gui;</pre>
+ProxyChain(\test).gui;</textarea>
 
-<p><div class='note'><span class='notelabel'>NOTE:</span> When using ProxyChains with GUIs and controllers, things become much easier when specs for the process parameters are defined along with the processes. One can do this by adding global specs (<code class='code prettyprint lang-sc'>Spec.add(\dens, [1, 100, \exp])</code>s), or by adding specs to the ProxyChain's proxy. ProxyChain also supports defining these specs when setting up the repertoire of functions.</div><pre class='code prettyprint lang-sc'>(    // add a sound source and its specs together:
+<p><div class='note'><span class='notelabel'>NOTE:</span> When using ProxyChains with GUIs and controllers, things become much easier when specs for the process parameters are defined along with the processes. One can do this by adding global specs (<code>Spec.add(\dens, [1, 100, \exp])</code>s), or by adding specs to the ProxyChain's proxy. ProxyChain also supports defining these specs when setting up the repertoire of functions.</div><textarea class='editor'>(    // add a sound source and its specs together:
 ProxyChain.add3(
     \dust, \mix -&gt; { |dens=20, dustdec=0.02, dustfreq= 600|
         Ringz.ar(Dust.ar(dens).lag(0.0001), dustfreq, dustdec)
@@ -193,7 +197,7 @@ g = ProxyChain(\test).gui;
 
 // slotNames can be changed while they are off, and the gui will show it
 
-ProxyChain(\test).slotNames = [\dust,\ringmod,\comb, \ampFin];</pre>
+ProxyChain(\test).slotNames = [\dust,\ringmod,\comb, \ampFin];</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>ProxyChain.</span><a class='method-name' name='*allSources' href='./../Overviews/Methods.html#allSources'>allSources</a></h3>
 <div class='method'>
@@ -201,7 +205,7 @@ ProxyChain(\test).slotNames = [\dust,\ringmod,\comb, \ampFin];</pre>
 <div class='method'>
 <p>a dict of all ProxyChain instances.</div><h3 class='method-code'><span class='method-prefix'>ProxyChain.</span><a class='method-name' name='*add' href='./../Overviews/Methods.html#add'>add</a>( <span class='argstr'>... args</span>)</h3>
 <div class='method'>
-<p>put synth functions into <code class='code prettyprint lang-sc'>ProxyChain.all</code>, by name, func, name, func ...</div><h3 class='method-code'><span class='method-prefix'>ProxyChain.</span><a class='method-name' name='*add3' href='./../Overviews/Methods.html#add3'>add3</a>(<span class='argstr'>srcName</span>, <span class='argstr'>source</span>, <span class='argstr'>level</span>, <span class='argstr'>specs</span>)</h3>
+<p>put synth functions into <code>ProxyChain.all</code>, by name, func, name, func ...</div><h3 class='method-code'><span class='method-prefix'>ProxyChain.</span><a class='method-name' name='*add3' href='./../Overviews/Methods.html#add3'>add3</a>(<span class='argstr'>srcName</span>, <span class='argstr'>source</span>, <span class='argstr'>level</span>, <span class='argstr'>specs</span>)</h3>
 <div class='method'>
 <p>add a named synth func with level and specs</div><h3 class='method-code'><span class='method-prefix'>ProxyChain.</span><a class='method-name' name='*addSource' href='./../Overviews/Methods.html#addSource'>addSource</a>(<span class='argstr'>srcName</span>, <span class='argstr'>source</span>)</h3>
 <div class='method'>
@@ -219,14 +223,14 @@ ProxyChain(\test).slotNames = [\dust,\ringmod,\comb, \ampFin];</pre>
 <div class='method'>
 <p>check the sourceDict at srcName</div><h3 class='method-code'><span class='method-prefix'>ProxyChain.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>key</span>, <span class='argstr'>slotNames</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>server</span>)</h3>
 <div class='method'>
-<p>look up an existing ProxyChain, or (if new and slotNames are given), make a new ProxyChain with ordered names of synth functions in the slotNames.<pre class='code prettyprint lang-sc'>// the functions can be sources (func, \mix -&gt; func)
+<p>look up an existing ProxyChain, or (if new and slotNames are given), make a new ProxyChain with ordered names of synth functions in the slotNames.<textarea class='editor'>// the functions can be sources (func, \mix -&gt; func)
 // or filters (\filter -&gt; func, \filterIn -&gt; func)
 (
 c = ProxyChain(\alpha, [\dust, \ringmod, \dist, \comb]);
 c.play;    // play the proxy
 g = c.gui(12);    // make a gui for it with 12 slots - see ProxyChainGui
 )
-c.add(\dust);</pre>
+c.add(\dust);</textarea>
 <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>key<td class='argumentdesc'>
@@ -235,20 +239,20 @@ c.add(\dust);</pre>
 <p>number of audio channels. default = 2.<tr><td class='argumentname'>server<td class='argumentdesc'>
 <p>server to use. default = s.</table></div><h3 class='method-code'><span class='method-prefix'>ProxyChain.</span><a class='method-name' name='*from' href='./../Overviews/Methods.html#from'>from</a>(<span class='argstr'>proxy</span>, <span class='argstr'>slotNames: [  ]</span>)</h3>
 <div class='method'>
-<p>like new, but using an existing NodeProxy or Ndef<pre class='code prettyprint lang-sc'>Ndef(\bla).ar(2);
+<p>like new, but using an existing NodeProxy or Ndef<textarea class='editor'>Ndef(\bla).ar(2);
 ProxyChain.from(Ndef(\bla), [\dust, \ringmod, \dist, \comb, \ampFin]);
 ProxyChain(\bla).play;
 ProxyChain(\bla).add(\dust);
 
 
-ProxyChain.all;</pre>
+ProxyChain.all;</textarea>
 </div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-key' href='./../Overviews/Methods.html#key'>key</a></h3>
 <div class='method'>
-<p>the key under which the proxyChain is stored in <code class='code prettyprint lang-sc'>ProxyChain.all</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sources' href='./../Overviews/Methods.html#sources'>sources</a></h3>
+<p>the key under which the proxyChain is stored in <code>ProxyChain.all</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sources' href='./../Overviews/Methods.html#sources'>sources</a></h3>
 <div class='method'>
-<p>an optional dict of local source funcs - these will override source funcs with the same name in <code class='code prettyprint lang-sc'>ProxyChain.all</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-proxy' href='./../Overviews/Methods.html#proxy'>proxy</a></h3>
+<p>an optional dict of local source funcs - these will override source funcs with the same name in <code>ProxyChain.all</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-proxy' href='./../Overviews/Methods.html#proxy'>proxy</a></h3>
 <div class='method'>
 <p>the proxy inside the chain</div><h3><a class='anchor' name='methods%20that%20get%20forwarded%20to%20proxy'>methods that get forwarded to proxy</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-play' href='./../Overviews/Methods.html#play'>play</a>(<span class='argstr'>out</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>group</span>, <span class='argstr'>multi: false</span>, <span class='argstr'>vol</span>, <span class='argstr'>fadeTime</span>, <span class='argstr'>addAction</span>)</h3>
@@ -261,10 +265,10 @@ ProxyChain.all;</pre>
 <p></div><h3><a class='anchor' name='de/activating%20slots'>de/activating slots</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-add' href='./../Overviews/Methods.html#add'>add</a>(<span class='argstr'>key</span>, <span class='argstr'>wet</span>, <span class='argstr'>func</span>)</h3>
 <div class='method'>
-<p>kick in a source by name, with a mix level<pre class='code prettyprint lang-sc'>c.add(\dust, 0.123);
+<p>kick in a source by name, with a mix level<textarea class='editor'>c.add(\dust, 0.123);
 c.add(\dust, 0.2);
 c.add(\ringmod, 0.5);
-c.add(\dist, 1);</pre>
+c.add(\dist, 1);</textarea>
 <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>key<td class='argumentdesc'>
@@ -272,9 +276,9 @@ c.add(\dist, 1);</pre>
 <p>wet/dry mix ratio<tr><td class='argumentname'>func<td class='argumentdesc'>
 <p>an optional func that can locally replace the global func with that name.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remove' href='./../Overviews/Methods.html#remove'>remove</a>(<span class='argstr'>key</span>)</h3>
 <div class='method'>
-<p>remove a currently playing source by name.<pre class='code prettyprint lang-sc'>c.remove(\dist);
+<p>remove a currently playing source by name.<textarea class='editor'>c.remove(\dist);
 c.remove(\ringmod);
-c.remove(\riseComb5);</pre>
+c.remove(\riseComb5);</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setSlots' href='./../Overviews/Methods.html#setSlots'>setSlots</a>(<span class='argstr'>keys</span>, <span class='argstr'>levels: [  ]</span>, <span class='argstr'>update: false</span>)</h3>
 <div class='method'>
 <p>set (add or remove) multiple slots at once.</div><h3><a class='anchor' name='configuration%20&%20introspection'>configuration &amp; introspection</a></h3>
@@ -293,7 +297,7 @@ c.remove(\riseComb5);</pre>
 <div class='method'>
 <p>get all keys and values at slotName</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gui' href='./../Overviews/Methods.html#gui'>gui</a>(<span class='argstr'>numItems: 16</span>, <span class='argstr'>buttonList</span>, <span class='argstr'>parent</span>, <span class='argstr'>bounds</span>, <span class='argstr'>isMaster: false</span>)</h3>
 <div class='method'>
-<p>make a ProxyChainGui for the ProxyChain - see examples.<pre class='code prettyprint lang-sc'>// by default, buttonList nil is replaced with control buttons for all slots.
+<p>make a ProxyChainGui for the ProxyChain - see examples.<textarea class='editor'>// by default, buttonList nil is replaced with control buttons for all slots.
 c.gui(20);
 
 // if specified, can be friendlier
@@ -319,13 +323,13 @@ g = c.gui(20,
 
     ]
 )
-)</pre>
+)</textarea>
 </div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a></h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 
-<p>Replacing a slot and reordering slots:<pre class='code prettyprint lang-sc'>// take proxychain from above:
+<p>Replacing a slot and reordering slots:<textarea class='editor'>// take proxychain from above:
 ProxyChain(\test);
 // which has these slotnames
 ProxyChain(\test).slotNames
@@ -363,6 +367,7 @@ ProxyChain.add3(
 );
 )
 
-// now try kicking it in from the gui...</pre>
+// now try kicking it in from the gui...</textarea>
 
-<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/ProxyChain.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/ProxyChain.schelp</a><br>link::Classes/ProxyChain::<br></div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/ProxyChain.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/ProxyChain.schelp</a><br>link::Classes/ProxyChain::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

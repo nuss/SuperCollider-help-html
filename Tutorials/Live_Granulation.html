@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>Live Granulation | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Live Granulation | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Live Granulation';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Live Granulation:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -25,8 +29,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%202b:%20Parallel%20Pbind%20live%20granulation'>Ex. 2b: Parallel Pbind live granulation</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%202c:%20Live%20granulation%20with%20PbindFx'>Ex. 2c: Live granulation with PbindFx</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%202d:%20Accuracy%20comparison'>Ex. 2d: Accuracy comparison</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Tutorials (extension)</span>
@@ -45,15 +49,15 @@ var scdoc_sc_version = '3.9.3';
 
 <p>You can free buses on occasion if you are sure that nothing is running and you won't need them again. Keep in mind that you can also (re-)start the server with a higher number of audio buses available (<a href="#Ex.2c">Ex.2c</a>)<li>I haven't used below setups for live performances. Although all of them work stable for me as they are, in general hangs can occasionally happen with pattern-driven setups. Often this can be tracked down to sequences of extremely short event durations (and/or long grain durations). Where this can happen as a side-effect, thresholds can be built in. 
 <p>Another possible source of hangs is careless deep nesting of Patterns where mistakes can easily occur. Starting with clear Pattern structures is recommended - and if more complications are involved: testing without sound first, after saving your patch, might be a good idea.</ol>
-</div><div class='note'><span class='notelabel'>NOTE:</span> With the exception of <a href="#Ex.2d">(2d)</a> all examples use SoundIn, supposing to use input from your computer resp. soundcard. Depending on your setup you might have to change the standard input (bus = 0) passed to VarGui resp. the SoundIn ugen. Use headphones to avoid feedback!</div><div class='note'><span class='notelabel'>NOTE:</span> All live granulation variants of this file can of course be applied to any signal, thus also to any playback of a buffer. Vice versa all variants from <a href="./../Tutorials/Buffer_Granulation.html">Buffer Granulation</a> can be applied to a buffer, which is occasionally (or continuously) filled with live input.</div><pre class='code prettyprint lang-sc'>(
+</div><div class='note'><span class='notelabel'>NOTE:</span> With the exception of <a href="#Ex.2d">(2d)</a> all examples use SoundIn, supposing to use input from your computer resp. soundcard. Depending on your setup you might have to change the standard input (bus = 0) passed to VarGui resp. the SoundIn ugen. Use headphones to avoid feedback!</div><div class='note'><span class='notelabel'>NOTE:</span> All live granulation variants of this file can of course be applied to any signal, thus also to any playback of a buffer. Vice versa all variants from <a href="./../Tutorials/Buffer_Granulation.html">Buffer Granulation</a> can be applied to a buffer, which is occasionally (or continuously) filled with live input.</div><textarea class='editor'>(
 s = Server.local;
 Server.default = s;
 s.boot;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='1'>&nbsp;</a><h2><a class='anchor' name='1.%20Live%20granulation%20scheduled%20by%20server'>1. Live granulation scheduled by server</a></h2>
 <h3><a class='anchor' name='Ex.%201a:%20Basic%20live%20granulation%20with%20GrainIn'>Ex. 1a: Basic live granulation with GrainIn</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 ~audioBus_ex_1a = Bus.audio(s, 1);
 
 // pass envelopes with buffer, hanning is GrainIn's default anyway
@@ -122,12 +126,12 @@ VarGui(
     ],
     synth: [\live_gran_1a, \soundIn]
 ).gui
-)</pre>
+)</textarea>
 
 <p>Even with overlapping grains, sequenced effect processing per grain is possible with GrainIn, but requires more effort, see <a href="./../Tutorials/Buffer_Granulation.html#Ex.1e%20in%20the%20Buffer%20Granulation%20tutorial">Buffer Granulation: Ex.1e in the Buffer Granulation tutorial</a>.
 <p><a class='anchor' name='Ex.1b'>&nbsp;</a><h3><a class='anchor' name='Ex.%201b:%20Live%20granulation%20with%20server-driven%20enveloping'>Ex. 1b: Live granulation with server-driven enveloping</a></h3>
 
-<p>In this example only non-overlapping grains are regarded, for overlapping, as with GrainIn, a multichannel approach as in <a href="./../Tutorials/Buffer_Granulation.html#Ex.1e">Ex.1e in the Buffer Granulation tutorial</a> can be applied. In comparison to <a href="#1">live granulation example 1a</a> there is hardly an advantage in this basic variant. However intermediate processings can be built into this SynthDef, which aren't possible in the above example, where granulation is encapsulated in a ugen, manipulation of the envelope signal could be one.<pre class='code prettyprint lang-sc'>(
+<p>In this example only non-overlapping grains are regarded, for overlapping, as with GrainIn, a multichannel approach as in <a href="./../Tutorials/Buffer_Granulation.html#Ex.1e">Ex.1e in the Buffer Granulation tutorial</a> can be applied. In comparison to <a href="#1">live granulation example 1a</a> there is hardly an advantage in this basic variant. However intermediate processings can be built into this SynthDef, which aren't possible in the above example, where granulation is encapsulated in a ugen, manipulation of the envelope signal could be one.<textarea class='editor'>(
 ~audioBus_ex_1b = Bus.audio(s, 1);
 
 // pass envelopes with buffer
@@ -206,14 +210,14 @@ VarGui(
     ],
     synth: [\live_gran_1b, \soundIn]
 ).gui
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='2'>&nbsp;</a><h2><a class='anchor' name='2.%20Live%20granulation%20driven%20by%20language'>2. Live granulation driven by language</a></h2>
 
 <p>The crucial point of this strategy is a kind of incompatibility of In.ar and OffsetOut. Normally we use OffsetOut for exact buffer granulation with patterns, as the start of the synth (the grain) is corrected by a shift (standard Out.ar is only able to start at control block boundaries). However, when In.ar and OffsetOut.ar are used in the same synth the read input signal is also shifted, which results in a correct grain distance but an fluctuating input delay. This can be overcome by a little trick: we can use OffsetOut to send a trigger to a bus, which indicates its correct delay. Then the trigger can be read in the same synth and trigger again a gated envelope for the input signal, the resulting grain can be output with normal Out.ar. So grain distances are correct and input is not fluctuating (see <a href="#Ex.2d">Ex.2d</a> for an accuracy comparison). Nevertheless language-driven sequencing is not sample-exact in realtime, no matter if In.ar is used or not, this is related to hardware control and cannot be overcome. This might be an issue with a strictly periodic input signal and very short grain distances. You can e.g. check out with granulation of a fixed-pitch triangular wave or similar, every few seconds or so there will happen an audible jump due to an irregular time interval, which is necessary for clock calibration; at that point there will, in general, also be a phase shift of the input signal (see last example of <a href="#Ex.2d">Ex.2d</a>). This might not be noticed with an input of spoken voice e.g. Control block length is also a boundary for gated envelopes defined with EnvGen – here envelopes are established with an env buffer used by BufRd and Sweep ugens, a flexible method as Envelopes shape can be defined arbitrarily in language.
 <p><a class='anchor' name='Ex.2a'>&nbsp;</a><h3><a class='anchor' name='Ex.%202a:%20Basic%20Pbind%20live%20granulation'>Ex. 2a: Basic Pbind live granulation</a></h3>
 
-<p>At that point I haven't seen a solution to pass the trigger bus as argument, in the example it is hard-wired. As the SynthDef uses a SetResetFF ugen, which relies on two triggers within control block length, grainDelta shouldn't be shorter than that. If shorter grainDeltas are required this would be possible with alternating SynthDefs and buses. For the same reason this SynthDef should only be used once at the same time by a Pbind/EventStreamPlayer. Alternatively – as in <a href="#Ex.2b">Ex.2b</a> – a SynthDef factory can produce a number of structurally equal SynthDefs bound to a number of buses.<pre class='code prettyprint lang-sc'>(
+<p>At that point I haven't seen a solution to pass the trigger bus as argument, in the example it is hard-wired. As the SynthDef uses a SetResetFF ugen, which relies on two triggers within control block length, grainDelta shouldn't be shorter than that. If shorter grainDeltas are required this would be possible with alternating SynthDefs and buses. For the same reason this SynthDef should only be used once at the same time by a Pbind/EventStreamPlayer. Alternatively – as in <a href="#Ex.2b">Ex.2b</a> – a SynthDef factory can produce a number of structurally equal SynthDefs bound to a number of buses.<textarea class='editor'>(
 // input bus and trigger bus
 // trigger bus must be hard-wired in SynthDef though
 
@@ -296,11 +300,11 @@ VarGui([
         \ampIn, [0, 1, \lin, 0, 1]
     ], p, \soundIn
 ).gui
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.2b'>&nbsp;</a><h3><a class='anchor' name='Ex.%202b:%20Parallel%20Pbind%20live%20granulation'>Ex. 2b: Parallel Pbind live granulation</a></h3>
 
-<p>As trigger buses have to be hard-wired, a SynthDef factory produces a number of structurally equal SynthDefs bound to a number of buses. In this variant the granulation is combined with a bandpass filter.<pre class='code prettyprint lang-sc'>(
+<p>As trigger buses have to be hard-wired, a SynthDef factory produces a number of structurally equal SynthDefs bound to a number of buses. In this variant the granulation is combined with a bandpass filter.<textarea class='editor'>(
 // input bus and trigger bus
 // trigger bus must be hard-wired in SynthDef though
 
@@ -399,10 +403,10 @@ VarGui([
         \ampIn, [0, 1, \lin, 0, 1]
     ], p ! 3, \soundIn
 ).gui
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.2c'>&nbsp;</a><h3><a class='anchor' name='Ex.%202c:%20Live%20granulation%20with%20PbindFx'>Ex. 2c: Live granulation with PbindFx</a></h3>
-<pre class='code prettyprint lang-sc'>// extended ressources needed
+<textarea class='editor'>// extended ressources needed
 
 (
 s.options.numPrivateAudioBusChannels = 1024;
@@ -585,11 +589,11 @@ VarGui([
 ~fxOrder = Pstutter(2, PLseq([[2, 1], 2]))
 
 
-~fxOrder = Pstutter(2, PLseq([[1, 2], [2, 1]]))</pre>
+~fxOrder = Pstutter(2, PLseq([[1, 2], [2, 1]]))</textarea>
 
 <p><a class='anchor' name='Ex.2d'>&nbsp;</a><h3><a class='anchor' name='Ex.%202d:%20Accuracy%20comparison'>Ex. 2d: Accuracy comparison</a></h3>
 
-<p>This example compares the inaccuracies occuring with "normal" usage of Out.ar and the usage of In.ar + OffsetOut.ar with the strategy recommended in <a href="#Ex.2a">Ex.2a</a>. Run the three examples, the audio output is played and recorded into three files in the recordings directory (you get the path with thisProcess.platform.recordingsDir).<pre class='code prettyprint lang-sc'>// test with source of added sines, inaccuracies with straight use of Out.ar
+<p>This example compares the inaccuracies occuring with "normal" usage of Out.ar and the usage of In.ar + OffsetOut.ar with the strategy recommended in <a href="#Ex.2a">Ex.2a</a>. Run the three examples, the audio output is played and recorded into three files in the recordings directory (you get the path with thisProcess.platform.recordingsDir).<textarea class='editor'>// test with source of added sines, inaccuracies with straight use of Out.ar
 
 (
 ~audioBus_ex_2d1 = Bus.audio(s, 1);
@@ -848,5 +852,6 @@ p = Pfindur(1, Pbind(
     x.release;
     s.stopRecording;
 }.fork
-)</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Live_Granulation.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Live_Granulation.schelp</a><br>link::Tutorials/Live_Granulation::<br></div></div></body></html>
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Live_Granulation.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Live_Granulation.schelp</a><br>link::Tutorials/Live_Granulation::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>TraerParticleSystem | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>TraerParticleSystem | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'TraerParticleSystem';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>TraerParticleSystem:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -57,8 +61,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-particles'>particles</a> </li>
 <li class='toc3'><a href='#-removeCustomForce'>removeCustomForce</a> </li>
 <li class='toc3'><a href='#-springs'>springs</a> </li>
-</ul></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+</ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -84,19 +88,19 @@ var scdoc_sc_version = '3.9.3';
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setIntegrator' href='./../Overviews/Methods.html#setIntegrator'>setIntegrator</a>(<span class='argstr'>integrator</span>)</h3>
 <div class='method'>
-<p>pass this either: <code class='code prettyprint lang-sc'>\RUNGE_KUTTA</code> or <code class='code prettyprint lang-sc'>\MODIFIED_EULER</code> as a <a href="./../Classes/Symbol.html">Symbol</a>.<h4>Discussion:</h4>
+<p>pass this either: <code>\RUNGE_KUTTA</code> or <code>\MODIFIED_EULER</code> as a <a href="./../Classes/Symbol.html">Symbol</a>.<h4>Discussion:</h4>
 
 <p>Runge-Kutta is the default. It takes about 4 times as many cycles as Modified Euler. In return the system gets very stable. If you plan to have have over 1000 particles interacting with each other try Modified Euler. If you will have fewer particles and want tight springs and quicker responses use Runge-Kutta. Stick with the default and if things get slow try switching to Euler. You may have to add more drag or reduce the strength of springs and attractions to keep it stable. The example Random Arboretum has sections of code you can uncomment to experiment with this.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setGravity' href='./../Overviews/Methods.html#setGravity'>setGravity</a>(<span class='argstr'>x</span>, <span class='argstr'>y</span>, <span class='argstr'>z</span>)</h3>
 <div class='method'>
-<p>set the strength of gravity, down (in the positive y direction) or in whatever 3D direction you feel like. You probably want the magnitude of this to be in the range of <code class='code prettyprint lang-sc'>0-5</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setDrag' href='./../Overviews/Methods.html#setDrag'>setDrag</a>(<span class='argstr'>d</span>)</h3>
+<p>set the strength of gravity, down (in the positive y direction) or in whatever 3D direction you feel like. You probably want the magnitude of this to be in the range of <code>0-5</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setDrag' href='./../Overviews/Methods.html#setDrag'>setDrag</a>(<span class='argstr'>d</span>)</h3>
 <div class='method'>
 <p>set the drag force that acts on all objects equally, and proportional to velocity.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-tick' href='./../Overviews/Methods.html#tick'>tick</a>(<span class='argstr'>t: 1</span>)</h3>
 <div class='method'>
-<p>advance the simulation by some time <code class='code prettyprint lang-sc'>t</code>, or by the default <code class='code prettyprint lang-sc'>1.0</code>. You'll want to call this in <a href="./../Classes/UserView.html#-drawFunc">UserView: -drawFunc</a> or <a href="./../Classes/Window.html#-drawFunc">Window: -drawFunc</a>. You probably want to keep this the same at all times unless you want speed up or slow things down.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a></h3>
+<p>advance the simulation by some time <code>t</code>, or by the default <code>1.0</code>. You'll want to call this in <a href="./../Classes/UserView.html#-drawFunc">UserView: -drawFunc</a> or <a href="./../Classes/Window.html#-drawFunc">Window: -drawFunc</a>. You probably want to keep this the same at all times unless you want speed up or slow things down.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a></h3>
 <div class='method'>
 <p>this deletes all the particles and all the forces in the system (except the omnipresent gravity and drag even if there are 0).</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-makeParticle' href='./../Overviews/Methods.html#makeParticle'>makeParticle</a>(<span class='argstr'>mass: 1</span>, <span class='argstr'>x: 0</span>, <span class='argstr'>y: 0</span>, <span class='argstr'>z: 0</span>)</h3>
 <div class='method'>
-<p>Create a new particle in the system with some mass and at some x, y, z position. The default is a new particle with mass <code class='code prettyprint lang-sc'>1.0</code> at <code class='code prettyprint lang-sc'>(0, 0, 0)</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeParticle' href='./../Overviews/Methods.html#removeParticle'>removeParticle</a>(<span class='argstr'>p</span>)</h3>
+<p>Create a new particle in the system with some mass and at some x, y, z position. The default is a new particle with mass <code>1.0</code> at <code>(0, 0, 0)</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeParticle' href='./../Overviews/Methods.html#removeParticle'>removeParticle</a>(<span class='argstr'>p</span>)</h3>
 <div class='method'>
 <p><div class='note'><span class='notelabel'>NOTE:</span> removing things shifts the indices and the library does not take responsibility for you deleting particles that forces refer to. e.g. if you have a spring between two particles and remove one things will definitely break.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-makeSpring' href='./../Overviews/Methods.html#makeSpring'>makeSpring</a>(<span class='argstr'>a</span>, <span class='argstr'>b</span>, <span class='argstr'>ks</span>, <span class='argstr'>d</span>, <span class='argstr'>r</span>)</h3>
 <div class='method'>
@@ -137,4 +141,5 @@ var scdoc_sc_version = '3.9.3';
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeCustomForce' href='./../Overviews/Methods.html#removeCustomForce'>removeCustomForce</a>(<span class='argstr'>f</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-springs' href='./../Overviews/Methods.html#springs'>springs</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-springs' href='./../Overviews/Methods.html#springs'>springs</a> = value</h3>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/TraerPhysics/HelpSource/Classes/TraerParticleSystem.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/TraerPhysics/HelpSource/Classes/TraerParticleSystem.schelp</a><br>link::Classes/TraerParticleSystem::<br></div></div></body></html>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/TraerPhysics/HelpSource/Classes/TraerParticleSystem.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/TraerPhysics/HelpSource/Classes/TraerParticleSystem.schelp</a><br>link::Classes/TraerParticleSystem::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

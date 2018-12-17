@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>WatchList | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>WatchList | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'WatchList';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>WatchList:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -36,8 +40,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-clear'>clear</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -55,7 +59,7 @@ var scdoc_sc_version = '3.9.3';
 <p>* keys in an Environment, e.g. a ProxySpace;
 <p>* parameter names (controlKeys) of processes like Ndef, Tdef, Pdef
 <p>The main argument for historical order is that this is more location-stable that e.g. alphabetic order. When adding processes and parameters by live coding, the locations of parameters on physical controllers remain the same (as long as there is space for more), creating less distraction than changing orders based on alphabet (or order of \control.kr calls when rewriting an Ndef).<div class='note'><span class='notelabel'>NOTE:</span> ToDo : selection of subsets by offset and size</div>
-<p>First code examples:<pre class='code prettyprint lang-sc'>// a dict to watch
+<p>First code examples:<textarea class='editor'>// a dict to watch
 a = ();
 b = WatchList.envir(a);
 g = ParamGui(a, 8); g.orderedNames = b.list;
@@ -74,7 +78,7 @@ a.put(\x, nil);
 b.list;
 // ParamGui does not show empty keys yet, but should
 a.put(\x, [1, 2, 3]); // old order comes back
-a.put(\bc, [3, 2, 1]);</pre>
+a.put(\bc, [3, 2, 1]);</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3><a class='anchor' name='basic%20creation'>basic creation</a></h3>
 <h3 class='method-code'><span class='method-prefix'>WatchList.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>object</span>, <span class='argstr'>getFunc</span>, <span class='argstr'>keepGone: true</span>, <span class='argstr'>skip: true</span>, <span class='argstr'>halo: true</span>)</h3>
@@ -117,7 +121,7 @@ a.put(\bc, [3, 2, 1]);</pre>
 <div class='method'>
 <p>clear the list</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>// example for using WatchLists for a proxyspace and its proxies
+<textarea class='editor'>// example for using WatchLists for a proxyspace and its proxies
 
 p = ProxySpace.push(s);
 
@@ -216,5 +220,6 @@ m.elAt(\kn).do { |el, i|
 // they will be added to the bottom of the list
 // add parameters on "front" proxies - params are added to the end
 // note: this order is lost when switching front proxy
-// would require making a separate watchlist for each proxy</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/WatchList.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/WatchList.schelp</a><br>link::Classes/WatchList::<br></div></div></body></html>
+// would require making a separate watchlist for each proxy</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/WatchList.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/WatchList.schelp</a><br>link::Classes/WatchList::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

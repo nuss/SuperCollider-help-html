@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>PulseDPW | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>PulseDPW | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'PulseDPW';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>PulseDPW:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -26,8 +30,8 @@ var scdoc_sc_version = '3.9.3';
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -47,17 +51,18 @@ var scdoc_sc_version = '3.9.3';
 <p>This is actually a "pseudo-ugen" based on SawDPW rather than a separate UGen in itself, but is still very efficient. Compare the CPU usage in these examples:<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
-<h3 class='method-code'><span class='method-prefix'>PulseDPW.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>freq: 440</span>, <span class='argstr'>width: 0.5</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>PulseDPW.</span><a class='method-name' name='*kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>freq: 440</span>, <span class='argstr'>width: 0.5</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>PulseDPW.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>rate: 'ar'</span>, <span class='argstr'>freq: 440</span>, <span class='argstr'>width: 0.5</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>PulseDPW.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>freq: 440.0</span>, <span class='argstr'>width: 0.5</span>, <span class='argstr'>mul: 1.0</span>, <span class='argstr'>add: 0.0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>PulseDPW.</span><a class='method-name' name='*kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>freq: 440.0</span>, <span class='argstr'>width: 0.5</span>, <span class='argstr'>mul: 1.0</span>, <span class='argstr'>add: 0.0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>PulseDPW.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>rate: 'ar'</span>, <span class='argstr'>freq: 440.0</span>, <span class='argstr'>width: 0.5</span>, <span class='argstr'>mul: 1.0</span>, <span class='argstr'>add: 0.0</span>)</h3>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>// modulate frequency
+<textarea class='editor'>// modulate frequency
 { Pulse   .ar(XLine.kr(40,4000,6),0.1, 0.2) }.play;
 { PulseDPW.ar(XLine.kr(40,4000,6),0.1, 0.2) }.play;
 
 // two band limited square waves thru a resonant low pass filter
 { RLPF.ar(Pulse   .ar([100,250],0.5,0.1), XLine.kr(8000,400,5), 0.05) }.play;
-{ RLPF.ar(PulseDPW.ar([100,250],0.5,0.1), XLine.kr(8000,400,5), 0.05) }.play;</pre>
-<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/MCLDUGens/HelpSource/Classes/PulseDPW.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/MCLDUGens/HelpSource/Classes/PulseDPW.schelp</a><br>link::Classes/PulseDPW::<br></div></div></body></html>
+{ RLPF.ar(PulseDPW.ar([100,250],0.5,0.1), XLine.kr(8000,400,5), 0.05) }.play;</textarea>
+<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/MCLDUGens/HelpSource/Classes/PulseDPW.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/MCLDUGens/HelpSource/Classes/PulseDPW.schelp</a><br>link::Classes/PulseDPW::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

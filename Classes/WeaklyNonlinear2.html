@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>WeaklyNonlinear2 | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>WeaklyNonlinear2 | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'WeaklyNonlinear2';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>WeaklyNonlinear2:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -23,8 +27,8 @@ var scdoc_sc_version = '3.9.3';
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -44,7 +48,7 @@ var scdoc_sc_version = '3.9.3';
 <p>y= Dx
 <p>The nonlinear term is not calculated if alpha is zero. Otherwise it is generated at additional CPU cost. 
 <p>All inputs can have .kr rate UGens plugged in. <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>WeaklyNonlinear2.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>input</span>, <span class='argstr'>reset: 0</span>, <span class='argstr'>ratex: 1</span>, <span class='argstr'>ratey: 1</span>, <span class='argstr'>freq: 440</span>, <span class='argstr'>initx: 0</span>, <span class='argstr'>inity: 0</span>, <span class='argstr'>alpha: 0</span>, <span class='argstr'>xexponent: 0</span>, <span class='argstr'>beta: 0</span>, <span class='argstr'>yexponent: 0</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>WeaklyNonlinear2.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>input</span>, <span class='argstr'>reset: 0</span>, <span class='argstr'>ratex: 1</span>, <span class='argstr'>ratey: 1</span>, <span class='argstr'>freq: 440</span>, <span class='argstr'>initx: 0</span>, <span class='argstr'>inity: 0</span>, <span class='argstr'>alpha: 0</span>, <span class='argstr'>xexponent: 0</span>, <span class='argstr'>beta: 0</span>, <span class='argstr'>yexponent: 0</span>, <span class='argstr'>mul: 1.0</span>, <span class='argstr'>add: 0.0</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
 <table class='arguments'>
@@ -59,7 +63,7 @@ var scdoc_sc_version = '3.9.3';
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>//Can be very noisy, high pitched and aliases badly- ie great fun, but watch out for your ears, filter, try out odd param settings. I've turned all the amplitudes down in the following
+<textarea class='editor'>//Can be very noisy, high pitched and aliases badly- ie great fun, but watch out for your ears, filter, try out odd param settings. I've turned all the amplitudes down in the following
 
 
 //defaults, high pitched! WARNING
@@ -105,5 +109,6 @@ Resonz.ar(WeaklyNonlinear2.ar(Saw.ar(MouseX.kr(50,2000,'exponential'),0.5),0,1,1
 
 
 //noisy stereo wall
-{Out.ar(0,CombN.ar(LPF.ar(0.1*WeaklyNonlinear2.ar(LFSaw.ar(MouseX.kr(100,[400,405]),0,0.1),freq:[330,440], alpha:MouseY.kr(0,[0.1,0.5])),10000),0.02,0.02,5))}.play</pre>
-<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/SLUGens/HelpSource/Classes/WeaklyNonlinear2.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/SLUGens/HelpSource/Classes/WeaklyNonlinear2.schelp</a><br>link::Classes/WeaklyNonlinear2::<br></div></div></body></html>
+{Out.ar(0,CombN.ar(LPF.ar(0.1*WeaklyNonlinear2.ar(LFSaw.ar(MouseX.kr(100,[400,405]),0,0.1),freq:[330,440], alpha:MouseY.kr(0,[0.1,0.5])),10000),0.02,0.02,5))}.play</textarea>
+<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/SLUGens/HelpSource/Classes/WeaklyNonlinear2.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/SLUGens/HelpSource/Classes/WeaklyNonlinear2.schelp</a><br>link::Classes/WeaklyNonlinear2::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

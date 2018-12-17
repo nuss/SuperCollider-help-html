@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>BusPlug | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>BusPlug | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'BusPlug';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>BusPlug:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -85,12 +89,12 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-vol'>vol</a> </li>
 <li class='toc3'><a href='#-wakeUp'>wakeUp</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes</span>
- | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>JITLib'>JITLib</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>JITLib>NodeProxy'>NodeProxy</a> | <a href='./../Browse.html#Live Coding'>Live Coding</a></span>
+ | <span id='categories'><a href='./../Browse.html#JITLib'>JITLib</a>&#8201;&gt;&#8201;<a href='./../Browse.html#JITLib>NodeProxy'>NodeProxy</a> | <a href='./../Browse.html#Live Coding'>Live Coding</a></span>
 </div><h1>BusPlug<span id='superclasses'> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></span>
 </h1>
 <div id='summary'>a listener on a bus</div>
@@ -101,11 +105,11 @@ var scdoc_sc_version = '3.9.3';
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>A BusPlug is represents a listener on a private <a href="./../Classes/Bus.html">Bus</a> that makes it easy to play back to multiple channels. It is mainly in use as a superclass of NodeProxy, but it can be used for general channel routings as well. Most methods are documented in the <a href="./../Classes/NodeProxy.html">NodeProxy</a> helpfile.<pre class='code prettyprint lang-sc'>s.boot;
+<p>A BusPlug is represents a listener on a private <a href="./../Classes/Bus.html">Bus</a> that makes it easy to play back to multiple channels. It is mainly in use as a superclass of NodeProxy, but it can be used for general channel routings as well. Most methods are documented in the <a href="./../Classes/NodeProxy.html">NodeProxy</a> helpfile.<textarea class='editor'>s.boot;
 z = Bus.control(s, 16);
 z.setn({ |i| (i * 5).nthPrime } ! 16 * 5 + 100);
 a = BusPlug.for(z);
-{ Splay.ar(SinOsc.ar(a.kr(3, MouseX.kr(0, 25)))) * 0.1 }.play; // selectively play 3 channel of the 16, modulate offset</pre>
+{ Splay.ar(SinOsc.ar(a.kr(3, MouseX.kr(0, 25)))) * 0.1 }.play; // selectively play 3 channel of the 16, modulate offset</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>BusPlug.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>server</span>)</h3>
 <div class='method'>
@@ -148,23 +152,23 @@ a = BusPlug.for(z);
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>numChannels</span>, <span class='argstr'>offset: 0</span>, <span class='argstr'>clip: 'wrap'</span>)</h3>
 <div class='method'>
 <p>Return a link to numChannels of my output. If uninitialized, creates a matching bus. Normally, <strong>ar defaults to stereo, kr to mono</strong>. This can be set in the classvars: <a href="#*defaultNumAudio">*defaultNumAudio</a>, <a href="#*defaultNumControl">*defaultNumControl</a>
-<p>For consistency, it always returns an array of signals when no numChannels are given. To make it a single ugen output, use <code class='code prettyprint lang-sc'>cumChannels = 1</code> . See also: <a href="./../Classes/InBus.html">InBus</a>.<h4>Arguments:</h4>
+<p>For consistency, it always returns an array of signals when no numChannels are given. To make it a single ugen output, use <code>cumChannels = 1</code> . See also: <a href="./../Classes/InBus.html">InBus</a>.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>numChannels<td class='argumentdesc'>
-<p>Number of channels returned. If the receiver is neutral or reshaping is elastic, initialize it to this number. If this is more than the available channels, use the clip behaviour (below). If set to <code class='code prettyprint lang-sc'>1</code>, it will return an instance of <a href="./../Classes/InBus.html">InBus</a>, otherwise an Array of one or more instances of InBus.<tr><td class='argumentname'>offset<td class='argumentdesc'>
-<p>Channel offset when reading a bus that has more channels than numChannels, cross fading between adjacent channels. "/Users/wanninger/Library/Application Support/SuperCollider/Help/Overviews/Methods.html"<tr><td class='argumentname'>clip<td class='argumentdesc'>
+<p>Number of channels returned. If the receiver is neutral or reshaping is elastic, initialize it to this number. If this is more than the available channels, use the clip behaviour (below). If set to <code>1</code>, it will return an instance of <a href="./../Classes/InBus.html">InBus</a>, otherwise an Array of one or more instances of InBus.<tr><td class='argumentname'>offset<td class='argumentdesc'>
+<p>Channel offset when reading a bus that has more channels than numChannels, cross fading between adjacent channels.<tr><td class='argumentname'>clip<td class='argumentdesc'>
 <p>If set to 'wrap', exceeding channels will wrap around, if set to 'clip', repeat the last one.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asUGenInput' href='./../Overviews/Methods.html#asUGenInput'>asUGenInput</a></h3>
 <div class='method'>
-<p>Returns the appropriate output to read from the BusPlug bus (an <a href="./../Classes/InBus.html">InBus</a> UGen)<pre class='code prettyprint lang-sc'>b = BusPlug.new;
+<p>Returns the appropriate output to read from the BusPlug bus (an <a href="./../Classes/InBus.html">InBus</a> UGen)<textarea class='editor'>b = BusPlug.new;
 { Blip.ar(b + 5) }.play;
-b.bus.set(12);</pre>
+b.bus.set(12);</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-embedInStream' href='./../Overviews/Methods.html#embedInStream'>embedInStream</a>(<span class='argstr'>inval</span>)</h3>
 <div class='method'>
-<p>Returns the map argument for the bus, if the bus has multiple channels, it will return an array of map args.<pre class='code prettyprint lang-sc'>b = BusPlug.new;
+<p>Returns the map argument for the bus, if the bus has multiple channels, it will return an array of map args.<textarea class='editor'>b = BusPlug.new;
 x = Pbind(\z, b).asStream;
 x.next(()); // returns the map argument for the bus
 b.defineBus(\audio, 3);
-x.next(()); // returns map arguments for the audio rate bus</pre>
+x.next(()); // returns map arguments for the audio rate bus</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asControlInput' href='./../Overviews/Methods.html#asControlInput'>asControlInput</a></h3>
 <div class='method'>
 <p>Returns the map argument for the bus, just like <a href="#-embedInStream">-embedInStream</a></div><h3><a class='anchor' name='Monitoring%20and%20Routing'>Monitoring and Routing</a></h3>
@@ -256,7 +260,7 @@ x.next(()); // returns map arguments for the audio rate bus</pre>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-vol' href='./../Overviews/Methods.html#vol'>vol</a> = <span class='argstr'>val</span></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-wakeUp' href='./../Overviews/Methods.html#wakeUp'>wakeUp</a></h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>// using as a control bus listener
+<textarea class='editor'>// using as a control bus listener
 
 s.boot;
 z = Bus.control(s, 16);
@@ -301,6 +305,7 @@ p.play(12);
 
 // listen to that bus for a test:
 x = { InFeedback.ar(12,2) }.play;
-x.free;</pre>
+x.free;</textarea>
 
-<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/BusPlug.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/BusPlug.schelp</a><br>link::Classes/BusPlug::<br></div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/BusPlug.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/BusPlug.schelp</a><br>link::Classes/BusPlug::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

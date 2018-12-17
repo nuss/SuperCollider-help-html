@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>PbindFx | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>PbindFx | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'PbindFx';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>PbindFx:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -61,8 +65,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'><li class='toc2'><a href='#Ex.%2010a:%20Parallel%20effects'>Ex. 10a: Parallel effects</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%2010b:%20Modulation%20graphs'>Ex. 10b: Modulation graphs</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%2010c:%20Modulation%20graphs,%20changed%20per%20event'>Ex. 10c: Modulation graphs, changed per event</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -164,21 +168,21 @@ var scdoc_sc_version = '3.9.3';
 <li>Checks of (3) are also based on info in SynthDescLib.global. It is possible to replace SynthDefs on the fly (<a href="#Ex.%207a">Ex.7a</a>, <a href="#Ex.%207b">Ex.7b</a>), in that case I'd recommend to use also methods 'add' or 'store' – e.g. in case of using 'send' for redefinition no bus matching check is performed and a possibly wrong routing would be undetected.<li>As shown in above graphics the source synth's cleanupDelay is interpretated differentely with gated and non-gated (fixed-length) envelopes. This is done automatically by looking for a 'gate' arg in the SynthDef's SynthDesc. It's the users responsibility to use the conventional arg 'gate' for release in the SynthDef and omit a 'gate' arg with SynthDefs employing fixed-length envelopes.<li>As with normal event patterns the source Pbind / Pbind pairs may be defined with arrays to produce multiple synths per event, then the whole source signal is routed to the fx graph (see <a href="#Ex.%202b">Ex.2b</a>, <a href="#Ex.%202c">Ex.2c</a> and others). fxData pairs can also be defined with arrays, which causes parallel processing per node ("implicit parallelism"), see <a href="#Ex.%204">Ex.4a</a>. For applying different fxs to parallel events (resp. chords) use parallel PbindFxs (<a href="#Ex.%203a">Ex.3a</a>, <a href="#Ex.%203b">Ex.3b</a>). It is of course also possible that fx synths have array args and fx patterns are passing them with the double-bracketing convention used for these cases, see <a href="./../Tutorials/Event_patterns_and_array_args.html">Event patterns and array args</a>.<li>Source instrument and effect SynthDefs are allowed to have args of same name. There is no problem as key/value pairs are stored in separate lists/events.<li>PbindFx is implemented per automatically chosen effect type 'pbindFx', which employs event type 'note', thus an event type must neither be passed to pbindData nor to fxData.<li>The value conversion framework can be used for fxData, e.g. by passing \midinote instead of \freq or \db instead of \amp as with Pbind, see Ex.9. Other than with Pbind, freq and amp event defaults are not passed to fx synths, if no such values are passed via fxData. In that case default values of fx synths are taken.<li>While playing PbindFx you should not play with allocation affecting private buses. Freeing buses is done by SkipJack objects, so you should not forcefully stop all SkipJack objects while playing PbindFx.<li>Keys \group and \addAction may be passed, they determine how the group enclosing event-generated synths is related to the passed group, see scheme <a href="#Principle%20of%20operation">Principle of operation</a>.<li>Zero synths are using the SynthDefs 'pbindFx_zero' and 'pbindFx_splitZero' which are written to disk at startup time, as well as split synths pbindFx_split_axb for a = 2,...,8 and b = 1,...,8. Of course these SynthDefs shouldn't be deleted or exchanged.</ol>
 <h2><a class='anchor' name='Resources,%20troubleshooting'>Resources, troubleshooting</a></h2>
 <ol>
-<li>You might encounter the error message "Meta_Bus:audio: failed to get an audio bus allocated." As audio buses for effect chains are allocated and freed per event a higher number of private audio buses is likely to be required (more than default 128). You might also encounter the error message "exception in real time: alloc failed, increase server's memory allocation (e.g. via ServerOptions)". Hence it's recommended to set the concerned server options before (re-)booting and working with PbindFx, e.g.:<pre class='code prettyprint lang-sc'>(
+<li>You might encounter the error message "Meta_Bus:audio: failed to get an audio bus allocated." As audio buses for effect chains are allocated and freed per event a higher number of private audio buses is likely to be required (more than default 128). You might also encounter the error message "exception in real time: alloc failed, increase server's memory allocation (e.g. via ServerOptions)". Hence it's recommended to set the concerned server options before (re-)booting and working with PbindFx, e.g.:<textarea class='editor'>(
 s.options.numPrivateAudioBusChannels = 1024;
 s.options.memSize = 8192 * 16;
 s.reboot;
-)</pre>
-<li>You might encounter the warning "Scheduler queue is full." Per default delayed freeing of buses is scheduled on SystemClock, which defaults to queueSize 1024. In case of granulation and/or large cleanup delays it's recommended to pass a cleanup clock with sufficiently large queueSize via <strong>pbindData</strong>, its permanent flag must be set to true, e.g.:<pre class='code prettyprint lang-sc'>...
+)</textarea>
+<li>You might encounter the warning "Scheduler queue is full." Per default delayed freeing of buses is scheduled on SystemClock, which defaults to queueSize 1024. In case of granulation and/or large cleanup delays it's recommended to pass a cleanup clock with sufficiently large queueSize via <strong>pbindData</strong>, its permanent flag must be set to true, e.g.:<textarea class='editor'>...
 \cleanupClock, t = TempoClock(queueSize: 8192).permanent_(true)
-...</pre>
+...</textarea>
 
-<p>Note that this clock keeps on running and survives CmdPeriod, you should explicitely stop it if you don't need it anymore, hence it should be stored in a variable. In case you haven't done that you can still stop all TempoClocks and remove them from CmdPeriod with<pre class='code prettyprint lang-sc'>TempoClock.all.copy.do(_.stop)</pre>
+<p>Note that this clock keeps on running and survives CmdPeriod, you should explicitely stop it if you don't need it anymore, hence it should be stored in a variable. In case you haven't done that you can still stop all TempoClocks and remove them from CmdPeriod with<textarea class='editor'>TempoClock.all.copy.do(_.stop)</textarea>
 <li>Cleanup delays for source and effects (or, if not passed, their default values) should be sufficiently large (see description of <strong>\cleanupDelay</strong> ), otherwise effects and audio buses might be freed too early and signals cut.<li>Some effects, like echo, introduce a delay. If sequencing mixes delayed events with non-delayed events, entries of the latter have to be delayed accordingly to preserve correct timing, this can be done by setting an offset in seconds with \lag. See examples with echo below.</ol>
 <h2><a class='anchor' name='Ex.%201:%20Straight%20usage%20with%20unchanged%20effect%20order'>Ex. 1: Straight usage with unchanged effect order</a></h2>
 
 <p><a class='anchor' name='Ex.%201a'>&nbsp;</a><h3><a class='anchor' name='Ex.%201a:%20Source%20synth%20with%20sustained%20envelope'>Ex. 1a: Source synth with sustained envelope</a></h3>
-<pre class='code prettyprint lang-sc'>// boot server with extended resources
+<textarea class='editor'>// boot server with extended resources
 
 (
 s.options.numPrivateAudioBusChannels = 1024;
@@ -302,11 +306,11 @@ q = p.play;
 // (descending number of groups, synths and ugens reflects delayed cleanup)
 // with stopping the same example by Cmd-Period
 
-q.stop;</pre>
+q.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%201b'>&nbsp;</a><h3><a class='anchor' name='Ex.%201b:%20Source%20synth%20with%20fixed-length%20envelope'>Ex. 1b: Source synth with fixed-length envelope</a></h3>
 
-<p>SynthDefs from <a href="#Ex.%201a">Ex. 1a</a> plus SynthDef variation with adsr args<pre class='code prettyprint lang-sc'>(
+<p>SynthDefs from <a href="#Ex.%201a">Ex. 1a</a> plus SynthDef variation with adsr args<textarea class='editor'>(
 SynthDef(\source_adsrFixed, { |out = 0, freq = 400, decayTime = 0.5,
     att = 0.005, dec = 0.01, sus = 0.2, rel = 0.3, susLevel = 0.5, amp = 0.1|
     var env, sig = Saw.ar(freq);
@@ -362,13 +366,13 @@ q = p.play;
 
 s.queryAllNodes;
 
-q.stop;</pre>
+q.stop;</textarea>
 <h2><a class='anchor' name='Ex.%202:%20Sequencing%20of%20different%20effect%20chains'>Ex. 2: Sequencing of different effect chains</a></h2>
 
 <p><a class='anchor' name='Ex.%202a'>&nbsp;</a><h3><a class='anchor' name='Ex.%202a:%20Determined%20fx%20sequence'>Ex. 2a: Determined fx sequence</a></h3>
 
 <p>PbindFx using spat and echo effects. Especially relevant keys: \fxOrder which determines fx sequencing and \cleanupDelay for proper releaseTimes of source and effects.
-<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 p = PbindFx([
         \instrument, \source,
         \dur, 0.5,
@@ -408,12 +412,12 @@ p = PbindFx([
 q = p.play;
 )
 
-q.stop;</pre>
+q.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%202b'>&nbsp;</a><h3><a class='anchor' name='Ex.%202b:%20Random%20fx%20sequence'>Ex. 2b: Random fx sequence</a></h3>
 
 <p>If more than one synth per event is produced (here by key 'midinote'), the effect chain is applied to all of them, see <a href="#Ex.%203">Ex.3</a> for applying different effects to parallel synths.
-<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 p = PbindFx([
         \instrument, \source,
         \dur, 0.2,
@@ -446,12 +450,12 @@ p = PbindFx([
 q = p.play;
 )
 
-q.stop;</pre>
+q.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%202c'>&nbsp;</a><h3><a class='anchor' name='Ex.%202c:%20Some%20extensions'>Ex. 2c: Some extensions</a></h3>
 
 <p>Additional use of rests, reverb added. Here the reverb usage is deliberately wasteful, see <a href="#Ex.%202d">Ex.2d</a> for an alternative. The use of Pn + Pshuf (or equivalently Pshufn) gives balanced random variation for several key streams.
-<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 p = PbindFx([
         \instrument, \source,
         \dur, Pn(Pshuf(0.2!5 ++ Rest(0.2))),
@@ -490,12 +494,12 @@ p = PbindFx([
 q = p.play;
 )
 
-q.stop;</pre>
+q.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%202d'>&nbsp;</a><h3><a class='anchor' name='Ex.%202d:%20Saving%20resources'>Ex. 2d: Saving resources</a></h3>
 
 <p>If effects have a long cleanup delay, you will get a possibly large number of overlapping effect chains. E.g. in <a href="#Ex.%202c">Ex.2c</a> many reverb synths can be there in parallel, the decayTime is controlled by Pwhite(3.0, 10), so it might well be that reverbs with decayTimes 7.95, 8, and 8.1 are instantiated in parallel, which doesn't make much difference and is quite wasteful. Reverb is often placed at the last position of the effect chain, so a more efficient approach would be the following: do all effect sequencing without reverb with PbindFx and pipe the overall out to a permanently running reverb.
-<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>// start two reverbs with different parameters, read from dedicated buses
+<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>// start two reverbs with different parameters, read from dedicated buses
 
 (
 a = Bus.audio(s, 2);
@@ -550,7 +554,7 @@ q.stop;
 
 // free extra resources
 
-[x, y, a, b].do(_.free);</pre>
+[x, y, a, b].do(_.free);</textarea>
 
 <p><a class='anchor' name='Ex.%203'>&nbsp;</a><h2><a class='anchor' name='Ex.%203:%20Different%20effects%20for%20parallel%20synths'>Ex. 3: Different effects for parallel synths</a></h2>
 
@@ -558,7 +562,7 @@ q.stop;
 <p><a class='anchor' name='Ex.%203a'>&nbsp;</a><h3><a class='anchor' name='Ex.%203a:%20Using%20a%20template%20Pbind'>Ex. 3a: Using a template Pbind</a></h3>
 
 <p>Here the option of passing a source Pbind instead of a list of Pbind pairs can be used.
-<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 // master pattern, fxOrders defines fxOrder for voices of chord
 f = Pbind(
     \dur, 0.3,
@@ -630,12 +634,12 @@ q = Ptpar([
 ]).play;
 )
 
-q.stop;</pre>
+q.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%203b'>&nbsp;</a><h3><a class='anchor' name='Ex.%203b:%20Using%20a%20PbindFx%20generator%20Function'>Ex. 3b: Using a PbindFx generator Function</a></h3>
 
 <p>Equivalent to <a href="#Ex.%203a">Ex.3a</a>, but might look more straight, as fxOrder pair already generated with PbindFx Function.
-<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 // master pattern for fxOrder
 f = Pbind(
     \dur, 0.3,
@@ -688,11 +692,11 @@ d = 0.001;
 q = Ptpar([0, f, d, u, d, v, d, w]).play;
 )
 
-q.stop;</pre>
+q.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%204'>&nbsp;</a><h2><a class='anchor' name='Ex.%204:%20Applying%20the%20same%20fx%20SynthDef%20more%20than%20once%20in%20a%20chain'>Ex. 4: Applying the same fx SynthDef more than once in a chain</a></h2>
 <h3><a class='anchor' name='Ex.%204a:%20Implicit%20duplication%20(=%20implicit%20parallelism)'>Ex. 4a: Implicit duplication (= implicit parallelism)</a></h3>
-<pre class='code prettyprint lang-sc'>// Within a graph node parallelism can be established in analogy to 
+<textarea class='editor'>// Within a graph node parallelism can be established in analogy to 
 // the generation of multiple synths with Pbind: 
 // by passing an array as value within fxData.
 
@@ -743,9 +747,9 @@ p = PbindFx([
 q = p.play;
 )
 
-q.stop;</pre>
+q.stop;</textarea>
 <h3><a class='anchor' name='Ex.%204b:%20Explicit%20duplication'>Ex. 4b: Explicit duplication</a></h3>
-<pre class='code prettyprint lang-sc'>// By passing the same fx in different fxData args you have all options
+<textarea class='editor'>// By passing the same fx in different fxData args you have all options
 // by defining the fx graph: in sequence, in parallel or however.
 // Here is an example for explicit duplication in sequence,
 // for defining explicit parallelism and arbitrary fx graphs see Ex. 10
@@ -791,12 +795,12 @@ p = PbindFx([
 q = p.play;
 )
 
-q.stop;</pre>
+q.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%205'>&nbsp;</a><h2><a class='anchor' name='Ex.%205:%20Tempo%20control'>Ex. 5: Tempo control</a></h2>
 
 <p>Tempo control works as with Pbind and can be influenced by a number of parameters. As cleanup parameters of PbindFx are passed in seconds, tempo control can be done independent from making cleanup time changes (though you might do so as well). The use of a dedicated TempoClock as master tempo control is a good idea, setting tempo for individual streams can be done with 'stretch'. The following example employs a PbindFx generator Function, the tempo of streams can be controlled individually and generally.
-<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 // PbindFx generator Function,
 // streams will get different midinote offsets,
 // tempo will be read from a passed array
@@ -888,7 +892,7 @@ z.stop;
 
 // stop clock
 
-t.stop;</pre>
+t.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%206'>&nbsp;</a><h2><a class='anchor' name='Ex.%206:%20Further%20external%20routing'>Ex. 6: Further external routing</a></h2>
 
@@ -896,7 +900,7 @@ t.stop;</pre>
 <p>Audio routing benefits from the possibility to pass groups to PbindFx. Then all temporary groups, generated during playing the PbindFx, are enclosed by it and node order can be clearly defined. For audio bus routing better use In.ar than mapping with asMap, that way matching of ins and outs of fx chains is checked and it avoids issues with using asMap and stopping the external source (occuring at least in SC 3.6.6).
 <p>Spat SynthDef from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.
 <p><a class='anchor' name='Ex.%206a'>&nbsp;</a><h3><a class='anchor' name='Ex.%206a:%20Source%20synth%20reading%20audio%20modulation%20signals%20from%20external%20buses'>Ex. 6a: Source synth reading audio modulation signals from external buses</a></h3>
-<pre class='code prettyprint lang-sc'>// source synth based on SinOsc and additional ring modulation,
+<textarea class='editor'>// source synth based on SinOsc and additional ring modulation,
 // while reading from an audio bus with no signal, it outputs only the sine
 
 (
@@ -985,11 +989,11 @@ q.stop;
 (
 g.free;
 a.free;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%206b'>&nbsp;</a><h3><a class='anchor' name='Ex.%206b:%20Fx%20synths%20reading%20audio%20modulation%20signals%20from%20external%20buses'>Ex. 6b: Fx synths reading audio modulation signals from external buses</a></h3>
 
-<p>Spat SynthDef from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>Spat SynthDef from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 // simple sine source synth
 SynthDef(\source_sine, { |out = 0, freq = 400, decayTime = 0.5,
     attackTime = 0.005, amp = 0.1, gate = 1|
@@ -1094,12 +1098,12 @@ q.stop;
 g.free;
 a.free;
 b.free;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%206c'>&nbsp;</a><h3><a class='anchor' name='Ex.%206c:%20Controlling%20effects%20with%20LFOs'>Ex. 6c: Controlling effects with LFOs</a></h3>
 
 <p>Control the amount / mix of an effect continously.
-<p>Spat SynthDef from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>Spat SynthDef from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 // bus for LFO control
 c = Bus.control(s, 1);
 
@@ -1146,7 +1150,7 @@ x = { Out.kr(c, SinOsc.kr(0.15, -pi/2).range(0, 0.8)) }.play
 q.stop;
 x.free;
 c.free;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%207'>&nbsp;</a><h2><a class='anchor' name='Ex.%207:%20Replacement'>Ex. 7: Replacement</a></h2>
 
@@ -1154,7 +1158,7 @@ c.free;
 <p><a class='anchor' name='Ex.%207a'>&nbsp;</a><h3><a class='anchor' name='Ex.%207a:%20Replacement%20restricted%20to%20key%20streams'>Ex. 7a: Replacement restricted to key streams</a></h3>
 
 <p>This can be done with Pbind + Pdefn or Pbind + PL, a specific possibility with PbindFx is the replacement of \fxOrder.
-<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 ~midi = PLseq([60, 60, 60, 62]);
 ~fxs = PLseq([0, 0, 1, 3]);
 
@@ -1208,11 +1212,11 @@ q = p.play;
 
 // stop and free resources
 
-q.stop;</pre>
+q.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%207b'>&nbsp;</a><h3><a class='anchor' name='Ex.%207b:%20Replacement%20of%20source%20and%20fx%20patterns'>Ex. 7b: Replacement of source and fx patterns</a></h3>
 
-<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 // define source and effect patterns
 
 ~midi = PLseq([60, 60, 62, 63]);
@@ -1315,11 +1319,11 @@ SynthDef(\source_pulse, { |out = 0, freq = 400, decayTime = 0.5,
 );
 )
 
-q.stop;</pre>
+q.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%207c'>&nbsp;</a><h3><a class='anchor' name='Ex.%207c:%20Replacement%20with%20Pbindef'>Ex. 7c: Replacement with Pbindef</a></h3>
 
-<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 // source and fxs passed as Pbindefs
 
 // list of instrument symbols
@@ -1393,12 +1397,12 @@ q.stop;
 
 // before playing again do Pbindef cleanup
 
-i.do { |x| Pbindef(x).clear };</pre>
+i.do { |x| Pbindef(x).clear };</textarea>
 
 <p><a class='anchor' name='Ex.%208'>&nbsp;</a><h2><a class='anchor' name='Ex.%208:%20GUI%20control'>Ex. 8: GUI control</a></h2>
 
 <p>Control of fx params with VarGui, control of fx sequencing by code.
-<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 // ensure we are in top envir
 currentEnvironment = topEnvironment;
 
@@ -1501,12 +1505,12 @@ v = VarGui([
 
 // stop by gui or explicitely
 
-v.streams[0].stop;</pre>
+v.streams[0].stop;</textarea>
 
 <p><a class='anchor' name='Ex.%209'>&nbsp;</a><h2><a class='anchor' name='Ex.%209:%20Using%20value%20conversions%20with%20fx%20data'>Ex. 9: Using value conversions with fx data</a></h2>
 
 <p>Effects can produce their own characteristic frequencies. For this it can be practical to use Event's value conversion framework.
-<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 // filter bank effect, level of signal very much depends on input frequencies
 SynthDef(\klank, { |out, in, freq = 400, add = 7, amp = 1, ringTime = 0.1, mix = 1|
     var sig, inSig = In.ar(in, 2);
@@ -1548,14 +1552,14 @@ p = PbindFx([
 q = p.play;
 )
 
-q.stop;</pre>
+q.stop;</textarea>
 <h2><a class='anchor' name='Ex.%2010:%20Parallel%20effects%20and%20arbitrary%20effect%20graphs'>Ex. 10: Parallel effects and arbitrary effect graphs</a></h2>
 
 <p><a class='anchor' name='Ex.%2010a'>&nbsp;</a><h3><a class='anchor' name='Ex.%2010a:%20Parallel%20effects'>Ex. 10a: Parallel effects</a></h3>
 
 <p>Here source is routed to echo #1 and echo #2 in parallel, echo #1 (fx index 2) is a "classical" echo whereas echo #2 (fx index 3), due to short echoDelta, results in an additional frequency. The output of echo #2 is routed to a wah-wah, echo #1 directly to out.<div class='image'><img src='attachments/PbindFx/PbindFx_graph_4c.png'/></div>
 
-<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>SynthDefs from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 p = PbindFx([
         \instrument, \source,
         \dur, Pseq([Pn(0.2, { rrand(8, 12) }), Pwhite(2.0, 4.0, 1)], inf),
@@ -1598,12 +1602,12 @@ p = PbindFx([
 q = p.play;
 )
 
-q.stop;</pre>
+q.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%2010b'>&nbsp;</a><h3><a class='anchor' name='Ex.%2010b:%20Modulation%20graphs'>Ex. 10b: Modulation graphs</a></h3>
 
 <p>A generalized modulating effect node has two ins: carrier and modulator. Fx convention of PbindFx demands one single In ugen per fx synth, but two ins can simply be handled by a 2-channel In ugen and hard-panned input signals.
-<p>Spat SynthDef from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>(
+<p>Spat SynthDef from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>(
 // sine source
 SynthDef(\sine_adsrFixed, { |out = 0, freq = 400, decayTime = 0.5,
     att = 0.005, dec = 0.01, sus = 0.2, rel = 0.3, susLevel = 0.5, amp = 0.1|
@@ -1674,15 +1678,15 @@ p = PbindFx([
 q = p.play;
 )
 
-q.stop;</pre>
+q.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%2010c'>&nbsp;</a><h3><a class='anchor' name='Ex.%2010c:%20Modulation%20graphs,%20changed%20per%20event'>Ex. 10c: Modulation graphs, changed per event</a></h3>
 
-<p>SynthDefs from Ex. 10b, spat SynthDef from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<pre class='code prettyprint lang-sc'>// fx graphs corresponding to fxOrder `(0:1, 4:1, 1:6) and `(0:1, 5:1, 1:6), src = \sine_adsrFixed:</pre>
+<p>SynthDefs from Ex. 10b, spat SynthDef from <a href="#Ex.%201a">Ex.1a</a>, see also extended server resources defined there.<textarea class='editor'>// fx graphs corresponding to fxOrder `(0:1, 4:1, 1:6) and `(0:1, 5:1, 1:6), src = \sine_adsrFixed:</textarea>
 <div class='image'><img src='attachments/PbindFx/PbindFx_graph_4a.png'/></div>
-<pre class='code prettyprint lang-sc'>// fx graph corresponding to fxOrder `(0:2, 3:2, 2:6), src = \sine_adsrFixed:</pre>
+<textarea class='editor'>// fx graph corresponding to fxOrder `(0:2, 3:2, 2:6), src = \sine_adsrFixed:</textarea>
 <div class='image'><img src='attachments/PbindFx/PbindFx_graph_4b.png'/></div>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 p = PbindFx([
         \instrument, \sine_adsrFixed,
         \dur, 0.3,
@@ -1738,5 +1742,6 @@ p = PbindFx([
 q = p.play;
 )
 
-q.stop;</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PbindFx.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PbindFx.schelp</a><br>link::Classes/PbindFx::<br></div></div></body></html>
+q.stop;</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PbindFx.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PbindFx.schelp</a><br>link::Classes/PbindFx::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

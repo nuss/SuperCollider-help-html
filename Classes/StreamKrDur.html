@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>StreamKrDur | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>StreamKrDur | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'StreamKrDur';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>StreamKrDur:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -40,8 +44,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-wigglyness'>wigglyness</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -57,7 +61,7 @@ var scdoc_sc_version = '3.9.3';
 <h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>This plays a pattern in real time in the language, and sends those values as /c_set messages to its bus on the server. Durations are specified in beats by a second pattern.
-<p>Timings are exact, its messages are sent to the server with a small latency period before they should be played. That is to say when you start playing a StreamKrDur, it will run slightly and exactly ahead of time. It is cancellable and stoppable within Server-latency.<pre class='code prettyprint lang-sc'>// dalek mating season I
+<p>Timings are exact, its messages are sent to the server with a small latency period before they should be played. That is to say when you start playing a StreamKrDur, it will run slightly and exactly ahead of time. It is cancellable and stoppable within Server-latency.<textarea class='editor'>// dalek mating season I
 (
     f = StreamKrDur(
             Prand(Array.fill(rrand(4,16),{ rrand(20,80).midicps }),inf),
@@ -71,8 +75,8 @@ var scdoc_sc_version = '3.9.3';
     },[
         f
     ]).play
-)</pre>
-<pre class='code prettyprint lang-sc'>(
+)</textarea>
+<textarea class='editor'>(
     var freq;
 
     freq =  StreamKrDur(
@@ -87,9 +91,9 @@ var scdoc_sc_version = '3.9.3';
     },[
         freq
     ]).play
-)</pre>
+)</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>StreamKrDur.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>values: 0</span>, <span class='argstr'>durations: 0.25</span>, <span class='argstr'>lag: 0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>StreamKrDur.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>values: 0.0</span>, <span class='argstr'>durations: 0.25</span>, <span class='argstr'>lag: 0.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>values<td class='argumentdesc'>
@@ -123,7 +127,7 @@ var scdoc_sc_version = '3.9.3';
 <div class='method'></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 
-<p>dalek mating season II<pre class='code prettyprint lang-sc'>(
+<p>dalek mating season II<textarea class='editor'>(
 var freq,freq2,pmindex;
 
     freq = StreamKrDur(
@@ -149,9 +153,9 @@ var freq,freq2,pmindex;
         freq2,
         pmindex
     ]).gui
-)</pre>
+)</textarea>
 
-<p>same thing with a separated Instr<pre class='code prettyprint lang-sc'>(
+<p>same thing with a separated Instr<textarea class='editor'>(
     Instr([\oscillOrc,\pmosc],{ arg freq=400, freq2=500,pmindex=0,phasemod=0.0,amp=1.0;
             PMOsc.ar(freq,freq2,pmindex,phasemod,amp)
     });
@@ -175,9 +179,9 @@ var freq,freq2,pmindex;
       ]);
 
      p.gui;
-)</pre>
+)</textarea>
 
-<p>A metronome<pre class='code prettyprint lang-sc'>(
+<p>A metronome<textarea class='editor'>(
 var nome,layout;
 nome = Patch({ arg beat,freq,amp;
         Decay2.ar(
@@ -201,11 +205,11 @@ ToggleButton(layout,"Nome",{
     if(nome.isPlaying,{ nome.stop })
 },minWidth: 250);
 
-)</pre>
+)</textarea>
 
 <p>In this case since the beat clock, and both stream kr durs are running all at the same tempo, it would be slightly more efficient to use an InstrGateSpawner and do separate events. Only one scheduler then instead of 2. See the example in InstrGateSpawner
 <p>But if you wanted them in different syncs, different streams and a continuos running synth (and have fun with the Decay), then this would be a good starting point.
-<p>With a Pbind you are creating a new event for every note and creating new UGens and a new Synth each time. This is more like an analog synth: the oscillators play constantly and they are gated to create notes.<pre class='code prettyprint lang-sc'>(
+<p>With a Pbind you are creating a new event for every note and creating new UGens and a new Synth each time. This is more like an analog synth: the oscillators play constantly and they are gated to create notes.<textarea class='editor'>(
 
     Tempo.bpm = 130;
 
@@ -240,6 +244,7 @@ ToggleButton(layout,"Nome",{
       ]);
 
      p.gui;
-)</pre>
+)</textarea>
 
-<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/StreamKrDur.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/StreamKrDur.schelp</a><br>link::Classes/StreamKrDur::<br></div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/StreamKrDur.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/StreamKrDur.schelp</a><br>link::Classes/StreamKrDur::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

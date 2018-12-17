@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>LPCAnalyzer | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>LPCAnalyzer | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'LPCAnalyzer';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>LPCAnalyzer:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -23,8 +27,8 @@ var scdoc_sc_version = '3.9.3';
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -40,7 +44,7 @@ var scdoc_sc_version = '3.9.3';
 <p>Linear predictive coding analysis on any arbitrary input signal. The spectrum of the input signal is modeled, and used to filter the source. This works most successfully if the source is spectrally flat to begin with, ie, an impulse train ( <a href="./../Classes/Impulse.html">Impulse</a> UGen ) or white noise ( <a href="./../Classes/WhiteNoise.html">WhiteNoise</a> UGen ).
 <p>The two big hits to CPU costs here are large n, causing peaky calculation hits once per window as autocorrelation coefficients are calculated, and p as determining the order of the filter which is fitted, and thus the per sample output calculation cost.
 <p>(For more technicalities see John Makhoul (1975) <em>"Linear Prediction: A Tutorial Review"</em>. Proceedings of the IEEE 63(4).)<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>LPCAnalyzer.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>input: 0</span>, <span class='argstr'>source: 0.01</span>, <span class='argstr'>n: 256</span>, <span class='argstr'>p: 10</span>, <span class='argstr'>testE: 0</span>, <span class='argstr'>delta: 0.999</span>, <span class='argstr'>windowtype: 0</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>LPCAnalyzer.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>input: 0</span>, <span class='argstr'>source: 0.01</span>, <span class='argstr'>n: 256</span>, <span class='argstr'>p: 10</span>, <span class='argstr'>testE: 0</span>, <span class='argstr'>delta: 0.999</span>, <span class='argstr'>windowtype: 0</span>, <span class='argstr'>mul: 1.0</span>, <span class='argstr'>add: 0.0</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
 <table class='arguments'>
@@ -55,7 +59,7 @@ var scdoc_sc_version = '3.9.3';
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>{LPCAnalyzer.ar(SoundIn.ar,Impulse.ar(440,0,0.2), 256, 50)}.play
+<textarea class='editor'>{LPCAnalyzer.ar(SoundIn.ar,Impulse.ar(440,0,0.2), 256, 50)}.play
 
 {LPCAnalyzer.ar(SoundIn.ar,Impulse.ar(440,0,0.2), 256, 50, windowtype:1)}.play
 
@@ -143,6 +147,7 @@ source= Impulse.ar(delaytime.reciprocal);
 (DelayN.ar(input,delaytime, delaytime)- LPCAnalyzer.ar(input,source,1024,MouseX.kr(1,256))).poll(10000)
 
 }.play
-)</pre>
+)</textarea>
 
-<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/NCAnalysisUGens/HelpSource/Classes/LPCAnalyzer.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/NCAnalysisUGens/HelpSource/Classes/LPCAnalyzer.schelp</a><br>link::Classes/LPCAnalyzer::<br></div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/NCAnalysisUGens/HelpSource/Classes/LPCAnalyzer.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/NCAnalysisUGens/HelpSource/Classes/LPCAnalyzer.schelp</a><br>link::Classes/LPCAnalyzer::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

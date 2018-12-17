@@ -1,27 +1,31 @@
-<!doctype html><html lang='en'><head><title>atTime | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>atTime | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'atTime';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>atTime:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#atTime'>atTime</a></li>
 <ul class='toc'><li class='toc2'><a href='#Nil%20:%20immediately'>Nil : immediately</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Integer%20:%20according%20to%20TempoClock%20on%20the%20next'>Integer : according to TempoClock on the next</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Date%20:%20at%20that%20time%20on%20that%20date%20if%20in%20the%20future'>Date : at that time on that date if in the future</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Guides (extension)</span>
@@ -36,7 +40,7 @@ var scdoc_sc_version = '3.9.3';
 <p>This is an argument for many methods such as player-play(atTime)
 <p>It specifies when the bundle or event or result of the method should occur.<h3><a class='anchor' name='Nil%20:%20immediately'>Nil : immediately</a></h3>
 
-<p> Float : that many seconds from now  if time is greater than server latency,  it will be scheded in sclang and only sent close to the time<pre class='code prettyprint lang-sc'>// start in 4.5 seconds
+<p> Float : that many seconds from now  if time is greater than server latency,  it will be scheded in sclang and only sent close to the time<textarea class='editor'>// start in 4.5 seconds
 (
 
 Patch({ arg tempo;
@@ -46,11 +50,11 @@ Patch({ arg tempo;
 
 ]).play(atTime: 4.5)
 
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Integer%20:%20according%20to%20TempoClock%20on%20the%20next'>Integer : according to TempoClock on the next</a></h3>
 
 <p> 1 bar  2 half bar  4 beat  8 8th note  16 16th note  etc.
-<p> execute the following several times. this will launch multiple patches playing the impulse.  they should each start at the start of the next bar.<pre class='code prettyprint lang-sc'>(
+<p> execute the following several times. this will launch multiple patches playing the impulse.  they should each start at the start of the next bar.<textarea class='editor'>(
 
 Patch({ arg tempo;
     Impulse.ar( tempo )
@@ -59,11 +63,11 @@ Patch({ arg tempo;
 
 ]).play(atTime: 1)
 
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Date%20:%20at%20that%20time%20on%20that%20date%20if%20in%20the%20future'>Date : at that time on that date if in the future</a></h3>
 
 <p> Date has to have raw seconds set to work !  use Date.localtime or Date.getDate to create a Date object with the raw seconds set.  and then make relative changes to that date.
-<p> ie. you can't make a Date.new(year,month ....) and expect that to work.  note: a getRawSeconds primitive would solve this problem.<pre class='code prettyprint lang-sc'>(
+<p> ie. you can't make a Date.new(year,month ....) and expect that to work.  note: a getRawSeconds primitive would solve this problem.<textarea class='editor'>(
 d = Date.getDate;
 // 10 seconds in the future
 d.rawSeconds = d.rawSeconds + 10;
@@ -74,6 +78,7 @@ Patch({ arg tempo;
 
 ]).play(atTime: d)
 
-)</pre>
+)</textarea>
 
-<p>See the schedBundle method extensions for the actual implementations of these.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Guides/atTime.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Guides/atTime.schelp</a><br>link::Guides/atTime::<br></div></div></body></html>
+<p>See the schedBundle method extensions for the actual implementations of these.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Guides/atTime.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Guides/atTime.schelp</a><br>link::Guides/atTime::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

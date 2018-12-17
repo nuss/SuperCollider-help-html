@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>Sieves and Psieve patterns | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Sieves and Psieve patterns | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Sieves and Psieve patterns';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Sieves and Psieve patterns:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -46,8 +50,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'><li class='toc2'><a href='#5a)%20Applying%20sieve%20intervals%20to%20(micro)%20rhythms'>5a) Applying sieve intervals to (micro) rhythms</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#5b)%20Sequentially%20generating%20new%20sieve%20patterns%20for%20rhythm%20and%20pitch'>5b) Sequentially generating new sieve patterns for rhythm and pitch</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#5c)%20Sequencing%20instrumental%20variation%20with%20sieves'>5c) Sequencing instrumental variation with sieves</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Tutorials (extension)</span>
@@ -69,7 +73,7 @@ var scdoc_sc_version = '3.9.3';
 <li>Xenakis, Iannis (1990). "Sieves" Perspectives of New Music 28(1): 58-78.<li>Xenakis, Iannis (1992). Formalized Music. Hillsdale, NY: Pendragon Press, 2nd Revised edition.<li>Ariza, Christopher (2005). "The Xenakis Sieve as Object: A New Model and a Complete Implementation" Computer Music Journal 29(2): 40-60.<li>Roads, Curtis (2015). Composing Electronic Music. A New Aesthetic. Oxford University Press.</ol>
 <h2><a class='anchor' name='1)%20The%20Sieve%20class'>1) The Sieve class</a></h2>
 <h3><a class='anchor' name='1a)%20Basic%20generation%20from%20Integers,%20modes%20'intervals'%20and%20'points''>1a) Basic generation from Integers, modes 'intervals' and 'points'</a></h3>
-<pre class='code prettyprint lang-sc'>// define a simple sieve with multiples of 3, 5 and 7, 0 is included
+<textarea class='editor'>// define a simple sieve with multiples of 3, 5 and 7, 0 is included
 // as no limit is given, the result goes up to the default limit of 65536
 // per default result is given in mode 'points'
 
@@ -109,9 +113,9 @@ a.toIntervals.dump
 
 // calculate with 'intervals' from the beginning
 
-Sieve.union_i(3, 5, 7, `30)</pre>
+Sieve.union_i(3, 5, 7, `30)</textarea>
 <h3><a class='anchor' name='1b)%20Generation%20from%20Patterns,%20Streams%20and%20Sieves'>1b) Generation from Patterns, Streams and Sieves</a></h3>
-<pre class='code prettyprint lang-sc'>// Instead of Integers producing their multiples you can pass Patterns or Streams.
+<textarea class='editor'>// Instead of Integers producing their multiples you can pass Patterns or Streams.
 // It's assumed that Patterns/Streams produce Integers interpreted as intervals
 // (if it's defined to produce 'points' it can e.g. be wrapped into a Pdiff).
 
@@ -132,9 +136,9 @@ Sieve.union(Pseq([1, 10], inf), `30)
 
 a = Sieve.union(5, 7, `30);
 
-Sieve.union(a, 3, `30)</pre>
+Sieve.union(a, 3, `30)</textarea>
 <h3><a class='anchor' name='1c)%20Elementary%20sieve%20operations'>1c) Elementary sieve operations</a></h3>
-<pre class='code prettyprint lang-sc'>// beneath union: intersection, symmetric difference, difference
+<textarea class='editor'>// beneath union: intersection, symmetric difference, difference
 // note that order of arguments only plays a role with difference
 
 
@@ -173,9 +177,9 @@ e == f
 
 g = Sieve.dif(a, Sieve.union(b, c, d, `100))
 
-e == g</pre>
+e == g</textarea>
 <h3><a class='anchor' name='1d)%20Offset%20methods'>1d) Offset methods</a></h3>
-<pre class='code prettyprint lang-sc'>// for passing individual offsets there exist dedicated methods with suffixes '_o' and '_oi'
+<textarea class='editor'>// for passing individual offsets there exist dedicated methods with suffixes '_o' and '_oi'
 // offsets args are passed after the generating items
 
 
@@ -205,9 +209,9 @@ a.shiftTo(0)
 
 a &gt;&gt; 100
 
-a &gt;&gt;! 10</pre>
+a &gt;&gt;! 10</textarea>
 <h3><a class='anchor' name='1e)%20Sieve%20operations%20defined%20as%20instance%20methods'>1e) Sieve operations defined as instance methods</a></h3>
-<pre class='code prettyprint lang-sc'>// all operations and shortcuts defined above can be applied to instances
+<textarea class='editor'>// all operations and shortcuts defined above can be applied to instances
 
 (
 a = Sieve.union(3, 5, `1000);
@@ -223,9 +227,9 @@ c = Sieve.union(6, 8, `1000);
 
 symdif(a, b, c).plot
 
-dif(a, b, c).plot</pre>
+dif(a, b, c).plot</textarea>
 <h3><a class='anchor' name='1f)%20Sieve%20operations%20defined%20as%20binary%20operators'>1f) Sieve operations defined as binary operators</a></h3>
-<pre class='code prettyprint lang-sc'>// instantiation with 'new': second arg limit doesn't need to be a Ref
+<textarea class='editor'>// instantiation with 'new': second arg limit doesn't need to be a Ref
 (
 a = Sieve(6, 60);
 b = Sieve(8, 60);
@@ -275,9 +279,9 @@ b-*a
 
 // Efficiency hint: for an operation with a number of args, especially with large Sieves,
 // it is more efficient to use the core class or instance methods than to concatenate binary operators:
-// doing the latter means stepping through the list/range with each binary operation</pre>
+// doing the latter means stepping through the list/range with each binary operation</textarea>
 <h3><a class='anchor' name='1g)%20Segments%20of%20Sieves'>1g) Segments of Sieves</a></h3>
-<pre class='code prettyprint lang-sc'>// These operations result in new Sieve objects of mode 'points'
+<textarea class='editor'>// These operations result in new Sieve objects of mode 'points'
 
 a = Sieve.union(3, 5, 7, `30)
 
@@ -312,9 +316,9 @@ a &lt;&gt;=! [10, 20]
 
 a.segmentBetween(10, 20)
 
-a &lt;&gt;! [10, 20]</pre>
+a &lt;&gt;! [10, 20]</textarea>
 <h3><a class='anchor' name='1h)%20Conversion%20to%20Sieves%20from%20Arrays'>1h) Conversion to Sieves from Arrays</a></h3>
-<pre class='code prettyprint lang-sc'>// Conversion from arbitrary SequenceableCollection to Sieve:
+<textarea class='editor'>// Conversion from arbitrary SequenceableCollection to Sieve:
 // per default it's assumed that receiver and result are thought to be in mode 'points'
 // but source and target mode can be passed as args 'fromMode' and 'toMode'
 
@@ -360,9 +364,9 @@ a.reverse.toSieve(\i)
 // but this only makes sense in a context where a large number of
 // speed-critical conversions on well-prepared data has to be done.
 // Otherwise it's always useful to perform those checks as
-// sieve operations on wrong data (e.g. unordered lists) will fail or hang.</pre>
+// sieve operations on wrong data (e.g. unordered lists) will fail or hang.</textarea>
 <h3><a class='anchor' name='1i)%20Copying%20and%20transformation%20of%20Sieves%20by%20arbitrary%20array%20operations'>1i) Copying and transformation of Sieves by arbitrary array operations</a></h3>
-<pre class='code prettyprint lang-sc'>// It would be possible to define Sieve as subclass of List but there exist many
+<textarea class='editor'>// It would be possible to define Sieve as subclass of List but there exist many
 // methods for List which don't make any sense for sieves, even worse: they can consequently
 // result in disfunctionality of standard operations defined for Sieves as List subclasses.
 // This could be overcome with additional checks for these standard operations, a bloating which
@@ -427,10 +431,10 @@ b.copyApplyTo { |x| x * x * x ++ (1..10).mirror  }
 
 // partial application
 
-b.copyApplyTo(_ ++ [7, 5, 1])</pre>
+b.copyApplyTo(_ ++ [7, 5, 1])</textarea>
 <h2><a class='anchor' name='2)%20Psieve%20patterns'>2) Psieve patterns</a></h2>
 <h3><a class='anchor' name='2a)%20Basic%20generation%20from%20Integers,%20modes%20'intervals'%20and%20'points''>2a) Basic generation from Integers, modes 'intervals' and 'points'</a></h3>
-<pre class='code prettyprint lang-sc'>// Psieve patterns use the prefix PSV followed by the name of elementary
+<textarea class='editor'>// Psieve patterns use the prefix PSV followed by the name of elementary
 // sieve operations, as used with the Sieve class, and optional suffixes.
 // In comparison with Sieve more arguments are taken, so
 // the generating arguments and offsets are to be passed within an array.
@@ -481,9 +485,9 @@ c = PSVunion([7, 17, 29], 30, 100).asStream
 
 d = c.all
 
-d.size</pre>
+d.size</textarea>
 <h3><a class='anchor' name='2b)%20Generation%20from%20Patterns,%20Streams%20and%20Sieves'>2b) Generation from Patterns, Streams and Sieves</a></h3>
-<pre class='code prettyprint lang-sc'>// distorted periodicity by union with random sieve
+<textarea class='editor'>// distorted periodicity by union with random sieve
 
 a = ({ rrand(0, 1000) } ! 50).asSet.asArray.sort.toSieve
 
@@ -499,9 +503,9 @@ PSVunion_i([4, 7]).asStream.nextN(100).plot
 
 PSVunion_i([4, 7, Pn(Pshuf([2, 5, 9])) ]).asStream.nextN(100).plot
 
-PSVunion_i([4, 7, Pwhite(3, 5) ]).asStream.nextN(100).plot</pre>
+PSVunion_i([4, 7, Pwhite(3, 5) ]).asStream.nextN(100).plot</textarea>
 <h3><a class='anchor' name='2c)%20Sequencing%20logical%20operations'>2c) Sequencing logical operations</a></h3>
-<pre class='code prettyprint lang-sc'>// This is done by PSVop patterns, which take a Symbol or a pattern of Symbols,
+<textarea class='editor'>// This is done by PSVop patterns, which take a Symbol or a pattern of Symbols,
 // refering to the elementary logical operators.
 // The stream of operations is forwarded with every integer point, 
 // which has to be stepped through.
@@ -586,9 +590,9 @@ p.(PSVop_i([4, 7], \d, PLseq([0, 0, 1, 0, 0, 0, 1])))
 // ... or combination of dynamic operator changes and difIndex changes.
 // difIndices are only forwarded when operator 'difference' is current
 
-p.(PSVop_i([4, 7], PLseq([\d, \d, \u]), PLseq([0, 0, 1])))</pre>
+p.(PSVop_i([4, 7], PLseq([\d, \d, \u]), PLseq([0, 0, 1])))</textarea>
 <h3><a class='anchor' name='2d)%20Using%20Sieves%20in%20other%20than%20Psieve%20patterns'>2d) Using Sieves in other than Psieve patterns</a></h3>
-<pre class='code prettyprint lang-sc'>// Period lengths of intervals of basic Sieves are related to prime factors and 
+<textarea class='editor'>// Period lengths of intervals of basic Sieves are related to prime factors and 
 // least common multiples ([1] and [3] for a more detailled description)
 
 // So when using intervals of those basic structures it is not necessary to 
@@ -655,10 +659,10 @@ Pn(Plazy(q), 30).asStream.all.plot;
 
 q = { Pindex(z, Pseq(((0..rrand(10, 20)) ! rrand(1, 5)).flat) + z.size.rand) }
 
-Pn(Plazy(q), 20).asStream.all.plot;</pre>
+Pn(Plazy(q), 20).asStream.all.plot;</textarea>
 <h2><a class='anchor' name='3)%20Periodicity%20of%20intervals%20with%20elementary%20operations'>3) Periodicity of intervals with elementary operations</a></h2>
 <h3><a class='anchor' name='3a)%20Periodicity%20of%20intervals%20with%20elementary%20operations'>3a) Periodicity of intervals with elementary operations</a></h3>
-<pre class='code prettyprint lang-sc'>// For 'union' and no offsets one period of intervals is given with summation limit
+<textarea class='editor'>// For 'union' and no offsets one period of intervals is given with summation limit
 // equal to the least common multiple (lcm) of the generating numbers.
 // (if one number divides another, the larger one can be dropped)
 
@@ -702,7 +706,7 @@ Sieve.dif_oi(8, -8, 3, 0, 7, 0, `(168 + 8)).plot;
 
 
 // In other words in the latter cases the produced sequence is a 
-// concatenation of symmetric segments, in which begin/end points are merged.</pre>
+// concatenation of symmetric segments, in which begin/end points are merged.</textarea>
 <h3><a class='anchor' name='3b)%20Types%20of%20symmetry'>3b) Types of symmetry</a></h3>
 
 <p><a class='anchor' name='3b'>&nbsp;</a> 
@@ -714,7 +718,7 @@ Sieve.dif_oi(8, -8, 3, 0, 7, 0, `(168 + 8)).plot;
 <li>If the period length is even, a symmetric period corresponds to a symmetric coperiod and a quasisymmteric period corresponds to a quasisymmteric coperiod.<li>If the period length is odd, a symmetric period corresponds to a quasisymmteric coperiod.<li>Only a period of identic elements can be symmetric and quasi-symmetric at the same time.</ol>
 <h3><a class='anchor' name='3c)%20Analysis%20tools'>3c) Analysis tools</a></h3>
 
-<p><a class='anchor' name='3c'>&nbsp;</a><pre class='code prettyprint lang-sc'>// Method 'checkSymmetricPeriods' applies to Arrays resp. intervals of Sieves
+<p><a class='anchor' name='3c'>&nbsp;</a><textarea class='editor'>// Method 'checkSymmetricPeriods' applies to Arrays resp. intervals of Sieves
 // and checks for periods and possible symmetries.
 // It returns an array with 4 items:
 // (1) the sequence clumped in (quasi-)symmetric (or asymmetric) chunks
@@ -757,9 +761,9 @@ a.checkCharacteristicPeriod
 
 // you can plot it directly, compare with the sieve plot, where period starts at index 41
 
-a.plotCharacteristicPeriod</pre>
+a.plotCharacteristicPeriod</textarea>
 <h3><a class='anchor' name='3d)%20Symmetry%20types%20of%20elementary%20operations%20without%20offset'>3d) Symmetry types of elementary operations without offset</a></h3>
-<pre class='code prettyprint lang-sc'>// Some observations of types occuring, no proof.
+<textarea class='editor'>// Some observations of types occuring, no proof.
 // Connections between types and used numbers are not obvious here:
 // all symmetry types of an operator occur with tuples of coprime and not-coprime numbers
 
@@ -811,9 +815,9 @@ a.plotCharacteristicPeriod;
 a = Sieve.dif_i(6, 10, `90);
 a.plot;
 a.plotCharacteristicPeriod;
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='3e)%20Symmetry%20types%20of%20elementary%20operations%20with%20offset'>3e) Symmetry types of elementary operations with offset</a></h3>
-<pre class='code prettyprint lang-sc'>// If generators are coprime all is quite straight: offsets will not change the
+<textarea class='editor'>// If generators are coprime all is quite straight: offsets will not change the
 // sum of the period equal to the least common multiple but will only cause a shift.
 // This was elaborated by Xenakis in [1]
 
@@ -907,10 +911,10 @@ a.plotCharacteristicPeriod;
 
 a = PSVop_i([6, 5, 7], Pseq([\u, \d, \sd, \d], inf)).iter.nextN(500).toSieve(\i, \i);
 
-a.plotCharacteristicPeriod;</pre>
+a.plotCharacteristicPeriod;</textarea>
 <h2><a class='anchor' name='4)%20Troubleshooting'>4) Troubleshooting</a></h2>
 <h3><a class='anchor' name='4a)%20Critical%20inputs,%20limits'>4a) Critical inputs, limits</a></h3>
-<pre class='code prettyprint lang-sc'>// Due to the definition of sieves there are input combinations which
+<textarea class='editor'>// Due to the definition of sieves there are input combinations which
 // might result in massive looping without any result.
 
 // Default settings are chosen in a way that this shouldn't result in hangs immediately,
@@ -999,10 +1003,10 @@ a.list.size
 
 // reset global limit
 
-Sieve.limit = 65536</pre>
+Sieve.limit = 65536</textarea>
 <h3><a class='anchor' name='4b)%20Calculating%20least%20common%20multiples'>4b) Calculating least common multiples</a></h3>
 
-<p><a class='anchor' name='4b'>&nbsp;</a><pre class='code prettyprint lang-sc'>// For calculating period lengths the related operations of greatest common divisor
+<p><a class='anchor' name='4b'>&nbsp;</a><textarea class='editor'>// For calculating period lengths the related operations of greatest common divisor
 // and least common multiple are relevant (e.g. see [1])
 
 // Up to SC 3.7.2 built-in method 'lcm' fails for large Integers,
@@ -1064,10 +1068,10 @@ lcmByGcd(135630546, 429496729)
 // large numbers, whereas lcmByFactors still finds the result
 
 lcmByGcd(135630546, 429496729, 610337457)
-lcmByFactors(135630546, 429496729, 610337457)</pre>
+lcmByFactors(135630546, 429496729, 610337457)</textarea>
 
 <p><a class='anchor' name='5'>&nbsp;</a> <h2><a class='anchor' name='5)%20Audio%20examples'>5) Audio examples</a></h2>
-<pre class='code prettyprint lang-sc'>// synthdefs to play with
+<textarea class='editor'>// synthdefs to play with
 (
 SynthDef(\noise_grain, { |out = 0, freq = 400, att = 0.005, rel = 0.1, rq = 0.1, amp = 0.1|
     var sig = { WhiteNoise.ar } ! 2;
@@ -1089,9 +1093,9 @@ SynthDef(\saw_grain, { |out = 0, freq = 400, att = 0.005, rel = 0.1, amp = 0.1|
     sig = sig * EnvGen.ar(Env.perc(att, rel, amp), doneAction: 2);
     OffsetOut.ar(out, sig);
 }).add;
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='5a)%20Applying%20sieve%20intervals%20to%20(micro)%20rhythms'>5a) Applying sieve intervals to (micro) rhythms</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 // rhythm by sieve intervals
 
 ~delta = 0.05;
@@ -1129,10 +1133,10 @@ p = Pbind(
 ~rhy = PSVsymdif_i([3, 4, 7])
 
 
-p.stop</pre>
+p.stop</textarea>
 
 <p><a class='anchor' name='5b'>&nbsp;</a> <h3><a class='anchor' name='5b)%20Sequentially%20generating%20new%20sieve%20patterns%20for%20rhythm%20and%20pitch'>5b) Sequentially generating new sieve patterns for rhythm and pitch</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 // rhythm by sieve intervals
 
 ~delta = 0.1;
@@ -1181,10 +1185,10 @@ q = Pbind(
 ~rel = Pstutter(Pwhite(2, 5), Pn(Pshuf([0.05, 0.1, 0.2])));
 )
 
-q.stop;</pre>
+q.stop;</textarea>
 
 <p><a class='anchor' name='5c'>&nbsp;</a> <h3><a class='anchor' name='5c)%20Sequencing%20instrumental%20variation%20with%20sieves'>5c) Sequencing instrumental variation with sieves</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 ~delta = 0.15;
 ~rhy = 1;
 ~rel = 0.04;
@@ -1241,5 +1245,6 @@ r = Pbind(
 ~rel = Pstutter(Pwhite(2, 5), Pn(Pshuf([0.05, 0.05, 0.1, 0.5])));
 )
 
-r.stop</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Sieves_and_Psieve_patterns.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Sieves_and_Psieve_patterns.schelp</a><br>link::Tutorials/Sieves_and_Psieve_patterns::<br></div></div></body></html>
+r.stop</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Sieves_and_Psieve_patterns.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Sieves_and_Psieve_patterns.schelp</a><br>link::Tutorials/Sieves_and_Psieve_patterns::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

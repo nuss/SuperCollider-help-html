@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>VarGui | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>VarGui | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'VarGui';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>VarGui:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -53,8 +57,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%208:%20EZSmoothSlider,%20EZRoundSlider'>Ex. 8: EZSmoothSlider, EZRoundSlider</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%209:%20slider%20step%20precision'>Ex. 9: slider step precision</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%2010:%20MIDI%20learn%20functionality%20with%20sliders'>Ex. 10: MIDI learn functionality with sliders</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -77,7 +81,7 @@ var scdoc_sc_version = '3.9.3';
 <p>With miSCellaneous v0.16 (March 2017) backwards compatibility with Cocoa and SwingOSC is no longer supported, now cross-platform Qt is standard. VarGui was originally written with Cocoa as reference, though restrcitions on Qt are minor. <ol>
 <li>With Qt mouseDown is the hardcoded mode of player action, which anyway could be regarded as standard usage.<li>Moving several sliders in parallel (<a href="#Ex.%201c">Ex.1c</a>) works on all platforms and with wslib sliders. <li>Combined slider movement with modifier keys can differ in the necessary order of key pressing and mouse clicking. In Qt you can (and with the Cmd modifier involved you have to) press thereafter.<li>With EZSlider you can jump to a certain slider position by clicking at an arbitrary position in the slider field. With wslib sliders you can choose modes \jump and \move (<a href="#Ex.%208">Ex.8</a>). <li>Combined synth / stream player button actions with Caps-lock are currently not working with Qt.</ol>
 
-<p>You can list styles by <code class='code prettyprint lang-sc'>GUI.availableStyles</code> and set with <code class='code prettyprint lang-sc'>GUI.style = \myFavoriteStyle</code><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>You can list styles by <code>GUI.availableStyles</code> and set with <code>GUI.style = \myFavoriteStyle</code><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>VarGui.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>varCtr</span>, <span class='argstr'>synthCtr</span>, <span class='argstr'>stream</span>, <span class='argstr'>synth</span>, <span class='argstr'>clock</span>, <span class='argstr'>quant</span>, <span class='argstr'>varEnvirGroups</span>, <span class='argstr'>envir</span>, <span class='argstr'>synthCtrGroups</span>, <span class='argstr'>assumePlaying</span>, <span class='argstr'>assumeRunning</span>, <span class='argstr'>assumeEnded</span>, <span class='argstr'>server</span>)</h3>
 <div class='method'>
 <p>Create a new VarGui object, which holds control specifications.<h4>Arguments:</h4>
@@ -113,15 +117,15 @@ var scdoc_sc_version = '3.9.3';
 <p>Boolean, nil or collection thereof, then size must equal the number of synths given by <strong>synth</strong> or <strong>synthCtr</strong>. Player state information for (unregistered) synths or nodeIDs,  booleans are not accepted if corresponding items in <strong>synth</strong> are instances of Symbol or String. Defaults to nil.<tr><td class='argumentname'>server<td class='argumentdesc'>
 <p>The server to send node messages to.  Defaults to the local server.</table><h4>Discussion:</h4>
 
-<p><a class='anchor' name='gt_1'>&nbsp;</a><pre class='code prettyprint lang-sc'>(
+<p><a class='anchor' name='gt_1'>&nbsp;</a><textarea class='editor'>(
 s = Server.local;
 Server.default = s;
 s.boot;
-)</pre>
+)</textarea>
 
-<p>Pbind defined with variable to be controlled while playing. Pfunc's function is evaluated at playtime of each Event and gets the value of the variable ~midi in the environment in which the EventStreamPlayer will be playing.<pre class='code prettyprint lang-sc'>p = Pbind(\midinote, Pfunc { ~midi } + Pseq([0, 3, 5, 7], inf), \dur, 0.2)</pre>
+<p>Pbind defined with variable to be controlled while playing. Pfunc's function is evaluated at playtime of each Event and gets the value of the variable ~midi in the environment in which the EventStreamPlayer will be playing.<textarea class='editor'>p = Pbind(\midinote, Pfunc { ~midi } + Pseq([0, 3, 5, 7], inf), \dur, 0.2)</textarea>
 
-<p>VarGui to set this variable. As a pattern is given as stream arg the derived EventStreamPlayer will run in a new environment which is generated at VarGui init time.<pre class='code prettyprint lang-sc'>v = VarGui([\midi, [50, 70, \lin, 1, 55]], stream: p).gui;</pre>
+<p>VarGui to set this variable. As a pattern is given as stream arg the derived EventStreamPlayer will run in a new environment which is generated at VarGui init time.<textarea class='editor'>v = VarGui([\midi, [50, 70, \lin, 1, 55]], stream: p).gui;</textarea>
 
 <p>Try out basic slider and player functionality.
 <p><strong>Playing:</strong><div class='image'><img src='attachments/VarGui/player_1.png'/></div>
@@ -137,23 +141,23 @@ s.boot;
 <p><strong>Stream has ended:</strong><div class='image'><img src='attachments/VarGui/player_4.png'/></div>
 
 <p>E.g. if an eventstream player has encountered nil, reset button's background will become red. Now it needs the reset button to go on and its action - pause or play - depends on the active mode. 
-<p><a class='anchor' name='synth_0'>&nbsp;</a><pre class='code prettyprint lang-sc'>// synth definition with raising frequency
+<p><a class='anchor' name='synth_0'>&nbsp;</a><textarea class='editor'>// synth definition with raising frequency
 
 (
 SynthDef(\synth_0, { |devFactor = 0.1, devFreq = 10, amp = 0.1|
     var freq = XLine.kr(400, 1200, 10); 
     Out.ar(0, SinOsc.ar(SinOsc.ar(devFreq, 0, devFactor * freq, freq), mul: amp).dup(2) * EnvGate.new) 
 }).add;
-)</pre>
+)</textarea>
 
-<p>VarGui to play synth of above definition and set synth args, player functionality with different stop / renew modes. Notification must be on. Note that pause, stop and resume actions cause sending of run / free messages, thus possibly audible clicks. To avoid that work with amp = 0 or use a gated envelope and a gate control slider with only values 0 and 1 or use Synths of limited duration as in Ex. 2.<pre class='code prettyprint lang-sc'>(
+<p>VarGui to play synth of above definition and set synth args, player functionality with different stop / renew modes. Notification must be on. Note that pause, stop and resume actions cause sending of run / free messages, thus possibly audible clicks. To avoid that work with amp = 0 or use a gated envelope and a gate control slider with only values 0 and 1 or use Synths of limited duration as in Ex. 2.<textarea class='editor'>(
 VarGui(
     synthCtr: [\devFactor, [0, 0.99, \lin, 0.01, 0.5], 
         \devFreq, [1, 100, \lin, 0.1, 70],
         \amp, [0, 0.3, \lin, 0.001, 0.1]], 
     synth: \synth_0
 ).gui;
-)</pre>
+)</textarea>
 
 <p>Latency options (buttons and boxes below the player section): bundle latency of synth player actions can be set to nil, a custom value (button abbrieviation c) or global server latency (abbr. s), these two values can be set in the boxes below. Settings can be used to sync synth and stream players, if both contained in a GUI.
 <p>Synth players work similar as stream players, but there are more options. There is an addtional stop mode button that determines how and if renewing (creating new synth nodes of same definition) is handled.
@@ -256,24 +260,24 @@ VarGui(
 <p>Float. Defaults to 700.
 <p><a class='anchor' name='gt_0'>&nbsp;</a></table><h4>Discussion:</h4>
 
-<p>SynthDef <a href="#synth_0">synth_0</a> from above, number of synth players multiplied by expanding single control. For multiple slider and player button control see the modifier options explained in <a href="#Ex.%201c">Ex.1c</a>.<pre class='code prettyprint lang-sc'>(
+<p>SynthDef <a href="#synth_0">synth_0</a> from above, number of synth players multiplied by expanding single control. For multiple slider and player button control see the modifier options explained in <a href="#Ex.%201c">Ex.1c</a>.<textarea class='editor'>(
 v = VarGui(
     synthCtr: [\devFactor, [0, 0.99, \lin, 0.01, 0.5], 
         \devFreq, [1, 100, \lin, 0.1, 70],
         \amp, [0, 0.2, \lin, 0.001, 0.02]] ! 6, 
     synth: \synth_0 ! 6
 ).gui;
-)</pre>
+)</textarea>
 
-<p>GUI appearance customization: close window (only one window per VarGui instance allowed) and try again with same or other color options. <pre class='code prettyprint lang-sc'>v.gui;
+<p>GUI appearance customization: close window (only one window per VarGui instance allowed) and try again with same or other color options. <textarea class='editor'>v.gui;
 
 v.gui(colorDeviation: 0, colorsLo: 0.4, colorsHi: 0.9);
 
-v.gui(greyMode: true);</pre>
+v.gui(greyMode: true);</textarea>
 
-<p>Force slider arrangement in 2 columns, controls of each synth should only be in one column.<pre class='code prettyprint lang-sc'>v.gui(colorDeviation: 0, tryColumnNum: 2, allowSynthBreak: false);</pre>
+<p>Force slider arrangement in 2 columns, controls of each synth should only be in one column.<textarea class='editor'>v.gui(colorDeviation: 0, tryColumnNum: 2, allowSynthBreak: false);</textarea>
 
-<p>You can save a slider state snapshot by button / dialog to the file "XY", only slider states (flattened spacPair collections) and groupings are stored,  you have to pass synth data with load. <pre class='code prettyprint lang-sc'>VarGui.load("PathToXY", "XY", synth: \synth_0 ! 6).gui;</pre>
+<p>You can save a slider state snapshot by button / dialog to the file "XY", only slider states (flattened spacPair collections) and groupings are stored,  you have to pass synth data with load. <textarea class='editor'>VarGui.load("PathToXY", "XY", synth: \synth_0 ! 6).gui;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-update' href='./../Overviews/Methods.html#update'>update</a></h3>
 <div class='method'>
 <p>Update variables and controllers to current slider values. Like update button action. Unless the VarGui window was generated with option <strong>updateNow</strong> set to false,  variables and controllers are immediately set to slider values and normally updating is not required. </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-updateVarSliders' href='./../Overviews/Methods.html#updateVarSliders'>updateVarSliders</a>(<span class='argstr'>key</span>, <span class='argstr'>varNum: 0</span>, <span class='argstr'>val</span>, <span class='argstr'>indexOffset: 0</span>, <span class='argstr'>updateNow: true</span>)</h3>
@@ -322,13 +326,13 @@ v.gui(greyMode: true);</pre>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 
 <p><a class='anchor' name='Ex.%201a'>&nbsp;</a><h3><a class='anchor' name='Ex.%201a:%20step%20sequencer'>Ex. 1a: step sequencer</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 s = Server.local;
 Server.default = s;
 s.boot;
-)</pre>
+)</textarea>
 
-<p>There are different ways to read a sequence of values from a settable array assigned to an envir variable. PLseq is convenient, for a comparison with Plazy, Pfunc etc. see <a href="./../Tutorials/PLx_suite.html">PLx suite</a>. In all cases the EventStreamPlayer can be played in an arbitrary environment, from which ~seq will be taken. This holds true for Patterns with functional code like Pfunc and also for PLseq, the latter has an envir arg which defaults to \current. Note that all PLx Patterns default to repeats = inf, ListPatterns as Pseq default to repeats = 1.<pre class='code prettyprint lang-sc'>(
+<p>There are different ways to read a sequence of values from a settable array assigned to an envir variable. PLseq is convenient, for a comparison with Plazy, Pfunc etc. see <a href="./../Tutorials/PLx_suite.html">PLx suite</a>. In all cases the EventStreamPlayer can be played in an arbitrary environment, from which ~seq will be taken. This holds true for Patterns with functional code like Pfunc and also for PLseq, the latter has an envir arg which defaults to \current. Note that all PLx Patterns default to repeats = inf, ListPatterns as Pseq default to repeats = 1.<textarea class='editor'>(
 SynthDef(\synth_1a, { |freq = 400, preAmp = 5, amp = 0.1|
     var src = SinOsc.ar(freq, 0, mul: preAmp).tanh ! 2;
     OffsetOut.ar(0, src * amp * EnvGen.ar(Env.perc, doneAction: 2))
@@ -343,19 +347,19 @@ p = Pbind(
     \midinote, PLseq(\seq) + PL(\seqAdd), 
     \dur, 0.2
 );
-)</pre>
+)</textarea>
 
-<p><code class='code prettyprint lang-sc'>~seq</code> will be set and read in the new Environment, which will be generated at VarGui init time.<pre class='code prettyprint lang-sc'>(
+<p><code>~seq</code> will be set and read in the new Environment, which will be generated at VarGui init time.<textarea class='editor'>(
 ~specPairs = [\seq, [36, 60, \lin, 1, 36] ! 5, 
     \seqAdd, [0, 12, \lin, 1, 0],
     \amp, [0, 0.3, \lin, 0.01, 0.1],
     \preAmp, [5, 50, \lin, 0.01, 20]];
 
 v = VarGui(~specPairs, stream: p).gui;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%201b'>&nbsp;</a><h3><a class='anchor' name='Ex.%201b:%20step%20sequencer%20with%20MIDI'>Ex. 1b: step sequencer with MIDI</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 // connect a MIDI device, allNotesOff with CmdPeriod useful
 
 MIDIClient.init;
@@ -385,11 +389,11 @@ v = VarGui([\seq, [36, 60, \lin, 1, 36] ! 5,
 
 // remove if not needed anymore
 
-CmdPeriod.remove(g);</pre>
+CmdPeriod.remove(g);</textarea>
 
 <p><a class='anchor' name='Ex.%201c'>&nbsp;</a><h3><a class='anchor' name='Ex.%201c:%20more%20step%20sequencers,%20quantization,%20slider%20modifiers'>Ex. 1c: more step sequencers, quantization, slider modifiers</a></h3>
 
-<p>SynthDef from <a href="#Ex.%201a">Ex.1a</a> , four players from a Pbind, four varCtr specifications with shifted range.<pre class='code prettyprint lang-sc'>(
+<p>SynthDef from <a href="#Ex.%201a">Ex.1a</a> , four players from a Pbind, four varCtr specifications with shifted range.<textarea class='editor'>(
 p = Pbind(
     \instrument, \synth_1a,
     \preAmp, PL(\preAmp), 
@@ -418,7 +422,7 @@ v = VarGui(~spec, stream: p!4, quant: 0.2).gui(tryColumnNum: 2, streamPlayerGrou
 
 v.envirs; // get envirs
 
-// try slider action with modifier keys</pre>
+// try slider action with modifier keys</textarea>
 <div class='note'><span class='notelabel'>NOTE:</span> In Qt you can press modifier keys before and thereafter. Caps-lock is currently replaced by Cmd, with Cmd modifier involved you *have* to press thereafter. 
 <p>Modifiers allow to control groups of sliders, values in other sliders are clipped to the according range. The following rules apply to synth and var control sliders separately, combined synth and var controls of same name work with Caps on cocoa and Cmd elsewise (<a href="#Ex.%202">Ex.2</a>).<ul>
 <li>Shift: within an arrayed control all sliders below are set to the handled value or clipped.<li>Shift + Ctrl: within an arrayed control all sliders above are set to the handled value or clipped.<li>Alt: controls of same name (in different envirs or different synths) are set to the handled value or clipped.<li>Alt + Shift, Alt + Shift + Ctrl: Accordingly for arrayed controls of same name.</ul>
@@ -428,7 +432,7 @@ v.envirs; // get envirs
 </div>
 <p><a class='anchor' name='Ex.%201d'>&nbsp;</a><h3><a class='anchor' name='Ex.%201d:%20step%20sequencer,%20stream%20players%20in%20same%20environment'>Ex. 1d: step sequencer, stream players in same environment</a></h3>
 
-<p>You can try to benefit from eventstream players having variables in common.  SynthDef from <a href="#Ex.%201a">Ex.1a</a> , second Pbind derived from p without pitch offset as parallel pattern.<pre class='code prettyprint lang-sc'>(
+<p>You can try to benefit from eventstream players having variables in common.  SynthDef from <a href="#Ex.%201a">Ex.1a</a> , second Pbind derived from p without pitch offset as parallel pattern.<textarea class='editor'>(
 p = Pbind(
     \instrument, \synth_1a,
     \preAmp, PL(\preAmp), 
@@ -452,11 +456,11 @@ v = VarGui([\seq, { [48, 84, \lin, 1, rrand(48, 84)] } ! 5,
 )
 
 // stopping and resuming of a single player may break parallelism 
-// Shift-clicked reset syncs again</pre>
+// Shift-clicked reset syncs again</textarea>
 
 <p><a class='anchor' name='Ex.%201e'>&nbsp;</a><h3><a class='anchor' name='Ex.%201e:%20step%20sequencer%20and%20replacements%20with%20PLx'>Ex. 1e: step sequencer and replacements with PLx</a></h3>
 
-<p>SynthDef from <a href="#Ex.%201a">Ex.1a</a><pre class='code prettyprint lang-sc'>(
+<p>SynthDef from <a href="#Ex.%201a">Ex.1a</a><textarea class='editor'>(
 // SynthDef from (1a)
 
 // Pbind with PL as placeholder for pitch patterns
@@ -531,10 +535,10 @@ VarGui(~pitchSpec.(\accum, { rrand(40,80) }!7 )).gui(name: \accum);
 
 ~a = ~randPat;
 
-~a = ~accPat;</pre>
+~a = ~accPat;</textarea>
 
 <p><a class='anchor' name='Ex.%202'>&nbsp;</a><h3><a class='anchor' name='Ex.%202:%20stream%20players%20and%20synths%20in%20one%20VarGui'>Ex. 2: stream players and synths in one VarGui</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 // Pbind with default synth
 // ~freq can be a collection, then pitch or chord are shifted by ~freqFac,
 // ascending (~step &gt; 0) or descending (~step &lt; 0) groups of 4 items
@@ -553,9 +557,9 @@ SynthDef(\synth_2, { |out = 0, freq = #[600, 700, 900, 1000], freqFac = 1,
     var src = SinOsc.ar(freq * XLine.kr(freqFac/2, freqFac, attTime + susTime), 0, mul: preAmp).tanh ! 2;
     Out.ar(0, src * amp * ampFac * EnvGen.ar(Env.linen(attTime, susTime, relTime), doneAction: 2))
 }).add;
-)</pre>
+)</textarea>
 
-<p>Try multiple slider movements with modifier keys as described in <a href="#Ex.%201c">Ex.1c</a>. As synth args and variables are identically named they can be controlled with linked slider movements using Cmd. Accordingly stream and synth player buttons can also be pressed in parallel.<pre class='code prettyprint lang-sc'>(
+<p>Try multiple slider movements with modifier keys as described in <a href="#Ex.%201c">Ex.1c</a>. As synth args and variables are identically named they can be controlled with linked slider movements using Cmd. Accordingly stream and synth player buttons can also be pressed in parallel.<textarea class='editor'>(
 v = VarGui([\freq, [600, 700, 900, 1000].collect([400, 1200, \lin, 0.01, _]),
     \freqFac, [0.25, 1.25, \lin, 0.01, 1],
     \amp, [0.0, 0.1, \lin, 0.001, 0.03],
@@ -576,10 +580,10 @@ v = VarGui([\freq, [600, 700, 900, 1000].collect([400, 1200, \lin, 0.01, _]),
 /*, colorDeviation: 0 */
 /*, sliderPriority: \synth, playerPriority: \synth */
 )
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%203'>&nbsp;</a><h3><a class='anchor' name='Ex.%203:%20granular%20synthesis%20with%20Tasks'>Ex. 3: granular synthesis with Tasks</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 // Synth definition for single synthesized grains, waveform to be selected by type 
 
 SynthDef(\synth_3, { arg out = 0, freqLo = 1000, freqHi = 10000, amp = 0.1, type = 0, pan;
@@ -621,11 +625,11 @@ v = VarGui( 3.collect { |i| [\type, [0, 2, \lin, 1, i],
     // collecting Function values of Integers, e.g. (_*3)!5
     stream: 3.collect { f }
 ).gui(colorDeviation: 0);
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%204a'>&nbsp;</a><h3><a class='anchor' name='Ex.%204a:%20interaction%20of%20synth%20and%20stream%20players,%20control%20synth%20controlling%20pbind%20synths'>Ex. 4a: interaction of synth and stream players, control synth controlling pbind synths</a></h3>
 
-<p>Pbind producing a sequence of short events, each pbind-driven synth reading frequency from a control bus<pre class='code prettyprint lang-sc'>( 
+<p>Pbind producing a sequence of short events, each pbind-driven synth reading frequency from a control bus<textarea class='editor'>( 
 // control synth
 
 SynthDef(\synth_4_kr, {|out = 0, devFreq = 0.5, midiCenter = 60, midiDev = 10|
@@ -675,11 +679,11 @@ VarGui([\in, [c, c, \lin, 1, c], // bus fixed, display only
     \out, c], // bus fixed, display only
     x, \synth_4_kr
 ).gui(sliderPriority: \synth, playerPriority: \synth)
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%204b'>&nbsp;</a><h3><a class='anchor' name='Ex.%204b:%20interaction%20of%20synth%20and%20stream%20players,%20pbind%20and%20control%20synth%20controlling%20audio%20synth'>Ex. 4b: interaction of synth and stream players, pbind and control synth controlling audio synth</a></h3>
 
-<p>Audio synth controlled by LFO pitch synth and a Pbind setting synth args (like Pmono). PLx ListPatterns taken here as they default to repeats = inf.<pre class='code prettyprint lang-sc'>(
+<p>Audio synth controlled by LFO pitch synth and a Pbind setting synth args (like Pmono). PLx ListPatterns taken here as they default to repeats = inf.<textarea class='editor'>(
 y = Pbind(\type, \set,
     // sequencing of durations and amplitudes quite fixed, just global tempo and amp control
     \dur, PLshufn([0.15, 0.15, 0.35]) / PL(\tempo),
@@ -712,12 +716,12 @@ VarGui([ \tempo, [0.7, 1.2, \lin, 0.01, 1],
 
     y, [\synth_4_kr,\synth_4_ar] 
 ).gui(sliderPriority: \synth, playerPriority: \synth)
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%205a'>&nbsp;</a><h3><a class='anchor' name='Ex.%205a:%20reordering%20of%20var%20control'>Ex. 5a: reordering of var control</a></h3>
 
 <p>One may want to have controls grouped per name, not per Environment (resp. Pbind, Task, Synth),  this can be achieved by passing a flat (not grouped) array of specPairs and the appropriate grouping, there are methods implemented for that special case of reordering:
-<p>SynthDef from <a href="#Ex.%201a">Ex.1a</a><pre class='code prettyprint lang-sc'>(
+<p>SynthDef from <a href="#Ex.%201a">Ex.1a</a><textarea class='editor'>(
 p = Pbind(
     \instrument, \synth_1a,
     \preAmp, PL(\preAmp),    
@@ -763,10 +767,10 @@ v = VarGui(
 )
 
 // Note that in the case of not connected varEnvirGroups the column break gui option
-// allowEnvirBreak is ignored, means always set to true.</pre>
+// allowEnvirBreak is ignored, means always set to true.</textarea>
 
 <p><a class='anchor' name='Ex.%205b'>&nbsp;</a><h3><a class='anchor' name='Ex.%205b:%20reordering%20of%20synth%20control'>Ex. 5b: reordering of synth control</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 SynthDef(\synth_5b, { |devFactor = 0.1, devFreq = 10, amp = 0.1|
     var freq = XLine.kr(2000, 400, 3); 
     Out.ar(0, Pan2.ar(SinOsc.ar(SinOsc.ar(devFreq, 0, devFactor * freq, freq), mul: amp), LFDNoise3.ar(2)) * EnvGate.new) 
@@ -798,11 +802,11 @@ v = VarGui(
 )
 
 // Note that in the case of not connected synthCtrGroups the column break gui option
-// allowSynthBreak is ignored, means always set to true.</pre>
+// allowSynthBreak is ignored, means always set to true.</textarea>
 
 <p><a class='anchor' name='Ex.%206a'>&nbsp;</a><h3><a class='anchor' name='Ex.%206a:%20non%20standard%20usage:%20passing%20Synths'>Ex. 6a: non standard usage: passing Synths</a></h3>
 
-<p>Passing symbols or strings as synth args, refering to known (added) SynthDefs, is recommended. However also Synths or nodeIDs can be given, but the player would have to know their state, so Synths should be registered.<pre class='code prettyprint lang-sc'>(
+<p>Passing symbols or strings as synth args, refering to known (added) SynthDefs, is recommended. However also Synths or nodeIDs can be given, but the player would have to know their state, so Synths should be registered.<textarea class='editor'>(
 SynthDef(\sine, { |freq = 400, amp = 0.1| Out.ar(0, SinOsc.ar(freq, mul: amp)) }).add;
 SynthDef(\pulse, { |freq = 400, amp = 0.1| Out.ar(0, Pulse.ar(freq, mul: amp)) }).add;
 )
@@ -832,10 +836,10 @@ y.run(false);
 
 // no new Synths from temporary synth definition
 
-v = VarGui(synth: [x,y], assumePlaying: true, assumeRunning: [true, false]).gui;</pre>
+v = VarGui(synth: [x,y], assumePlaying: true, assumeRunning: [true, false]).gui;</textarea>
 
 <p><a class='anchor' name='Ex.%206b'>&nbsp;</a><h3><a class='anchor' name='Ex.%206b:%20non%20standard%20usage:%20setting%20sliders%20from%20outside'>Ex. 6b: non standard usage: setting sliders from outside</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 // synth definition with arrayed control
 
 SynthDef(\vibes, { |amp = 0.005, devFactor = 0.1, devFreq = 10, devDisturb = 0.1| 
@@ -888,10 +892,10 @@ p = Pbind(
 
 // stop updating
 
-p.stop;</pre>
+p.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%206c'>&nbsp;</a><h3><a class='anchor' name='Ex.%206c:%20non%20standard%20usage:%20setting%20values%20for%20plotting'>Ex. 6c: non standard usage: setting values for plotting</a></h3>
-<pre class='code prettyprint lang-sc'>// By setting a slider hook arbitrary actions can be triggered with lifting a slider handle.
+<textarea class='editor'>// By setting a slider hook arbitrary actions can be triggered with lifting a slider handle.
 // A slider hook can e.g. trigger the refreshing of a plot of parametric functions.
 
 (
@@ -922,10 +926,10 @@ x = (0, 0.1..20);
 v.addSliderAction { p.value_(v.envirs.collect { |e| f.inEnvir(e).(x) }).refresh };
 
 // slider movements affecting more than one plot can be achieved with modifier combinations including alt
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%207'>&nbsp;</a><h3><a class='anchor' name='Ex.%207:%20color%20grouping'>Ex. 7: color grouping</a></h3>
-<pre class='code prettyprint lang-sc'>// By default color grouping is based on logical separations:
+<textarea class='editor'>// By default color grouping is based on logical separations:
 // different synths and environments, different variables and controls, arrays.
 
 // But apart of that there might exist more related controls
@@ -976,10 +980,10 @@ VarGui(synth: \synth_7!2, synthCtr: ~synthCtr!2).gui(synthColorGroups: ~g+5 ++ ~
 ~h = [~g, ~g+5].flop.collect(_.flat);  // or ~h = ~g.collect { |x| x + 5 ++ x };
 
 VarGui(synth: \synth_7!2, synthCtr: ~synthCtr!2).gui(synthColorGroups: ~h);    
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%208'>&nbsp;</a><h3><a class='anchor' name='Ex.%208:%20EZSmoothSlider,%20EZRoundSlider'>Ex. 8: EZSmoothSlider, EZRoundSlider</a></h3>
-<pre class='code prettyprint lang-sc'>// EZSlider is used as default slider type.
+<textarea class='editor'>// EZSlider is used as default slider type.
 // With wslib installed (Quark) you can choose 
 // its slider types EZSmoothSlider and EZRoundSlider 
 // as gui option
@@ -1006,10 +1010,10 @@ v.synthCtrSliders.first.sliderView.mode_(\jump)
 
 // For multiple slider handling see Ex 1c.
 
-// Very small numbers are forced to exponential notation (see also Ex. 9).</pre>
+// Very small numbers are forced to exponential notation (see also Ex. 9).</textarea>
 
 <p><a class='anchor' name='Ex.%209'>&nbsp;</a><h3><a class='anchor' name='Ex.%209:%20slider%20step%20precision'>Ex. 9: slider step precision</a></h3>
-<pre class='code prettyprint lang-sc'>// VarGui makes some adaptions concerning slider step sizes and rounding
+<textarea class='editor'>// VarGui makes some adaptions concerning slider step sizes and rounding
 // depending on passed controlspec step size
 // in order to unify slightly different behaviour of GUI kits
 // and set parameters automatically also for very small step sizes.
@@ -1071,11 +1075,11 @@ VarGui([\a, [10000000, 50000000, \lin, 10000000.001, 0]]).gui(numberWidth: 100);
 
 // ... but resolves this
 
-VarGui([\a, [10000000, 50000000, \lin, 10000000.001, 0]]).gui(precisionSpan: 12, numberWidth: 100);</pre>
+VarGui([\a, [10000000, 50000000, \lin, 10000000.001, 0]]).gui(precisionSpan: 12, numberWidth: 100);</textarea>
 
 <p><a class='anchor' name='Ex.%2010'>&nbsp;</a><h3><a class='anchor' name='Ex.%2010:%20MIDI%20learn%20functionality%20with%20sliders'>Ex. 10: MIDI learn functionality with sliders</a></h3>
 
-<p>Connect your midi device, maybe you have to restart SC then. As gui example e.g. take SynthDefs and Pbind from <a href="#Ex.%204a">Ex.4a</a>, evaluate both code blocks. It must be possible to refer to the VarGui instance (e.g. v = VarGui(...))<pre class='code prettyprint lang-sc'>// start MIDI
+<p>Connect your midi device, maybe you have to restart SC then. As gui example e.g. take SynthDefs and Pbind from <a href="#Ex.%204a">Ex.4a</a>, evaluate both code blocks. It must be possible to refer to the VarGui instance (e.g. v = VarGui(...))<textarea class='editor'>// start MIDI
 
 MIDIIn.connectAll
 
@@ -1103,5 +1107,6 @@ v.startMIDIlearn
 
 ...
 
-v.stopMIDIlearn</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/VarGui.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/VarGui.schelp</a><br>link::Classes/VarGui::<br></div></div></body></html>
+v.stopMIDIlearn</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/VarGui.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/VarGui.schelp</a><br>link::Classes/VarGui::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>RedDifferentialManchesterCode | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>RedDifferentialManchesterCode | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'RedDifferentialManchesterCode';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>RedDifferentialManchesterCode:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -29,8 +33,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-phase'>phase</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -85,7 +89,7 @@ var scdoc_sc_version = '3.9.3';
 <div class='method'>
 <p>Get or set the phase dynamically (either 0 or 1).</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>//bigger number require more number of bits
+<textarea class='editor'>//bigger number require more number of bits
 RedDifferentialManchesterCode(11, 0).encodeValue(2r10011010010) //compare table in wikipedia article
 RedDifferentialManchesterCodeNegative(11).encodeValue(2r10100111001)
 
@@ -96,8 +100,8 @@ a.encodeArray([114, 114, 5]) //use this method for longer arrays
 
 //if used as an audio signal it is often preferred to normalize the values -1 to 1.
 //here is a simple way to do that normalization...
-RedDifferentialManchesterCode(11).encode([1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0])*2-1</pre>
-<pre class='code prettyprint lang-sc'>//--sound examples
+RedDifferentialManchesterCode(11).encode([1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0])*2-1</textarea>
+<textarea class='editor'>//--sound examples
 
 //the example just sequence differential manchester encoded bytes.
 (
@@ -124,13 +128,13 @@ Routine.run({
         (1/t*16).wait;
     };
 });
-)</pre>
-<pre class='code prettyprint lang-sc'>//this example renders the 0-255 counter data in advance, normalize it and load it into a buffer
+)</textarea>
+<textarea class='editor'>//this example renders the 0-255 counter data in advance, normalize it and load it into a buffer
 //stutter(8) means eight samples per data bit
 b= Buffer.sendCollection(s, RedDifferentialManchesterCode().encodeArray((0..255)).stutter(8)*2-1)
 b.play
-b.free</pre>
-<pre class='code prettyprint lang-sc'>//it is also possible to skip this class and do differential manchester code directly in the synthdef...
+b.free</textarea>
+<textarea class='editor'>//it is also possible to skip this class and do differential manchester code directly in the synthdef...
 (
 SynthDef(\redDifferentialManchesterEncode, {|out= 0, amp= 1, rate= 1000|
     var numBits= 8;
@@ -146,6 +150,7 @@ SynthDef(\redDifferentialManchesterEncode, {|out= 0, amp= 1, rate= 1000|
 )
 
 Synth(\redDifferentialManchesterEncode, [\data, 154.asBinaryDigits, \amp, 0.2])
-//record the result and compare with RedDifferentialManchesterCode().encodeValue(114)</pre>
+//record the result and compare with RedDifferentialManchesterCode().encodeValue(114)</textarea>
 
-<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedDifferentialManchesterCode.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedDifferentialManchesterCode.schelp</a><br>link::Classes/RedDifferentialManchesterCode::<br></div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedDifferentialManchesterCode.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedDifferentialManchesterCode.schelp</a><br>link::Classes/RedDifferentialManchesterCode::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

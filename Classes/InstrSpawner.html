@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>InstrSpawner | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>InstrSpawner | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'InstrSpawner';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>InstrSpawner:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -47,8 +51,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-guiClass'>guiClass</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -64,7 +68,7 @@ var scdoc_sc_version = '3.9.3';
 <h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>a Pbind-like spawner that plays an Instr with streams supplied to its inputs.
-<p>One nice feature is that it is easy to supply kr or ar rate Patches to the inputs and this will be played continuously and patched into each event. See examples below.<pre class='code prettyprint lang-sc'>// start and pchRatio are streamed
+<p>One nice feature is that it is easy to supply kr or ar rate Patches to the inputs and this will be played continuously and patched into each event. See examples below.<textarea class='editor'>// start and pchRatio are streamed
 (
 InstrSpawner({ arg sample,start=0,pchRatio=1.0,env;
     PlayBuf.ar(
@@ -86,11 +90,11 @@ InstrSpawner({ arg sample,start=0,pchRatio=1.0,env;
 
 ],0.06).play
 
-)</pre>
+)</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>InstrSpawner.</span><a class='method-name' name='*latency' href='./../Overviews/Methods.html#latency'>latency</a></h3>
 <h3 class='method-code'><span class='method-prefix'>InstrSpawner.</span><a class='method-name' name='*latency' href='./../Overviews/Methods.html#latency'>latency</a> = value</h3>
-<div class='method'></div><h3 class='method-code'><span class='method-prefix'>InstrSpawner.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>func</span>, <span class='argstr'>args</span>, <span class='argstr'>deltaPattern: 1</span>)</h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>InstrSpawner.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>func</span>, <span class='argstr'>args</span>, <span class='argstr'>deltaPattern: 1.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>func<td class='argumentdesc'>
@@ -139,7 +143,7 @@ InstrSpawner({ arg sample,start=0,pchRatio=1.0,env;
 <div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-guiClass' href='./../Overviews/Methods.html#guiClass'>guiClass</a></h3>
 <div class='method'></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>// pchRatio will not stream, is fixed at -1
+<textarea class='editor'>// pchRatio will not stream, is fixed at -1
 (
 
 InstrSpawner({ arg sample,start=0,pchRatio=1.0,env;
@@ -153,9 +157,9 @@ InstrSpawner({ arg sample,start=0,pchRatio=1.0,env;
 
 ],0.125).play
 
-)</pre>
+)</textarea>
 
-<p>the Patch in the width input plays continuously and is patched into each spawn event<pre class='code prettyprint lang-sc'>(
+<p>the Patch in the width input plays continuously and is patched into each spawn event<textarea class='editor'>(
     InstrSpawner({ arg freq,rq,width,fenv,fenvmod,envperc;
          width.debug("width");  // an OutputProxy
         RLPF.ar(
@@ -174,10 +178,10 @@ InstrSpawner({ arg sample,start=0,pchRatio=1.0,env;
         6000,
         Env.perc(releaseTime: 0.8)
     ],0.125).play
-)</pre>
+)</textarea>
 
 <p>note: for beats see <a href="./../Classes/InstrGateSpawner.html">InstrGateSpawner</a>
-<p> the stereo Patch in the width input causes the InstrSpawner to expand to stereo<pre class='code prettyprint lang-sc'>(
+<p> the stereo Patch in the width input causes the InstrSpawner to expand to stereo<textarea class='editor'>(
     InstrSpawner({ arg freq,rq,width,fenv,fenvmod,envperc;
          width.debug("width");  // an OutputProxy
         RLPF.ar(
@@ -221,9 +225,9 @@ i = InstrSpawner(\InstrSpawner,[
 
 i.play
 
-)</pre>
+)</textarea>
 
-<p>sliders are polled on the gui<pre class='code prettyprint lang-sc'>(
+<p>sliders are polled on the gui<textarea class='editor'>(
 
 Instr(\InstrSpawner,{ arg freq=1000,amp=0.1,env;
 
@@ -271,6 +275,7 @@ InstrSpawner(\InstrSpawner,[
         6000,
         Env.perc(releaseTime: 0.1)
     ],0.25).play
-)</pre>
+)</textarea>
 
-<p>this is more flexible, is only on when you need it, and lets you do wrapping or scaling of the event count all in the pattern domain.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/InstrSpawner.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/InstrSpawner.schelp</a><br>link::Classes/InstrSpawner::<br></div></div></body></html>
+<p>this is more flexible, is only on when you need it, and lets you do wrapping or scaling of the event count all in the pattern domain.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/InstrSpawner.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/InstrSpawner.schelp</a><br>link::Classes/InstrSpawner::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

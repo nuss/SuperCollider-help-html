@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>PlayerMixer | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>PlayerMixer | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'PlayerMixer';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>PlayerMixer:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -37,8 +41,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-guiClass'>guiClass</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -53,7 +57,7 @@ var scdoc_sc_version = '3.9.3';
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>Plays all of the players, mixing them together in its own synth.<pre class='code prettyprint lang-sc'>(
+<p>Plays all of the players, mixing them together in its own synth.<textarea class='editor'>(
 c = FloatArray[1,2,4,5,6,8,13];
 // an array buffer loads an array onto the server
 d = ArrayBuffer(c);
@@ -84,9 +88,9 @@ p = PlayerMixer([
 ]);
 p.gui
 
-)</pre>
+)</textarea>
 
-<p>Patching of this combined output is easy. They are treated like a single unit.<pre class='code prettyprint lang-sc'>(
+<p>Patching of this combined output is easy. They are treated like a single unit.<textarea class='editor'>(
 
 Patch({ arg audio,ffreq=100,rq=0.1;
 
@@ -95,7 +99,7 @@ Patch({ arg audio,ffreq=100,rq=0.1;
     p // that you created in the above example
 ]).gui
 
-)</pre>
+)</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>PlayerMixer.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>players</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
@@ -128,7 +132,7 @@ Patch({ arg audio,ffreq=100,rq=0.1;
 <div class='method'></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 
-<p>It is possible to dynamically add, replace or remove players<pre class='code prettyprint lang-sc'>(
+<p>It is possible to dynamically add, replace or remove players<textarea class='editor'>(
 Instr(\testSine,{arg freq=1000,mul=0.1; SinOsc.ar(freq,0,mul)});
 a=PlayerMixer([
     Patch(\testSine,[400,0.1]),
@@ -164,5 +168,6 @@ b.select(0);        //crashes
 a.addPlayer(Patch(\testSine,[2400,0.15]));
 b.select(0);        //crashes
 a.addPlayer(Patch(\testSine,[2800,0.1]));
-b.select(0);        //crashes</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/PlayerMixer.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/PlayerMixer.schelp</a><br>link::Classes/PlayerMixer::<br></div></div></body></html>
+b.select(0);        //crashes</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/PlayerMixer.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/PlayerMixer.schelp</a><br>link::Classes/PlayerMixer::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

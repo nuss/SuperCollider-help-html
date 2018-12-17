@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>StoredList | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>StoredList | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'StoredList';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>StoredList:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -49,8 +53,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-storeDialog'>storeDialog</a> </li>
 </ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -65,7 +69,7 @@ var scdoc_sc_version = '3.9.3';
 <h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>A StoredList is typically used for storing settings to disk, and recalling them later. These are often parameter lists of processes like Ndefs, Pdefs, Tdefs. StoredList are used in PxChainPreset for now, and may be adapted for ProxyPreset as well.
-<p>First code examples:<pre class='code prettyprint lang-sc'>z = StoredList(\myTestID);
+<p>First code examples:<textarea class='editor'>z = StoredList(\myTestID);
 
 // a storedList has these internal items:
 z.id.postcs; // this come from an ndef name
@@ -133,7 +137,7 @@ y = StoredList(\myTestID);
 y.read;
 y.list;
 y.storePath == z.storePath
-y.prettyList;</pre>
+y.prettyList;</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>StoredList.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>id</span>, <span class='argstr'>list</span>, <span class='argstr'>suffix: ".pxpreset"</span>)</h3>
 <div class='method'>
@@ -180,11 +184,11 @@ y.prettyList;</pre>
 <p>write a setting to disk<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>path<td class='argumentdesc'>
-<p>an optional path - default is auto-created <code class='code prettyprint lang-sc'>storePath</code>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dir' href='./../Overviews/Methods.html#dir'>dir</a></h3>
+<p>an optional path - default is auto-created <code>storePath</code>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dir' href='./../Overviews/Methods.html#dir'>dir</a></h3>
 <div class='method'>
-<p>the directory in which to write and read. consists of : <code class='code prettyprint lang-sc'>dirpath +/+ dirname</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-filename' href='./../Overviews/Methods.html#filename'>filename</a></h3>
+<p>the directory in which to write and read. consists of : <code>dirpath +/+ dirname</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-filename' href='./../Overviews/Methods.html#filename'>filename</a></h3>
 <div class='method'>
-<p>the filename where settings list will be written and read. consists of : <code class='code prettyprint lang-sc'>&lt;id&gt;.&lt;suffix&gt;.&lt;fileExt&gt;</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-read' href='./../Overviews/Methods.html#read'>read</a>(<span class='argstr'>path</span>, <span class='argstr'>keep: false</span>, <span class='argstr'>doneFunc</span>)</h3>
+<p>the filename where settings list will be written and read. consists of : <code>&lt;id&gt;.&lt;suffix&gt;.&lt;fileExt&gt;</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-read' href='./../Overviews/Methods.html#read'>read</a>(<span class='argstr'>path</span>, <span class='argstr'>keep: false</span>, <span class='argstr'>doneFunc</span>)</h3>
 <div class='method'>
 <p>read settings list into the StoredList object.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -212,13 +216,13 @@ y.prettyList;</pre>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dirname' href='./../Overviews/Methods.html#dirname'>dirname</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dirname' href='./../Overviews/Methods.html#dirname'>dirname</a> = value</h3>
 <div class='method'>
-<p>the constituents of <code class='code prettyprint lang-sc'>.dir</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-deleteDialog' href='./../Overviews/Methods.html#deleteDialog'>deleteDialog</a>(<span class='argstr'>loc</span>)</h3>
+<p>the constituents of <code>.dir</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-deleteDialog' href='./../Overviews/Methods.html#deleteDialog'>deleteDialog</a>(<span class='argstr'>loc</span>)</h3>
 <div class='method'>
 <p>open a dialog for deleting settings</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-storeDialog' href='./../Overviews/Methods.html#storeDialog'>storeDialog</a>(<span class='argstr'>name</span>, <span class='argstr'>newset</span>, <span class='argstr'>loc</span>)</h3>
 <div class='method'>
 <p>open a dialog for naming and storing a new setting</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>// tests for store/delete
+<textarea class='editor'>// tests for store/delete
 z = StoredList(\myTestID);
 z.storeDialog('testName', [\asd -&gt; \xyz]);
 z.storeDialog('testName', [\asd -&gt; \xyz], 150@150);
@@ -227,5 +231,6 @@ Button(nil, Rect(300, 300, 100, 100)).front.states_([["test"]])
 .action = { |bt| z.storeDialog('?', [\fgh -&gt; \uvw], bt.bounds.center) };
 
 Button(nil, Rect(300, 300, 100, 100)).front.states_([["test"]])
-.action = { |bt| z.deleteDialog(bt.bounds.center) };</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/StoredList.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/StoredList.schelp</a><br>link::Classes/StoredList::<br></div></div></body></html>
+.action = { |bt| z.deleteDialog(bt.bounds.center) };</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/StoredList.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/StoredList.schelp</a><br>link::Classes/StoredList::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

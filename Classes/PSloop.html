@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>PSloop | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>PSloop | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'PSloop';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>PSloop:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -45,8 +49,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.4c:%20loopFunc%20vs.%20goFunc'>Ex.4c: loopFunc vs. goFunc</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.4d:%20Turning%20loopFunc%20and%20goFunc%20on%20and%20off'>Ex.4d: Turning loopFunc and goFunc on and off</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.5:%20PSloops%20controlling%20different%20sound%20params'>Ex.5: PSloops controlling different sound params</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -106,14 +110,14 @@ var scdoc_sc_version = '3.9.3';
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loopFuncPerItem' href='./../Overviews/Methods.html#loopFuncPerItem'>loopFuncPerItem</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loopFuncPerItem' href='./../Overviews/Methods.html#loopFuncPerItem'>loopFuncPerItem</a> = value</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 s = Server.local;
 Server.default = s;
 s.boot;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.1a'>&nbsp;</a><h3><a class='anchor' name='Ex.1a:%20PSloop%20used%20as%20value%20pattern'>Ex.1a: PSloop used as value pattern</a></h3>
-<pre class='code prettyprint lang-sc'>// straight usage as value pattern for midinotes
+<textarea class='editor'>// straight usage as value pattern for midinotes
 
 (
 // lookBack determines number of items to loop, must start with 0 (no loop),
@@ -161,10 +165,10 @@ p = Pbind(
 
 ~lookBack = 0
 
-p.stop;</pre>
+p.stop;</textarea>
 
 <p><a class='anchor' name='Ex.1b'>&nbsp;</a><h3><a class='anchor' name='Ex.1b:%20PSloop%20used%20as%20event%20pattern'>Ex.1b: PSloop used as event pattern</a></h3>
-<pre class='code prettyprint lang-sc'>// rhythms are looped too
+<textarea class='editor'>// rhythms are looped too
 
 (
 ~lookBack = 0;
@@ -196,10 +200,10 @@ p = PSloop(
 ~lookBack = 7
 
 
-p.stop;</pre>
+p.stop;</textarea>
 
 <p><a class='anchor' name='Ex.2a'>&nbsp;</a><h3><a class='anchor' name='Ex.2a:%20PSloop%20used%20as%20value%20pattern,%20lookBack%20given%20as%20pattern'>Ex.2a: PSloop used as value pattern, lookBack given as pattern</a></h3>
-<pre class='code prettyprint lang-sc'>// lookBack passed as pattern,
+<textarea class='editor'>// lookBack passed as pattern,
 // lookBack pattern must start with zeros,
 // otherwise it will immediately stop with buffer values = nil
 
@@ -216,10 +220,10 @@ p = Pbind(
 ).play
 )
 
-p.stop</pre>
+p.stop</textarea>
 
 <p><a class='anchor' name='Ex.2b'>&nbsp;</a><h3><a class='anchor' name='Ex.2b:%20PSloop%20used%20as%20event%20pattern,%20lookBack%20given%20as%20pattern'>Ex.2b: PSloop used as event pattern, lookBack given as pattern</a></h3>
-<pre class='code prettyprint lang-sc'>// rhythms looped too
+<textarea class='editor'>// rhythms looped too
 
 (
 p = PSloop(
@@ -232,10 +236,10 @@ p = PSloop(
 ).play
 )
 
-p.stop</pre>
+p.stop</textarea>
 
 <p><a class='anchor' name='Ex.3a'>&nbsp;</a><h3><a class='anchor' name='Ex.3a:%20lookBack%20indices%20given%20as%20array'>Ex.3a: lookBack indices given as array</a></h3>
-<pre class='code prettyprint lang-sc'>// With the indices arg arbitrary series from the buffer can be played.
+<textarea class='editor'>// With the indices arg arbitrary series from the buffer can be played.
 // Passing an array we define an index sequence which doesn't depend on lookBack
 
 (
@@ -267,10 +271,10 @@ p = PSloop(
 ~lookBack = 5
 
 
-p.stop</pre>
+p.stop</textarea>
 
 <p><a class='anchor' name='Ex.3b'>&nbsp;</a><h3><a class='anchor' name='Ex.3b:%20lookBack%20indices%20given%20as%20Function'>Ex.3b: lookBack indices given as Function</a></h3>
-<pre class='code prettyprint lang-sc'>// If a Function is passed to indices it takes the current lookBack arg as argument.
+<textarea class='editor'>// If a Function is passed to indices it takes the current lookBack arg as argument.
 
 // mirroring the full lookBack size
 // start without loop
@@ -301,10 +305,10 @@ p = PSloop(
 
 ~lookBack = 3
 
-p.stop</pre>
+p.stop</textarea>
 
 <p><a class='anchor' name='Ex.3c'>&nbsp;</a><h3><a class='anchor' name='Ex.3c:%20lookBack%20indices%20given%20as%20Pattern'>Ex.3c: lookBack indices given as Pattern</a></h3>
-<pre class='code prettyprint lang-sc'>// The indices arg might get a pattern which can generate Functions as well as arrays.
+<textarea class='editor'>// The indices arg might get a pattern which can generate Functions as well as arrays.
 // Start with sufficient number of zeros as lookBack to fill buffer.
 
 (
@@ -319,10 +323,10 @@ p = PSloop(
 ).trace.play
 )
 
-p.stop</pre>
+p.stop</textarea>
 
 <p><a class='anchor' name='Ex.4a'>&nbsp;</a><h3><a class='anchor' name='Ex.4a:%20loopFunc%20given%20as%20Function'>Ex.4a: loopFunc given as Function</a></h3>
-<pre class='code prettyprint lang-sc'>// a Function passed to loopFunc is applied to all items of the looping
+<textarea class='editor'>// a Function passed to loopFunc is applied to all items of the looping
 
 (
 ~lookBack = 0;
@@ -350,10 +354,10 @@ p = Pbind(
 
 ~lookBack = 0
 
-p.stop</pre>
+p.stop</textarea>
 
 <p><a class='anchor' name='Ex.4b'>&nbsp;</a><h3><a class='anchor' name='Ex.4b:%20loopFunc%20given%20as%20Pattern'>Ex.4b: loopFunc given as Pattern</a></h3>
-<pre class='code prettyprint lang-sc'>// loopFunc also takes a pattern of Functions, in this case
+<textarea class='editor'>// loopFunc also takes a pattern of Functions, in this case
 // the arg loopFuncPerItem decides if next Functions are polled per item or per loop.
 
 (
@@ -397,10 +401,10 @@ p = Pbind(
 
 ~lookBack = 0
 
-p.stop</pre>
+p.stop</textarea>
 
 <p><a class='anchor' name='Ex.4c'>&nbsp;</a><h3><a class='anchor' name='Ex.4c:%20loopFunc%20vs.%20goFunc'>Ex.4c: loopFunc vs. goFunc</a></h3>
-<pre class='code prettyprint lang-sc'>// Besides loopFunc a separate Function (or Pattern of Functions) can be defined for
+<textarea class='editor'>// Besides loopFunc a separate Function (or Pattern of Functions) can be defined for
 // application outside loops via the goFunc arg.
 // The arg loopFuncAsGoFunc decides if loopFunc should be taken for that task
 // (and goFunc should be ignored in that case).
@@ -452,10 +456,10 @@ p = Pbind(
 
 ~loopFuncAsGoFunc = false
 
-p.stop</pre>
+p.stop</textarea>
 
 <p><a class='anchor' name='Ex.4d'>&nbsp;</a><h3><a class='anchor' name='Ex.4d:%20Turning%20loopFunc%20and%20goFunc%20on%20and%20off'>Ex.4d: Turning loopFunc and goFunc on and off</a></h3>
-<pre class='code prettyprint lang-sc'>// There are no separate PSloop flags needed for that:
+<textarea class='editor'>// There are no separate PSloop flags needed for that:
 // If loopFunc or goFunc return nil, no Function is applied,
 // so suited Patterns using flags can be passed as loopFunc / goFunc args.
 
@@ -542,10 +546,10 @@ p = Pbind(
 ~lookBack = 5
 
 
-p.stop</pre>
+p.stop</textarea>
 
 <p><a class='anchor' name='Ex.5'>&nbsp;</a><h3><a class='anchor' name='Ex.5:%20PSloops%20controlling%20different%20sound%20params'>Ex.5: PSloops controlling different sound params</a></h3>
-<pre class='code prettyprint lang-sc'>// Overlapping of loops on different sound params can give interesting polyrhythmic structures
+<textarea class='editor'>// Overlapping of loops on different sound params can give interesting polyrhythmic structures
 
 (
 SynthDef(\psloop_1, { |out = 0, freq = 440, centDif = 5, rq = 0.1, cutoff = 1000, amp = 0.1
@@ -593,5 +597,6 @@ VarGui({ |i| [
     \amp, [0, 1, \lin, 0, 0.2 + (i * 0.1)]
 ] }!3, stream: [r, q, p], quant: 1/5
 ).gui(labelWidth: 80)
-)</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PSloop.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PSloop.schelp</a><br>link::Classes/PSloop::<br></div></div></body></html>
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PSloop.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PSloop.schelp</a><br>link::Classes/PSloop::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

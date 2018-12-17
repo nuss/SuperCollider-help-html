@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>PanX | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>PanX | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'PanX';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>PanX:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -25,8 +29,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'><li class='toc3'><a href='#-init'>init</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -40,7 +44,7 @@ var scdoc_sc_version = '3.9.3';
 <a class='anchor' name='kw_JoshUGens'>&nbsp;</a><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>Multichannel equal power panner.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>PanX.</span><a class='method-name' name='*kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>numChans</span>, <span class='argstr'>in</span>, <span class='argstr'>pos: 0</span>, <span class='argstr'>level: 1</span>, <span class='argstr'>width: 2</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>PanX.</span><a class='method-name' name='*kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>numChans</span>, <span class='argstr'>in</span>, <span class='argstr'>pos: 0.0</span>, <span class='argstr'>level: 1.0</span>, <span class='argstr'>width: 2.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>numChans<td class='argumentdesc'>
@@ -48,7 +52,7 @@ var scdoc_sc_version = '3.9.3';
 <p>Input signal.<tr><td class='argumentname'>pos<td class='argumentdesc'>
 <p>A value between 0 and 1. 0 is first speaker, 1 is the last. Values &lt; 0 fade out sound from the first speakers, and values &gt; 1 fade out sound from the last speakers. Sound does NOT wrap.<tr><td class='argumentname'>level<td class='argumentdesc'>
 <p>A control rate level input.<tr><td class='argumentname'>width<td class='argumentdesc'>
-<p>The width of the panning envelope. Nominally this is 2.0 which pans between pairs of adjacent speakers. Width values greater than two will spread the pan over greater numbers of speakers. Width values less than one will leave silent gaps between speakers.</table></div><h3 class='method-code'><span class='method-prefix'>PanX.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>numChans</span>, <span class='argstr'>in</span>, <span class='argstr'>pos: 0</span>, <span class='argstr'>level: 1</span>, <span class='argstr'>width: 2</span>)</h3>
+<p>The width of the panning envelope. Nominally this is 2.0 which pans between pairs of adjacent speakers. Width values greater than two will spread the pan over greater numbers of speakers. Width values less than one will leave silent gaps between speakers.</table></div><h3 class='method-code'><span class='method-prefix'>PanX.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>numChans</span>, <span class='argstr'>in</span>, <span class='argstr'>pos: 0.0</span>, <span class='argstr'>level: 1.0</span>, <span class='argstr'>width: 2.0</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
 <table class='arguments'>
@@ -62,7 +66,7 @@ var scdoc_sc_version = '3.9.3';
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-init' href='./../Overviews/Methods.html#init'>init</a>(<span class='argstr'>numChans</span> <span class='argstr'>... theInputs</span>)</h3>
 <div class='method'></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>// five channel panning across an array
+<textarea class='editor'>// five channel panning across an array
 s.boot;
 (
 a = {
@@ -77,6 +81,7 @@ a = {
 s.scope(5);
 )
 
-a.free;</pre>
+a.free;</textarea>
 
-<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PanX.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PanX.schelp</a><br>link::Classes/PanX::<br></div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PanX.schelp'>/usr/local/share/SuperCollider/Extensions/SC3plugins/JoshUGens/HelpSource/Classes/PanX.schelp</a><br>link::Classes/PanX::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

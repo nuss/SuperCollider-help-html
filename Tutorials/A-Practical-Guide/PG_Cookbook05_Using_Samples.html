@@ -1,27 +1,31 @@
-<!doctype html><html lang='en'><head><title>Pattern Guide Cookbook 05: Using Samples | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Pattern Guide Cookbook 05: Using Samples | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../../lib/jquery.min.js'></script>
+<script src='./../../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './../..';
 var scdoc_title = 'Pattern Guide Cookbook 05: Using Samples';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../../scdoc.js' type='text/javascript'></script>
 <script src='./../../docmap.js' type='text/javascript'></script>
-<script src='./../../prettify.js' type='text/javascript'></script>
-<script src='./../../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Pattern Guide Cookbook 05: Using Samples:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#Using%20samples'>Using samples</a></li>
 <ul class='toc'><li class='toc2'><a href='#Playing%20a%20pattern%20in%20time%20with%20a%20sampled%20loop'>Playing a pattern in time with a sampled loop</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Using%20audio%20samples%20to%20play%20pitched%20material'>Using audio samples to play pitched material</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Multi-sampled%20instruments'>Multi-sampled instruments</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Tutorials/A-Practical-Guide</span>
@@ -37,8 +41,8 @@ var scdoc_sc_version = '3.9.3';
 
 <p>A deceptively complex requirement... here, we will loop the a11wlk01.wav sample between 0.404561 and 3.185917 seconds (chosen for its surprisingly accurate four-beat groove), and overlay synthesized bells emphasizing the meter.
 <p>It might be tempting to loop a <a href="./../../Classes/PlayBuf.html">PlayBuf</a> so that the loop runs automatically on the server, but it can easily drift out of sync with the client (because of slight deviations in the actual sample rate). Instead, the example defines a SynthDef that plays exactly one repetition of the loop, and repeatedly triggers it once per bar.
-<p>The primary bell pattern accents the downbeat and follows with a randomly generated rhythm. The catch is that we have no assurance that the <a href="./../../Classes/Pwrand.html">Pwrand</a> <code class='code prettyprint lang-sc'>\dur</code> pattern will add up to exactly 4 beats. The <a href="./../../Classes/Pfindur.html">Pfindur</a> ("finite duration") pattern cuts off the inner Pbind after 4 beats. This would stop the pattern, except <a href="./../../Classes/Pn.html">Pn</a> repeats the Pfindur infinitely, placing the accent in the right place every time.
-<p>The loop actually starts with a half-beat anacrusis, so <a href="./../../Classes/Ptpar.html">Ptpar</a> delays the bell patterns by 0.5 beats.<pre class='code prettyprint lang-sc'>(
+<p>The primary bell pattern accents the downbeat and follows with a randomly generated rhythm. The catch is that we have no assurance that the <a href="./../../Classes/Pwrand.html">Pwrand</a> <code>\dur</code> pattern will add up to exactly 4 beats. The <a href="./../../Classes/Pfindur.html">Pfindur</a> ("finite duration") pattern cuts off the inner Pbind after 4 beats. This would stop the pattern, except <a href="./../../Classes/Pn.html">Pn</a> repeats the Pfindur infinitely, placing the accent in the right place every time.
+<p>The loop actually starts with a half-beat anacrusis, so <a href="./../../Classes/Ptpar.html">Ptpar</a> delays the bell patterns by 0.5 beats.<textarea class='editor'>(
 b = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");
 
 // one loop segment
@@ -94,9 +98,9 @@ p = Ptpar([
 ], 1).play;
 )
 
-p.stop;</pre>
+p.stop;</textarea>
 
-<p>The use of Ptpar above means that you could stop or start only the whole ball of wax at once, with no control over the three layers. It's no more difficult to play the layers in the independent event stream players, using the quant argument to ensure the proper synchronization. See the <a href="./../../Classes/Quant.html">Quant</a> help file for details on specifying the onset time of a pattern.<pre class='code prettyprint lang-sc'>(
+<p>The use of Ptpar above means that you could stop or start only the whole ball of wax at once, with no control over the three layers. It's no more difficult to play the layers in the independent event stream players, using the quant argument to ensure the proper synchronization. See the <a href="./../../Classes/Quant.html">Quant</a> help file for details on specifying the onset time of a pattern.<textarea class='editor'>(
 TempoClock.default.tempo = 0.35953685899971 * 4;
 
 p = Pbind(
@@ -131,12 +135,12 @@ r = Pbind(
 
 [p, q, r].do(_.stop);
 
-b.free;</pre>
+b.free;</textarea>
 <h3><a class='anchor' name='Using%20audio%20samples%20to%20play%20pitched%20material'>Using audio samples to play pitched material</a></h3>
 
 <p>To use an instrument sample in a pattern, you need a SynthDef that plays the sample at a given rate. Here we will use <a href="./../../Classes/PlayBuf.html">PlayBuf</a>, which doesn't allow looping over a specific region. For that, <a href="./../../Classes/Phasor.html">Phasor</a> and <a href="./../../Classes/BufRd.html">BufRd</a> are probably the best choice. ( <strong>Third-party extension alert</strong> : LoopBuf by Lance Putnam is an alternative - find it in the <strong>sc3-plugins</strong> package.)
-<p>Frequency is controlled by the rate parameter. The sample plays at a given frequency at normal rate, so to play a specific frequency, <code class='code prettyprint lang-sc'>frequency / baseFrequency</code> gives you the required rate.
-<p>The first example makes a custom protoEvent that calculates rate, as <code class='code prettyprint lang-sc'>\freq</code>, based on the base frequency. It uses one sample, so it would be best for patterns that will play in a narrow range. Since there isn't an instrument sample in the SuperCollider distribution, we will record a frequency-modulation sample into a buffer before running the pattern.<pre class='code prettyprint lang-sc'>// make a sound sample
+<p>Frequency is controlled by the rate parameter. The sample plays at a given frequency at normal rate, so to play a specific frequency, <code>frequency / baseFrequency</code> gives you the required rate.
+<p>The first example makes a custom protoEvent that calculates rate, as <code>\freq</code>, based on the base frequency. It uses one sample, so it would be best for patterns that will play in a narrow range. Since there isn't an instrument sample in the SuperCollider distribution, we will record a frequency-modulation sample into a buffer before running the pattern.<textarea class='editor'>// make a sound sample
 (
 var    recorder;
 fork {
@@ -178,11 +182,11 @@ p = Pbind(
 )
 
 p.stop;
-b.free;</pre>
+b.free;</textarea>
 <h3><a class='anchor' name='Multi-sampled%20instruments'>Multi-sampled instruments</a></h3>
 
 <p>To extend the sampler's range using multiple samples and ensure smooth transitions between frequency ranges, the SynthDef should crossfade between adjacent buffers. A hybrid approach is used here, where Pbind calculates the lower buffer number to use and the SynthDef calculates the crossfade strength. (The calculations could be structured differently, either putting more of them into the SynthDef for convenience in the pattern, or loading them into the pattern and keeping the SynthDef as lean as possible.)
-<p>MIDI note numbers are used for these calculations because it's a linear frequency scale and linear interpolation is easier than the exponential interpolation that would be required when using Hz. Assuming a sorted array, indexInBetween gives the fractional index using linear interpolation. If you need to use frequency in Hz, use this function in place of indexInBetween.<pre class='code prettyprint lang-sc'>    f = { |val, array|
+<p>MIDI note numbers are used for these calculations because it's a linear frequency scale and linear interpolation is easier than the exponential interpolation that would be required when using Hz. Assuming a sorted array, indexInBetween gives the fractional index using linear interpolation. If you need to use frequency in Hz, use this function in place of indexInBetween.<textarea class='editor'>    f = { |val, array|
         var a, b, div;
         var i = array.indexOfGreaterThan(val);
         if(i.isNil) { array.size - 1 } {
@@ -196,9 +200,9 @@ b.free;</pre>
                 }
             }
         };
-    };</pre>
+    };</textarea>
 
-<p>But that function isn't needed for this example:<pre class='code prettyprint lang-sc'>(
+<p>But that function isn't needed for this example:<textarea class='editor'>(
 var    bufCount;
 ~midinotes = (39, 46 .. 88);
 bufCount = ~midinotes.size;
@@ -257,7 +261,8 @@ p = Pbind(
 )
 
 p.stop;
-b.do(_.free); ~baseBuf.free;</pre>
+b.do(_.free); ~baseBuf.free;</textarea>
 
 <p>Previous: <a href="./../../Tutorials/A-Practical-Guide/PG_Cookbook04_Sending_MIDI.html">Pattern Guide Cookbook 04: Sending MIDI</a>
-<p>Next: <a href="./../../Tutorials/A-Practical-Guide/PG_Cookbook06_Phrase_Network.html">Pattern Guide Cookbook 06: Phrase Network</a><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Tutorials/A-Practical-Guide/PG_Cookbook05_Using_Samples.schelp'>/usr/local/share/SuperCollider/HelpSource/Tutorials/A-Practical-Guide/PG_Cookbook05_Using_Samples.schelp</a><br>link::Tutorials/A-Practical-Guide/PG_Cookbook05_Using_Samples::<br></div></div></body></html>
+<p>Next: <a href="./../../Tutorials/A-Practical-Guide/PG_Cookbook06_Phrase_Network.html">Pattern Guide Cookbook 06: Phrase Network</a><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Tutorials/A-Practical-Guide/PG_Cookbook05_Using_Samples.schelp'>/usr/local/share/SuperCollider/HelpSource/Tutorials/A-Practical-Guide/PG_Cookbook05_Using_Samples.schelp</a><br>link::Tutorials/A-Practical-Guide/PG_Cookbook05_Using_Samples::<br></div></div><script src='./../../editor.js' type='text/javascript'></script>
+</body></html>

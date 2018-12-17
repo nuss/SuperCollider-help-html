@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>PLx suite | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>PLx suite | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'PLx suite';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>PLx suite:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -33,8 +37,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%205a:%20Updating%20input%20of%20N-ary%20operators'>Ex. 5a: Updating input of N-ary operators</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%205b:%20Updating%20input%20of%20N-ary%20Functions'>Ex. 5b: Updating input of N-ary Functions</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%206:%20PLbind%20/%20PLbindef'>Ex. 6: PLbind / PLbindef</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Tutorials (extension)</span>
@@ -61,7 +65,7 @@ var scdoc_sc_version = '3.9.3';
 <p><a href="./../Classes/PLbindef.html">PLbindef</a>, <a href="./../Classes/PLbindefPar.html">PLbindefPar</a><h2><a class='anchor' name='examples'>Examples</a></h2>
 
 <p><a class='anchor' name='Ex.%201a'>&nbsp;</a><h3><a class='anchor' name='Ex.%201a:%20ListPatterns%20placeholder%20constructs%20with%20Plazy'>Ex. 1a: ListPatterns placeholder constructs with Plazy</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 s = Server.local;
 Server.default = s;
 s.boot;
@@ -101,12 +105,12 @@ x = Pbind(
 
 ~a[10] = 91;
 
-x.stop;</pre>
+x.stop;</textarea>
 
 <p>Similar placeholder constructs with Pcollect and Pfunc have similar drawbacks concerning replacement. However, this type of "delayed replacement" might be wanted in some cases and is also possible with PLx patterns, see <a href="./../Classes/PLn.html">PLn</a> and the <strong>cutItems</strong> arg of PLx list patterns.
 <p><a class='anchor' name='Ex.%201b'>&nbsp;</a><h3><a class='anchor' name='Ex.%201b:%20PLx%20implementation%20of%20ListPatterns'>Ex. 1b: PLx implementation of ListPatterns</a></h3>
 
-<p>PLx Patterns take symbols as input. Derived Streams get the values of the Environment of streamification.<pre class='code prettyprint lang-sc'>(
+<p>PLx Patterns take symbols as input. Derived Streams get the values of the Environment of streamification.<textarea class='editor'>(
 p = Pbind(
     \midinote, PLseq(\a),
     \dur, 0.2
@@ -146,10 +150,10 @@ x = Pbind(
 ).play;
 )
 
-x.stop;</pre>
+x.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%201c'>&nbsp;</a><h3><a class='anchor' name='Ex.%201c:%20PLx%20implementation%20of%20Non-ListPatterns'>Ex. 1c: PLx implementation of Non-ListPatterns</a></h3>
-<pre class='code prettyprint lang-sc'>// an explicit definition with Plazy
+<textarea class='editor'>// an explicit definition with Plazy
 
 p = Pwhite(Pn(Plazy { ~lo }), Pn(Plazy { ~hi }), { ~r });
 
@@ -175,11 +179,11 @@ e.use { ~r = inf; x = Pbind(\midinote, q, \dur, 0.2).play };
 
 e.lo = PLseq([60, 90]);
 
-x.stop;</pre>
+x.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%201d'>&nbsp;</a><h3><a class='anchor' name='Ex.%201d:%20Plain%20PL'>Ex. 1d: Plain PL</a></h3>
 
-<p>A general placeholder that can be updated after instantiation. Its repeats arg defaults to inf.<pre class='code prettyprint lang-sc'>PL(\a, \r);
+<p>A general placeholder that can be updated after instantiation. Its repeats arg defaults to inf.<textarea class='editor'>PL(\a, \r);
 
 // roughly equivalent to
 
@@ -204,11 +208,11 @@ e.a = Pshuf((80, 78.5..65), inf);
 e.a = PLshuf((80, 78.5..65));
 
 
-x.stop;</pre>
+x.stop;</textarea>
 
 <p>PL can also be used with Patterns which don't have a PLx implementation. See <a href="./../Classes/PL.html">PL</a> for an example.
 <p><a class='anchor' name='Ex.%202'>&nbsp;</a><h3><a class='anchor' name='Ex.%202:%20Playing%20in%20different%20Environments'>Ex. 2: Playing in different Environments</a></h3>
-<pre class='code prettyprint lang-sc'>// Pbind to be streamified differently in different environments
+<textarea class='editor'>// Pbind to be streamified differently in different environments
 
 (
 p = Pbind(
@@ -247,22 +251,22 @@ f.a = (79..75) +.t [0, 3.5];
 e.a = [Pseq([63, 65.5], 4), 85, 87];
 
 x.stop;
-y.stop;</pre>
+y.stop;</textarea>
 
 <p><a class='anchor' name='Ex.%203'>&nbsp;</a><h3><a class='anchor' name='Ex.%203:%20Use%20with%20VarGui'>Ex. 3: Use with VarGui</a></h3>
-<pre class='code prettyprint lang-sc'>// basic form of a step sequencer (amp defaults to 0 in associated global ControlSpec)
+<textarea class='editor'>// basic form of a step sequencer (amp defaults to 0 in associated global ControlSpec)
 
 (
 \default.pVarGui(
     ctrBefore: [\a, [0, 6, \lin, 1, 3] ! 8],
     pBefore: [\degree, PLseq(\a) ]
 ).gui;
-)</pre>
+)</textarea>
 
 <p>See <a href="./../Classes/VarGui.html">VarGui</a> and <a href="./../Tutorials/VarGui_shortcut_builds.html">VarGui shortcut builds</a> for further examples.
 <p><a class='anchor' name='Ex.%204'>&nbsp;</a><h3><a class='anchor' name='Ex.%204:%20The%20repeats%20arg'>Ex. 4: The repeats arg</a></h3>
 
-<p>PLx Patterns' repeats arg defaults to inf. This makes sense in situations where you want to go on replacing items on the fly. If a PLx Patterns is itself enclosed you may want to set it to a different value. Anyway the resulting number of repeats is the product of outer and inner repeats.<pre class='code prettyprint lang-sc'>// PL(\a) defaults to repeats = inf
+<p>PLx Patterns' repeats arg defaults to inf. This makes sense in situations where you want to go on replacing items on the fly. If a PLx Patterns is itself enclosed you may want to set it to a different value. Anyway the resulting number of repeats is the product of outer and inner repeats.<textarea class='editor'>// PL(\a) defaults to repeats = inf
 // Pshuf defaults to repeats = 1, is embedded repeatedly and
 // so it continues producing new permutations (like Pshufn)
 
@@ -310,11 +314,11 @@ x = p.play;
 
 // stop with a Pseq which defaults to repeats = 1, played twice because of PL(\a, 2)
 
-~a = Pseq((70..65));</pre>
+~a = Pseq((70..65));</textarea>
 
 <p><a class='anchor' name='Ex.%205a'>&nbsp;</a><h3><a class='anchor' name='Ex.%205a:%20Updating%20input%20of%20N-ary%20operators'>Ex. 5a: Updating input of N-ary operators</a></h3>
 
-<p>One may want to have the choice to update inputs of N-ary operators applied to Patterns too. A common case is clipping. Say you have a Pcauchy pattern (distribution with a relatively high number of outliers) and want to dynamically change its mean value and clip bounds.<pre class='code prettyprint lang-sc'>(
+<p>One may want to have the choice to update inputs of N-ary operators applied to Patterns too. A common case is clipping. Say you have a Pcauchy pattern (distribution with a relatively high number of outliers) and want to dynamically change its mean value and clip bounds.<textarea class='editor'>(
 p = Pbind(
     \midinote, PLcauchy(\m, \s).collect(_.clip(~lo, ~hi)),
     \dur, 0.1
@@ -395,12 +399,12 @@ e.use { ~lo = 60; ~hi = PLseq([65, 90]) };
 
 e.use { ~lo = PLseq((50..95)); ~hi = ~lo + 10 };
 
-x.stop;</pre>
+x.stop;</textarea>
 
 <p>For replacing operators dynamically take PLnaryFunc with the operator wrapped into a Function.
 <p><a class='anchor' name='Ex.%205b'>&nbsp;</a><h3><a class='anchor' name='Ex.%205b:%20Updating%20input%20of%20N-ary%20Functions'>Ex. 5b: Updating input of N-ary Functions</a></h3>
 
-<p>Self-defined functions can be used as with PLnaryop.<pre class='code prettyprint lang-sc'>(
+<p>Self-defined functions can be used as with PLnaryop.<textarea class='editor'>(
 p = Pbind(
     \midinote, PLnaryFunc(\f, \src, [\b, \c]),
     \dur, 0.1
@@ -443,9 +447,9 @@ e.f = { |x,y,z| x + (y * 1.2) + z };
 e.f = { |x,y,z| x + y + (z * 1.7) };
 
 
-x.stop;</pre>
+x.stop;</textarea>
 <h3><a class='anchor' name='Ex.%206:%20PLbind%20/%20PLbindef'>Ex. 6: PLbind / PLbindef</a></h3>
-<pre class='code prettyprint lang-sc'>// start PLbindef, an special Environment of that name is created for setting
+<textarea class='editor'>// start PLbindef, an special Environment of that name is created for setting
 
 p = PLbindef(\a, \midinote, 70).play
 
@@ -502,5 +506,6 @@ p.reset
 (
 p.stop;
 p.remove;
-)</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/PLx_suite.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/PLx_suite.schelp</a><br>link::Tutorials/PLx_suite::<br></div></div></body></html>
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/PLx_suite.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/PLx_suite.schelp</a><br>link::Tutorials/PLx_suite::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

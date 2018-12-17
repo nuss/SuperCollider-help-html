@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>OSCCommands | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>OSCCommands | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'OSCCommands';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>OSCCommands:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -34,8 +38,8 @@ var scdoc_sc_version = '3.9.3';
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -49,27 +53,27 @@ var scdoc_sc_version = '3.9.3';
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>OSCCommands implements a couple of methods that let the user collect OSC command-names (including their path/namespace - e.g. '/my, super/long/and/winding/pth/to/cmdname' - resp. the number of addressable msg-slots. E.g. from an orientation-sensor: <code class='code prettyprint lang-sc'>[ '/cmdname', &lt;x-value&gt;, &lt;y-value&gt;, &lt;z-value&gt; ]</code> (one command-name, 3 slots). Collected command-names can be stored to disk under a name set by the user. For convenience OSCCommands has its own GUI which shows the user which names have already been collected resp. allowing her/him to remove unwanted names from the list. Command-names will be stored to disk in a file named "OSCCommands" in the same directory as the class-file itself.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>OSCCommands implements a couple of methods that let the user collect OSC command-names (including their path/namespace - e.g. '/my, super/long/and/winding/pth/to/cmdname' - resp. the number of addressable msg-slots. E.g. from an orientation-sensor: <code>[ '/cmdname', &lt;x-value&gt;, &lt;y-value&gt;, &lt;z-value&gt; ]</code> (one command-name, 3 slots). Collected command-names can be stored to disk under a name set by the user. For convenience OSCCommands has its own GUI which shows the user which names have already been collected resp. allowing her/him to remove unwanted names from the list. Command-names will be stored to disk in a file named "OSCCommands" in the same directory as the class-file itself.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>OSCCommands.</span><a class='method-name' name='*collect' href='./../Overviews/Methods.html#collect'>collect</a>(<span class='argstr'>play: true</span>)</h3>
 <div class='method'>
-<p>Starts the collection-process when set to <code class='code prettyprint lang-sc'>true</code>. Stop the process by calling the same method, argument <code class='code prettyprint lang-sc'>play</code> set to <code class='code prettyprint lang-sc'>false</code><h4>Arguments:</h4>
+<p>Starts the collection-process when set to <code>true</code>. Stop the process by calling the same method, argument <code>play</code> set to <code>false</code><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>play<td class='argumentdesc'>
-<p>a <a href="./../Classes/Boolean.html">Boolean</a>, indicating whether the process shall be started or stopped - default: <code class='code prettyprint lang-sc'>true</code></table><h4>Returns:</h4>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a>, indicating whether the process shall be started or stopped - default: <code>true</code></table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>this (OSCCommands)</div></div><h3 class='method-code'><span class='method-prefix'>OSCCommands.</span><a class='method-name' name='*collectTempIPsAndCmds' href='./../Overviews/Methods.html#collectTempIPsAndCmds'>collectTempIPsAndCmds</a>(<span class='argstr'>play: true</span>)</h3>
 <div class='method'>
-<p>Collect OSC command-names and the sizes of their messages (i.e. how many slots are sent within the message). Command-names will be stored in <a href="#*tempIPsAndCmds">*tempIPsAndCmds</a>, an <a href="./../Classes/Event.html">Event</a>, under a key thats made up of a combination of the IP-address and port: <code class='code prettyprint lang-sc'>&lt;IP-address&gt;:&lt;port&gt;</code>.<pre class='code prettyprint lang-sc'>OSCCommands.collectTempIPsAndCmds // invoke collection
+<p>Collect OSC command-names and the sizes of their messages (i.e. how many slots are sent within the message). Command-names will be stored in <a href="#*tempIPsAndCmds">*tempIPsAndCmds</a>, an <a href="./../Classes/Event.html">Event</a>, under a key thats made up of a combination of the IP-address and port: <code>&lt;IP-address&gt;:&lt;port&gt;</code>.<textarea class='editor'>OSCCommands.collectTempIPsAndCmds // invoke collection
 OSCCommands.tempCollectRunning // should return true
 OSCCommands.tempIPsAndCmds // see what has come in already
 /* send some OSC to sclang... */
 OSCCommands.tempIPsAndCmds // now there should be something
 OSCCommands.collectTempIPsAndCmds(false) // stop collecting
-OSCCommands.tempCollectRunning // should return false now</pre>
+OSCCommands.tempCollectRunning // should return false now</textarea>
 <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>play<td class='argumentdesc'>
-<p>a <a href="./../Classes/Boolean.html">Boolean</a>, indicating whether the process shall be started or stopped - default: <code class='code prettyprint lang-sc'>true</code></table><h4>Returns:</h4>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a>, indicating whether the process shall be started or stopped - default: <code>true</code></table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>this (OSCCommands)</div></div><h3 class='method-code'><span class='method-prefix'>OSCCommands.</span><a class='method-name' name='*saveCmdSet' href='./../Overviews/Methods.html#saveCmdSet'>saveCmdSet</a>(<span class='argstr'>deviceName</span>)</h3>
 <div class='method'>
@@ -88,14 +92,14 @@ OSCCommands.tempCollectRunning // should return false now</pre>
 <div class='returnvalue'>
 <p>a <a href="./../Classes/Window.html">Window</a></div></div><h3 class='method-code'><span class='method-prefix'>OSCCommands.</span><a class='method-name' name='*deviceCmds' href='./../Overviews/Methods.html#deviceCmds'>deviceCmds</a>(<span class='argstr'>deviceName</span>)</h3>
 <div class='method'>
-<p>If a <code class='code prettyprint lang-sc'>deviceName</code> has been given return an <a href="./../Classes/Event.html">Event</a> with command-names stored to disk under the device-name <code class='code prettyprint lang-sc'>deviceName</code>. Else return an <a href="./../Classes/Event.html">Event</a> with all currently stored commands resp. their keys.<h4>Arguments:</h4>
+<p>If a <code>deviceName</code> has been given return an <a href="./../Classes/Event.html">Event</a> with command-names stored to disk under the device-name <code>deviceName</code>. Else return an <a href="./../Classes/Event.html">Event</a> with all currently stored commands resp. their keys.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>deviceName<td class='argumentdesc'>
 <p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a> representing the name under which the list of commands has been stored.</table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='method-code'><span class='method-prefix'>OSCCommands.</span><a class='method-name' name='*clearCmdsAt' href='./../Overviews/Methods.html#clearCmdsAt'>clearCmdsAt</a>(<span class='argstr'>deviceName</span>)</h3>
 <div class='method'>
-<p>Removes all commands stored to disk under the name given in <code class='code prettyprint lang-sc'>deviceName</code>.<h4>Arguments:</h4>
+<p>Removes all commands stored to disk under the name given in <code>deviceName</code>.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>deviceName<td class='argumentdesc'>
 <p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a></table><h4>Returns:</h4>
@@ -119,7 +123,7 @@ OSCCommands.tempCollectRunning // should return false now</pre>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 
-<p>For the following example you will have to have installed an application capable of sending OSC-messages somewhere in your local network (it might be e.g. an application on your computer or some OSC-controller on a mobile phone). Very likely you will have to tell this application to send its output to the IP-address of the computer where SuperCollider is running resp. to the receiving port of SC which is by default <code class='code prettyprint lang-sc'>57120</code> (setting a non-standard port should work using SC &gt;= 3.5).<pre class='code prettyprint lang-sc'>// most easy
+<p>For the following example you will have to have installed an application capable of sending OSC-messages somewhere in your local network (it might be e.g. an application on your computer or some OSC-controller on a mobile phone). Very likely you will have to tell this application to send its output to the IP-address of the computer where SuperCollider is running resp. to the receiving port of SC which is by default <code>57120</code> (setting a non-standard port should work using SC &gt;= 3.5).<textarea class='editor'>// most easy
 OSCCommands.front;
 
 // start the collecting-process
@@ -146,6 +150,7 @@ OSCCommands.deviceCmds(\myAppOrDeviceName);
 OSCCommands.storedDevices;
 
 // delete a stored device including its command-names
-OSCCommands.clearCmdsAt(\myAppOrDeviceName);</pre>
+OSCCommands.clearCmdsAt(\myAppOrDeviceName);</textarea>
 
-<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/OSCCommands.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/OSCCommands.schelp</a><br>link::Classes/OSCCommands::<br></div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/OSCCommands.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/OSCCommands.schelp</a><br>link::Classes/OSCCommands::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

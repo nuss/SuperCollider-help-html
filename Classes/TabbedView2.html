@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>TabbedView2 | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>TabbedView2 | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'TabbedView2';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>TabbedView2:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -90,8 +94,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc2'><a href='#Adjust%20tab%20height%20and%20curves'>Adjust tab height and curves</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#Demo'>Demo</a></li>
 <ul class='toc'><li class='toc2'><a href='#All%20Features%20and%20Parameters'>All Features and Parameters</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -116,12 +120,12 @@ var scdoc_sc_version = '3.9.3';
 <p><div class='note'><span class='notelabel'>NOTE:</span> Try the <a href="#Demo">DEMO</a> Code to test all the features, and go through the <a href="#Examples">EXAMPLES</a>.</div>
 <p><h3><a class='anchor' name='Differences%20to%20older%20TabbedView'>Differences to older TabbedView</a></h3>
 
-<p>The new TabbedView2 now holds an Array of TabbedViewTab instances. The creation syntax is just like other Views:<pre class='code prettyprint lang-sc'> *new(parent, bounds);</pre>
+<p>The new TabbedView2 now holds an Array of TabbedViewTab instances. The creation syntax is just like other Views:<textarea class='editor'> *new(parent, bounds);</textarea>
 
 <p>You then add defaults, followed by the individual tabs, setting their individual instance variables.<div class='note'><span class='notelabel'>NOTE:</span> You never dierectly create TabbedViewTab instances, but rather use TabbedView2.add to add tabs. Many instance variables for TabbedView, are now (arrays of) default values for TabbedViewTab instances. TabbedViewTab instances can in turn override those defaults. This way you can customize individual tabs.
 <p>See <a href="./../Classes/TabbedViewTab.html">TabbedViewTab</a> .</div>
 <p><strong>Example</strong>:
-<p><strong>Old Syntax</strong><pre class='code prettyprint lang-sc'>(
+<p><strong>Old Syntax</strong><textarea class='editor'>(
 // create the TabbedView, tabs,color, etc.
 t=TabbedView.new(nil,nil,
     ["test1","test2","test3"],
@@ -138,9 +142,9 @@ Slider(v, Rect(20,20,320,20));
 
 //add more views
 t.add("extraTab, but not custom")
-)</pre>
+)</textarea>
 
-<p><strong>New Syntax</strong><pre class='code prettyprint lang-sc'>(
+<p><strong>New Syntax</strong><textarea class='editor'>(
 // create the TabbedView2
 t=TabbedView2.new;
 
@@ -167,7 +171,7 @@ m.unfocusedColor=Color.green.alpha_(0.4);
 m.background=Color.green.alpha_(0.1);
 
 t.refresh;
-)</pre>
+)</textarea>
 
 <p><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>TabbedView2.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>parent</span>, <span class='argstr'>bounds</span>)</h3>
@@ -179,14 +183,14 @@ t.refresh;
 <p>Rect . if nil then the parent Rect is used</table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>returns a TabbedView2</div></div><h3><a class='anchor' name='Convenience%20Creation%20Methods'>Convenience Creation Methods</a></h3>
-<pre class='code prettyprint lang-sc'>// choose one.   .demo adds some tabs automatically
+<textarea class='editor'>// choose one.   .demo adds some tabs automatically
 TabbedView2.newPacked.demo;    //create a very space efficient TabbedView2
 TabbedView2.newFlat.demo;    // create a  flat  TabbedView2
 TabbedView2.newTall.demo;    // create a tall TabbedView2
 TabbedView2.newColor.demo;    // create a Tabbed View with  rgb tabs
 TabbedView2.newColorLabels.demo;    // create a Tabbed View with  rgb labels
 TabbedView2.newBasic.demo;    // create a very basic TabbedView2
-TabbedView2.newTransparent.demo;    // create a transparent TabbedView2</pre>
+TabbedView2.newTransparent.demo;    // create a transparent TabbedView2</textarea>
 <h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Views%20and%20Windows'>Views and Windows</a></h3>
@@ -289,7 +293,7 @@ TabbedView2.newTransparent.demo;    // create a transparent TabbedView2</pre>
 <tr><td class='argumentname'>(bool)<td class='argumentdesc'>
 <p>default false.</table></div><h3><a class='anchor' name='Examples:%20Set%20tabPosition%20and%20followEdges'>Examples: Set tabPosition and followEdges</a></h3>
 
-<p><strong>Setting the position or followEdges instance variables</strong><pre class='code prettyprint lang-sc'>(
+<p><strong>Setting the position or followEdges instance variables</strong><textarea class='editor'>(
 v=TabbedView2.newColorLabels; //default
 v.tabHeight = 25;
 5.do{arg i; var q="aa"; i.do{q=q++"a"}; v.add(q) };
@@ -314,7 +318,7 @@ TabbedView2.newTall.tabPosition_(\left).demo(25,"test");
 TabbedView2.newTall(nil,Rect(100,500,400,100)).tabPosition_(\bottom).demo(5,"test");
 
 
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Auto-Archiving%20a%20TabbedView2%20State'>Auto-Archiving a TabbedView2 State</a></h3>
 <div class='note'><span class='notelabel'>NOTE:</span> In order to archive tab positions, their labels must be unique.</div>
 <p><div class='note'><span class='notelabel'>NOTE:</span> Does not support detached Tabs</div>
@@ -324,16 +328,16 @@ TabbedView2.newTall(nil,Rect(100,500,400,100)).tabPosition_(\bottom).demo(5,"tes
 <p><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>symbols<td class='argumentdesc'>
-<p>symbol1, symbol2, symbol3, ...<pre class='code prettyprint lang-sc'>v=TabbedView2.newBasic.demo;
-v.autoArchive(\myProject, \mySection, \myTabbedViewName)</pre>
+<p>symbol1, symbol2, symbol3, ...<textarea class='editor'>v=TabbedView2.newBasic.demo;
+v.autoArchive(\myProject, \mySection, \myTabbedViewName)</textarea>
 </table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-archiveKeys' href='./../Overviews/Methods.html#archiveKeys'>archiveKeys</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-archiveKeys' href='./../Overviews/Methods.html#archiveKeys'>archiveKeys</a> = value</h3>
 <div class='method'>
 <p>Array: Determines which keys will be archived when autoArchive is enabled.
-<p><code class='code prettyprint lang-sc'>default=[\indexes, \followEdges, \tabPosition, \tabFocus]</code><h4>Arguments:</h4>
+<p><code>default=[\indexes, \followEdges, \tabPosition, \tabFocus]</code><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>(array)<td class='argumentdesc'>
-<p>Array of Symbols, may include only <code class='code prettyprint lang-sc'>[\indexes, \followEdges, \tabPosition, \tabFocus]</code></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-saveStateToArchive' href='./../Overviews/Methods.html#saveStateToArchive'>saveStateToArchive</a>( <span class='argstr'>... args</span>)</h3>
+<p>Array of Symbols, may include only <code>[\indexes, \followEdges, \tabPosition, \tabFocus]</code></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-saveStateToArchive' href='./../Overviews/Methods.html#saveStateToArchive'>saveStateToArchive</a>( <span class='argstr'>... args</span>)</h3>
 <div class='method'>
 <p>Saves the state of the TabbedView2 to given path in the Archive.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -420,15 +424,15 @@ v.autoArchive(\myProject, \mySection, \myTabbedViewName)</pre>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 <h3><a class='anchor' name='Usage:'>Usage:</a></h3>
 
-<p><strong>use CompositeView style GUI</strong><pre class='code prettyprint lang-sc'>(
+<p><strong>use CompositeView style GUI</strong><textarea class='editor'>(
 t=TabbedView2.new;
 v=t.add("tab1");
  Button( v,Rect(50,50,200,100)).states_([["go to next tab "]]).action_({t.focus(1)});
 t.add("tab2");
 t.add("tab3");
-)</pre>
+)</textarea>
 
-<p><strong>use FlowView style GUI</strong><pre class='code prettyprint lang-sc'>(
+<p><strong>use FlowView style GUI</strong><textarea class='editor'>(
 t=TabbedView2.new; // use Flow Style
 
     t.add("test1").flow({|w|
@@ -441,10 +445,10 @@ t=TabbedView2.new; // use Flow Style
         .states_([["go to last tab"]]).action_({t.focus(2)})
     });
     t.add("test2");
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Quick%20styling%20with%20variations%20on%20*new:'>Quick styling with variations on *new:</a></h3>
 
-<p>(There are some color differences for swing)<pre class='code prettyprint lang-sc'>//.demo automatically adds 3 tabs.
+<p>(There are some color differences for swing)<textarea class='editor'>//.demo automatically adds 3 tabs.
 
 TabbedView2.newBasic.demo
 TabbedView2.newColor.demo
@@ -455,40 +459,40 @@ TabbedView2.newTransparent.demo
 (
 t = TabbedView2.newPacked;
 20.do{|i| t.add(i.asString)}; //very good for tons of tabs :
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Drag%20objects%20from%20one%20tab%20to%20another%20(under%20cocoa%20and%20qt%20only%20at%20the%20moment):'>Drag objects from one tab to another (under cocoa and qt only at the moment):</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 v=TabbedView2.newColorLabels.demo;
 n = GUI.dragSource.new(v.tabViews[0], Rect(50, 50, 140, 24));
             n.object = "Drag me to Tab2";
  GUI.textView.new (v.views[1], Rect(50, 50, 140, 80));
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Add,%20removeAt,%20insert%20tabs'>Add, removeAt, insert tabs</a></h3>
 
-<p>defaults on *new, but other themes use fixed widths:<pre class='code prettyprint lang-sc'>v=TabbedView2.newTall.demo(3)
+<p>defaults on *new, but other themes use fixed widths:<textarea class='editor'>v=TabbedView2.newTall.demo(3)
 
 v.add("I am last")
 
 v.insert(2,"squeeze me in")
 
-v.removeAt(2)</pre>
+v.removeAt(2)</textarea>
 <h3><a class='anchor' name='Auto-Archiving%20Tabs'>Auto-Archiving Tabs</a></h3>
 <div class='note'><span class='notelabel'>NOTE:</span> Does not support detached Tabs</div>
-<p><pre class='code prettyprint lang-sc'>v=TabbedView2.newTall.demo(3);
+<p><textarea class='editor'>v=TabbedView2.newTall.demo(3);
 b.autoArchive(\tabsDemo,\tabTest); // the Archive path to save to
 // v's state will now be stored in the archive,
-// and will be restored if you execte the above code again.</pre>
+// and will be restored if you execte the above code again.</textarea>
 <h3><a class='anchor' name='resize'>resize</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 w=GUI.window.new.front;
 v=TabbedView2.newTall(w,Rect(40,40,280,280)).demo(8)
     .tabPosition_(\right).followEdges_(false);
 v.resize_(5);
 GUI.slider.new(v.views[0],Rect(10,80,200,30)).resize_(2);
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Nest%20TabbedView2%20&%20use%20scrolling'>Nest TabbedView2 &amp; use scrolling</a></h3>
 
-<p>uses scroll:true in the inner tab<pre class='code prettyprint lang-sc'>(
+<p>uses scroll:true in the inner tab<textarea class='editor'>(
 v=TabbedView2.newPacked(nil,Rect(200,200,600,400).insetBy(20,20)).demo(3,"")
         .tabHeight_(40).tabPosition_(\right).followEdges_(false);
 
@@ -504,27 +508,27 @@ q.tabViews[0].flow({ arg w;
     });
 });
 GUI.slider.new(q.tabViews[1], Rect(20,20,200,20));
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='User%20functions:%20focus%20and%20unfocus'>User functions: focus and unfocus</a></h3>
 
-<p> turn on/off scopes , e.g.<pre class='code prettyprint lang-sc'>(
+<p> turn on/off scopes , e.g.<textarea class='editor'>(
 v=TabbedView2.new;
 v.add("test1").focusAction={"tab2 is focused".postln};
 v.add("test2").unfocusAction={"tab2 just unfocused".postln};
 v.add("test3");
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Swing%20Special:%20focusFrameColor_(color)%20and%20unfocusTabs_(bool)'>Swing Special: focusFrameColor_(color) and unfocusTabs_(bool)</a></h3>
 
-<p>The tabs are drawn with user view which have a clear focus frame on Cocoa. On Swing, the frame cannot be made clear, so by default the tabs are unfocused after clicking. You can change this if it interferes with your tabbing scheme.<pre class='code prettyprint lang-sc'>(
+<p>The tabs are drawn with user view which have a clear focus frame on Cocoa. On Swing, the frame cannot be made clear, so by default the tabs are unfocused after clicking. You can change this if it interferes with your tabbing scheme.<textarea class='editor'>(
 v=TabbedView2.new.demo;
 
 v.unfocusTabs_(false);  // default is false on Cocoa and QT, true otherwise;
 v.focusFrameColor_(Color.red); //cocoa only
 
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Fixed%20tab%20widths%20and%20\auto%20tab%20widths'>Fixed tab widths and \auto tab widths</a></h3>
 
-<p>tabWidth defaults to \auto on *new, but other themes use fixed widths:<pre class='code prettyprint lang-sc'>( // *newFlat has fixed width, so you might need to adjust it
+<p>tabWidth defaults to \auto on *new, but other themes use fixed widths:<textarea class='editor'>( // *newFlat has fixed width, so you might need to adjust it
 t = TabbedView2.newFlat(nil,Rect(150,100,400,500));
 t.tabWidth_(\auto); //change default width to auto
 t.add("1");
@@ -544,16 +548,16 @@ t.add("threeeeeeeeeeee").tabWidth_(110); // adjust width of this tab only
 t.add("four");
 t.add("5");
 t.tabWidth_(\auto);
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Set%20Font'>Set Font</a></h3>
 
-<p>Swing fonts only work within certain limits for now. use swingFactor_ to adjust the conversion.<pre class='code prettyprint lang-sc'>TabbedView2.newBasic.font_(GUI.font.new("Monaco",9)).tabHeight_(18).demo;
+<p>Swing fonts only work within certain limits for now. use swingFactor_ to adjust the conversion.<textarea class='editor'>TabbedView2.newBasic.font_(GUI.font.new("Monaco",9)).tabHeight_(18).demo;
 TabbedView2.newBasic.font_(GUI.font.new("Monaco",36)).demo;
 TabbedView2.newBasic.font_(GUI.font.new("Helvetica",14)).tabHeight_(\auto).demo;
 TabbedView2.newTall.font_(GUI.font.new("Helvetica",18)).tabPosition_(\left).demo;
-TabbedView2.newTall.font_(GUI.font.new("Helvetica",36)).tabHeight_(\auto).tabWidth_(\auto).demo;</pre>
+TabbedView2.newTall.font_(GUI.font.new("Helvetica",36)).tabHeight_(\auto).tabWidth_(\auto).demo;</textarea>
 <h3><a class='anchor' name='Set%20colors%20very%20specifically%20to%20your%20own%20taste%20using%20set%20methods'>Set colors very specifically to your own taste using set methods</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 t=TabbedView2.new;
 //set default colors
 c=[Color.rand,Color.rand,Color.rand];
@@ -571,10 +575,10 @@ t.tabAt(6).labelColor_(Color.red)
 t.refresh;
 )
 
-t.resetColors;  //resets individual tabs to default. ( use this, e.g., if you dragged a tab (under QT) to another TabbedView2 that has different default colors).</pre>
+t.resetColors;  //resets individual tabs to default. ( use this, e.g., if you dragged a tab (under QT) to another TabbedView2 that has different default colors).</textarea>
 <h3><a class='anchor' name='Adjust%20padding%20and%20curves'>Adjust padding and curves</a></h3>
 
-<p>labelPadding only has an effect on auto width<pre class='code prettyprint lang-sc'>(
+<p>labelPadding only has an effect on auto width<textarea class='editor'>(
 v=TabbedView2.new;
 v.labelPadding_(8);      //tighter padding
 v.tabCurve_(0);           //sharper curves
@@ -587,9 +591,9 @@ v.demo(20,"")
 
 (
 v=TabbedView2.newPacked.demo(20,"");
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Adjust%20tab%20height%20and%20curves'>Adjust tab height and curves</a></h3>
-<pre class='code prettyprint lang-sc'>// super flat and elegant
+<textarea class='editor'>// super flat and elegant
 
 (
 v=TabbedView2.new.tabWidth_(70).tabHeight_(13).tabCurve_(0).demo(5);
@@ -599,12 +603,12 @@ v=TabbedView2.new.tabWidth_(70).tabHeight_(13).tabCurve_(0).demo(5);
 
 (
 TabbedView2.new.tabWidth_(70).tabHeight_(30).demo(5);
-)</pre>
+)</textarea>
 
 <p><h2><a class='anchor' name='Demo'>Demo</a></h2>
 
 <p>Execute the code below to test all the features and parameters.<h3><a class='anchor' name='All%20Features%20and%20Parameters'>All Features and Parameters</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 w=Window.new("TabbedView Examples").front.setTopLeftBounds(Rect(50,50,1050,700));
 // setup views
 ~t1v=TabbedView2.newTall(w.view, Rect(50,50,450,600));
@@ -720,5 +724,6 @@ StaticText(~t1t2,Rect(20,60,360,40))
 
 StaticText(~t1t3,Rect(20,60,360,40))
     .string_("- Under QT, I have a detach icon: .useDetachIcon_(true)");
-)</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/TabbedView2/HelpSource/Classes/TabbedView2.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/TabbedView2/HelpSource/Classes/TabbedView2.schelp</a><br>link::Classes/TabbedView2::<br></div></div></body></html>
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/TabbedView2/HelpSource/Classes/TabbedView2.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/TabbedView2/HelpSource/Classes/TabbedView2.schelp</a><br>link::Classes/TabbedView2::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

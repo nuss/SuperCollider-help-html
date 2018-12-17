@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>CVWidgetKnob | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>CVWidgetKnob | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'CVWidgetKnob';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>CVWidgetKnob:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -40,8 +44,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-size'>size</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -65,28 +69,28 @@ var scdoc_sc_version = '3.9.3';
 <p>an instance of <a href="./../Classes/CV.html">CV</a> - optional. If none is given it will be created internally.<tr><td class='argumentname'>name<td class='argumentdesc'>
 <p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a> - optional. If none is given the widget will be named "knob".<tr><td class='argumentname'>bounds<td class='argumentdesc'>
 <p>a <a href="./../Classes/Rect.html">Rect</a> - optional. If none is given the widget will be created with a default size.<tr><td class='argumentname'>defaultAction<td class='argumentdesc'>
-<p>optional - a <a href="./../Classes/Function.html">Function</a> or a <a href="./../Classes/String.html">String</a> that compiles to one when <a href="./../Classes/String.html#-interpret">interpret</a> is called on it. If an argument is added to the function it will provide the widget's <a href="./../Classes/CV.html">CV</a>. E.g.: <code class='code prettyprint lang-sc'>{ arg cv; cv.value.postln }</code> <tr><td class='argumentname'>setup<td class='argumentdesc'>
+<p>optional - a <a href="./../Classes/Function.html">Function</a> or a <a href="./../Classes/String.html">String</a> that compiles to one when <a href="./../Classes/String.html#-interpret">interpret</a> is called on it. If an argument is added to the function it will provide the widget's <a href="./../Classes/CV.html">CV</a>. E.g.: <code>{ arg cv; cv.value.postln }</code> <tr><td class='argumentname'>setup<td class='argumentdesc'>
 <p>optional - an <a href="./../Classes/Event.html">Event</a> containing the following optional keys:<dl>
-<dt>midiMode<dd>see <a href="./../Classes/CVWidget.html#-setMidiMode">CVWidget: -setMidiMode</a>. default: <code class='code prettyprint lang-sc'>0</code><dt>midiMean<dd>see <a href="./../Classes/CVWidget.html#-setMidiMean">CVWidget: -setMidiMean</a>. default: <code class='code prettyprint lang-sc'>64</code><dt>midiResolution<dd>see <a href="./../Classes/CVWidget.html#-setMidiResolution">CVWidget: -setMidiResolution</a>. default: <code class='code prettyprint lang-sc'>1</code><dt>softWithin<dd>see <a href="./../Classes/CVWidget.html#-setSoftWithin">CVWidget: -setSoftWithin</a>. default: <code class='code prettyprint lang-sc'>0.1</code><dt>ctrlButtonBank<dd>see <a href="./../Classes/CVWidget.html#-setCtrlButtonBank">CVWidget: -setCtrlButtonBank</a>. default: <code class='code prettyprint lang-sc'>nil</code><dt>calibrate<dd>see <a href="./../Classes/CVWidget.html#-setCalibrate">CVWidget: -setCalibrate</a>. default: <code class='code prettyprint lang-sc'>true</code></dl>
+<dt>midiMode<dd>see <a href="./../Classes/CVWidget.html#-setMidiMode">CVWidget: -setMidiMode</a>. default: <code>0</code><dt>midiMean<dd>see <a href="./../Classes/CVWidget.html#-setMidiMean">CVWidget: -setMidiMean</a>. default: <code>64</code><dt>midiResolution<dd>see <a href="./../Classes/CVWidget.html#-setMidiResolution">CVWidget: -setMidiResolution</a>. default: <code>1</code><dt>softWithin<dd>see <a href="./../Classes/CVWidget.html#-setSoftWithin">CVWidget: -setSoftWithin</a>. default: <code>0.1</code><dt>ctrlButtonBank<dd>see <a href="./../Classes/CVWidget.html#-setCtrlButtonBank">CVWidget: -setCtrlButtonBank</a>. default: <code>nil</code><dt>calibrate<dd>see <a href="./../Classes/CVWidget.html#-setCalibrate">CVWidget: -setCalibrate</a>. default: <code>true</code></dl>
 <tr><td class='argumentname'>controllersAndModels<td class='argumentdesc'>
 <p>if a widget wraps a <a href="./../Classes/CV.html">CV</a> that has been created within some CVWidget the models and controllers of that other widget can be added here. However, it is <em>not</em> recommended to do so as there are specific methods that allow you to recreate widgets that have already been closed. See also <a href="./../Classes/CVWidget.html#-wdgtControllersAndModels">CVWidget: -wdgtControllersAndModels</a><tr><td class='argumentname'>cvcGui<td class='argumentdesc'>
 <p>a multi-purpose argument: usually you will not set anything here. It is used with the <a href="#-open">-open</a> method resp. CVCenter. Within these it is used to pass in OSC-/MIDI-responders resp. the widgets MIDI-/OSC-environment. See also <a href="./../Classes/CVWidget.html#-midiOscEnv">CVWidget: -midiOscEnv</a><tr><td class='argumentname'>persistent<td class='argumentdesc'>
-<p>if set to <code class='code prettyprint lang-sc'>true</code> the widget's OSC-/MIDI-responders will not be removed when the widget gets closed - default: <code class='code prettyprint lang-sc'>nil</code><tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>if set to <code>true</code> the widget's OSC-/MIDI-responders will not be removed when the widget gets closed - default: <code>nil</code><tr><td class='argumentname'>server<td class='argumentdesc'>
 <p>only used for <a href="./../Classes/SwingOSC">SwingOSC</a> compatability (untested)</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>only used for <a href="./../Classes/SwingOSC">SwingOSC</a> compatability (untested) this (a <code class='code prettyprint lang-sc'>CVWidgetKnob</code>)</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>only used for <a href="./../Classes/SwingOSC">SwingOSC</a> compatability (untested) this (a <code>CVWidgetKnob</code>)</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-open' href='./../Overviews/Methods.html#open'>open</a>(<span class='argstr'>window</span>, <span class='argstr'>wdgtBounds</span>)</h3>
 <div class='method'>
-<p>If a widget has been created with the argument <code class='code prettyprint lang-sc'>persistent</code> set to true the user may reopen the widget with this method. This is basically a workaround due to the fact that GUIs in SuperCollider usually can't be opened again once they have been closed (even though executing the variable storing the the regarding object still returns the object). However, rather than reopening the old widget this method will create a new one, holding all properties, the CV and MIDI-/OSC-responders. In order to make this work as desired one should apply the following syntax where <code class='code prettyprint lang-sc'>x</code> holds the instance of the initially created widget:
-<p><code class='code prettyprint lang-sc'>x = x.open // the old widget was stored in x which will afterwards hold the new widget</code>
+<p>If a widget has been created with the argument <code>persistent</code> set to true the user may reopen the widget with this method. This is basically a workaround due to the fact that GUIs in SuperCollider usually can't be opened again once they have been closed (even though executing the variable storing the the regarding object still returns the object). However, rather than reopening the old widget this method will create a new one, holding all properties, the CV and MIDI-/OSC-responders. In order to make this work as desired one should apply the following syntax where <code>x</code> holds the instance of the initially created widget:
+<p><code>x = x.open // the old widget was stored in x which will afterwards hold the new widget</code>
 <p>See example in <a href="./../Classes/CVWidget.html#reusable_widgets">CVWidget: reusable_widgets</a><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>window<td class='argumentdesc'>
 <p>a <a href="./../Classes/Window.html">Window</a> or nil - if none is provided the window will be created internally<tr><td class='argumentname'>wdgtBounds<td class='argumentdesc'>
 <p>a <a href="./../Classes/Rect.html">Rect</a> or nil - if none is provided the bounds of the old widget will be used.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a <code class='code prettyprint lang-sc'>CVCWidgetKnob</code></div></div><h3><a class='anchor' name='GUI-elements'>GUI-elements</a></h3>
+<p>a <code>CVCWidgetKnob</code></div></div><h3><a class='anchor' name='GUI-elements'>GUI-elements</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-knob' href='./../Overviews/Methods.html#knob'>knob</a></h3>
 <div class='method'>
 <p>A <a href="./../Classes/Knob.html">Knob</a>, displaying or setting the current value of the widget's <a href="./../Classes/CV.html">CV</a>.<h4>Returns:</h4>
@@ -117,12 +121,12 @@ var scdoc_sc_version = '3.9.3';
 <div class='returnvalue'>
 <p>a <a href="./../Classes/TextField.html">TextField</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiCtrl' href='./../Overviews/Methods.html#midiCtrl'>midiCtrl</a></h3>
 <div class='method'>
-<p>A <a href="./../Classes/TextField.html">TextField</a> displaying the controller-number of an existing <a href="./../Classes/CCResponder.html">CCResponder</a> or, if none is present, one may use this field to set the controller-number for which the <a href="./../Classes/CCResponder.html">CCResponder</a> shall be created.<div class='note'><span class='notelabel'>NOTE:</span> SuperCollider numbers hardware-controllers internally beginning with <code class='code prettyprint lang-sc'>0</code> - if <code class='code prettyprint lang-sc'>0</code> gets entered here the controller will be displayed as <code class='code prettyprint lang-sc'>1</code> as most devices will probably number their knobs and sliders beginning with <code class='code prettyprint lang-sc'>1</code>. Also, the way controller-numbers are displayed is related to the <code class='code prettyprint lang-sc'>ctrlButtonBank</code> setting which can be set with <a href="./../Classes/CVWidget.html#-setCtrlButtonBank">CVWidget: -setCtrlButtonBank</a></div>
+<p>A <a href="./../Classes/TextField.html">TextField</a> displaying the controller-number of an existing <a href="./../Classes/CCResponder.html">CCResponder</a> or, if none is present, one may use this field to set the controller-number for which the <a href="./../Classes/CCResponder.html">CCResponder</a> shall be created.<div class='note'><span class='notelabel'>NOTE:</span> SuperCollider numbers hardware-controllers internally beginning with <code>0</code> - if <code>0</code> gets entered here the controller will be displayed as <code>1</code> as most devices will probably number their knobs and sliders beginning with <code>1</code>. Also, the way controller-numbers are displayed is related to the <code>ctrlButtonBank</code> setting which can be set with <a href="./../Classes/CVWidget.html#-setCtrlButtonBank">CVWidget: -setCtrlButtonBank</a></div>
 <p> <h4>Returns:</h4>
 <div class='returnvalue'>
 <p>a <a href="./../Classes/TextField.html">TextField</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-oscEditBut' href='./../Overviews/Methods.html#oscEditBut'>oscEditBut</a></h3>
 <div class='method'>
-<p>A <a href="./../Classes/Button.html">Button</a> that links to the widget's OSC-tab within the <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a>. If an <a href="./../Classes/OSCresponder.html">OSCresponder</a> is present, the button-label will display the command-name, the message-slot and the current <a href="./../Classes/CVWidget.html#-setOscMapping">OSC-mapping</a> (if the button is big enough to display all this information - mapping can be <code class='code prettyprint lang-sc'>\linlin</code>, <code class='code prettyprint lang-sc'>\linexp</code>, <code class='code prettyprint lang-sc'>\explin</code> or <code class='code prettyprint lang-sc'>\expexp</code>).<h4>Returns:</h4>
+<p>A <a href="./../Classes/Button.html">Button</a> that links to the widget's OSC-tab within the <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a>. If an <a href="./../Classes/OSCresponder.html">OSCresponder</a> is present, the button-label will display the command-name, the message-slot and the current <a href="./../Classes/CVWidget.html#-setOscMapping">OSC-mapping</a> (if the button is big enough to display all this information - mapping can be <code>\linlin</code>, <code>\linexp</code>, <code>\explin</code> or <code>\expexp</code>).<h4>Returns:</h4>
 <div class='returnvalue'>
 <p>a <a href="./../Classes/Button.html">Button</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-calibBut' href='./../Overviews/Methods.html#calibBut'>calibBut</a></h3>
 <div class='method'>
@@ -141,7 +145,7 @@ var scdoc_sc_version = '3.9.3';
 <tr><td class='argumentname'>color<td class='argumentdesc'>
 <p>a <a href="./../Classes/Color.html">Color</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a <a href="./../Classes/Color.html">Color</a> (getter) or <code class='code prettyprint lang-sc'>this</code> (a <code class='code prettyprint lang-sc'>CVWidgetMS</code>) (setter)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stringColor' href='./../Overviews/Methods.html#stringColor'>stringColor</a></h3>
+<p>a <a href="./../Classes/Color.html">Color</a> (getter) or <code>this</code> (a <code>CVWidgetMS</code>) (setter)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stringColor' href='./../Overviews/Methods.html#stringColor'>stringColor</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stringColor' href='./../Overviews/Methods.html#stringColor'>stringColor</a> = <span class='argstr'>color</span></h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/CVWidget.html'>CVWidget</a></div>
 <div class='method'>
@@ -150,9 +154,10 @@ var scdoc_sc_version = '3.9.3';
 <tr><td class='argumentname'>color<td class='argumentdesc'>
 <p>a <a href="./../Classes/Color.html">Color</a></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a <a href="./../Classes/Color.html">Color</a> (getter) or <code class='code prettyprint lang-sc'>this</code> (a <code class='code prettyprint lang-sc'>CVWidgetMS</code>) (setter)</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<p>a <a href="./../Classes/Color.html">Color</a> (getter) or <code>this</code> (a <code>CVWidgetMS</code>) (setter)</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-size' href='./../Overviews/Methods.html#size'>size</a></h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 
-<p>See examples in <a href="./../Classes/CVWidget.html#examples">CVWidget: examples</a><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/CVWidgetKnob.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/CVWidgetKnob.schelp</a><br>link::Classes/CVWidgetKnob::<br></div></div></body></html>
+<p>See examples in <a href="./../Classes/CVWidget.html#examples">CVWidget: examples</a><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/CVWidgetKnob.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/CVWidgetKnob.schelp</a><br>link::Classes/CVWidgetKnob::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

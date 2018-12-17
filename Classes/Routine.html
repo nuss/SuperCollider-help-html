@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>Routine | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Routine | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Routine';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Routine:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -43,8 +47,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-run'>run</a> </li>
 <li class='toc3'><a href='#-valueArray'>valueArray</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes</span>
@@ -72,10 +76,10 @@ var scdoc_sc_version = '3.9.3';
 <tr><td class='argumentname'>func<td class='argumentdesc'>
 <p>A Function with code for the Thread to run.<tr><td class='argumentname'>stackSize<td class='argumentdesc'>
 <p>Call stack size (an Integer).</table><h4>Discussion:</h4>
-<pre class='code prettyprint lang-sc'>a = Routine.new({ 1.yield; 2.yield; });
+<textarea class='editor'>a = Routine.new({ 1.yield; 2.yield; });
 a.next.postln;
 a.next.postln;
-a.next.postln;</pre>
+a.next.postln;</textarea>
 </div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>Routine.</span><a class='method-name' name='*run' href='./../Overviews/Methods.html#run'>run</a>(<span class='argstr'>func</span>, <span class='argstr'>stackSize</span>, <span class='argstr'>clock</span>, <span class='argstr'>quant</span>)</h3>
@@ -83,19 +87,19 @@ a.next.postln;</pre>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-next' href='./../Overviews/Methods.html#next'>next</a>(<span class='argstr'>inval</span>)</h3>
 <div class='method'>
 <p>This method performs differently according to the Routine's state:<ul>
-<li>Starts the Routine, if it has not been started yet or it has been <a href="#-reset">reset</a>; i.e runs its Function from the beginning, passing on the <code class='code prettyprint lang-sc'>inval</code> argument.<li>Resumes the Routine, if it has been suspended (it has yielded); i.e. resumes its Function from the point where <a href="./../Classes/Object.html#-yield">yield</a> was called on an Object, passing the <code class='code prettyprint lang-sc'>inval</code> argument as the return value of <code class='code prettyprint lang-sc'>yield</code>.<li>Does nothing if the Routine has stopped (because its Function has returned, or <a href="#-stop">-stop</a> has been called).</ul>
+<li>Starts the Routine, if it has not been started yet or it has been <a href="#-reset">reset</a>; i.e runs its Function from the beginning, passing on the <code>inval</code> argument.<li>Resumes the Routine, if it has been suspended (it has yielded); i.e. resumes its Function from the point where <a href="./../Classes/Object.html#-yield">yield</a> was called on an Object, passing the <code>inval</code> argument as the return value of <code>yield</code>.<li>Does nothing if the Routine has stopped (because its Function has returned, or <a href="#-stop">-stop</a> has been called).</ul>
 
 <p>Since Routine inherits from <a href="./../Classes/Thread.html">Thread</a>, it will become the <em>current thread</em> when it is started or resumed; i.e. <a href="./../Classes/Thread.html#.thisThread">thisThread</a> used in the Routine Function will return the Routine. It will inherit the parent thread's logical time and clock (see <a href="./../Classes/Thread.html#-parent">Thread: -parent</a>).
-<p>Synonyms for <code class='code prettyprint lang-sc'>next</code> are <a href="#-value">-value</a> and <a href="#-resume">-resume</a>.<h4>Returns:</h4>
+<p>Synonyms for <code>next</code> are <a href="#-value">-value</a> and <a href="#-resume">-resume</a>.<h4>Returns:</h4>
 <div class='returnvalue'><ul>
-<li>Either the value that the Routine yields (the Object on which <a href="./../Classes/Object.html#-yield">yield</a> is called within the Routine Function),<li>...or <code class='code prettyprint lang-sc'>nil</code>, if the Routine has stopped.</ul>
+<li>Either the value that the Routine yields (the Object on which <a href="./../Classes/Object.html#-yield">yield</a> is called within the Routine Function),<li>...or <code>nil</code>, if the Routine has stopped.</ul>
 </div><h4>Discussion:</h4>
 
-<p>When a Routine is started by a call to this method (or one of its synonyms), the method's argument is passed on as the argument to the Routine Function:<pre class='code prettyprint lang-sc'>Routine { arg inval;
+<p>When a Routine is started by a call to this method (or one of its synonyms), the method's argument is passed on as the argument to the Routine Function:<textarea class='editor'>Routine { arg inval;
     inval.postln;
-}.value("hello routine");</pre>
+}.value("hello routine");</textarea>
 
-<p>After the Routine has yielded (it has been suspended at the point in its Function where <code class='code prettyprint lang-sc'>yield</code> is called on an Object), a call to this method (or its synonyms) resumes executing the Function and the argument to this method becomes the return value of <code class='code prettyprint lang-sc'>yield</code>. To access that value within the Function, you have to assign it to a variable - typically, the argument of the Function is reused:<pre class='code prettyprint lang-sc'>(
+<p>After the Routine has yielded (it has been suspended at the point in its Function where <code>yield</code> is called on an Object), a call to this method (or its synonyms) resumes executing the Function and the argument to this method becomes the return value of <code>yield</code>. To access that value within the Function, you have to assign it to a variable - typically, the argument of the Function is reused:<textarea class='editor'>(
 r = Routine { arg inval;
     inval.postln;
     inval = 123.yield;
@@ -104,9 +108,9 @@ r = Routine { arg inval;
 )
 
 r.value("hello routine");
-r.value("goodbye routine");</pre>
+r.value("goodbye routine");</textarea>
 
-<p>Typically, a Routine yields multiple times, and each time the result of the yield is reassigning to the argument of its Function.<pre class='code prettyprint lang-sc'>(
+<p>Typically, a Routine yields multiple times, and each time the result of the yield is reassigning to the argument of its Function.<textarea class='editor'>(
 r = Routine { arg inval;
     inval.postln; // Post the value passed in when started.
     5.do { arg i;
@@ -119,18 +123,18 @@ r = Routine { arg inval;
 5.do {
     r.value("hello routine").postln; // Post the value that the Routine yields.
 }
-)</pre>
+)</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-value' href='./../Overviews/Methods.html#value'>value</a>(<span class='argstr'>inval</span>)</h3>
 <div class='method'>
 <p>Equivalent to <a href="#-next">-next</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resume' href='./../Overviews/Methods.html#resume'>resume</a>(<span class='argstr'>inval</span>)</h3>
 <div class='method'>
 <p>Equivalent to <a href="#-next">-next</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stop' href='./../Overviews/Methods.html#stop'>stop</a></h3>
 <div class='method'>
-<p>Equivalent to the Routine Function reaching its end or returning: after this, the Routine will never run again (the <a href="#-next">-next</a> method has no effect and returns <code class='code prettyprint lang-sc'>nil</code>), unless <a href="#-reset">-reset</a> is called.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reset' href='./../Overviews/Methods.html#reset'>reset</a></h3>
+<p>Equivalent to the Routine Function reaching its end or returning: after this, the Routine will never run again (the <a href="#-next">-next</a> method has no effect and returns <code>nil</code>), unless <a href="#-reset">-reset</a> is called.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reset' href='./../Overviews/Methods.html#reset'>reset</a></h3>
 <div class='method'>
 <p>Causes the Routine to start from the beginning next time <a href="#-next">-next</a> is called.<h4>Discussion:</h4>
 
-<p>If a Routine is stopped (its Function has returned or <a href="#-stop">-stop</a> has been called), it will never run again (the <a href="#-next">-next</a> method has no effect and returns <code class='code prettyprint lang-sc'>nil</code>), unless this method is called.
+<p>If a Routine is stopped (its Function has returned or <a href="#-stop">-stop</a> has been called), it will never run again (the <a href="#-next">-next</a> method has no effect and returns <code>nil</code>), unless this method is called.
 <p>A Routine cannot reset itself, except by calling <a href="./../Classes/Object.html#-yieldAndReset">Object: -yieldAndReset</a>.
 <p>See also: <a href="./../Classes/Object.html#-yield">Object: -yield</a>, <a href="./../Classes/Object.html#-alwaysYield">Object: -alwaysYield</a></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-play' href='./../Overviews/Methods.html#play'>play</a>(<span class='argstr'>clock</span>, <span class='argstr'>quant</span>)</h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/Stream.html'>Stream</a></div>
@@ -141,7 +145,7 @@ r = Routine { arg inval;
 <p>a Clock, TempoClock by default<tr><td class='argumentname'>quant<td class='argumentdesc'>
 <p>see the <a href="./../Classes/Quant.html">Quant</a> helpfile</table><h4>Discussion:</h4>
 
-<p>using <a href="./../Classes/Object.html#idle">Object:idle</a> within a routine, return values until this time is over. Time is measured relative to the thread's clock.<pre class='code prettyprint lang-sc'>// for 6 seconds, return 200, then continue
+<p>using <a href="./../Classes/Object.html#idle">Object:idle</a> within a routine, return values until this time is over. Time is measured relative to the thread's clock.<textarea class='editor'>// for 6 seconds, return 200, then continue
 (
 r = Routine {
         199.yield;
@@ -175,17 +179,17 @@ fork {
         1.wait;
     }
 }
-);</pre>
+);</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-awake' href='./../Overviews/Methods.html#awake'>awake</a>(<span class='argstr'>inBeats</span>, <span class='argstr'>inSeconds</span>, <span class='argstr'>inClock</span>)</h3>
 <div class='method'>
-<p>This method is called by a <a href="./../Classes/Clock.html">Clock</a> on which the Routine was scheduled when its scheduling time is up. It calls <a href="#-next">-next</a>, passing on the scheduling time in beats as an argument. The value returned by <code class='code prettyprint lang-sc'>next</code> (the value yielded by the Routine) will in turn be returned by this method, thus determining the time which the Routine will be rescheduled for.<h4>Arguments:</h4>
+<p>This method is called by a <a href="./../Classes/Clock.html">Clock</a> on which the Routine was scheduled when its scheduling time is up. It calls <a href="#-next">-next</a>, passing on the scheduling time in beats as an argument. The value returned by <code>next</code> (the value yielded by the Routine) will in turn be returned by this method, thus determining the time which the Routine will be rescheduled for.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>inBeats<td class='argumentdesc'>
 <p>The scheduling time in beats. This is equal to the current logical time (<a href="./../Classes/Thread.html#-beats">Thread: -beats</a>).<tr><td class='argumentname'>inSeconds<td class='argumentdesc'>
 <p>The scheduling time in seconds. This is equal to the current logical time (<a href="./../Classes/Thread.html#-seconds">Thread: -seconds</a>).<tr><td class='argumentname'>inClock<td class='argumentdesc'>
 <p>The clock which awoke the Routine.</table></div><h3><a class='anchor' name='Accessible%20instance%20variables'>Accessible instance variables</a></h3>
 
-<p>Routine inherits from <a href="./../Classes/Thread.html">Thread</a>, which allows access to some of its state:<pre class='code prettyprint lang-sc'>(
+<p>Routine inherits from <a href="./../Classes/Thread.html">Thread</a>, which allows access to some of its state:<textarea class='editor'>(
 r = Routine { arg inval;
     loop {
         // thisThread refers to the routine.
@@ -201,7 +205,7 @@ r = Routine { arg inval;
 r.stop;
 r.beats;
 r.seconds;
-r.clock;</pre>
+r.clock;</textarea>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-beats' href='./../Overviews/Methods.html#beats'>beats</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-beats' href='./../Overviews/Methods.html#beats'>beats</a> = <span class='argstr'>inBeats</span></h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/Thread.html'>Thread</a></div>
@@ -230,7 +234,7 @@ r.clock;</pre>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-run' href='./../Overviews/Methods.html#run'>run</a>(<span class='argstr'>inval</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-valueArray' href='./../Overviews/Methods.html#valueArray'>valueArray</a>(<span class='argstr'>inval</span>)</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 var r, outval;
 r = Routine.new({ arg inval;
     ("-&gt;inval was " ++ inval).postln;
@@ -254,8 +258,8 @@ outval = r.next('e');
 ("&lt;-outval was " ++ outval).postln;
 outval = r.next('f');
 ("&lt;-outval was " ++ outval).postln;
-)</pre>
-<pre class='code prettyprint lang-sc'>// wait
+)</textarea>
+<textarea class='editor'>// wait
 
 (
 var r;
@@ -270,8 +274,8 @@ r = Routine {
     0.5.wait;
     "done".postln;
 }.play;
-)</pre>
-<pre class='code prettyprint lang-sc'>// waitUntil
+)</textarea>
+<textarea class='editor'>// waitUntil
 
 (
 var r;
@@ -286,8 +290,8 @@ r = Routine {
     0.5.wait;
     "done".postln;
 }.play;
-)</pre>
-<pre class='code prettyprint lang-sc'>// Using Routine to set button states on the fly.
+)</textarea>
+<textarea class='editor'>// Using Routine to set button states on the fly.
 (
 var update, w, b;
 w = SCWindow.new("State Window", Rect(150,SCWindow.screenBounds.height-140,380,60));
@@ -316,8 +320,8 @@ b.action_(Routine { |butt|
 });
 
 w.front;
-)</pre>
-<pre class='code prettyprint lang-sc'>// drawing in a window dynamically with Pen
+)</textarea>
+<textarea class='editor'>// drawing in a window dynamically with Pen
 (
 var w, much = 0.02, string, synth;
 
@@ -352,5 +356,6 @@ fork { while { w.isClosed.not } { defer { w.refresh }; 0.04.wait; } };
 
 w.front;
 
-)</pre>
-<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Routine.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Routine.schelp</a><br>link::Classes/Routine::<br></div></div></body></html>
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Routine.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Routine.schelp</a><br>link::Classes/Routine::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

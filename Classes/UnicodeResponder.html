@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>UnicodeResponder | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>UnicodeResponder | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'UnicodeResponder';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>UnicodeResponder:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -53,8 +57,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-report'>report</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -73,7 +77,7 @@ var scdoc_sc_version = '3.9.3';
 <p>If you merely check the modifier like so:  (modifer &amp; optionModifier ) == optionModifier or  modifier.isAlt
 <p>then you will detect the presence of the options key, but not if ONLY the option key is present ( ie. it will match for shift-option as well )
 <p>see <a href="./../Classes/KeyCodeResponder.html">KeyCodeResponder</a>
-<p>true:  must be pressed false:  must not be pressed nil:  can be either pressed or not pressed<pre class='code prettyprint lang-sc'>(
+<p>true:  must be pressed false:  must not be pressed nil:  can be either pressed or not pressed<textarea class='editor'>(
 k = UnicodeResponder.new;
 
 // option down arrow
@@ -92,9 +96,9 @@ v = GUI.slider.new(w,Rect(10,10,100,100));
 v.keyDownAction = k;
 
 v.focus;
-)</pre>
+)</textarea>
 
-<p>Use this to post the codes:<pre class='code prettyprint lang-sc'>(
+<p>Use this to post the codes:<textarea class='editor'>(
 
 UnicodeResponder.tester
 
@@ -105,7 +109,7 @@ UnicodeResponder.tester
 //  shift :
 k.register(   41  ,   true, false, false, false, {
 
-});</pre>
+});</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>UnicodeResponder.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a></h3>
 <div class='method'></div><h3 class='method-code'><span class='method-prefix'>UnicodeResponder.</span><a class='method-name' name='*register' href='./../Overviews/Methods.html#register'>register</a>(<span class='argstr'>unicode</span>, <span class='argstr'>shift</span>, <span class='argstr'>caps</span>, <span class='argstr'>opt</span>, <span class='argstr'>cntl</span>, <span class='argstr'>function</span>)</h3>
@@ -186,7 +190,7 @@ k.register(   41  ,   true, false, false, false, {
 <div class='method'></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 
-<p>The view in this example is merely to have something to focus on, it does nothing else.<pre class='code prettyprint lang-sc'>(
+<p>The view in this example is merely to have something to focus on, it does nothing else.<textarea class='editor'>(
 var w, l;
 w= GUI.window.new("test").front;
 l= GUI.listView.new(w, Rect(10, 10, 350, 350))
@@ -210,10 +214,10 @@ l= GUI.listView.new(w, Rect(10, 10, 350, 350))
                 "shift a".postln
             })
     )
-)</pre>
+)</textarea>
 
 <p>Note that to match shift-a you have to specify "A", not "a"
-<p>You can also specify with ascii characters<pre class='code prettyprint lang-sc'>(
+<p>You can also specify with ascii characters<textarea class='editor'>(
 
 var w, l;
 w= GUI.window.new("test").front;
@@ -252,6 +256,7 @@ l= GUI.listView.new(w, Rect(10, 10, 350, 350))
             );
 
     )
-)</pre>
+)</textarea>
 
-<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/UnicodeResponder.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/UnicodeResponder.schelp</a><br>link::Classes/UnicodeResponder::<br></div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/UnicodeResponder.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/UnicodeResponder.schelp</a><br>link::Classes/UnicodeResponder::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

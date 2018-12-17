@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>VarGui shortcut builds | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>VarGui shortcut builds | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'VarGui shortcut builds';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>VarGui shortcut builds:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -34,8 +38,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'><li class='toc2'><a href='#5a:%20core%20shortcut%20methods'>5a: core shortcut methods</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#5b:%20spec-%20and%20pbindmaker%20methods'>5b: spec- and pbindmaker methods</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#6.%20Save%20and%20load'>6. Save and load</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Tutorials (extension)</span>
@@ -51,7 +55,7 @@ var scdoc_sc_version = '3.9.3';
 <p>VarGui allows combined control of Synths, Pbinds / EventStreamPlayers and Tasks in one GUI. Many of its options though may not be relevant for most usages, also control specs were to be given directly (changed with v0.5). Shortcut build methods take advantage of SynthDef controlspec metadata, if defined (or global ControlSpecs), and autogenerate Pbinds for sequencing. Controls and Pbinds can be customized with options. Main tools are the methods <strong>sVarGui</strong> ( <strong>s</strong>ynth ), <strong>pVarGui</strong> ( <strong>p</strong>attern ) and compound builders <strong>spVarGui</strong> / <strong>psVarGui</strong>. Methods <strong>sVarGui</strong> / <strong>pVarGui</strong>, applied to a single Symbol / String, produce a VarGui for one or more Synth(s) or Pbind(s) based on the referred single SynthDef ( <a href="#Ex.1a">Ex.1a</a>, <a href="#Ex.1b">Ex.1b</a>, <a href="#Ex.2a">Ex.2a</a>, <a href="#Ex.2b">Ex.2b</a> ). Both methods also apply to collections of SynthDef Symbols / Strings ( <a href="#Ex.3a">Ex.3a</a>, <a href="#Ex.3b">Ex.3b</a> ), whereas <strong>spVarGui</strong> and <strong>psVarGui</strong>, builders of mixed Synth / Pbind VarGuis, expect collections of two items which may be Symbols / Strings or collections of Symbols / Strings ( <a href="#Ex.3c">Ex.3c</a> ). Examples are using Patterns from dynamic scope <a href="./../Tutorials/PLx_suite.html">PLx suite</a> for conveniently refering to environmental variables.<h2><a class='anchor' name='1.%20Synth%20GUIs'>1. Synth GUIs</a></h2>
 
 <p><a class='anchor' name='Ex.1a'>&nbsp;</a><h3><a class='anchor' name='Ex.1a:%20default%20instrument'>Ex.1a: default instrument</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 s = Server.local;
 Server.default = s;
 s.boot;
@@ -119,11 +123,11 @@ Spec.add(\amp, [0, 1, \lin, 0, 0.1]);
 
 // bad definition, \freq is already used as global ControlSpec 
 
-\default.sVarGui(ctrBefore: [\freq, [300, 1000, \exp, 0, 440]]).gui; // WRONG</pre>
+\default.sVarGui(ctrBefore: [\freq, [300, 1000, \exp, 0, 440]]).gui; // WRONG</textarea>
 
 <p><a class='anchor' name='Ex.1b'>&nbsp;</a><h3><a class='anchor' name='Ex.1b:%20SynthDefs%20including%20metadata'>Ex.1b: SynthDefs including metadata</a></h3>
 
-<p>SynthDef with defined controlspec metadata. The specs can be stored as ControlSpecs or Arrays, may also be Symbols / Strings refering to the global dictionary of Specs (Spec.specs). It's only convention to store specs under the key \specs, it can be anything else, and nothing prevents you from storing more than one dictionary of ControlSpecs per SynthDef - the VarGui shortcut methods have a metaKey arg (default: \specs) which determines where to lookup in the metadata dictionary.<pre class='code prettyprint lang-sc'>(
+<p>SynthDef with defined controlspec metadata. The specs can be stored as ControlSpecs or Arrays, may also be Symbols / Strings refering to the global dictionary of Specs (Spec.specs). It's only convention to store specs under the key \specs, it can be anything else, and nothing prevents you from storing more than one dictionary of ControlSpecs per SynthDef - the VarGui shortcut methods have a metaKey arg (default: \specs) which determines where to lookup in the metadata dictionary.<textarea class='editor'>(
 SynthDef(\buzz, { arg freq = 400, out, gate = 1, freqDev = 0.01, att = 0.01, dec = 0.01, susLevel = 0.5, rel = 1, 
     cutoff = #[1000, 1000, 1000], rq = 0.25, amp = 0.2, preAmp = 1, maxDelay = 0.03;
     var src, srcFreq, sig;
@@ -185,11 +189,11 @@ SynthDef(\buzz, { arg freq = 400, out, gate = 1, freqDev = 0.01, att = 0.01, dec
 // mostly sounds different from last version 
 // because of fixed max chorus-width param freqDev
 
-\buzz.sVarGui(num: 4, metaKey: \basicSpecs).gui(tryColumnNum: 2);</pre>
+\buzz.sVarGui(num: 4, metaKey: \basicSpecs).gui(tryColumnNum: 2);</textarea>
 <h2><a class='anchor' name='2.%20Sequencing%20GUIs'>2. Sequencing GUIs</a></h2>
 
 <p>Controlling Pbinds / EventStreamPlayers with VarGui is based on (a) the setting of environmental variables and (b) the proper definition of Pbinds with Patterns of <a href="./../Tutorials/PLx_suite.html">PLx suite</a> or Patterns with functional code ( <a href="./../Tutorials/Event_patterns_and_Functions.html">Event patterns and Functions</a> ) so that EventStreamPlayers get the updated variable values in the following events.
-<p>Basic example of a Pbind to get envir values:<pre class='code prettyprint lang-sc'>p = Pbind(
+<p>Basic example of a Pbind to get envir values:<textarea class='editor'>p = Pbind(
     \dur, Pfunc { ~dur } * Pseq([2,1,1], inf),
     \legato, Pfunc { ~legato },
     \amp, Pfunc { ~amp }
@@ -201,13 +205,13 @@ p = Pbind(
     \dur, PL(\dur) * Pseq([2,1,1], inf), 
     \legato, PL(\legato), 
     \amp, PL(\amp) 
-)</pre>
+)</textarea>
 
-<p>Especially when based on a SynthDef with a large number of args writing a Pbind can be lengthy, moreover redundant if there are many pbind pairs of the form <pre class='code prettyprint lang-sc'>[ aSymbol, Pfunc { ~aSymbol } ]</pre>
+<p>Especially when based on a SynthDef with a large number of args writing a Pbind can be lengthy, moreover redundant if there are many pbind pairs of the form <textarea class='editor'>[ aSymbol, Pfunc { ~aSymbol } ]</textarea>
 
 <p>The pVarGui method is going the opposite way: Pbind pairs get this most simple form for all args with metadata or global ControlSpecs defined, though it's possible to exclude keys and add respectively replace customized pairs before and after the automatically generated ones. All you need is a SynthDef that is suited for Pbind sequencing (known to SynthDescLib by being <strong>add</strong>ed, properly defined Envelopes).<div class='warning'><span class='warninglabel'>WARNING:</span> As a lot of the underlying Pbind structure (by default all of it !) is hidden, it's possible to call pVarGui without knowing anything about Patterns. Nevertheless it's highly recommended to be aware of the mechanisms of Pbind for applying useful sequencing customizations and having a look at the fully written Pbind examples in <a href="./../Classes/VarGui.html">VarGui</a>. Clearly: adding, replacing and excluding Pbind pairs without seeing the resulting code is a possible source of error, so if using VarGui this way better start slowly and go on stepwise. With the post option you can print out the ordered list of pairs.</div>
 <p><a class='anchor' name='Ex.2a'>&nbsp;</a><h3><a class='anchor' name='Ex.2a:%20default%20instrument'>Ex.2a: default instrument</a></h3>
-<pre class='code prettyprint lang-sc'>// for default instrument examples 
+<textarea class='editor'>// for default instrument examples 
 // we replace \amp spec with a new ControlSpec with default 0.1 
 
 Spec.add(\amp, [0, 1, \lin, 0, 0.1]);
@@ -307,11 +311,11 @@ Pbind(
     quant: 0.2,
     post: true 
 ).gui(tryColumnNum: 2);
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.2b'>&nbsp;</a><h3><a class='anchor' name='Ex.2b:%20SynthDefs%20including%20metadata'>Ex.2b: SynthDefs including metadata</a></h3>
 
-<p>Automatic Pbind generation in VarGui shortcut builds is especially saving typing if SynthDefs have a lot of args and controlspec metadata defined.<pre class='code prettyprint lang-sc'>// most simple, controls are built for all args with metadata defined
+<p>Automatic Pbind generation in VarGui shortcut builds is especially saving typing if SynthDefs have a lot of args and controlspec metadata defined.<textarea class='editor'>// most simple, controls are built for all args with metadata defined
 // arrayed args are detected and controls are established for a corresponding array
 // SynthDef from above
 
@@ -390,10 +394,10 @@ Pbind(
     post: true,
     num: 2
 ).gui(tryColumnNum: 2);
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.2c'>&nbsp;</a><h3><a class='anchor' name='Ex.2c:%20Combination%20of%20parameter%20control%20and%20pattern%20exchange%20(JITLib)'>Ex.2c: Combination of parameter control and pattern exchange (JITLib)</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 \buzz.pVarGui(
     ctrReplace: [\freq, [20, 1000, \exp, 0, 80]],
     pReplace: [
@@ -411,10 +415,10 @@ Pdefn(\cutoff, Pseq([2, 1, 1], inf));
 
 Pdefn(\freq, 1);
 
-Pdefn(\cutoff, Pseq([1, 1, 1.7, 1.3, 1.2], inf));</pre>
+Pdefn(\cutoff, Pseq([1, 1, 1.7, 1.3, 1.2], inf));</textarea>
 
 <p><a class='anchor' name='Ex.2d'>&nbsp;</a><h3><a class='anchor' name='Ex.2d:%20Combination%20of%20parameter%20control%20and%20pattern%20exchange%20(PLx)'>Ex.2d: Combination of parameter control and pattern exchange (PLx)</a></h3>
-<pre class='code prettyprint lang-sc'>// above done with PL
+<textarea class='editor'>// above done with PL
 // note that PLs are taking envir variables from the current Environment by default,
 // this is ok for the variables set by VarGui (freq) in its Environment,
 // but for PLs to take values from elsewhere we must give the Environment explicitely.
@@ -473,12 +477,12 @@ Pdefn(\cutoff, Pseq([1, 1, 1.7, 1.3, 1.2], inf));</pre>
 
 ~fr = [1];
 
-~co = [1, 2, 1.7, 1.3, 1.2];</pre>
+~co = [1, 2, 1.7, 1.3, 1.2];</textarea>
 <h2><a class='anchor' name='3.%20Mixed%20GUIs'>3. Mixed GUIs</a></h2>
 
 <p>To control Synths or Pbinds / EventStreamPlayers derived from more than one SynthDef sVarGui and pVarGui can be applied to collections.
 <p><a class='anchor' name='Ex.3a'>&nbsp;</a><h3><a class='anchor' name='Ex.3a:%20Synths%20from%20different%20SynthDefs'>Ex.3a: Synths from different SynthDefs</a></h3>
-<pre class='code prettyprint lang-sc'>// for default instrument examples 
+<textarea class='editor'>// for default instrument examples 
 // we replace \amp spec with a new ControlSpec with default 0.1 
 
 Spec.add(\amp, [0, 1, \lin, 0, 0.1]);
@@ -514,10 +518,10 @@ VarGui(synth: [\buzz, \default]).gui;
     (ctrReplace: { [\freq, [194, 206, \exp, 0, rrand(194.0, 206)]] }, num: 4),
     (ctrReplace: [\freq, [97, 103, \exp, 0, 99]])
 ).gui(tryColumnNum: 2, allowSynthBreak: false);
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.3b'>&nbsp;</a><h3><a class='anchor' name='Ex.3b:%20Pbinds%20from%20different%20SynthDefs'>Ex.3b: Pbinds from different SynthDefs</a></h3>
-<pre class='code prettyprint lang-sc'>// overtones, deviations of pitch and pulsation 
+<textarea class='editor'>// overtones, deviations of pitch and pulsation 
 
 (
 [\default, \buzz].pVarGui(
@@ -546,10 +550,10 @@ VarGui(synth: [\buzz, \default]).gui;
         quant: 0.2
     )
 ).gui(tryColumnNum: 2, allowEnvirBreak: false);
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.3c'>&nbsp;</a><h3><a class='anchor' name='Ex.3c:%20Synths%20and%20Pbinds'>Ex.3c: Synths and Pbinds</a></h3>
-<pre class='code prettyprint lang-sc'>// Pbind granulation with \buzz, controls and pbind pairs adapted and added, 
+<textarea class='editor'>// Pbind granulation with \buzz, controls and pbind pairs adapted and added, 
 // psVarGui (pbind input first) and spVarGui (synth input first)
 // apply to collections of two items.
 
@@ -619,7 +623,7 @@ VarGui(synth: [\buzz, \default]).gui;
         )
     ]
 ).gui(tryColumnNum: 2, allowEnvirBreak: false, sliderPriority: \synth, playerPriority: \synth);
-)</pre>
+)</textarea>
 <h2><a class='anchor' name='4.%20Differences%20between%20shortcut%20builds%20and%20direct%20VarGui%20instantiation'>4. Differences between shortcut builds and direct VarGui instantiation</a></h2>
 <ul>
 <li>Shortcut methods apply to Symbols / Strings or collections thereof for Synth and Pbind generation and control. Symbols / Strings refer to the corresponding SynthDefs, known to SynthDesLib.global. For passing Synths, nodeIDs, EventStreamPlayers, also Task Functions and Tasks, you would have to call VarGui directly.<li>Shortcuts and also direct instantiation (not before v0.5) are using SynthDef metadata and / or global ControlSpecs. Though customization options for specs (exclude, add, replace) are a main feature of the shortcut methods. As a compromise spec- and pbindmaker methods with these options may be plugged into direct instantiation ( <a href="#5b">5b</a> ).<li>The pVarGui method invokes automatic Pbind generation with customization options for Pbind pairs (exclude, pBefore, pAfter, pReplace), VarGui expects Pbinds to be passed directly. As a compromise a pbindmaker method with these options may be plugged into direct instantiation ( <a href="#5b">5b</a> ).<li>In shortcut methods the <strong>num</strong> arg causes coordinated expansion, all other args (except <strong>server</strong>) may optionally be given as Functions of indices. With VarGui input you'd have to pass lengthy nested Arrays or write something like { |i| ... } ! n for every arg explicitely, as sizes of input must match. As a compromise spec- and pbindmaker methods with <strong>num</strong> arg may be plugged into direct instantiation ( <a href="#5b">5b</a> ).<li>Reordering / interleaving of controls of different Environments / Synths ( <a href="./../Classes/VarGui.html#Ex.%205a">VarGui: Ex. 5a</a> and <a href="./../Classes/VarGui.html#Ex.%205b">VarGui: Ex. 5b</a> ) is not possible with shortcut methods. However this seems to be a quite special feature, with shortcut methods ordering of Synths / Pbinds is primarily defined by order of args, control customization options allow further modifications of order. Finally choosing sliderPriority (\synth or \var first) is a pure gui method option and applies to both ways of VarGui building.</ul>
@@ -639,7 +643,7 @@ VarGui(synth: [\buzz, \default]).gui;
 <p>In most cases you won't need this, except for reloading customized sequencing VarGuis ( <a href="#6">6</a> ). For special arrangements methods for making specdata and Pbinds of appropriate Pfuncs can be used for customizing control with direct VarGui instantiation. These methods take args in the same way as sVarGui and pVarGui.
 <p><a href="./../Classes/Symbol.html#-sVarGuiSpecs">Symbol: -sVarGuiSpecs</a>
 <p><a href="./../Classes/Symbol.html#-pVarGuiSpecs">Symbol: -pVarGuiSpecs</a>
-<p><a href="./../Classes/Symbol.html#-pfuncPbinds">Symbol: -pfuncPbinds</a><pre class='code prettyprint lang-sc'>// sVarGuiSpecs returns a list of spec pair lists of the form [\key, specArray, ...]
+<p><a href="./../Classes/Symbol.html#-pfuncPbinds">Symbol: -pfuncPbinds</a><textarea class='editor'>// sVarGuiSpecs returns a list of spec pair lists of the form [\key, specArray, ...]
 // derived from SynthDef metadata / global ControlSpecs,
 // controls can be excluded, added and replaced
 
@@ -724,11 +728,11 @@ VarGui(
             quant: 0.2
     )
 ).gui(tryColumnNum: 2, allowEnvirBreak: false);
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='6'>&nbsp;</a><h2><a class='anchor' name='6.%20Save%20and%20load'>6. Save and load</a></h2>
 
-<p>A VarGui's slider state can be saved via save button and dialog. Loading is straightforward with Synths. You just have to give the correct path and synth arg (which maybe has to be an array).<pre class='code prettyprint lang-sc'>// change slider positions and save
+<p>A VarGui's slider state can be saved via save button and dialog. Loading is straightforward with Synths. You just have to give the correct path and synth arg (which maybe has to be an array).<textarea class='editor'>// change slider positions and save
 
 \buzz.sVarGui.gui;
 
@@ -743,9 +747,9 @@ VarGui.load("Path_To_XY", "XY", synth: \buzz).gui;
 
 // reload, synth arg must have corresponding size
 
-VarGui.load("Path_To_XY", "XY", synth: \buzz ! 4).gui(tryColumnNum: 2);</pre>
+VarGui.load("Path_To_XY", "XY", synth: \buzz ! 4).gui(tryColumnNum: 2);</textarea>
 
-<p>VarGui only saves slider states, not the Pbind structure (would open a can of worms). So if you had a customized Pbind in the original setup you'd have to pass an appropriate Pbind together with load. This can also be a Pbind other than in the original setup. But if you want to restore you can nearly copy the input of the original cutomization into the pbindmaker method pfuncPbinds ( <a href="#5b">5b</a> ).<pre class='code prettyprint lang-sc'>// with no customization save and load also works straightforward
+<p>VarGui only saves slider states, not the Pbind structure (would open a can of worms). So if you had a customized Pbind in the original setup you'd have to pass an appropriate Pbind together with load. This can also be a Pbind other than in the original setup. But if you want to restore you can nearly copy the input of the original cutomization into the pbindmaker method pfuncPbinds ( <a href="#5b">5b</a> ).<textarea class='editor'>// with no customization save and load also works straightforward
 // change slider positions and save
 
 \buzz.pVarGui.gui;
@@ -803,5 +807,6 @@ VarGui.load("Path_To_XY", "XY",
             PLseq(\a), \octave, Pwhite(5,7) ]),
     quant: 0.2
 ).gui(tryColumnNum: 2, allowEnvirBreak: false)
-)</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/VarGui_shortcut_builds.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/VarGui_shortcut_builds.schelp</a><br>link::Tutorials/VarGui_shortcut_builds::<br></div></div></body></html>
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/VarGui_shortcut_builds.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/VarGui_shortcut_builds.schelp</a><br>link::Tutorials/VarGui_shortcut_builds::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

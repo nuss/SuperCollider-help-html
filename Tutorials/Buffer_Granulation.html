@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>Buffer Granulation | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Buffer Granulation | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Buffer Granulation';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Buffer Granulation:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -38,8 +42,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.3c:%20Switching%20between%20ugens%20of%20external%20control%20synths'>Ex.3c: Switching between ugens of external control synths</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.3d:%20Pattern-driven%20sequencing%20of%20granular%20events%20using%20demand%20rate%20ugens'>Ex.3d: Pattern-driven sequencing of granular events using demand rate ugens</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#4.%20Extensions%20of%20Setups'>4. Extensions of Setups</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Tutorials (extension)</span>
@@ -68,7 +72,7 @@ var scdoc_sc_version = '3.9.3';
 
 <p><a class='anchor' name='1'>&nbsp;</a><h2><a class='anchor' name='1.%20Granulation%20with%20Ugens'>1. Granulation with Ugens</a></h2>
 <h3><a class='anchor' name='Ex.1a:%20Basic%20buffer%20granulation%20Synth'>Ex.1a: Basic buffer granulation Synth</a></h3>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 s = Server.local;
 Server.default = s;
 s.boot;
@@ -123,10 +127,10 @@ b = Buffer.read(s, Platform.miSCellaneousDirs[0] +/+ "Sounds" +/+ "kitchen_sound
 
 // start from GUI
 
-\gran_1a.sVarGui([\bufNum, b.bufnum]).gui;</pre>
+\gran_1a.sVarGui([\bufNum, b.bufnum]).gui;</textarea>
 
 <p><a class='anchor' name='Ex.1b'>&nbsp;</a><h3><a class='anchor' name='Ex.1b:%20More%20deviations'>Ex.1b: More deviations</a></h3>
-<pre class='code prettyprint lang-sc'>// In example 1a only a deviation from the grain center position was implemented.
+<textarea class='editor'>// In example 1a only a deviation from the grain center position was implemented.
 // With additional deviation controls a greater plasticity of sound can be achieved,
 // here deviations are added for trigRate (LFO with oscillation freq and deviation max),
 // grain duration and rate (TRand, equally weighted random deviation with given max).
@@ -187,9 +191,9 @@ b = Buffer.read(s, Platform.miSCellaneousDirs[0] +/+ "Sounds" +/+ "kitchen_sound
 // start from GUI
 // use color grouping for better overview
 
-\gran_1b.sVarGui([\bufNum, b.bufnum]).gui(synthColorGroups: (0..14).clumps([1,5,3,2,2,1,1]) )</pre>
+\gran_1b.sVarGui([\bufNum, b.bufnum]).gui(synthColorGroups: (0..14).clumps([1,5,3,2,2,1,1]) )</textarea>
 <h3><a class='anchor' name='Ex.1c:%20Buffer%20granulation%20Synth%20with%20external%20control%20synths'>Ex.1c: Buffer granulation Synth with external control synths</a></h3>
-<pre class='code prettyprint lang-sc'>// This is a more modular approach, once having a basic granulation synth
+<textarea class='editor'>// This is a more modular approach, once having a basic granulation synth
 // it can be linked with arbitrary control synths, here
 // also moving through the buffer is controlled externally.
 // Depending on LFOs it might be worth defining
@@ -310,9 +314,9 @@ VarGui(synthCtr: [[
     // but granulation Synth is passed directly as object
     synth: \lfo!5 ++ x
 ).gui(sliderPriority: \synth, playerPriority: \synth);
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Ex.1d:%20Buffer%20granulation%20Synth%20with%20demand%20rate%20ugens'>Ex.1d: Buffer granulation Synth with demand rate ugens</a></h3>
-<pre class='code prettyprint lang-sc'>// Repeated grain triggering within a synth can be defined by demand rate ugens,
+<textarea class='editor'>// Repeated grain triggering within a synth can be defined by demand rate ugens,
 // which is comfortable in connection with granular ugens.
 
 // E.g. with TGrains you can trigger parameters like grain duration, playback rate,
@@ -405,10 +409,10 @@ VarGui(synthCtr: [
     labelWidth: 90,
     sliderWidth: 280
 );
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.1e'>&nbsp;</a><h3><a class='anchor' name='Ex.1e:%20Buffer%20granulation%20Synth%20with%20per-grain%20effect%20processing%20(TGrains)'>Ex.1e: Buffer granulation Synth with per-grain effect processing (TGrains)</a></h3>
-<pre class='code prettyprint lang-sc'>// TGrains and other granular ugens allow per-grain processing
+<textarea class='editor'>// TGrains and other granular ugens allow per-grain processing
 // for a limited number of parameters (pos, rate etc.)
 // Nevertheless it is possible to apply arbitrary effects with
 // per-grain parameter changes, even if grains overlap.
@@ -501,10 +505,10 @@ VarGui(synthCtr: [
     tryColumnNum: 1,
     synthColorGroups: (0..12).clumps([1,4,2,1,3,1,1])
 );
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.1f'>&nbsp;</a><h3><a class='anchor' name='Ex.1f:%20Buffer%20granulation%20Synth%20with%20per-grain%20effect%20processing%20(DXEnvFan)'>Ex.1f: Buffer granulation Synth with per-grain effect processing (DXEnvFan)</a></h3>
-<pre class='code prettyprint lang-sc'>// DXEnvFan generates a multichannel envelope which can be used as trigger for granulation and fxs on grains.
+<textarea class='editor'>// DXEnvFan generates a multichannel envelope which can be used as trigger for granulation and fxs on grains.
 // It encapsulates the trigger logic, which has been used explicitely in Ex. 1e.
 // DX ugens can be used for a variety of microsound techniques, see their help files.
 
@@ -582,11 +586,11 @@ b = Buffer.read(s, Platform.miSCellaneousDirs[0] +/+ "Sounds" +/+ "kitchen_sound
     tryColumnNum: 1,
     synthColorGroups: (0..12).clumps([1,4,2,1,3,1,1])
 )
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='2'>&nbsp;</a><h2><a class='anchor' name='2.%20Granulation%20driven%20by%20language'>2. Granulation driven by language</a></h2>
 <h3><a class='anchor' name='Ex.2a:%20Basic%20buffer%20granulation%20Pbind'>Ex.2a: Basic buffer granulation Pbind</a></h3>
-<div class='note'><span class='notelabel'>NOTE:</span> Language-driven sequencing is not sample-exact in realtime (with NRT synthesis it is). This is related to hardware control and cannot be overcome currently. However for most practical purposes this might not be relevant. It is anyway a far less strong effect than the inaccuracies related to Out.ar and the combination of OffsetOut.ar and In.ar (see examples 2a-d in <a href="./../Tutorials/Live_Granulation.html">Live Granulation</a>)</div><pre class='code prettyprint lang-sc'>// Control parameters like in Ex.1a, but implemented with a SynthDef for
+<div class='note'><span class='notelabel'>NOTE:</span> Language-driven sequencing is not sample-exact in realtime (with NRT synthesis it is). This is related to hardware control and cannot be overcome currently. However for most practical purposes this might not be relevant. It is anyway a far less strong effect than the inaccuracies related to Out.ar and the combination of OffsetOut.ar and In.ar (see examples 2a-d in <a href="./../Tutorials/Live_Granulation.html">Live Granulation</a>)</div><textarea class='editor'>// Control parameters like in Ex.1a, but implemented with a SynthDef for
 // playing single grains and an appropriate Pbind,
 // OffsetOut used for exact timing.
 
@@ -649,10 +653,10 @@ VarGui([
     \amp, [0.0, 1, \lin, 0.01, 0.25]
     ], stream: p
 ).gui(varColorGroups: (0..8).clumps([4,1,1,1,1,1]))
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.2b'>&nbsp;</a><h3><a class='anchor' name='Ex.2b:%20Switching%20between%20stochastic%20distributions'>Ex.2b: Switching between stochastic distributions</a></h3>
-<pre class='code prettyprint lang-sc'>// Extended basic SynthDef from Ex.2a with bandpass filter
+<textarea class='editor'>// Extended basic SynthDef from Ex.2a with bandpass filter
 
 (
 SynthDef(\gran_2b, { |out = 0, pos = 0, sndBuf = 0, windowBuf = 1, granDur = 0.1,
@@ -792,10 +796,10 @@ VarGui([
     \amp, [0.0, 1, \lin, 0.01, 0.25]
     ], stream: p
 ).gui(varColorGroups: (0..19).clumps([4,3,3,3,5,1,1]))
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.2c'>&nbsp;</a><h3><a class='anchor' name='Ex.2c:%20Generating%20granular%20phrases%20with%20Pspawner'>Ex.2c: Generating granular phrases with Pspawner</a></h3>
-<pre class='code prettyprint lang-sc'>// This example needs SynthDef \gran_2b and Function d to be taken from Ex. 2b
+<textarea class='editor'>// This example needs SynthDef \gran_2b and Function d to be taken from Ex. 2b
 
 (
 b = Buffer.read(s, Platform.miSCellaneousDirs[0] +/+ "Sounds" +/+ "kitchen_sounds_1.wav");
@@ -894,10 +898,10 @@ VarGui([
     \amp, [0.0, 1, \lin, 0.01, 0.35]
     ], stream: q
 ).gui(varColorGroups: (0..22).clumps([4,3,3,3,5,3,1,1]) )
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.2d'>&nbsp;</a><h3><a class='anchor' name='Ex.2d:%20Wave%20sets'>Ex.2d: Wave sets</a></h3>
-<pre class='code prettyprint lang-sc'>// For this example you need Alberto de Campo's Wavesets class
+<textarea class='editor'>// For this example you need Alberto de Campo's Wavesets class
 // (Quark extension, implementation following definitions of Trevor Wishart)
 // and the Function d from Ex.2b.
 
@@ -1046,11 +1050,11 @@ VarGui([
     ],
     stream: p
 ).gui(varColorGroups: (0..25).clumps([4,3,3,1,5,3,2,1,3,1]))
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='3'>&nbsp;</a><h2><a class='anchor' name='3.%20Hybrid%20Implementations'>3. Hybrid Implementations</a></h2>
 <h3><a class='anchor' name='Ex.3a:%20Granulation%20with%20ugen%20plus%20step%20sequencing'>Ex.3a: Granulation with ugen plus step sequencing</a></h3>
-<pre class='code prettyprint lang-sc'>// Here the trigger for the TGrains ugen comes from a Pbind
+<textarea class='editor'>// Here the trigger for the TGrains ugen comes from a Pbind
 // which also generates rates like a step sequencer
 
 
@@ -1121,9 +1125,9 @@ VarGui(varCtr: [
     \midi, [-12, 12, \lin, 1, 1] ! 8
     ], synth: x, stream: p
 ).gui;
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Ex.3b:%20Using%20external%20control%20synths'>Ex.3b: Using external control synths</a></h3>
-<pre class='code prettyprint lang-sc'>// Example needs SynthDef from Ex.2a
+<textarea class='editor'>// Example needs SynthDef from Ex.2a
 
 // Also with language-driven granulation
 // controls can be delegated to separate Synths,
@@ -1186,9 +1190,9 @@ VarGui([
     ],
     p, \bufPhasor
 ).gui(sliderPriority: \synth, playerPriority: \synth);
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Ex.3c:%20Switching%20between%20ugens%20of%20external%20control%20synths'>Ex.3c: Switching between ugens of external control synths</a></h3>
-<pre class='code prettyprint lang-sc'>// Example needs SynthDef from Ex.2a
+<textarea class='editor'>// Example needs SynthDef from Ex.2a
 
 // external control synth for position as in Ex.3a, but with
 // different types of movement to select
@@ -1252,9 +1256,9 @@ VarGui([
     ],
     p, \bufPosLFO
 ).gui(sliderPriority: \synth, playerPriority: \synth);
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='Ex.3d:%20Pattern-driven%20sequencing%20of%20granular%20events%20using%20demand%20rate%20ugens'>Ex.3d: Pattern-driven sequencing of granular events using demand rate ugens</a></h3>
-<pre class='code prettyprint lang-sc'>// This is basically the same as SynthDef \gran_1d with an additional envelope,
+<textarea class='editor'>// This is basically the same as SynthDef \gran_1d with an additional envelope,
 // grain position phasor is left out, position is determined by a phasor synth via bus and mapping.
 
 (
@@ -1400,7 +1404,7 @@ VarGui([
     labelWidth: 90,
     sliderWidth: 300
 );
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='4.%20Extensions%20of%20Setups'>&nbsp;</a><h2><a class='anchor' name='4.%20Extensions%20of%20Setups'>4. Extensions of Setups</a></h2>
 <ul>
@@ -1425,4 +1429,5 @@ VarGui([
 <li><strong>Micro rhythm</strong>
 <p>See Xenakis' suggestion of Sieves with rhythm generation as a special application, a granulation example is contained in the example section of: <a href="./../Tutorials/Sieves_and_Psieve_patterns.html">Sieves and Psieve patterns</a>. PSPdiv, a dynamic multi-layer pulse divider, which is based on Pspawner, can also be used in this context, see the last example of <a href="./../Classes/PSPdiv.html">PSPdiv</a>.</ul>
 
-<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Buffer_Granulation.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Buffer_Granulation.schelp</a><br>link::Tutorials/Buffer_Granulation::<br></div></div></body></html>
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Buffer_Granulation.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Buffer_Granulation.schelp</a><br>link::Tutorials/Buffer_Granulation::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

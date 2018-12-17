@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>Fb1 | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Fb1 | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Fb1';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Fb1:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -44,8 +48,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%203d:%20blockSize%20/%20blockFactor'>Ex. 3d: blockSize / blockFactor</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%203e:%20func%20index'>Ex. 3e: func index</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#Ex.%204:%20Saving%20CPU'>Ex. 4: Saving CPU</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -95,21 +99,21 @@ var scdoc_sc_version = '3.9.3';
 
 <p>Writing ar UGens in func that produce a time-varying signal itself (e.g. SinOsc.ar, in contrast to SinOsc.kr and operator UGens like '+', '*' etc.) - instead, if such ar UGens aren't applied to data from inside func, they can be passed via Fb1's and func's 'in' arg. It remains the case of such ar UGens that should process data that is provided by func (e.g. letting the fb out modulate a parameter of a VarSaw.ar). This is currently not possible and I don't have a clear picture if and how it would be possible at all or if it would make much sense.<h2><a class='anchor' name='Examples%201:%20Proof%20of%20concept'>Examples 1: Proof of concept</a></h2>
 
-<p>Examples 1b-1d are just a comparison of standard filters vs. explicit definition with Fb1 to show its functioning. Mostly there is no benefit in doing so in practice as standard filters UGens need less ressources. The real power of Fb1 lies in the potential to define nonlinear feedback and feedforward relations (<a href="#Ex.%202">Ex.2 ff.</a>). Other than that you can use it to define higher order linear filters for which no classes exist.<pre class='code prettyprint lang-sc'>// check blockSize before
+<p>Examples 1b-1d are just a comparison of standard filters vs. explicit definition with Fb1 to show its functioning. Mostly there is no benefit in doing so in practice as standard filters UGens need less ressources. The real power of Fb1 lies in the potential to define nonlinear feedback and feedforward relations (<a href="#Ex.%202">Ex.2 ff.</a>). Other than that you can use it to define higher order linear filters for which no classes exist.<textarea class='editor'>// check blockSize before
 
 (
 if (s.options.blockSize != 64) {
     s.options.blockSize = 64;
     s.quit.reboot;
 }
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%201a'>&nbsp;</a><h3><a class='anchor' name='Ex.%201a:%20Basic%20principle'>Ex. 1a: Basic principle</a></h3>
 
 <p>The original form of the following example is by Nathaniel Virgo and shows the underlying principle for feedback alone. Succesively Buffers are set with new values at kr, at the end buffers are read with an ar Phasor, thereby the order of UGens is crucial. As James Harkins remarked in the below thread, plugging the writers into the final reader forces it, it can be done with summing, but other operations than '+' are also possible.
 <p>The example also works without this precautionary measure, at least on OSX, SC 3.9.3. The option <strong>graphOrderType</strong> allows to turn forced ordering off or to choose the alternative order-forcing operation '&lt;!', see <a href="#Ex.%204">Ex.4</a>.
 <p><a href="https://www.listarc.bham.ac.uk/lists/sc-users-2011/msg01337.html">https://www.listarc.bham.ac.uk/lists/sc-users-2011/msg01337.html</a>
-<p><a href="https://www.listarc.bham.ac.uk/lists/sc-users-2011/msg01363.html">https://www.listarc.bham.ac.uk/lists/sc-users-2011/msg01363.html</a><pre class='code prettyprint lang-sc'>(
+<p><a href="https://www.listarc.bham.ac.uk/lists/sc-users-2011/msg01363.html">https://www.listarc.bham.ac.uk/lists/sc-users-2011/msg01363.html</a><textarea class='editor'>(
 x = {
     var buf1 = LocalBuf(64);
     var buf2 = LocalBuf(64);
@@ -188,10 +192,10 @@ z = {
 }.play;
 )
 
-z.release</pre>
+z.release</textarea>
 
 <p><a class='anchor' name='Ex.%201b'>&nbsp;</a><h3><a class='anchor' name='Ex.%201b:%20OnePole'>Ex. 1b: OnePole</a></h3>
-<pre class='code prettyprint lang-sc'>// OnePole as lopass
+<textarea class='editor'>// OnePole as lopass
 
 s.freqscope;
 
@@ -283,10 +287,10 @@ q = {
 }.play
 )
 
-q.release</pre>
+q.release</textarea>
 
 <p><a class='anchor' name='Ex.%201c'>&nbsp;</a><h3><a class='anchor' name='Ex.%201c:%20SOS'>Ex. 1c: SOS</a></h3>
-<pre class='code prettyprint lang-sc'>// SOS as bandreject, note its convention:
+<textarea class='editor'>// SOS as bandreject, note its convention:
 // SOS.ar(in, a0, a1, a2, b1, b2, mul, add)
 // out(i) = (a0 * in(i)) + (a1 * in(i-1)) + (a2 * in(i-2)) + (b1 * out(i-1)) + (b2 * out(i-2))
 
@@ -334,10 +338,10 @@ z = {
 }.play
 )
 
-z.release</pre>
+z.release</textarea>
 
 <p><a class='anchor' name='Ex.%201d'>&nbsp;</a><h3><a class='anchor' name='Ex.%201d:%20LTI'>Ex. 1d: LTI</a></h3>
-<pre class='code prettyprint lang-sc'>// You need to have the SC-3 plugins installed in order to use LTI,
+<textarea class='editor'>// You need to have the SC-3 plugins installed in order to use LTI,
 // which is part of Nick Collins' SLUGens.
 
 // Example with coefficients from Nick Collins' helpfile,
@@ -400,13 +404,13 @@ u = {
 
 u.release
 
-// The filter alternatives with Fb1 mainly make sense in the higher order case when coefficients should be modulated</pre>
+// The filter alternatives with Fb1 mainly make sense in the higher order case when coefficients should be modulated</textarea>
 
 <p><a class='anchor' name='Ex.%202'>&nbsp;</a><h2><a class='anchor' name='Examples%202:%20Nonlinear%20feedback%20operations'>Examples 2: Nonlinear feedback operations</a></h2>
 
 <p>This is an interesting field of exploration as it cannot easily be done with SC otherwise. Here the time-varying potential of unary and binary operators comes into play, normally they are applied to time-varying signals, but here their iteration on a single-sample base is itself an essential part of producing the variation in time. Good candidates are already simple operators and their combinations, also with + and -, e.g. *, /, **, %, trigonometric operators etc.
 <p><a class='anchor' name='Ex.%202a'>&nbsp;</a><h3><a class='anchor' name='Ex.%202a:%20%'>Ex. 2a: %</a></h3>
-<pre class='code prettyprint lang-sc'>s.scope
+<textarea class='editor'>s.scope
 
 // start fb fx Synth
 
@@ -453,10 +457,10 @@ x.release
 (
 y.free;
 ~bus.free;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%202b'>&nbsp;</a><h3><a class='anchor' name='Ex.%202b:%20sin'>Ex. 2b: sin</a></h3>
-<pre class='code prettyprint lang-sc'>// sin can work as a limiter as well as a nonlinear dynamics engine,
+<textarea class='editor'>// sin can work as a limiter as well as a nonlinear dynamics engine,
 // here it causes a wavefolding-like effect
 
 s.scope
@@ -497,10 +501,10 @@ x.release
 (
 y.free;
 ~bus.free;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%202c'>&nbsp;</a><h3><a class='anchor' name='Ex.%202c:%20*'>Ex. 2c: *</a></h3>
-<pre class='code prettyprint lang-sc'>// rather irrational concatenation of simple operations
+<textarea class='editor'>// rather irrational concatenation of simple operations
 // depth changes cause frequency changes
 
 s.scope
@@ -540,10 +544,10 @@ x.release
 (
 y.free;
 ~bus.free;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%202d'>&nbsp;</a><h3><a class='anchor' name='Ex.%202d:%20/'>Ex. 2d: /</a></h3>
-<pre class='code prettyprint lang-sc'>// With divisions we must avoid division by zero resp. blowup, here it's max in the divisor.
+<textarea class='editor'>// With divisions we must avoid division by zero resp. blowup, here it's max in the divisor.
 // The example also establishes a cross-feedback of the two channels by using reverse.
 
 s.scope
@@ -573,10 +577,10 @@ x.release
 (
 y.free;
 ~bus.free;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%202e'>&nbsp;</a><h3><a class='anchor' name='Ex.%202e:%20**'>Ex. 2e: **</a></h3>
-<pre class='code prettyprint lang-sc'>// exponentiation can also be interesting
+<textarea class='editor'>// exponentiation can also be interesting
 // here an area of instability is crossed by a stereo lfo
 
 s.scope
@@ -611,10 +615,10 @@ x.release
 (
 y.free;
 ~bus.free;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.%202f'>&nbsp;</a><h3><a class='anchor' name='Ex.%202f:%20Conditional%20feedback'>Ex. 2f: Conditional feedback</a></h3>
-<pre class='code prettyprint lang-sc'>// defining the next sample depending on some characteristics of the previous one(s)
+<textarea class='editor'>// defining the next sample depending on some characteristics of the previous one(s)
 // This can be done with the if UGen and Select.
 // 'if' doesn't support multichannel expansion, so take Select here
 
@@ -653,11 +657,11 @@ x = {
 }.play
 )
 
-x.release</pre>
+x.release</textarea>
 <h2><a class='anchor' name='Examples%203:%20Conventions%20and%20args'>Examples 3: Conventions and args</a></h2>
 
 <p><a class='anchor' name='Ex.%203a'>&nbsp;</a><h3><a class='anchor' name='Ex.%203a:%20Multichannel%20feedback%20/%20feedforward'>Ex. 3a: Multichannel feedback / feedforward</a></h3>
-<pre class='code prettyprint lang-sc'>// in and out can be multichannel signals of arbitrary size or collections thereof,
+<textarea class='editor'>// in and out can be multichannel signals of arbitrary size or collections thereof,
 // however arbitrary nesting is not supported,
 // outSize arg has to be passed explicitely,
 // size of in arg is taken over automatically.
@@ -831,10 +835,10 @@ x = {
 }.play
 )
 
-x.release</pre>
+x.release</textarea>
 
 <p><a class='anchor' name='Ex.%203b'>&nbsp;</a><h3><a class='anchor' name='Ex.%203b:%20inInit%20/%20outInit'>Ex. 3b: inInit / outInit</a></h3>
-<pre class='code prettyprint lang-sc'>// linear congruential generator
+<textarea class='editor'>// linear congruential generator
 
 // this is not a strict linear congruential generator
 // as the server doesn't know integers, it's done with floats,
@@ -962,10 +966,10 @@ x.release
 
 // inInit and outInit cannot be differentiated for a multichannel component of a multichannel in / out.
 // If you want to do such, you'd have to split the inner
-// multichannel component and differentiate the outer one.</pre>
+// multichannel component and differentiate the outer one.</textarea>
 
 <p><a class='anchor' name='Ex.%203c'>&nbsp;</a><h3><a class='anchor' name='Ex.%203c:%20inDepth%20/%20outDepth'>Ex. 3c: inDepth / outDepth</a></h3>
-<pre class='code prettyprint lang-sc'>// Normally, and like in most previous examples,
+<textarea class='editor'>// Normally, and like in most previous examples,
 // out[j] and in[j] in func refer to samples out[i-j] and in[i-j],
 // in[0] to the current input samples.
 // The lookback size can be determined by passing Integers to inDepth / outDepth, e.g.
@@ -1037,10 +1041,10 @@ x.release
 
 // inDepth and outDepth cannot be differentiated for a multichannel component of a multichannel in / out.
 // If you want to do such, you'd have to split the inner
-// multichannel component and differentiate the outer one.</pre>
+// multichannel component and differentiate the outer one.</textarea>
 
 <p><a class='anchor' name='Ex.%203d'>&nbsp;</a><h3><a class='anchor' name='Ex.%203d:%20blockSize%20/%20blockFactor'>Ex. 3d: blockSize / blockFactor</a></h3>
-<pre class='code prettyprint lang-sc'>// Normally Fb1's blockSize should equal the server's current blockSize,
+<textarea class='editor'>// Normally Fb1's blockSize should equal the server's current blockSize,
 // which can be set as a server option, per default it's 64.
 
 // If you are using a different blockSize, you can either
@@ -1100,10 +1104,10 @@ x = {
 }.play
 )
 
-x.release</pre>
+x.release</textarea>
 
 <p><a class='anchor' name='Ex.%203e'>&nbsp;</a><h3><a class='anchor' name='Ex.%203e:%20func%20index'>Ex. 3e: func index</a></h3>
-<pre class='code prettyprint lang-sc'>// func can take an index as third arg, it runs from 0 to blockSize - 1
+<textarea class='editor'>// func can take an index as third arg, it runs from 0 to blockSize - 1
 // this can be used to define the feedback relation depending on it
 
 // note that inDepth is set to [2, 1] as we look back to inSig[i-1] (in[1][0]),
@@ -1129,10 +1133,10 @@ x = {
 }.play
 )
 
-x.release</pre>
+x.release</textarea>
 
 <p><a class='anchor' name='Ex.%204'>&nbsp;</a><h2><a class='anchor' name='Ex.%204:%20Saving%20CPU'>Ex. 4: Saving CPU</a></h2>
-<pre class='code prettyprint lang-sc'>// UGens written in func are generated as often as blockSize.
+<textarea class='editor'>// UGens written in func are generated as often as blockSize.
 // Therefore, if possible, references to kr UGens outside save resources.
 // In addition look for hidden unnecessary operations, which can add hundreds of UGens
 
@@ -1249,5 +1253,6 @@ x = {
 }.play
 )
 
-x.release</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/Fb1.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/Fb1.schelp</a><br>link::Classes/Fb1::<br></div></div></body></html>
+x.release</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/Fb1.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/Fb1.schelp</a><br>link::Classes/Fb1::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

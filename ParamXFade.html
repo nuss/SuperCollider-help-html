@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>ParamXFade | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>ParamXFade | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./editor.css' type='text/css' />
 <link rel='stylesheet' href='./frontend.css' type='text/css' />
 <link rel='stylesheet' href='./custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./lib/jquery.min.js'></script>
+<script src='./lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = '.';
 var scdoc_title = 'ParamXFade';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./scdoc.js' type='text/javascript'></script>
 <script src='./docmap.js' type='text/javascript'></script>
-<script src='./prettify.js' type='text/javascript'></script>
-<script src='./lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>ParamXFade:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -38,8 +42,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-getFunc'>getFunc</a>  <a href='#-setFunc'>setFunc</a> </li>
 <li class='toc3'><a href='#-startFunc'>startFunc</a>  <a href='#-endFunc'>endFunc</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'> (extension)</span>
@@ -54,7 +58,7 @@ var scdoc_sc_version = '3.9.3';
 
 <p>ParamXFade can crossfade a set of parameters of a process (e.g. an Ndef or a Tdef) from their current values to a destination over a fadeTime.
 <p>This is useful for morphing between presets flexibly.
-<p>First code example:<pre class='code prettyprint lang-sc'>// try with an Ndef first
+<p>First code example:<textarea class='editor'>// try with an Ndef first
 Ndef(\a, { |freq = 400, reso = 5, amp=0.2, pan|
     Pan2.ar(RLPF.ar(Pulse.ar(12), freq, 1/reso, amp), pan);
 }).play;
@@ -73,7 +77,7 @@ x.fadeTo([\freq, 0.9, \reso, 0.75], 10);
 // set freq while fading - pxf will continue fade from there
 Ndef(\a).set(\freq, 300);
 
-Ndef(\a).end;</pre>
+Ndef(\a).end;</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*new' href='./Overviews/Methods.html#new'>new</a></h3>
 <div class='method'>
@@ -83,7 +87,7 @@ Ndef(\a).end;</pre>
 <p>a specific object<tr><td class='argumentname'>fadeTime<td class='argumentdesc'>
 <p>optional - initial time to crossfade<tr><td class='argumentname'>dt<td class='argumentdesc'>
 <p>optional initial timestep<tr><td class='argumentname'>getSetType<td class='argumentdesc'>
-<p>select which methods to use for getting/setting: default value \uni uses methods given in getSetDict:<pre class='code prettyprint lang-sc'>ParamXFade.getSetDict[\uni].cs;</pre>
+<p>select which methods to use for getting/setting: default value \uni uses methods given in getSetDict:<textarea class='editor'>ParamXFade.getSetDict[\uni].cs;</textarea>
 
 <p></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*getSetDict' href='./Overviews/Methods.html#getSetDict'>getSetDict</a></h3>
 <div class='method'>
@@ -121,7 +125,7 @@ Ndef(\a).end;</pre>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-endFunc' href='./Overviews/Methods.html#endFunc'>endFunc</a></h3>
 <div class='method'>
 <p>functions to run when crossfade task starts and ends</div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>// same test for PatternProxy
+<textarea class='editor'>// same test for PatternProxy
 Tdef(\a).set(\freq, 100, \reso, 5, \amp, 0.2, \pan, -1);
 Tdef(\a).addSpec(\reso, [2, 32, \exp]).gui;
 y = ParamXFade(Tdef(\a));
@@ -164,5 +168,6 @@ y.destVals;
 // these change during fading:
 y.remainTime;
 y.fadeIndex;
-y.currVals;</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/ParamXFade.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/ParamXFade.schelp</a><br>link::ParamXFade::<br></div></div></body></html>
+y.currVals;</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/ParamXFade.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/ParamXFade.schelp</a><br>link::ParamXFade::<br></div></div><script src='./editor.js' type='text/javascript'></script>
+</body></html>

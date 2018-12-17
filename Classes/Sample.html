@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>Sample | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Sample | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Sample';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Sample:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -52,8 +56,8 @@ var scdoc_sc_version = '3.9.3';
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#methods%20usable%20inside%20an%20Instr%20function.'>methods usable inside an Instr function.</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Beat%20Synching'>Beat Synching</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -69,7 +73,7 @@ var scdoc_sc_version = '3.9.3';
 
 <p>This class can be used as an argument to a Patch. It will take care of all the troubles of loading, allocating, measuring, and even beat synchronizing of a small sound file. It will not clear the copyright.
 <p>It will not play by itself, its just like a Buffer.
-<p>But within the Instr function you can use many useful methods on your Sample object such as .bufDurKr<pre class='code prettyprint lang-sc'>(
+<p>But within the Instr function you can use many useful methods on your Sample object such as .bufDurKr<textarea class='editor'>(
 
 p = Patch({ arg sample;
 
@@ -86,14 +90,14 @@ p = Patch({ arg sample;
 
 p.gui;
 
-)</pre>
+)</textarea>
 
 <p>Notice that the path to the sample is relative to the sounds/ directory, not to SuperCollider's own directory. You can set the Sample.soundsDir to the directory of your choice (eg, ~/Library/Sounds/ or ~/Sounds/ ). Copy a11wlk01.wav to your own sounds directory so you can still play examples.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>Sample.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>soundFilePath</span>, <span class='argstr'>tempo</span>, <span class='argstr'>startFrame: 0</span>, <span class='argstr'>endFrame: -1</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>soundFilePath<td class='argumentdesc'><tr><td class='argumentname'>tempo<td class='argumentdesc'>
-<p>If the sample is a rhythmic loop then this specifies what the tempo of that loop is. This can then be used for beat sync or beat splicing calculations. If the sample is an even 4 or 8 beats then it will do a fairly good job of guessing the tempo.<tr><td class='argumentname'>startFrame<td class='argumentdesc'><tr><td class='argumentname'>endFrame<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>Sample.</span><a class='method-name' name='*newClear' href='./../Overviews/Methods.html#newClear'>newClear</a>(<span class='argstr'>numFrames: 44100</span>, <span class='argstr'>numChannels: 1</span>, <span class='argstr'>sampleRate: 44100</span>)</h3>
+<p>If the sample is a rhythmic loop then this specifies what the tempo of that loop is. This can then be used for beat sync or beat splicing calculations. If the sample is an even 4 or 8 beats then it will do a fairly good job of guessing the tempo.<tr><td class='argumentname'>startFrame<td class='argumentdesc'><tr><td class='argumentname'>endFrame<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>Sample.</span><a class='method-name' name='*newClear' href='./../Overviews/Methods.html#newClear'>newClear</a>(<span class='argstr'>numFrames: 44100</span>, <span class='argstr'>numChannels: 1</span>, <span class='argstr'>sampleRate: 44100.0</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>numFrames<td class='argumentdesc'><tr><td class='argumentname'>numChannels<td class='argumentdesc'><tr><td class='argumentname'>sampleRate<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>Sample.</span><a class='method-name' name='*roster' href='./../Overviews/Methods.html#roster'>roster</a>: METHOD NOT FOUND!</h3>
@@ -161,7 +165,7 @@ p.gui;
 <div class='method'></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 
-<p>You can swap the samples while playing. Click on the name of the sample (in black font) and browse for a stereo sample. Then start play, and you can browse for more and change it while playing.<pre class='code prettyprint lang-sc'>(
+<p>You can swap the samples while playing. Click on the name of the sample (in black font) and browse for a stereo sample. Then start play, and you can browse for more and change it while playing.<textarea class='editor'>(
 Instr("help-Sample",{ arg sample,pchRatio=0.50;
     PlayBuf.ar(sample.numChannels,
                 sample.bufnumIr, // finds the buffer number when the synth starts
@@ -175,10 +179,10 @@ p = Patch("help-Sample",[
 
 p.gui
 
-)</pre>
+)</textarea>
 
 <p>The def name was : help-SampleO8NEut
-<p>You can build up a library of Instr functions and exploit them with Patch.<pre class='code prettyprint lang-sc'>(
+<p>You can build up a library of Instr functions and exploit them with Patch.<textarea class='editor'>(
 Instr([\help,\Sample],{ arg sample,pchRatio=1.0,start=0.0;
     PlayBuf.ar(sample.numChannels,
                 sample.bufnumIr, // finds the buffer number when the synth starts
@@ -187,9 +191,9 @@ Instr([\help,\Sample],{ arg sample,pchRatio=1.0,start=0.0;
                 start * sample.bufFramesKr,
                 1.0); // loop
 });
-)</pre>
+)</textarea>
 
-<p>Patch object:<pre class='code prettyprint lang-sc'>(
+<p>Patch object:<textarea class='editor'>(
     p = Patch([\help,\Sample],
     [
         Sample("a11wlk01.wav")
@@ -197,14 +201,14 @@ Instr([\help,\Sample],{ arg sample,pchRatio=1.0,start=0.0;
 
     // edit controls on the gui
     p.gui
-)</pre>
+)</textarea>
 
-<p>You can save it to disk and reload it the settings will be restored.<pre class='code prettyprint lang-sc'>(
+<p>You can save it to disk and reload it the settings will be restored.<textarea class='editor'>(
     Patch.new(
         [ 'help', 'Sample' ], [ Sample.new("a11wlk01.wav", 1.6347258775994),
             0.46511627906977, 0.17441860465116 ]
     ).play
-)</pre>
+)</textarea>
 <h2><a class='anchor' name='methods%20usable%20inside%20an%20Instr%20function.'>methods usable inside an Instr function.</a></h2>
 
 <p>These methods will work inside an Instr but not when used in a normal SynthDef.
@@ -215,7 +219,7 @@ Instr([\help,\Sample],{ arg sample,pchRatio=1.0,start=0.0;
 <p> bufSamplesKr  a kr rate signal with the number of samples of the current sample  bufSamplesIr  an ir rate signal with the number of samples of the current sample
 <p> duration  duration in seconds of current sample, embedded into SynthDef as a constant.  bufDurKr  duration in seconds  bufDurIr  duration in seconds
 <p> numChannels  integer, number of channels of the current sample. this will be embedded  into the SynthDef as a constant. the SynthDef will still be reusable for  all samples of the same numChannels.  bufChannelsKr  number of channels of the current sample. you cannot use this to modulate  a PlayBuf.  bufChannelsIr  number of channels of the sample. you cannot use this to modulate  a PlayBuf.<h2><a class='anchor' name='Beat%20Synching'>Beat Synching</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
     Instr([\help,\Sample],{ arg sample;
         PlayBuf.ar(
             sample.numChannels,
@@ -233,6 +237,7 @@ Instr([\help,\Sample],{ arg sample,pchRatio=1.0,start=0.0;
 
     // move the tempo slider
     p.gui
-)</pre>
+)</textarea>
 
-<p>Note that the patch will not play starting on the even bar division unless it is started with p.play(atTime: 1)<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/Sample.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/Sample.schelp</a><br>link::Classes/Sample::<br></div></div></body></html>
+<p>Note that the patch will not play starting on the even bar division unless it is started with p.play(atTime: 1)<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/Sample.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/Sample.schelp</a><br>link::Classes/Sample::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>Guide to HS and HSpar | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Guide to HS and HSpar | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Guide to HS and HSpar';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Guide to HS and HSpar:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#Motivation'>Motivation</a></li>
@@ -25,8 +29,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc1'><a href='#Synth%20value%20access'>Synth value access</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Order%20of%20execution'>Order of execution</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#About%20the%20examples'>About the examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Guides (extension)</span>
@@ -72,9 +76,10 @@ var scdoc_sc_version = '3.9.3';
 
 <p>If several Pbinds are played in parallel, demands for values of the same help synth can be very close together, which causes possibly unnecessary OSC traffic: If accuracy of synth values is not very important (and for LFO-like purposes it is probably not) it seems sufficient to identify synth values from a small time region. This is done by the HS / HSpar parameter <strong>granularity</strong>, which defaults to 200, defining a time region of 0.005 seconds. Synth value demands within such a region are using just one (namely the first) demanded value, scheduling itself isn't affected. Mostly you won't have to think about this quantization - note that it has nothing to do with Quant objects and synchronizing players.<h2><a class='anchor' name='Synth%20value%20access'>Synth value access</a></h2>
 
-<p>In the case of a single help synth (HS), values are accessible within the PHS / PHSuse by the local variable <code class='code prettyprint lang-sc'>~val</code>, e.g. by <code class='code prettyprint lang-sc'>Pkey(\val)</code> or a construction with <code class='code prettyprint lang-sc'>Pfunc</code>. In the case of several help synths (HSpar), there is the option of defining a separately timed pattern to switch between playing help synths, always marking one as "current". Then <code class='code prettyprint lang-sc'>~val</code> refers to this current help synth, but reference behaviour can be differentiated by options and other keywords within the PHSpar / PHSparUse to get values of all playing help synths and other values (indices) which may be useful for control definitions. See examples in the help file <a href="./../Classes/PHSpar.html">PHSpar</a>, e.g. the last one.<h2><a class='anchor' name='Order%20of%20execution'>Order of execution</a></h2>
+<p>In the case of a single help synth (HS), values are accessible within the PHS / PHSuse by the local variable <code>~val</code>, e.g. by <code>Pkey(\val)</code> or a construction with <code>Pfunc</code>. In the case of several help synths (HSpar), there is the option of defining a separately timed pattern to switch between playing help synths, always marking one as "current". Then <code>~val</code> refers to this current help synth, but reference behaviour can be differentiated by options and other keywords within the PHSpar / PHSparUse to get values of all playing help synths and other values (indices) which may be useful for control definitions. See examples in the help file <a href="./../Classes/PHSpar.html">PHSpar</a>, e.g. the last one.<h2><a class='anchor' name='Order%20of%20execution'>Order of execution</a></h2>
 
 <p>If more than one Pbind is defined via PHS / PHSuse / PHSpar / PHSparUse the corresponding players will be started in order of definition with a small amount of time-shift between them, so that they can refer to each other (especially at coinciding points of logical time). See the last example of <a href="./../Classes/PHS.html">PHS</a>.<h2><a class='anchor' name='About%20the%20examples'>About the examples</a></h2>
 
 <p>Examples in the doc files use help synths values mainly for pitch - this seemes to make the concept quite clear. I preferred to take the default instrument to emphasize what is happening structurally. See <a href="./../Classes/HS.html">HS</a> examples for other usages. 
-<p>Be sure to have the right HS / HSpar definition evaluated before defining resp. playing a PHS / PHSpar ! - examples usually begin with a HS / HSpar definition and are thought to be worked through following the comments.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Guides/Guide_to_HS_and_HSpar.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Guides/Guide_to_HS_and_HSpar.schelp</a><br>link::Guides/Guide_to_HS_and_HSpar::<br></div></div></body></html>
+<p>Be sure to have the right HS / HSpar definition evaluated before defining resp. playing a PHS / PHSpar ! - examples usually begin with a HS / HSpar definition and are thought to be worked through following the comments.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Guides/Guide_to_HS_and_HSpar.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Guides/Guide_to_HS_and_HSpar.schelp</a><br>link::Guides/Guide_to_HS_and_HSpar::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

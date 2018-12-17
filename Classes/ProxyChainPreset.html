@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>ProxyChainPreset | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>ProxyChainPreset | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'ProxyChainPreset';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>ProxyChainPreset:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -40,8 +44,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'><li class='toc3'><a href='#-deleteDialog'>deleteDialog</a> </li>
 <li class='toc3'><a href='#-storeDialog'>storeDialog</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -56,7 +60,7 @@ var scdoc_sc_version = '3.9.3';
 <h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>ProxyChainPreset can store presets for ProxyChain objects: A setting includes which functions are active (by name), and separate parameter settings for each active function.
-<p>First code examples:<pre class='code prettyprint lang-sc'>s.boot;
+<p>First code examples:<textarea class='editor'>s.boot;
 
 // first, prepare for making a proxy chain:
 
@@ -163,7 +167,7 @@ b.setCurr(\test5);
 // now write them to disk
 b.settings.write;
 
-b.settingNames;</pre>
+b.settingNames;</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>ProxyChainPreset.</span><a class='method-name' name='*all' href='./../Overviews/Methods.html#all'>all</a></h3>
 <div class='method'>
@@ -212,7 +216,7 @@ b.settingNames;</pre>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-storeDialog' href='./../Overviews/Methods.html#storeDialog'>storeDialog</a>(<span class='argstr'>name</span>, <span class='argstr'>loc</span>)</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 
-<p>Here is a quick and dirty gui sketch for a ProxyChainPresetGui, assuming you still have b and c preset from above around:<pre class='code prettyprint lang-sc'>(
+<p>Here is a quick and dirty gui sketch for a ProxyChainPresetGui, assuming you still have b and c preset from above around:<textarea class='editor'>(
 w = Window("PCPre", Rect(0,600,500,500)).front;
 w.addFlowLayout;
 e = EZPopUpMenu(w, Rect(0,0,150, 20), \pcPre, b.settingNames,
@@ -227,9 +231,9 @@ e = EZPopUpMenu(w, Rect(0,0,150, 20), \pcPre, b.settingNames,
 };
 
 g = ProxyChainGui(c, 20, w);
-)</pre>
+)</textarea>
 
-<p>An example of a MasterFX / ProxyChainPreset combination, using the same sound functions as above:<pre class='code prettyprint lang-sc'>m = MasterFX(s, 2, [\dust, \ringmod, \dist, \ampFin]);
+<p>An example of a MasterFX / ProxyChainPreset combination, using the same sound functions as above:<textarea class='editor'>m = MasterFX(s, 2, [\dust, \ringmod, \dist, \ampFin]);
 n = ProxyChainPreset(m.proxyChain);
 n.exceptedSlots = [\ampFin];
 
@@ -258,6 +262,7 @@ e = EZPopUpMenu(w, Rect(0,0,150, 20), \mfxPre, b.settingNames,
 };
 
 g = MasterFXGui(m, 24, w);
-)</pre>
+)</textarea>
 
-<p>s<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/ProxyChainPreset.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/ProxyChainPreset.schelp</a><br>link::Classes/ProxyChainPreset::<br></div></div></body></html>
+<p>s<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/ProxyChainPreset.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/ProxyChainPreset.schelp</a><br>link::Classes/ProxyChainPreset::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

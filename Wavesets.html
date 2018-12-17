@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>Wavesets | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Wavesets | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./editor.css' type='text/css' />
 <link rel='stylesheet' href='./frontend.css' type='text/css' />
 <link rel='stylesheet' href='./custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./lib/jquery.min.js'></script>
+<script src='./lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = '.';
 var scdoc_title = 'Wavesets';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./scdoc.js' type='text/javascript'></script>
 <script src='./docmap.js' type='text/javascript'></script>
-<script src='./prettify.js' type='text/javascript'></script>
-<script src='./lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Wavesets:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -62,8 +66,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-plot'>plot</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Task%20Examples'>Task Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'> (extension)</span>
@@ -80,7 +84,7 @@ var scdoc_sc_version = '3.9.3';
 <p>By Trevor Wishart's definition, a waveset is a segment of an audio signal between one non-positive to positive zero crossing and the next. [ see T. Wishart (1994): Audible Design. ] Note that this definition only applies to mono signals.
 <p>In extension of that concept, the Wavesets class provides fractional zero crossings, amplitude analyses, and other statistical data.
 <p>See also the end of Chapter 16, Microsound, in the SuperCollider Book at MIT Press for detailed examples - code available here:
-<p><a href="http://supercolliderbook.net/">http://supercolliderbook.net/</a><pre class='code prettyprint lang-sc'>Server.default.boot; // make sure server is booted
+<p><a href="http://supercolliderbook.net/">http://supercolliderbook.net/</a><textarea class='editor'>Server.default.boot; // make sure server is booted
 
 // make a wavesets from a soundfile
 w = Wavesets.from(String.scDir +/+ "sounds/a11wlk01.wav");
@@ -111,7 +115,7 @@ fork {
         ev.sustain.wait;
     }
 };
-)</pre>
+)</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*prepareSynthDefs' href='./Overviews/Methods.html#prepareSynthDefs'>prepareSynthDefs</a></h3>
 <div class='method'>
@@ -204,7 +208,7 @@ fork {
 <p>create a buffer for the Waevesets on the server given.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plot' href='./Overviews/Methods.html#plot'>plot</a></h3>
 <div class='method'>
 <p>plot a section of &lt;length&gt; Wavesets from &lt;startWs&gt;</div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>// The simplest usage is to ask the waveset to prepare an event for you.
+<textarea class='editor'>// The simplest usage is to ask the waveset to prepare an event for you.
 
 w = Wavesets.from(String.scDir +/+ "sounds/a11wlk01.wav");
 
@@ -248,10 +252,10 @@ x.set(\start, w.xings.at(780), \end, w.xings.at(800));
 x.set(\playRate, 0.25);
 x.set(\playRate, 1);
 
-x.release;</pre>
+x.release;</textarea>
 <h2><a class='anchor' name='Task%20Examples'>Task Examples</a></h2>
 
-<p>To play a waveset (or group) for a precise number of repetitions, one can use a SynthDef with a hard cutoff envelope, as below. Note that adding an offset outside the phasor works better; Phasor.ar(0, playRate, start, end) is sometimes off by a few samples. This is likely a 32bit float precision problem.<pre class='code prettyprint lang-sc'>(
+<p>To play a waveset (or group) for a precise number of repetitions, one can use a SynthDef with a hard cutoff envelope, as below. Note that adding an offset outside the phasor works better; Phasor.ar(0, playRate, start, end) is sometimes off by a few samples. This is likely a 32bit float precision problem.<textarea class='editor'>(
 // the simplest synthdef as implented in *prepareSynthDefs:
 SynthDef(\wvst0, { arg out = 0, buf = 0, start = 0, length = 441, playRate = 1, sustain = 1, amp=0.2, pan;
     var phasor = Phasor.ar(0, BufRateScale.ir(buf) * playRate, 0, length) + start;
@@ -371,5 +375,6 @@ Task {
         0.5.wait;
     };
 }.play;
-)</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Wavesets/HelpSource/Wavesets.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Wavesets/HelpSource/Wavesets.schelp</a><br>link::Wavesets::<br></div></div></body></html>
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Wavesets/HelpSource/Wavesets.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Wavesets/HelpSource/Wavesets.schelp</a><br>link::Wavesets::<br></div></div><script src='./editor.js' type='text/javascript'></script>
+</body></html>

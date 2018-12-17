@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>HS | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>HS | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'HS';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>HS:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -35,8 +39,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-free'>free</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -64,7 +68,7 @@ var scdoc_sc_version = '3.9.3';
 <p>Boolean for posting of (server to client) OSC messages. Defaults to false.<tr><td class='argumentname'>granularity<td class='argumentdesc'>
 <p>Time grains per second, quantization for bookkeeping. Defaults to 200.<tr><td class='argumentname'>inputCheck<td class='argumentdesc'>
 <p>Boolean for checking input data. Defaults to true.</table><h4>Discussion:</h4>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 s = Server.local;
 Server.default = s;
 s.boot;
@@ -74,10 +78,10 @@ s.boot;
 // This compiles the SynthDef and prepares the HS to be played with a PHS,
 // no Synth object is yet instantiated.
 
-h = HS(s, { LFDNoise3.kr(0.7, 15, 75) });</pre>
+h = HS(s, { LFDNoise3.kr(0.7, 15, 75) });</textarea>
 
 <p>A PHS, like a Pbind, defines event stream behaviour, only durations are given separately. Here values are demanded just by one stream with constant duration,  but more than one duration pattern per HS and more than one Pbind per duration pattern may be defined - see the <a href="./../Classes/PHS.html">PHS</a> help file for examples. 
-<p>The play method of a PHS creates a PHSplayer which plays a synth from HS's synth definition,  synth values are accessible within the PHS definition by the variable <code class='code prettyprint lang-sc'>~val</code>, e.g. by <code class='code prettyprint lang-sc'>Pkey(\val)</code>. If HS's synthdef has no args, this must be specified in the PHS by <code class='code prettyprint lang-sc'>nil</code> or <code class='code prettyprint lang-sc'>[]</code>.<pre class='code prettyprint lang-sc'>p = PHS(h, [], 0.15, [ \midinote, Pkey(\val) ]).play;
+<p>The play method of a PHS creates a PHSplayer which plays a synth from HS's synth definition,  synth values are accessible within the PHS definition by the variable <code>~val</code>, e.g. by <code>Pkey(\val)</code>. If HS's synthdef has no args, this must be specified in the PHS by <code>nil</code> or <code>[]</code>.<textarea class='editor'>p = PHS(h, [], 0.15, [ \midinote, Pkey(\val) ]).play;
 
 // also:
 // p = PHS(h, [], 0.15, [ \midinote, Pfunc { |e| e.use { ~val } }  ]).play;
@@ -92,7 +96,7 @@ p.stop(true); // HS synth also paused
 
 p.play; // resume the PHSplayer together with HS synth
 
-p.free; // also stop HS synth and cleanup - PHSplayer and HS object are freed</pre>
+p.free; // also stop HS synth and cleanup - PHSplayer and HS object are freed</textarea>
 </div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-demandLatency' href='./../Overviews/Methods.html#demandLatency'>demandLatency</a></h3>
@@ -146,7 +150,7 @@ p.free; // also stop HS synth and cleanup - PHSplayer and HS object are freed</p
 <div class='method'>
 <p>Free all related PHSplayers / PHSusePlayers, then <strong>stop</strong>, <strong>sleep</strong> and <strong>busFree</strong>.<div class='note'><span class='notelabel'>NOTE:</span> <strong>stop</strong> and <strong>free</strong> will normally be called by the respective player methods, see <a href="./../Classes/PHSplayer.html">PHSplayer</a>.</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 s = Server.local;
 Server.default = s;
 s.boot;
@@ -235,6 +239,7 @@ p.play(c, q);
 (
 r.stop;
 p.free;
-)</pre>
+)</textarea>
 
-<p> <div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/HS.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/HS.schelp</a><br>link::Classes/HS::<br></div></div></body></html>
+<p> <div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/HS.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/HS.schelp</a><br>link::Classes/HS::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

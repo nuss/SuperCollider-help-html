@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>PSPdiv | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>PSPdiv | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'PSPdiv';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>PSPdiv:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -28,8 +32,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%203:%20Ornamenting%20a%20line%20with%20a%20second%20layer'>Ex. 3: Ornamenting a line with a second layer</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%204:%20Polyrhythmics%20of%20several%20layers'>Ex. 4: Polyrhythmics of several layers</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%205:%20Granulation,%20control%20of%20many%20layers'>Ex. 5: Granulation, control of many layers</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -66,14 +70,14 @@ var scdoc_sc_version = '3.9.3';
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='Examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 s = Server.local;
 Server.default = s;
 s.boot;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.1'>&nbsp;</a><h3><a class='anchor' name='Ex.%201:%20Basic%20functionality%20with%20one%20layer'>Ex. 1: Basic functionality with one layer</a></h3>
-<pre class='code prettyprint lang-sc'>// test SynthDef
+<textarea class='editor'>// test SynthDef
 
 (
 SynthDef(\varKlank, { |freq = 500, att = 0.01, rel = 0.1, sourceType = 0,
@@ -183,11 +187,11 @@ x = q.play
 )
 
 
-x.stop</pre>
+x.stop</textarea>
 
 <p><a class='anchor' name='Ex.2'>&nbsp;</a><h3><a class='anchor' name='Ex.%202:%20Parallel%20embedding%20with%20one%20layer'>Ex. 2: Parallel embedding with one layer</a></h3>
 
-<p>SynthDef from <a href="#Ex.1">Ex.1</a><pre class='code prettyprint lang-sc'>(
+<p>SynthDef from <a href="#Ex.1">Ex.1</a><textarea class='editor'>(
 // default values for proxies
 
 ~pulse = 0.5;
@@ -250,11 +254,11 @@ x = q.play
 ~divBase = PLrand([1, 2]);
 
 
-x.stop</pre>
+x.stop</textarea>
 
 <p><a class='anchor' name='Ex.3'>&nbsp;</a><h3><a class='anchor' name='Ex.%203:%20Ornamenting%20a%20line%20with%20a%20second%20layer'>Ex. 3: Ornamenting a line with a second layer</a></h3>
 
-<p>SynthDef from <a href="#Ex.1">Ex.1</a><pre class='code prettyprint lang-sc'>(
+<p>SynthDef from <a href="#Ex.1">Ex.1</a><textarea class='editor'>(
 p = Pbind(
     \instrument, \varKlank,
     // basic melodic line, data stored in variable for use by ornamentation
@@ -322,11 +326,11 @@ x = r.play
 ~divType = \par;
 )
 
-x.stop</pre>
+x.stop</textarea>
 
 <p><a class='anchor' name='Ex.4'>&nbsp;</a><h3><a class='anchor' name='Ex.%204:%20Polyrhythmics%20of%20several%20layers'>Ex. 4: Polyrhythmics of several layers</a></h3>
 
-<p>SynthDef from <a href="#Ex.1">Ex.1</a><pre class='code prettyprint lang-sc'>// three layers using varying pentatonic scales shifted by sixth tones
+<p>SynthDef from <a href="#Ex.1">Ex.1</a><textarea class='editor'>// three layers using varying pentatonic scales shifted by sixth tones
 
 (
 // staccato layer
@@ -407,11 +411,11 @@ x = u.play
 
 ~pulse = PLshufn([1, 1, 9/8]);
 
-x.stop;</pre>
+x.stop;</textarea>
 
 <p><a class='anchor' name='Ex.5'>&nbsp;</a><h3><a class='anchor' name='Ex.%205:%20Granulation,%20control%20of%20many%20layers'>Ex. 5: Granulation, control of many layers</a></h3>
 
-<p>SynthDef from <a href="#Ex.1">Ex.1</a><pre class='code prettyprint lang-sc'>(
+<p>SynthDef from <a href="#Ex.1">Ex.1</a><textarea class='editor'>(
 ~amp = 0.05;
 ~att = 0.005;
 ~rel = 0.05;
@@ -470,5 +474,6 @@ x = u.play
 
 ~pulse = 1/4
 
-x.stop</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PSPdiv.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PSPdiv.schelp</a><br>link::Classes/PSPdiv::<br></div></div></body></html>
+x.stop</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PSPdiv.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PSPdiv.schelp</a><br>link::Classes/PSPdiv::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>TabbedView | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>TabbedView | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'TabbedView';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>TabbedView:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -60,8 +64,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Change%20History'>Change History</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -255,13 +259,13 @@ var scdoc_sc_version = '3.9.3';
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 
 <p><strong>Usage:</strong>
-<p><strong>use CompositeView style GUI</strong><pre class='code prettyprint lang-sc'>(
+<p><strong>use CompositeView style GUI</strong><textarea class='editor'>(
 t=TabbedView(name:"** this is a mock preferences pane **");
 
 ActionButton(t.views[0],"go to next tab ",{t.focus(1)}).bounds_(Rect(50,50,200,100));
-)</pre>
+)</textarea>
 
-<p><strong>use FlowView style GUI</strong><pre class='code prettyprint lang-sc'>(
+<p><strong>use FlowView style GUI</strong><textarea class='editor'>(
 t=TabbedView(); // use Flow Style
 
     t.views[0].flow({|w| 
@@ -274,9 +278,9 @@ t=TabbedView(); // use Flow Style
         .states_([["go to last tab"]]).action_({t.focus(2)})
     });
     
-)</pre>
+)</textarea>
 
-<p><strong>quick styling with variations on  *new:</strong>(There are some color differences for swing)<pre class='code prettyprint lang-sc'>TabbedView.newBasic
+<p><strong>quick styling with variations on  *new:</strong>(There are some color differences for swing)<textarea class='editor'>TabbedView.newBasic
 
 TabbedView.newColor
 
@@ -288,9 +292,9 @@ TabbedView.newTall
 
 TabbedView.newTransparent
 
-TabbedView.newPacked(nil,nil,Array.fill(20,{|i| i.asString})); //very good for tons of tabs :</pre>
+TabbedView.newPacked(nil,nil,Array.fill(20,{|i| i.asString})); //very good for tons of tabs :</textarea>
 
-<p><strong>set tabPosition and followEdges:</strong>live switching adjusts positions of contents if you use .flow .<pre class='code prettyprint lang-sc'>(
+<p><strong>set tabPosition and followEdges:</strong>live switching adjusts positions of contents if you use .flow .<textarea class='editor'>(
 v=TabbedView.newColorLabels(nil,nil,Array.fill(5,{arg i; var q="aa"; i.do{q=q++"a"}; q })); //default
 v.views[0].flow({arg w;
     ActionButton(w,"tabs top",{v.tabPosition_(\top)},300,50);
@@ -313,17 +317,17 @@ TabbedView.newColorLabels(nil,nil,Array.fill(25,{|i| "tab"++i.asString})).tabPos
 
 TabbedView.newTall(nil,nil,Array.fill(5,{|i| "tab"++i.asString})).tabPosition_(\left);
 
-TabbedView.newTall(nil,Rect(100,500,400,100),Array.fill(5,{|i| "tab"++i.asString})).tabPosition_(\bottom);</pre>
+TabbedView.newTall(nil,Rect(100,500,400,100),Array.fill(5,{|i| "tab"++i.asString})).tabPosition_(\bottom);</textarea>
 
-<p><strong>Drag objects from one tab to another (under cocoa and qt only at the moment):</strong><pre class='code prettyprint lang-sc'>(
+<p><strong>Drag objects from one tab to another (under cocoa and qt only at the moment):</strong><textarea class='editor'>(
 v=TabbedView.newColorLabels;
 n = GUI.dragSource.new(v.views[0], Rect(50, 50, 140, 24));
             n.object = "Drag me to Tab2";
  GUI.textView.new (v.views[1], Rect(50, 50, 140, 80));
-)</pre>
+)</textarea>
 
 <p><strong>add, removeAt, insert  tabs</strong>
-<p>defaults on *new, but other thems use fixedwidths:<pre class='code prettyprint lang-sc'>v=TabbedView.newColor
+<p>defaults on *new, but other thems use fixedwidths:<textarea class='editor'>v=TabbedView.newColor
 
 v.add("I am last")
 
@@ -338,10 +342,10 @@ w=GUI.window.new.front;
 v=TabbedView.newColorLabels(w,Rect(40,40,280,280),Array.fill(12,{|i| "tab"++i.asString})).tabPosition_(\right).followEdges_(false);
 v.resize_(5);
 GUI.slider.new(v.views[0],Rect(10,80,200,30)).resize_(2);
-)</pre>
+)</textarea>
 
 <p><strong>nest TabbedViews &amp; use scrolling</strong>
-<p>uses scroll:true in the inner tab<pre class='code prettyprint lang-sc'>(
+<p>uses scroll:true in the inner tab<textarea class='editor'>(
 v=TabbedView.newPacked(nil,Rect(200,200,600,400).insetBy(20,20),["1","2","3"])
         .tabHeight_(40).tabPosition_(\right).followEdges_(false);
 
@@ -356,39 +360,39 @@ q.views[0].flow({ arg w;
     });
 });
 GUI.slider.new(q.views[1],q.views[1].bounds.insetBy(50,50));
-)</pre>
+)</textarea>
 
 <p><strong>user functions:   focus and unfocus</strong>
-<p> turn on/off scopes , e.g. <pre class='code prettyprint lang-sc'>( 
+<p> turn on/off scopes , e.g. <textarea class='editor'>( 
 v=TabbedView.new();
 v.focusActions[1]={"tab2 is focused".postln};
 v.unfocusActions[1]={"tab2 just unfocused".postln};
-)</pre>
+)</textarea>
 
-<p><strong>focusFrameColor_(color) and unfocusTabs_(bool)</strong>The tabs are drawn with user view which have a clear focus frame on Cocoa. On Swing, the frame cannot be made clear, so by default the tabs are unfocused after clicking. You can change this if it interferes with your tabbing scheme.<pre class='code prettyprint lang-sc'>( 
+<p><strong>focusFrameColor_(color) and unfocusTabs_(bool)</strong>The tabs are drawn with user view which have a clear focus frame on Cocoa. On Swing, the frame cannot be made clear, so by default the tabs are unfocused after clicking. You can change this if it interferes with your tabbing scheme.<textarea class='editor'>( 
 v=TabbedView.new();
 
 v.unfocusTabs_(false);  // default is false on Cocoa, true otherwise;
 v.focusFrameColor_(Color.red); //cocoa only
 
-)</pre>
+)</textarea>
 
 <p><strong>default autosizing tabs</strong>
-<p>defaults to auto on *new, but other themes use fixedwidths:<pre class='code prettyprint lang-sc'>(
+<p>defaults to auto on *new, but other themes use fixedwidths:<textarea class='editor'>(
 TabbedView.new(nil,Rect(150,100,400,500),["1","two","threeeeeeeeeeee","four","5"]); 
 )
 
 (
 v=TabbedView.newFlat(nil,Rect(150,100,400,300),["1","two","threeeeeeeeeee","four","5"]); 
 v.tabWidth_(\auto);
-)</pre>
+)</textarea>
 
-<p><strong>fixed tab sizes</strong><pre class='code prettyprint lang-sc'>(
+<p><strong>fixed tab sizes</strong><textarea class='editor'>(
 TabbedView(nil,nil,["1","two","three","four","5"]).tabWidth_(70);  
-)</pre>
+)</textarea>
 
 <p><strong>set font</strong>
-<p>Swing fonts only work within certain limits for now. use swingFactor_ to adjust the conversion.<pre class='code prettyprint lang-sc'>(
+<p>Swing fonts only work within certain limits for now. use swingFactor_ to adjust the conversion.<textarea class='editor'>(
 v=TabbedView.newBasic.font_(GUI.font.new("Monaco",9)).tabHeight_(18);
 
 )
@@ -409,16 +413,16 @@ v=TabbedView.newTall.font_(GUI.font.new("Helvetica",18)).tabPosition_(\left);
 (
 v=TabbedView.newTall.font_(GUI.font.new("Helvetica",36)).tabHeight_(\auto).tabWidth_(\auto);
 
-)</pre>
+)</textarea>
 
 <p> 
-<p><strong>Set colors with an argument to .new</strong>Colors can wrap around if there are less than there are labels.  Unfocused colors are calculated automatically.<pre class='code prettyprint lang-sc'>(
+<p><strong>Set colors with an argument to .new</strong>Colors can wrap around if there are less than there are labels.  Unfocused colors are calculated automatically.<textarea class='editor'>(
 v=TabbedView(nil,nil,Array.fill(8,{|i| i.asString}),
     [Color.rand,Color.rand,Color.rand]);
     //Colors can wrap around 
-)</pre>
+)</textarea>
 
-<p><strong>Set colors very specifically to your own taste using set methods</strong><pre class='code prettyprint lang-sc'>(
+<p><strong>Set colors very specifically to your own taste using set methods</strong><textarea class='editor'>(
 v=TabbedView.new(nil,nil,["one","two","three"]); 
     //Colors can wrap around 
 v.labelColors_([Color.rand,Color.rand,Color.rand]);
@@ -429,10 +433,10 @@ v=TabbedView.new(nil,nil,["one","two","three"]);
 v.labelColors_([Color.red,Color.blue,Color.yellow]);
 v.unfocusedColors_([Color.red.alpha_(0.1),Color.blue.alpha_(0.1),Color.yellow.alpha_(0.1)]);
 v.backgrounds_([Color.red.alpha_(0.1),Color.blue.alpha_(0.1),Color.yellow.alpha_(0.1)]);
-)</pre>
+)</textarea>
 
 <p><strong>adjust padding and curves for small autowidth</strong>
-<p>labelPadding only has an effect on autowidth<pre class='code prettyprint lang-sc'>(
+<p>labelPadding only has an effect on autowidth<textarea class='editor'>(
 v=TabbedView(nil,nil,Array.fill(20,{|i| i.asString}));
 v.labelPadding_(8);      //tighter padding
 v.tabCurve_(3);           //sharper curves
@@ -444,9 +448,9 @@ v.backgrounds_([Color.white.alpha_(0.3)]);
 
 (
 v=TabbedView.newPacked(nil,nil,Array.fill(20,{|i| i.asString}));
-)</pre>
+)</textarea>
 
-<p><strong>adjust tab height and curves</strong><pre class='code prettyprint lang-sc'>// super flat and elegant
+<p><strong>adjust tab height and curves</strong><textarea class='editor'>// super flat and elegant
 
 (
 v=TabbedView(nil,nil,["1","two","three","four","5"]).tabWidth_(70).tabHeight_(13).tabCurve_(3); 
@@ -456,8 +460,9 @@ v=TabbedView(nil,nil,["1","two","three","four","5"]).tabWidth_(70).tabHeight_(13
 
 (
 TabbedView(nil,nil,["1","two","three","four","5"]).tabWidth_(70).tabHeight_(30).tabCurve_(3); 
-)</pre>
+)</textarea>
 <h2><a class='anchor' name='Change%20History'>Change History</a></h2>
 <ul>
 <li>Aug 27, 2007 : code optimized; instanceVar tabPosition. Version 1.0;<li>Aug 24, 2007 : small code optimizations Version 1.01;<li>Aug 23, 2007 : fixed small bug when bounds=nil Version 1.02;<li>Aug 30, 2007 : added scroll option. Convenience new methods can now take arguments of form arg:value Version 1.03;<li>Sep 2, 2007 : FlowView contents will now reposition in real time if tab position is changed. tabPosition getter. Version 1.04;  Tabs can switch during drags(cocoa only); <li>Feb 12, 2008 : relativeOrigin variable added to adjust to new SCCompositeView behavior. Swing compatibility. Version 1.10;<li>Feb 16, 2008 : Version 1.11; Swing themes adjusted to use no transparency.   deprecated: newRGB and newRGBLabels ;  use new methods: newColor and newColorLabels instead.  swingFactor defaults to 7 (integers work better than floats,<li>Feb 19, 2008 : Version 1.12;   focus_() deprecated; use focus(index) instead.   focused added.<li>Feb 19, 2008 : Version 1.13;   focused removed and changed to activeTab.  All variables that had a double s in "focussed", changed to singel s;<li>Feb 20, 2008 : Version 1.14; Fixed returned tab on add and insert methods <li>Feb 20, 2008 : Version 1.15; added font variable. other bug fixes <li>Feb 26, 2008 : Version 1.20; added followEdges option. <li>July 09, 2008 : Version 1.21; updates for SC3.21 <li>Dec 15, 2008 : Version 1.22; changed swing font calculation <li>Dec 19, 2008 : Version 1.23; changed swing font calculation<li>Jan 28, 2008 : Version 1.24; fixed loop bug (thanks Fredrik Olofsson) . relativeOrigin deprecated (always use r/o)<li>Jun 11, 2009 : Version 1.25; removed all calls to relativeOrigin. focusFrameColor_(color) and unfocusTabs_(bool).   arg w changed to parent<li>July 15, 2009: Version 1.26; GUI context change bug fixed (thanks to sciss). Font calculations put in an AppClock.<li>July 26, 2009: Version 1.27; removed AppClock and returned to factored font calculation for swing. AppClock causes   flow layout problems<li>Aug 01, 2009: Version 1.28; small fix to Help file<li>Oct 09, 2012: Version 1.29; Removed deprecated methods. QT support. SCDoc Support.</ul>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/TabbedView/HelpSource/Classes/TabbedView.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/TabbedView/HelpSource/Classes/TabbedView.schelp</a><br>link::Classes/TabbedView::<br></div></div></body></html>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/TabbedView/HelpSource/Classes/TabbedView.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/TabbedView/HelpSource/Classes/TabbedView.schelp</a><br>link::Classes/TabbedView::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

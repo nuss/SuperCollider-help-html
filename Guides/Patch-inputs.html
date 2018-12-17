@@ -1,27 +1,31 @@
-<!doctype html><html lang='en'><head><title>Patch inputs | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>Patch inputs | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Patch inputs';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>Patch inputs:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#Fixed%20Arguments'>Fixed Arguments</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Talking%20to%20the%20Patch's%20input%20objects'>Talking to the Patch's input objects</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Scaling%20inputs%20and%20outputs'>Scaling inputs and outputs</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Meta-patches%20:%20factory%20methods%20and%20creating%20Patches%20with%20Patches'>Meta-patches : factory methods and creating Patches with Patches</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Guides (extension)</span>
@@ -36,7 +40,7 @@ var scdoc_sc_version = '3.9.3';
 <p>An argument may be nil. For a nil argument, Patch will ask the spec to create a suitable defaultControl.<ul>
 <li>ControlSpec : KrNumberEditor<li>StaticSpec : NumberEditor (for quantities or max delay times etc.)  a static spec is a non-modulateable control<li>EnvSpec : EnvEditor<li>SampleSpec : Sample<li>etc.</ul>
 
-<p>The instrument may specify default values in the arg names of its function:<pre class='code prettyprint lang-sc'>(
+<p>The instrument may specify default values in the arg names of its function:<textarea class='editor'>(
 Instr(\bubbles, { arg speed = 0.4, amp=0.4;
     var f, zout;
     f = LFSaw.kr(speed, 0, 24, LFSaw.kr([8,7.23], 0, 3, 80)).midicps;
@@ -55,28 +59,28 @@ p = Patch(\bubbles,
 // from the instr function
 p.gui;
 
-)</pre>
+)</textarea>
 
-<p>If you wanted to build your patch with a KrNumberEditor (a slider) defaulted to 0.01 for the speed:<pre class='code prettyprint lang-sc'>(
+<p>If you wanted to build your patch with a KrNumberEditor (a slider) defaulted to 0.01 for the speed:<textarea class='editor'>(
 Patch(\bubbles,
     [
         KrNumberEditor(0.01,\speed)
     ]).gui
-)</pre>
+)</textarea>
 
-<p>Args may also be supplied using a dictionary/event expressing args by name as: (argName: value, ... )<pre class='code prettyprint lang-sc'>Patch({ arg freq,amp;
+<p>Args may also be supplied using a dictionary/event expressing args by name as: (argName: value, ... )<textarea class='editor'>Patch({ arg freq,amp;
 
     SinOsc.ar(freq,amp)
 },(
     amp: 0.4
-)).gui</pre>
+)).gui</textarea>
 
 <p>This is useful for Instr with long arg lists and helps to avoid errors.
 <p>For any nil arguments, a default control will be created.
 <p>This gives the impression that Patch is "an automatic gui for an Instr / SynthDef".
 <p>If you do not supply arguments, it will make default ones, simple ones, but the real power of Patch is to supply functions with complex and varied inputs. Sitting there with 5 sliders on a 1 dimensional Instrument isn't really the height of synthesis.<h2><a class='anchor' name='Fixed%20Arguments'>Fixed Arguments</a></h2>
 
-<p>Floats and other scalar values including Envelopes, are transparently dealt with by Patch. These items are passed to the Instr function, but not to the SynthDef or the Synth. They are not modulateable.<pre class='code prettyprint lang-sc'>(
+<p>Floats and other scalar values including Envelopes, are transparently dealt with by Patch. These items are passed to the Instr function, but not to the SynthDef or the Synth. They are not modulateable.<textarea class='editor'>(
 // fixing arguments
 
 Instr([\jmcExamples,'moto-rev'],{ arg lfo=0.2,freq=1000,rq=0.1;
@@ -89,10 +93,10 @@ q = Patch([\jmcExamples,'moto-rev'],[
 
 q.gui;
 
-)</pre>
+)</textarea>
 <h2><a class='anchor' name='Talking%20to%20the%20Patch's%20input%20objects'>Talking to the Patch's input objects</a></h2>
 
-<p>As an extra facility, each arg name automagically becomes an attribute of the patch object itself.<pre class='code prettyprint lang-sc'>p = Patch({ arg freq=440; SinOsc.ar( freq ) });
+<p>As an extra facility, each arg name automagically becomes an attribute of the patch object itself.<textarea class='editor'>p = Patch({ arg freq=440; SinOsc.ar( freq ) });
 // with no args supplied, a KrNumberEditor was made as input for \freq
 p.args.dump;
 
@@ -106,10 +110,10 @@ p.freq.value = 300
 
 // look for the input for the 'freq' arg
 // and sends it the .set(500) message if it responds to that
-p.set(\freq, 500)</pre>
+p.set(\freq, 500)</textarea>
 <h2><a class='anchor' name='Scaling%20inputs%20and%20outputs'>Scaling inputs and outputs</a></h2>
 
-<p>First of all, quite apart from Patch, you can use a spec to map a signal from a 0..1 range to the range of the spec :<pre class='code prettyprint lang-sc'>(
+<p>First of all, quite apart from Patch, you can use a spec to map a signal from a 0..1 range to the range of the spec :<textarea class='editor'>(
 var spec;
 spec = [ 100,18000,\exp].asSpec;
 
@@ -120,9 +124,9 @@ spec = [ 100,18000,\exp].asSpec;
     )
 }.play
 
-)</pre>
+)</textarea>
 
-<p>you can also do that with a Patch input, supplying the resulting function as an input to the patch:<pre class='code prettyprint lang-sc'>(
+<p>you can also do that with a Patch input, supplying the resulting function as an input to the patch:<textarea class='editor'>(
 var spec;
 spec = [ 100,18000,\exp].asSpec;
 
@@ -132,10 +136,10 @@ Patch({ arg freq;
     // creates a BinaryOpFunction
     spec.map( { SinOsc.kr(0.1).range(0,1) } ).dump
 ]).play
-)</pre>
+)</textarea>
 
 <p>A Patch is subclass of <a href="./../Classes/AbstractPlayer.html">AbstractPlayer</a> which is a subclass of <a href="./../Classes/AbstractFunction.html">AbstractFunction</a>.
-<p>Because a Player IS A FUNCTION, a Spec may also be used to map another player's output and then use that as an input to a patch :<pre class='code prettyprint lang-sc'>(
+<p>Because a Player IS A FUNCTION, a Spec may also be used to map another player's output and then use that as an input to a patch :<textarea class='editor'>(
 var spec;
 spec = [ 100,18000,\exp].asSpec;
 
@@ -146,21 +150,21 @@ Patch({ arg freq;
     spec.map( Patch({ SinOsc.kr(0.1).range(0,1) }) ).debug
 ]).play
 
-)</pre>
+)</textarea>
 
 <p>spec.map is taking the player and creating a BinaryOpFunction out of it.
-<p>if you do math on functions you get another function.<pre class='code prettyprint lang-sc'>f = { 3 } * { 4 };
+<p>if you do math on functions you get another function.<textarea class='editor'>f = { 3 } * { 4 };
 
-f.value</pre>
+f.value</textarea>
 
-<p>the simplest example is:<pre class='code prettyprint lang-sc'>(Patch({ SinOsc.ar(440) }) * 0.1).play</pre>
+<p>the simplest example is:<textarea class='editor'>(Patch({ SinOsc.ar(440) }) * 0.1).play</textarea>
 
-<p>where the output of the Patch is multiplied by 0.1, reducing the amplitude. Internal optimization in this case results in using a PlayerAmp<pre class='code prettyprint lang-sc'>// true binary op players not yet implemented :(
-(Patch({SinOsc.ar(440) }) % 0.4).play</pre>
+<p>where the output of the Patch is multiplied by 0.1, reducing the amplitude. Internal optimization in this case results in using a PlayerAmp<textarea class='editor'>// true binary op players not yet implemented :(
+(Patch({SinOsc.ar(440) }) % 0.4).play</textarea>
 <h2><a class='anchor' name='Meta-patches%20:%20factory%20methods%20and%20creating%20Patches%20with%20Patches'>Meta-patches : factory methods and creating Patches with Patches</a></h2>
 
 <p>Patch's auto-input creation is simple and convienient, but to really get interesting results I recommend experimenting with factory methods to create your patches, supplying them with inputs useful for what you are working on.
-<p>eg. If you often use a certain physical controller then make a factory method:<pre class='code prettyprint lang-sc'>buildPatch  = { arg instrName;
+<p>eg. If you often use a certain physical controller then make a factory method:<textarea class='editor'>buildPatch  = { arg instrName;
     var i;
     i = Instr.at(instrName);
 
@@ -171,10 +175,10 @@ f.value</pre>
     ])
 };
 // this creates a Patch
-buildPatch.value( \boingboing );</pre>
+buildPatch.value( \boingboing );</textarea>
 
 <p>You could even interrogate the instr to see which inputs might make good candidates for your JoyAxis.
-<p>Remember, Instr are not just for audio functions, so you can even keep your factories themselves in Instrument libraries:<pre class='code prettyprint lang-sc'>Instr(\joysticker,{ arg instrName;
+<p>Remember, Instr are not just for audio functions, so you can even keep your factories themselves in Instrument libraries:<textarea class='editor'>Instr(\joysticker,{ arg instrName;
 
     var i;
     i = Instr.at(instrName);
@@ -185,8 +189,9 @@ buildPatch.value( \boingboing );</pre>
     ])
 },PlayerSpec.new);
 
-patch = Instr(\joysticker).value( \simple );</pre>
+patch = Instr(\joysticker).value( \simple );</textarea>
 
 <p>You have just used an Instr function to create and return a Patch. This Instr is not used for audio, its just used to build and return a Patch.
 <p>Note that the output type is <a href="./../Classes/PlayerSpec.html">PlayerSpec</a>
-<p>You could choose different controllers for different common inputs, you can query the argument name and the spec. Keep files in databases,  load other Patches or soundfiles from disk. You could flip coins and choose from soundfiles, audio in, other saved patches or randomly chosen net radio feeds.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Guides/Patch-inputs.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Guides/Patch-inputs.schelp</a><br>link::Guides/Patch-inputs::<br></div></div></body></html>
+<p>You could choose different controllers for different common inputs, you can query the argument name and the spec. Keep files in databases,  load other Patches or soundfiles from disk. You could flip coins and choose from soundfiles, audio in, other saved patches or randomly chosen net radio feeds.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Guides/Patch-inputs.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Guides/Patch-inputs.schelp</a><br>link::Guides/Patch-inputs::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>MFunc | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>MFunc | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./editor.css' type='text/css' />
 <link rel='stylesheet' href='./frontend.css' type='text/css' />
 <link rel='stylesheet' href='./custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./lib/jquery.min.js'></script>
+<script src='./lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = '.';
 var scdoc_title = 'MFunc';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./scdoc.js' type='text/javascript'></script>
 <script src='./docmap.js' type='text/javascript'></script>
-<script src='./prettify.js' type='text/javascript'></script>
-<script src='./lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>MFunc:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -36,8 +40,8 @@ var scdoc_sc_version = '3.9.3';
 <li class='toc3'><a href='#-useTry'>useTry</a> </li>
 <li class='toc3'><a href='#-tryValue'>tryValue</a> </li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'> (extension)</span>
@@ -60,7 +64,7 @@ var scdoc_sc_version = '3.9.3';
 <p>MFunc is intended for use in modal interfaces, so for example, when a single slider has an MFunc as its action, it can have functions that<ul>
 <li>record control values for looping,<li>log control values in a file,<li>send control values to any number of destinations, in parallel or exclusively<li>send control values by network<li>or whatever other behavior is desired.</ul>
 
-<p>This is intended to replace complicated cascades of if-statements (which easily accumulate when coding modal user interface functions). Instead of setting flags for modes and reading them in control structure logic, one can use MFuncs to switch between modes by a. enabling the functions desired in the new mode, b. disabling the ones that should be off in the new mode, and c. keeping all other functions independent by leaving them untouched.<pre class='code prettyprint lang-sc'>// first a real example with a modal slider /////////////
+<p>This is intended to replace complicated cascades of if-statements (which easily accumulate when coding modal user interface functions). Instead of setting flags for modes and reading them in control structure logic, one can use MFuncs to switch between modes by a. enabling the functions desired in the new mode, b. disabling the ones that should be off in the new mode, and c. keeping all other functions independent by leaving them untouched.<textarea class='editor'>// first a real example with a modal slider /////////////
 
 // make an empty MFunc
 m = MFunc();
@@ -129,11 +133,11 @@ m.mode_(\c_only);
 m.mode_(\abc);
 
 
-For more discussion of details, removing/adding variants etc. see examples below!</pre>
+For more discussion of details, removing/adding variants etc. see examples below!</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*new' href='./Overviews/Methods.html#new'>new</a></h3>
 <div class='method'>
-<p>make a new MFunc, like this:<pre class='code prettyprint lang-sc'>(
+<p>make a new MFunc, like this:<textarea class='editor'>(
 m = MFunc([
         \ada, { "ada".postln },
         \bob, { "bob".postln },
@@ -147,7 +151,7 @@ m = MFunc([
     initMode: \ada,
     modeLists: (\triplet: [\ada, \bob, \ede])
 )
-)</pre>
+)</textarea>
 </div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-activeNames' href='./Overviews/Methods.html#activeNames'>activeNames</a></h3>
 <div class='method'>
@@ -197,7 +201,7 @@ m = MFunc([
 <p>get and set flag whether to use .tryValue istead of .value</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-tryValue' href='./Overviews/Methods.html#tryValue'>tryValue</a></h3>
 <div class='method'>
 <p>wrap all function evaluations in try { }, so that if one fails, it posts good info, and all later functions in the list will still be evaluated.</div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>// make an MFunc
+<textarea class='editor'>// make an MFunc
 (
 m = MFunc([
     \ada, { "ada".postln },
@@ -344,5 +348,6 @@ MFdef(\m).value;
 
 // can't set an MFdef with new args after its creation for now;
 // maybe this should be supported later?
-MFdef(\m, []);</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/dev_jitgui/HelpSource/MFunc.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/dev_jitgui/HelpSource/MFunc.schelp</a><br>link::MFunc::<br></div></div></body></html>
+MFdef(\m, []);</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/dev_jitgui/HelpSource/MFunc.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/dev_jitgui/HelpSource/MFunc.schelp</a><br>link::MFunc::<br></div></div><script src='./editor.js' type='text/javascript'></script>
+</body></html>

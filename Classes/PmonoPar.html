@@ -1,19 +1,23 @@
-<!doctype html><html lang='en'><head><title>PmonoPar | SuperCollider 3.9.3 Help</title>
+<!doctype html><html lang='en'><head><title>PmonoPar | SuperCollider 3.10.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
 <script>
 var helpRoot = './..';
 var scdoc_title = 'PmonoPar';
-var scdoc_sc_version = '3.9.3';
+var scdoc_sc_version = '3.10.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<body onload='fixTOC();prettyPrint()'>
+<body onload='fixTOC()'>
 <div id='toc'>
 <div id='toctitle'>PmonoPar:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
@@ -27,8 +31,8 @@ var scdoc_sc_version = '3.9.3';
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.1b:%20Passing%20values%20by%20using%20the%20value%20conversion%20framework'>Ex.1b: Passing values by using the value conversion framework</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.2:%20Data%20sharing%20between%20streams%20of%20PmonoPar'>Ex.2: Data sharing between streams of PmonoPar</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.3:%20Data%20sharing%20between%20streams%20of%20parallel%20PmonoPars'>Ex.3: Data sharing between streams of parallel PmonoPars</a></li>
-<ul class='toc'></ul></ul></ul></div><div class='contents'>
-<div id='menubar'></div>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
@@ -55,14 +59,14 @@ var scdoc_sc_version = '3.9.3';
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<pre class='code prettyprint lang-sc'>(
+<textarea class='editor'>(
 s = Server.local;
 Server.default = s;
 s.boot;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.1a'>&nbsp;</a> <h3><a class='anchor' name='Ex.1a:%20PmonoPar%20with%20differently%20timed%20streams'>Ex.1a: PmonoPar with differently timed streams</a></h3>
-<pre class='code prettyprint lang-sc'>// per convention keys after \dur are the ones to be set
+<textarea class='editor'>// per convention keys after \dur are the ones to be set
 // playing ends after end of last stream
 
 (
@@ -78,10 +82,10 @@ p = PmonoPar([
         \amp, Pseq([0.05, 0.3], 30)  
     ]
 ]).trace.play;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.1b'>&nbsp;</a> <h3><a class='anchor' name='Ex.1b:%20Passing%20values%20by%20using%20the%20value%20conversion%20framework'>Ex.1b: Passing values by using the value conversion framework</a></h3>
-<pre class='code prettyprint lang-sc'>// if \degree, \note or \midinote are occuring after \dur,
+<textarea class='editor'>// if \degree, \note or \midinote are occuring after \dur,
 // a frequency value will be calculated according to Event's usual conversion framework
 // and used for setting the arg 'freq'.
 
@@ -98,10 +102,10 @@ p = PmonoPar([
         \amp, Pseq([0.05, 0.3], 30)  
     ]
 ]).trace.play;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.2'>&nbsp;</a> <h3><a class='anchor' name='Ex.2:%20Data%20sharing%20between%20streams%20of%20PmonoPar'>Ex.2: Data sharing between streams of PmonoPar</a></h3>
-<pre class='code prettyprint lang-sc'>// define two Pbinds of same length, play first
+<textarea class='editor'>// define two Pbinds of same length, play first
 
 // data sharing with rhythms of coinciding entry points is sure as streams are time-shifted
 
@@ -115,10 +119,10 @@ p = PmonoPar([
         \midinote, Pshuf((60..85))   
     ]
 ]).trace.play;
-)</pre>
+)</textarea>
 
 <p><a class='anchor' name='Ex.3'>&nbsp;</a> <h3><a class='anchor' name='Ex.3:%20Data%20sharing%20between%20streams%20of%20parallel%20PmonoPars'>Ex.3: Data sharing between streams of parallel PmonoPars</a></h3>
-<pre class='code prettyprint lang-sc'>// data sharing between streams of same PmonoPar and streams of second PmonoPar,
+<textarea class='editor'>// data sharing between streams of same PmonoPar and streams of second PmonoPar,
 // use of Ptpar ensures that first stream of second PmonoPar comes after first stream of first PmonoPar,
 // consider also PpolyPar for such type of usage
 
@@ -144,5 +148,6 @@ q = PmonoPar([
 ]);
 
 r = Ptpar([0, p, 1e-5, q]).trace.play
-)</pre>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PmonoPar.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PmonoPar.schelp</a><br>link::Classes/PmonoPar::<br></div></div></body></html>
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PmonoPar.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PmonoPar.schelp</a><br>link::Classes/PmonoPar::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>
