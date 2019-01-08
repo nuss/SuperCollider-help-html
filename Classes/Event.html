@@ -126,7 +126,7 @@ a.play; // returns 6 * 7</textarea>
 <p>May be provided as another event which is used to provide default keys for the event without modifying it.<tr><td class='argumentname'>know<td class='argumentdesc'>
 <p>If <strong>know</strong> is set to <a href="./../Classes/True.html">True</a>, the event will respond to appropriate message calls. See <a href="./../Classes/Environment.html">Environment</a> for more details.</table></div><h3 class='method-code'><span class='method-prefix'>Event.</span><a class='method-name' name='*default' href='./../Overviews/Methods.html#default'>default</a></h3>
 <div class='method'>
-<p>Returns an empty event with <a href="#.defaultParentEvent">.defaultParentEvent</a> as parent.</div><h3 class='method-code'><span class='method-prefix'>Event.</span><a class='method-name' name='*silent' href='./../Overviews/Methods.html#silent'>silent</a>(<span class='argstr'>dur: 1.0</span>, <span class='argstr'>inEvent</span>)</h3>
+<p>Returns an empty event with <a href="#defaultParentEvent">defaultParentEvent</a> as parent.</div><h3 class='method-code'><span class='method-prefix'>Event.</span><a class='method-name' name='*silent' href='./../Overviews/Methods.html#silent'>silent</a>(<span class='argstr'>dur: 1.0</span>, <span class='argstr'>inEvent</span>)</h3>
 <div class='method'>
 <p>Returns an event that describes a pause of <strong>dur</strong> duration.</div><h3 class='method-code'><span class='method-prefix'>Event.</span><a class='method-name' name='*addEventType' href='./../Overviews/Methods.html#addEventType'>addEventType</a>(<span class='argstr'>type</span>, <span class='argstr'>func</span>, <span class='argstr'>parentEvent</span>)</h3>
 <div class='method'>
@@ -347,11 +347,11 @@ q.y = q.x * q.n;    // shorter way to do the same (pseudo-methods)
 q.y;            // [ 100, 200, 300 ]</textarea>
 <h3><a class='anchor' name='Event%20for%20specifying%20different%20things%20to%20happen'>Event for specifying different things to happen</a></h3>
 
-<p>Event provides a <a href="#.defaultParentEvent">.defaultParentEvent</a> that defines a variety of different event types and provides a complete set of default key/value pairs for each type. The type is determined by the value of the key <strong>\type</strong> which defaults to <strong>\note</strong>. Note events create synths on the server.<textarea class='editor'>( ).play;            // the default note
+<p>Event provides a <a href="#defaultParentEvent">defaultParentEvent</a> that defines a variety of different event types and provides a complete set of default key/value pairs for each type. The type is determined by the value of the key <strong>\type</strong> which defaults to <strong>\note</strong>. Note events create synths on the server.<textarea class='editor'>( ).play;            // the default note
 (freq: 500, pan: -1) .play;    // 500 Hz, panned left
 (play: { ~what.postln }, what: "hello happening").play;    // something else</textarea>
 
-<p>Per default, the play message derives its behaviour from the <a href="#.defaultParentEvent">.defaultParentEvent</a>, which provides many default values, such as default instrument (\default), note (0), legato (0.8) and so on. Depending on the event type, these may differ completely and need not even represent a sound.<h3><a class='anchor' name='Events%20and%20SynthDefs'>Events and SynthDefs</a></h3>
+<p>Per default, the play message derives its behaviour from the <a href="#defaultParentEvent">defaultParentEvent</a>, which provides many default values, such as default instrument (\default), note (0), legato (0.8) and so on. Depending on the event type, these may differ completely and need not even represent a sound.<h3><a class='anchor' name='Events%20and%20SynthDefs'>Events and SynthDefs</a></h3>
 
 <p>The key used to select what synthdef is to be played is <strong>\instrument</strong>. In order to use a <a href="./../Classes/SynthDef.html">SynthDef</a> with an Event, send it an <strong>add</strong> message. This creates a description of the SynthDef that the event can consult to determine its control names. The values of these names in the event are used when the event is played. (See <a href="./../Classes/SynthDesc.html">SynthDesc</a> for details.)<textarea class='editor'>(
 SynthDef(\pm, { |out=0, freq=440, amp=0.1, pan=0, gate=1, ratio = 1, index = 1, ar = 0.1, dr = 0.1|
@@ -435,7 +435,7 @@ Pbind(
 ).play;
 )</textarea>
 
-<p>Here is an example that illustrates some more of the keys defined by the <a href="#.defaultParentEvent">.defaultParentEvent</a>. Note that it is equivalent to write <code>Pbind(\key, val, ...)</code> and <code>Pbind(*[key: val, ...])</code>.<textarea class='editor'>(
+<p>Here is an example that illustrates some more of the keys defined by the <a href="#defaultParentEvent">defaultParentEvent</a>. Note that it is equivalent to write <code>Pbind(\key, val, ...)</code> and <code>Pbind(*[key: val, ...])</code>.<textarea class='editor'>(
 Pbind(*[
     stepsPerOctave:    Pstep(Pseq((2..12).mirror, inf),12),    // 3 - 12 tone e.t. scales
     note:        Pseq((0..12).mirror, inf),        // play full notes up and down
@@ -456,7 +456,7 @@ Pbind(*[
     this.use { ~play.value };
 }</textarea>
 
-<p>Thus we can see that the <a href="#.defaultParentEvent">.defaultParentEvent</a> is used unless otherwise specified and the function stored in <code>~play</code> is executed in the context of the Event. It can be replaced in a given event for different behavior:<textarea class='editor'>(a: 6, b: 7, play: { (~a * ~b).postln }).play;</textarea>
+<p>Thus we can see that the <a href="#defaultParentEvent">defaultParentEvent</a> is used unless otherwise specified and the function stored in <code>~play</code> is executed in the context of the Event. It can be replaced in a given event for different behavior:<textarea class='editor'>(a: 6, b: 7, play: { (~a * ~b).postln }).play;</textarea>
 <h3><a class='anchor' name='Timing%20control%20with%20Event's%20delta%20method'>Timing control with Event's delta method</a></h3>
 
 <p>Events also specify timing within a <a href="./../Classes/Pattern.html">Pattern</a>. Event's <code>delta</code> method returns the value of <code>~delta</code> or, if that is nil, <code>~dur * ~stretch</code>.
