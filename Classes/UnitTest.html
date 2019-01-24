@@ -41,15 +41,15 @@ var scdoc_sc_version = '3.10.1';
 <li class='toc3'><a href='#-assertFloatEquals'>assertFloatEquals</a> </li>
 <li class='toc3'><a href='#-assertArrayFloatEquals'>assertArrayFloatEquals</a> </li>
 <li class='toc3'><a href='#-ifAsserts'>ifAsserts</a> </li>
+<li class='toc3'><a href='#-assertException'>assertException</a> </li>
+<li class='toc3'><a href='#-assertNoException'>assertNoException</a> </li>
 <li class='toc3'><a href='#-wait'>wait</a> </li>
 <li class='toc3'><a href='#-bootServer'>bootServer</a> </li>
 <li class='toc3'><a href='#-passed'>passed</a> </li>
 <li class='toc3'><a href='#-failed'>failed</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-assertException'>assertException</a> </li>
-<li class='toc3'><a href='#-assertNoException'>assertNoException</a> </li>
-<li class='toc3'><a href='#-asynchAssert'>asynchAssert</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-asynchAssert'>asynchAssert</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
@@ -116,7 +116,8 @@ UnitTest.runAll;</textarea>
 <h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>method<td class='argumentdesc'>
-<p>the method to run</table><h4>Returns:</h4>
+<p>the method to run<tr><td class='argumentname'>(report)<td class='argumentdesc'>
+<p>Reports the result of the test if <code>true</code> (default is <code>true</code>)</table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-assert' href='./../Overviews/Methods.html#assert'>assert</a>(<span class='argstr'>boolean</span>, <span class='argstr'>message</span>, <span class='argstr'>report: true</span>, <span class='argstr'>onFailure</span>, <span class='argstr'>details</span>)</h3>
 <div class='method'>
@@ -172,7 +173,19 @@ this.assertArrayFloatEquals([2, 3.0001], [2, 3], "Fail since pairs of floats are
 a = UnitTest.new;
 a.ifAsserts(2 == 3, "yes", { a.assert(2 == 4) }, { a.assert(1 == 1, "but this is correct") });
 )</textarea>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-wait' href='./../Overviews/Methods.html#wait'>wait</a>(<span class='argstr'>condition</span>, <span class='argstr'>failureMessage</span>, <span class='argstr'>maxTime: 10.0</span>)</h3>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-assertException' href='./../Overviews/Methods.html#assertException'>assertException</a>(<span class='argstr'>func</span>, <span class='argstr'>errorClass</span>, <span class='argstr'>message</span>, <span class='argstr'>report: true</span>, <span class='argstr'>onFailure</span>, <span class='argstr'>details</span>)</h3>
+<div class='method'>
+<p>Make sure that a specific <a href="./../Classes/Exception.html">Exception</a> or <a href="./../Classes/Error.html">Error</a> is thrown.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>Pass the code that is expected to throw an error in this function.<tr><td class='argumentname'>errorClass<td class='argumentdesc'>
+<p>The class or class name which the error should be kind of.<tr><td class='argumentname'>message<td class='argumentdesc'>
+<p>A message describing the purpose of the assertion.<tr><td class='argumentname'>report<td class='argumentdesc'>
+<p>Reports the result of the test if <code>true</code> (default is <code>true</code>)<tr><td class='argumentname'>onFailure<td class='argumentdesc'>
+<p>If not <code>nil</code>, a failure stops the tests and evaluates this function.<tr><td class='argumentname'>details<td class='argumentdesc'>
+<p>Some optional extra details which will be passed to the reporting framework for display unless brief reporting is requested (see <a href="#*passVerbosity">*passVerbosity</a>).</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-assertNoException' href='./../Overviews/Methods.html#assertNoException'>assertNoException</a>(<span class='argstr'>func</span>, <span class='argstr'>message</span>, <span class='argstr'>report: true</span>, <span class='argstr'>onFailure</span>, <span class='argstr'>details</span>)</h3>
+<div class='method'>
+<p>Make sure that a specific <a href="./../Classes/Exception.html">Exception</a> or <a href="./../Classes/Error.html">Error</a> is <strong>not</strong> thrown. For arguments, see <a href="#-assertException">-assertException</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-wait' href='./../Overviews/Methods.html#wait'>wait</a>(<span class='argstr'>condition</span>, <span class='argstr'>failureMessage</span>, <span class='argstr'>maxTime: 10.0</span>)</h3>
 <div class='method'>
 <p>Wait for a condition, consider failed after maxTime. Only valid within a test (or a routine).<textarea class='editor'>(
 {
@@ -210,8 +223,6 @@ a.ifAsserts(2 == 3, "yes", { a.assert(2 == 4) }, { a.assert(1 == 1, "but this is
 <textarea class='editor'>this.failed(message: "this failed");</textarea>
 </div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-assertException' href='./../Overviews/Methods.html#assertException'>assertException</a>(<span class='argstr'>func</span>, <span class='argstr'>errorClass</span>, <span class='argstr'>message</span>, <span class='argstr'>report: true</span>, <span class='argstr'>onFailure</span>, <span class='argstr'>details</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-assertNoException' href='./../Overviews/Methods.html#assertNoException'>assertNoException</a>(<span class='argstr'>func</span>, <span class='argstr'>message</span>, <span class='argstr'>report: true</span>, <span class='argstr'>onFailure</span>, <span class='argstr'>details</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asynchAssert' href='./../Overviews/Methods.html#asynchAssert'>asynchAssert</a>(<span class='argstr'>waitConditionBlock</span>, <span class='argstr'>testBlock</span>, <span class='argstr'>timeoutMessage: ""</span>, <span class='argstr'>timeout: 10</span>)</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 

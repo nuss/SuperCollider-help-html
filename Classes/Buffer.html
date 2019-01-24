@@ -79,7 +79,7 @@ var scdoc_sc_version = '3.10.1';
 <li class='toc3'><a href='#-loadCollection'>loadCollection</a> </li>
 <li class='toc3'><a href='#-sendCollection'>sendCollection</a> </li>
 <li class='toc3'><a href='#-get'>get</a>  <a href='#-getMsg'>getMsg</a> </li>
-<li class='toc3'><a href='#-getn'>getn</a>  <a href='#-getMsg'>getMsg</a> </li>
+<li class='toc3'><a href='#-getn'>getn</a>  <a href='#-getnMsg'>getnMsg</a> </li>
 <li class='toc3'><a href='#-loadToFloatArray'>loadToFloatArray</a> </li>
 <li class='toc3'><a href='#-getToFloatArray'>getToFloatArray</a> </li>
 <li class='toc3'><a href='#-normalize'>normalize</a>  <a href='#-normalizeMsg'>normalizeMsg</a> </li>
@@ -110,7 +110,6 @@ var scdoc_sc_version = '3.10.1';
 <li class='toc3'><a href='#-copyLoopTo'>copyLoopTo</a> </li>
 <li class='toc3'><a href='#-doOnInfo'>doOnInfo</a> </li>
 <li class='toc3'><a href='#-duration'>duration</a> </li>
-<li class='toc3'><a href='#-getnMsg'>getnMsg</a> </li>
 <li class='toc3'><a href='#-playOnce'>playOnce</a> </li>
 <li class='toc3'><a href='#-preparePartConv'>preparePartConv</a> </li>
 <li class='toc3'><a href='#-queryDone'>queryDone</a> </li>
@@ -679,7 +678,7 @@ b.setn(0, Array.fill(16, { rrand(0.0, 1.0) }));
 b.get(0, {|msg| msg.postln});
 b.free;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getn' href='./../Overviews/Methods.html#getn'>getn</a>(<span class='argstr'>index</span>, <span class='argstr'>count</span>, <span class='argstr'>action</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getMsg' href='./../Overviews/Methods.html#getMsg'>getMsg</a>(<span class='argstr'>index</span>, <span class='argstr'>action</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getnMsg' href='./../Overviews/Methods.html#getnMsg'>getnMsg</a>(<span class='argstr'>index</span>, <span class='argstr'>count</span>, <span class='argstr'>action</span>)</h3>
 <div class='method'>
 <p>Send a message requesting the a contiguous range of values of size count starting from index. action is a Function which will be passed the values in an Array as an argument and evaluated when a reply is received. See setn above for an example.<h4>Discussion:</h4>
 
@@ -870,7 +869,7 @@ x.free; b.free;</textarea>
 <p>Fill this buffer with a series of Chebyshev polynomials, which can be defined as: <code>cheby(n) = amplitude  * cos(n * acos(x))</code>. To eliminate a DC offset when used as a waveshaper, the wavetable is offset so that the center value is zero.
 <p>Similar functionality can be found in <a href="./../Classes/Signal.html#*chebyFill">Signal.chebyFill</a> and <a href="./../Classes/Wavetable.html#*chebyFill">Wavetable.chebyFill</a>. If you require Chebyshev polynomials that do not include the offset compensation, it is recommended to use one of these.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>amplitudes<td class='argumentdesc'>
+<tr><td class='argumentname'>amps<td class='argumentdesc'>
 <p>An Array containing amplitudes for the harmonics. The first float value specifies the amplitude for n = 1, the second float value specifies the amplitude for n = 2, and so on.<tr><td class='argumentname'>normalize<td class='argumentdesc'>
 <p>A Boolean indicating whether or not to normalize the buffer to a peak value of 1.0. The default is true.<tr><td class='argumentname'>asWavetable<td class='argumentdesc'>
 <p>A Boolean indicating whether or not to write to the buffer in wavetable format so that it can be read by interpolating oscillators. The default is true.<tr><td class='argumentname'>clearFirst<td class='argumentdesc'>
@@ -888,7 +887,8 @@ x = {
 }.play;
 )
 x.free; b.free;</textarea>
-</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+
+<p></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asBufWithValues' href='./../Overviews/Methods.html#asBufWithValues'>asBufWithValues</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asControlInput' href='./../Overviews/Methods.html#asControlInput'>asControlInput</a></h3>
@@ -909,7 +909,6 @@ x.free; b.free;</textarea>
 </h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doOnInfo' href='./../Overviews/Methods.html#doOnInfo'>doOnInfo</a> = value</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-duration' href='./../Overviews/Methods.html#duration'>duration</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getnMsg' href='./../Overviews/Methods.html#getnMsg'>getnMsg</a>(<span class='argstr'>index</span>, <span class='argstr'>count</span>, <span class='argstr'>action</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-playOnce' href='./../Overviews/Methods.html#playOnce'>playOnce</a>(<span class='argstr'>mul: 1</span>, <span class='argstr'>rate: 1</span>, <span class='argstr'>out: 0</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Buffer/extBuffer-playDialog.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Buffer/extBuffer-playDialog.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-preparePartConv' href='./../Overviews/Methods.html#preparePartConv'>preparePartConv</a>(<span class='argstr'>buf</span>, <span class='argstr'>fftsize</span>)</h3>
