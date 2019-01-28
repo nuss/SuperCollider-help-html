@@ -25,7 +25,6 @@ var scdoc_sc_version = '3.10.1';
 <ul class='toc'></ul><li class='toc1'><a href='#Multichannel%20expansion'>Multichannel expansion</a></li>
 <ul class='toc'><li class='toc2'><a href='#Expanding%20methods%20and%20operators'>Expanding methods and operators</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Using%20flop%20for%20multichannel%20expansion'>Using flop for multichannel expansion</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#Multichannel%20expansion%20in%20Patterns'>Multichannel expansion in Patterns</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#Pitfalls'>Pitfalls</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Protecting%20arrays%20against%20expansion'>Protecting arrays against expansion</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Reducing%20channel%20expansion%20with%20Mix'>Reducing channel expansion with Mix</a></li>
@@ -99,7 +98,7 @@ SynthDef("help_multichannel", { |out=0, freq=440, mod=0.1, modrange=20|
             LFPar.kr(mod, 0, modrange) + freq
         ) * EnvGate(0.1)
     )
-}).add;
+}).send(s);
 )</textarea>
 
 <p><textarea class='editor'>(
@@ -134,43 +133,6 @@ a = { |dur=1, x=1, n=10, freq=400|
 )
 
 a.value(5, [0.3, 0.3, 0.2], [12, 32, 64], [1000, 710, 700]);</textarea>
-<h3><a class='anchor' name='Multichannel%20expansion%20in%20Patterns'>Multichannel expansion in Patterns</a></h3>
-
-<p>Multichannel expansion does not quite follow the scheme one might expect from the previously described. E.g. the following doesn't multichannel-expand properly:<textarea class='editor'>(
-SynthDef(\help_multichannel, { |out=0, freq=#[342, 145]|
-    var env = EnvGate.new;
-    Out.ar(out, [SinOsc.ar(freq[0]), Saw.ar(freq[1])] * env * 0.3)
-}).add
-)
-
-// not working as expected
-// only freq in the left channel gets set correctly
-(
-a = Pbind(
-    \instrument, \help_multichannel,
-    \freq, Pseq([[342, 145], [187, 564], [234, 135]], inf),
-    \dur, 0.5
-).play;
-)
-
-a.stop</textarea>
-
-<p>Instead wrap arrayed args in an extra pair of square brackets<textarea class='editor'>// freq in both channels set as expected
-(
-a = Pbind(
-    \instrument, \multichannel,
-    \freq, Pseq([[[342, 145]], [[187, 564]], [[234, 135]]], inf),
-    \dur, 0.5
-).play;
-)
-
-a.stop</textarea>
-
-<p>Under the hood this is a consequence of how .flop prepares the given args to be passed to the Synth:<textarea class='editor'>// single square brackets
-[\freq, [342, 145]].flop
-// --&gt; [ [ freq, 342 ], [ freq, 145 ] ]
-[\freq, [[342, 145]]].flop
-// --&gt; [ [ freq, [ 342, 145 ] ] ]</textarea>
 <h2><a class='anchor' name='Pitfalls'>Pitfalls</a></h2>
 
 <p>Some UGens create stereo output from mono input, and might not behave as expected regarding multichannel expansion.
