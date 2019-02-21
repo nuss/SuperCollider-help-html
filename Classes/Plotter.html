@@ -39,18 +39,20 @@ var scdoc_sc_version = '3.10.2';
 <li class='toc3'><a href='#-findSpecs'>findSpecs</a> </li>
 <li class='toc3'><a href='#-superpose'>superpose</a> </li>
 <li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc3'><a href='#-setValue'>setValue</a> </li>
 <li class='toc3'><a href='#-data'>data</a> </li>
 <li class='toc3'><a href='#-cursorPos'>cursorPos</a> </li>
 <li class='toc3'><a href='#-plots'>plots</a> </li>
 <li class='toc3'><a href='#-specs'>specs</a> </li>
 <li class='toc3'><a href='#-domainSpecs'>domainSpecs</a> </li>
+<li class='toc3'><a href='#-domain'>domain</a> </li>
+<li class='toc3'><a href='#-plotColors'>plotColors</a> </li>
 <li class='toc3'><a href='#-editFunc'>editFunc</a> </li>
 </ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-bounds'>bounds</a> </li>
 <li class='toc3'><a href='#-calcDomainSpecs'>calcDomainSpecs</a> </li>
 <li class='toc3'><a href='#-calcSpecs'>calcSpecs</a> </li>
-<li class='toc3'><a href='#-domain'>domain</a> </li>
 <li class='toc3'><a href='#-draw'>draw</a> </li>
 <li class='toc3'><a href='#-drawBounds'>drawBounds</a> </li>
 <li class='toc3'><a href='#-drawFunc'>drawFunc</a> </li>
@@ -73,7 +75,6 @@ var scdoc_sc_version = '3.10.2';
 <li class='toc3'><a href='#-prReshape'>prReshape</a> </li>
 <li class='toc3'><a href='#-print'>print</a> </li>
 <li class='toc3'><a href='#-refresh'>refresh</a> </li>
-<li class='toc3'><a href='#-setValue'>setValue</a> </li>
 <li class='toc3'><a href='#-updatePlotBounds'>updatePlotBounds</a> </li>
 <li class='toc3'><a href='#-updatePlotSpecs'>updatePlotSpecs</a> </li>
 <li class='toc3'><a href='#-updatePlots'>updatePlots</a> </li>
@@ -208,7 +209,18 @@ a.superpose = true; a.refresh;</textarea>
 <div class='method'>
 <p>Return or set the data values. Data may be numerical arrays of up to 3 dimensions.<textarea class='editor'>a = [1, 4, 2, 7, 4].dup(2).plot;
 a.value;</textarea>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-data' href='./../Overviews/Methods.html#data'>data</a></h3>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setValue' href='./../Overviews/Methods.html#setValue'>setValue</a>(<span class='argstr'>arrays</span>, <span class='argstr'>findSpecs: true</span>, <span class='argstr'>refresh: true</span>, <span class='argstr'>separately: true</span>, <span class='argstr'>minval</span>, <span class='argstr'>maxval</span>, <span class='argstr'>defaultRange</span>)</h3>
+<div class='method'>
+<p>Set the data values, with additional arguments determining how the plot is updated.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>arrays<td class='argumentdesc'>
+<p>Arrays of data to plot. Data may be numerical arrays of up to 3 dimensions.<tr><td class='argumentname'>findSpecs<td class='argumentdesc'>
+<p>A <code>Boolean</code>. If <code>true</code> (default), bounds of the plot(s) are determined automatically. If <code>false</code>, previous bounds will persist.<tr><td class='argumentname'>refresh<td class='argumentdesc'>
+<p>A <code>Boolean</code>. If <code>true</code> (default), refresh the view immediately.<tr><td class='argumentname'>separately<td class='argumentdesc'>
+<p>A <code>Boolean</code>. If <code>true</code> (default), min and max of each set of data will be calculated and displayed separately for each plot. If <code>false</code>, each plot's range on the y-axis will be the same.<tr><td class='argumentname'>minval<td class='argumentdesc'>
+<p>(Optional) The minimum value displayed on the y-axis.<tr><td class='argumentname'>maxval<td class='argumentdesc'>
+<p>(Optional) The maximum value displayed on the y-axis.<tr><td class='argumentname'>defaultRange<td class='argumentdesc'>
+<p>(Optional) A default range for the y-axis in the case that the max and min values of the data are identical.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-data' href='./../Overviews/Methods.html#data'>data</a></h3>
 <div class='method'>
 <p>Reference to the current internal data.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cursorPos' href='./../Overviews/Methods.html#cursorPos'>cursorPos</a></h3>
 <div class='method'><h4>Returns:</h4>
@@ -226,7 +238,33 @@ a.specs = \freq.asSpec; a.refresh;</textarea>
 <div class='method'>
 <p>Set or get the spec for the x-axis (domain).<textarea class='editor'>a = { (40..300).scramble }.dup(2).plot;
 a.domainSpecs = \freq.asSpec; a.refresh;</textarea>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-editFunc' href='./../Overviews/Methods.html#editFunc'>editFunc</a></h3>
+
+<p><h4>Discussion:</h4>
+
+<p>The default domainSpec when setting your Plotter <a href="#-value">-value</a> is a linear spec in the range <code>[0, value.size-1]</code>. Unless you set <a href="#-domain">-domain</a>, your values are displayed as evenly sampled between the <code>minval</code> and <code>maxval</code> of the domainSpecs.
+<p>If a new <a href="#-value">-value</a> is set, you will need to update your domainSpecs.
+<p>For examples, see <a href="#-domain">-domain</a> and <a href="#examples">examples</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-domain' href='./../Overviews/Methods.html#domain'>domain</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-domain' href='./../Overviews/Methods.html#domain'>domain</a> = <span class='argstr'>domainArray</span></h3>
+<div class='method'>
+<p>Set or get the x-axis positions of your data points. The size of the <code>domainArray</code> must equal the size of your value array, i.e. a domain value specified for each data point.<h4>Discussion:</h4>
+
+<p>Domain values are mapped into the range of the <a href="#-domainSpecs">-domainSpecs</a>, so need not be evenly distributed. If <a href="#-domain">-domain</a> is set to <code>nil</code>, your values are displayed as evenly sampled between the <code>minval</code> and <code>maxval</code> of the <a href="#-domainSpecs">-domainSpecs</a>.
+<p>Currently, for multichannel data plots, it's assumed that all channels of data share a single <a href="#-domain">-domain</a>. I.e. <code>domainArray</code> must be an <a href="./../Classes/Array.html">Array</a> of rank 1.
+<p>If a new <a href="#-value">-value</a> is set, you will need to update your <a href="#-domain">-domain</a>.
+<p>Example:<textarea class='editor'>(
+var data, domain, plot;
+domain = 25.collect({rrand(0, 50)}).sort;
+data = domain.linlin(0, 50, 0, 1);
+
+plot = data.plot.plotMode_(\points);
+plot.domainSpecs_([0, 50].asSpec);
+plot.domain_(domain);
+)</textarea>
+
+<p>A more elaborate example can be found in the <a href="#examples">examples</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plotColors' href='./../Overviews/Methods.html#plotColors'>plotColors</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plotColors' href='./../Overviews/Methods.html#plotColors'>plotColors</a> = <span class='argstr'>argColors</span></h3>
+<div class='method'>
+<p>Set or get the <a href="./../Classes/Color.html">Color</a>(s) of your plot. An <a href="./../Classes/Array.html">Array</a> of colors will be mapped across multichannel plot data, including when <a href="#-superpose">-superpose</a> is <code>true</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-editFunc' href='./../Overviews/Methods.html#editFunc'>editFunc</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-editFunc' href='./../Overviews/Methods.html#editFunc'>editFunc</a> = value</h3>
 <div class='method'>
 <p>Supply a function which is evaluated when editing data. The function is called with the arguments: <code>plotter</code>, <code>plotIndex</code>, <code>index</code>, <code>val</code>, <code>x</code>, <code>y</code>.<h4>Discussion:</h4>
@@ -269,8 +307,6 @@ a.parent.onClose = { x.release };
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bounds' href='./../Overviews/Methods.html#bounds'>bounds</a> = value</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-calcDomainSpecs' href='./../Overviews/Methods.html#calcDomainSpecs'>calcDomainSpecs</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-calcSpecs' href='./../Overviews/Methods.html#calcSpecs'>calcSpecs</a>(<span class='argstr'>separately: true</span>, <span class='argstr'>minval</span>, <span class='argstr'>maxval</span>, <span class='argstr'>defaultRange</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-domain' href='./../Overviews/Methods.html#domain'>domain</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-domain' href='./../Overviews/Methods.html#domain'>domain</a> = value</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-draw' href='./../Overviews/Methods.html#draw'>draw</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-drawBounds' href='./../Overviews/Methods.html#drawBounds'>drawBounds</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-drawFunc' href='./../Overviews/Methods.html#drawFunc'>drawFunc</a></h3>
@@ -299,7 +335,6 @@ a.parent.onClose = { x.release };
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prReshape' href='./../Overviews/Methods.html#prReshape'>prReshape</a>(<span class='argstr'>item</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-print' href='./../Overviews/Methods.html#print'>print</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-refresh' href='./../Overviews/Methods.html#refresh'>refresh</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setValue' href='./../Overviews/Methods.html#setValue'>setValue</a>(<span class='argstr'>arrays</span>, <span class='argstr'>findSpecs: true</span>, <span class='argstr'>refresh: true</span>, <span class='argstr'>separately: true</span>, <span class='argstr'>minval</span>, <span class='argstr'>maxval</span>, <span class='argstr'>defaultRange</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-updatePlotBounds' href='./../Overviews/Methods.html#updatePlotBounds'>updatePlotBounds</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-updatePlotSpecs' href='./../Overviews/Methods.html#updatePlotSpecs'>updatePlotSpecs</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-updatePlots' href='./../Overviews/Methods.html#updatePlots'>updatePlots</a></h3>
@@ -400,7 +435,47 @@ Env.new({ 1.0.rand2 }! 8, { 1.0.rand } ! 7, \sin).plot;
 b = Buffer.read(s, Platform.resourceDir +/+ "sounds/SinedPink.aiff");
         // Platform.resourceDir +/+ "sounds/SinedPink.aiff" contains SinOsc on left, PinkNoise on right
 b.plot;
-b.free;</textarea>
+b.free;
+
+// Setting the domain, run the full block:
+(
+var ys, xs; // ys: data, xs: domain positions
+var rs = 0, plt2;
+
+// xs are the sample points over a 2pi range
+
+// sample locations, normalized
+xs = 50.collect({rrand(0.05, 1)}).normalizeSum;
+xs.do{ |me, i| xs[i] = me + rs; rs = rs + me; };
+
+// force beginning/end to land on 0/2pi
+xs[0] = 0;
+xs[xs.size-1] = 1;
+
+// scale these points to a 2pi range
+xs = xs * 2pi;
+
+// ys are the values of the sinusoid at the sampled points
+ys = sin(xs);
+
+// the uneven sampling is apparent when
+// displayed as uniformly sampled
+ys.plot("original data plot, uniform domain", [100, 100, 385, 285].asRect);
+
+// generate a second plot whose domainSpec is specified:
+// we see a smooth sinusoid cycle beginning
+// at 0 and ending at 2pi
+plt2 = ys.plot("resampled domain", [100+400, 100, 385, 285].asRect);
+
+// domain values place plotted points where they
+// actually sampled the sinusoid, thus visually
+// reconstructing it.
+plt2.domain = xs;
+
+// these values are placed within the domainSpec
+// so we can pad the plot on either side.
+plt2.domainSpecs_(([-0.5pi, 2.5pi]).asSpec);
+)</textarea>
 <h2><a class='anchor' name='Changing%20global%20defaults'>Changing global defaults</a></h2>
 
 <p>The default styles are kept (and may be overridden) in <code>GUI.skin.at(\plot)</code>. See also <a href="./../Classes/GUI.html">GUI</a> help.<textarea class='editor'>// specify plot layout
