@@ -1,0 +1,441 @@
+<!doctype html><html lang='en'><head><title>CuePlayer | SuperCollider 3.10.2 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'CuePlayer';
+var scdoc_sc_version = '3.10.2';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>CuePlayer:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*globalClock'>globalClock</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-tempo'>tempo</a> </li>
+<li class='toc3'><a href='#-put'>put</a> </li>
+<li class='toc3'><a href='#-add'>add</a> </li>
+<li class='toc3'><a href='#-trigger'>trigger</a> </li>
+<li class='toc3'><a href='#-blockTrigger'>blockTrigger</a> </li>
+<li class='toc3'><a href='#-setCurrent'>setCurrent</a> </li>
+<li class='toc3'><a href='#-next'>next</a> </li>
+<li class='toc3'><a href='#-hook'>hook</a> </li>
+<li class='toc3'><a href='#-gui'>gui</a> </li>
+<li class='toc3'><a href='#-midiTriggerNoteOn'>midiTriggerNoteOn</a> </li>
+<li class='toc3'><a href='#-midiTriggerVelocity'>midiTriggerVelocity</a> </li>
+<li class='toc3'><a href='#-midiTriggerControl'>midiTriggerControl</a> </li>
+<li class='toc3'><a href='#-addMIDIFunc'>addMIDIFunc</a> </li>
+<li class='toc3'><a href='#-clearMIDI'>clearMIDI</a> </li>
+<li class='toc3'><a href='#-oscTrigger'>oscTrigger</a> </li>
+<li class='toc3'><a href='#-freeOscTrigger'>freeOscTrigger</a> </li>
+<li class='toc3'><a href='#-sendOSC'>sendOSC</a> </li>
+<li class='toc3'><a href='#-clock'>clock</a> </li>
+<li class='toc3'><a href='#-useGlobalClock'>useGlobalClock</a> </li>
+<li class='toc3'><a href='#-plot'>plot</a> </li>
+<li class='toc3'><a href='#-enableLiveReload'>enableLiveReload</a> </li>
+<li class='toc3'><a href='#-disableLiveReload'>disableLiveReload</a> </li>
+<li class='toc3'><a href='#-guiInstance'>guiInstance</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-addTimelineToRegister'>addTimelineToRegister</a> </li>
+<li class='toc3'><a href='#-midiTrigger'>midiTrigger</a> </li>
+<li class='toc3'><a href='#-oscTriggerInform'>oscTriggerInform</a> </li>
+<li class='toc3'><a href='#-sched'>sched</a> </li>
+<li class='toc3'><a href='#-stop'>stop</a> </li>
+<li class='toc3'><a href='#-timelineRegister'>timelineRegister</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Class'>Class</a></span>
+</div><h1>CuePlayer<span id='superclasses'> : <a href="../Classes/Cues.html">Cues</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Organise and execute cues for real-time and mixed electronic works</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/CuePlayer/CuePlayer.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/CuePlayer/CuePlayer.sc'>CuePlayer.sc</a></div><div id='related'>See also: <a href="./../Tutorials/CuePlayerTutorial.html">CuePlayer Tutorial</a>, <a href="./../Classes/CueInfo.html">CueInfo</a>, <a href="./../Classes/Timeline.html">Timeline</a>, <a href="./../Classes/DurationLine.html">DurationLine</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>The CuePlayer is useful for real-time and mixed electronic works (possibly involving acoustic instruments) when the composer wishes to build a series of processes (cues) and execute them one after another during the course of a piece. The cues are initially organised into an Array, and later on they may be triggered via code, a GUI window or any device/software which outputs midi/osc data, such as a footpedal or a Digital Audio Workstation.
+<p>There are lots of features which make the CuePlayer useful for composing in-studio and performing on-stage electroacoustic works using SuperCollider. Please read below and go through this short <a href="./../Tutorials/CuePlayerTutorial.html">CuePlayer Tutorial</a> for more information.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>CuePlayer.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a></h3>
+<div class='method'>
+<p>Create a new CuePlayer instance</div><h3 class='method-code'><span class='method-prefix'>CuePlayer.</span><a class='method-name' name='*globalClock' href='./../Overviews/Methods.html#globalClock'>globalClock</a></h3>
+<div class='method'>
+<p>Returns the global clock. See <a href="#useGlobalClock">useGlobalClock</a>.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-tempo' href='./../Overviews/Methods.html#tempo'>tempo</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-tempo' href='./../Overviews/Methods.html#tempo'>tempo</a> = <span class='argstr'>bpm: 120</span></h3>
+<div class='method'>
+<p>Set the tempo. Processes may be evaluated with reference to this clock.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bpm<td class='argumentdesc'>
+<p>Beats per minute.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Beats per minute.
+<p><a class='anchor' name='put'>&nbsp;</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-put' href='./../Overviews/Methods.html#put'>put</a>(<span class='argstr'>cueNumber</span>, <span class='argstr'>function</span>, <span class='argstr'>timeline</span>, <span class='argstr'>timelineOptions</span>)</h3>
+<div class='method'>
+<p>Put cue at cue-number, replacing what is there.
+<p>This allows explicitly to create a cue at a specific cue-number. Simply construct your cue as a function and then assign it to a cue-number; (think of the cue-number as the index of the cue-list which holds all processes).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>cueNumber<td class='argumentdesc'>
+<p>The cue-number to register the function.
+<p><a href="./../Classes/Function.html">Function</a><tr><td class='argumentname'>function<td class='argumentdesc'>
+<p>A compatible cue object; a <a href="./../Classes/Function.html">Function</a>, a <a href="./../Classes/CueInfo.html">CueInfo</a>, or a <a href="./../Classes/String.html">String</a> representing the path of an scd file returning one of the compatible objects.<tr><td class='argumentname'>timeline<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/Array.html">Array</a> with time - function pairs, (time is in beats or optionally in seconds). Alternatively a <a href="./../Classes/String.html">String</a> representing the path of an scd file. The file must return an <a href="./../Classes/Array.html">Array</a> of time - function pairs, like [ 0, { }, 1, { } ]. See <a href="./../Classes/Timeline.html">Timeline</a> and the <a href="#examples">examples</a> at the end of this document.<tr><td class='argumentname'>timelineOptions<td class='argumentdesc'>
+<p>An event of timeline options. See <a href="./../Classes/Timeline.html">Timeline</a>.<textarea class='editor'>// This is how to make cues at specific cue-numbers.
+
+a = CuePlayer.new; // Create a new CuePlayer instance
+
+a.put(1, { "do something".postln }); // Define 1st cue.
+a.put(2, { "this is the 2nd cue".postln }); // Define 2nd cue.
+a.put(5, { "&amp; this is the 5th cue".postln }); // Define 5th cue.</textarea>
+
+<p><a class='anchor' name='add'>&nbsp;</a></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-add' href='./../Overviews/Methods.html#add'>add</a>(<span class='argstr'>function</span>, <span class='argstr'>timeline</span>, <span class='argstr'>timelineOptions</span>)</h3>
+<div class='method'>
+<p>Add a cue at the end of the cue-list.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>function<td class='argumentdesc'>
+<p>A compatible cue object; a <a href="./../Classes/Function.html">Function</a>, a <a href="./../Classes/CueInfo.html">CueInfo</a>, or a <a href="./../Classes/String.html">String</a> representing the path of an scd file returning one of the compatible objects.<tr><td class='argumentname'>timeline<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/Array.html">Array</a> with time - function pairs, (time is in beats or optionally in seconds). Alternatively a <a href="./../Classes/String.html">String</a> representing the path of an scd file. The file must return an <a href="./../Classes/Array.html">Array</a> of time - function pairs, like [ 0, { }, 1, { } ]. See <a href="./../Classes/Timeline.html">Timeline</a> and the <a href="#examples">examples</a> at the end of this document.<tr><td class='argumentname'>timelineOptions<td class='argumentdesc'>
+<p>An event of timeline options. See <a href="./../Classes/Timeline.html">Timeline</a>.
+<p><a class='anchor' name='trigger'>&nbsp;</a></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-trigger' href='./../Overviews/Methods.html#trigger'>trigger</a>(<span class='argstr'>cueNumber: 1</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/Cues.html'>Cues</a></div>
+<div class='method'>
+<p>Trigger a cue.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>cueNumber<td class='argumentdesc'>
+<p>An integer which corresponds to the function (cue) to evaluate.<textarea class='editor'>a = CuePlayer.new; // Create a new CuePlayer instance
+
+// Define cues 1 &amp; 2
+a.put(1, { "this is cue one".postln });
+a.put(2, { "this is cue two".postln });
+
+// Trigger cues
+a.trigger(1); // trigger cue 1
+a.trigger(2); // trigger cue 2</textarea>
+</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-blockTrigger' href='./../Overviews/Methods.html#blockTrigger'>blockTrigger</a>(<span class='argstr'>interval: 0.3</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/Cues.html'>Cues</a></div>
+<div class='method'>
+<p>Filter out triggers that occur too fast.
+<p>When the CuePlayer receives a new trigger within less time than the blockTrigger's value, it neglects it. This avoids the piece moving forward by mistake, for example when a footpedal is rapidly pressed twice by accident.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>interval<td class='argumentdesc'>
+<p>A number. Default is 0.3 secs.
+<p><a class='anchor' name='setCurrent'>&nbsp;</a></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setCurrent' href='./../Overviews/Methods.html#setCurrent'>setCurrent</a>(<span class='argstr'>cueNumber</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/Cues.html'>Cues</a></div>
+<div class='method'>
+<p>Set current cue.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>cueNumber<td class='argumentdesc'>
+<p>An integer which corresponds to the function (cue).
+<p><a class='anchor' name='next'>&nbsp;</a></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-next' href='./../Overviews/Methods.html#next'>next</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/Cues.html'>Cues</a></div>
+<div class='method'>
+<p>Trigger next cue.</div></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-hook' href='./../Overviews/Methods.html#hook'>hook</a> = value</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/Cues.html'>Cues</a></div>
+<div class='method'>
+<p>Register a function to be avaluated right before triggering a new cue. The function is passed in the cuePlayer as an argument.<textarea class='editor'>b = CuePlayer.new;
+b.hook = {arg cueplayer; cueplayer.current.postln; }</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gui' href='./../Overviews/Methods.html#gui'>gui</a>(<span class='argstr'>monitorInChannels: 2</span>, <span class='argstr'>monitorOutChannels: 8</span>, <span class='argstr'>options</span>)</h3>
+<div class='method'>
+<p>Create a GUI window for the CuePlayer.
+<p>This method brings up a convenient window allowing the user to control the CuePlayer from a Graphic User Interface. Through the window the user can monitor input/output buses, trigger cues, use a timer and a metronome and control the server's level.
+<p>The <a href="./../Classes/CueInfo.html">CueInfo</a> object is used to add descriptive text to cues (if needed) which may be subsequently displayed on screen using the gui method.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>monitorInChannels<td class='argumentdesc'>
+<p>An integer (0 - 8) for creating input level meters.<tr><td class='argumentname'>monitorOutChannels<td class='argumentdesc'>
+<p>An integer (1 - 48) for creating output level meters.<tr><td class='argumentname'>options<td class='argumentdesc'>
+<p>An event of one or more options.<textarea class='editor'>b = CuePlayer.new; // Create a new CuePlayer instance
+
+// Bring up the CuePlayer window.
+b.gui(
+    monitorInChannels: 5, // Monitor 5 input channels
+    monitorOutChannels: 24, // Monitor 24 output channels
+    options: (
+        monitorInOffset:  2, // Offset input monitoring by 2; (hence monitor inputs 3,4,5,6,7 here)
+        largeDisplay: true, // Show/hide the big window displaying current cue-number. Useful for the performers on stage.
+        largeDisplayBounds: Rect(600, 300, 450, 450), // Set bounds of the big window.
+        infoDisplay: true, // Show/hide the cue-title.
+        left: 1200, // Left bound of the CuePlayer window.
+        top: 300, // Top bound of the CuePlayer window.
+        timer: true, // Show/hide timer
+        metronome: true, // Show/hide metronome
+        serverControls: true, //  Show/hide server controls: mute-button, volume-slider, Peak CPU, Number of Synths
+        shortcuts: false // Use shortcuts; default is false
+        // spacebar: trigger next cue
+        // b: focus on bpm box
+        // c: focus on cue-number box
+        // p: start/pause timer
+        // s: stop timer
+        // P: plot current timeline
+        // m: mute server
+        // M: toggle metronome
+    )
+);</textarea>
+</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiTriggerNoteOn' href='./../Overviews/Methods.html#midiTriggerNoteOn'>midiTriggerNoteOn</a>(<span class='argstr'>note: 60</span>, <span class='argstr'>channel: 15</span>)</h3>
+<div class='method'>
+<p>Set up a midi-trigger on a given note and channel to trigger the next cue. This allows to evaluate sequential cues upon receiving a midi-note through a specified midi-channel. Default note is 60 (middle C) transmitted via channel 15. Bear in mind that the CuePlayer starts counting midi-channels from 1, (as opposed to 0). See also the <a href="./../Tutorials/CuePlayerTutorial.html">CuePlayer Tutorial</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>note<td class='argumentdesc'>
+<p>The midi-note which the CuePlayer listens to in order to trigger the next cue.<tr><td class='argumentname'>channel<td class='argumentdesc'>
+<p>The midi-channel.<textarea class='editor'>// Create a new CuePlayer instance &amp; bring up the GUI
+a = CuePlayer.new;
+a.gui;
+
+// Connect all midi devices &amp; set up a midi-trigger for the CuePlayer
+MIDIIn.connectAll;
+a.midiTriggerNoteOn(note: 60, channel: 15);
+
+// Ready to trigger cues from an external midi-device hooked up on channel 15 upon sending note 60.</textarea>
+</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiTriggerVelocity' href='./../Overviews/Methods.html#midiTriggerVelocity'>midiTriggerVelocity</a>(<span class='argstr'>note: 60</span>, <span class='argstr'>channel: 16</span>, <span class='argstr'>offset: 0</span>)</h3>
+<div class='method'>
+<p>Set up a midi-trigger on a given note and channel to trigger a cue based on the note's velocity value. This allows to evaluate specific cues upon receiving a midi-note; the velocity (1-127) controls the cue-number. Default note is 60 (middle C) transmitted via channel 16. Bear in mind that the CuePlayer starts counting midi-channels from 1, (as opposed to 0). See also the <a href="./../Tutorials/CuePlayerTutorial.html">CuePlayer Tutorial</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>note<td class='argumentdesc'>
+<p>The midi-note which the CuePlayer listens to.<tr><td class='argumentname'>channel<td class='argumentdesc'>
+<p>The midi-channel.<tr><td class='argumentname'>offset<td class='argumentdesc'>
+<p>Add a constant to the specified cue-number. Useful when more than 127 cues are needed.<textarea class='editor'>// Create a new CuePlayer instance &amp; bring up the GUI
+a = CuePlayer.new;
+a.gui;
+
+// Connect all midi devices &amp; set up a midi-trigger for the CuePlayer
+MIDIIn.connectAll;
+a.midiTriggerVelocity(note: 60, channel: 16, offset: 0);
+
+/* Ready to trigger cues from an external midi-device hooked up on channel 16
+based on the note's velocity value. */</textarea>
+</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiTriggerControl' href='./../Overviews/Methods.html#midiTriggerControl'>midiTriggerControl</a>(<span class='argstr'>value: 0</span>, <span class='argstr'>ccNum: 64</span>, <span class='argstr'>channel: 1</span>)</h3>
+<div class='method'>
+<p>Set up a midi-trigger on a given value of a midi-controller to trigger the next cue. This allows to evaluate sequential cues upon receiving a midi-control message from an external device (such as a foot-pedal) through a specified midi-channel. Default value is 0, controller-number is 64, transmitted via channel 1. Bear in mind that the CuePlayer starts counting midi-channels from 1 (as opposed to 0).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>value<td class='argumentdesc'>
+<p>The value of the midi-controller which will trigger the next cue.<tr><td class='argumentname'>ccNum<td class='argumentdesc'>
+<p>The controller's number.<tr><td class='argumentname'>channel<td class='argumentdesc'>
+<p>The midi-channel.<textarea class='editor'>// Create a new CuePlayer instance &amp; bring up the GUI
+a = CuePlayer.new;
+a.gui;
+
+// Connect all midi devices &amp; set up a trigger which will respond to midi-control messages
+MIDIIn.connectAll;
+a.midiTriggerControl(value: 127, ccNum: 64, channel: 1)
+
+// Ready to trigger cues from midi-controller 64 hooked up on channel 1 upon sending the value 127</textarea>
+</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addMIDIFunc' href='./../Overviews/Methods.html#addMIDIFunc'>addMIDIFunc</a>(<span class='argstr'>midiFunc</span>)</h3>
+<div class='method'>
+<p>Add a custom midi function.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>midiFunc<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/MIDIFunc.html">MIDIFunc</a>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clearMIDI' href='./../Overviews/Methods.html#clearMIDI'>clearMIDI</a></h3>
+<div class='method'>
+<p>Clear all MIDI functions defined with midiTriggerNoteOn and midiTriggerVelocity.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-oscTrigger' href='./../Overviews/Methods.html#oscTrigger'>oscTrigger</a>(<span class='argstr'>path: '/cueTrigger'</span>)</h3>
+<div class='method'>
+<p>Set up an Open Sound Control trigger. This allows to evaluate a cue upon receiving an OSC message. Default path is '/cueTrigger'. Default message is -1 which will trigger the next cue; any other positive integer will trigger the respective cue. See also the <a href="./../Tutorials/CuePlayerTutorial.html">CuePlayer Tutorial</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>A Symbol indicating the path of the OSC address.<textarea class='editor'>// Create a new CuePlayer instance &amp; bring up the GUI
+a = CuePlayer.new;
+a.gui;
+
+// Define cues 1, 2 &amp; 3
+a.put(1, { "this is cue 1".postln });
+a.put(2, { "this is cue 2".postln });
+a.put(3, { "this is cue 3".postln });
+
+// An OSC responder
+a.oscTrigger
+
+// Test it
+m = NetAddr("127.0.0.1", NetAddr.langPort); // Create a net address
+m.sendMsg("/cueTrigger", -1); // Send a message to trigger next cue
+m.sendMsg("/cueTrigger", -1); // Trigger next cue
+m.sendMsg("/cueTrigger", -1); // Trigger next cue
+m.sendMsg("/cueTrigger", 2); // Trigger cue 2
+m.sendMsg("/cueTrigger", 3); // Trigger cue 3</textarea>
+</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-freeOscTrigger' href='./../Overviews/Methods.html#freeOscTrigger'>freeOscTrigger</a></h3>
+<div class='method'>
+<p>Free the OSC trigger mechanism.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sendOSC' href='./../Overviews/Methods.html#sendOSC'>sendOSC</a>(<span class='argstr'>ip: "127.0.0.1"</span>, <span class='argstr'>port: 8000</span>, <span class='argstr'>msg</span>)</h3>
+<div class='method'>
+<p>Send an open sound control message to a network address. See also the <a href="./../Tutorials/CuePlayerTutorial.html">CuePlayer Tutorial</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>ip<td class='argumentdesc'>
+<p>The IP number, like "127.0.0.1".<tr><td class='argumentname'>port<td class='argumentdesc'>
+<p>The port number, like 57110.<tr><td class='argumentname'>msg<td class='argumentdesc'>
+<p>The message, like ["/play", 1].<textarea class='editor'>a = CuePlayer.new; // Create a new CuePlayer instance
+
+// Send messages (possibly to control a DAW).
+// ip/port/message need to be adjusted to match the software's specs.
+a.sendOSC("127.0.0.1", 8000, ["/play", 1]);
+a.sendOSC("127.0.0.1", 8000, ["/pause", 1]);</textarea>
+</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clock' href='./../Overviews/Methods.html#clock'>clock</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clock' href='./../Overviews/Methods.html#clock'>clock</a> = value</h3>
+<div class='method'>
+<p>Return the clock currently in use by this CuePlayer instance.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <a href="./../Classes/TempoClock.html">TempoClock</a> instance.
+<p><a class='anchor' name='useGlobalClock'>&nbsp;</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-useGlobalClock' href='./../Overviews/Methods.html#useGlobalClock'>useGlobalClock</a></h3>
+<div class='method'>
+<p>Use the common clock. This is a TempoClock used by all CuePlayer instances. Useful when multiple synced CuePlayers are needed.<div class='note'><span class='notelabel'>NOTE:</span> Current GUI implementation for this feature is under development.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plot' href='./../Overviews/Methods.html#plot'>plot</a>(<span class='argstr'>cueNumber</span>)</h3>
+<div class='method'>
+<p>Provides a visual representation of the selected timeline items. It is applicable only when using timelines. See <a href="#put">put</a> and <a href="#add">add</a> methods.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>cueNumber<td class='argumentdesc'>
+<p>An integer. If a timeline is provided, it plots the items in the selected cue-number.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-enableLiveReload' href='./../Overviews/Methods.html#enableLiveReload'>enableLiveReload</a></h3>
+<div class='method'>
+<p>Enable live reloading of scripts provided as path strings. See <a href="#put">put</a> and <a href="#add">add</a> methods.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-disableLiveReload' href='./../Overviews/Methods.html#disableLiveReload'>disableLiveReload</a></h3>
+<div class='method'>
+<p>Disable live reloading of scripts provided as path strings. See <a href="#put">put</a> and <a href="#add">add</a> methods.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-guiInstance' href='./../Overviews/Methods.html#guiInstance'>guiInstance</a></h3>
+<div class='method'>
+<p>Return the instnace of <a href="./../Classes/CuePlayerGUI.html">CuePlayerGUI</a> used by this CuePlayer.
+<p><a class='anchor' name='examples'>&nbsp;</a></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addTimelineToRegister' href='./../Overviews/Methods.html#addTimelineToRegister'>addTimelineToRegister</a>(<span class='argstr'>cueNumber</span>, <span class='argstr'>timeline</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiTrigger' href='./../Overviews/Methods.html#midiTrigger'>midiTrigger</a>(<span class='argstr'>note: 60</span>, <span class='argstr'>channel: 15</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-oscTriggerInform' href='./../Overviews/Methods.html#oscTriggerInform'>oscTriggerInform</a>(<span class='argstr'>path</span>, <span class='argstr'>message</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sched' href='./../Overviews/Methods.html#sched'>sched</a>(<span class='argstr'>time</span>, <span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stop' href='./../Overviews/Methods.html#stop'>stop</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-timelineRegister' href='./../Overviews/Methods.html#timelineRegister'>timelineRegister</a></h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>/* ************************************************************************ */
+// Using few basic methods
+
+// Define a SynthDef to play with
+(
+SynthDef(\fsosynth, {
+    arg fundamental = 120, harmonics = #[0.5, 1.19, 1.5, 4], dec = 4;
+    var signal, envelope, delay;
+    signal = Mix.ar( FSinOsc.ar( fundamental * harmonics, mul: 0.07) );
+    delay = DelayN.ar(signal, delaytime: SinOsc.kr(15, mul: 25/SampleRate.ir, add: 50/SampleRate.ir ));
+    envelope = EnvGen.kr(Env.perc(attackTime:0.1,releaseTime: dec), 1, doneAction: 2);
+    Out.ar( [0,1], (signal + delay) * envelope)
+    }
+).store;
+)
+
+// Create a new CuePlayer instance &amp; set its tempo
+a = CuePlayer.new;
+a.tempo_(130);
+
+// Build the cues
+(
+// Define cue-1
+a.put(1, {
+    Synth(\fsosynth, [\fundamental, 146]);
+});
+
+// Define cue-2
+a.put(2, {
+    Synth(\fsosynth, [\fundamental, 97, \harmonics, #[0.5, 1.19, 1.5, 8] ]);
+});
+
+// Define cue-3
+a.put(3, {
+    Pdef(\pattern, Pbind(\instrument, \fsosynth, \fundamental, 110, \dec, 0.5, \dur, 1 )).play(a.clock, quant:[1]);
+    // Play the pattern at the CuePlayer's clock
+});
+
+// Add a cue at the end of the cue-list, (here it equates with cue-4)
+a.add({
+    Pdef(\pattern).clear;
+});
+)
+
+// Now, evaluate one by one
+a.trigger(1); // trigger cue 1
+a.trigger(3); // trigger cue 3
+a.tempo_(100); // change the tempo
+a.setCurrent(1); // set current cue to 1 ...
+a.next; // trigger next cue (i.e cue-2)
+a.trigger(4); // trigger cue 4
+
+/* ************************************************************************ */
+// Using the GUI
+
+// Bring up the window and control the CuePlayer from its GUI
+(
+a.gui(
+    monitorInChannels: 4, // Monitor 4 input channels
+    monitorOutChannels: 16, // Monitor 16 output channels
+    options: (
+        infoDisplay: true, // Show the cue-title field.
+        largeDisplay: true, // Show the big window displaying current cue-number.
+        // Useful for the performers on stage.
+        left: 1300, // Left bound of the CuePlayer window.
+        top: 300, // Top bound of the CuePlayer window.
+    )
+));
+
+/* ************************************************************************ */
+// Attaching text to a cue
+
+// Define cue-5, &amp; add text information using the CueInfo object
+(
+a.put(5,
+    CueInfo(
+        cueTitle: "play a C", // this will be projected on the cueplayer window
+        largeDisplayInfo:  "performer's info", // ... and this on the large display
+        function: { Synth(\fsosynth, [\fundamental, 130]); }
+))
+);
+
+a.trigger(5); // trigger cue 5
+// "cueTitle" appears on the cueplayer gui &amp; "largeDisplayInfo" on a second window for the performer.
+
+/* ************************************************************************ */
+// Using a timeline
+
+// Put a timeline at cue-6
+a.put(6,
+    {"a timeline".postln},
+    timeline: [
+        1, {Synth(\fsosynth, [\fundamental, 174, \dec, 0.4 ])},
+        2, {Synth(\fsosynth, [\fundamental, 220, \dec, 0.4 ])},
+        3, {Synth(\fsosynth, [\fundamental, 130, \dec, 0.4 ])},
+        4, {Synth(\fsosynth, [\fundamental, 146, \dec, 0.4 ])},
+        4.5, {Synth(\fsosynth, [\fundamental, 174, \dec, 0.4 ])},
+        5, {Synth(\fsosynth, [\fundamental, 220, \dec, 0.4 ])},
+        5.5, {Synth(\fsosynth, [\fundamental, 130, \dec, 0.4 ])},
+        6, {Synth(\fsosynth, [\fundamental, 146, \dec, 1 ])},
+        8,{Synth(\fsosynth, [\fundamental, 293, \dec, 3 ])}
+    ],
+    timelineOptions: (quant: 1)
+);
+
+// Trigger cue-6 with the following code or via the GUI
+a.trigger(6);
+
+// Plot the timeline's events
+a.plot(6);
+
+// Alternatively you may save the timeline (as an Array of time - function pairs) in an scd file and point to its path.
+a.put(7,
+    {"read timeline from an scd file".postln},
+    timeline: PathName(CuePlayer.class.filenameSymbol.asString).parentPath +/+ "HelpSource/Classes/timeline" +/+ "score.scd",
+    timelineOptions: (quant: 1)
+);
+
+a.trigger(7);
+
+/* ************************************************************************ */</textarea>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/CuePlayer/HelpSource/Classes/CuePlayer.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/CuePlayer/HelpSource/Classes/CuePlayer.schelp</a><br>link::Classes/CuePlayer::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

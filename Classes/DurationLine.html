@@ -1,0 +1,96 @@
+<!doctype html><html lang='en'><head><title>DurationLine | SuperCollider 3.10.2 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'DurationLine';
+var scdoc_sc_version = '3.10.2';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>DurationLine:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-create'>create</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-animation'>animation</a> </li>
+<li class='toc3'><a href='#-cuePlayer'>cuePlayer</a> </li>
+<li class='toc3'><a href='#-getCueTriggerFromCuePlayer'>getCueTriggerFromCuePlayer</a> </li>
+</ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Class'>Class</a></span>
+</div><h1>DurationLine<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Display a scrolling line on the large window.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/CuePlayer/DurationLine.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/CuePlayer/DurationLine.sc'>DurationLine.sc</a></div><div id='related'>See also: <a href="./../Classes/CuePlayer.html">CuePlayer</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>DurationLine allows to display a vertical line on the large window which scrolls from left to right within a certain amount of time. This may be used to have a visual representation on how long a particular process lasts.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+
+<p><a class='anchor' name='new'>&nbsp;</a><h3 class='method-code'><span class='method-prefix'>DurationLine.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>cuePlayer</span>)</h3>
+<div class='method'>
+<p>Create a new DurationLine instance.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+
+<p><a class='anchor' name='create'>&nbsp;</a><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-create' href='./../Overviews/Methods.html#create'>create</a>(<span class='argstr'>duration: 5</span>, <span class='argstr'>color</span>, <span class='argstr'>width: 2</span>)</h3>
+<div class='method'>
+<p>Create a duration-line specifying its duration, color and vertical-width.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>duration<td class='argumentdesc'>
+<p>The time (in seconds) it takes for the vertical line to scan the window from left to right.<tr><td class='argumentname'>color<td class='argumentdesc'>
+<p>Defines the color of the line.<tr><td class='argumentname'>width<td class='argumentdesc'>
+<p>Defines the thickness of the line.<textarea class='editor'>(
+a = CuePlayer.new; // Create a new CuePlayer instance &amp; bring up its GUI
+a.gui( monitorInChannels: 2, monitorOutChannels: 8,
+    options:(
+        largeDisplay: true, largeDisplayBounds: Rect(1400, 210, 285, 285)
+    )
+);
+
+~durLine = DurationLine(a); // create a durationline
+
+a.put(1, {
+    "this is cue-1".postln;
+    // display a red vertical line in the big window moving from left to right within 1 second
+    ~durLine.create(duration: 1, color: Color.red, width: 30);
+});
+
+a.put(2, {
+    "this is cue-2".postln;
+        // display a blue vertical line in the big window moving from left to right within 3 seconds
+    ~durLine.create(duration: 3, color: Color.blue, width: 15);
+})
+)
+
+
+a.trigger(1);
+a.trigger(2);</textarea>
+</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-animation' href='./../Overviews/Methods.html#animation'>animation</a>(<span class='argstr'>duration: 5</span>, <span class='argstr'>color</span>, <span class='argstr'>width: 2</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cuePlayer' href='./../Overviews/Methods.html#cuePlayer'>cuePlayer</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getCueTriggerFromCuePlayer' href='./../Overviews/Methods.html#getCueTriggerFromCuePlayer'>getCueTriggerFromCuePlayer</a></h3>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/CuePlayer/HelpSource/Classes/DurationLine.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/CuePlayer/HelpSource/Classes/DurationLine.schelp</a><br>link::Classes/DurationLine::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>
