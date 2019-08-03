@@ -29,7 +29,8 @@ var scdoc_sc_version = '3.10.2';
 <li class='toc3'><a href='#*initClass'>initClass</a> </li>
 <li class='toc3'><a href='#*at'>at</a> </li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-currentSynthDef'>currentSynthDef</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-setUpControls'>setUpControls</a> </li>
+<li class='toc3'><a href='#-currentSynthDef'>currentSynthDef</a> </li>
 <li class='toc3'><a href='#-clearSamples'>clearSamples</a> </li>
 <li class='toc3'><a href='#-prResetSampling'>prResetSampling</a> </li>
 <li class='toc3'><a href='#-addOutProxy'>addOutProxy</a> </li>
@@ -41,7 +42,6 @@ var scdoc_sc_version = '3.10.2';
 <li class='toc3'><a href='#-controls'>controls</a> </li>
 <li class='toc3'><a href='#-prInitCVs'>prInitCVs</a> </li>
 <li class='toc3'><a href='#-init'>init</a> </li>
-<li class='toc3'><a href='#-setUpControls'>setUpControls</a> </li>
 <li class='toc3'><a href='#-bendSpec'>bendSpec</a> </li>
 <li class='toc3'><a href='#-pdef'>pdef</a> </li>
 <li class='toc3'><a href='#-initSynthDef'>initSynthDef</a> </li>
@@ -81,7 +81,35 @@ var scdoc_sc_version = '3.10.2';
 
 <p>All other controls you may have defined in your SynthDef will automatically be picked up by the setup process and get assigned appropriate widgets automatically.
 <p>Especially after loading an already existing CVCenter setup you possibly have to re-init the keyboard through <a href="./-reInit">-reInit</a>
-<p>Additionally an output proxy - a <a href="./Classes/NodeProxy.html">NodeProxy</a> or an <a href="./Classes/Ndef.html">Ndef</a> - can be added through <a href="./-addOutProxy">-addOutProxy</a> which allows you to do filtering and all kinds of NodeProxy trickery. First code examples:<textarea class='editor'>(
+<p>Additionally an output proxy - a <a href="./Classes/NodeProxy.html">NodeProxy</a> or an <a href="./Classes/Ndef.html">Ndef</a> - can be added through <a href="./-addOutProxy">-addOutProxy</a> which allows you to do filtering and all kinds of NodeProxy trickery.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*all' href='./Overviews/Methods.html#all'>all</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./Classes/Event.html">Event</a>, containing all instantiated Keyboards</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*new' href='./Overviews/Methods.html#new'>new</a></h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>Instanciate a new keyboard under <code>name</code>. The keyboard will be accessible under <code>CVCenterKeyboard.all[name]</code></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*newSynthDef' href='./Overviews/Methods.html#newSynthDef'>newSynthDef</a></h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>synthDefName<td class='argumentdesc'>
+<p>a <a href="./Classes/Symbol.html">Symbol</a> or <a href="./Classes/String.html">String</a>, identifying an already declared <a href="./Classes/SynthDef.html">SynthDef</a> to be used with the new CVCenterKeyboard instance. The SynthDef must have defined an envelop and a <code>\gate</code> argument.<tr><td class='argumentname'>keyboardName<td class='argumentdesc'>
+<p>a <a href="./Classes/Symbol.html">Symbol</a> or <a href="./Classes/String.html">String</a>, identifying the CVCenterKeyboard. The keyboard will be accessible at this key within the <code>CVCenter.all</code> variable.<tr><td class='argumentname'>connectMidi<td class='argumentdesc'>
+<p>if set to <code>true</code> immediately connect the external MIDI keyboard (default: <code>true</code>)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*initClass' href='./Overviews/Methods.html#initClass'>initClass</a></h3>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*at' href='./Overviews/Methods.html#at'>at</a></h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>keyboardName<td class='argumentdesc'></table></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setUpControls' href='./Overviews/Methods.html#setUpControls'>setUpControls</a></h3>
+<div class='method'>
+<p>Set up the keyboard for the specified <a href="./Classes/SynthDef.html">SynthDef</a>. The SynthDef must already have been added beforehand, either when creating the keyboard with <a href="#*newSynthDef">*newSynthDef</a> or <a href="#-addSynthDef">-addSynthDef</a>. <code>setUpControls</code> will analyze the internal control structure of the SynthDef and create a set of appropriate <a href="./Classes/CVWidget.html">CVWidget</a>s within <a href="./Classes/CVCenter.html">CVCenter</a>. Some controls, however, must be reserved for the control through the MIDI keyboard keys: an argument for pitch, one for velocity and a bend argument as well as one for the output bus.<textarea class='editor'>// define a SynthDef
+// notice the enevlope and gate
+(
 SynthDef(\pmosc, {
     var env = Env.adsr(\atk.kr(0.01), \dec.kr(0.3), \sust.kr(0.5), \rel.kr(0.7));
     var son = PMOsc.ar(
@@ -109,26 +137,33 @@ Spec.add(\modphase, \phase);
 
 //
 ~kb = CVCenterKeyboard.newSynthDef(\pmosc, \myKeyboard);
-~kb.setUpControls(\pmosc, \kb, \out, \carfreq, \veloc, \carfreq);
-// just in case, won't do no harm
-~kb.reInit(\pmosc);
-~kb.addOutProxy(useNdef: true);</textarea>
-<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*all' href='./Overviews/Methods.html#all'>all</a></h3>
-<div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*new' href='./Overviews/Methods.html#new'>new</a></h3>
-<div class='method'><h4>Arguments:</h4>
+
+(
+~kb.setUpControls(
+    \pmosc, // the SynthDef
+    \kb, // a prefix for CVCenter, should make shure the resulting widgets have a unique names
+    \out, // the argument setting the out bus
+    \carfreq, // the pitch argument, to be controlled through the MIDI keyboard keys
+    \veloc, // the velocity argument
+    \carfreq // the bend argument - will often be the same as the pitch argument
+);
+// in case a keyboard doesn't play... won't do no harm
+~kb.reInit(\pmosc);</textarea>
+<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>name<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*newSynthDef' href='./Overviews/Methods.html#newSynthDef'>newSynthDef</a></h3>
-<div class='method'><h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>synthDefName<td class='argumentdesc'><tr><td class='argumentname'>connectMidi<td class='argumentdesc'><tr><td class='argumentname'>keyboardName<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*initClass' href='./Overviews/Methods.html#initClass'>initClass</a></h3>
-<div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*at' href='./Overviews/Methods.html#at'>at</a></h3>
-<div class='method'><h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>keyboardName<td class='argumentdesc'></table></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-currentSynthDef' href='./Overviews/Methods.html#currentSynthDef'>currentSynthDef</a></h3>
+<tr><td class='argumentname'>synthDefName<td class='argumentdesc'>
+<p>the <a href="./Classes/SynthDef.html">SynthDef</a>'s name<tr><td class='argumentname'>prefix<td class='argumentdesc'>
+<p>an optional <a href="./Classes/Symbol.html">Symbol</a> or <a href="./Classes/String.html">String</a> for CVCenter, to make sure the resulting widgets get a unique name.<tr><td class='argumentname'>pitchControl<td class='argumentdesc'>
+<p>a <a href="./Classes/Symbol.html">Symbol</a> or <a href="./Classes/String.html">String</a> denoting the keyboard key, incoming note. Default: <code>\freq</code><tr><td class='argumentname'>velocControl<td class='argumentdesc'>
+<p>a <a href="./Classes/Symbol.html">Symbol</a> or <a href="./Classes/String.html">String</a> denoting velocity coming with the note. Default: <code>\veloc</code><tr><td class='argumentname'>bendControl<td class='argumentdesc'>
+<p>a <a href="./Classes/Symbol.html">Symbol</a> or <a href="./Classes/String.html">String</a> denoting the pitch bend wheel. Default: <code>\bend</code><tr><td class='argumentname'>outControl<td class='argumentdesc'>
+<p>a <a href="./Classes/Symbol.html">Symbol</a> or <a href="./Classes/String.html">String</a> denoting the output bus. Default: <code>\out</code><tr><td class='argumentname'>includeInCVCenter<td class='argumentdesc'>
+<p>an <a href="./Classes/Array.html">Array</a> of <a href="./Classes/Symbol.html">Symbol</a>s or <a href="./Classes/String.html">String</a>s, denoting those of the afore described arguments which <em>should</em> appear in CVCenter though they have already been assigned to the keyboard<tr><td class='argumentname'>theServer<td class='argumentdesc'>
+<p>optional: the <a href="./Classes/Server.html">Server</a> to rum the <a href="./Classes/Synth.html">Synth</a> on<tr><td class='argumentname'>out<td class='argumentdesc'>
+<p>optional: an <a href="./Classes/Integer.html">Integer</a> denoting a default output bus (can be set in the SynthDef beforehand as well)<tr><td class='argumentname'>deactivateDefaultWidgetActions<td class='argumentdesc'>
+<p>a <a href="./Classes/Boolean.html">Boolean</a>, denoting if default widget actions should be deactivated (default: <code>true</code>)<tr><td class='argumentname'>srcID<td class='argumentdesc'>
+<p>optional: an <a href="./Classes/Integer.html">Integer</a>, denoting the source ID of a MIDI device (see also: <a href="./Guides/UsingMIDI.html">Using MIDI</a>)<tr><td class='argumentname'>tab<td class='argumentdesc'>
+<p>optional: a <a href="./Classes/Symbol.html">Symbol</a> or <a href="./Classes/String.html">String</a> denoting the tab in which the CVWidgets for this given Synth will appear. If none is given the tab name will default the the SynthDef's name</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-currentSynthDef' href='./Overviews/Methods.html#currentSynthDef'>currentSynthDef</a></h3>
 <div class='method'>
 <p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clearSamples' href='./Overviews/Methods.html#clearSamples'>clearSamples</a></h3>
 <div class='method'><h4>Arguments:</h4>
@@ -158,10 +193,7 @@ Spec.add(\modphase, \phase);
 <table class='arguments'>
 <tr><td class='argumentname'>synthDefName<td class='argumentdesc'><tr><td class='argumentname'>args<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-init' href='./Overviews/Methods.html#init'>init</a></h3>
 <div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setUpControls' href='./Overviews/Methods.html#setUpControls'>setUpControls</a></h3>
-<div class='method'><h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>synthDefName<td class='argumentdesc'><tr><td class='argumentname'>prefix<td class='argumentdesc'><tr><td class='argumentname'>outControl<td class='argumentdesc'><tr><td class='argumentname'>keyboardControl<td class='argumentdesc'><tr><td class='argumentname'>velocControl<td class='argumentdesc'><tr><td class='argumentname'>bendControl<td class='argumentdesc'><tr><td class='argumentname'>theServer<td class='argumentdesc'><tr><td class='argumentname'>out<td class='argumentdesc'><tr><td class='argumentname'>deactivateDefaultWidgetActions<td class='argumentdesc'><tr><td class='argumentname'>srcID<td class='argumentdesc'><tr><td class='argumentname'>tab<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bendSpec' href='./Overviews/Methods.html#bendSpec'>bendSpec</a></h3>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bendSpec' href='./Overviews/Methods.html#bendSpec'>bendSpec</a></h3>
 <div class='method'>
 <p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pdef' href='./Overviews/Methods.html#pdef'>pdef</a></h3>
 <div class='method'>
