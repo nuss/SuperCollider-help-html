@@ -26,7 +26,6 @@ var scdoc_sc_version = '3.10.2';
 <ul class='toc'><li class='toc3'><a href='#*all'>all</a> </li>
 <li class='toc3'><a href='#*new'>new</a> </li>
 <li class='toc3'><a href='#*newSynthDef'>newSynthDef</a> </li>
-<li class='toc3'><a href='#*initClass'>initClass</a> </li>
 <li class='toc3'><a href='#*at'>at</a> </li>
 <li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
@@ -36,33 +35,27 @@ var scdoc_sc_version = '3.10.2';
 <li class='toc3'><a href='#-currentSynthDef'>currentSynthDef</a> </li>
 <li class='toc3'><a href='#-synthDefNames'>synthDefNames</a> </li>
 <li class='toc3'><a href='#-switchSynthDef'>switchSynthDef</a> </li>
+<li class='toc3'><a href='#-bendSpec'>bendSpec</a> </li>
 <li class='toc3'><a href='#-out'>out</a> </li>
 <li class='toc3'><a href='#-controls'>controls</a> </li>
 <li class='toc3'><a href='#-addOutProxy'>addOutProxy</a> </li>
 <li class='toc3'><a href='#-clearSamples'>clearSamples</a> </li>
-<li class='toc3'><a href='#-prResetSampling'>prResetSampling</a> </li>
-<li class='toc3'><a href='#-prInitCVs'>prInitCVs</a> </li>
-<li class='toc3'><a href='#-init'>init</a> </li>
-<li class='toc3'><a href='#-bendSpec'>bendSpec</a> </li>
 <li class='toc3'><a href='#-pdef'>pdef</a> </li>
 <li class='toc3'><a href='#-initSynthDef'>initSynthDef</a> </li>
 <li class='toc3'><a href='#-removeOutProxy'>removeOutProxy</a> </li>
 <li class='toc3'><a href='#-debug'>debug</a> </li>
 <li class='toc3'><a href='#-sample'>sample</a> </li>
 <li class='toc3'><a href='#-activateSampling'>activateSampling</a> </li>
-<li class='toc3'><a href='#-prAddWidgetActionsForKeyboard'>prAddWidgetActionsForKeyboard</a> </li>
-<li class='toc3'><a href='#-prInitKeyboard'>prInitKeyboard</a> </li>
 <li class='toc3'><a href='#-server'>server</a> </li>
 <li class='toc3'><a href='#-name'>name</a> </li>
 <li class='toc3'><a href='#-wdgtNames'>wdgtNames</a> </li>
 <li class='toc3'><a href='#-outProxy'>outProxy</a> </li>
 <li class='toc3'><a href='#-free'>free</a> </li>
 <li class='toc3'><a href='#-sampleEvents'>sampleEvents</a> </li>
-<li class='toc3'><a href='#-prMidiInit'>prMidiInit</a> </li>
-<li class='toc3'><a href='#-prDurSum'>prDurSum</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-keyboardName'>keyboardName</a> </li>
+<li class='toc3'><a href='#-prResetSampling'>prResetSampling</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
@@ -104,9 +97,7 @@ var scdoc_sc_version = '3.10.2';
 <p>a <a href="./../Classes/Symbol.html">Symbol</a> or <a href="./../Classes/String.html">String</a>, identifying the CVCenterKeyboard. The keyboard will be accessible at this key within the <code>CVCenter.all</code> variable.<tr><td class='argumentname'>connectMidi<td class='argumentdesc'>
 <p>if set to <code>true</code> immediately connect the external MIDI keyboard (default: <code>true</code>)</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>CVCenterKeyboard.</span><a class='method-name' name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a></h3>
-<div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>CVCenterKeyboard.</span><a class='method-name' name='*at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>keyboardName</span>)</h3>
+<p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>CVCenterKeyboard.</span><a class='method-name' name='*at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>keyboardName</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>keyboardName<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
@@ -183,7 +174,9 @@ Spec.add(\modphase, \phase);
 <p>It may happen that the physical keyboard doesn't respond, e.g. after loading a <a href="./../Classes/CVCenter.html#*loadSetup">CVCenter setup</a>. This short command will recreate the keyboard internally without any further user interaction. Optionally the name of the SynthDef for which the keyboard shall recreated may be given.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>synthDefName<td class='argumentdesc'>
-<p>optional - a <a href="./../Classes/Symbol.html">Symbol</a>, denoting the <a href="./../Classes/SynthDef.html">SynthDef</a> you want to reinitialize.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-currentSynthDef' href='./../Overviews/Methods.html#currentSynthDef'>currentSynthDef</a></h3>
+<p>optional - a <a href="./../Classes/Symbol.html">Symbol</a>, denoting the <a href="./../Classes/SynthDef.html">SynthDef</a> you want to reinitialize.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-currentSynthDef' href='./../Overviews/Methods.html#currentSynthDef'>currentSynthDef</a></h3>
 <div class='method'>
 <p>The CVCenterKeyboard must have been set up through calling <a href="#-setUpControls">-setUpControls</a> before.<h4>Returns:</h4>
 <div class='returnvalue'>
@@ -196,7 +189,15 @@ Spec.add(\modphase, \phase);
 <table class='arguments'>
 <tr><td class='argumentname'>synthDefName<td class='argumentdesc'></table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-out' href='./../Overviews/Methods.html#out'>out</a></h3>
+<p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bendSpec' href='./../Overviews/Methods.html#bendSpec'>bendSpec</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bendSpec' href='./../Overviews/Methods.html#bendSpec'>bendSpec</a> = value</h3>
+<div class='method'>
+<p>Set or get the <a href="./../Classes/ControlSpec.html">ControlSpec</a> for the 'bend' arg within the currently used SynthDef, denoted by the arg <code>bendControl</code> in <a href="#-setUpControls">-setUpControls</a>, usually controlled through pitch bend wheel on a MIDI keyboard. By default this will be
+<p><code>ControlSpec(0.midicps.neg, 0.midicps, \lin, 0, 0, " hz")</code>
+<p>which results in
+<p><code>ControlSpec(-8.1757989156437, 8.1757989156437, 'linear', 0, 0, " hz")</code><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/ControlSpec.html">ControlSpec</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-out' href='./../Overviews/Methods.html#out'>out</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-out' href='./../Overviews/Methods.html#out'>out</a> = value</h3>
 <div class='method'>
 <p>Set or get the Synth out bus.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-controls' href='./../Overviews/Methods.html#controls'>controls</a></h3>
@@ -208,17 +209,7 @@ Spec.add(\modphase, \phase);
 <tr><td class='argumentname'>synthDefName<td class='argumentdesc'><tr><td class='argumentname'>numChannels<td class='argumentdesc'><tr><td class='argumentname'>useNdef<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clearSamples' href='./../Overviews/Methods.html#clearSamples'>clearSamples</a>( <span class='argstr'>... indices</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>... indices<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prResetSampling' href='./../Overviews/Methods.html#prResetSampling'>prResetSampling</a></h3>
-<div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prInitCVs' href='./../Overviews/Methods.html#prInitCVs'>prInitCVs</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>args</span>)</h3>
-<div class='method'><h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>synthDefName<td class='argumentdesc'><tr><td class='argumentname'>args<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-init' href='./../Overviews/Methods.html#init'>init</a></h3>
-<div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bendSpec' href='./../Overviews/Methods.html#bendSpec'>bendSpec</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bendSpec' href='./../Overviews/Methods.html#bendSpec'>bendSpec</a> = value</h3>
-<div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pdef' href='./../Overviews/Methods.html#pdef'>pdef</a></h3>
+<tr><td class='argumentname'>... indices<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pdef' href='./../Overviews/Methods.html#pdef'>pdef</a></h3>
 <div class='method'>
 <p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-initSynthDef' href='./../Overviews/Methods.html#initSynthDef'>initSynthDef</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>connectMidi</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
@@ -234,13 +225,7 @@ Spec.add(\modphase, \phase);
 <p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-activateSampling' href='./../Overviews/Methods.html#activateSampling'>activateSampling</a>(<span class='argstr'>onOff: true</span>, <span class='argstr'>synthDefName</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>onOff<td class='argumentdesc'><tr><td class='argumentname'>synthDefName<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prAddWidgetActionsForKeyboard' href='./../Overviews/Methods.html#prAddWidgetActionsForKeyboard'>prAddWidgetActionsForKeyboard</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>deactivateDefaultActions</span>)</h3>
-<div class='method'><h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>synthDefName<td class='argumentdesc'><tr><td class='argumentname'>deactivateDefaultActions<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prInitKeyboard' href='./../Overviews/Methods.html#prInitKeyboard'>prInitKeyboard</a>(<span class='argstr'>synthDefName</span>)</h3>
-<div class='method'><h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>synthDefName<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-server' href='./../Overviews/Methods.html#server'>server</a></h3>
+<tr><td class='argumentname'>onOff<td class='argumentdesc'><tr><td class='argumentname'>synthDefName<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-server' href='./../Overviews/Methods.html#server'>server</a></h3>
 <div class='method'>
 <p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-name' href='./../Overviews/Methods.html#name'>name</a>: METHOD NOT FOUND!</h3>
 <div class='method'>
@@ -253,15 +238,10 @@ Spec.add(\modphase, \phase);
 <table class='arguments'>
 <tr><td class='argumentname'>synthDefName<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sampleEvents' href='./../Overviews/Methods.html#sampleEvents'>sampleEvents</a></h3>
 <div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prMidiInit' href='./../Overviews/Methods.html#prMidiInit'>prMidiInit</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>connectMidi</span>)</h3>
-<div class='method'><h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>synthDefName<td class='argumentdesc'><tr><td class='argumentname'>connectMidi<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prDurSum' href='./../Overviews/Methods.html#prDurSum'>prDurSum</a>(<span class='argstr'>durs</span>)</h3>
-<div class='method'><h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>durs<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<p></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keyboardName' href='./../Overviews/Methods.html#keyboardName'>keyboardName</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prResetSampling' href='./../Overviews/Methods.html#prResetSampling'>prResetSampling</a></h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 <textarea class='editor'>_some_example_code_</textarea>
 
