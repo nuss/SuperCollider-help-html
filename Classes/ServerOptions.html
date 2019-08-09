@@ -50,6 +50,7 @@ var scdoc_sc_version = '3.10.2';
 <li class='toc3'><a href='#-numWireBufs'>numWireBufs</a> </li>
 <li class='toc3'><a href='#-outputStreamsEnabled'>outputStreamsEnabled</a> </li>
 <li class='toc3'><a href='#-protocol'>protocol</a> </li>
+<li class='toc3'><a href='#-bindAddress'>bindAddress</a> </li>
 <li class='toc3'><a href='#-remoteControlVolume'>remoteControlVolume</a> </li>
 <li class='toc3'><a href='#-sampleRate'>sampleRate</a> </li>
 <li class='toc3'><a href='#-verbosity'>verbosity</a> </li>
@@ -172,7 +173,11 @@ var scdoc_sc_version = '3.10.2';
 <p>A String which allows turning off output streams that you are not interested in on the audio device. If the string is "11000", for example, then only the first two output streams on the device will be enabled. Turning off streams can reduce CPU load.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-protocol' href='./../Overviews/Methods.html#protocol'>protocol</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-protocol' href='./../Overviews/Methods.html#protocol'>protocol</a> = value</h3>
 <div class='method'>
-<p>A Symbol representing the communications protocol. Either <code>\udp</code> or <code>\tcp</code>. The default is <code>\udp</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remoteControlVolume' href='./../Overviews/Methods.html#remoteControlVolume'>remoteControlVolume</a></h3>
+<p>A Symbol representing the communications protocol. Either <code>\udp</code> or <code>\tcp</code>. The default is <code>\udp</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bindAddress' href='./../Overviews/Methods.html#bindAddress'>bindAddress</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bindAddress' href='./../Overviews/Methods.html#bindAddress'>bindAddress</a> = value</h3>
+<div class='method'>
+<p>scsynth only. The IP address that the server's TCP or UDP socket is listening on. The default value is <code>"127.0.0.1"</code>, meaning only listen to OSC messages on the host.<div class='warning'><span class='warninglabel'>WARNING:</span> Until SuperCollider 3.10.3, this was set to <code>"0.0.0.0"</code> (listen on all network interfaces). However, this is a dangerous default configuration — for most users working on laptops connected to WiFi, this means that anyone on your local network can send OSC messages to the server. <code>"0.0.0.0"</code> is only useful if you are running networked server/client, and only safe if your networking is properly configured.
+<p>supernova always listens to all network interfaces, and ignores the <code>bindAddress</code> option. This cannot be configured. To avoid exposing yourself to security issues, you should switch to scsynth, or disable networking on your machine when running supernova.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remoteControlVolume' href='./../Overviews/Methods.html#remoteControlVolume'>remoteControlVolume</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remoteControlVolume' href='./../Overviews/Methods.html#remoteControlVolume'>remoteControlVolume</a> = value</h3>
 <div class='method'>
 <p>A Boolean indicating whether this server should allow its volume to be set remotely. The default value is <code>false</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sampleRate' href='./../Overviews/Methods.html#sampleRate'>sampleRate</a></h3>
