@@ -32,32 +32,27 @@ var scdoc_sc_version = '3.10.2';
 <ul class='toc'><li class='toc3'><a href='#-setUpControls'>setUpControls</a> </li>
 <li class='toc3'><a href='#-addSynthDef'>addSynthDef</a> </li>
 <li class='toc3'><a href='#-reInit'>reInit</a> </li>
+<li class='toc3'><a href='#-bendSpec'>bendSpec</a> </li>
+<li class='toc3'><a href='#-out'>out</a> </li>
+<li class='toc3'><a href='#-free'>free</a> </li>
+<li class='toc2'><a href='#Filtering'>Filtering</a></li>
+<ul class='toc'><li class='toc3'><a href='#-addOutProxy'>addOutProxy</a> </li>
+<li class='toc3'><a href='#-removeOutProxy'>removeOutProxy</a> </li>
+<li class='toc3'><a href='#-outProxy'>outProxy</a> </li>
+</ul><li class='toc2'><a href='#Recording%20sequences'>Recording sequences</a></li>
+<ul class='toc'><li class='toc3'><a href='#-activateSampling'>activateSampling</a> </li>
+<li class='toc3'><a href='#-clearSamples'>clearSamples</a> </li>
+</ul><li class='toc2'><a href='#Debugging%20and%20introspection'>Debugging and introspection</a></li>
+<ul class='toc'><li class='toc3'><a href='#-debug'>debug</a> </li>
 <li class='toc3'><a href='#-currentSynthDef'>currentSynthDef</a> </li>
 <li class='toc3'><a href='#-synthDefNames'>synthDefNames</a> </li>
 <li class='toc3'><a href='#-switchSynthDef'>switchSynthDef</a> </li>
-<li class='toc3'><a href='#-bendSpec'>bendSpec</a> </li>
-<li class='toc3'><a href='#-out'>out</a> </li>
-<li class='toc3'><a href='#-controls'>controls</a> </li>
-<li class='toc3'><a href='#-addOutProxy'>addOutProxy</a> </li>
-<li class='toc3'><a href='#-removeOutProxy'>removeOutProxy</a> </li>
-<li class='toc3'><a href='#-clearSamples'>clearSamples</a> </li>
-<li class='toc3'><a href='#-pdef'>pdef</a> </li>
-<li class='toc3'><a href='#-initSynthDef'>initSynthDef</a> </li>
-<li class='toc3'><a href='#-debug'>debug</a> </li>
-<li class='toc3'><a href='#-sample'>sample</a> </li>
-<li class='toc3'><a href='#-activateSampling'>activateSampling</a> </li>
+<li class='toc3'><a href='#-keyboardName'>keyboardName</a> </li>
 <li class='toc3'><a href='#-server'>server</a> </li>
-<li class='toc3'><a href='#-name'>name</a> </li>
 <li class='toc3'><a href='#-wdgtNames'>wdgtNames</a> </li>
-<li class='toc3'><a href='#-outProxy'>outProxy</a> </li>
-<li class='toc3'><a href='#-free'>free</a> </li>
-<li class='toc3'><a href='#-sampleEvents'>sampleEvents</a> </li>
-<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
-<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-keyboardName'>keyboardName</a> </li>
-<li class='toc3'><a href='#-prResetSampling'>prResetSampling</a> </li>
-</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
-<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<li class='toc3'><a href='#-pdef'>pdef</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><div id='menubar'></div>
 <div class='contents'>
 <div class='header'>
 <div id='label'>
@@ -100,9 +95,11 @@ var scdoc_sc_version = '3.10.2';
 <p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>CVCenterKeyboard.</span><a class='method-name' name='*at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>keyboardName</span>)</h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>keyboardName<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<tr><td class='argumentname'>keyboardName<td class='argumentdesc'></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>CVCenterKeyboard.all[keyboardName] (a CVCenterKeyboard instance)</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setUpControls' href='./../Overviews/Methods.html#setUpControls'>setUpControls</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>prefix</span>, <span class='argstr'>pitchControl: 'freq'</span>, <span class='argstr'>velocControl: 'veloc'</span>, <span class='argstr'>bendControl: 'bend'</span>, <span class='argstr'>outControl: 'out'</span>, <span class='argstr'>includeInCVCenter: [  ]</span>, <span class='argstr'>theServer</span>, <span class='argstr'>out: 0</span>, <span class='argstr'>deactivateDefaultWidgetActions: true</span>, <span class='argstr'>srcID</span>, <span class='argstr'>tab</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setUpControls' href='./../Overviews/Methods.html#setUpControls'>setUpControls</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>prefix</span>, <span class='argstr'>pitchControl: 'freq'</span>, <span class='argstr'>velocControl: 'veloc'</span>, <span class='argstr'>bendControl: 'bend'</span>, <span class='argstr'>outControl: 'out'</span>, <span class='argstr'>includeInCVCenter: [  ]</span>, <span class='argstr'>theServer</span>, <span class='argstr'>outbus: 0</span>, <span class='argstr'>deactivateDefaultWidgetActions: true</span>, <span class='argstr'>srcID</span>, <span class='argstr'>tab</span>)</h3>
 <div class='method'>
 <p>Set up the keyboard for the specified <a href="./../Classes/SynthDef.html">SynthDef</a>. The SynthDef must already have been added beforehand, either when creating the keyboard with <a href="#*newSynthDef">*newSynthDef</a> or <a href="#-addSynthDef">-addSynthDef</a>. <code>setUpControls</code> will analyze the internal control structure of the SynthDef and create a set of appropriate <a href="./../Classes/CVWidget.html">CVWidget</a>s within <a href="./../Classes/CVCenter.html">CVCenter</a>. Some controls, however, must be reserved for the control through the MIDI keyboard keys: an argument for pitch, one for velocity and a bend argument as well as one for the output bus.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -179,19 +176,6 @@ Spec.add(\modphase, \phase);
 <tr><td class='argumentname'>synthDefName<td class='argumentdesc'>
 <p>optional - a <a href="./../Classes/Symbol.html">Symbol</a>, denoting the <a href="./../Classes/SynthDef.html">SynthDef</a> you want to reinitialize.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-currentSynthDef' href='./../Overviews/Methods.html#currentSynthDef'>currentSynthDef</a></h3>
-<div class='method'>
-<p>The CVCenterKeyboard must have been set up through calling <a href="#-setUpControls">-setUpControls</a> before.<h4>Returns:</h4>
-<div class='returnvalue'>
-<p>a <a href="./../Classes/Symbol.html">Symbol</a>, denoting the SynthDef currently used with the CVCenterKeyboard instance</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-synthDefNames' href='./../Overviews/Methods.html#synthDefNames'>synthDefNames</a></h3>
-<div class='method'><h4>Returns:</h4>
-<div class='returnvalue'>
-<p>an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Symbol.html">Symbol</a>s, denoting all SynthDefs that have been added to the CVCenterKeyboard instance</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-switchSynthDef' href='./../Overviews/Methods.html#switchSynthDef'>switchSynthDef</a>(<span class='argstr'>synthDefName</span>)</h3>
-<div class='method'>
-<p>Switch to a different SynthDef. The SynthDef must have been added <em>and</em> set up beforehand.<h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>synthDefName<td class='argumentdesc'></table><h4>Returns:</h4>
-<div class='returnvalue'>
 <p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bendSpec' href='./../Overviews/Methods.html#bendSpec'>bendSpec</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bendSpec' href='./../Overviews/Methods.html#bendSpec'>bendSpec</a> = value</h3>
 <div class='method'>
@@ -203,10 +187,14 @@ Spec.add(\modphase, \phase);
 <p>a <a href="./../Classes/ControlSpec.html">ControlSpec</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-out' href='./../Overviews/Methods.html#out'>out</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-out' href='./../Overviews/Methods.html#out'>out</a> = value</h3>
 <div class='method'>
-<p>Set or get the Synth out bus.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-controls' href='./../Overviews/Methods.html#controls'>controls</a></h3>
-<div class='method'><h4>Returns:</h4>
+<p>Set or get the CVCenterKeyboard out bus. Changes are picked up immediately, regardless of if the output is wrapped in a NodeProxy or not.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-free' href='./../Overviews/Methods.html#free'>free</a>(<span class='argstr'>synthDefName</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>synthDefName<td class='argumentdesc'>
+<p>optional - a <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a>, denoting the SynthDef that should be removed from the keyboard. If not given all SynthDef currently stored with the keyboard will be removed</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>an <a href="./../Classes/Event.html">Event</a> holding the controls the <em>all SynthDefs</em> as passed in with <a href="#-setUpControls">-setUpControls</a>. The SynthDef names are the keys for the sub Events.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addOutProxy' href='./../Overviews/Methods.html#addOutProxy'>addOutProxy</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>numChannels: 2</span>, <span class='argstr'>useNdef: false</span>, <span class='argstr'>out</span>)</h3>
+<p>a CVCenterKeyboard</div></div><h3><a class='anchor' name='Filtering'>Filtering</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addOutProxy' href='./../Overviews/Methods.html#addOutProxy'>addOutProxy</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>numChannels: 2</span>, <span class='argstr'>useNdef: false</span>, <span class='argstr'>outbus</span>)</h3>
 <div class='method'>
 <p>The method creates a <a href="./../Classes/NodeProxy.html">NodeProxy</a> or optionally an <a href="./../Classes/Ndef.html">Ndef</a> and routes the keyboard's output through it. This means one can easily add filters (e.g. through a <a href="./../Reference/NodeProxy_roles.html">NodeProxy role</a>) and do other kinds of NodeProxy trickery. If <code>useNdef</code> is set to <code>true</code> the resulting Ndef will also appear in an <a href="./../Classes/NdefMixer.html">NdefMixer</a>.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -235,7 +223,7 @@ Spec.add(\modphase, \phase);
 // the Ndef should appear under a key which is the combination of
 // keyboardName and 'Out'. E.g. Ndef(\myFunkyKeyboardOut)
 NdefMixer.new;</textarea>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeOutProxy' href='./../Overviews/Methods.html#removeOutProxy'>removeOutProxy</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>out: 0</span>)</h3>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeOutProxy' href='./../Overviews/Methods.html#removeOutProxy'>removeOutProxy</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>outbus</span>)</h3>
 <div class='method'>
 <p>The complementary method to <code>addOutProxy</code> which removes a once created proxy again. Calling this method should work seemlessly like <code>addOutProxy</code>, meaning the playing the keyboard should produce the same sound without filters applied.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -243,41 +231,68 @@ NdefMixer.new;</textarea>
 <p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a>, denoting the SynthDef name. If not given the <a href="#~currentSynthDef">~currentSynthDef</a> is assumed<tr><td class='argumentname'>out<td class='argumentdesc'>
 <p>the output bus to which the keyboard should play. If none is given <code>0</code> is assumed</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clearSamples' href='./../Overviews/Methods.html#clearSamples'>clearSamples</a>( <span class='argstr'>... indices</span>)</h3>
-<div class='method'><h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>... indices<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pdef' href='./../Overviews/Methods.html#pdef'>pdef</a></h3>
+<p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-outProxy' href='./../Overviews/Methods.html#outProxy'>outProxy</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/NodeProxy.html">NodeProxy</a> or an <a href="./../Classes/Ndef.html">Ndef</a> or <code>nil</code> if not output proxy exists</div></div><h3><a class='anchor' name='Recording%20sequences'>Recording sequences</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-activateSampling' href='./../Overviews/Methods.html#activateSampling'>activateSampling</a>(<span class='argstr'>onOff: true</span>, <span class='argstr'>synthDefName</span>)</h3>
 <div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-initSynthDef' href='./../Overviews/Methods.html#initSynthDef'>initSynthDef</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>connectMidi</span>)</h3>
-<div class='method'><h4>Arguments:</h4>
+<p>Calling this method will start (or stop) recording strokes on the external MIDI keyboard into <a href="./../Classes/Pattern.html">Pattern</a> sequencer. For each note on the external keyboard (0-127) a separate <a href="./../Classes/Pseq.html">Pseq</a> is created where <code>noteOn</code> and <code>notOff</code> will create a sequence of durations composed of numbers (as long as a note is held) and <a href="./../Classes/Rest.html">Rest</a>s. Current control values should also be respected. Each of the recorded notes and the Synth control's current values are put into a <a href="./../Classes/Pbind.html">Pbind</a> (128 separate Pbinds) and get wrapped into a <a href="./../Classes/Ppar.html">Ppar</a> which in turn gets wrapped in a <a href="./../Classes/Pdef.html">Pdef</a>. The generated sequence should start playing immediately after calling <code>&lt;CVCenterKeyboard instance&gt;.activateSampling(false)</code>. The resulting Pdefs can be queried with <a href="#-pdef">-pdef</a>. You may record as many sequences as you like. Each of them will be stored in a Pdef under a key that is a combination of the SynthDef's name and a numerical value (e.g. <code>Pdef(\pmosc)</code>).<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>synthDefName<td class='argumentdesc'><tr><td class='argumentname'>connectMidi<td class='argumentdesc'><tr><td class='argumentname'>(keyboardName)<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-debug' href='./../Overviews/Methods.html#debug'>debug</a></h3>
+<tr><td class='argumentname'>onOff<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a>, indicating whether to start or stop sampling (default: <code>true</code>).<tr><td class='argumentname'>synthDefName<td class='argumentdesc'>
+<p>optional - a <a href="./../Classes/String.html">String</a>, denoting the SynthDef to be used with recording.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a CVCenterKeyboard</div><h4>Discussion:</h4>
+<textarea class='editor'>~kb.activateSampling;
+// play some notes on your keyboard
+~kb.activateSampling(false);
+// you should hear the sequence that you've just played
+
+// introspection into the generated Pdef
+// should post [ Pdef('pmosc0') ]
+~kb.pdef;
+// each Pdef can be handled like any regular Pdef
+// i.e. they should respond to methods like 'pause', 'resume', 'play', 'stop', etc.
+// as convenience method you may use 'clearSamples' to clear Pdefs at given indices
+// or all of them at once (if no indices are provided)
+~kb.clearSamples;</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clearSamples' href='./../Overviews/Methods.html#clearSamples'>clearSamples</a>( <span class='argstr'>... indices</span>)</h3>
+<div class='method'>
+<p>Calling this method will clear the <a href="./../Classes/Pdef.html">Pdef</a>s that have been generated through <a href="#-activateSampling">-activateSampling</a>. If one or more indices are given only the Pdefs at the given indices will be cleared.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... indices<td class='argumentdesc'>
+<p>One or more comma-separated <a href="./../Classes/Integer.html">Integer</a>s, denoting the Pdefs that should be cleared from the currently recorded sequences (optional)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a CVCenterKeyboard</div></div><h3><a class='anchor' name='Debugging%20and%20introspection'>Debugging and introspection</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-debug' href='./../Overviews/Methods.html#debug'>debug</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-debug' href='./../Overviews/Methods.html#debug'>debug</a> = value</h3>
 <div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sample' href='./../Overviews/Methods.html#sample'>sample</a></h3>
+<p>Show some useful debugging info when playing the keyboard (triggered by <code>noteOn</code>, <code>noteOff</code> and <code>bend</code> messages coming from the external MIDI keyboard)</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-currentSynthDef' href='./../Overviews/Methods.html#currentSynthDef'>currentSynthDef</a></h3>
 <div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-activateSampling' href='./../Overviews/Methods.html#activateSampling'>activateSampling</a>(<span class='argstr'>onOff: true</span>, <span class='argstr'>synthDefName</span>)</h3>
-<div class='method'><h4>Arguments:</h4>
+<p>The CVCenterKeyboard must have been set up through calling <a href="#-setUpControls">-setUpControls</a> before.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a>, denoting the SynthDef currently used with the CVCenterKeyboard instance</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-synthDefNames' href='./../Overviews/Methods.html#synthDefNames'>synthDefNames</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Symbol.html">Symbol</a>s, denoting all SynthDefs that have been added to the CVCenterKeyboard instance</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-switchSynthDef' href='./../Overviews/Methods.html#switchSynthDef'>switchSynthDef</a>(<span class='argstr'>synthDefName</span>)</h3>
+<div class='method'>
+<p>Switch to a different SynthDef. The SynthDef must have been added <em>and</em> set up beforehand.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>onOff<td class='argumentdesc'><tr><td class='argumentname'>synthDefName<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-server' href='./../Overviews/Methods.html#server'>server</a></h3>
-<div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-name' href='./../Overviews/Methods.html#name'>name</a>: METHOD NOT FOUND!</h3>
-<div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-wdgtNames' href='./../Overviews/Methods.html#wdgtNames'>wdgtNames</a></h3>
-<div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-outProxy' href='./../Overviews/Methods.html#outProxy'>outProxy</a></h3>
-<div class='method'>
-<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-free' href='./../Overviews/Methods.html#free'>free</a>(<span class='argstr'>synthDefName</span>)</h3>
-<div class='method'><h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>synthDefName<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sampleEvents' href='./../Overviews/Methods.html#sampleEvents'>sampleEvents</a></h3>
-<div class='method'>
-<p></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keyboardName' href='./../Overviews/Methods.html#keyboardName'>keyboardName</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prResetSampling' href='./../Overviews/Methods.html#prResetSampling'>prResetSampling</a></h3>
-<h2><a class='anchor' name='examples'>Examples</a></h2>
-<textarea class='editor'>_some_example_code_</textarea>
-
-<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenterKeyboard/HelpSource/Classes/CVCenterKeyboard.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenterKeyboard/HelpSource/Classes/CVCenterKeyboard.schelp</a><br>link::Classes/CVCenterKeyboard::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+<tr><td class='argumentname'>synthDefName<td class='argumentdesc'></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keyboardName' href='./../Overviews/Methods.html#keyboardName'>keyboardName</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> representing the name of the CVCenterKeyboard. The name serves as key in <code>CVCenterkeyboard.all</code></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-server' href='./../Overviews/Methods.html#server'>server</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the <a href="./../Classes/Server.html">Server</a> to be used with the CVCenterKeyboard. If none is passed in with <a href="#-setUpControls">-setUpControls</a> it will default to <code>Server.default</code></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-wdgtNames' href='./../Overviews/Methods.html#wdgtNames'>wdgtNames</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Symbols">Symbols</a>, denoting the <a href="./../Classes/CVWidget.html">CVWidget</a>S that have been created with <a href="#-setUpControls">-setUpControls</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pdef' href='./../Overviews/Methods.html#pdef'>pdef</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Pdef.html">Pdef</a>s that represent the currently recorded sequences or <code>nil</code> if no sequences exist</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenterKeyboard/HelpSource/Classes/CVCenterKeyboard.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenterKeyboard/HelpSource/Classes/CVCenterKeyboard.schelp</a><br>link::Classes/CVCenterKeyboard::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
 </body></html>
