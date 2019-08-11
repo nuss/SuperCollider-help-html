@@ -160,7 +160,7 @@ Spec.add(\modphase, \phase);
     \out, // the argument setting the out bus
 );
 )
-// in case a keyboard doesn't play... won't do no harm
+// in case a keyboard doesn't play. Or if controls are not set properly... won't do no harm
 ~kb.reInit(\pmosc);</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addSynthDef' href='./../Overviews/Methods.html#addSynthDef'>addSynthDef</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>connectMidi: false</span>)</h3>
 <div class='method'>
@@ -188,7 +188,7 @@ Spec.add(\modphase, \phase);
 (
 SynthDef.new(\square, {
     var sig, env;
-    env = EnvGen.kr(Env.adsr, \gate.kr(1), doneAction: Done.freeSelf);
+    env = EnvGen.kr(Env.adsr(\atk.kr(0.03), \dec.kr(0.5), \sust.kr(0.5), \rel.kr(0.7)), \gate.kr(1), doneAction: Done.freeSelf);
     sig = Pulse.ar(\freq.kr(220), \width.kr(0.5));
     sig = sig!2 * env;
     Out.ar(\out.kr(0), sig * \veloc.kr(1) * \amp.kr(0.5));
@@ -199,8 +199,11 @@ SynthDef.new(\square, {
 ~kb.setUpControls(\square, \sq, bendControl: \freq);
 // switch keyboard to new SynthDef
 ~kb.switchSynthDef(\square);
+// if controls are not set properly
+~kb.reInit;
 // ... and back
-~kb.switchSynthDef(\pmosc);</textarea>
+~kb.switchSynthDef(\pmosc);
+~kb.reInit;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bendSpec' href='./../Overviews/Methods.html#bendSpec'>bendSpec</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bendSpec' href='./../Overviews/Methods.html#bendSpec'>bendSpec</a> = value</h3>
 <div class='method'>
@@ -262,7 +265,7 @@ NdefMixer.new;</textarea>
 <p>a <a href="./../Classes/NodeProxy.html">NodeProxy</a> or an <a href="./../Classes/Ndef.html">Ndef</a> or <code>nil</code> if not output proxy exists</div></div><h3><a class='anchor' name='Recording%20sequences'>Recording sequences</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-activateSampling' href='./../Overviews/Methods.html#activateSampling'>activateSampling</a>(<span class='argstr'>onOff: true</span>, <span class='argstr'>synthDefName</span>)</h3>
 <div class='method'>
-<p>Calling this method will start (or stop) recording strokes on the external MIDI keyboard into <a href="./../Classes/Pattern.html">Pattern</a> sequencer. For each note on the external keyboard (0-127) a separate <a href="./../Classes/Pseq.html">Pseq</a> is created where <code>noteOn</code> and <code>notOff</code> will create a sequence of durations composed of numbers (as long as a note is held) and <a href="./../Classes/Rest.html">Rest</a>s. Current control values should also be respected. Each of the recorded notes and the Synth control's current values are put into a <a href="./../Classes/Pbind.html">Pbind</a> (128 separate Pbinds) and get wrapped into a <a href="./../Classes/Ppar.html">Ppar</a> which in turn gets wrapped in a <a href="./../Classes/Pdef.html">Pdef</a>. The generated sequence should start playing immediately after calling <code>&lt;CVCenterKeyboard instance&gt;.activateSampling(false)</code>. The resulting Pdefs can be queried with <a href="#-pdef">-pdef</a>. You may record as many sequences as you like. Each of them will be stored in a Pdef under a key that is a combination of the SynthDef's name and a numerical value (e.g. <code>Pdef(\pmosc)</code>).<h4>Arguments:</h4>
+<p>Calling this method will start (or stop) recording strokes on the external MIDI keyboard into a <a href="./../Classes/Pattern.html">Pattern</a> sequencer. For each note on the external keyboard (0-127) a separate <a href="./../Classes/Pseq.html">Pseq</a> is created where <code>noteOn</code> and <code>notOff</code> will create a sequence of durations composed of numbers (as long as a note is held) and <a href="./../Classes/Rest.html">Rest</a>s. Current control values should also be respected. Each of the recorded notes and the Synth control's current values are put into a <a href="./../Classes/Pbind.html">Pbind</a> (128 separate Pbinds) and get wrapped into a <a href="./../Classes/Ppar.html">Ppar</a> which in turn gets wrapped in a <a href="./../Classes/Pdef.html">Pdef</a>. The generated sequence should start playing immediately after calling <code>&lt;CVCenterKeyboard instance&gt;.activateSampling(false)</code>. The resulting Pdefs can be queried with <a href="#-pdef">-pdef</a>. You may record as many sequences as you like. Each of them will be stored in a Pdef under a key that is a combination of the SynthDef's name and a numerical counter (e.g. <code>Pdef('pmosc-0')</code>).<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>onOff<td class='argumentdesc'>
 <p>a <a href="./../Classes/Boolean.html">Boolean</a>, indicating whether to start or stop sampling (default: <code>true</code>).<tr><td class='argumentname'>synthDefName<td class='argumentdesc'>
