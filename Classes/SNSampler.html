@@ -50,6 +50,9 @@ var scdoc_sc_version = '3.10.3';
 <li class='toc3'><a href='#-setBufnum'>setBufnum</a> </li>
 <li class='toc3'><a href='#-setInputCompressor'>setInputCompressor</a> </li>
 <li class='toc3'><a href='#-setupSampler'>setupSampler</a> </li>
+<li class='toc3'><a href='#-touchOSC'>touchOSC</a> </li>
+<li class='toc3'><a href='#-touchOSCPanel'>touchOSCPanel</a> </li>
+<li class='toc3'><a href='#-usedBuffers'>usedBuffers</a> </li>
 </ul></ul><li class='toc1'><a href='#Help%20template'>Help template</a></li>
 <ul class='toc'></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
@@ -69,7 +72,7 @@ var scdoc_sc_version = '3.10.3';
 <h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>SNSampler.</span><a class='method-name' name='*all' href='./../Overviews/Methods.html#all'>all</a></h3>
-<h3 class='method-code'><span class='method-prefix'>SNSampler.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>name: 'Sampler'</span>, <span class='argstr'>numBuffers: 5</span>, <span class='argstr'>bufLength: 60</span>, <span class='argstr'>numChannels: 1</span>, <span class='argstr'>out: 0</span>, <span class='argstr'>server</span>, <span class='argstr'>oscFeedbackAddress</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>SNSampler.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>name: 'Sampler'</span>, <span class='argstr'>numBuffers: 5</span>, <span class='argstr'>bufLength: 60</span>, <span class='argstr'>numChannels: 1</span>, <span class='argstr'>out: 0</span>, <span class='argstr'>server</span>, <span class='argstr'>touchOSC</span>, <span class='argstr'>touchOSCPanel: 1</span>, <span class='argstr'>oscFeedbackAddress</span>)</h3>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
@@ -96,7 +99,12 @@ var scdoc_sc_version = '3.10.3';
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-server' href='./../Overviews/Methods.html#server'>server</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setBufnum' href='./../Overviews/Methods.html#setBufnum'>setBufnum</a>(<span class='argstr'>bufnum: 0</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setInputCompressor' href='./../Overviews/Methods.html#setInputCompressor'>setInputCompressor</a>(<span class='argstr'>thresh: 0.5</span>, <span class='argstr'>slopeBelow: 0.03</span>, <span class='argstr'>slopeAbove: 0.15</span>, <span class='argstr'>clampTime: 0.01</span>, <span class='argstr'>relaxTime: 0.23</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setupSampler' href='./../Overviews/Methods.html#setupSampler'>setupSampler</a>(<span class='argstr'>in: 0</span>, <span class='argstr'>doneAction</span>, <span class='argstr'>touchOSC: true</span>, <span class='argstr'>touchOSCPanel: 1</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setupSampler' href='./../Overviews/Methods.html#setupSampler'>setupSampler</a>(<span class='argstr'>in: 0</span>, <span class='argstr'>doneAction</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-touchOSC' href='./../Overviews/Methods.html#touchOSC'>touchOSC</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-touchOSC' href='./../Overviews/Methods.html#touchOSC'>touchOSC</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-touchOSCPanel' href='./../Overviews/Methods.html#touchOSCPanel'>touchOSCPanel</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-touchOSCPanel' href='./../Overviews/Methods.html#touchOSCPanel'>touchOSCPanel</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-usedBuffers' href='./../Overviews/Methods.html#usedBuffers'>usedBuffers</a></h3>
 <h2><a class='anchor' name='Help%20template'>Help template</a></h2>
 
 <p>Copy and paste the text below and save to HelpSource/Classes/SNSampler.schelp<textarea class='editor'>TITLE:: SNSampler
@@ -123,6 +131,8 @@ argument:: bufLength
 argument:: numChannels
 argument:: out
 argument:: server
+argument:: touchOSC
+argument:: touchOSCPanel
 argument:: oscFeedbackAddress
 
 METHOD:: all
@@ -132,45 +142,40 @@ INSTANCEMETHODS::
 
 METHOD:: isSampling
 
-METHOD:: loopLengths
-
-METHOD:: numBuffers
-
-METHOD:: numChannels
-
-METHOD:: inBus
-
-METHOD:: name
-
-METHOD:: recorder
-
-METHOD:: sample
-argument:: bool
-
 METHOD:: bufLength
 
 METHOD:: server
 
-METHOD:: reset
-argument:: index
-argument:: doneAction
+METHOD:: recorder
 
-METHOD:: randomBufferSelect
+METHOD:: usedBuffers
 
-METHOD:: prCreateWidgets
+METHOD:: name
 
 METHOD:: buffers
-
-METHOD:: setBufnum
-argument:: bufnum
-
-METHOD:: bypassOut
 
 METHOD:: init
 argument:: argName
 argument:: oscFeedbackAddress
 
+METHOD:: prCreateWidgets
+
+METHOD:: loopLengths
+
+METHOD:: bypassOut
+
+METHOD:: touchOSC
+
+METHOD:: numChannels
+
 METHOD:: doneAction
+
+METHOD:: sample
+argument:: bool
+
+METHOD:: randomBufferSelect
+
+METHOD:: inBus
 
 METHOD:: setInputCompressor
 argument:: thresh
@@ -179,11 +184,20 @@ argument:: slopeAbove
 argument:: clampTime
 argument:: relaxTime
 
+METHOD:: setBufnum
+argument:: bufnum
+
 METHOD:: setupSampler
 argument:: in
 argument:: doneAction
-argument:: touchOSC
-argument:: touchOSCPanel
+
+METHOD:: numBuffers
+
+METHOD:: touchOSCPanel
+
+METHOD:: reset
+argument:: index
+argument:: doneAction
 
 
 EXAMPLES::
