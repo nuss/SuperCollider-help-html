@@ -50,7 +50,7 @@ var scdoc_sc_version = '3.10.3';
 <h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>See <a href="http://michael.dipperstein.com/lzss/">http://michael.dipperstein.com/lzss/</a> and <a href="http://en.wikipedia.org/wiki/Lempel-Ziv-Storer-Szymanski">http://en.wikipedia.org/wiki/Lempel-Ziv-Storer-Szymanski</a>
-<p>A dictionary look-up compressor that performs best with long repeating patterns e.g. [0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3].<div class='note'><span class='notelabel'>NOTE:</span> Only works with 8bit <a href="./../Classes/Integer.html">Integer</a> (0-255) values.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>A dictionary look-up compressor that performs best with long repeating patterns e.g. <code>[0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3]</code>.<div class='note'><span class='notelabel'>NOTE:</span> Only works with 8bit <a href="./../Classes/Integer.html">Integer</a> (0-255) values.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>RedLZSS.</span><a class='method-name' name='*compress' href='./../Overviews/Methods.html#compress'>compress</a>(<span class='argstr'>input</span>)</h3>
 <div class='method'>
 <p>Expects an array of 8bit integers. Returns a string of binary numbers.</div><h3 class='method-code'><span class='method-prefix'>RedLZSS.</span><a class='method-name' name='*decompress' href='./../Overviews/Methods.html#decompress'>decompress</a>(<span class='argstr'>input</span>)</h3>
@@ -95,7 +95,7 @@ a==c
 a= "JOEYNJOEYNJOEYJOEYNJOEYNJOEYJOEYNJOEYNJOEYJOEYNJOEYNJOEY".ascii;
 b= RedLZSS.compress(a);
 c= RedLZSS.binaryStringToBytes(b);
-c.size/a.size;            //compressed to 27%
+c.size/a.size;    //compressed to 27%
 d= RedLZSS.bytesToBinaryString(c);
 e= RedLZSS.decompress(d);
 e.collect{|x| x.asAscii}.join;
@@ -111,9 +111,9 @@ a==c
 
 
 a= {|i| [0, 0, 0, 1].choose}.dup(5000);
-RedLZSS.window= 512;        //decrease window and length to speed up compression
+RedLZSS.window= 512;    //decrease window and length to speed up compression
 RedLZSS.length= 16;
-b= RedLZSS.compress(a);        //very slow to compress large arrays
+b= RedLZSS.compress(a);    //very slow to compress large arrays
 RedLZSS.binaryStringToBytes(b).size/a.size;    //compressed to around 22% (also 22% with default window and length values)
 c= RedLZSS.decompress(b);    //fast to decompress
 a==c</textarea>

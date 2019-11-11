@@ -23,16 +23,17 @@ var scdoc_sc_version = '3.10.3';
 <div id='toctitle'>RedEffectModule:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 <li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*def'>def</a> </li>
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-prepareForPlay'>prepareForPlay</a> </li>
-<li class='toc3'><a href='#-free'>free</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-free'>free</a> </li>
 <li class='toc3'><a href='#-gui'>gui</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-synth'>synth</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-initModule'>initModule</a> </li>
+<li class='toc3'><a href='#-synth'>synth</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
@@ -49,30 +50,75 @@ var scdoc_sc_version = '3.10.3';
 <div id='related'>See also: <a href="./../Classes/RedAbstractModule.html">RedAbstractModule</a>, <a href="./../Classes/RedEffectModuleGUI.html">RedEffectModuleGUI</a>, <a href="./../Classes/RedInstrumentModule.html">RedInstrumentModule</a></div>
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
-<div class='warning'><span class='warninglabel'>WARNING:</span> Do not instantiate. Use its subclasses.</div>
-<p><div class='note'><span class='notelabel'>NOTE:</span> Requires <a href="./../Classes/Conductor.html">Conductor</a> quark.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div class='warning'><span class='warninglabel'>WARNING:</span> Do not instantiate. Use its subclasses.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>RedEffectModule.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>out: 0</span>, <span class='argstr'>group</span>, <span class='argstr'>addAction: 'addToTail'</span>, <span class='argstr'>lag: 0</span>)</h3>
+<div class='method'>
+<p>Create a new stereo effect module and boot the server if not already running. Server is taken from group argument.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>out<td class='argumentdesc'>
+<p>Which audio bus to use. Puts a <a href="./../Classes/ReplaceOut.html">ReplaceOut</a> on this bus and the following (index+1).<tr><td class='argumentname'>group<td class='argumentdesc'>
+<p>A <a href="./../Classes/Group.html">Group</a>. Defaults to <code>Server.default.defaultGroup</code>.<tr><td class='argumentname'>addAction<td class='argumentdesc'>
+<p>A <a href="./../Classes/Symbol.html">Symbol</a>.<tr><td class='argumentname'>lag<td class='argumentdesc'>
+<p>a non-modulatable lag time for all parameters.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>RedEffectModule.</span><a class='method-name' name='*def' href='./../Overviews/Methods.html#def'>def</a></h3>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prepareForPlay' href='./../Overviews/Methods.html#prepareForPlay'>prepareForPlay</a>(<span class='argstr'>server</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-free' href='./../Overviews/Methods.html#free'>free</a></h3>
 <div class='method'>
-<p><h4>Arguments:</h4>
+<p>Free the synth and remove this module from <code>RedAbstractModule.all</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gui' href='./../Overviews/Methods.html#gui'>gui</a>(<span class='argstr'>parent</span>, <span class='argstr'>position</span>)</h3>
+<div class='method'>
+<p>Create a <a href="./../Classes/RedEffectModuleGUI.html">RedEffectModuleGUI</a>.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>server<td class='argumentdesc'>
-<p>Defaults to <code>Server.default</code>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-free' href='./../Overviews/Methods.html#free'>free</a></h3>
-<div class='method'>
-<p>Remove module from <code>RedAbstractModule.all</code>. Free the synth and (if created) the internal group.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gui' href='./../Overviews/Methods.html#gui'>gui</a>(<span class='argstr'>parent</span>, <span class='argstr'>position</span>)</h3>
-<div class='method'>
-<p>Create a <a href="./../Classes/RedEffectModuleGUI.html">RedEffectModuleGUI</a>.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<tr><td class='argumentname'>parent<td class='argumentdesc'>
+<p>Can be a <a href="./../Classes/Window.html">Window</a> or a <a href="./../Classes/CompositeView.html">CompositeView</a>.<tr><td class='argumentname'>position<td class='argumentdesc'>
+<p>A <a href="./../Classes/Point.html">Point</a>.</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-initModule' href='./../Overviews/Methods.html#initModule'>initModule</a>(<span class='argstr'>group</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-synth' href='./../Overviews/Methods.html#synth'>synth</a></h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
-<textarea class='editor'>a= RedEfxDist(0);
-b= {SinOsc.ar([400, 404], 0, 0.5)}.play
-a.gui
-a.free
-b.free</textarea>
+<textarea class='editor'>a= RedEfxBit8(0);
+c= {SinOsc.ar([400, 404], 0, 0.25)}.play;
+a.bit8Mix= 1;
+a.cvs;
+a.specs;
+a.bit8Rate= 0.1;
+a.free;
+c.free;
+
+a= RedEfxDist(0);
+c= {SinOsc.ar([400, 404], 0, 0.25)}.play;
+a.distMix= 0;
+a.distDepth= 0.1;
+g= a.gui;
+a.distFreq= 10;
+a.free;
+c.free;
+g.close;
+
+
+//--class template
+
+RedEfxTemp : RedEffectModule {
+    *def {|lag= 0|
+        ^SynthDef(\redEfxTemp, {|out= 0, mix= -1, amount= 1|
+            var dry, wet;
+            dry= In.ar(out, 2);
+            wet= dry*LFTri.ar(1, 0, amount, 1);
+            ReplaceOut.ar(out, XFade2.ar(dry, wet, mix));
+        }, [0, lag, lag], metadata: (
+            specs: (
+                \out: \audiobus.asSpec,    //this should always be present
+                \mix: ControlSpec(-1, 1, 'lin', 0, -1),    //and this too
+                \amount: ControlSpec(0, 999, 'lin', 0, 1.5)
+            ),
+            order: [
+                \out -&gt; \tempOut,
+                \mix -&gt; \tempMix,
+                \amount -&gt; \tempAmount
+            ]
+        ));
+    }
+}</textarea>
 
 <p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedEffectModule.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedEffectModule.schelp</a><br>link::Classes/RedEffectModule::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
 </body></html>

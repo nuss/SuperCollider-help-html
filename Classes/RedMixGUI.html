@@ -46,7 +46,11 @@ var scdoc_sc_version = '3.10.3';
 <div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redMix/RedMixGUI.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redMix/RedMixGUI.sc'>RedMixGUI.sc</a></div><div id='related'>See also: <a href="./../Overviews/redMixOverview.html">redMixOverview</a>, <a href="./../Classes/RedMixMono.html">RedMixMono</a>, <a href="./../Classes/RedMixStereo.html">RedMixStereo</a>, <a href="./../Classes/RedMixStereoMono.html">RedMixStereoMono</a>, <a href="./../Classes/RedMatrixMixerGUI.html">RedMatrixMixerGUI</a>, <a href="./../Classes/RedMixerGUI.html">RedMixerGUI</a></div>
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
-<div class='note'><span class='notelabel'>NOTE:</span> Requires <a href="./../Classes/Conductor.html">Conductor</a> quark.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+
+<p>gui for redMix objects.
+<p>The GUI takes the following modifier keys…<table>
+<tr><td>ctrl<td>releasing the 2d slider will reset it to 0</table>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>RedMixGUI.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>redMix</span>, <span class='argstr'>parent</span>, <span class='argstr'>position</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
@@ -65,39 +69,45 @@ var scdoc_sc_version = '3.10.3';
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 <textarea class='editor'>(
 s.waitForBoot{
-    a= RedMixStereo(10, 14, 0);
-    Pbind(\degree, 0, \out, 10).play;
-    Pbind(\degree, 4, \out, 14).play;
-    c= RedMixGUI(a);
-}
+    a= RedMixStereo(20, 40, 0);
+    b= Pbind(\degree, 0, \out, 20).play;
+    c= Pbind(\degree, 4, \out, 40).play;
+    g= RedMixGUI(a);
+};
 )
 
-c.parent;
-c.redMix==a;
-c.close;
+g.parent;
+g.redMix==a;
+g.redMix.mix= -0.9;
+g.close;
+a.free;
+b.stop;
+c.stop;
 
 (
-w= Window("lkj", Rect(100, 200, 500, 500));
+var w= Window("lkj", Rect(100, 200, 500, 500));
 w.front;
-w.view.decorator= FlowLayout(w.view.bounds, 10@10, 10@10);
-a= RedMixStereo(10, 14, 0);
-Pbind(\degree, 0, \out, 10).play;
-Pbind(\degree, 4, \out, 14).play;
+w.view.decorator= FlowLayout(w.view.bounds, Point(10, 10), Point(10, 10));
+a= RedMixStereo(20, 40, 0);
+b= Pbind(\degree, 0, \out, 20).play;
+c= Pbind(\degree, 4, \out, 40).play;
 a.gui(w);
 w.view.decorator.nextLine;
 a.gui(w);
+w.onClose= {a.free; b.stop; c.stop};
 )
 
 (
 w= Window("hgf", Rect(100, 200, 500, 500));
 w.front;
 v= CompositeView(w, Rect(10, 10, 400, 400)).background_(Color.blue).decorator= FlowLayout(Rect(0, 0, 300, 300));
-a= RedMixStereo(10, 14, 0);
-Pbind(\degree, 0, \out, 10).play;
-Pbind(\degree, 4, \out, 14).play;
+a= RedMixStereo(20, 40, 0);
+b= Pbind(\degree, 0, \out, 20).play;
+c= Pbind(\degree, 4, \out, 40).play;
 a.gui(v);
 v.decorator.nextLine;
 a.gui(v);
+w.onClose= {a.free; b.stop; c.stop};
 )</textarea>
 
 <p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedMixGUI.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedMixGUI.schelp</a><br>link::Classes/RedMixGUI::<br></div></div><script src='./../editor.js' type='text/javascript'></script>

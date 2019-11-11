@@ -49,7 +49,7 @@ var scdoc_sc_version = '3.10.3';
 <div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redMixer/RedMixerGUI.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redMixer/RedMixerGUI.sc'>RedMixerGUI.sc</a></div><div id='related'>See also: <a href="./../Classes/RedMixer.html">RedMixer</a>, <a href="./../Classes/RedEffectsRackGUI.html">RedEffectsRackGUI</a></div>
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
-<div class='note'><span class='notelabel'>NOTE:</span> Requires <a href="./../Classes/Conductor.html">Conductor</a> quark.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<div class='note'><span class='notelabel'>NOTE:</span> Requires the <a href="./../Classes/TabbedView.html">TabbedView</a> quark.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>RedMixerGUI.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>redMixer</span>, <span class='argstr'>position</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
@@ -70,11 +70,11 @@ var scdoc_sc_version = '3.10.3';
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-redMixer' href='./../Overviews/Methods.html#redMixer'>redMixer</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-win' href='./../Overviews/Methods.html#win'>win</a></h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
-<textarea class='editor'>a= RedMixer();
+<textarea class='editor'>a= RedMixer(#[20, 40, 60, 80]);
 c= RedMixerGUI(a);
-b= Pbind(\degree, Pseq([0, 5, 6, 3, 2, 1], inf), \out, Pseq([2, 4, 6, 8], inf)).play;
-a.channels[1].cvs.vol.input= 1.0.rand;
-a.channels[2].cvs.bal.input= 1.0.rand;
+b= Pbind(\degree, Pseq([0, 5, 6, 3, 2, 1], inf), \out, Pseq([20, 40, 60, 80], inf), \dur, 0.5, \amp, 0.7).play;
+a.channels[1].vol= -12;
+a.channels[2].bal= -0.4;
 c.close;
 b.stop;
 a.free;</textarea>

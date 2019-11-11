@@ -47,7 +47,7 @@ var scdoc_sc_version = '3.10.3';
 <h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>See <a href="http://michael.dipperstein.com/lzss/">http://michael.dipperstein.com/lzss/</a> and <a href="http://www.binaryessence.com/dct/en000138.htm">http://www.binaryessence.com/dct/en000138.htm</a>
-<p>A dictionary look-up compressor that performs best with very long repeating patterns e.g. [0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3]. Use <a href="./../Classes/RedLZSS.html">RedLZSS</a> for better albeit slower compression.<div class='note'><span class='notelabel'>NOTE:</span> Works with <a href="./../Classes/Integer.html">Integer</a>, <a href="./../Classes/Float.html">Float</a> and <a href="./../Classes/Symbol.html">Symbol</a>. Can also take a <a href="./../Classes/String.html">String</a> instead of an <a href="./../Classes/Array.html">Array</a>.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>A dictionary look-up compressor that performs best with very long repeating patterns e.g. <code>[0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3]</code>. Use <a href="./../Classes/RedLZSS.html">RedLZSS</a> for better albeit slower compression.<div class='note'><span class='notelabel'>NOTE:</span> Works with <a href="./../Classes/Integer.html">Integer</a>, <a href="./../Classes/Float.html">Float</a> and <a href="./../Classes/Symbol.html">Symbol</a>. Can also take a <a href="./../Classes/String.html">String</a> instead of an <a href="./../Classes/Array.html">Array</a>.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>RedLZ77.</span><a class='method-name' name='*compress' href='./../Overviews/Methods.html#compress'>compress</a>(<span class='argstr'>input</span>)</h3>
 <div class='method'>
 <p>Returns an array with length, distance and value...</div><h3 class='method-code'><span class='method-prefix'>RedLZ77.</span><a class='method-name' name='*decompress' href='./../Overviews/Methods.html#decompress'>decompress</a>(<span class='argstr'>input</span>)</h3>
@@ -64,12 +64,12 @@ var scdoc_sc_version = '3.10.3';
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 <textarea class='editor'>a= [0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3];
 b= RedLZ77.compress(a);
-b.size/a.size;            //compressed to 58%
+b.size/a.size;    //compressed to 58%
 c= RedLZ77.decompress(b);
 a==c
 
 
-a= "AABCBBABC";            //string instead of array
+a= "AABCBBABC";    //string instead of array
 b= RedLZ77.compress(a);
 c= RedLZ77.decompress(b);
 a==c.join;
@@ -83,24 +83,24 @@ a==c
 
 a= "JOEYNJOEYNJOEYJOEYNJOEYNJOEYJOEYNJOEYNJOEYJOEYNJOEYNJOEY".ascii;
 b= RedLZ77.compress(a);
-b.size/a.size;            //compressed to 41%
+b.size/a.size;    //compressed to 41%
 c= RedLZ77.decompress(b);
 a==c
 
 
 a= "Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.".ascii;
 b= RedLZ77.compress(a);
-b.size/a.size;            //expanded to 117%
+b.size/a.size;    //expanded to 117%
 c= RedLZ77.decompress(b);
 c.collect{|x| x.asAscii}.join;
 a==c
 
 
 a= {|i| [0, 0, 0, 0.1].choose}.dup(5000);
-RedLZ77.window= 512;        //decrease window and length to speed up compression
+RedLZ77.window= 512;    //decrease window and length to speed up compression
 RedLZ77.length= 16;
-b= RedLZ77.compress(a);        //very slow to compress large arrays
-b.size/a.size;            //compressed to around 24% (20% with default window and length values)
+b= RedLZ77.compress(a);    //very slow to compress large arrays
+b.size/a.size;    //compressed to around 24% (20% with default window and length values)
 c= RedLZ77.decompress(b);    //fast to decompress
 c.size
 a==c</textarea>

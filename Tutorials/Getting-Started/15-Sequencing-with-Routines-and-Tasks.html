@@ -41,7 +41,8 @@ var scdoc_sc_version = '3.10.3';
 </div>
 
 <p>When you schedule a function (as in the Scheduling Events tutorial), the function always begins at the beginning and runs through to the end. For sequencing, it's more useful to have a control structure that can run part of the way through, return a value, and then pick up where it left off the next time it's needed. In SuperCollider, this is a Routine.
-<p>Routines can be used for data processing, e.g.<textarea class='editor'>r = Routine({
+<p>Routines can be used for data processing, e.g.<textarea class='editor'>(
+r = Routine({
     "abcde".yield;
     "fghij".yield;
     "klmno".yield;
@@ -49,6 +50,7 @@ var scdoc_sc_version = '3.10.3';
     "uvwxy".yield;
     "z{|}~".yield;
 });
+)
 
 r.next;    // get the next value from the Routine
 6.do({ r.next.postln });</textarea>
@@ -56,7 +58,8 @@ r.next;    // get the next value from the Routine
 <p>The first time you call next, the routine yields <strong>"abcde"</strong>. This yield value becomes the result of r.next, and is printed in the post window. On the second next call, execution picks up just after the first yield and continues with the second string, and so forth. When there is nothing more to yield, r.next returns nil.
 <p>We will come back to the use of routines for data generation. More important for sequencing is what happens when you schedule a routine on a clock, and the routine returns time values.<h2><a class='anchor' name='Scheduling%20routines'>Scheduling routines</a></h2>
 
-<p>Recall that, when you schedule a function on a clock, numbers returned by the function are treated as time values -- specifically, the amount of time until the function should execute again. The same thing happens with numbers yielded by a routine.<textarea class='editor'>r = Routine({
+<p>Recall that, when you schedule a function on a clock, numbers returned by the function are treated as time values -- specifically, the amount of time until the function should execute again. The same thing happens with numbers yielded by a routine.<textarea class='editor'>(
+r = Routine({
     var delta;
     loop {
         delta = rrand(1, 3) * 0.5;
@@ -64,6 +67,7 @@ r.next;    // get the next value from the Routine
         delta.yield;
     }
 });
+)
 
 r.next;
 

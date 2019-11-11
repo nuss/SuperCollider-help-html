@@ -48,7 +48,7 @@ var scdoc_sc_version = '3.10.3';
 <div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redEffectsRack/RedEffectsRackGUI.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redEffectsRack/RedEffectsRackGUI.sc'>RedEffectsRackGUI.sc</a></div><div id='related'>See also: <a href="./../Classes/RedEffectsRack.html">RedEffectsRack</a>, <a href="./../Classes/RedMatrixMixerGUI.html">RedMatrixMixerGUI</a>, <a href="./../Classes/RedMixerGUI.html">RedMixerGUI</a></div>
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
-<div class='note'><span class='notelabel'>NOTE:</span> Requires the <a href="./../Classes/Conductor.html">Conductor</a> and the <a href="./../Classes/TabbedView.html">TabbedView</a> quarks.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<div class='note'><span class='notelabel'>NOTE:</span> Requires the <a href="./../Classes/TabbedView.html">TabbedView</a> quark.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>RedEffectsRackGUI.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>redEffectsRack</span>, <span class='argstr'>position</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
@@ -58,7 +58,7 @@ var scdoc_sc_version = '3.10.3';
 <p>A <a href="./../Classes/Point.html">Point</a>.</table></div><h3 class='method-code'><span class='method-prefix'>RedEffectsRackGUI.</span><a class='method-name' name='*numEffectsBeforeScroll' href='./../Overviews/Methods.html#numEffectsBeforeScroll'>numEffectsBeforeScroll</a></h3>
 <h3 class='method-code'><span class='method-prefix'>RedEffectsRackGUI.</span><a class='method-name' name='*numEffectsBeforeScroll' href='./../Overviews/Methods.html#numEffectsBeforeScroll'>numEffectsBeforeScroll</a> = value</h3>
 <div class='method'>
-<p>The number of <a href="./../Classes/RedEffectModuleGUI.html">RedEffectModuleGUI</a> to fit before adding a vertical scroller. The default is 9. This fits well with a screensize of 1440x900. For smaller screens use a lower value.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>The number of <a href="./../Classes/RedEffectModuleGUI.html">RedEffectModuleGUI</a> to fit before adding a vertical scroller. The default is 9. For smaller screens use a lower value.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-close' href='./../Overviews/Methods.html#close'>close</a></h3>
 <div class='method'>
@@ -72,28 +72,28 @@ var scdoc_sc_version = '3.10.3';
 <textarea class='editor'>a= RedEffectsRack();
 b= Pbind(\degree, Pseq([0, 1, 5, 4, 3, 4], inf), \dur, 0.25).play;
 c= RedEffectsRackGUI(a);
-a.cvs.ringMix.value_(0.5);
+a.ringMix= 0.5;
 a.free;
 b.stop;
 c.close;
 
-//--
-a= RedEffectsRack([RedEfxRing, RedEfxGuit, RedEfxVerb, RedEfxRing]);
+a= RedEffectsRack([RedEfxRing, RedEfxDelp, RedEfxGuit, RedEfxVerb, RedEfxRing]);
 b= Pbind(\degree, Pseq([0, 1, 5, 4, 3, 4], inf), \dur, 0.25).play;
-c= RedEffectsRackGUI(a);
+c= RedEffectsRackGUI(a, Point(10, 300));
 c.redEffectsRack.efxs;
-a.cvs.verbMix.value= 0.5;
-a.cvs.verbDamp.value= 0.7;
+a.verbMix= 0.75;
+a.verbDamp= 0.7;
 a.free;
 b.stop;
 c.close;
 
-//--
+s.options.memSize= 8192*2;
+s.reboot;
 a= RedEffectsRack(RedEffectModule.subclasses);
 b= Pbind(\degree, Pseq([0, 1, 5, 4, 3, 4], inf), \dur, 0.25).play;
 c= RedEffectsRackGUI(a);
 c.redEffectsRack.efxs;
-a.cvs.verbMix.value= 0.5;
+a.verbMix= 0.5;
 a.free;
 b.stop;
 c.close;</textarea>

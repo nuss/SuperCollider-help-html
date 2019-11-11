@@ -101,8 +101,9 @@ a.encodeArray([114, 114, 5]) //use this method for longer arrays
 
 //if used as an audio signal it is often preferred to normalize the values -1 to 1.
 //here is a simple way to do that normalization...
-RedDifferentialManchesterCode(11).encode([1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0])*2-1</textarea>
-<textarea class='editor'>//--sound examples
+RedDifferentialManchesterCode(11).encode([1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0])*2-1
+
+//--sound examples
 
 //the example just sequence differential manchester encoded bytes.
 (
@@ -129,13 +130,15 @@ Routine.run({
         (1/t*16).wait;
     };
 });
-)</textarea>
-<textarea class='editor'>//this example renders the 0-255 counter data in advance, normalize it and load it into a buffer
+)
+
+//this example renders the 0-255 counter data in advance, normalize it and load it into a buffer
 //stutter(8) means eight samples per data bit
 b= Buffer.sendCollection(s, RedDifferentialManchesterCode().encodeArray((0..255)).stutter(8)*2-1)
 b.play
-b.free</textarea>
-<textarea class='editor'>//it is also possible to skip this class and do differential manchester code directly in the synthdef...
+b.free
+
+//it is also possible to skip this class and do differential manchester code directly in the synthdef...
 (
 SynthDef(\redDifferentialManchesterEncode, {|out= 0, amp= 1, rate= 1000|
     var numBits= 8;
@@ -145,7 +148,7 @@ SynthDef(\redDifferentialManchesterEncode, {|out= 0, amp= 1, rate= 1000|
     var src= Duty.ar(1/rate, 0, Dswitch1([
         1-Dbufrd(buf),
         Dbufwr(1-Dseq(data).bitXor(Dbufrd(buf)), buf)
-    ], Dseq(#[0, 1], numBits))); 
+    ], Dseq(#[0, 1], numBits)));
     OffsetOut.ar(out, src*2-1*amp*env);
 }).add;
 )

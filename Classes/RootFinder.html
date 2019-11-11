@@ -1,0 +1,114 @@
+<!doctype html><html lang='en'><head><title>RootFinder | SuperCollider 3.10.3 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'RootFinder';
+var scdoc_sc_version = '3.10.3';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>RootFinder:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*findRoot'>findRoot</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Math'>Math</a></span>
+</div><h1>RootFinder<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>a multi-dimensional root finder</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/RootFinder.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/RootFinder.sc'>RootFinder.sc</a></div></div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A multi-dimensional root finder based on the <strong>Levenberg-Marquardt</strong> optimization algorithm<a class='footnote anchor' name='footnote_org_1' href='#footnote_1'><sup>1</sup></a> . The LM algorithm is an iterative technique that finds a local minimum of a function that is expressed as the sum of squares of nonlinear functions. It has become a standard technique for nonlinear least-squares problems and can be thought of as a combination of steepest descent and the Gauss-Newton method. When the current solution is far from the correct one, the algorithm behaves like a steepest descent method: slow, but guaranteed to converge. When the current solution is close to the correct solution, it becomes a Gauss-Newton method<a class='footnote anchor' name='footnote_org_2' href='#footnote_2'><sup>2</sup></a> .<div class='note'><span class='notelabel'>NOTE:</span> <code>RootFinder</code> requires the user to provide an analytic Jacobian (or the single analytic derivative in the case of one function and one independent variable) in order to work. See the examples below.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>RootFinder.</span><a class='method-name' name='*findRoot' href='./../Overviews/Methods.html#findRoot'>findRoot</a>(<span class='argstr'>func</span>, <span class='argstr'>jacobian</span>, <span class='argstr'>x0</span>, <span class='argstr'>param</span>, <span class='argstr'>opts</span>)</h3>
+<div class='method'>
+<p>Find a shared root of <code>N</code> real-valued functions each containing <code>M</code> independent variables.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>An (array of) instance(s) of <a href="./../Classes/AbstractFunction.html">AbstractFunction</a>, where each instance returns a single scalar value of type <a href="./../Classes/SimpleNumber.html">SimpleNumber</a>. These are the functions <code>F_n(x)</code> to be minimized.<tr><td class='argumentname'>jacobian<td class='argumentdesc'>
+<p>An (array of) instance(s) of <a href="./../Classes/AbstractFunction.html">AbstractFunction</a>, where each instance returns a single scalar value of type <a href="./../Classes/SimpleNumber.html">SimpleNumber</a>. This is the Jacobian: a matrix of all first-order partial derivatives of a scalar-valued function <code>F(x)</code> with respect to the coordinate vector <code>x = [x_1, x_2, ... , x_{M - 1}, x_M]</code>.<tr><td class='argumentname'>x0<td class='argumentdesc'>
+<p>An (array of) instance(s) of <a href="./../Classes/SimpleNumber.html">SimpleNumber</a>. This denotes the initial guess <code>x_0 = [x_{0, 1}, x_{0, 2}, ... , x_{0, M - 1}, x_{0, M}]</code> for the location of the root.<tr><td class='argumentname'>param<td class='argumentdesc'>
+<p>An optional <a href="./../Classes/Collection.html">Collection</a> or single instance of <a href="./../Classes/SimpleNumber.html">SimpleNumber</a>. This may be used for supplying any additional function parameters.<tr><td class='argumentname'>opts<td class='argumentdesc'>
+<p>An instance of <a href="./../Classes/Array.html">Array</a> holding 4 optional parameters which are used in the stopping criteria of the algorithm. The first parameter <code>tau</code> is a number between <code>1 * 10^{-8}</code> and <code>1</code>. Smaller values apply if it is assumed that <code>x_0</code> is already close to <code>x_r</code>. The second parameter <code>epsilon_1</code> is used in the stoping criterion <code>|F'(x)| &lt;= epsilon_1</code>, the third parameter <code>epsilon_2</code> is used in the stopping criterion <code>|h| &lt;= epsilon_2 |x|</code>, and the fourth parameter <code>k_max</code> denotes the maximum nr. of iterations so that the algorithm stops as soon as the iteration count <code>k</code> satisfies the condition <code>k &gt;= k_max</code>.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/Array.html">Array</a> holding the location <code>x_r</code> of the shared root.</div><h4>Discussion:</h4>
+
+<p>First example: solving a system of two equations in two unknowns<pre>2x_1 - x_2 - e^{-x_1} = 0
+-x_1 + 2x_2 - e^{-x_2} = 0</pre>
+<p>with initial guess <code>x_0 = [-5, -5]</code>.
+<p>Second example: finding a root of one equation in one unknown<pre>2x-e^{-x} = 0</pre>
+<p>with initial guess <code>x_0 = 0</code>.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>// corresponds to the first example described above
+(
+var f,df,x0;
+
+// define the functions
+f = List.new
+    .add({ |x| 2*x[0]-x[1]-exp(x[0].neg) })
+    .add({ |x| x[0].neg+(2*x[1])-exp(x[1].neg) });
+
+// define the associated Jacobian
+df = List.new
+    .add({ |x| 2+exp(x[0].neg) })        // df_1/dx_1
+    .add({ |x| -1 })            // df_1/dx_2
+    .add({ |x| -1 })            // df_2/dx_1
+    .add({ |x| 2+exp(x[1].neg) });        // df_2/dx_2
+
+// initial guess for x
+x0 = [0,0];
+
+// solve the system (i.e. find the shared root)
+x = RootFinder.findRoot(f,df,x0);
+
+// test: this should return 0 (or at least a very small number)
+f collect: _.(x)
+)
+
+// corresponds to the second example described above
+(
+var f,df,x0;
+
+// define the function
+f = { |x| 2*x-exp(x.neg) };
+
+// define the first derivative
+df = { |x| 2+exp(x.neg) };
+
+// initial guess for x
+x0 = 0;
+
+// find the root
+x = RootFinder.findRoot(f,df,0);
+
+// test: this should return 0 (or at least a very small number)
+f.(x);
+)</textarea>
+<div class='footnotes'>
+<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - The SC code is based on the MATLAB implementation of the algorithm found at <a href="http://www2.imm.dtu.dk/~hbn/Software/">http://www2.imm.dtu.dk/~hbn/Software/</a></div><a class='anchor' name='footnote_2'/><div class='footnote'>[<a href='#footnote_org_2'>2</a>] - <a href="http://www.ics.forth.gr/~lourakis/levmar/">http://www.ics.forth.gr/~lourakis/levmar/</a></div></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Classes/RootFinder.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Classes/RootFinder.schelp</a><br>link::Classes/RootFinder::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

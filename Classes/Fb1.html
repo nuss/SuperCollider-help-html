@@ -24,12 +24,14 @@ var scdoc_sc_version = '3.10.3';
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*ar'>ar</a> </li>
+<li class='toc3'><a href='#*kr'>kr</a> </li>
 <li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#Overview%20-%20what%20can%20/%20cannot%20be%20done%20?'>Overview - what can / cannot be done ?</a></li>
 <ul class='toc'><li class='toc2'><a href='#What%20can%20be%20done:'>What can be done:</a></li>
-<ul class='toc'></ul><li class='toc2'><a href='#What%20cannot%20/%20shouldn't%20be%20done:'>What cannot / shouldn't be done:</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#What%20cannot%20/%20shouldn't%20be%20done%20(ar%20case%20considerations):'>What cannot / shouldn't be done (ar case considerations):</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#Examples%201:%20Proof%20of%20concept'>Examples 1: Proof of concept</a></li>
 <ul class='toc'><li class='toc2'><a href='#Ex.%201a:%20Basic%20principle'>Ex. 1a: Basic principle</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%201b:%20OnePole'>Ex. 1b: OnePole</a></li>
@@ -49,6 +51,7 @@ var scdoc_sc_version = '3.10.3';
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%203d:%20blockSize%20/%20blockFactor'>Ex. 3d: blockSize / blockFactor</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Ex.%203e:%20func%20index'>Ex. 3e: func index</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#Ex.%204:%20Saving%20CPU'>Ex. 4: Saving CPU</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Ex.%205:%20Control%20rate'>Ex. 5: Control rate</a></li>
 <ul class='toc'></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
 <div class='header'>
@@ -60,15 +63,16 @@ var scdoc_sc_version = '3.10.3';
 <div id='summary'>single sample feedback / feedforward pseudo ugen</div>
 </div>
 <div class='subheader'>
-<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Nonlinear/Fb1.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Nonlinear/Fb1.sc'>Fb1.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Guides/Introduction_to_miSCellaneous.html">Introduction to miSCellaneous</a>, <a href="./../Classes/GFIS.html">GFIS</a></div>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Nonlinear/Fb1.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Nonlinear/Fb1.sc'>Fb1.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Guides/Introduction_to_miSCellaneous.html">Introduction to miSCellaneous</a>, <a href="./../Classes/GFIS.html">GFIS</a>, <a href="./../Classes/Fb1_ODE.html">Fb1_ODE</a>, <a href="./../Classes/Fb1_ODEdef.html">Fb1_ODEdef</a>, <a href="./../Classes/Fb1_ODEintdef.html">Fb1_ODEintdef</a>, <a href="./../Classes/Fb1_MSD.html">Fb1_MSD</a>, <a href="./../Classes/Fb1_SD.html">Fb1_SD</a>, <a href="./../Classes/Fb1_Lorenz.html">Fb1_Lorenz</a>, <a href="./../Classes/Fb1_Hopf.html">Fb1_Hopf</a>, <a href="./../Classes/Fb1_HopfA.html">Fb1_HopfA</a>, <a href="./../Classes/Fb1_HopfAFDC.html">Fb1_HopfAFDC</a>, <a href="./../Classes/Fb1_VanDerPol.html">Fb1_VanDerPol</a>, <a href="./../Classes/Fb1_Duffing.html">Fb1_Duffing</a></div>
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>Fb1 provides an interface for single sample feedback and feedforward at audio rate, the defining relation with (formal) access to previous samples is passed as a Function, which might involve additional UGens. Fb1 works with arbitrary blockSizes and also allows to refer to samples earlier than one blockSize before. This includes linear filter definitions of arbitrary length with dynamic coefficients as well as all kinds of nonlinear calculations of feedback and feedforward data (FOS and SOS UGens cover the linear case with lengths 1 and 2, LTI the general linear case).
+<p>Fb1 provides an interface for single sample feedback and feedforward at audio and control rate, the defining relation with (formal) access to previous samples is passed as a Function, which might involve additional UGens. Fb1.ar works with arbitrary blockSizes and also allows to refer to samples earlier than one blockSize before. This includes linear filter definitions of arbitrary length with dynamic coefficients as well as all kinds of nonlinear calculations of feedback and feedforward data (FOS and SOS UGens cover the linear case with lengths 1 and 2, LTI the general linear case). 
+<p>Fb1 at control rate exists since miSCellaneous v0.22, for compatibility reasons I left the convention that Fb1.new generates an ar UGen, so Fb1.new is now equivalent to Fb1.ar and Fb1.kr is possible in addition, see <a href="#Ex.%205">Ex.5</a>. Fb1 is the base of an ordinary differential equation integrator framework for initial value problems, that also came with v0.22, see <a href="./../Classes/Fb1_ODE.html">Fb1_ODE</a> for an introduction.
 <p><strong>HISTORY AND CREDITS:</strong> There have been long discussions on single-sample feedback in SC. The most simple, but CPU-intense strategy is setting the server's blockSize to 1. Julian Rohrhuber gave a number of examples with Dbufrd / Dbufwr. SC's folder 'Examples' contains the files single_sample_feedback.scd and single_sample_feedback_02.scd. Special solutions are also possible with Delay1, Delay2 and other UGens. This particular implementation is based on Nathaniel Virgo's suggestion of iteratively writing to and reading from Buffers of blockSize – big credit for this! See also Nathaniel Virgo's Feedback quark for his feedback classes Fb and FbNode. Thanks also to James Harkins for his remarks on graph order. See <a href="#Ex.%201a">Ex.1a</a> for the basic feedback implementation principle. I implemented the ar feedforward option by temporary buffers for ar writing and kr reading, the feedback / feedforward relation can now be passed via a Function with 'in' and 'out' args. That way the syntax looks very similar to the common notations used for filter descriptions and also applies directly to the multichannel case. Most other options of Fb1 are for special multichannel handling and differentiated lookback definitions, which can help to save a lot of UGens.<div class='warning'><span class='warninglabel'>WARNING:</span> Be careful with amplitudes, feedback can become loud! It is highly recommended to take measures to avoid blowup, e.g. by limiting operators (tanh, softclip, distort) and/or using MasterFX from the JITLibExtensions quark. Also consider that short iteration cycles can produce loud high pitches, wrapping lopass filters is useful!</div><div class='note'><span class='notelabel'>NOTE:</span> The convenience of direct definition of the feedback / feedforward relation comes with the price of a large number of UGens involved. You might want to allow a higher number of UGens with the server option numWireBufs. You might also want to experiment with blockSizes smaller than 64 and larger than 1 (e.g. 8, 16 or 32). Check the <strong>graphOrderType</strong> arg, other values might cause considerable CPU saving and/or shortening of synthdef compile time.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>Fb1.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>func</span>, <span class='argstr'>in</span>, <span class='argstr'>outSize: 0</span>, <span class='argstr'>inDepth: 1</span>, <span class='argstr'>outDepth: 2</span>, <span class='argstr'>inInit</span>, <span class='argstr'>outInit</span>, <span class='argstr'>blockSize: 64</span>, <span class='argstr'>blockFactor: 1</span>, <span class='argstr'>graphOrderType: 1</span>, <span class='argstr'>leakDC: true</span>, <span class='argstr'>leakCoef: 0.995</span>)</h3>
 <div class='method'>
-<p>Creates a new Fb1 object.<h4>Arguments:</h4>
+<p>Creates a new Fb1 ar object.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>func<td class='argumentdesc'>
 <p>The Function to define the feedback / feedforward relation. The Function should take the two arguments 'in' and 'out', both understood as nested multichannel signals, additionally a block index is passed (<a href="#Ex.%203e">Ex.3e</a>). Each 'in' / 'out' item of the arrays represents current or previous samples, for all points in time the samples are passed in specific array shapes, which are determined by the shapes of <strong>in</strong> and <strong>outSize</strong>. Allowed are pure signals (size = 0) and nested SequenceableCollections at maximum: e.g. <strong>outSize</strong> can be 0, 3, or [0, 2, 5], accordingly in signals can be of sizes 0, i or [i1, ... , in] with i, ij &gt;= 0. Note that 'in' and 'out' only formally represent ar feedback and feedforward signals, technically kr UGens (BufRd.kr) are passed, the ar signals are reconstructed at the end by reading (arrays of) Buffers.
@@ -86,6 +90,26 @@ var scdoc_sc_version = '3.10.3';
 
 <p>Default 1 is recommended, but with CPU-intense SynthDefs it might be worth trying it with the value 0. This saves a lot of UGens and in all my examples I didn't encounter cases with different results. Type 2 can shorten the SynthDef compilation time for certain graphs with a large number of UGens, which can be lengthy with type 1. However, CPU usage doesn't directly correspond to the number of UGens.<tr><td class='argumentname'>leakDC<td class='argumentdesc'>
 <p>Boolean. Determines if a LeakDC is applied to the output. Defaults to true.<tr><td class='argumentname'>leakCoef<td class='argumentdesc'>
+<p>Number, the <strong>leakDC</strong> coefficient. Defaults to 0.995.</table></div><h3 class='method-code'><span class='method-prefix'>Fb1.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>func</span>, <span class='argstr'>in</span>, <span class='argstr'>outSize: 0</span>, <span class='argstr'>inDepth: 1</span>, <span class='argstr'>outDepth: 2</span>, <span class='argstr'>inInit</span>, <span class='argstr'>outInit</span>, <span class='argstr'>blockSize: 64</span>, <span class='argstr'>blockFactor: 1</span>, <span class='argstr'>graphOrderType: 1</span>, <span class='argstr'>leakDC: true</span>, <span class='argstr'>leakCoef: 0.995</span>)</h3>
+<div class='method'>
+<p>Equivalent to <a href="#*new">*new</a>.</div><h3 class='method-code'><span class='method-prefix'>Fb1.</span><a class='method-name' name='*kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>func</span>, <span class='argstr'>in</span>, <span class='argstr'>outSize: 0</span>, <span class='argstr'>inDepth: 1</span>, <span class='argstr'>outDepth: 2</span>, <span class='argstr'>inInit</span>, <span class='argstr'>outInit</span>, <span class='argstr'>graphOrderType: 1</span>, <span class='argstr'>leakDC: true</span>, <span class='argstr'>leakCoef: 0.995</span>)</h3>
+<div class='method'>
+<p>Creates a new Fb1 kr object.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>The Function to define the feedback / feedforward relation. The Function should take the two arguments 'in' and 'out', both understood as nested multichannel signals, additionally a block index is passed (<a href="#Ex.%203e">Ex.3e</a>). Each 'in' / 'out' item of the arrays represents current or previous control samples, for all points in time the control samples are passed in specific array shapes, which are determined by the shapes of <strong>in</strong> and <strong>outSize</strong>. Allowed are pure signals (size = 0) and nested SequenceableCollections at maximum: e.g. <strong>outSize</strong> can be 0, 3, or [0, 2, 5], accordingly in signals can be of sizes 0, i or [i1, ... , in] with i, ij &gt;= 0. Note that 'in' and 'out' only formally represent feedback and feedforward signals, technically kr UGens (BufRd.kr) are passed.
+<p>The Function should return the multichannel UGen to be referred to with 'out', the shapes of the returned UGens and <strong>outSize</strong> must be the same. Furthermore the meaning of 'in' and 'out' depends on the <strong>inDepth</strong> and <strong>outDepth</strong> arguments. If an Integer is passed to them (default), the indices of 'in' resp. 'out' correspond to the lookback indices: E.g. out[1] refers to the last control output sample(s) (of shape <strong>outSize</strong>), out[2] to the control output sample(s) before the last control sample(s) etc. This is compliant with the convention of writing out[i-1], out[i-2] etc. For a multichannel 'in' / 'out' signal, depth can be differentiated, which saves UGens in the case of "gaps" in the recursion: E.g. for a three-channel out signal <strong>outDepth</strong> can look like [3, [7, 18], [2, 5, 6]]. Then out[1] is a three-channel signal, whereby out[1][0] corresponds to out[i-1] of the first, out[1][1] to out[i-18] of the second and out[1][2] to out[i-5] of the third component. If the size of <strong>inDepth</strong> / <strong>outDepth</strong> is smaller than outSize, wrapping is applied. As a result double-bracketing can be used to define specific lookback indices for all components of the multichannel signal: E.g. if <strong>outDepth</strong> equals [[7, 18]] for a three-channel signal then out[0] means the three-channel signal out[i-7] and out[1] means out[i-18]. See <a href="#Ex.%203a">Ex.3a</a> for multichannel feedback / feedforward.<tr><td class='argumentname'>in<td class='argumentdesc'>
+<p>A single kr input signal or a SequenceableCollection of kr input signals to be referred to with <strong>func</strong> (feedforward data). See <a href="#Ex.%203a">Ex.3a</a> for multichannel feedback / feedforward.<tr><td class='argumentname'>outSize<td class='argumentdesc'>
+<p>Integer or SequenceableCollection thereof, the size(s) defined by the UGen(s) returned by <strong>func</strong>. It's the user's responsibilty to pass the correct size(s)! Defaults to 0.<tr><td class='argumentname'>inDepth<td class='argumentdesc'>
+<p>Integer or SequenceableCollection of Integers or SequenceableCollections thereof, this determines the behaviour of func (see there). If an Integer is passed, it means the maximum storage size for feedforward data. If a SequenceableCollection is passed, lookback indices for feedforward data can be differentiated, its items can again be Integers or SequenceableCollections (see <strong>func</strong>). Usually the inner SequenceableCollections should be ordered, but this is not compulsory. Defaults to 1 (no lookback). See <a href="#Ex.%203c">Ex.3c</a>.<tr><td class='argumentname'>outDepth<td class='argumentdesc'>
+<p>Integer or SequenceableCollection of Integers or SequenceableCollections thereof, this determines the behaviour of func (see there). If an Integer is passed, it means the maximum storage size for feedback data. If a SequenceableCollection is passed, lookback indices for feedback data can be differentiated, its items can again be Integers or SequenceableCollections (see <strong>func</strong>). Usually the inner SequenceableCollections should be ordered, but this is not compulsory. Defaults to 2 (look back to last control sample at maximum). See <a href="#Ex.%203c">Ex.3c</a>.<tr><td class='argumentname'>inInit<td class='argumentdesc'>
+<p>Number or SequenceableCollection, feedforward init data. If a Number is passed, it means the previous init value for the calculation of the first control sample(s), if the size of in is larger than 1, this init value is taken for all components of the multichannel signal. If a SequenceableCollection is passed, this differentiates the init values for a multichannel signal 'in' used by <strong>func</strong>. Then the components must be Numbers (again defining one init value) or SequenceableCollections, which define a lookback collection: first Number is the previous value, second the value before and so on. If the size of <strong>inInit</strong> is smaller than the size of <strong>in</strong>, wrapping is applied, that way a double-bracket array, e.g. [[3, 0, 1]], defines the same init sequence for all components of a multichannel <strong>in</strong>. See <a href="#Ex.%203b">Ex.3b</a>.<tr><td class='argumentname'>outInit<td class='argumentdesc'>
+<p>Number or SequenceableCollection, feedback init data. If a Number is passed, it means the previous init value for the calculation of the first control sample(s), if <strong>outSize</strong> is larger than 1, this init value is taken for all components of the multichannel signal 'out' used by <strong>func</strong>. If a SequenceableCollection is passed, this differentiates the init values for this multichannel signal. Then the components must be Numbers (again defining one init value) or SequenceableCollections, which define a lookback collection: first Number is the previous value, second the value before and so on. If the size of <strong>outInit</strong> is smaller than <strong>outSize</strong>, wrapping is applied, that way a double-bracket array, e.g. [[3, 0, 1]], defines the same init sequence for all components of the multichannel signal 'out' used by <strong>func</strong>. See <a href="#Ex.%203b">Ex.3b</a>.<tr><td class='argumentname'>graphOrderType<td class='argumentdesc'>
+<p>0, 1 or 2. Determines if topological order of generated BufRd and BufWr instances in the SynthDef graph is forced by additional UGens.<ul>
+<li>Type 0: forced graph order is turned off.<li>Type 1 (default): graph order is forced by summation and &lt;!.<li>Type 2: graph order is forced by &lt;! operators only.</ul>
+
+<p>Default 1 is recommended, but with CPU-intense SynthDefs it might be worth trying it with the value 0. This saves a lot of UGens and in all my examples I didn't encounter cases with different results. Type 2 can shorten the SynthDef compilation time for certain graphs with a large number of UGens, which can be lengthy with type 1. However, CPU usage doesn't directly correspond to the number of UGens.<tr><td class='argumentname'>leakDC<td class='argumentdesc'>
+<p>Boolean. Determines if a LeakDC is applied to the output. Defaults to true.<tr><td class='argumentname'>leakCoef<td class='argumentdesc'>
 <p>Number, the <strong>leakDC</strong> coefficient. Defaults to 0.995.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
@@ -94,9 +118,8 @@ var scdoc_sc_version = '3.10.3';
 
 <p>The feedback / feedforward relation is defined within func, it's important to note that this Function is applied in a very special way to build the feedback relation into the synthdef graph.
 <p>Let n be the given blockSize, then<ol>
-<li>func is applied n times to establish the iteration in the synthdef graph.<li>func (only formally) takes over previous (multichannel) samples for calculation of next (multichannel) samples via 'out' arg, technically BufRd.krs are passed to 'out' arg, the ar signals are reconstructed thereafter<li>unary and binary operators are the basic tools for this calculation<li>func can take over modulating kr UGens from outside via simple reference, no linear interpolation in this case though, you might therefore consider (5)<li>func can take over modulating ar UGens from outside via Fb1's and func's 'in' arg<li>func can contain explicitely defined kr UGens, note that for every UGen in func, n instances are built into the SynthDef graph!<li>kr UGens in func can be applied to data passed via 'in' or 'out'<li>func's index argument can be used to specify the feedback / feedforward relation per block index</ol>
-
-<p><h3><a class='anchor' name='What%20cannot%20/%20shouldn't%20be%20done:'>What cannot / shouldn't be done:</a></h3>
+<li>ar / kr: func (only formally) takes over previous (multichannel) out samples for calculation of next (multichannel) out samples via its 'out' arg, technically BufRd.krs are passed to 'out' arg, in the ar case signals are reconstructed thereafter<li>ar: func is applied n times to establish the iteration in the synthdef graph<li>ar / kr: unary and binary operators are the basic tools for this calculation<li>ar / kr: func can take over modulating kr UGens from outside via simple reference, for ar no linear interpolation in this case though, you might therefore consider (5)<li>ar / kr: func can take over feedforward UGens with reference to their past data from outside via Fb1's and func's 'in' arg<li>ar / kr: func can contain explicitely defined kr UGens. ar: note that for every UGen in func, n instances are built into the SynthDef graph!<li>ar / kr: kr UGens in func can be applied to data passed via 'in' or 'out'<li>ar: func's index argument can be used to specify the feedback / feedforward relation per block index</ol>
+<h3><a class='anchor' name='What%20cannot%20/%20shouldn't%20be%20done%20(ar%20case%20considerations):'>What cannot / shouldn't be done (ar case considerations):</a></h3>
 
 <p>Writing ar UGens in func that produce a time-varying signal itself (e.g. SinOsc.ar, in contrast to SinOsc.kr and operator UGens like '+', '*' etc.) - instead, if such ar UGens aren't applied to data from inside func, they can be passed via Fb1's and func's 'in' arg. It remains the case of such ar UGens that should process data that is provided by func (e.g. letting the fb out modulate a parameter of a VarSaw.ar). This is currently not possible and I don't have a clear picture if and how it would be possible at all or if it would make much sense.<h2><a class='anchor' name='Examples%201:%20Proof%20of%20concept'>Examples 1: Proof of concept</a></h2>
 
@@ -196,7 +219,16 @@ z = {
 z.release</textarea>
 
 <p><a class='anchor' name='Ex.%201b'>&nbsp;</a><h3><a class='anchor' name='Ex.%201b:%20OnePole'>Ex. 1b: OnePole</a></h3>
-<textarea class='editor'>// OnePole as lopass
+<textarea class='editor'>// check blockSize before (or reset blockSize in examples)
+
+(
+if (s.options.blockSize != 64) {
+    s.options.blockSize = 64;
+    s.quit.reboot;
+}
+)
+
+// OnePole as lopass
 
 s.freqscope;
 
@@ -291,7 +323,16 @@ q = {
 q.release</textarea>
 
 <p><a class='anchor' name='Ex.%201c'>&nbsp;</a><h3><a class='anchor' name='Ex.%201c:%20SOS'>Ex. 1c: SOS</a></h3>
-<textarea class='editor'>// SOS as bandreject, note its convention:
+<textarea class='editor'>// check blockSize before (or reset blockSize in examples)
+
+(
+if (s.options.blockSize != 64) {
+    s.options.blockSize = 64;
+    s.quit.reboot;
+}
+)
+
+// SOS as bandreject, note its convention:
 // SOS.ar(in, a0, a1, a2, b1, b2, mul, add)
 // out(i) = (a0 * in(i)) + (a1 * in(i-1)) + (a2 * in(i-2)) + (b1 * out(i-1)) + (b2 * out(i-2))
 
@@ -342,7 +383,16 @@ z = {
 z.release</textarea>
 
 <p><a class='anchor' name='Ex.%201d'>&nbsp;</a><h3><a class='anchor' name='Ex.%201d:%20LTI'>Ex. 1d: LTI</a></h3>
-<textarea class='editor'>// You need to have the SC-3 plugins installed in order to use LTI,
+<textarea class='editor'>// check blockSize before (or reset blockSize in examples)
+
+(
+if (s.options.blockSize != 64) {
+    s.options.blockSize = 64;
+    s.quit.reboot;
+}
+)
+
+// You need to have the SC-3 plugins installed in order to use LTI,
 // which is part of Nick Collins' SLUGens.
 
 // Example with coefficients from Nick Collins' helpfile,
@@ -411,7 +461,16 @@ u.release
 
 <p>This is an interesting field of exploration as it cannot easily be done with SC otherwise. Here the time-varying potential of unary and binary operators comes into play, normally they are applied to time-varying signals, but here their iteration on a single-sample base is itself an essential part of producing the variation in time. Good candidates are already simple operators and their combinations, also with + and -, e.g. *, /, **, %, trigonometric operators etc.
 <p><a class='anchor' name='Ex.%202a'>&nbsp;</a><h3><a class='anchor' name='Ex.%202a:%20%'>Ex. 2a: %</a></h3>
-<textarea class='editor'>s.scope
+<textarea class='editor'>// check blockSize before (or reset blockSize in examples)
+
+(
+if (s.options.blockSize != 64) {
+    s.options.blockSize = 64;
+    s.quit.reboot;
+}
+)
+
+s.scope
 
 // start fb fx Synth
 
@@ -461,7 +520,16 @@ y.free;
 )</textarea>
 
 <p><a class='anchor' name='Ex.%202b'>&nbsp;</a><h3><a class='anchor' name='Ex.%202b:%20sin'>Ex. 2b: sin</a></h3>
-<textarea class='editor'>// sin can work as a limiter as well as a nonlinear dynamics engine,
+<textarea class='editor'>// check blockSize before (or reset blockSize in examples)
+
+(
+if (s.options.blockSize != 64) {
+    s.options.blockSize = 64;
+    s.quit.reboot;
+}
+)
+
+// sin can work as a limiter as well as a nonlinear dynamics engine,
 // here it causes a wavefolding-like effect
 
 s.scope
@@ -505,7 +573,16 @@ y.free;
 )</textarea>
 
 <p><a class='anchor' name='Ex.%202c'>&nbsp;</a><h3><a class='anchor' name='Ex.%202c:%20*'>Ex. 2c: *</a></h3>
-<textarea class='editor'>// rather irrational concatenation of simple operations
+<textarea class='editor'>// check blockSize before (or reset blockSize in examples)
+
+(
+if (s.options.blockSize != 64) {
+    s.options.blockSize = 64;
+    s.quit.reboot;
+}
+)
+
+// rather irrational concatenation of simple operations
 // depth changes cause frequency changes
 
 s.scope
@@ -548,7 +625,16 @@ y.free;
 )</textarea>
 
 <p><a class='anchor' name='Ex.%202d'>&nbsp;</a><h3><a class='anchor' name='Ex.%202d:%20/'>Ex. 2d: /</a></h3>
-<textarea class='editor'>// With divisions we must avoid division by zero resp. blowup, here it's max in the divisor.
+<textarea class='editor'>// check blockSize before (or reset blockSize in examples)
+
+(
+if (s.options.blockSize != 64) {
+    s.options.blockSize = 64;
+    s.quit.reboot;
+}
+)
+
+// With divisions we must avoid division by zero resp. blowup, here it's max in the divisor.
 // The example also establishes a cross-feedback of the two channels by using reverse.
 
 s.scope
@@ -581,7 +667,17 @@ y.free;
 )</textarea>
 
 <p><a class='anchor' name='Ex.%202e'>&nbsp;</a><h3><a class='anchor' name='Ex.%202e:%20**'>Ex. 2e: **</a></h3>
-<textarea class='editor'>// exponentiation can also be interesting
+<textarea class='editor'>// check blockSize before (or reset blockSize in examples)
+
+(
+if (s.options.blockSize != 64) {
+    s.options.blockSize = 64;
+    s.quit.reboot;
+}
+)
+
+
+// exponentiation can also be interesting
 // here an area of instability is crossed by a stereo lfo
 
 s.scope
@@ -619,7 +715,16 @@ y.free;
 )</textarea>
 
 <p><a class='anchor' name='Ex.%202f'>&nbsp;</a><h3><a class='anchor' name='Ex.%202f:%20Conditional%20feedback'>Ex. 2f: Conditional feedback</a></h3>
-<textarea class='editor'>// defining the next sample depending on some characteristics of the previous one(s)
+<textarea class='editor'>// check blockSize before (or reset blockSize in examples)
+
+(
+if (s.options.blockSize != 64) {
+    s.options.blockSize = 64;
+    s.quit.reboot;
+}
+)
+
+// defining the next sample depending on some characteristics of the previous one(s)
 // This can be done with the if UGen and Select.
 // 'if' doesn't support multichannel expansion, so take Select here
 
@@ -662,7 +767,16 @@ x.release</textarea>
 <h2><a class='anchor' name='Examples%203:%20Conventions%20and%20args'>Examples 3: Conventions and args</a></h2>
 
 <p><a class='anchor' name='Ex.%203a'>&nbsp;</a><h3><a class='anchor' name='Ex.%203a:%20Multichannel%20feedback%20/%20feedforward'>Ex. 3a: Multichannel feedback / feedforward</a></h3>
-<textarea class='editor'>// in and out can be multichannel signals of arbitrary size or collections thereof,
+<textarea class='editor'>// check blockSize before (or reset blockSize in examples)
+
+(
+if (s.options.blockSize != 64) {
+    s.options.blockSize = 64;
+    s.quit.reboot;
+}
+)
+
+// in and out can be multichannel signals of arbitrary size or collections thereof,
 // however arbitrary nesting is not supported,
 // outSize arg has to be passed explicitely,
 // size of in arg is taken over automatically.
@@ -839,7 +953,16 @@ x = {
 x.release</textarea>
 
 <p><a class='anchor' name='Ex.%203b'>&nbsp;</a><h3><a class='anchor' name='Ex.%203b:%20inInit%20/%20outInit'>Ex. 3b: inInit / outInit</a></h3>
-<textarea class='editor'>// linear congruential generator
+<textarea class='editor'>// check blockSize before (or reset blockSize in examples)
+
+(
+if (s.options.blockSize != 64) {
+    s.options.blockSize = 64;
+    s.quit.reboot;
+}
+)
+
+// linear congruential generator
 
 // this is not a strict linear congruential generator
 // as the server doesn't know integers, it's done with floats,
@@ -970,7 +1093,16 @@ x.release
 // multichannel component and differentiate the outer one.</textarea>
 
 <p><a class='anchor' name='Ex.%203c'>&nbsp;</a><h3><a class='anchor' name='Ex.%203c:%20inDepth%20/%20outDepth'>Ex. 3c: inDepth / outDepth</a></h3>
-<textarea class='editor'>// Normally, and like in most previous examples,
+<textarea class='editor'>// check blockSize before (or reset blockSize in examples)
+
+(
+if (s.options.blockSize != 64) {
+    s.options.blockSize = 64;
+    s.quit.reboot;
+}
+)
+
+// Normally, and like in most previous examples,
 // out[j] and in[j] in func refer to samples out[i-j] and in[i-j],
 // in[0] to the current input samples.
 // The lookback size can be determined by passing Integers to inDepth / outDepth, e.g.
@@ -1108,7 +1240,16 @@ x = {
 x.release</textarea>
 
 <p><a class='anchor' name='Ex.%203e'>&nbsp;</a><h3><a class='anchor' name='Ex.%203e:%20func%20index'>Ex. 3e: func index</a></h3>
-<textarea class='editor'>// func can take an index as third arg, it runs from 0 to blockSize - 1
+<textarea class='editor'>// check blockSize before (or reset blockSize in examples)
+
+(
+if (s.options.blockSize != 64) {
+    s.options.blockSize = 64;
+    s.quit.reboot;
+}
+)
+
+// func can take an index as third arg, it runs from 0 to blockSize - 1
 // this can be used to define the feedback relation depending on it
 
 // note that inDepth is set to [2, 1] as we look back to inSig[i-1] (in[1][0]),
@@ -1137,7 +1278,16 @@ x = {
 x.release</textarea>
 
 <p><a class='anchor' name='Ex.%204'>&nbsp;</a><h2><a class='anchor' name='Ex.%204:%20Saving%20CPU'>Ex. 4: Saving CPU</a></h2>
-<textarea class='editor'>// UGens written in func are generated as often as blockSize.
+<textarea class='editor'>// check blockSize before (or reset blockSize in examples)
+
+(
+if (s.options.blockSize != 64) {
+    s.options.blockSize = 64;
+    s.quit.reboot;
+}
+)
+
+// UGens written in func are generated as often as blockSize.
 // Therefore, if possible, references to kr UGens outside save resources.
 // In addition look for hidden unnecessary operations, which can add hundreds of UGens
 
@@ -1251,6 +1401,48 @@ x = {
         softclip(a + b * a + a * a + a / max(lfo, a + b));
     }, src, 2) * 0.1;
     LPF.ar(sig, 3000)
+}.play
+)
+
+x.release
+
+// see also Ex.5 for saving CPU with kr</textarea>
+
+<p><a class='anchor' name='Ex.%205'>&nbsp;</a><h2><a class='anchor' name='Ex.%205:%20Control%20rate'>Ex. 5: Control rate</a></h2>
+<textarea class='editor'>// Ex.4 with kr and K2A
+
+(
+x = {
+    var sig, src, lfo;
+    src = SinOsc.kr(90 * LFDNoise3.kr(0.3!2).range(0.98, 1.02)) * SinOsc.kr(45.25);
+    lfo = SinOsc.kr(SinOsc.kr(0.1).range(0.03, 1)).range(0.001, 0.01);
+    sig = Fb1.kr({ |in, out|
+        var a = in[0];
+        var b = out[1];
+        // with SC's L/R-precendence we can write without brackets
+        softclip(a + b * a + a * a + a / max(lfo, a + b));
+    }, src, 2, graphOrderType: 0) * 0.1;
+    LPF.ar(K2A.ar(sig), 3000)
+}.play
+)
+
+x.release
+
+
+// FM with same signal
+
+(
+x = {
+    var sig, src, lfo;
+    src = SinOsc.kr(90 * LFDNoise3.kr(0.3!2).range(0.98, 1.02)) * SinOsc.kr(45.25);
+    lfo = SinOsc.kr(SinOsc.kr(0.1).range(0.03, 1)).range(0.001, 0.01);
+    sig = Fb1.kr({ |in, out|
+        var a = in[0];
+        var b = out[1];
+        // with SC's L/R-precendence we can write without brackets
+        softclip(a + b * a + a * a + a / max(lfo, a + b));
+    }, src, 2, graphOrderType: 0) * 0.1;
+    SinOsc.ar(2000 * sig, 0, 0.1) 
 }.play
 )
 

@@ -43,7 +43,8 @@ var scdoc_sc_version = '3.10.3';
 <div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redMix/RedMixStereo.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redMix/RedMixStereo.sc'>RedMixStereo.sc</a></div><div id='related'>See also: <a href="./../Overviews/redMixOverview.html">redMixOverview</a>, <a href="./../Classes/RedMixMono.html">RedMixMono</a>, <a href="./../Classes/RedMixStereoMono.html">RedMixStereoMono</a>, <a href="./../Classes/RedMatrixMixer.html">RedMatrixMixer</a>, <a href="./../Classes/RedMixer.html">RedMixer</a></div>
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
-<div class='note'><span class='notelabel'>NOTE:</span> Requires <a href="./../Classes/Conductor.html">Conductor</a> quark.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+
+<p>simple mixer that take two stereo sources, combines them and output to one stereo<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>RedMixStereo.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>inA: 0</span>, <span class='argstr'>inB: 2</span>, <span class='argstr'>out: 0</span>, <span class='argstr'>group</span>, <span class='argstr'>lag: 0.05</span>)</h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/RedAbstractMix.html'>RedAbstractMix</a></div>
 <div class='method'>
@@ -60,16 +61,18 @@ var scdoc_sc_version = '3.10.3';
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<textarea class='editor'>a= RedMixStereo(2, 4, 0);
-b= Pbind(\degree, Pseq([0, 1, 5, 4, 3], inf), \dur, 0.25, \pan, Pseq([-1, 1], inf), \out, 2).play;
-c= Pbind(\degree, Pseq([10, 11, 16, 15], inf), \dur, 0.25, \pan, Pseq([-1, 1], inf), \out, 4).play;
+<textarea class='editor'>a= RedMixStereo(20, 40, 0);    //stereo inputs on 20 and 40, stereo output on 0
+b= Pbind(\degree, Pseq([0, 1, 5, 4, 3], inf), \dur, 0.25, \pan, Pseq([-1, 1], inf), \out, 20).play;
+c= Pbind(\degree, Pseq([10, 11, 16, 15], inf), \dur, 0.25, \pan, Pseq([-1, 1], inf), \out, 40).play;
 
-a.cvs.mix.value= -0.9;
-a.cvs.mix.value= 0.9;
-a.cvs.lag.value= 2;
-a.cvs.mix.value= 0;
-a.cvs.amp.value= 0.2;
-a.gui;
+a.mix= -0.9;
+a.mix= 0.9;
+a.lag= 2;
+a.mix= 0;
+a.amp= 0.2;
+
+g= a.gui;    //optional
+g.close;
 
 b.stop;
 c.stop;

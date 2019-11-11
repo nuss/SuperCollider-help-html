@@ -26,19 +26,19 @@ var scdoc_sc_version = '3.10.3';
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
 <li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-def'>def</a> </li>
-<li class='toc3'><a href='#-defaults'>defaults</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-in'>in</a> </li>
+<li class='toc3'><a href='#-out'>out</a> </li>
+<li class='toc3'><a href='#-lag'>lag</a> </li>
+<li class='toc3'><a href='#-def'>def</a> </li>
 <li class='toc3'><a href='#-free'>free</a> </li>
 <li class='toc3'><a href='#-gui'>gui</a> </li>
 <li class='toc3'><a href='#-group'>group</a> </li>
-<li class='toc3'><a href='#-cvs'>cvs</a> </li>
 <li class='toc3'><a href='#-synth'>synth</a> </li>
-<li class='toc3'><a href='#-os'>os</a> </li>
+<li class='toc3'><a href='#-cvs'>cvs</a> </li>
 <li class='toc3'><a href='#-defString'>defString</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-args'>args</a> </li>
-<li class='toc3'><a href='#-isReady'>isReady</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-isReady'>isReady</a> </li>
 <li class='toc3'><a href='#-nIn'>nIn</a> </li>
 <li class='toc3'><a href='#-nOut'>nOut</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
@@ -56,7 +56,8 @@ var scdoc_sc_version = '3.10.3';
 <div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redMatrixMixer/RedMatrixMixer.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redMatrixMixer/RedMatrixMixer.sc'>RedMatrixMixer.sc</a></div><div id='related'>See also: <a href="./../Classes/RedMatrixMixerGUI.html">RedMatrixMixerGUI</a>, <a href="./../Classes/RedEffectsRack.html">RedEffectsRack</a>, <a href="./../Classes/RedMixer.html">RedMixer</a></div>
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
-<div class='note'><span class='notelabel'>NOTE:</span> Requires the <a href="./../Classes/Conductor.html">Conductor</a> quark.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+
+<p>matrix mixer<div class='note'><span class='notelabel'>NOTE:</span> this class dynamically adds N unique methods for each output channel. <code>o0</code> means output channel 0, <code>o1</code> output channel 1 etc. depending on how many outputs you have specified when creating the mixer.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>RedMatrixMixer.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>nIn: 8</span>, <span class='argstr'>nOut: 8</span>, <span class='argstr'>in: 0</span>, <span class='argstr'>out: 0</span>, <span class='argstr'>group</span>, <span class='argstr'>lag: 0.05</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
@@ -66,40 +67,46 @@ var scdoc_sc_version = '3.10.3';
 <p>Number of output busses.<tr><td class='argumentname'>in<td class='argumentdesc'>
 <p>Offset of first input bus.<tr><td class='argumentname'>out<td class='argumentdesc'>
 <p>Offset of first out bus.<tr><td class='argumentname'>group<td class='argumentdesc'>
-<p><code>nil</code> boots the default server and creates a group after the <code>defaultGroup</code>.<tr><td class='argumentname'>lag<td class='argumentdesc'>
+<p>if <code>nil</code> matrixmixer will boot the default server and creates a group after the <code>defaultGroup</code>. if a <a href="./../Classes/Group.html">Group</a> then that will be used (also its server). Note that a passed in group object is not freed with calling matrixmixer's <a href="#-free">-free</a>.<tr><td class='argumentname'>lag<td class='argumentdesc'>
 <p>For amplitudes in seconds.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-def' href='./../Overviews/Methods.html#def'>def</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-in' href='./../Overviews/Methods.html#in'>in</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-in' href='./../Overviews/Methods.html#in'>in</a> = <span class='argstr'>val</span></h3>
 <div class='method'>
-<p>Generate a <a href="./../Classes/SynthDef.html">SynthDef</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defaults' href='./../Overviews/Methods.html#defaults'>defaults</a></h3>
+<p>input bus offset</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-out' href='./../Overviews/Methods.html#out'>out</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-out' href='./../Overviews/Methods.html#out'>out</a> = <span class='argstr'>val</span></h3>
 <div class='method'>
-<p>Revert all <a href="./../Classes/CV.html">CV</a>s to their defaults.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-free' href='./../Overviews/Methods.html#free'>free</a></h3>
+<p>output bus offset</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lag' href='./../Overviews/Methods.html#lag'>lag</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lag' href='./../Overviews/Methods.html#lag'>lag</a> = <span class='argstr'>val</span></h3>
 <div class='method'>
-<p>Free all synths.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gui' href='./../Overviews/Methods.html#gui'>gui</a>(<span class='argstr'>position</span>)</h3>
+<p>mix lag time in seconds (linear)</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-def' href='./../Overviews/Methods.html#def'>def</a></h3>
+<div class='method'>
+<p>Generate a <a href="./../Classes/SynthDef.html">SynthDef</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-free' href='./../Overviews/Methods.html#free'>free</a></h3>
+<div class='method'>
+<p>Free all internal synths and groups (not passed in groups).</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gui' href='./../Overviews/Methods.html#gui'>gui</a>(<span class='argstr'>position</span>)</h3>
 <div class='method'>
 <p>Create a <a href="./../Classes/RedMatrixMixerGUI.html">RedMatrixMixerGUI</a> for this RedMatrixMixer.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>position<td class='argumentdesc'>
 <p>A <a href="./../Classes/Point.html">Point</a>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-group' href='./../Overviews/Methods.html#group'>group</a></h3>
 <div class='method'>
-<p>The <a href="./../Classes/Group.html">Group</a> in use.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cvs' href='./../Overviews/Methods.html#cvs'>cvs</a></h3>
+<p>The <a href="./../Classes/Group.html">Group</a> in use.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-synth' href='./../Overviews/Methods.html#synth'>synth</a></h3>
 <div class='method'>
-<p>Dictionary of <a href="./../Classes/CV.html">CV</a>s:<table>
-<tr><td>in<td>input bus offset<tr><td>out<td>output bus offset<tr><td>lag<td>mix lag time in seconds (linear)<tr><td>o0, o1... oN<td>as many as out busses. An array of amplitudes (as many as in busses)</table>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-synth' href='./../Overviews/Methods.html#synth'>synth</a></h3>
+<p>The mixer synth.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cvs' href='./../Overviews/Methods.html#cvs'>cvs</a></h3>
 <div class='method'>
-<p>The mixer synth.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-os' href='./../Overviews/Methods.html#os'>os</a></h3>
-<div class='method'>
-<p>List of all amplitude control cv objects. <code>.cvs.o0, .cvs.o1, .cvs.02…</code> etc.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defString' href='./../Overviews/Methods.html#defString'>defString</a></h3>
+<p>Dictionary with all <a href="./../Classes/Ref.html">Ref</a> objects. (used to be CV objects)</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defString' href='./../Overviews/Methods.html#defString'>defString</a></h3>
 <div class='method'>
 <p>Not useful - just for show-off.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-args' href='./../Overviews/Methods.html#args'>args</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isReady' href='./../Overviews/Methods.html#isReady'>isReady</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-nIn' href='./../Overviews/Methods.html#nIn'>nIn</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-nOut' href='./../Overviews/Methods.html#nOut'>nOut</a></h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
-<textarea class='editor'>a= RedMatrixMixer(4, 2, 0, 0);    //4 channels in, 2 channels out
+<textarea class='editor'>s.options.numOutputBusChannels= 8;
+s.reboot;
+s.meter;
+
+a= RedMatrixMixer(4, 4, 0, 0);    //4 channels in, 4 channels out
 (
 SynthDef(\redMatrixMixerTest, {|out= 0, freq= 400, gate= 1, amp= 0.5|
     var e= EnvGen.kr(Env.asr(0.01, 1, 0.01), gate, doneAction:2);
@@ -117,29 +124,30 @@ b= Pbind(
 ).play;
 )
 
-a.gui;
-a.cvs.o0.value= [1, 0, 0.3, 0];        //in0 to out0 with full amp, in2 to out0 with 0.3 amp
-a.cvs.o1.value= [0, 1, 0, 0.2];        //in1 to out1 with full amp, in3 to out1 with 0.2 amp
-a.cvs.in.value= 1;            //change to listen to input busses to 1-4
+a.gui;    //optional
 
-a.cvs.out.value= 1;            //left channel still outputs because the pbinds plays there
-                    //and no ReplaceOut is blocking it
-a.cvs.out.value= 0;
-a.cvs.in.value= 0;
+a.o0= [1, 0, 0.3, 0];    //in0 to out0 with full amp, in2 to out0 with 0.3 amp
+a.o1= [0, 1, 0, 0.2];    //in1 to out1 with full amp, in3 to out1 with 0.2 amp
+a.in= 1;    //change to listen to input busses to 1-4
 
-a.cvs.lag.value= 3;
-a.cvs.o0.value= [0, 1, 1, 0.3];        //change mix with a 3 second lag
-a.cvs.o1.value= [1, 0, 0, 0.2];
-a.os;
+a.out= 1;    //left channel still outputs because the pbinds plays there
+//and no ReplaceOut is blocking it
+a.out= 0;
+a.in= 0;
 
-a.defString
+a.o1= [0, 0, 0, 0];
+a.lag= 2;
+a.o0= [0, 1, 1, 0.3];    //change mix with a 2 second lag
+a.o0= [1, 0, 0, 0.2];
+a.o1= [0, 0.5, 0, 0];
+
+a.cvs    //current settings
+a.defString    //current synth def as a string
 a.def
 
-a.defaults
 a.free;
 b.stop;
 
-//--
 a= RedMatrixMixer(24, 22, 0, 0);    //14 channels in, 12 channels out
 a.defString
 a.free</textarea>

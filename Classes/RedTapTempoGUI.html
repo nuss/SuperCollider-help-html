@@ -71,13 +71,15 @@ var scdoc_sc_version = '3.10.3';
 <p>Get or set tempo in bps.</div></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-monitor' href='./../Overviews/Methods.html#monitor'>monitor</a> = <span class='argstr'>bool</span></h3>
 <div class='method'>
-<p>A <a href="./../Classes/Boolean.html">Boolean</a>.</div></h3>
+<p>A <a href="./../Classes/Boolean.html">Boolean</a>. see <a href="#-monitorBus">-monitorBus</a> below.</div></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-monitorAmp' href='./../Overviews/Methods.html#monitorAmp'>monitorAmp</a> = <span class='argstr'>val</span></h3>
 <div class='method'>
 <p>A <a href="./../Classes/Float.html">Float</a>.</div></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-monitorBus' href='./../Overviews/Methods.html#monitorBus'>monitorBus</a> = <span class='argstr'>index</span></h3>
 <div class='method'>
-<p>Default monitor bus is 7.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-close' href='./../Overviews/Methods.html#close'>close</a></h3>
+<p>Which bus to play the click sound on.<h4>Discussion:</h4>
+
+<p>As the default monitor bus is 7 we need to <code>s.options.numOutputBusChannels= 8;</code> and then <code>s.reboot</code> and <code>s.meter</code> to see the signal.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-close' href='./../Overviews/Methods.html#close'>close</a></h3>
 <div class='method'>
 <p>Closes the window if open and stop internal task.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-def' href='./../Overviews/Methods.html#def'>def</a></h3>
 <div class='method'>
@@ -96,11 +98,11 @@ a.monitorAmp= 0.2;
 a.monitor= false;
 a.close;
 
-//--
+//embedd the gui into another window
 (
 w= Window("hgf", Rect(100, 200, 500, 500));
 w.front;
-v= CompositeView(w, Rect(10, 10, 400, 400)).background_(Color.blue).decorator= FlowLayout(Rect(0, 0, 300, 300));
+v= CompositeView(w, Rect(100, 100, 200, 200)).background_(Color.blue);
 c= TempoClock(1.4);
 a= RedTapTempoGUI(c, parent:v);
 )
