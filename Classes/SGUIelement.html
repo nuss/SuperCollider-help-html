@@ -1,0 +1,177 @@
+<!doctype html><html lang='en'><head><title>SGUIelement | SuperCollider 3.10.3 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'SGUIelement';
+var scdoc_sc_version = '3.10.3';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>SGUIelement:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-action'>action</a> </li>
+<li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc3'><a href='#-valueAction'>valueAction</a> </li>
+<li class='toc3'><a href='#-doAction'>doAction</a> </li>
+<li class='toc3'><a href='#-asView'>asView</a> </li>
+<li class='toc3'><a href='#-views'>views</a> </li>
+<li class='toc3'><a href='#-addView'>addView</a> </li>
+<li class='toc3'><a href='#-update'>update</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-softSetValue'>softSetValue</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#SInstruments'>SInstruments</a></span>
+</div><h1>SGUIelement<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>a value with one or more views</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/sInstruments/classes/SGUIelement.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/sInstruments/classes/SGUIelement.sc'>SGUIelement.sc</a></div><div id='subclasses'>Subclasses: <a href="../Classes/SGUIelementRange.html">SGUIelementRange</a>, <a href="../Classes/SGUIelementString.html">SGUIelementString</a></div>
+<div id='related'>See also: <a href="./../Overviews/sInstrumentsOverview.html">sInstrumentsOverview</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This is a value with one or more views attached.
+<p>Views like sliders and numberboxes are attached using the <a href="#-addView">-addView</a> method. Optionally one can provide a <a href="./../Classes/ControlSpec.html">ControlSpec</a>.
+<p>Attached views only redraw when <a href="#-update">-update</a> is called (e.g. inside a slow running <a href="./../Classes/Routine.html">Routine</a>). There is no need to defer these update calls and the actual redrawing will only happen if the value has changed since last call to update.
+<p>The <a href="#-action">-action</a> function you set is independent of the views and will be called directly when the value changes (e.g. incoming data from a sensor at very high rate - the action function will be called each time while any attached views will only redraw when update is called).
+<p>Changing the value of a view using mouse or keyboard will call the action function immediately.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>SGUIelement.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a></h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-action' href='./../Overviews/Methods.html#action'>action</a> = value</h3>
+<div class='method'>
+<p>a <a href="./../Classes/Function.html">Function</a>. can be called without deferring.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-value' href='./../Overviews/Methods.html#value'>value</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-value' href='./../Overviews/Methods.html#value'>value</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>get or set the current value. nothing special. normalised. action is only called if value has changed.</div></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-valueAction' href='./../Overviews/Methods.html#valueAction'>valueAction</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>set value and always call action - also on repeated values. useful for button toggles.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doAction' href='./../Overviews/Methods.html#doAction'>doAction</a></h3>
+<div class='method'>
+<p>always call action.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asView' href='./../Overviews/Methods.html#asView'>asView</a></h3>
+<div class='method'>
+<p>layout support. only latest (last) view is returned. makes adding views to layouts easier.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-views' href='./../Overviews/Methods.html#views'>views</a></h3>
+<div class='method'>
+<p>an array with all added views.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addView' href='./../Overviews/Methods.html#addView'>addView</a>(<span class='argstr'>view</span>, <span class='argstr'>spec</span>)</h3>
+<div class='method'>
+<p>add a view as a dependancy. also with a spec. automatically sets up the view action function.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>view<td class='argumentdesc'>
+<p>some view. not complex ones like RangeSlider. for those use subclasses.<tr><td class='argumentname'>spec<td class='argumentdesc'>
+<p>a <a href="./../Classes/ControlSpec.html">ControlSpec</a>. if not provided a default one will be created.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-update' href='./../Overviews/Methods.html#update'>update</a></h3>
+<div class='method'>
+<p>call at regular intervals (typically a slow fps AppClock routine). if the value has changed the view will redraw.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-softSetValue' href='./../Overviews/Methods.html#softSetValue'>softSetValue</a>(<span class='argstr'>val</span>, <span class='argstr'>within: 0.03</span>, <span class='argstr'>timeout: 1</span>)</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>(
+var win;
+var element= SGUIelement();
+var elementSpec= \freq.asSpec;
+var fps= 5;  //this will be the slow update rate of the gui
+
+//fake some fast changing sensor data
+r= Routine.run({
+    inf.do{
+        NetAddr.localAddr.sendMsg(\freq, 200.0.exprand(2000));
+        (1/40).wait;  //here how fast the value will be changing
+    };
+});
+
+//set up window and attach two views
+win= Window("SGUIelement test", 200@100);
+win.view.layout_(VLayout(
+    element.addView(Slider().orientation_(\horizontal)),
+    element.addView(NumberBox(), elementSpec),
+));
+CmdPeriod.doOnce({win.close});
+win.onClose({r.stop});
+win.front;
+
+//element action function (fast updating - independent of gui)
+element.action= {|val|
+    val.postln;
+    //here would be the place for code that set a synth parameter or bus value
+};
+
+//network
+OSCFunc({|msg| element.value= elementSpec.unmap(msg[1])}, \freq);
+
+//gui updater
+Routine({
+    inf.do{
+        element.update;  //make the views redraw (if value changed)
+        (1/fps).wait;
+    };
+}).play(AppClock);
+)
+
+r.stop;  //and then try manually changing the slider/numberbox
+
+
+
+//softset example
+MIDIIn.connectAll;
+(
+var win;
+var element= SGUIelement();
+var elementSpec= \amp.asSpec;
+var fps= 15;
+
+//set up midi with softset
+MIDIdef.cc(\softset, {|msg|
+    msg.postln;
+    element.softSetValue(msg/127);  //move a controller up to ~75%
+});
+CmdPeriod.doOnce({MIDIdef.cc(\softset).free});
+
+//set up window with views
+win= Window("SGUIelement softset test", 200@100);
+win.view.layout_(VLayout(
+    element.addView(Slider().orientation_(\horizontal)),
+    element.addView(NumberBox(), elementSpec),
+));
+CmdPeriod.doOnce({win.close});
+win.onClose({r.stop});
+win.front;
+
+element.value= 0.75;  //set a value that will be picked up when midi cc is nearby
+
+//gui updater
+Routine({
+    inf.do{
+        element.update;
+        (1/fps).wait;
+    };
+}).play(AppClock);
+)</textarea>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/sInstruments/HelpSource/Classes/SGUIelement.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/sInstruments/HelpSource/Classes/SGUIelement.schelp</a><br>link::Classes/SGUIelement::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

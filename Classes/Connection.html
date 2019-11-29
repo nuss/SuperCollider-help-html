@@ -1,385 +1,234 @@
-<html><head><title>Connection</title>
+<!doctype html><html lang='en'><head><title>Connection | SuperCollider 3.10.3 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Connection';
+var scdoc_sc_version = '3.10.3';
+</script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
-<script type='text/javascript'>var helpRoot='./..';</script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<ul id='menubar'></ul>
-<body onload='fixTOC();prettyPrint()'>
-<div class='contents'>
-<div class='header'>
-<div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></div>
-<h1>Connection</h1>
-<div id='summary'>(Undocumented class)</div>
-</div>
-<div class='subheader'>
-<div id='filename'>Source: /home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/<a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/Connection.sc'>Connection.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
-</div>
+<body onload='fixTOC()'>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<div id='toctitle'>Connection:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited class methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented class methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*traceAll'>traceAll</a> </li>
+<li class='toc3'><a href='#*untraceAll'>untraceAll</a> </li>
+<li class='toc3'><a href='#*traceWith'>traceWith</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*basicNew'>basicNew</a> </li>
 <li class='toc3'><a href='#*collectionStack'>collectionStack</a> </li>
-<li class='toc3'><a href='#*initClass'>initClass</a> </li>
-<li class='toc3'><a href='#*new'>new</a> </li>
 <li class='toc3'><a href='#*prAfterCollect'>prAfterCollect</a> </li>
 <li class='toc3'><a href='#*prBeforeCollect'>prBeforeCollect</a> </li>
-<li class='toc3'><a href='#*traceAll'>traceAll</a> </li>
-<li class='toc3'><a href='#*traceWith'>traceWith</a> </li>
+<li class='toc3'><a href='#*traceFunc'>traceFunc</a> </li>
 <li class='toc3'><a href='#*tracing'>tracing</a> </li>
-<li class='toc3'><a href='#*untraceAll'>untraceAll</a> </li>
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited instance methods'>Inherited instance methods</a></li>
-<li class='toc2'><a href='#Undocumented instance methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-addDependant'>addDependant</a> </li>
-<li class='toc3'><a href='#-chain'>chain</a> </li>
-<li class='toc3'><a href='#-collapse'>collapse</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-connected'>connected</a> </li>
 <li class='toc3'><a href='#-connect'>connect</a> </li>
-<li class='toc3'><a href='#-connectTo'>connectTo</a> </li>
-<li class='toc3'><a href='#-connected'>connected</a> </li>
-<li class='toc3'><a href='#-connectionFreed'>connectionFreed</a> </li>
-<li class='toc3'><a href='#-defer'>defer</a> </li>
-<li class='toc3'><a href='#-dependant'>dependant</a> </li>
-<li class='toc3'><a href='#-dependants'>dependants</a> </li>
 <li class='toc3'><a href='#-disconnect'>disconnect</a> </li>
 <li class='toc3'><a href='#-disconnectWith'>disconnectWith</a> </li>
-<li class='toc3'><a href='#-filter'>filter</a> </li>
 <li class='toc3'><a href='#-free'>free</a> </li>
+<li class='toc3'><a href='#-++'>++</a> </li>
+<li class='toc2'><a href='#Filters%20and%20modifiers'>Filters and modifiers</a></li>
+<ul class='toc'><li class='toc3'><a href='#-transform'>transform</a> </li>
+<li class='toc3'><a href='#-filter'>filter</a> </li>
+<li class='toc3'><a href='#-oneShot'>oneShot</a> </li>
+<li class='toc3'><a href='#-defer'>defer</a> </li>
+<li class='toc3'><a href='#-collapse'>collapse</a> </li>
+</ul><li class='toc2'><a href='#Debugging'>Debugging</a></li>
+<ul class='toc'><li class='toc3'><a href='#-trace'>trace</a> </li>
+<li class='toc3'><a href='#-traceWith'>traceWith</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-addDependant'>addDependant</a> </li>
+<li class='toc3'><a href='#-asCollection'>asCollection</a> </li>
+<li class='toc3'><a href='#-chain'>chain</a> </li>
+<li class='toc3'><a href='#-connectionFreed'>connectionFreed</a> </li>
+<li class='toc3'><a href='#-dependant'>dependant</a> </li>
+<li class='toc3'><a href='#-dependants'>dependants</a> </li>
+<li class='toc3'><a href='#-makeUnique'>makeUnique</a> </li>
 <li class='toc3'><a href='#-object'>object</a> </li>
 <li class='toc3'><a href='#-onTrace'>onTrace</a> </li>
-<li class='toc3'><a href='#-oneShot'>oneShot</a> </li>
 <li class='toc3'><a href='#-prCollect'>prCollect</a> </li>
 <li class='toc3'><a href='#-releaseDependants'>releaseDependants</a> </li>
 <li class='toc3'><a href='#-removeDependant'>removeDependant</a> </li>
-<li class='toc3'><a href='#-trace'>trace</a> </li>
 <li class='toc3'><a href='#-traceConnection'>traceConnection</a> </li>
-<li class='toc3'><a href='#-traceWith'>traceWith</a> </li>
-<li class='toc3'><a href='#-transform'>transform</a> </li>
-</ul></ul><li class='toc1'><a href='#Help template'>Help template</a></li>
-<ul class='toc'></ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+<li class='toc3'><a href='#-uniqueConnectionAt'>uniqueConnectionAt</a> </li>
+<li class='toc3'><a href='#-uniqueConnectionPut'>uniqueConnectionPut</a> </li>
+<li class='toc3'><a href='#-valueFilter'>valueFilter</a> </li>
+</ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Connection'>Connection</a></span>
+</div><h1>Connection<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Represents a dependancy connection between two objects</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/Connection.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/Connection.sc'>Connection.sc</a></div><div id='related'>See also: <a href="./../Guides/Connection.html">Connection overview</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited class methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented class methods'>Undocumented class methods</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*basicNew' href='./../Overviews/Methods.html#basicNew'>basicNew</a> (<span class='argstr'>object</span>, <span class='argstr'>dependant</span>, <span class='argstr'>connected</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*collectionStack' href='./../Overviews/Methods.html#collectionStack'>collectionStack</a> </h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a> </h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>object</span>, <span class='argstr'>dependant</span>, <span class='argstr'>autoConnect: true</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*prAfterCollect' href='./../Overviews/Methods.html#prAfterCollect'>prAfterCollect</a> </h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*prBeforeCollect' href='./../Overviews/Methods.html#prBeforeCollect'>prBeforeCollect</a> </h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*traceAll' href='./../Overviews/Methods.html#traceAll'>traceAll</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*traceAll' href='./../Overviews/Methods.html#traceAll'>traceAll</a> = value</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*traceWith' href='./../Overviews/Methods.html#traceWith'>traceWith</a> (<span class='argstr'>func</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*tracing' href='./../Overviews/Methods.html#tracing'>tracing</a> </h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*untraceAll' href='./../Overviews/Methods.html#untraceAll'>untraceAll</a> </h3>
+<p><a href="./../Classes/Connection.html">Connection</a> represents a dependency connection between two objects. When the <a href="./../Classes/Object.html#-changed">Object: -changed</a> method of the left-hand object is called, the <a href="./../Classes/Object.html#-update">Object: -update</a> method of the right-hand object is called.
+<p>Creating a connection using:<textarea class='editor'>Connection(obj, dependantm, autoConnect:true)</textarea>
+
+<p>is roughly equivalent to calling<textarea class='editor'>obj.addDependant(dependant);</textarea>
+
+<p>Connections operate <strong>on top of</strong> the existing changed/update/addDependant functionality, so they can interoperate with other SuperCollider functionality based around these methods (for example, <a href="./../Classes/SimpleController.html">SimpleController</a>).<div class='note'><span class='notelabel'>NOTE:</span> Connection's are not usually created via the Connection constructor. Instead, they should be created using <a href="./../Classes/Object.html#-connectTo">Object: -connectTo</a>. This allows objects to override default behaviors when connecting.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>Connection.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>object</span>, <span class='argstr'>dependant</span>, <span class='argstr'>autoConnect: true</span>)</h3>
+<div class='method'>
+<p>Create a new Connection between <code>object</code> and <code>dependant</code>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>object<td class='argumentdesc'>
+<p>Object that will be broadcasting changes.<tr><td class='argumentname'>dependant<td class='argumentdesc'>
+<p>Object that will be receiving notification of changes.<tr><td class='argumentname'>autoConnect<td class='argumentdesc'>
+<p>If <code>false</code>, object will not be connected to the dependant immediately. It can be connected later using the <a href="#-connected">-connected</a> method.</table></div><h3 class='method-code'><span class='method-prefix'>Connection.</span><a class='method-name' name='*traceAll' href='./../Overviews/Methods.html#traceAll'>traceAll</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Connection.</span><a class='method-name' name='*traceAll' href='./../Overviews/Methods.html#traceAll'>traceAll</a> = value</h3>
+<div class='method'>
+<p>When <code>traceAll == true</code>, all new Connections will be created with tracing turned on. See <a href="./../Classes/Connection.html#-trace">Connection: -trace</a>Note that this will <strong>not</strong> turn on tracing for Connections that have already been created.</div><h3 class='method-code'><span class='method-prefix'>Connection.</span><a class='method-name' name='*untraceAll' href='./../Overviews/Methods.html#untraceAll'>untraceAll</a></h3>
+<div class='method'>
+<p>Turn off tracing on all Connections that are currently being traced. See <a href="./../Classes/Connection.html#-trace">Connection: -trace</a></div><h3 class='method-code'><span class='method-prefix'>Connection.</span><a class='method-name' name='*traceWith' href='./../Overviews/Methods.html#traceWith'>traceWith</a>(<span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>Execute function <code>func</code> and trace ALL connections created during that function, ONLY for the duration of the function. If <code>traceAll == true</code>, all created connections will continue to be traced after the function is finished, otherwise they will not.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Connection.</span><a class='method-name' name='*basicNew' href='./../Overviews/Methods.html#basicNew'>basicNew</a>(<span class='argstr'>object</span>, <span class='argstr'>dependant</span>, <span class='argstr'>connected</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Connection.</span><a class='method-name' name='*collectionStack' href='./../Overviews/Methods.html#collectionStack'>collectionStack</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Connection.</span><a class='method-name' name='*prAfterCollect' href='./../Overviews/Methods.html#prAfterCollect'>prAfterCollect</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Connection.</span><a class='method-name' name='*prBeforeCollect' href='./../Overviews/Methods.html#prBeforeCollect'>prBeforeCollect</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Connection.</span><a class='method-name' name='*traceFunc' href='./../Overviews/Methods.html#traceFunc'>traceFunc</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Connection.</span><a class='method-name' name='*traceFunc' href='./../Overviews/Methods.html#traceFunc'>traceFunc</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>Connection.</span><a class='method-name' name='*tracing' href='./../Overviews/Methods.html#tracing'>tracing</a></h3>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3><a class='anchor' name='Inherited instance methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented instance methods'>Undocumented instance methods</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-addDependant' href='./../Overviews/Methods.html#addDependant'>addDependant</a> (<span class='argstr'>dep</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-chain' href='./../Overviews/Methods.html#chain'>chain</a> (<span class='argstr'>newDependant</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-collapse' href='./../Overviews/Methods.html#collapse'>collapse</a> (<span class='argstr'>delta: 0</span>, <span class='argstr'>clock</span>, <span class='argstr'>force: true</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connect' href='./../Overviews/Methods.html#connect'>connect</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectTo' href='./../Overviews/Methods.html#connectTo'>connectTo</a> (<span class='argstr'>nextDependant</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connected' href='./../Overviews/Methods.html#connected'>connected</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connected' href='./../Overviews/Methods.html#connected'>connected</a> = <span class='argstr'>connect</span></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-connectionFreed' href='./../Overviews/Methods.html#connectionFreed'>connectionFreed</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-defer' href='./../Overviews/Methods.html#defer'>defer</a> (<span class='argstr'>delta: 0</span>, <span class='argstr'>clock</span>, <span class='argstr'>force: false</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-dependant' href='./../Overviews/Methods.html#dependant'>dependant</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-dependants' href='./../Overviews/Methods.html#dependants'>dependants</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disconnect' href='./../Overviews/Methods.html#disconnect'>disconnect</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-disconnectWith' href='./../Overviews/Methods.html#disconnectWith'>disconnectWith</a> (<span class='argstr'>func</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-filter' href='./../Overviews/Methods.html#filter'>filter</a> (<span class='argstr'>filter</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-free' href='./../Overviews/Methods.html#free'>free</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-object' href='./../Overviews/Methods.html#object'>object</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-onTrace' href='./../Overviews/Methods.html#onTrace'>onTrace</a> (<span class='argstr'>obj</span>, <span class='argstr'>what</span> <span class='argstr'>... values</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-oneShot' href='./../Overviews/Methods.html#oneShot'>oneShot</a> (<span class='argstr'>shouldFree: false</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-prCollect' href='./../Overviews/Methods.html#prCollect'>prCollect</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-releaseDependants' href='./../Overviews/Methods.html#releaseDependants'>releaseDependants</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-removeDependant' href='./../Overviews/Methods.html#removeDependant'>removeDependant</a> (<span class='argstr'>dep</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-trace' href='./../Overviews/Methods.html#trace'>trace</a> (<span class='argstr'>shouldTrace: true</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-traceConnection' href='./../Overviews/Methods.html#traceConnection'>traceConnection</a> </h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-traceWith' href='./../Overviews/Methods.html#traceWith'>traceWith</a> (<span class='argstr'>func</span>)</h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-transform' href='./../Overviews/Methods.html#transform'>transform</a> (<span class='argstr'>func</span>)</h3>
-<h2><a class='anchor' name='Help template'>Help template</a></h2>
-
-<p>Copy and paste the text below and save to HelpSource/Classes/Connection.schelp<pre class='code prettyprint lang-sc'>TITLE:: Connection
-summary:: (put short description here)
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
-
-DESCRIPTION::
-(put long description here)
-
-
-CLASSMETHODS::
-
-METHOD:: prBeforeCollect
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: initClass
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: prAfterCollect
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: untraceAll
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: traceWith
-(describe method here)
-
-ARGUMENT:: func
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: traceAll
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: collectionStack
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: tracing
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: basicNew
-(describe method here)
-
-ARGUMENT:: object
-(describe argument here)
-
-ARGUMENT:: dependant
-(describe argument here)
-
-ARGUMENT:: connected
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: new
-(describe method here)
-
-ARGUMENT:: object
-(describe argument here)
-
-ARGUMENT:: dependant
-(describe argument here)
-
-ARGUMENT:: autoConnect
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-
-INSTANCEMETHODS::
-
-METHOD:: filter
-(describe method here)
-
-ARGUMENT:: filter
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: connected
-(describe method here)
-
-ARGUMENT:: connect
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: connectionFreed
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: dependants
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: object
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: defer
-(describe method here)
-
-ARGUMENT:: delta
-(describe argument here)
-
-ARGUMENT:: clock
-(describe argument here)
-
-ARGUMENT:: force
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: transform
-(describe method here)
-
-ARGUMENT:: func
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: collapse
-(describe method here)
-
-ARGUMENT:: delta
-(describe argument here)
-
-ARGUMENT:: clock
-(describe argument here)
-
-ARGUMENT:: force
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: removeDependant
-(describe method here)
-
-ARGUMENT:: dep
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: traceConnection
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: oneShot
-(describe method here)
-
-ARGUMENT:: shouldFree
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: free
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: dependant
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: trace
-(describe method here)
-
-ARGUMENT:: shouldTrace
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: connect
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: prCollect
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: disconnect
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: releaseDependants
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: disconnectWith
-(describe method here)
-
-ARGUMENT:: func
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: onTrace
-(describe method here)
-
-ARGUMENT:: obj
-(describe argument here)
-
-ARGUMENT:: what
-(describe argument here)
-
-ARGUMENT::  ... values
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: traceWith
-(describe method here)
-
-ARGUMENT:: func
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: addDependant
-(describe method here)
-
-ARGUMENT:: dep
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: connectTo
-(describe method here)
-
-ARGUMENT:: nextDependant
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: chain
-(describe method here)
-
-ARGUMENT:: newDependant
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-
-EXAMPLES::
-
-code::
-(some example code)
-::
-</pre>
-<div class='doclink'>link::Classes/Connection::<br>sc version: 3.8dev</div></div></body></html>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-connected' href='./../Overviews/Methods.html#connected'>connected</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-connected' href='./../Overviews/Methods.html#connected'>connected</a> = <span class='argstr'>connect</span></h3>
+<div class='method'>
+<p>When <code>connected == true</code>, <a href="./../Classes/Object.html#-changed">Object: -changed</a> messages will be passed from the object to the dependant.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>connect<td class='argumentdesc'>
+<p>Boolean. <code>false</code> will disconnect the object from it's dependant.</table><h4>Discussion:</h4>
+<textarea class='editor'>o = (); d = { |...args| "Updated: %".format(args).postln };
+c = o.connectTo(d);
+o.changed(\thisWillBeSent);
+c.connected = false;
+o.changed(\thisWillNotBeSent);
+c.connected = true;
+o.changed(\thisWillAlsoBeSent);</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-connect' href='./../Overviews/Methods.html#connect'>connect</a></h3>
+<div class='method'>
+<p>Synonym for <code>connection.connected = true;</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-disconnect' href='./../Overviews/Methods.html#disconnect'>disconnect</a></h3>
+<div class='method'>
+<p>Synonym for <code>connection.connected = false;</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-disconnectWith' href='./../Overviews/Methods.html#disconnectWith'>disconnectWith</a>(<span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>Execute function <code>func</code> - disconnect the Connection for the duration, and return it to it's previous state after func is done. Note that, if the connection was already disconnected, the connection will remain in a disconnected state.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-free' href='./../Overviews/Methods.html#free'>free</a></h3>
+<div class='method'>
+<p>Permanently disconnect the connection. This will free up resources and ensure all objects will be garbage collected. Connections cannot be reconnected after freeing.</div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-++' href='./../Overviews/Methods.html#++'>++</a>(<span class='argstr'>other</span>)</h3>
+<div class='method'>
+<p>Concatenate with another <a href="./../Classes/Connection.html">Connection</a> or <a href="./../Classes/ConnectionList.html">ConnectionList</a>.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <a href="./../Classes/ConnectionList.html">ConnectionList</a>.</div></div><h3><a class='anchor' name='Filters%20and%20modifiers'>Filters and modifiers</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-transform' href='./../Overviews/Methods.html#transform'>transform</a>(<span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>Insert an <a href="./../Classes/UpdateTransform.html">UpdateTransform</a> between the object and it's dependant.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>A <a href="./../Classes/Function.html">Function</a> to be used as the argument to the <a href="./../Classes/UpdateTransform.html">UpdateTransform</a> constructor.</table><h4>Discussion:</h4>
+<textarea class='editor'>o = (); d = { |...args| "Updated: %".format(args).postln };
+c = o.connectTo(d);
+o.changed(\foo, 1);
+c.transform({ |object, what, value| [object, what, value * 360] });
+o.changed(\foo, 1);</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-filter' href='./../Overviews/Methods.html#filter'>filter</a>(<span class='argstr'>filter</span>)</h3>
+<div class='method'>
+<p>Insert an <a href="./../Classes/UpdateFilter.html">UpdateFilter</a> between the object and it's dependant.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>filter<td class='argumentdesc'>
+<p>A <a href="./../Classes/Function.html">Function</a> or <a href="./../Classes/Symbol.html">Symbol</a>, to be used as the argument to the <a href="./../Classes/UpdateFilter.html">UpdateFilter</a> constructor.</table><h4>Discussion:</h4>
+<textarea class='editor'>o = (); d = { |...args| "Updated: %".format(args).postln };
+c = o.connectTo(d).filter({ |object, what, value| value &gt; 50 });
+o.changed(\foo, 10);   // not notified
+o.changed(\foo, 100);  // notified</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-oneShot' href='./../Overviews/Methods.html#oneShot'>oneShot</a>(<span class='argstr'>shouldFree: true</span>)</h3>
+<div class='method'>
+<p>Disconnect the connection the next time a signal is recieved.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>shouldFree<td class='argumentdesc'>
+<p>If <code>shouldFree == true</code>, Connection will be free'd instead of disconnected.</table><h4>Discussion:</h4>
+<textarea class='editor'>o = (); d = { |...args| "Updated: %".format(args).postln };
+c = o.connectTo(d).oneShot();
+o.changed(\onlyOnce);
+o.changed(\notThisOne);
+c.connected.postln;</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defer' href='./../Overviews/Methods.html#defer'>defer</a>(<span class='argstr'>delta: 0</span>, <span class='argstr'>clock</span>, <span class='argstr'>force: false</span>)</h3>
+<div class='method'>
+<p>Insert an <a href="./../Classes/DeferredUpdater.html">DeferredUpdater</a> between the object and it's dependant.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>delta, clock, force<td class='argumentdesc'>
+<p>Arguments passed along to the <a href="./../Classes/DeferredUpdater.html">DeferredUpdater</a> constructor.</table><h4>Discussion:</h4>
+<textarea class='editor'>o = (); d = { |...args| "Updated: %".format(args).postln };
+c = o.connectTo(d).defer(3);
+o.changed(\foo, 10);   // notified 3 seconds later...</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-collapse' href='./../Overviews/Methods.html#collapse'>collapse</a>(<span class='argstr'>delta: 0</span>, <span class='argstr'>clock</span>, <span class='argstr'>force: true</span>)</h3>
+<div class='method'>
+<p>Insert an <a href="./../Classes/CollapsedUpdater.html">CollapsedUpdater</a> between the object and it's dependant.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>delta, clock, force<td class='argumentdesc'>
+<p>Arguments passed along to the <a href="./../Classes/CollapsedUpdater.html">CollapsedUpdater</a> constructor.</table><h4>Discussion:</h4>
+<textarea class='editor'>(
+o = (); d = { |...args| "Updated: %".format(args).postln };
+c = o.connectTo(d).collapse(1);
+fork {
+    (0..10).do {
+        |i|
+        o.changed(\collapsing, i);
+        0.3.wait;
+    }
+};
+)</textarea>
+</div><h3><a class='anchor' name='Debugging'>Debugging</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-trace' href='./../Overviews/Methods.html#trace'>trace</a>(<span class='argstr'>shouldTrace: true</span>)</h3>
+<div class='method'>
+<p>Enable or disable tracing for this connection. When tracing a connection, all signals passed from the object to the dependant will be displayed in the post window <strong>even if</strong> the Connection is currently disconnected.
+<p><code>⋯⋯</code> indicates that the signal was passed along (e.g. connected == true);
+<p><code>⋰⋰</code> indicates that the signal was <strong>not</strong> passed along (e.g. connected == false);<h4>Discussion:</h4>
+<textarea class='editor'>o = (); d = { |...args| "Updated: %".format(args).postln };
+c = o.connectTo(d).trace(true);
+o.changed(\isConnected);
+c.disconnect();
+o.changed(\isNotConnected);</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-traceWith' href='./../Overviews/Methods.html#traceWith'>traceWith</a>(<span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>Turn tracing on for this connection for the duration of <code>func</code></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addDependant' href='./../Overviews/Methods.html#addDependant'>addDependant</a>(<span class='argstr'>dep</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asCollection' href='./../Overviews/Methods.html#asCollection'>asCollection</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-chain' href='./../Overviews/Methods.html#chain'>chain</a>(<span class='argstr'>newDependant</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-connectionFreed' href='./../Overviews/Methods.html#connectionFreed'>connectionFreed</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dependant' href='./../Overviews/Methods.html#dependant'>dependant</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dependants' href='./../Overviews/Methods.html#dependants'>dependants</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-makeUnique' href='./../Overviews/Methods.html#makeUnique'>makeUnique</a>(<span class='argstr'>name</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-object' href='./../Overviews/Methods.html#object'>object</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-onTrace' href='./../Overviews/Methods.html#onTrace'>onTrace</a>(<span class='argstr'>obj</span>, <span class='argstr'>what</span> <span class='argstr'>... values</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prCollect' href='./../Overviews/Methods.html#prCollect'>prCollect</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-releaseDependants' href='./../Overviews/Methods.html#releaseDependants'>releaseDependants</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeDependant' href='./../Overviews/Methods.html#removeDependant'>removeDependant</a>(<span class='argstr'>dep</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-traceConnection' href='./../Overviews/Methods.html#traceConnection'>traceConnection</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-uniqueConnectionAt' href='./../Overviews/Methods.html#uniqueConnectionAt'>uniqueConnectionAt</a>(<span class='argstr'>name</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-uniqueConnectionPut' href='./../Overviews/Methods.html#uniqueConnectionPut'>uniqueConnectionPut</a>(<span class='argstr'>name</span>, <span class='argstr'>value</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-valueFilter' href='./../Overviews/Methods.html#valueFilter'>valueFilter</a>(<span class='argstr'>func</span>)</h3>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/HelpSource/Classes/Connection.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/HelpSource/Classes/Connection.schelp</a><br>link::Classes/Connection::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,109 +1,216 @@
-<html><head><title>Connection overview</title>
+<!doctype html><html lang='en'><head><title>Connection overview | SuperCollider 3.10.3 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Connection overview';
+var scdoc_sc_version = '3.10.3';
+</script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
-<script type='text/javascript'>var helpRoot='./..';</script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<ul id='menubar'></ul>
-<body onload='fixTOC();prettyPrint()'>
-<div class='contents'>
-<div class='header'>
-<div id='label'>SuperCollider GUIDES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Control'>Control</a></div>
-<h1>Connection overview</h1>
-<div id='summary'>An overview of the Connection quark</div>
-</div>
-<div class='subheader'>
-<div id='related'>See also: <a href="./../Classes/Connection.html">Connection</a></div>
-</div>
+<body onload='fixTOC()'>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#Description'>Description</a></li>
+<div id='toctitle'>Connection overview:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#Description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#Introduction'>Introduction</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#The Connection class'>The Connection class</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Slots'>Slots</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Control values'>Control values</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#Connection modifiers'>Connection modifiers</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#The%20Connection%20class'>The Connection class</a></li>
+<ul class='toc'><li class='toc2'><a href='#Connecting%20objects%20expressively'>Connecting objects expressively</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#.signal()'>.signal()</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#ConnectionList'>ConnectionList</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Connecting%20multiple%20objects'>Connecting multiple objects</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#MVC%20and%20ControlValue's'>MVC and ControlValue's</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Slots'>Slots</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Control%20values'>Control values</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Connection%20modifiers'>Connection modifiers</a></li>
 <ul class='toc'><li class='toc2'><a href='#filter'>filter</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#transform'>transform</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#defer'>defer</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#collapse'>collapse</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#oneShot'>oneShot</a></li>
 <ul class='toc'></ul></ul><li class='toc1'><a href='#Debugging'>Debugging</a></li>
-<ul class='toc'></ul></ul></div><h2><a class='anchor' name='Description'>Description</a></h2>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Guides (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Connection'>Connection</a></span>
+</div><h1>Connection overview<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>An overview of the Connection quark</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./../Classes/Connection.html">Connection</a></div>
+</div>
+<h2><a class='anchor' name='Description'>Description</a></h2>
 
-<p>Connection provides a more convient, expressive, and powerful way of connecting and synchronizing objects, values, and UI views in SuperCollider. It is built on top of (and is compatible with) the existing <a href="./../Classes/Object.html#addDependant">Object: addDependant</a>, <a href="./../Classes/Object.html#removeDependant">Object: removeDependant</a> <a href="./../Classes/Object.html#changed">Object: changed</a> etc. patterns, but provides greatly expanded functionality.<div class='warning'><span class='warninglabel'>WARNING:</span> The Connection quark is under active development. Most API's, object names, etc. are subject to change or removal. Please send feedback, bug reports, feature ideas to Scott Carver &lt;scott@artificia.org&gt;.</div><h2><a class='anchor' name='Introduction'>Introduction</a></h2>
+<p>Connection provides a more convient, expressive, and powerful way of connecting and synchronizing objects, values, and UI views in SuperCollider. It is built on top of (and is compatible with) the existing <a href="./../Classes/Object.html#addDependant">Object: addDependant</a>, <a href="./../Classes/Object.html#removeDependant">Object: removeDependant</a> <a href="./../Classes/Object.html#changed">Object: changed</a> etc. patterns, but provides greatly expanded functionality.<div class='note'><span class='notelabel'>NOTE:</span> While Connection has some convenient methods for operating on collections of objects or methods, it is not an "automatic gui creation" library - there are much better tools for this. Instead, it attempts to provide semantically clear operations that can be composed in obvious ways to achieve what you want. In general, individual lines of code using Connection classes and methods express obvious relationships between objects, with little-to-no "magic" or behind-the-scenes inference of intent.</div><div class='warning'><span class='warninglabel'>WARNING:</span> The Connection quark is under active development. Most API's, object names, etc. are subject to change or removal. Please send feedback, bug reports, feature ideas to Scott Carver &lt;scott@artificia.org&gt;.</div><h2><a class='anchor' name='Introduction'>Introduction</a></h2>
 
-<p>SuperCollider has a built-in notification pattern that allows any object to be notified if another object changes:<pre class='code prettyprint lang-sc'>(
+<p>SuperCollider has a built-in notification pattern that allows any object to be notified if another object changes:<textarea class='editor'>(
 ~notifier = Object();
 ~recipient = { "I've been notified!".postln };
 ~notifier.addDependant(~recipient);
 ~notifier.changed(\foo, "bar");
 ~notifier.removeDependant(~recipient);
-)</pre>
+)</textarea>
 
-<p>Any dependant of ~notifier receives a call to it's <code class='code prettyprint lang-sc'>update</code> method with the arguments <code class='code prettyprint lang-sc'>(object, changed ...args)</code>. In this example, <code class='code prettyprint lang-sc'>~notifier.changed(\foo, "bar")</code> results in <code class='code prettyprint lang-sc'>~recipient.update(~notifier, \foo, "bar")</code>. The "changed" argument is usally used to express <em>what</em> changed about the object, and the argument after is usually the new value or a description of that change.
-<p>This pattern is simple and powerful, but has pitfalls. When connecting up more complex objects - for example, a UI View with multiple sliders and fields - this pattern requires an extensive amount of bookkeeping. You must keep track of:<ol>
+<p>Any dependant of ~notifier receives a call to it's <code>update</code> method with the arguments <code>(object, changed ...args)</code>. In this example, <code>~notifier.changed(\foo, "bar")</code> results in <code>~recipient.update(~notifier, \foo, "bar")</code>. The "changed" argument is usually used to express <em>what</em> changed about the object, and the argument after is usually the new value or a description of that change.
+<p>This pattern is simple and powerful, but has pitfalls. When connecting up more complex objects - for example, a UI View with multiple sliders and fields - this pattern requires an extensive amount of bookkeeping. You will potentially need to keep track of:<ol>
 <li>Every object you've <strong>added a dependant to</strong>.<li>Every object you've <strong>added as a dependant</strong>.<li><strong>Which</strong> objects you've added as dependants to which other objects.</ol>
 
-<p>And, it becomes verbose as you begin to deal with multiple signals from multiple objects. Often this takes the form of a proliferation of inline functions that simply forward updates with minor changes:<pre class='code prettyprint lang-sc'>object.addDependant({
+<p>And, it becomes verbose as you begin to deal with multiple signals interconnecting multiple objects. Often this takes the form of a proliferation of inline functions that simply forward updates with minor changes:<textarea class='editor'>object.addDependant({
     |obj, change, val|
     if (change==\value) { this.onValueChanged(val) }
-})</pre>
+})</textarea>
 
-<p>This is a dangerous anti-pattern: once you've added an untracked function using "this", you have effectively leaked the "this" object until you call <code class='code prettyprint lang-sc'>object.release</code> to clear it's dependants (and - if others are listening to <code class='code prettyprint lang-sc'>object</code>, you'll disconnect them too!). If you fail to disconnect <strong>all</strong> of your object → dependant connections, you risk creating memory leaks or continuing to send updates to objects that are no longer in use.<h2><a class='anchor' name='The Connection class'>The Connection class</a></h2>
+<p>This is a dangerous anti-pattern: once you've added an untracked function using "this", you have effectively leaked the "this" object until you call <code>object.release</code> to clear it's dependants (and - if others are listening to <code>object</code>, you'll disconnect them too!). If you fail to disconnect <strong>all</strong> of your object → dependant connections, you risk creating memory leaks or continuing to send updates to objects that are no longer in use.<h2><a class='anchor' name='The%20Connection%20class'>The Connection class</a></h2>
 
-<p>The core of the Connection quark is the <a href="./../Classes/Connection.html">Connection</a> class, which encapsulates the connection between one object and one dependant:<pre class='code prettyprint lang-sc'>(
+<p>The core of the Connection quark is the <a href="./../Classes/Connection.html">Connection</a> class, which encapsulates the connection between one object and one dependant:<textarea class='editor'>(
 ~notifier = Object();
 ~recipient = { "I've been notified!".postln };
 ~connection = Connection(~notifier, ~recipient);
 ~notifier.changed(\foo, "bar");
 ~connection.disconnect();
-)</pre>
+)</textarea>
 
-<p>Once you have created a Connection, you can manipulate that connection generically, without needing to store or care about the specific objects it connects. It handles <code class='code prettyprint lang-sc'>addDependant</code> / <code class='code prettyprint lang-sc'>removeDependant</code> calls, and is guaranteed not to leak memory after it's disconnected and is not reachable. This means significantly less bookkeeping for more complex sets of connections.
-<p>The canonical way to create connections is with the <code class='code prettyprint lang-sc'>connectTo</code> method - this is preferred over creating Connections directly.<pre class='code prettyprint lang-sc'>(
+<p>Once you have created a Connection, you can manipulate that connection generically, without needing to store or care about the specific objects it connects. It handles <code>addDependant</code> / <code>removeDependant</code> calls, and is guaranteed not to leak memory after it's disconnected and is not reachable. This means significantly less bookkeeping for more complex sets of connections.
+<p>The canonical way to create connections is with the <a href="./../Classes/Object.html#-connectTo">Object: -connectTo</a> method - this is preferred over creating Connections directly.<textarea class='editor'>(
+~slider = Slider();
+~view = View(bounds:600@200).layout_(HLayout(~slider)).front;
+~connection = ~slider.connectTo({
+    |slider|
+    "Slider changed: %".format(slider.value).postln;
+});
+~slider.action = { |v| v.changed(\value) }; // Turn your action into a .changed signal.
+~view.onClose = { ~connection.free };
+)</textarea>
+
+<p>This is not much more efficient than simply using addDependant, and we still have lots of trivial inline functions.<h3><a class='anchor' name='Connecting%20objects%20expressively'>Connecting objects expressively</a></h3>
+
+<p>If we want to add 20 sliders, our code looks very similar.<textarea class='editor'>(
 ~sliders = 20.collect { Slider() };
 ~view = View(bounds:600@200).layout_(HLayout(*~sliders)).front;
 ~connections = ~sliders.collect({
     |slider, i|
     slider.action = { |v| v.changed(\value) };
     slider.connectTo({
-        |slider|
         "Slider % changed: %".format(i, slider.value).postln;
     })
 });
-~view.onClose = { ~connections.do(_.disconnect) };
-)</pre>
+~view.onClose = { ~connections.do(_.free) };
+)</textarea>
 
-<p>The Connection quark provides several conveniences that make the above example even more expressive:<pre class='code prettyprint lang-sc'>(
+<p>The Connection quark provides several conveniences that make the above example more expressive and straightforward.<h3><a class='anchor' name='.signal()'>.signal()</a></h3>
+
+<p>For our Sliders, <code>slider.signal(\value)</code> will forward <strong>only things that match</strong> <code>slider.changed(\value,...)</code>. In addition, Connection is smart enough to automatically add a <code>slider.action</code> function to turn slider actions into <code>slider.changed(\value, slider.value)</code><textarea class='editor'>(
 ~sliders = 20.collect { Slider() };
-~numbers = 20.collect { NumberBox().fixedWidth_(30) };
-~view = View(bounds:600@200).layout_(GridLayout.rows(~sliders, ~numbers)).front;
-~connections = ConnectionList.newFrom(
-    ~sliders.collect {
+~view = View(bounds:600@200).layout_(HLayout(*~sliders)).front;
+~connections = ~sliders.collect({
+    |slider, i|
+    slider.signal(\value).connectTo({
+        "Slider % changed: %".format(i, slider.value).postln;
+    })
+});
+~view.onClose = { ~connections.do(_.free) };
+)</textarea>
+<h3><a class='anchor' name='ConnectionList'>ConnectionList</a></h3>
+
+<p>When managing groups of connections, we can use <a href="./../Classes/ConnectionList.html">ConnectionList</a>. <a href="./../Classes/ConnectionList.html">ConnectionList</a> is a standard collection, but forwards all common <a href="./../Classes/Connection.html">Connection</a> methods on to each item it contains. So, rather than iterating over a collection of Connections to free them all, you can simply use <code>connectionList.free()</code>.
+<p><a href="./../Classes/ConnectionList.html#*make">ConnectionList: *make</a> will collect all Connections that are created during the execution of a function.<textarea class='editor'>(
+~sliders = 20.collect { Slider() };
+~view = View(bounds:600@200).layout_(HLayout(*~sliders)).front;
+~connections = ConnectionList.make {
+    ~sliders.do {
         |slider, i|
-        slider.signal(\value).connectTo(~numbers[i].valueSlot);
+        slider.signal(\value).connectTo({
+            "Slider % changed: %".format(i, slider.value).postln;
+        })
     }
-);
-~view.onClose = { ~connections.disconnect };
-)</pre>
-<ul>
-<li><a href="./../Classes/ConnectionList.html">ConnectionList</a> provides a <a href="./../Classes/List.html">List</a>-derived class that contains Connections, and applies common Connection methods to all items in the list.<li>The <code class='code prettyprint lang-sc'>signal</code> method extension provides an object that re-broadcasts only changes of a certain type (i.e. <code class='code prettyprint lang-sc'>slider.changed(\value)</code>). It can be used with any object.<li>The <code class='code prettyprint lang-sc'>object.connectTo(dependant)</code> method provides a shorthand for <code class='code prettyprint lang-sc'>Connection(object, dependant)</code>. It should always be used over Connection itself, since it allows for objects to subclass to provide special behavior when connecting.<li>Connecting to <code class='code prettyprint lang-sc'>object.valueSlot</code> calls the <code class='code prettyprint lang-sc'>value_</code> setter for an object, with the first value argument of the update. It's the equivalent of connecting to: <code class='code prettyprint lang-sc'>{ |obj, changed, value| dependant.value = value; }</code><li>The <code class='code prettyprint lang-sc'>slider.action</code> that broadcasts changes for the slider from the first example is automatically added as soon as we connect to a signal of that Slider.<li>Finally, View:valueSlot (and <em>all</em> View slots) are smart enough to {}.defer when setting View properties.</ul>
+};
+~view.onClose = { ~connections.free };
+)</textarea>
+<h3><a class='anchor' name='Connecting%20multiple%20objects'>Connecting multiple objects</a></h3>
+
+<p>The <a href="./../Classes/Connection.html#-connectTo">Connection: -connectTo</a> method can take multiple objects, and will connect all of them. This makes it easy to create <strong>a one-to-many connection</strong>. For example: <code>slider.connectAll(a, b, c)</code>.
+<p>The <a href="./../Classes/Collection.html#-connectAll">Collection: -connectAll</a> method provides a <strong>many-to-one connection</strong>, connecting all objects in a list to one dependant. For example: <code>~sliders.connectAll({ |slider| "Slider changed: %".format(slider.value).postln; })</code>
+<p>If we want to add a NumberBox for each of our sliders, we need a <strong>many-to-many connection</strong>. We can use <a href="./../Classes/Collection.html#-connectEach">Collection: -connectEach</a> to connect a list of objects to a list of dependants. For example:<textarea class='editor'>(
+~sliders = 20.collect { Slider() };
+~numbers = 20.collect { NumberBox().minWidth_(40) };
+~view = View(bounds:600@200).layout_(GridLayout.rows(~sliders, ~numbers)).front;
+~connections = ConnectionList.make {
+    ~sliders.connectEach(\value, ~numbers, _.valueSlot);
+    ~numbers.connectEach(\value, ~sliders, _.valueSlot);
+    ~sliders.connectAll({ |slider| "Slider changed: %".format(slider.value).postln; });
+};
+~view.onClose = { ~connections.free };
+)</textarea>
+
+<p>You may notice that, for <code>connectEach</code>, we provide some other arguments. The form of connectEach is <code>objectList.connectEach(signalFunction, dependentList, slotFunction)</code>, which is equivalent to:<textarea class='editor'>objectList.do {
+    |obj, i|
+    signalFunction.value(obj).connectTo(slotFunction.value(dependentList[i]))
+};</textarea>
+
+<p>In short, the two functions should take list items and provide an appropriate object or dependent to be connected. If you specify a Symbol or a String instead, these are taken to be arguments to the objects .signal or .methodSlot methods. So, the following are equivalent:<textarea class='editor'>~sliders.connectEach(\value, ~numbers, "value_(value)");
+~sliders.connectEach(_.signal(\value), ~numbers, _.methodSlot("value_(value)"));
+~sliders.connectEach(\value, ~numbers, _.valueSlot);</textarea>
+
+<p>See <a href="#Slots">Slots</a> below for more information on <a href="./../Classes/Object.html#-methodSlot">Object: -methodSlot</a>.<h3><a class='anchor' name='MVC%20and%20ControlValue's'>MVC and ControlValue's</a></h3>
+
+<p>You can see that the number of connections we have is rapidly increasing. The model-view-controller design pattern suggests that we keep <strong>values</strong> in a single place (the model), and notify objects that display or use those values (views) when a value changes. Connection provides a <a href="./../Classes/ControlValue">ControlValue</a> class to store values, and transmit changes when the value changes. We can use <a href="./../Classes/NumericControlValue.html">NumericControlValue</a> to store our numeric values.<textarea class='editor'>(
+~values = 20.collect { NumericControlValue() };
+~sliders = 20.collect { Slider() };
+~numbers = 20.collect { NumberBox().minWidth_(40) };
+~view = View(bounds:600@200).layout_(GridLayout.rows(~sliders, ~numbers)).front;
+~connections = ConnectionList.make {
+    ~values.connectEach(\value, ~sliders, _.valueSlot);
+    ~values.connectEach(\value, ~numbers, _.valueSlot);
+    ~sliders.connectEach(\value, ~values, _.valueSlot);
+};
+~view.onClose = { ~connections.free };
+)</textarea>
+
+<p>Note that connections are one-way - we want our sliders to be updated when our values change, but also change the values when we move them. So, we need a connection in each direction. We only care about our number boxes displaying values, so we can make those one-way. We can see this two-way connection in action if we animate our values:<textarea class='editor'>(
+~values = 20.collect { NumericControlValue().value_(1.0.rand) };
+~sliders = 20.collect { Slider() };
+~numbers = 20.collect { NumberBox().minWidth_(40) };
+~view = View(bounds:600@200).layout_(GridLayout.rows(~sliders, ~numbers)).front;
+
+~connections = ConnectionList.make {
+    ~values.connectEach(\value, ~sliders, _.valueSlot);
+    ~values.connectEach(\value, ~numbers, _.valueSlot);
+    ~sliders.connectEach(\value, ~values, _.valueSlot);
+};
+~view.onClose = { ~connections.free };
+
+// slowly animate our values
+Routine({
+    while {~view.notClosed} {
+        ~values.do {
+            |v|
+            v.value = (v.value + 0.005) % 1.0;
+        };
+        (1/30).wait;
+    }
+}).play(AppClock);
+)</textarea>
 <h2><a class='anchor' name='Slots'>Slots</a></h2>
 
-<p>The <code class='code prettyprint lang-sc'>valueSlot</code> method above is a specific case of the more general <code class='code prettyprint lang-sc'>methodSlot</code>, which allows you to forward updates to a specific method of an object. This functionality is provided by <code class='code prettyprint lang-sc'>Classes/MethodSlot</code>, which you generally create via <code class='code prettyprint lang-sc'>object.methodSlot("methodName")</code>.<pre class='code prettyprint lang-sc'>(
+<p>The <code>valueSlot</code> method above is a specific case of the more general <code>methodSlot</code>, which allows you to forward updates to a specific method of an object. This functionality is provided by <a href="./../Classes/MethodSlot.html">MethodSlot</a>, which you generally create via <code>object.methodSlot("methodName")</code>.<textarea class='editor'>(
 ~object = Object();
 ~dependant = (
     scored:     { |self, points| "Points scored: %".format(points).postln },
     touchdown:     { "Touchdown!".postln },
     fieldGoal:    { "Field Goal!".postln },
 );
-~connections = ConnectionList.makeWith {
+~connections = ConnectionList.with {
     ~object.signal(\scored)        .connectTo(~dependant.methodSlot("scored(value)"));
     ~object.signal(\touchdown)    .connectTo(~dependant.methodSlot("touchdown"));
     ~object.signal(\fieldGoal)    .connectTo(~dependant.methodSlot("fieldGoal"));
@@ -113,23 +220,23 @@
 ~object.changed(\fieldGoal);
 ~object.changed(\scored, 3);
 ~connections.disconnect();
-)</pre>
+)</textarea>
 
-<p>The <code class='code prettyprint lang-sc'>methodSlot</code> method can specify both a method name and the order of the arguments passed. Specifying a string argument in <code class='code prettyprint lang-sc'>methodSlot</code> is exactly equivalent to inserting that string into a function the following form (under the hood, the quark does exactly this):<pre class='code prettyprint lang-sc'>{
+<p>The <code>methodSlot</code> method can specify both a method name and the order of the arguments passed. Specifying a string argument in <code>methodSlot</code> is exactly equivalent to inserting that string into a function the following form (under the hood, the quark does exactly this):<textarea class='editor'>{
     |recipient, object, changed ...args|
     var value=args[0];
     recipient.{{methodSlot_argument}}
-}</pre>
+}</textarea>
 
-<p>Also in the above, <code class='code prettyprint lang-sc'>ConnectionList:makeWith</code> assembles a ConnectionList from all connections that are created during the execution of that function.
-<p>Synths and Groups have slot methods for their arguments, making it easy to map values to Synth parameters:<pre class='code prettyprint lang-sc'>(
-~sliders = [
-    ~amp     = Slider(),
-    ~freq     = Slider(),
-    ~delay     = Slider(),
-    ~decay    = Slider()
-];
-~view = View(bounds:600@200).layout_(HLayout(*~sliders)).front;
+<p>So, for example, when a signal like <code>object.changed(\quarter, 2)</code> is recieved by <code>dependant.methodSlot("updateElement(changed, value)")</code>, the resulting call is <code>dependant.updateElement(\quarter, 2)</code>.
+<p>Synths and Groups have slot methods for their arguments, making it easy to map values to Synth parameters:<textarea class='editor'>(
+~sliders = (
+    amp:     Slider(),
+    freq:     Slider(),
+    delay:     Slider(),
+    decay:    Slider(),
+);
+~view = View(bounds:600@200).layout_(HLayout(*~sliders.values)).front;
 
 s.waitForBoot {
     SynthDef(\connDemo, {
@@ -138,18 +245,18 @@ s.waitForBoot {
     }).add;
     s.sync;
     ~synth = Synth(\connDemo);
-    ~connections = ConnectionList.makeWith {
-        ~amp.signal(\value).connectTo(~synth.argSlot(\amp));
-        ~freq.signal(\value).connectTo(~synth.argSlot(\freq));
-        ~delay.signal(\value).connectTo(~synth.argSlot(\delay));
-        ~decay.signal(\value).connectTo(~synth.argSlot(\decay));
+    ~connections = ConnectionList.make {
+        ~sliders.amp.signal(\value).connectTo(~synth.argSlot(\amp));
+        ~sliders.freq.signal(\value).connectTo(~synth.argSlot(\freq));
+        ~sliders.delay.signal(\value).connectTo(~synth.argSlot(\delay));
+        ~sliders.decay.signal(\value).connectTo(~synth.argSlot(\decay));
     };
     ~view.onClose = { ~connections.disconnect; ~synth.free; }
 };
-)</pre>
-<h2><a class='anchor' name='Control values'>Control values</a></h2>
+)</textarea>
+<h2><a class='anchor' name='Control%20values'>Control values</a></h2>
 
-<p> Of course, our sliders only range from 0..1. And, we lose their values if we close the View. The <a href="./../Classes/NumericControlValue.html">NumericControlValue</a> class, which provides a model for a numeric value, broadcasts updates when it changes, and can be connected to other objects that are interested in it's value. This class is almost identical in functionality to the CV class from the Conductor quark.<pre class='code prettyprint lang-sc'>(
+<p>Of course, our sliders only range from 0..1. And, we lose their values if we close the View. The <a href="./../Classes/NumericControlValue.html">NumericControlValue</a> class, which provides a model for a numeric value, broadcasts updates when it changes, and can be connected to other objects that are interested in it's value. This class is almost identical in functionality to the CV class from the Conductor quark.<textarea class='editor'>(
 ~controls = [
     ~amp     = NumericControlValue(spec:ControlSpec(0, 1, default:1)),
     ~freq     = NumericControlValue(spec:ControlSpec(1, 20, default:1)),
@@ -166,17 +273,17 @@ s.waitForBoot {
 ~view.onClose = { ~synth.free; ~connections.disconnect };
 
 ~connections = ConnectionList.makeWith {
-    ~controls.connectEach(~sliders, \value, "value_(object.input)");
-    ~controls.connectEach(~numbers, \value, "value_(object.value)");
-    ~sliders.connectEach(~controls, \value, "input_(value)");
-    ~numbers.connectEach(~controls, \value, "value_(value)");
+    ~controls.connectEach(\input, ~sliders, _.valueSlot);
+    ~controls.connectEach(\value, ~numbers, _.valueSlot);
+    ~sliders.connectEach(\value, ~controls, _.inputSlot);
+    ~numbers.connectEach(\value, ~controls, _.valueSlot);
 };
 
 s.waitForBoot {
     s.makeBundle(nil, {
         ~synth = Synth(\connDemo);
         ~connections.addAll(
-            ~controls.connectEach([
+            ~controls.connectEach(\value, [
                 ~synth.argSlot(\amp),
                 ~synth.argSlot(\freq),
                 ~synth.argSlot(\delay),
@@ -186,19 +293,16 @@ s.waitForBoot {
         );
     })
 }
-)</pre>
+)</textarea>
 
-<p>We can use <a href="./../Classes/Collection.html#connectEach">Collection: connectEach</a> to connect arrays of objects. It's shorthand for e.g.:<pre class='code prettyprint lang-sc'>~controls.do {
-    |control, i|
-    control.signal(\value).connectTo(~sliders[i].methodSlot("value_(object.input)"))
-}</pre>
+<p>We could have been more succinct when connecting <code>~synth</code> arguments by using <code>argsSlots</code>, which returns a collection of slots for a argument list of names.<textarea class='editor'>~controls.connectEach(\value, ~synth.argSlots(\amp, \freq, \delay, \decay, \filterFreq));</textarea>
+<h2><a class='anchor' name='Connection%20modifiers'>Connection modifiers</a></h2>
 
-<p>We could have been more succinct when connecting <code class='code prettyprint lang-sc'>~synth</code> arguments by using <code class='code prettyprint lang-sc'>argsSlots</code>, which returns a collection of slots for a argument list of names.<pre class='code prettyprint lang-sc'>~controls.connectEach(~synth.argSlots(\amp, \freq, \delay, \decay, \filterFreq));</pre>
-<div class='note'><span class='notelabel'>NOTE:</span> While Connection has some convenient methods for operating on collections of objects or methods, it is not an "automatic gui creation" library - there are much better tools for this. Instead, it attempts to provide semantically clear operations that can be composed in obvious ways to achieve what you want. In general, individual lines of code using Connection classes and methods express obvious relationships between objects, with little-to-no "magic" or behind-the-scenes inference of intent.</div><h2><a class='anchor' name='Connection modifiers'>Connection modifiers</a></h2>
+<p>Connection has modifier methods that allow you to express useful ways of handling or modifying updates between objects. Connection modifiers can be applied in three ways.<ol>
+<li>They can be used as a method of objects returned by the .signal method. <code>object.signal(\value).filter(...).connectTo(dependant)</code><li>They can be used as a method modifying an existing connection. <code>object.signal(\value).connectTo(dependant).filter(...)</code><li>They can also be constructed as objects and connected in a chain with objects. <code>object.signal(\value).connectTo(UpdateFilter(...)).connectTo(dependant);</code></ol>
+<h3><a class='anchor' name='filter'>filter</a></h3>
 
-<p>Connection has modifier methods that allow you to express useful ways of handling or modifying updates between objects. )<h3><a class='anchor' name='filter'>filter</a></h3>
-
-<p>Filter will only allow updates through that match either a specified <code class='code prettyprint lang-sc'>\key</code>, or for which a function returns true:<pre class='code prettyprint lang-sc'>(
+<p>Filter will only allow updates through that match either a specified <code>\key</code>, or for which a function returns true:<textarea class='editor'>(
 ~object = Object();
 ~reporter = { |...args| "Message recieved: %".format(args).postln };
 
@@ -212,10 +316,10 @@ s.waitForBoot {
 ~object.changed(\notallowed, "This update will not.");
 ~object.changed(\value, 10);
 ~object.changed(\value, 101);
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='transform'>transform</a></h3>
 
-<p>Transform will use a provided function to modify the values being passed in an update. The result of the function must be of the form: <code class='code prettyprint lang-sc'>[object, changed, args]</code>, where <code class='code prettyprint lang-sc'>args</code> is an array. Returning <code class='code prettyprint lang-sc'>nil</code> will not forward the update, effectively filtering it.<pre class='code prettyprint lang-sc'>(
+<p>Transform will use a provided function to modify the values being passed in an update. The result of the function must be of the form: <code>[object, changed, args]</code>, where <code>args</code> is an array. Returning <code>nil</code> will not forward the update, effectively filtering it.<textarea class='editor'>(
 ~object = Object();
 ~reporter = { |...args| "Message recieved: %".format(args).postln };
 
@@ -235,18 +339,18 @@ s.waitForBoot {
 ~object.changed(\multiply, 9);
 ~object.changed(\add, 8);
 ~object.changed(\skipped, "Transform returns nil, so this is not forwarded.");
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='defer'>defer</a></h3>
 
-<p>The equivalent to <a href="./../Classes/Function.html#defer">Function: defer</a> - will defer updates for a specified amount of time, and/or to a different thread.<pre class='code prettyprint lang-sc'>(
+<p>The equivalent to <a href="./../Classes/Function.html#defer">Function: defer</a> - will defer updates for a specified amount of time, and/or to a different thread.<textarea class='editor'>(
 ~object = Object();
 ~reporter = { |...args| "Message recieved: %".format(args).postln };
 ~object.connectTo(~reporter).defer(3);
 ~object.changed(\thisWillArriveInThreeSeconds);
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='collapse'>collapse</a></h3>
 
-<p>This will collapse updates over a specified interval, effectively rate-limiting and ensuring only one update (the most recent) is applied for a period of time.<pre class='code prettyprint lang-sc'>(
+<p>This will collapse updates over a specified interval, effectively rate-limiting and ensuring only one update (the most recent) is applied for a period of time.<textarea class='editor'>(
 ~object = Object();
 ~reporter = { |...args| "Update recieved at time %".format(thisThread.seconds).postln };
 ~object.connectTo(~reporter).collapse(1);
@@ -256,10 +360,10 @@ fork {
         0.25.wait;
     }
 }
-)</pre>
+)</textarea>
 <h3><a class='anchor' name='oneShot'>oneShot</a></h3>
 
-<p>This will disconnect or free a connection after it is fired. Note that disconnected connections can be reconnected (they will again auto-disconnect the next time they are fired). Free'd connections will free resources and cannot be reconnected. Freeing one-shot connections is an effective way to avoid holding on to these connections yourself.<pre class='code prettyprint lang-sc'>(
+<p>This will disconnect or free a connection after it is fired. Note that disconnected connections can be reconnected (they will again auto-disconnect the next time they are fired). Free'd connections will free resources and cannot be reconnected. Freeing one-shot connections is an effective way to avoid holding on to these connections yourself.<textarea class='editor'>(
 ~object = Object();
 ~reporter = { |...args| "Message recieved: %".format(args).postln };
 
@@ -272,10 +376,10 @@ fork {
 ~autoFree = ~object.connectTo(~reporter).oneShot(true);
 ~object.changed(\afterThisWereFree);
 ~object.changed(\resourcesAreNowFreed);
-)</pre>
+)</textarea>
 <h2><a class='anchor' name='Debugging'>Debugging</a></h2>
 
-<p>Updates happening to connected objects can be traced using <a href="./../Classes/Connection.html#trace">Connection: trace</a>. Traces of connected items are shown with "⋯⋯". Traces of disconnected items are shown with "⋰⋰".<pre class='code prettyprint lang-sc'>(
+<p>Updates happening to connected objects can be traced using <a href="./../Classes/Connection.html#trace">Connection: trace</a>. Traces of connected items are shown with "⋯⋯". Traces of disconnected items are shown with "⋰⋰".<textarea class='editor'>(
 ~sliders = 10.collect { Slider () };
 ~window = View(bounds:400@200).layout_(HLayout(*~sliders)).front;
 
@@ -293,5 +397,6 @@ fork {
 ~connections.trace(true);
 
 ~window.onClose = { ~connections.trace(false); ~connections.disconnect; }
-)</pre>
-<div class='doclink'>source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/HelpSource/Guides/Connection.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/HelpSource/Guides/Connection.schelp</a><br>link::Guides/Connection::<br>sc version: 3.8dev</div></div></body></html>
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/HelpSource/Guides/Connection.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/HelpSource/Guides/Connection.schelp</a><br>link::Guides/Connection::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>
