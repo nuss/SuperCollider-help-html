@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>String | SuperCollider 3.10.4 Help</title>
+<!doctype html><html lang='en'><head><title>String | SuperCollider 3.11.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'String';
-var scdoc_sc_version = '3.10.4';
+var scdoc_sc_version = '3.11.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -26,12 +26,13 @@ var scdoc_sc_version = '3.10.4';
 <ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*readNew'>readNew</a> </li>
 <li class='toc3'><a href='#*scDir'>scDir</a> </li>
-<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Extensions%20by%20wslib'>Extensions by wslib</a></li>
+<ul class='toc'><li class='toc3'><a href='#*makeNoteName'>makeNoteName</a> </li>
+<li class='toc3'><a href='#*notesDict'>notesDict</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 <li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*fillJoin'>fillJoin</a> </li>
 <li class='toc3'><a href='#*heightM9'>heightM9</a> </li>
-<li class='toc3'><a href='#*makeNoteName'>makeNoteName</a> </li>
-<li class='toc3'><a href='#*notesDict'>notesDict</a> </li>
 <li class='toc3'><a href='#*widthM9'>widthM9</a> </li>
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Accessing%20characters'>Accessing characters</a></li>
@@ -135,6 +136,8 @@ var scdoc_sc_version = '3.10.4';
 </ul><li class='toc2'><a href='#YAML%20and%20JSON%20parsing'>YAML and JSON parsing</a></li>
 <ul class='toc'><li class='toc3'><a href='#-parseYAML'>parseYAML</a> </li>
 <li class='toc3'><a href='#-parseYAMLFile'>parseYAMLFile</a> </li>
+<li class='toc3'><a href='#-parseJSON'>parseJSON</a> </li>
+<li class='toc3'><a href='#-parseJSONFile'>parseJSONFile</a> </li>
 </ul><li class='toc2'><a href='#Document%20Support'>Document Support</a></li>
 <ul class='toc'><li class='toc3'><a href='#-newTextWindow'>newTextWindow</a> </li>
 <li class='toc3'><a href='#-openDocument'>openDocument</a> </li>
@@ -158,14 +161,20 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-pVarGuiSpecs'>pVarGuiSpecs</a> </li>
 <li class='toc3'><a href='#-sVarGui'>sVarGui</a> </li>
 <li class='toc3'><a href='#-pVarGui'>pVarGui</a> </li>
-<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Extensions%20by%20wslib'>Extensions by wslib</a></li>
+<ul class='toc'><li class='toc3'><a href='#-notesDict'>notesDict</a> </li>
+<li class='toc3'><a href='#-namemidi'>namemidi</a> </li>
+<li class='toc3'><a href='#-getAlt'>getAlt</a> </li>
+<li class='toc3'><a href='#-getOctave'>getOctave</a> </li>
+<li class='toc3'><a href='#-getNote'>getNote</a> </li>
+<li class='toc3'><a href='#-asNote'>asNote</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-absolutePath2'>absolutePath2</a> </li>
 <li class='toc3'><a href='#-afp'>afp</a> </li>
 <li class='toc3'><a href='#-appleScript'>appleScript</a> </li>
 <li class='toc3'><a href='#-asAppleScriptCmd'>asAppleScriptCmd</a> </li>
 <li class='toc3'><a href='#-asColor'>asColor</a> </li>
-<li class='toc3'><a href='#-asCueFunction'>asCueFunction</a> </li>
 <li class='toc3'><a href='#-asDefName'>asDefName</a> </li>
 <li class='toc3'><a href='#-asFileSafeString'>asFileSafeString</a> </li>
 <li class='toc3'><a href='#-asHexIfPossible'>asHexIfPossible</a> </li>
@@ -173,7 +182,6 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-asInterfaceDef'>asInterfaceDef</a> </li>
 <li class='toc3'><a href='#-asKeyStrokeCmd'>asKeyStrokeCmd</a> </li>
 <li class='toc3'><a href='#-asMenuAction'>asMenuAction</a> </li>
-<li class='toc3'><a href='#-asNote'>asNote</a> </li>
 <li class='toc3'><a href='#-asNumberIfPossible'>asNumberIfPossible</a> </li>
 <li class='toc3'><a href='#-asOSCArgArray'>asOSCArgArray</a> </li>
 <li class='toc3'><a href='#-asOSCArgEmbeddedArray'>asOSCArgEmbeddedArray</a> </li>
@@ -185,7 +193,6 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-asSeconds'>asSeconds</a> </li>
 <li class='toc3'><a href='#-asStrang'>asStrang</a> </li>
 <li class='toc3'><a href='#-asString'>asString</a> </li>
-<li class='toc3'><a href='#-asTimeline'>asTimeline</a> </li>
 <li class='toc3'><a href='#-asUnicode'>asUnicode</a> </li>
 <li class='toc3'><a href='#-asWebColorString'>asWebColorString</a> </li>
 <li class='toc3'><a href='#-asciiCorrect'>asciiCorrect</a> </li>
@@ -232,7 +239,6 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-exclude'>exclude</a> </li>
 <li class='toc3'><a href='#-extension'>extension</a> </li>
 <li class='toc3'><a href='#-extractNumbers'>extractNumbers</a> </li>
-<li class='toc3'><a href='#-extractXMLTagValue'>extractXMLTagValue</a> </li>
 <li class='toc3'><a href='#-fformat'>fformat</a> </li>
 <li class='toc3'><a href='#-fillPath'>fillPath</a> </li>
 <li class='toc3'><a href='#-findHelpFileOrElse'>findHelpFileOrElse</a> </li>
@@ -250,10 +256,7 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-flatNoString'>flatNoString</a> </li>
 <li class='toc3'><a href='#-folderContents'>folderContents</a> </li>
 <li class='toc3'><a href='#-forceNoteName'>forceNoteName</a> </li>
-<li class='toc3'><a href='#-getAlt'>getAlt</a> </li>
 <li class='toc3'><a href='#-getHostIP'>getHostIP</a> </li>
-<li class='toc3'><a href='#-getNote'>getNote</a> </li>
-<li class='toc3'><a href='#-getOctave'>getOctave</a> </li>
 <li class='toc3'><a href='#-getPathsInDirectory'>getPathsInDirectory</a> </li>
 <li class='toc3'><a href='#-getSubDirectories'>getSubDirectories</a> </li>
 <li class='toc3'><a href='#-getUnits'>getUnits</a> </li>
@@ -289,13 +292,10 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-moveToDir'>moveToDir</a> </li>
 <li class='toc3'><a href='#-multiChannelPerform'>multiChannelPerform</a> </li>
 <li class='toc3'><a href='#-namecps'>namecps</a> </li>
-<li class='toc3'><a href='#-namemidi'>namemidi</a> </li>
 <li class='toc3'><a href='#-namename'>namename</a> </li>
 <li class='toc3'><a href='#-nametransp'>nametransp</a> </li>
 <li class='toc3'><a href='#-namevoicetype'>namevoicetype</a> </li>
-<li class='toc3'><a href='#-natLess'>natLess</a> </li>
 <li class='toc3'><a href='#-notemidi'>notemidi</a> </li>
-<li class='toc3'><a href='#-notesDict'>notesDict</a> </li>
 <li class='toc3'><a href='#-numbersToAlpha'>numbersToAlpha</a> </li>
 <li class='toc3'><a href='#-openHTMLFile'>openHTMLFile</a> </li>
 <li class='toc3'><a href='#-openInFinder'>openInFinder</a> </li>
@@ -395,21 +395,34 @@ y = "this is a\n"
 <h3 class='method-code'><span class='method-prefix'>String.</span><a class='method-name' name='*readNew' href='./../Overviews/Methods.html#readNew'>readNew</a>(<span class='argstr'>file</span>)</h3>
 <div class='method'>
 <p>Read the entire contents of a <a href="./../Classes/File.html">File</a> and return them as a new String.</div><h3 class='method-code'><span class='method-prefix'>String.</span><a class='method-name' name='*scDir' href='./../Overviews/Methods.html#scDir'>scDir</a></h3>
+<div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/deprecated/3.11/deprecated-3.11.sc'>/usr/local/share/SuperCollider/SCClassLibrary/deprecated/3.11/deprecated-3.11.sc</a></div>
 <div class='method'>
-<p>Provided for backwards compatibility.<h4>Returns:</h4>
+<p>Deprecated alias for <code>Platform.resourceDir</code>. Please use <a href="./../Classes/Platform.html#*resourceDir">Platform: *resourceDir</a> instead.</div><h3><a class='anchor' name='Extensions%20by%20wslib'>Extensions by wslib</a></h3>
+<h3 class='method-code'><span class='method-prefix'>String.</span><a class='method-name' name='*makeNoteName' href='./../Overviews/Methods.html#makeNoteName'>makeNoteName</a>(<span class='argstr'>name: $C</span>, <span class='argstr'>alt: 0</span>, <span class='argstr'>octave: 3</span>, <span class='argstr'>cents: 0</span>, <span class='argstr'>maxAlt: 3</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
+<div class='method'>
+<p>Creates a String representing the name of a note.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>Name or MIDI pitch of the note to construct.<tr><td class='argumentname'>alt<td class='argumentdesc'>
+<p>Number of half-steps (semitones) to adjust the note by. Equivalent to 100 cents. If this exceeds the <code>maxAlt</code> value, it will be cropped to that, and the excess will be converted into cents which can be obtained from the resulting string via the unique <code>-cents</code> method.<tr><td class='argumentname'>octave<td class='argumentdesc'>
+<p>The octave of the note. <code>3</code> corresponds to the octave starting at middle C.<tr><td class='argumentname'>cents<td class='argumentdesc'>
+<p>Number of cents, i.e. one-hundredths of a half-step (semitone) to adjust the note by.<tr><td class='argumentname'>maxAlt<td class='argumentdesc'>
+<p>Maximum number of accidentals to include in the string. Any excess will be translated into cents which can be obtained from the resulting string via the unique <code>-cents</code>method.
+<p>Defaults to 2.</table><h4>Discussion:</h4>
+<textarea class='editor'>a = String.makeNoteName(name: $A); // "A3"
+a.class; // -&gt; String
+a.alt; // -&gt; 0</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>String.</span><a class='method-name' name='*notesDict' href='./../Overviews/Methods.html#notesDict'>notesDict</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
+<div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>the value of <code>Platform.resourceDir</code>, which is the base resource directory of SuperCollider.</div><h4>Discussion:</h4>
-
-<p>Please use <a href="./../Classes/Platform.html#*resourceDir">Platform: *resourceDir</a> instead.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>An <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> mapping characters representing note names to their offsets within the MIDI octave. For example, <code>$C</code> maps to <code>0</code>, and <code>$D</code> maps to <code>2</code>. Accidentals are not supported.</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>String.</span><a class='method-name' name='*fillJoin' href='./../Overviews/Methods.html#fillJoin'>fillJoin</a>(<span class='argstr'>size</span>, <span class='argstr'>function</span>, <span class='argstr'>joiner</span>, <span class='argstr'>excludeNil: true</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Lang/Improvements/extString-collect.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Lang/Improvements/extString-collect.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>String.</span><a class='method-name' name='*heightM9' href='./../Overviews/Methods.html#heightM9'>heightM9</a>(<span class='argstr'>n: 1</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/String/extString-boundsM9.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/String/extString-boundsM9.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>String.</span><a class='method-name' name='*makeNoteName' href='./../Overviews/Methods.html#makeNoteName'>makeNoteName</a>(<span class='argstr'>name: $C</span>, <span class='argstr'>alt: 0</span>, <span class='argstr'>octave: 3</span>, <span class='argstr'>cents: 0</span>, <span class='argstr'>maxAlt: 3</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>String.</span><a class='method-name' name='*notesDict' href='./../Overviews/Methods.html#notesDict'>notesDict</a></h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>String.</span><a class='method-name' name='*widthM9' href='./../Overviews/Methods.html#widthM9'>widthM9</a>(<span class='argstr'>n: 1</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/String/extString-boundsM9.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/String/extString-boundsM9.sc</a></div>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
@@ -582,12 +595,13 @@ z.class.postln;
 <p>As <a href="#-catArgs">-catArgs</a>, <a href="#-scatArgs">-scatArgs</a> and <a href="#-ccatArgs">-ccatArgs</a> above, but takes a Collection (usually a <a href="./../Classes/List.html">List</a> or an <a href="./../Classes/Array.html">Array</a>) as an argument.<textarea class='editor'>"a String".ccatList([\fish, SinOsc.ar, {4 + 3}]).postln;</textarea>
 </div><h3><a class='anchor' name='Regular%20expressions'>Regular expressions</a></h3>
 
-<p>Note the inversion of the arguments:<ul>
+<p>The String class provides access to the boost library's regular expression functions. Boost's default uses Perl settings. (Currently, there is no hook to override the regex style.) Syntax details may be found at <a href="https://www.boost.org/doc/libs/1_69_0/libs/regex/doc/html/boost_regex/syntax/perl_syntax.html">https://www.boost.org/doc/libs/1_69_0/libs/regex/doc/html/boost_regex/syntax/perl_syntax.html</a>.
+<p>Note carefully the argument order:<ul>
 <li><code>regexp.matchRegexp(stringToSearch)</code><li><code>stringToSearch.findRegexp(regexp)</code> (and similar for <code>findAllRegexp</code> and <code>findRegexpAt</code>).</ul>
 
 <p><code>findRegexp</code> follows the pattern established by <a href="./../Classes/String.html#-find">String: -find</a>, where the receiver is the string to be searched. <code>matchRegexp</code> follows the pattern of <a href="./../Reference/matchItem.html">matchItem</a>, where the receiver is the pattern to match and the first argument is the object to be tested. This is a common source of confusion, but it is based on this precedent.<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-matchRegexp' href='./../Overviews/Methods.html#matchRegexp'>matchRegexp</a>(<span class='argstr'>string</span>, <span class='argstr'>start: 0</span>, <span class='argstr'>end</span>)</h3>
 <div class='method'>
-<p>POSIX regular expression matching. Returns true if the receiver (a regular expression pattern) matches the string passed to it. The <strong>start</strong> is an offset where to start searching in the string (default: 0), <strong>end</strong> where to stop.<div class='note'><span class='notelabel'>NOTE:</span> This is <code>regexp.matchRegexp(stringToSearch)</code> and not the other way around! See above: <a href="./../Classes/String.html#Regular%20expressions">String: Regular expressions</a>.</div><textarea class='editor'>"c".matchRegexp("abcdefg", 2, 5); // true: substring exists
+<p>Perl regular expression matching (see <a href="./../Classes/String.html#Regular%20expressions">String: Regular expressions</a>). Returns true if the receiver (a regular expression pattern) matches the string passed to it. The <strong>start</strong> is an offset where to start searching in the string (default: 0), <strong>end</strong> where to stop.<div class='note'><span class='notelabel'>NOTE:</span> This is <code>regexp.matchRegexp(stringToSearch)</code> and not the other way around! See above: <a href="./../Classes/String.html#Regular%20expressions">String: Regular expressions</a>.</div><textarea class='editor'>"c".matchRegexp("abcdefg", 2, 5); // true: substring exists
 "c".matchRegexp("abcdefg", 4, 5); // false: substring doesn't exist
 
 "behaviou?r".matchRegexp("behavior"); // true: character may or may not exist
@@ -606,19 +620,28 @@ z.class.postln;
 "[xtz]+nd".matchRegexp("xnd"); // true: any combination of x, t, z</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findRegexp' href='./../Overviews/Methods.html#findRegexp'>findRegexp</a>(<span class='argstr'>regexp</span>, <span class='argstr'>offset: 0</span>)</h3>
 <div class='method'>
-<p>POSIX regular expression search.<textarea class='editor'>"foobar".findRegexp("o*bar");
+<p>Perl regular expression search (see <a href="./../Classes/String.html#Regular%20expressions">String: Regular expressions</a>). This method searches exhaustively for matches and collects them into an array of pairs, in the format <code>[character index, matching string]</code>.
+<p>"Leftmost largest match": As in most flavors of regular expressions, <code>*</code> and <code>+</code> are greedy; if it is possible to have more than one overlapping match for a part of the regular expression, the match list will include only the leftmost and largest of them. In <code>"foobar".findRegexp("o+")</code>, <code>"o+"</code> may potentially have three matches: <code>"o"</code> at index 1 (second character), <code>"o"</code> at index 2, and <code>"oo"</code> at index 1. <code>findRegexp</code> will return only the last of these (<code>"oo"</code>), because it begins in the leftmost-possible matching position, and it is the longest possible match at that position.
+<p>Note, though, that parentheses for grouping (a "marked sub-expression" or "capturing group") will produce a separate result: <code>"aaa".findRegexp("(a+)");</code> appears to produce duplicated results <code>[ [ 0, aaa ], [ 0, aaa ] ]</code>, but this is because the first match is for the parentheses and the second is for <code>a+</code>.
+<p>To see the marked sub-expression results more clearly, consider:<textarea class='editor'>"foobar".findRegexp("(o*)(bar)");
+-&gt; [ [ 1, oobar ], [ 1, oo ], [ 3, bar ] ]</textarea>
+
+<p><code>"oobar"</code> matches the entire regular expression. <code>"oo"</code> and <code>"bar"</code> match the first and second parenthesized sub-expressions, respectively.<textarea class='editor'>"foobar".findRegexp("o*bar");
 "32424 334 /**aaaaaa*/".findRegexp("/\\*\\*a*\\*/");
-"foobar".findRegexp("(o*)(bar)");
-"aaaabaaa".findAllRegexp("a+");</textarea>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findAllRegexp' href='./../Overviews/Methods.html#findAllRegexp'>findAllRegexp</a>(<span class='argstr'>string</span>, <span class='argstr'>offset: 0</span>)</h3>
+"aaaabaaa".findRegexp("a+");</textarea>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A nested array, where each sub-array is a pair, <code>[character index, matching string]</code>. If there are no matches, an empty array.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findAllRegexp' href='./../Overviews/Methods.html#findAllRegexp'>findAllRegexp</a>(<span class='argstr'>string</span>, <span class='argstr'>offset: 0</span>)</h3>
 <div class='method'>
-<p>Like <a href="#-findAll">-findAll</a>, but use regular expressions. So unlike findRegexp, it will just return the indices of the<textarea class='editor'>"foobar".findAllRegexp("o*bar");
+<p>Like <a href="#-findAll">-findAll</a>, but use regular expressions (see <a href="./../Classes/String.html#Regular%20expressions">String: Regular expressions</a>). Unlike findRegexp, it returns only the indices of the matches: <code>string.findAllRegexp(regexp)</code> returns the same as <code>string.findRegexp(regexp).flop.at(0)</code>.<textarea class='editor'>"foobar".findAllRegexp("o*bar");
 "32424 334 /**aaaaaa*/".findAllRegexp("/\\*\\*a*\\*/");
 "foobar".findAllRegexp("(o*)(bar)");
 "aaaabaaa".findAllRegexp("a+");</textarea>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findRegexpAt' href='./../Overviews/Methods.html#findRegexpAt'>findRegexpAt</a>(<span class='argstr'>regexp</span>, <span class='argstr'>offset: 0</span>)</h3>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An array of integer character indices pointing to all the possible matches.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findRegexpAt' href='./../Overviews/Methods.html#findRegexpAt'>findRegexpAt</a>(<span class='argstr'>regexp</span>, <span class='argstr'>offset: 0</span>)</h3>
 <div class='method'>
-<p>Match a regular expression at the given offset, returning the match and the length of the match in an Array, or nil if it doesn't match. The match must begin right at the offset.<textarea class='editor'>"foobaroob".findRegexpAt("o*b+", 0); // nil
+<p>Match a regular expression (see <a href="./../Classes/String.html#Regular%20expressions">String: Regular expressions</a>) at the given offset, returning the match and the length of the match in an Array, or nil if it doesn't match. The match must begin right at the offset.<textarea class='editor'>"foobaroob".findRegexpAt("o*b+", 0); // nil
 "foobaroob".findRegexpAt("o*b+", 1); // [ oob, 3 ]
 "foobaroob".findRegexpAt("o*b+", 2); // [ ob,  2 ]
 "foobaroob".findRegexpAt("o*b+", 3); // [ b,   1 ]
@@ -626,7 +649,9 @@ z.class.postln;
 "foobaroob".findRegexpAt("o*b+", 5); // nil
 "foobaroob".findRegexpAt("o*b+", 6); // [ oob, 3 ]
 "foobaroob".findRegexpAt("o*b+", 7); // [ ob,  2 ]</textarea>
-</div><h3><a class='anchor' name='Searching%20strings'>Searching strings</a></h3>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An array <code>[matching string, length]</code> if a match is found at the specified offset; <code>nil</code> if the offset doesn't match.</div></div><h3><a class='anchor' name='Searching%20strings'>Searching strings</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-find' href='./../Overviews/Methods.html#find'>find</a>(<span class='argstr'>string</span>, <span class='argstr'>ignoreCase: false</span>, <span class='argstr'>offset: 0</span>)</h3>
 <div class='method'>
 <p>Returns the index of the string in the receiver, or nil if not found. If <strong>ignoreCase</strong> is true, find makes no difference between uppercase and lowercase letters. The <strong>offset</strong> is the point in the string where the search begins. string may be a String or a <a href="./../Classes/Char.html">Char</a>.<textarea class='editor'>"These are several words".find("are").postln;
@@ -867,7 +892,15 @@ File.use("/tmp/loadPaths_example.scd", "w", { |file|
 <div class='returnvalue'>
 <p>A nested structure of <a href="./../Classes/Array.html">Array</a>s (for sequences), <a href="./../Classes/Dictionary.html">Dictionaries</a> (for maps) and <a href="./../Classes/String.html">String</a>s (for scalars).</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-parseYAMLFile' href='./../Overviews/Methods.html#parseYAMLFile'>parseYAMLFile</a></h3>
 <div class='method'>
-<p>Same as <code>parseYAML</code> but parse a file directly instead of a string. This is faster than reading a file into a string and then parse it.</div><h3><a class='anchor' name='Document%20Support'>Document Support</a></h3>
+<p>Same as <code>parseYAML</code> but parse a file directly instead of a string. This is faster than reading a file into a string and then parse it.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-parseJSON' href='./../Overviews/Methods.html#parseJSON'>parseJSON</a></h3>
+<div class='method'>
+<p>This method is currently just an alias for <a href="#-parseYAML">-parseYAML</a>, in the future it will only accept valid JSON.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A nested structure of <a href="./../Classes/Array.html">Array</a>s (for sequences), <a href="./../Classes/Dictionary.html">Dictionaries</a> (for maps) and <a href="./../Classes/String.html">String</a>s (for scalars).<textarea class='editor'>"{\"a\": 1}".parseYAML;
+"{\"a\": 1}".parseJSON;</textarea>
+</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-parseJSONFile' href='./../Overviews/Methods.html#parseJSONFile'>parseJSONFile</a></h3>
+<div class='method'>
+<p>This method is currently just an alias for <a href="#-parseYAMLFile">-parseYAMLFile</a>, in the future it will only accept valid JSON files.</div><h3><a class='anchor' name='Document%20Support'>Document Support</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-newTextWindow' href='./../Overviews/Methods.html#newTextWindow'>newTextWindow</a>(<span class='argstr'>title: "Untitled"</span>, <span class='argstr'>makeListener: false</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Collections/StringPlusGUI.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Collections/StringPlusGUI.sc</a></div>
 <div class='method'>
@@ -1015,7 +1048,59 @@ w.refresh;
 <p>See <a href="./../Classes/Symbol.html#-sVarGui">Symbol: -sVarGui</a>, <a href="./../Tutorials/VarGui_shortcut_builds.html">VarGui shortcut builds</a></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pVarGui' href='./../Overviews/Methods.html#pVarGui'>pVarGui</a>(<span class='argstr'>ctrBefore</span>, <span class='argstr'>ctrReplace</span>, <span class='argstr'>ctrAfter</span>, <span class='argstr'>durCtr: [ 0.05, 3, 'exp', 0, 0.2 ]</span>, <span class='argstr'>legatoCtr: [ 0.1, 5, 'exp', 0, 0.8 ]</span>, <span class='argstr'>pBefore</span>, <span class='argstr'>pReplace</span>, <span class='argstr'>pAfter</span>, <span class='argstr'>exclude</span>, <span class='argstr'>excludeGate: true</span>, <span class='argstr'>clock</span>, <span class='argstr'>quant</span>, <span class='argstr'>metaKey: 'specs'</span>, <span class='argstr'>useGlobalSpecs: true</span>, <span class='argstr'>post: false</span>, <span class='argstr'>trace: false</span>, <span class='argstr'>num: 1</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/extString_2.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/extString_2.sc</a></div>
 <div class='method'>
-<p>See <a href="./../Classes/Symbol.html#-pVarGui">Symbol: -pVarGui</a>, <a href="./../Tutorials/VarGui_shortcut_builds.html">VarGui shortcut builds</a></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<p>See <a href="./../Classes/Symbol.html#-pVarGui">Symbol: -pVarGui</a>, <a href="./../Tutorials/VarGui_shortcut_builds.html">VarGui shortcut builds</a></div><h3><a class='anchor' name='Extensions%20by%20wslib'>Extensions by wslib</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-notesDict' href='./../Overviews/Methods.html#notesDict'>notesDict</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Same as <a href="./../Classes/String.html#*notesDict">String: *notesDict</a>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-namemidi' href='./../Overviews/Methods.html#namemidi'>namemidi</a>(<span class='argstr'>cents</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
+<div class='method'>
+<p>Converts a note name to a MIDI note pitch.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>cents<td class='argumentdesc'>
+<p>Number of cents to adjust</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><a href="./../Classes/Float.html">Float</a> corresponding to a MIDI note pitch</div><h4>Discussion:</h4>
+<textarea class='editor'>"G2".namemidi; // -&gt; 55
+"Bbb4".namemidi(7); // -&gt; 81.07</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getAlt' href='./../Overviews/Methods.html#getAlt'>getAlt</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>-1 / 1 / 2 if the String contains <code>b</code> / <code>#</code> / <code>x</code> respectively, or 0 otherwise.</div><h4>Discussion:</h4>
+
+<p>Memoizes the result.<textarea class='editor'>"G2".namemidi; // -&gt; 55
+"Bbb4".namemidi(7); // -&gt; 81.07</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getOctave' href='./../Overviews/Methods.html#getOctave'>getOctave</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><a href="./../Classes/Integer.html">Integer</a> corresponding to the numerical component of the note.</div><h4>Discussion:</h4>
+
+<p>Does not take into account accidentals shifting the pitch into a different octave. This is probably a bug!
+<p>Memoizes the result.<textarea class='editor'>"C3".getOctave; // -&gt; 3
+"Cb3".getOctave; // -&gt; 3
+"B#4".getOctave; // -&gt; 4</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getNote' href='./../Overviews/Methods.html#getNote'>getNote</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>uppercase <a href="./../Classes/Char.html">Char</a> corresponding to first character of the string</div><h4>Discussion:</h4>
+<textarea class='editor'>"F#2".getNote.class; // -&gt; Char
+"F#2".getNote // -&gt; $F
+"f#2".getNote // -&gt; $F</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asNote' href='./../Overviews/Methods.html#asNote'>asNote</a>(<span class='argstr'>cents</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-asNote.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-asNote.sc</a></div>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><a href="./../Classes/Note.html">Note</a> whose pitch is described by the given string</div><h4>Discussion:</h4>
+<textarea class='editor'>"G#2".asNote.class; // -&gt; Note
+"A3".asNote.freq; // -&gt; 440</textarea>
+
+<p></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-absolutePath2' href='./../Overviews/Methods.html#absolutePath2'>absolutePath2</a>(<span class='argstr'>base</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-fileManagement.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-fileManagement.sc</a></div>
@@ -1027,8 +1112,6 @@ w.refresh;
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-appleScript.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-appleScript.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asColor' href='./../Overviews/Methods.html#asColor'>asColor</a>(<span class='argstr'>alpha: 1</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SVGFile/extVarious-SVGFile.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SVGFile/extVarious-SVGFile.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asCueFunction' href='./../Overviews/Methods.html#asCueFunction'>asCueFunction</a></h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/cueplayer/_class_extensions/plusForCues.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/cueplayer/_class_extensions/plusForCues.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asDefName' href='./../Overviews/Methods.html#asDefName'>asDefName</a></h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Control/asDefName.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Control/asDefName.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asFileSafeString' href='./../Overviews/Methods.html#asFileSafeString'>asFileSafeString</a></h3>
@@ -1043,8 +1126,6 @@ w.refresh;
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-appleScript.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-appleScript.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asMenuAction' href='./../Overviews/Methods.html#asMenuAction'>asMenuAction</a></h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/Base/Menu.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/Base/Menu.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asNote' href='./../Overviews/Methods.html#asNote'>asNote</a>(<span class='argstr'>cents</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-asNote.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-asNote.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asNumberIfPossible' href='./../Overviews/Methods.html#asNumberIfPossible'>asNumberIfPossible</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/String/extString-couldBeNumber.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/String/extString-couldBeNumber.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asOSCArgArray' href='./../Overviews/Methods.html#asOSCArgArray'>asOSCArgArray</a></h3>
@@ -1066,8 +1147,6 @@ w.refresh;
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asStrang' href='./../Overviews/Methods.html#asStrang'>asStrang</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/Strang/Strang.sc'>/home/stefan/.local/share/SuperCollider/Extensions/Strang/Strang.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asString' href='./../Overviews/Methods.html#asString'>asString</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asTimeline' href='./../Overviews/Methods.html#asTimeline'>asTimeline</a>(<span class='argstr'>clock</span>, <span class='argstr'>options</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/cueplayer/_class_extensions/plusForTimeline.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/cueplayer/_class_extensions/plusForTimeline.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asUnicode' href='./../Overviews/Methods.html#asUnicode'>asUnicode</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/String/extString-collection.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/String/extString-collection.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asWebColorString' href='./../Overviews/Methods.html#asWebColorString'>asWebColorString</a>(<span class='argstr'>default</span>)</h3>
@@ -1157,8 +1236,6 @@ w.refresh;
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-fileManagement.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-fileManagement.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-extractNumbers' href='./../Overviews/Methods.html#extractNumbers'>extractNumbers</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-nameconversion.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-nameconversion.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-extractXMLTagValue' href='./../Overviews/Methods.html#extractXMLTagValue'>extractXMLTagValue</a>(<span class='argstr'>key</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/String/extString-findReplace.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/String/extString-findReplace.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fformat' href='./../Overviews/Methods.html#fformat'>fformat</a>( <span class='argstr'>... args</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fillPath' href='./../Overviews/Methods.html#fillPath'>fillPath</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SVGFile/extVarious-SVGFile.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SVGFile/extVarious-SVGFile.sc</a></div>
@@ -1192,14 +1269,8 @@ w.refresh;
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-fileManagement.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-fileManagement.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-forceNoteName' href='./../Overviews/Methods.html#forceNoteName'>forceNoteName</a>(<span class='argstr'>toName: $C</span>, <span class='argstr'>maxAlt: 12</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getAlt' href='./../Overviews/Methods.html#getAlt'>getAlt</a></h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getHostIP' href='./../Overviews/Methods.html#getHostIP'>getHostIP</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-fileManagement.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-fileManagement.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getNote' href='./../Overviews/Methods.html#getNote'>getNote</a></h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getOctave' href='./../Overviews/Methods.html#getOctave'>getOctave</a></h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getPathsInDirectory' href='./../Overviews/Methods.html#getPathsInDirectory'>getPathsInDirectory</a>(<span class='argstr'>extension</span>, <span class='argstr'>nLevels</span>, <span class='argstr'>includeInPath: false</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-getPathsInDirectory.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-getPathsInDirectory.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getSubDirectories' href='./../Overviews/Methods.html#getSubDirectories'>getSubDirectories</a>(<span class='argstr'>nLevels</span>, <span class='argstr'>includeInPath: false</span>)</h3>
@@ -1265,20 +1336,14 @@ w.refresh;
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-multiChannelPerform' href='./../Overviews/Methods.html#multiChannelPerform'>multiChannelPerform</a>(<span class='argstr'>selector</span> <span class='argstr'>... args</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-namecps' href='./../Overviews/Methods.html#namecps'>namecps</a>(<span class='argstr'>cents</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-namemidi' href='./../Overviews/Methods.html#namemidi'>namemidi</a>(<span class='argstr'>cents</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-namename' href='./../Overviews/Methods.html#namename'>namename</a>(<span class='argstr'>cents</span>, <span class='argstr'>sign</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-nametransp' href='./../Overviews/Methods.html#nametransp'>nametransp</a>(<span class='argstr'>trans</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-namevoicetype' href='./../Overviews/Methods.html#namevoicetype'>namevoicetype</a>(<span class='argstr'>type</span>, <span class='argstr'>language: 'en'</span>, <span class='argstr'>filter</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-natLess' href='./../Overviews/Methods.html#natLess'>natLess</a>(<span class='argstr'>str2</span>, <span class='argstr'>equal: false</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/extNatSort.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/extNatSort.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-notemidi' href='./../Overviews/Methods.html#notemidi'>notemidi</a></h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/Extensions/SC3plugins/LoopBufUGens/classes/LJP Classes/Extensions/midinote.sc'>/usr/local/share/SuperCollider/Extensions/SC3plugins/LoopBufUGens/classes/LJP Classes/Extensions/midinote.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-notesDict' href='./../Overviews/Methods.html#notesDict'>notesDict</a></h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numbersToAlpha' href='./../Overviews/Methods.html#numbersToAlpha'>numbersToAlpha</a>(<span class='argstr'>offset: 0</span>, <span class='argstr'>toUpper: true</span>, <span class='argstr'>prepend: ""</span>, <span class='argstr'>append: ""</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-nameconversion.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/File management/extString-nameconversion.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-openHTMLFile' href='./../Overviews/Methods.html#openHTMLFile'>openHTMLFile</a>(<span class='argstr'>selectionStart: 0</span>, <span class='argstr'>selectionLength: 0</span>)</h3>

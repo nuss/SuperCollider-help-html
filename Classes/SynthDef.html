@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>SynthDef | SuperCollider 3.10.4 Help</title>
+<!doctype html><html lang='en'><head><title>SynthDef | SuperCollider 3.11.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'SynthDef';
-var scdoc_sc_version = '3.10.4';
+var scdoc_sc_version = '3.11.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -41,6 +41,7 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-func'>func</a> </li>
 <li class='toc3'><a href='#-variants'>variants</a> </li>
 <li class='toc3'><a href='#-allControlNames'>allControlNames</a> </li>
+<li class='toc3'><a href='#-specs'>specs</a> </li>
 <li class='toc2'><a href='#Special%20purpose%20methods'>Special purpose methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-writeDefFile'>writeDefFile</a> </li>
 <li class='toc3'><a href='#-load'>load</a> </li>
@@ -127,6 +128,7 @@ var scdoc_sc_version = '3.10.4';
 <ul class='toc'></ul><li class='toc2'><a href='#Literal%20Array%20Arguments'>Literal Array Arguments</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Wrapping%20Example:%20'factory'%20production%20of%20effects%20defs'>Wrapping Example: 'factory' production of effects defs</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#common%20argument%20names:%20out%20and%20gate'>common argument names: out and gate</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Inline%20ControlSpec%20definitions'>Inline ControlSpec definitions</a></li>
 <ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
 <div class='header'>
@@ -242,7 +244,9 @@ SynthDef(\help_synth, { |out, freq = 800, sustain = 1, amp = 0.1|
 <p>Return an Event containing this def's variants.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-allControlNames' href='./../Overviews/Methods.html#allControlNames'>allControlNames</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-allControlNames' href='./../Overviews/Methods.html#allControlNames'>allControlNames</a> = value</h3>
 <div class='method'>
-<p>An array of <a href="./../Classes/ControlName.html">ControlName</a>'s for the controls.</div><h3><a class='anchor' name='Special%20purpose%20methods'>Special purpose methods</a></h3>
+<p>An array of <a href="./../Classes/ControlName.html">ControlName</a>'s for the controls.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-specs' href='./../Overviews/Methods.html#specs'>specs</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/Dictionary.html">Dictionary</a> of <a href="./../Classes/ControlSpec.html">ControlSpec</a>s for a SynthDef. Equivalent to: <code>d.metadata[\specs]</code></div><h3><a class='anchor' name='Special%20purpose%20methods'>Special purpose methods</a></h3>
 
 <p>(for most purposes, the method add is recommended)<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-writeDefFile' href='./../Overviews/Methods.html#writeDefFile'>writeDefFile</a>(<span class='argstr'>dir</span>, <span class='argstr'>overwrite: true</span>, <span class='argstr'>mdPlugin</span>)</h3>
 <div class='method'>
@@ -636,5 +640,33 @@ Pbind(
     \out, Pseq([0, 1], inf)
 ).play;
 )</textarea>
-<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/SynthDef.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/SynthDef.schelp</a><br>link::Classes/SynthDef::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+<h3><a class='anchor' name='Inline%20ControlSpec%20definitions'>Inline ControlSpec definitions</a></h3>
+
+<p>Sometimes, it can be clearer to specify a <a href="./../Classes/ControlSpec.html">ControlSpec</a> for a parameter at the point of its usage in a SynthDef, rather than elsewhere. Specs can be set either when contructing a <a href="./../Classes/NamedControl.html">NamedControl</a> or as a property of a SynthDef argument.<textarea class='editor'>(
+~def = SynthDef(\argumentExample, { |freq, amp|
+    var sig;
+    freq.spec = ControlSpec(20, 20000, \exp);
+    amp.spec = ControlSpec(0, 1);
+    sig = SinOsc.ar(freq, 0, amp);
+    Out.ar(0, sig);
+});
+~def.specs.freq.postln;
+~def.specs.amp.postln;
+)
+
+(
+~def = SynthDef(\argumentExample, {
+    var sig;
+    sig = SinOsc.ar(
+        \freq.kr(spec:ControlSpec(20, 20000)),
+        0,
+        \amp.kr(spec:ControlSpec(0, 1));
+    );
+    Out.ar(0, sig);
+});
+~def.specs.freq.postln;
+~def.specs.amp.postln;
+)</textarea>
+
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/SynthDef.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/SynthDef.schelp</a><br>link::Classes/SynthDef::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
 </body></html>

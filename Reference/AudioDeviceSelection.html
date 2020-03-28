@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Audio device selection | SuperCollider 3.10.4 Help</title>
+<!doctype html><html lang='en'><head><title>Audio device selection | SuperCollider 3.11.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Audio device selection';
-var scdoc_sc_version = '3.10.4';
+var scdoc_sc_version = '3.11.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -51,9 +51,9 @@ Server.default.options.outDevice_("Built-in Output");</textarea>
 
 <p>In case of a dedicated audio interface, you might need to specify a single device, e.g.<textarea class='editor'>Server.default.options.device_("MOTU 828");</textarea>
 
-<p>On macOS you can programmatically obtain a list of available audio devices without booting the server:<textarea class='editor'>ServerOptions.devices; //all devices
-ServerOptions.inDevices; //input devices
-ServerOptions.outDevices; //output devices</textarea>
+<p>On Windows and macOS you can programmatically obtain a list of available audio devices without booting the server:<textarea class='editor'>ServerOptions.devices; // all devices
+ServerOptions.inDevices; // input devices
+ServerOptions.outDevices; // output devices</textarea>
 <h3><a class='anchor' name='Sample%20rate%20mismatch'>Sample rate mismatch</a></h3>
 
 <p>One possible reason why a server may fail to boot is a mismatch between input and output devices' sample rates, which may occur when using a different device for input and output (which is the case when using a Mac's internal soundcard). If the server fails to boot due to sample rate mismatch, an error will be posted accordingly.
@@ -95,7 +95,11 @@ o.inDevice_("Windows WASAPI : Microphone");
 o.outDevice_("Windows WASAPI : Speakers");
 Server.default.reboot;</textarea>
 
-<p>On Windows you <strong>cannot</strong> programmatically obtain the list of available audio devices in sclang. However, all the devices are listed in the post window when the server is booting: <code>Server.default.boot</code>. Partial device name matching is supported in Windows (though not in macOS).<h3><a class='anchor' name='Choosing%20the%20device%20and%20the%20API'>Choosing the device and the API</a></h3>
+<p>You can programmatically obtain a list of available audio devices without booting the server:<textarea class='editor'>ServerOptions.devices; // all devices
+ServerOptions.inDevices; // input devices
+ServerOptions.outDevices; // output devices</textarea>
+
+<p>Partial device name matching is supported in Windows (though not in macOS).<h3><a class='anchor' name='Choosing%20the%20device%20and%20the%20API'>Choosing the device and the API</a></h3>
 <ul>
 <li>If you need to specify the device, you will need to do so for both input and output (setting both <code>.inDevice</code>, as well as <code>.outDevice</code>), unless you use ASIO<li>Both input and output device needs to use the same API (listed before the name, for example <code>MME</code>, <code>WDM-KS</code> etc.).<li>Both input and output device should use the same sample rate (although some APIs might provide resampling). This can be set in Windows's Audio Control Panel.</ul>
 

@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Writing Primitives | SuperCollider 3.10.4 Help</title>
+<!doctype html><html lang='en'><head><title>Writing Primitives | SuperCollider 3.11.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Writing Primitives';
-var scdoc_sc_version = '3.10.4';
+var scdoc_sc_version = '3.11.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -65,9 +65,9 @@ var scdoc_sc_version = '3.10.4';
     errOutOfMemory,
     errCantCallOS,
     errException,
-    
+
     errPropertyNotFound = 6000,
-    
+
     errLastError
 };</pre>
 <p>If your primitive can return any value besides <code>errNone</code> then you will need to provide handling code after the primitive call. In most cases this will be <code>^this.primitiveFailed</code>. This will throw an Error giving the user information about what went wrong.
@@ -135,17 +135,25 @@ prOpenUDPPort {|portNum|
 <p>SC provides a number of functions which create new objects. These include <code>instantiateObject</code>, <code>newPyrObject</code>, <code>newPyrString</code>, and <code>newPyrArray</code>. Before any calls to such functions it is crucial that all previously created objects have been made reachable. If this is not done, it is possible that such objects will be marked as <strong>free</strong>. Since a freed object's memory may not be immediately reused, problems may not arise at the time your primitive is called, leading to extremely hard to find bugs.
 <p>Alternatively, most object creation functions include a <code>bool runGC</code> argument. If set to false, this will guarantee that the garbage collector does not run on this allocation. While not ideal, as it is best that GC activity is amortised to the extent possible, this option is safe, since the status of any previously created objects will not be changed.
 <p>The following two examples are both safe:<dl>
-<dt>Make the newly created object reachable:<dd><pre>PyrSlot* arg = g-&gt;sp;
+<dt>Make the newly created object reachable:<dd><pre>PyrSlot *arg = g-&gt;sp;
 PyrObject *array1 = newPyrArray(g-&gt;gc, 2, 0, true); // runGC = true
 SetObject(arg, array1); // make the array reachable on the stack
 PyrObject *array2 = newPyrArray(g-&gt;gc, 2, 0, true);
-...</pre><dt>Set <code>runGC</code> to false:<dd><pre>PyrSlot* arg = g-&gt;sp;
+...</pre><dt>Set <code>runGC</code> to false:<dd><pre>PyrSlot *arg = g-&gt;sp;
 // runGC = true
 PyrObject *array1 = newPyrArray(g-&gt;gc, 2, 0, true);
 // runGC = false so GC is not triggered, and array1 can't be freed
 PyrObject *array2 = newPyrArray(g-&gt;gc, 2, 0, false);
 ...</pre></dl>
-Care must be taken when writing utility functions which themselves create new objects, since this may happen somewhat opaquely and the calling context may not be known. Functions which may call themselves recursively also need special attention. In such cases setting <code>runGC</code> to false may be the safest option, or including a <code>runGC</code> arg so that GC behaviour is explicit. <code>MsgToInt8Array</code> is one example of such a function.<pre>static PyrInt8Array* MsgToInt8Array ( sc_msg_iter&amp; msg, bool runGC )
+One caveat: When making a new object reachable by storing it on the stack, you must ensure that you are not overwriting objects that will be needed later in the primitive. If this is done the receiver may be collected on any future allocations. One solution is to <strong>push</strong> the object onto the stack, and then pop it when finished, e.g.:<pre>PyrSlot *receiver = g-&gt;sp; // get the receiver
+PyrObject *result = newPyrArray(g-&gt;gc, 2, 0, true); // create the result
+++g-&gt;sp;
+SetObject(g-&gt;sp, result); // push the result array on the stack, so both it and rec are reachable
+... // further allocations which make use of the receiver to populate result
+--g-&gt;sp; // pop the stack back to the receiver slot since we stored result there above
+SetObject(receiver, result); // now set the receiver</pre>
+<p><code>prArrayMultiChanExpand</code> in lang/LangPrimSource/PyrListPrim.cpp gives an example of this approach. Setting <code>runGC</code> to false is another possible solution.
+<p>Similarly, care must be taken when writing utility functions which themselves create new objects, since this may happen somewhat opaquely and the calling context may not be known. Functions which may call themselves recursively also need special attention. In such cases setting <code>runGC</code> to false may be the safest option, or including a <code>runGC</code> arg so that GC behaviour is explicit. <code>MsgToInt8Array</code> is one example of such a function.<pre>static PyrInt8Array* MsgToInt8Array ( sc_msg_iter&amp; msg, bool runGC )
 {
     int size = msg.getbsize() ;
     VMGlobals *g = gMainVMGlobals ;
@@ -158,7 +166,7 @@ Care must be taken when writing utility functions which themselves create new ob
 <li>It is the last created object, or<li>Any subsequently created objects were allocated with <code>runGC = false</code> (i.e. the GC cannot have run in the interim), <em>and</em><li>It has not had GCWrite called upon it</ul>
 
 <p>The following two examples are both safe:<dl>
-<dt>Run GCWrite as parent may not be white:<dd><pre>PyrSlot* arg = g-&gt;sp;
+<dt>Run GCWrite as parent may not be white:<dd><pre>PyrSlot *arg = g-&gt;sp;
 PyrObject *array = newPyrArray(g-&gt;gc, 2, 0, true); // runGC = true
 SetObject(arg, array); // make the array reachable on the stack
 PyrObject *str = newPyrString(g-&gt;gc, "Hello", 0, true); // runGC = true
@@ -172,7 +180,7 @@ SetObject(array-&gt;slots, str);
 ...</pre></dl>
 If you <em>know</em> that the child object is still white, then you can use <code>GCWriteNew</code> instead of <code>GCWrite</code>. The child object will still be white if the GC has not been triggered since it was created, and you have not previously called GCWrite on it.
 <p>If placing an object inside another has modified its size (e.g. adding an object to an array), you must correctly adjust its size by <code>parent-&gt;size = newSize</code>. Both this and calling GCWrite (if necessary) should be done before any further object allocations. It is best practice to do them immediately if possible.<dl>
-<dt>This is safe:<dd><pre>PyrSlot* arg = g-&gt;sp;
+<dt>This is safe:<dd><pre>PyrSlot *arg = g-&gt;sp;
 int size = 10;
 PyrObject *array = newPyrArray(g-&gt;gc, size, 0, true); // runGC = true
 SetObject(arg, array);
@@ -185,7 +193,7 @@ for(i=0; i&lt;numLists; ++i) {
   //so it is accurate on next allocation
   array-&gt;size++;
 }
-...</pre><dt>This is <em>not</em> safe:<dd><pre>PyrSlot* arg = g-&gt;sp;
+...</pre><dt>This is <em>not</em> safe:<dd><pre>PyrSlot *arg = g-&gt;sp;
 int size = 10;
 PyrObject *array = newPyrArray(g-&gt;gc, size, 0, true); // runGC = true
 // setting size to final value here means
@@ -200,7 +208,7 @@ for(i=0; i&lt;numLists; ++i) {
 ...</pre></dl>
 It is good practice to avoid creating objects in a primitive at all where possible. Primitives are much simpler to write and debug if you pass in an object that you create in SC code and fill in its slots in the primitive.<div class='note'><span class='notelabel'>NOTE:</span> To summarize, before calling any function that might allocate (like <code>newPyr*</code>) you <strong>must</strong> make sure these criteria are fulfilled:<ol>
 <li>All objects previously created must be reachable, which means they must exist<ul>
-<li>on the <code>g-&gt;sp</code> stack<li>or, in a lang-side variable or class variable.<li>or, in a slot of another object that fulfils these criteria.</ul>
+<li>on the <code>g-&gt;sp</code> stack (taking care not to overwrite any objects which will be needed later)<li>or, in a lang-side variable or class variable.<li>or, in a slot of another object that fulfils these criteria.</ul>
 
 <p><li>If any object ( <code>child</code> ) was put inside a slot of another object ( <code>parent</code> ), you must have<ul>
 <li>called <code>g-&gt;gc-&gt;GCWrite(parent, child)</code> afterwards unless you <strong>know</strong> that the parent is still white (unexamined), or GCWriteNew if you also <strong>know</strong> that the child is white<li>and, set <code>parent-&gt;size</code> to the correct value</ul>
@@ -208,7 +216,7 @@ It is good practice to avoid creating objects in a primitive at all where possib
 </div>
 <p>Here's an example of how a complete primitive might look:<pre>int prMyPrimitive(struct VMGlobals* g, int numArgsPushed)
 {
-    PyrSlot* arg = g-&gt;sp;
+    PyrSlot *arg = g-&gt;sp;
     float number;
     int err;
 

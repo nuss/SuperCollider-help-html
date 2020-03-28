@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Matrix | SuperCollider 3.10.4 Help</title>
+<!doctype html><html lang='en'><head><title>Matrix | SuperCollider 3.11.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Matrix';
-var scdoc_sc_version = '3.10.4';
+var scdoc_sc_version = '3.11.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -27,6 +27,7 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#*with'>with</a> </li>
 <li class='toc3'><a href='#*withFlatArray'>withFlatArray</a> </li>
 <li class='toc3'><a href='#*newIdentity'>newIdentity</a> </li>
+<li class='toc3'><a href='#*newDiagonal'>newDiagonal</a> </li>
 <li class='toc3'><a href='#*newDFT'>newDFT</a> </li>
 <li class='toc3'><a href='#*newIDFT'>newIDFT</a> </li>
 <li class='toc3'><a href='#*fill'>fill</a> </li>
@@ -40,6 +41,8 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-doRow'>doRow</a> </li>
 <li class='toc3'><a href='#-doCol'>doCol</a> </li>
 <li class='toc3'><a href='#-doMatrix'>doMatrix</a> </li>
+<li class='toc3'><a href='#-colsDo'>colsDo</a> </li>
+<li class='toc3'><a href='#-rowsDo'>rowsDo</a> </li>
 <li class='toc2'><a href='#Changing%20Matrices'>Changing Matrices</a></li>
 <ul class='toc'><li class='toc3'><a href='#-put'>put</a> </li>
 <li class='toc3'><a href='#-putRow'>putRow</a> </li>
@@ -59,6 +62,7 @@ var scdoc_sc_version = '3.10.4';
 </ul><li class='toc2'><a href='#Return%20Matrices'>Return Matrices</a></li>
 <ul class='toc'><li class='toc3'><a href='#-fromRow'>fromRow</a> </li>
 <li class='toc3'><a href='#-fromCol'>fromCol</a> </li>
+<li class='toc3'><a href='#-getSub'>getSub</a> </li>
 <li class='toc3'><a href='#-addRow'>addRow</a> </li>
 <li class='toc3'><a href='#-addCol'>addCol</a> </li>
 <li class='toc3'><a href='#-insertRow'>insertRow</a> </li>
@@ -76,6 +80,7 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-+'>+</a> </li>
 <li class='toc3'><a href='#--'>-</a> </li>
 <li class='toc3'><a href='#-center'>center</a> </li>
+<li class='toc3'><a href='#-thresh2'>thresh2</a> </li>
 </ul><li class='toc2'><a href='#Return%20Characteristic%20Values'>Return Characteristic Values</a></li>
 <ul class='toc'><li class='toc3'><a href='#-sum'>sum</a> </li>
 <li class='toc3'><a href='#-sumRow'>sumRow</a> </li>
@@ -147,6 +152,7 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-mul'>mul</a> </li>
 <li class='toc3'><a href='#-mulMatrix'>mulMatrix</a> </li>
 <li class='toc3'><a href='#-mulNumber'>mulNumber</a> </li>
+<li class='toc3'><a href='#-postSub'>postSub</a> </li>
 <li class='toc3'><a href='#-printItemsOn'>printItemsOn</a> </li>
 <li class='toc3'><a href='#-removeAt'>removeAt</a> </li>
 <li class='toc3'><a href='#-solve'>solve</a> </li>
@@ -157,12 +163,13 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-unitUpperTriangularSolve'>unitUpperTriangularSolve</a> </li>
 <li class='toc3'><a href='#-upperTriangularInverse'>upperTriangularInverse</a> </li>
 <li class='toc3'><a href='#-upperTriangularSolve'>upperTriangularSolve</a> </li>
-</ul></ul></ul></div><div id='menubar'></div>
+</ul></ul><li class='toc1'><a href='#Authors'>Authors</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
- | <span id='categories'><a href='./../Browse.html#Linear Algebra'>Linear Algebra</a></span>
+ | <span id='categories'><a href='./../Browse.html#Math'>Math</a> | <a href='./../Browse.html#Linear Algebra'>Linear Algebra</a> | <a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>MathLib'>MathLib</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>MathLib>Matrix'>Matrix</a></span>
 </div><h1>Matrix<span id='superclasses'> : <a href="../Classes/Array.html">Array</a> : <a href="../Classes/ArrayedCollection.html">ArrayedCollection</a> : <a href="../Classes/SequenceableCollection.html">SequenceableCollection</a> : <a href="../Classes/Collection.html">Collection</a> : <a href="../Classes/Object.html">Object</a></span>
 <div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
 <div id='summary'>an ordered 2-dimensional array of numbers</div>
@@ -172,10 +179,9 @@ var scdoc_sc_version = '3.10.4';
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>original class by sc.solar
-<p>Matrices are 2-dimensional Arrays whose slots may only contain (at the moment 'real' ) numbers. Their shape is fully described by the number of rows and columns(cols). Each element can be adressed by 2 indices (row,col), where row (col) ranges between 0 and rows-1 (cols-1). For a lesson on matrices, read your math books from school. Or this reference if you like it the hard way:  <a href="http://www.ee.ic.ac.uk/hp/staff/dmb/matrix/intro.html#Intro">http://www.ee.ic.ac.uk/hp/staff/dmb/matrix/intro.html#Intro</a>
-<p>Array2D Matrix uses an array-of-rows–notation. This is the same concept as found in <a href="./../Classes/Array2D.html">Array2D</a>. As a subclass of Array, Matrix responds to far more methods than given in this helpfile. Be aware of strange results when using them. This is meant to support only the basic matrix manipulations. Most of this is not designed for realtime action. To slow, not optimized.
-<p>Suggestions, bugs, improvements to  sc.solar(at)studiobeige.de or  tboverma(at)techfak.uni-bielefeld.de<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>Matrices are a 2-dimensional <a href="./../Classes/Array.html">Array</a> whose slots may only contain (at the moment 'real' ) numbers. Their shape is fully described by the number of rows and columns(cols). Each element can be adressed by 2 indices (row,col), where row (col) ranges between 0 and rows-1 (cols-1). For a lesson on matrices, read your math books from school. Or this reference if you like it the hard way:  <a href="http://www.ee.ic.ac.uk/hp/staff/dmb/matrix/intro.html#Intro">http://www.ee.ic.ac.uk/hp/staff/dmb/matrix/intro.html#Intro</a>
+<p><strong>Array2D</strong>Matrix uses an array-of-rows–notation. This is the same concept as found in <a href="./../Classes/Array2D.html">Array2D</a>. As a subclass of <a href="./../Classes/Array.html">Array</a>, Matrix responds to far more methods than given in this helpfile. Be aware of strange results when using them. This is meant to support only the basic matrix manipulations. Most of this is not designed for realtime action. Too slow, not optimized.
+<p>Part of <a href="./../Guides/MathLib.html">MathLib</a>, a diverse library of mathematical functions.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*newClear' href='./../Overviews/Methods.html#newClear'>newClear</a>(<span class='argstr'>rows: 1</span>, <span class='argstr'>cols: 1</span>)</h3>
 <div class='method'>
 <p>Create a new Matrix of shape (rows, cols) filled with zeros. <code>Matrix.newClear(3,3).postln;</code><h4>Arguments:</h4>
@@ -184,7 +190,8 @@ var scdoc_sc_version = '3.10.4';
 <p>rows<tr><td class='argumentname'>cols<td class='argumentdesc'>
 <p>cols</table></div><h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*with' href='./../Overviews/Methods.html#with'>with</a>(<span class='argstr'>array</span>)</h3>
 <div class='method'>
-<p>Create a new Matrix whose rows are filled with the given subarrays. <code>Matrix.with([[1,2,3],[4,5,6],[7,8,9]]).postln;</code><h4>Arguments:</h4>
+<p>Create a new Matrix whose rows are filled with the given subarrays.
+<p><code>Matrix.with([[1,2,3],[4,5,6],[7,8,9]]).postln;</code><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>array<td class='argumentdesc'>
 <p>array</table></div><h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*withFlatArray' href='./../Overviews/Methods.html#withFlatArray'>withFlatArray</a>(<span class='argstr'>rows</span>, <span class='argstr'>cols</span>, <span class='argstr'>array</span>)</h3>
@@ -199,7 +206,14 @@ var scdoc_sc_version = '3.10.4';
 <p>Create a new identity matrix of shape (n,n). <code>Matrix.newIdentity(3).postln;</code><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>n<td class='argumentdesc'>
-<p>n</table></div><h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*newDFT' href='./../Overviews/Methods.html#newDFT'>newDFT</a>(<span class='argstr'>n</span>)</h3>
+<p>n</table></div><h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*newDiagonal' href='./../Overviews/Methods.html#newDiagonal'>newDiagonal</a>(<span class='argstr'>diagonal</span>)</h3>
+<div class='method'>
+<p>Create a new square <a href="https://en.wikipedia.org/wiki/Diagonal_matrix">diagonal matrix</a>.<textarea class='editor'>Matrix.newDiagonal(Array.series(8));  // Integer
+Matrix.newDiagonal(Array.series(8.0));  // Float</textarea>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>diagonal<td class='argumentdesc'>
+<p>An array of values with which to fill the diagonal.</table></div><h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*newDFT' href='./../Overviews/Methods.html#newDFT'>newDFT</a>(<span class='argstr'>n</span>)</h3>
 <div class='method'>
 <p>Create a new discrete Fourier transform matrix of shape (n,n). <code>Matrix.newDFT(3).postln;</code><textarea class='editor'>n = 51; // DFT size
 
@@ -275,7 +289,15 @@ Matrix.withFlatArray(3,3,[1,2,3,4,5,6,7,8,9]).postmln;</textarea>
 <p>evaluate function for each element ; function is passed three arguments: item, row,col;<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>function<td class='argumentdesc'>
-<p>function</table></div><h3><a class='anchor' name='Changing%20Matrices'>Changing Matrices</a></h3>
+<p>function</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-colsDo' href='./../Overviews/Methods.html#colsDo'>colsDo</a>(<span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>Iterate over the columns. Each column will be passed to <strong>func</strong> in turn.<textarea class='editor'>a = Matrix.newIdentity(4);
+a.colsDo({ |item, i| format("Col %: ", i).post; (item * i).postln;});</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rowsDo' href='./../Overviews/Methods.html#rowsDo'>rowsDo</a>(<span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>Iterate over the rows. Each row will be passed to <strong>func</strong> in turn.<textarea class='editor'>a = Matrix.newIdentity(4);
+a.rowsDo({ |item, i| format("Row %: ", i).post; (item * i).postln;});</textarea>
+</div><h3><a class='anchor' name='Changing%20Matrices'>Changing Matrices</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-put' href='./../Overviews/Methods.html#put'>put</a>(<span class='argstr'>row</span>, <span class='argstr'>col</span>, <span class='argstr'>val</span>)</h3>
 <div class='method'>
 <p>put a single element at (row, col)<h4>Arguments:</h4>
@@ -374,7 +396,17 @@ Matrix.withFlatArray(3,3,[1,2,3,4,5,6,7,8,9]).postmln;</textarea>
 <tr><td class='argumentname'>col<td class='argumentdesc'>
 <p>col</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a new matrix from column</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addRow' href='./../Overviews/Methods.html#addRow'>addRow</a>(<span class='argstr'>rowVals</span>)</h3>
+<p>a new matrix from column</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getSub' href='./../Overviews/Methods.html#getSub'>getSub</a>(<span class='argstr'>rowStart: 0</span>, <span class='argstr'>colStart: 0</span>, <span class='argstr'>rowLength</span>, <span class='argstr'>colHeight</span>)</h3>
+<div class='method'>
+<p>get a sub-matrix from within matrix.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rowStart<td class='argumentdesc'>
+<p>Row index to begin copying.<tr><td class='argumentname'>colStart<td class='argumentdesc'>
+<p>Column index to begin copying.<tr><td class='argumentname'>rowLength<td class='argumentdesc'>
+<p>The number of elements to copy from each row.<tr><td class='argumentname'>colHeight<td class='argumentdesc'>
+<p>The number of elements to copy from each column.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a new matrix</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addRow' href='./../Overviews/Methods.html#addRow'>addRow</a>(<span class='argstr'>rowVals</span>)</h3>
 <div class='method'>
 <p>add a row (values) to the matrix and return. receiver is unchanged.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -459,7 +491,24 @@ Matrix.withFlatArray(3,3,[1,2,3,4,5,6,7,8,9]).postmln;</textarea>
 <tr><td class='argumentname'>mean<td class='argumentdesc'>
 <p>mean</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a matrix centred around the mean vector (which will be calculated for you if not supplied)</div></div><h3><a class='anchor' name='Return%20Characteristic%20Values'>Return Characteristic Values</a></h3>
+<p>a matrix centred around the mean vector (which will be calculated for you if not supplied)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-thresh2' href='./../Overviews/Methods.html#thresh2'>thresh2</a>(<span class='argstr'>thresh</span>, <span class='argstr'>adverb</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p>Bilateral thresholding.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>thresh<td class='argumentdesc'>
+<p>When the <code>input.abs &lt; thresh</code>, the output is forced to <code>0</code>. Should be a positive value.<tr><td class='argumentname'>adverb<td class='argumentdesc'>
+<p>Optional, for processing Collections. See <a href="./../Reference/Adverbs.html">Adverbs for Binary Operators</a>.</table><h4>Discussion:</h4>
+<textarea class='editor'>(
+var m = Matrix.with(Array.rand(9, -9, 9).clump(3));
+var t = m.thresh(3);
+var t2 = m.thresh2(3);
+" original".postln; m.postmln;
+" thresh".postln;   t.postmln;
+" thresh2".postln;  t2.postmln;
+"";
+)</textarea>
+</div><h3><a class='anchor' name='Return%20Characteristic%20Values'>Return Characteristic Values</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sum' href='./../Overviews/Methods.html#sum'>sum</a></h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
@@ -669,6 +718,7 @@ Matrix.withFlatArray(3,3,[1,2,3,4,5,6,7,8,9]).postmln;</textarea>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mul' href='./../Overviews/Methods.html#mul'>mul</a>(<span class='argstr'>multplier2</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mulMatrix' href='./../Overviews/Methods.html#mulMatrix'>mulMatrix</a>(<span class='argstr'>aMatrix</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mulNumber' href='./../Overviews/Methods.html#mulNumber'>mulNumber</a>(<span class='argstr'>aNumber</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-postSub' href='./../Overviews/Methods.html#postSub'>postSub</a>(<span class='argstr'>rowStart: 0</span>, <span class='argstr'>colStart: 0</span>, <span class='argstr'>rowLength</span>, <span class='argstr'>colHeight</span>, <span class='argstr'>round: 0.001</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-printItemsOn' href='./../Overviews/Methods.html#printItemsOn'>printItemsOn</a>(<span class='argstr'>stream</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeAt' href='./../Overviews/Methods.html#removeAt'>removeAt</a>(<span class='argstr'>row</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-solve' href='./../Overviews/Methods.html#solve'>solve</a>(<span class='argstr'>b</span>, <span class='argstr'>method: 'crout'</span>)</h3>
@@ -686,5 +736,9 @@ Matrix.withFlatArray(3,3,[1,2,3,4,5,6,7,8,9]).postmln;</textarea>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-upperTriangularSolve' href='./../Overviews/Methods.html#upperTriangularSolve'>upperTriangularSolve</a>(<span class='argstr'>b</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
-<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Classes/Matrix.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Classes/Matrix.schelp</a><br>link::Classes/Matrix::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+<h2><a class='anchor' name='Authors'>Authors</a></h2>
+<ul>
+<li>sc.solar(at)studiobeige.de (Original author)<li>Till Bovermann</ul>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Classes/Matrix.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Classes/Matrix.schelp</a><br>link::Classes/Matrix::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
 </body></html>

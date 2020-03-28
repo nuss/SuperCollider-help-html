@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>jitlib_fading | SuperCollider 3.10.4 Help</title>
+<!doctype html><html lang='en'><head><title>jitlib_fading | SuperCollider 3.11.0 Help</title>
 <link rel='stylesheet' href='./../../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './../..';
 var scdoc_title = 'jitlib_fading';
-var scdoc_sc_version = '3.10.4';
+var scdoc_sc_version = '3.11.0';
 </script>
 <script src='./../../scdoc.js' type='text/javascript'></script>
 <script src='./../../docmap.js' type='text/javascript'></script>
@@ -86,9 +86,13 @@ s.sendMsg("/n_set", 1980, \gate, 0);</textarea>
 <h2><a class='anchor' name='c)%20custom%20fade%20envelope'>c) custom fade envelope</a></h2>
 <textarea class='editor'>// when a gate arg is provided, and the env can free the synth, this envelope
 // is supposed to be the fade envelope for the synth: no extra fade env is created.
-(
+
 ~out = { arg gate=1; EnvGen.kr(Env.asr, gate, doneAction: Done.freeSelf) * 0.2 * SinOsc.ar([1,1]*Rand(440,550)) };
-)</textarea>
+
+
+// if you want to use the proxy's fadeTime, you should provide a fadeTime argument:
+
+~out = { arg gate=1, fadeTime = 0.1; EnvGen.kr(Env.asr(fadeTime, 1, fadeTime), gate, doneAction: Done.freeSelf) * 0.2 * SinOsc.ar([1,1] * Rand(440, 550)) };</textarea>
 <h2><a class='anchor' name='d)%20SynthDef%20name%20assignment'>d) SynthDef name assignment</a></h2>
 <textarea class='editor'>// if a symbol is used as input, the defname of a def on the server is supposed
 // to represent a SynthDef that has a gate, an out input and can free itself.
@@ -103,7 +107,7 @@ SynthDef("test", { arg gate=1, out;
 }).send(s);
 )
 
-// you can also provide a fadeTime arg, whic is set by the proxy:
+// you can also provide a fadeTime arg, which is set by the proxy:
 (
 SynthDef("test", { arg gate=1, out, fadeTime=1;
     Out.ar(out,
@@ -115,8 +119,7 @@ SynthDef("test", { arg gate=1, out, fadeTime=1;
 
 ~out = \test;
 ~out.fadeTime = 3;</textarea>
-<div class='note'><span class='notelabel'>NOTE:</span> the <strong>number of channels</strong> is your own responsibility when using symbols, as a symbol carries no channel information! (in all other cases the number of channels is wrapped or expanded to fit the proxy)</div><textarea class='editor'>// if the synthdef has a fixed duration envelope, there is a FAILURE /n_set Node not found message.
-// with no further significance
+<div class='note'><span class='notelabel'>NOTE:</span> the <strong>number of channels</strong> is your own responsibility when using symbols, as a symbol carries no channel information! (in all other cases the number of channels is wrapped or expanded to fit the proxy)</div><textarea class='editor'>// if the synthdef has a fixed duration envelope, it won't use the proxy's fadeTime
 (
 SynthDef("test", { arg gate=1, out;
     Out.ar(out,

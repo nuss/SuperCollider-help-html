@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Signal | SuperCollider 3.10.4 Help</title>
+<!doctype html><html lang='en'><head><title>Signal | SuperCollider 3.11.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Signal';
-var scdoc_sc_version = '3.10.4';
+var scdoc_sc_version = '3.11.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -30,6 +30,7 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#*welchWindow'>welchWindow</a> </li>
 <li class='toc3'><a href='#*rectWindow'>rectWindow</a> </li>
 <li class='toc3'><a href='#*fftCosTable'>fftCosTable</a> </li>
+<li class='toc3'><a href='#*hammingWindow_old'>hammingWindow_old</a> </li>
 <li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 <li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*readNew'>readNew</a> </li>
@@ -60,6 +61,8 @@ var scdoc_sc_version = '3.10.4';
 <ul class='toc'><li class='toc3'><a href='#-+'>+</a>  <a href='#--'>-</a>  <a href='#-*'>*</a>  <a href='#-/'>/</a>  <a href='#-div'>div</a>  <a href='#-pow'>pow</a>  <a href='#-mod'>mod</a>  <a href='#-min'>min</a>  <a href='#-max'>max</a>  <a href='#-ring1'>ring1</a>  <a href='#-ring2'>ring2</a>  <a href='#-ring3'>ring3</a>  <a href='#-ring4'>ring4</a>  <a href='#-difsqr'>difsqr</a>  <a href='#-sumsqr'>sumsqr</a>  <a href='#-sqrdif'>sqrdif</a>  <a href='#-absdif'>absdif</a>  <a href='#-amclip'>amclip</a>  <a href='#-scaleneg'>scaleneg</a>  <a href='#-clip2'>clip2</a>  <a href='#-wrap2'>wrap2</a>  <a href='#-excess'>excess</a> </li>
 <li class='toc3'><a href='#-%'>%</a>  <a href='#-**'>**</a> </li>
 <li class='toc3'><a href='#-<!'>&lt;!</a> </li>
+</ul><li class='toc2'><a href='#Extensions%20by%20MathLib'>Extensions by MathLib</a></li>
+<ul class='toc'><li class='toc3'><a href='#-thresh2'>thresh2</a> </li>
 </ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-!='>!=</a> </li>
@@ -181,7 +184,7 @@ Signal.hanningWindow(1024, 512).plot;</textarea>
 <p>the number of samples in the Signal.<tr><td class='argumentname'>pad<td class='argumentdesc'>
 <p>the number of samples of the size that is zero padding.</table></div><h3 class='method-code'><span class='method-prefix'>Signal.</span><a class='method-name' name='*hammingWindow' href='./../Overviews/Methods.html#hammingWindow'>hammingWindow</a>(<span class='argstr'>size</span>, <span class='argstr'>pad: 0</span>)</h3>
 <div class='method'>
-<p>Fill a Signal of the given size with a Hamming window.<textarea class='editor'>Signal.hammingWindow(1024).plot;
+<p>Fill a Signal of the given size with a Hamming window.<div class='warning'><span class='warninglabel'>WARNING:</span> In versions of SuperCollider before 3.11, the implementation of <code>Signal.hammingWindow</code> had incorrect coefficients. To get the old behavior back, use <code>Signal.hammingWindow_old</code>.</div><textarea class='editor'>Signal.hammingWindow(1024).plot;
 Signal.hammingWindow(1024, 512).plot;</textarea>
 
 <p><h4>Arguments:</h4>
@@ -209,7 +212,9 @@ Signal.rectWindow(1024, 512).plot;</textarea>
 <p>the number of samples of the size that is zero padding.</table></div><h3 class='method-code'><span class='method-prefix'>Signal.</span><a class='method-name' name='*fftCosTable' href='./../Overviews/Methods.html#fftCosTable'>fftCosTable</a>(<span class='argstr'>fftsize</span>)</h3>
 <div class='method'>
 <p>Fourier Transform: Fill a Signal with the cosine table needed by the FFT methods. See also the instance methods <a href="#-fft">-fft</a> and <a href="#-ifft">-ifft</a>.<textarea class='editor'>Signal.fftCosTable(512).plot;</textarea>
-</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+</div><h3 class='method-code'><span class='method-prefix'>Signal.</span><a class='method-name' name='*hammingWindow_old' href='./../Overviews/Methods.html#hammingWindow_old'>hammingWindow_old</a>(<span class='argstr'>size</span>, <span class='argstr'>pad: 0</span>)</h3>
+<div class='method'>
+<p>This used to be <code>Signal.hammingWindow</code>, but the coefficients were incorrect (making it a different window in the generalized Hamming window family). It is provided to assist in porting code to 3.11 and later.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>Signal.</span><a class='method-name' name='*readNew' href='./../Overviews/Methods.html#readNew'>readNew</a>(<span class='argstr'>file</span>)</h3>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
@@ -458,6 +463,22 @@ Signal[0, 0.5, 1] mod: 0.15;
 Signal[0, 0.5, 1] % 0.15;
 
 FloatArray[0, 0.5, 1] % 0.15;</textarea>
+
+<p></div><h3><a class='anchor' name='Extensions%20by%20MathLib'>Extensions by MathLib</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-thresh2' href='./../Overviews/Methods.html#thresh2'>thresh2</a>(<span class='argstr'>thresh</span>, <span class='argstr'>adverb</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p>Bilateral thresholding.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>thresh<td class='argumentdesc'>
+<p>When the <code>input.abs &lt; thresh</code>, the output is forced to <code>0</code>. Should be a positive value.<tr><td class='argumentname'>adverb<td class='argumentdesc'>
+<p>Optional, for processing Collections. See <a href="./../Reference/Adverbs.html">Adverbs for Binary Operators</a>.</table><h4>Discussion:</h4>
+<textarea class='editor'>(
+var a = Signal.sineFill(1000, 1.0/(1..6));
+var b = a.thresh(0.3);
+var c = a.thresh2(0.3);
+[a, b, c].plot(minval: -1)
+)</textarea>
 
 <p></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>

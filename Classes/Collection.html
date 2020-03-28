@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Collection | SuperCollider 3.10.4 Help</title>
+<!doctype html><html lang='en'><head><title>Collection | SuperCollider 3.11.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Collection';
-var scdoc_sc_version = '3.10.4';
+var scdoc_sc_version = '3.11.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -45,6 +45,7 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-atAll'>atAll</a> </li>
 </ul><li class='toc2'><a href='#Testing'>Testing</a></li>
 <ul class='toc'><li class='toc3'><a href='#-includes'>includes</a> </li>
+<li class='toc3'><a href='#-includesEqual'>includesEqual</a> </li>
 <li class='toc3'><a href='#-includesAny'>includesAny</a> </li>
 <li class='toc3'><a href='#-includesAll'>includesAll</a> </li>
 <li class='toc3'><a href='#-matchItem'>matchItem</a> </li>
@@ -132,7 +133,6 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-hash'>hash</a> </li>
 <li class='toc3'><a href='#-histDo'>histDo</a> </li>
 <li class='toc3'><a href='#-histoBands'>histoBands</a> </li>
-<li class='toc3'><a href='#-includesEqual'>includesEqual</a> </li>
 <li class='toc3'><a href='#-isAssociationArray'>isAssociationArray</a> </li>
 <li class='toc3'><a href='#-isCollection'>isCollection</a> </li>
 <li class='toc3'><a href='#-kurtosis'>kurtosis</a> </li>
@@ -281,6 +281,12 @@ y.atAll([0, 2]);</textarea>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-includes' href='./../Overviews/Methods.html#includes'>includes</a>(<span class='argstr'>item1</span>)</h3>
 <div class='method'>
 <p>Answer whether anObject is contained in the receiver.<textarea class='editor'>List[1, 2, 3, 4].includes(3);</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-includesEqual' href='./../Overviews/Methods.html#includesEqual'>includesEqual</a>(<span class='argstr'>item1</span>)</h3>
+<div class='method'>
+<p>Answer whether anObject is contained in the receiver. In contrast to <a href="#-includes">-includes</a> this tests for equality - not identity.<textarea class='editor'>List["a", "b", "c"].includesEqual("c");  //true
+List["a", "b", "c"].includes("c");       //false
+List[ List[1, 2], List[3, 4] ].includesEqual(List[3, 4]);  //true
+List[ List[1, 2], List[3, 4] ].includes(List[3, 4]);       //false</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-includesAny' href='./../Overviews/Methods.html#includesAny'>includesAny</a>(<span class='argstr'>aCollection</span>)</h3>
 <div class='method'>
 <p>Answer whether any item in aCollection is contained in the receiver.<textarea class='editor'>List[1, 2, 3, 4].includesAny(List[4, 5]);</textarea>
@@ -550,7 +556,6 @@ Set[1, 5].isSubsetOf(a); // false</textarea>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Collection/extCollection-histDo.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/Collection/extCollection-histDo.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-histoBands' href='./../Overviews/Methods.html#histoBands'>histoBands</a>(<span class='argstr'>steps</span>, <span class='argstr'>min</span>, <span class='argstr'>max</span>, <span class='argstr'>center: 0.5</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/statistics/extHisto.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/statistics/extHisto.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-includesEqual' href='./../Overviews/Methods.html#includesEqual'>includesEqual</a>(<span class='argstr'>item1</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isAssociationArray' href='./../Overviews/Methods.html#isAssociationArray'>isAssociationArray</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isCollection' href='./../Overviews/Methods.html#isCollection'>isCollection</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-kurtosis' href='./../Overviews/Methods.html#kurtosis'>kurtosis</a>(<span class='argstr'>mean</span>)</h3>

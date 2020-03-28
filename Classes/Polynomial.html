@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Polynomial | SuperCollider 3.10.4 Help</title>
+<!doctype html><html lang='en'><head><title>Polynomial | SuperCollider 3.11.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Polynomial';
-var scdoc_sc_version = '3.10.4';
+var scdoc_sc_version = '3.11.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -23,134 +23,169 @@ var scdoc_sc_version = '3.10.4';
 <div id='toctitle'>Polynomial:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#*expandBinomialFactors'>expandBinomialFactors</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
-<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-*'>*</a> </li>
-<li class='toc3'><a href='#-/'>/</a> </li>
-<li class='toc3'><a href='#-binPow'>binPow</a> </li>
-<li class='toc3'><a href='#-binPowFrac'>binPowFrac</a> </li>
+<ul class='toc'><li class='toc3'><a href='#*newFrom'>newFrom</a> </li>
+<li class='toc3'><a href='#*expandBinomialFactors'>expandBinomialFactors</a> </li>
+<li class='toc3'><a href='#*newReverseBessel'>newReverseBessel</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-species'>species</a> </li>
 <li class='toc3'><a href='#-degree'>degree</a> </li>
-<li class='toc3'><a href='#-eigenvalue'>eigenvalue</a> </li>
+<li class='toc3'><a href='#-isMonomial'>isMonomial</a> </li>
+<li class='toc3'><a href='#-isBinomial'>isBinomial</a> </li>
+<li class='toc3'><a href='#-*'>*</a> </li>
+<li class='toc3'><a href='#-/'>/</a> </li>
+<li class='toc3'><a href='#-pow'>pow</a> </li>
 <li class='toc3'><a href='#-eval'>eval</a> </li>
 <li class='toc3'><a href='#-evalDerivs'>evalDerivs</a> </li>
 <li class='toc3'><a href='#-findRoots'>findRoots</a> </li>
-<li class='toc3'><a href='#-isBinomial'>isBinomial</a> </li>
-<li class='toc3'><a href='#-isMonomial'>isMonomial</a> </li>
-<li class='toc3'><a href='#-laguerre'>laguerre</a> </li>
-<li class='toc3'><a href='#-offLow'>offLow</a> </li>
-<li class='toc3'><a href='#-pow'>pow</a> </li>
-<li class='toc3'><a href='#-species'>species</a> </li>
-</ul></ul><li class='toc1'><a href='#Help%20template'>Help template</a></li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-offLow'>offLow</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Authors'>Authors</a></li>
 <ul class='toc'></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
- | <span id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></span>
+ | <span id='categories'><a href='./../Browse.html#Math'>Math</a> | <a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>MathLib'>MathLib</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>MathLib>Polynomials & Special'>Polynomials & Special</a></span>
 </div><h1>Polynomial<span id='superclasses'> : <a href="../Classes/ArrayedCollection.html">ArrayedCollection</a> : <a href="../Classes/SequenceableCollection.html">SequenceableCollection</a> : <a href="../Classes/Collection.html">Collection</a> : <a href="../Classes/Object.html">Object</a></span>
 <div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>various methods for polynomial math operations</div>
 </div>
 <div class='subheader'>
-<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/Polynomials/Polynomial.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/Polynomials/Polynomial.sc'>Polynomial.sc</a></div></div>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/Polynomials/Polynomial.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/Polynomials/Polynomial.sc'>Polynomial.sc</a></div><div id='related'>See also: <a href="./../Classes/GenLaguerre.html">GenLaguerre</a>, <a href="./../Classes/RootFinder.html">RootFinder</a></div>
+</div>
 <h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
-<h3 class='method-code'><span class='method-prefix'>Polynomial.</span><a class='method-name' name='*expandBinomialFactors' href='./../Overviews/Methods.html#expandBinomialFactors'>expandBinomialFactors</a>(<span class='argstr'>factors</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
-<h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-*' href='./../Overviews/Methods.html#*'>*</a>(<span class='argstr'>c2</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-/' href='./../Overviews/Methods.html#/'>/</a>(<span class='argstr'>c2</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-binPow' href='./../Overviews/Methods.html#binPow'>binPow</a>(<span class='argstr'>n</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-binPowFrac' href='./../Overviews/Methods.html#binPowFrac'>binPowFrac</a>(<span class='argstr'>alpha</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-degree' href='./../Overviews/Methods.html#degree'>degree</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-eigenvalue' href='./../Overviews/Methods.html#eigenvalue'>eigenvalue</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-eval' href='./../Overviews/Methods.html#eval'>eval</a>(<span class='argstr'>x</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-evalDerivs' href='./../Overviews/Methods.html#evalDerivs'>evalDerivs</a>(<span class='argstr'>x</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findRoots' href='./../Overviews/Methods.html#findRoots'>findRoots</a>(<span class='argstr'>method: 'laguerre'</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isBinomial' href='./../Overviews/Methods.html#isBinomial'>isBinomial</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isMonomial' href='./../Overviews/Methods.html#isMonomial'>isMonomial</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-laguerre' href='./../Overviews/Methods.html#laguerre'>laguerre</a>(<span class='argstr'>z</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-offLow' href='./../Overviews/Methods.html#offLow'>offLow</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pow' href='./../Overviews/Methods.html#pow'>pow</a>(<span class='argstr'>n</span>)</h3>
+<p>A class which makes possible various elementary polynomial math operations. Included are arithmetic methods like multiplication and division, (complex) root finding and evaluation at a specific point for arbitrary degree polynomials. All methods should work for real as well as complex coefficients.
+<p>Part of <a href="./../Guides/MathLib.html">MathLib</a>, a diverse library of mathematical functions.<div class='note'><span class='notelabel'>NOTE:</span> for all binary arithmetic operations to give valid results, it is necessary that both coefficient arrays are of the same size. This means that in some cases it will be necessary to pad a coefficient array with zeros until it matches the other coefficient array in size. See the <code>/</code> operation for an example.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>Polynomial.</span><a class='method-name' name='*newFrom' href='./../Overviews/Methods.html#newFrom'>newFrom</a>(<span class='argstr'>aCollection</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/Collection.html'>Collection</a></div>
+<div class='method'>
+<p>Creates a new instance of Polynomial. Returned is a polynomial of a degree equal to the number of coefficients minus one.<textarea class='editor'>a = Polynomial.newFrom([1, 2, 1])    //2nd degree polynomial
+b = Polynomial.newFrom([0, 2, 1])    //Another 2nd degree polynomial with a_0 coefficient equal to 0
+c = Polynomial.newFrom([1, 2, 0])    //1st degree polynomial, since a_2 coefficient is 0</textarea>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>aCollection<td class='argumentdesc'>
+<p>The coefficients need to be supplied in increasing order: a_0, a_1, a_2 ... a_n-1, a_n</table></div><h3 class='method-code'><span class='method-prefix'>Polynomial.</span><a class='method-name' name='*expandBinomialFactors' href='./../Overviews/Methods.html#expandBinomialFactors'>expandBinomialFactors</a>(<span class='argstr'>factors</span>)</h3>
+<div class='method'>
+<p>Expands an array of first degree binomial factors.<textarea class='editor'>(
+a = Polynomial.newFrom([2, 2]);
+b = Polynomial.newFrom([3, 3]);
+c = Polynomial.newFrom([4, 4]);
+
+Polynomial.expandBinomialFactors([a, b, c])
+)</textarea>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>factors<td class='argumentdesc'>
+<p>Factors to expand.</table></div><h3 class='method-code'><span class='method-prefix'>Polynomial.</span><a class='method-name' name='*newReverseBessel' href='./../Overviews/Methods.html#newReverseBessel'>newReverseBessel</a>(<span class='argstr'>degree</span>)</h3>
+<div class='method'>
+<p>Instance a reverse Bessel polynomial of the given degree.<a class='footnote anchor' name='footnote_org_1' href='#footnote_1'><sup>1</sup></a> <div class='note'><span class='notelabel'>NOTE:</span> Coefficients are instanced as <a href="./../Classes/Float.html">Float</a> to avoid numerical overflow.</div><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>degree<td class='argumentdesc'>
+<p>Polynomial degree</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-species' href='./../Overviews/Methods.html#species'>species</a></h3>
-<h2><a class='anchor' name='Help%20template'>Help template</a></h2>
+<div class='method'>
+<p>Synomyn for <a href="./../Classes/Object.html#-class">Object: -class</a>.<textarea class='editor'>a = Polynomial.newFrom([0, 2, 0, 0, 6, 0, 0]);
+a.species;
+a.class;</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-degree' href='./../Overviews/Methods.html#degree'>degree</a></h3>
+<div class='method'>
+<p>Returns the degree of the polynomial.<textarea class='editor'>a = Polynomial.newFrom([0, 2, 0, 0, 6, 0, 0]);
+a.degree;</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isMonomial' href='./../Overviews/Methods.html#isMonomial'>isMonomial</a></h3>
+<div class='method'>
+<p>Returns <code>true</code> if the polynomial is a monomial.<textarea class='editor'>Polynomial.newFrom([0, 0, 2, 0, 0]).isMonomial;</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isBinomial' href='./../Overviews/Methods.html#isBinomial'>isBinomial</a></h3>
+<div class='method'>
+<p>Returns <code>true</code> if the polynomial is a binomial.<textarea class='editor'>Polynomial.newFrom([0, 2, 0, 0, 6]).isBinomial;</textarea>
+</div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-*' href='./../Overviews/Methods.html#*'>*</a>(<span class='argstr'>c2</span>)</h3>
+<div class='method'>
+<p>Calculate the product of two polynomials by convolving the original coefficient sequences.<textarea class='editor'>// Real example
+Polynomial.newFrom([1, 2, 3, 4, 5]) * Polynomial.newFrom([5, 4, 3, 2, 1]);
 
-<p>Copy and paste the text below and save to HelpSource/Classes/Polynomial.schelp<textarea class='editor'>TITLE:: Polynomial
-summary:: _short_description_here_
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff
+// Complex example
+a = Polynomial.newFrom([Complex(2, 2.2), Complex(2.5, 5), Complex(7, 4)]);
+a * a.performUnaryOp(\conjugate);</textarea>
+</div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-/' href='./../Overviews/Methods.html#/'>/</a>(<span class='argstr'>c2</span>)</h3>
+<div class='method'>
+<p>Divide two polynomials using synthetic division. The degree of the numerator polynomial needs to be greater than or equal to the degree of the denominator polynomial.<textarea class='editor'>a = Polynomial.newFrom([Complex(2, 1), Complex(0.2, -0.436), Complex(-1.9, -5)]);
+b = Polynomial.newFrom([Complex(-5, 4), Complex(3.5, 1.2)]);
+#r, q = a / b;
 
-DESCRIPTION::
-_put_long_description_here_
+// Check if we get back the original polynomial
+// Notice padding of the remainder in order to get a valid result
+(b * q) + r.addAll([0, 0]);</textarea>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An Array containing the remainder in the first slot and the quotient in the second slot, where: P(z) / D(z) = Q(z) + R(z) / D(z)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pow' href='./../Overviews/Methods.html#pow'>pow</a>(<span class='argstr'>n</span>)</h3>
+<div class='method'>
+<p>Calculate the n'th power of a polynomial. Negative, complex or fractional powers are allowed for binomials with the a_0 coefficient equal to one in order to calculate the binomial series which converges for: |z| &lt; 1<textarea class='editor'>Polynomial.newFrom([1, 1]).pow(0.5)  //Binomial series: (1 + x)^0.5</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-eval' href='./../Overviews/Methods.html#eval'>eval</a>(<span class='argstr'>x</span>)</h3>
+<div class='method'>
+<p>Evaluate the polynomial at the (complex) point x.<textarea class='editor'>// Real
+Polynomial.newFrom([0.2, 0.1, 0.3, 0.5]).eval(1.0);
 
+// Complex
+Polynomial.newFrom([0.2, 0.1, 0.3, 0.5]).eval(Complex.new(1.0, 0.0));</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-evalDerivs' href='./../Overviews/Methods.html#evalDerivs'>evalDerivs</a>(<span class='argstr'>x</span>)</h3>
+<div class='method'>
+<p>Evaluate the polynomial and all of its derivatives at the (complex) point x.<textarea class='editor'>// Real
+Polynomial.newFrom([0.2, 0.1, 0.3, 0.5]).evalDerivs(1.0);
 
-First code examples: 
+// Complex
+Polynomial.newFrom([0.2, 0.1, 0.3, 0.5]).evalDerivs(Complex.new(1.0, 0.0));</textarea>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An Array containing the results. Slot zero contains the function value and subsequent slots are filled with the values of all existing derivatives.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findRoots' href='./../Overviews/Methods.html#findRoots'>findRoots</a>(<span class='argstr'>method: 'laguerre'</span>)</h3>
+<div class='method'>
+<p>Find all the roots of the polynomial.<textarea class='editor'>a = Polynomial.newFrom([80, 4, -24, -1, 1]);
+b = a.findRoots;
 
-code::
-_some_example_code_
-::
+//Check if the roots we found make sense
+c = ([b.neg, [1, 1, 1, 1]].lace(8).reshape(4, 2).collect(_ .as(Polynomial)));
+Polynomial.expandBinomialFactors(c)</textarea>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>method<td class='argumentdesc'>
+<p>Root finding method.<table>
+<tr><td><code>\laguerre</code><td><a href="https://en.wikipedia.org/wiki/Laguerre%27s_method">Laguerre's method</a><tr><td><code>\eigenvalue</code><td><a href="https://en.wikipedia.org/wiki/Eigenvalue_algorithm">Eigenvalue algorithm</a></table>
+</table><h4>Discussion:</h4>
 
-CLASSMETHODS::
-
-METHOD:: expandBinomialFactors
-argument:: factors
-
-
-INSTANCEMETHODS::
-
-METHOD:: offLow
-
-METHOD:: binPow
-argument:: n
-
-METHOD:: laguerre
-argument:: z
-
-METHOD:: /
-argument:: c2
-
-METHOD:: eigenvalue
-
-METHOD:: degree
-
-METHOD:: *
-argument:: c2
-
-METHOD:: isBinomial
-
-METHOD:: evalDerivs
-argument:: x
-
-METHOD:: pow
-argument:: n
-
-METHOD:: binPowFrac
-argument:: alpha
-
-METHOD:: eval
-argument:: x
-
-METHOD:: isMonomial
-
-METHOD:: species
-
-METHOD:: findRoots
-argument:: method
+<p><a href="https://en.wikipedia.org/wiki/Laguerre%27s_method">Laguerre's method</a> works for polynomials with real as well as complex coefficients.
+<p>Another option is to use the <a href="https://en.wikipedia.org/wiki/Eigenvalue_algorithm">Eigenvalue algorithm</a> to form the companion matrix which eigenvalues coincide with the roots of the polynomial. Although this method is more reliable than the first one, it is considerably slower and only works for polynomials with real coefficients.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-offLow' href='./../Overviews/Methods.html#offLow'>offLow</a></h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>// Two alternative methods for dividing polynomials
+a = Polynomial.newFrom([2, 3, 4, 1]);        // P(x) = 2 + 3*x + 4*x^2 + x^3
+b = Polynomial.newFrom([4, 5, 6, 0]);        // P(x) = 4 + 5*x + 6*x^2
 
 
-EXAMPLES::
+// First example: remainder and quotient are of the same order (standard behaviour)
+#r, q = a / b;
 
-code::
-_some_example_code_
-::
-</textarea>
-<div class='doclink'>link::Classes/Polynomial::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+// Get back original polynomial
+((b[0..b.size-2] * q.add(0)) + r.addAll([0, 0]));
+
+
+// Second example: quotient contains powers x^0 up to x^k and remainder starts from power x^(k+1)
+b = b.insert(0, b.removeAt(b.size-1));
+
+// We need to reverse the coefficients so that the powers are in increasing order again
+#r, q = (a.reverse / b.reverse).performUnaryOp(\reverse);
+
+// Adjust degree of the remainder (must be 3rd degree in this case)
+q.size.do({ r = r.insert(0, 0) });
+
+// Get back original polynomial
+((b[1..b.size-1] * q.add(0)) + r)</textarea>
+<h2><a class='anchor' name='Authors'>Authors</a></h2>
+
+<p>Michael Dzjaparidze, 2010. Joseph Anderson, 2019.<div class='footnotes'>
+<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - <a href="https://en.wikipedia.org/wiki/Bessel_polynomials">https://en.wikipedia.org/wiki/Bessel_polynomials</a></div></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Classes/Polynomial.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Classes/Polynomial.schelp</a><br>link::Classes/Polynomial::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
 </body></html>

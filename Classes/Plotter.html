@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Plotter | SuperCollider 3.10.4 Help</title>
+<!doctype html><html lang='en'><head><title>Plotter | SuperCollider 3.11.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Plotter';
-var scdoc_sc_version = '3.10.4';
+var scdoc_sc_version = '3.11.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -46,7 +46,7 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-specs'>specs</a> </li>
 <li class='toc3'><a href='#-domainSpecs'>domainSpecs</a> </li>
 <li class='toc3'><a href='#-domain'>domain</a> </li>
-<li class='toc3'><a href='#-plotColors'>plotColors</a> </li>
+<li class='toc3'><a href='#-plotColor'>plotColor</a> </li>
 <li class='toc3'><a href='#-editFunc'>editFunc</a> </li>
 </ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
@@ -193,9 +193,12 @@ a.value; // the value</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resolution' href='./../Overviews/Methods.html#resolution'>resolution</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resolution' href='./../Overviews/Methods.html#resolution'>resolution</a> = value</h3>
 <div class='method'>
-<p>Set the number of data points displayed maximally per pixel (default: 1)<textarea class='editor'>a = (0..200).scramble.plot;
-a.resolution = 8; a.refresh; // resizing the window shows interpolation
-a.resolution = 1; a.refresh;</textarea>
+<p>Set the minimum number of pixels between data points (default: 1)<textarea class='editor'>// Changing plot resolution (x-axis)
+p = 5000.collect({ |i| sinPi(i * 0.0025) }).plot;
+p.resolution_(5).refresh;  // 5px
+p.resolution_(10).refresh;
+p.resolution_(50).refresh; // undersampled
+p.resolution_(1).refresh;  // default</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findSpecs' href='./../Overviews/Methods.html#findSpecs'>findSpecs</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findSpecs' href='./../Overviews/Methods.html#findSpecs'>findSpecs</a> = value</h3>
 <div class='method'>
@@ -233,13 +236,13 @@ a.value;</textarea>
 <div class='method'>
 <p>Set or get the spec for the y-axis (codomain).<textarea class='editor'>a = { (40..3000).scramble }.dup(2).plot;
 a.specs = \freq.asSpec; a.refresh;</textarea>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-domainSpecs' href='./../Overviews/Methods.html#domainSpecs'>domainSpecs</a></h3>
+
+<p>See also <a href="#examples">examples</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-domainSpecs' href='./../Overviews/Methods.html#domainSpecs'>domainSpecs</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-domainSpecs' href='./../Overviews/Methods.html#domainSpecs'>domainSpecs</a> = <span class='argstr'>argSpecs</span></h3>
 <div class='method'>
 <p>Set or get the spec for the x-axis (domain).<textarea class='editor'>a = { (40..300).scramble }.dup(2).plot;
 a.domainSpecs = \freq.asSpec; a.refresh;</textarea>
-
-<p><h4>Discussion:</h4>
+<h4>Discussion:</h4>
 
 <p>The default domainSpec when setting your Plotter <a href="#-value">-value</a> is a linear spec in the range <code>[0, value.size-1]</code>. Unless you set <a href="#-domain">-domain</a>, your values are displayed as evenly sampled between the <code>minval</code> and <code>maxval</code> of the domainSpecs.
 <p>If a new <a href="#-value">-value</a> is set, you will need to update your domainSpecs.
@@ -261,8 +264,8 @@ plot.domainSpecs_([0, 50].asSpec);
 plot.domain_(domain);
 )</textarea>
 
-<p>A more elaborate example can be found in the <a href="#examples">examples</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plotColors' href='./../Overviews/Methods.html#plotColors'>plotColors</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plotColors' href='./../Overviews/Methods.html#plotColors'>plotColors</a> = <span class='argstr'>argColors</span></h3>
+<p>A more elaborate example can be found in the <a href="#examples">examples</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plotColor' href='./../Overviews/Methods.html#plotColor'>plotColor</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plotColor' href='./../Overviews/Methods.html#plotColor'>plotColor</a> = <span class='argstr'>colors</span></h3>
 <div class='method'>
 <p>Set or get the <a href="./../Classes/Color.html">Color</a>(s) of your plot. An <a href="./../Classes/Array.html">Array</a> of colors will be mapped across multichannel plot data, including when <a href="#-superpose">-superpose</a> is <code>true</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-editFunc' href='./../Overviews/Methods.html#editFunc'>editFunc</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-editFunc' href='./../Overviews/Methods.html#editFunc'>editFunc</a> = value</h3>
@@ -475,8 +478,17 @@ plt2.domain = xs;
 // these values are placed within the domainSpec
 // so we can pad the plot on either side.
 plt2.domainSpecs_(([-0.5pi, 2.5pi]).asSpec);
-)</textarea>
-<h2><a class='anchor' name='Changing%20global%20defaults'>Changing global defaults</a></h2>
+)
+
+// Non-linear scaling of axes.
+// plot 1000 values, linearly distributed on X and Y
+p = (1, 2 .. 1000).plot.domainSpecs_([1, 1000, \lin].asSpec).refresh;
+// scale y axis exponentially
+p.specs_([[1, 1000, \exp].asSpec]).refresh;
+// then scale x axis exponentially
+p.domainSpecs_([1, 1000, \exp].asSpec).refresh;</textarea>
+
+<p><h2><a class='anchor' name='Changing%20global%20defaults'>Changing global defaults</a></h2>
 
 <p>The default styles are kept (and may be overridden) in <code>GUI.skin.at(\plot)</code>. See also <a href="./../Classes/GUI.html">GUI</a> help.<textarea class='editor'>// specify plot layout
 (

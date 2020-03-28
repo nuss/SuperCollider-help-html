@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Symbol | SuperCollider 3.10.4 Help</title>
+<!doctype html><html lang='en'><head><title>Symbol | SuperCollider 3.11.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Symbol';
-var scdoc_sc_version = '3.10.4';
+var scdoc_sc_version = '3.11.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -58,7 +58,9 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-sVarGuiSpecs'>sVarGuiSpecs</a> </li>
 <li class='toc3'><a href='#-pVarGuiSpecs'>pVarGuiSpecs</a> </li>
 <li class='toc3'><a href='#-pfuncPbinds'>pfuncPbinds</a> </li>
-<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Extensions%20by%20wslib'>Extensions by wslib</a></li>
+<ul class='toc'><li class='toc3'><a href='#-asNote'>asNote</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-*'>*</a> </li>
 <li class='toc3'><a href='#-+'>+</a> </li>
@@ -83,7 +85,6 @@ var scdoc_sc_version = '3.10.4';
 <li class='toc3'><a href='#-asInstr'>asInstr</a> </li>
 <li class='toc3'><a href='#-asInterfaceDef'>asInterfaceDef</a> </li>
 <li class='toc3'><a href='#-asLayoutElement'>asLayoutElement</a> </li>
-<li class='toc3'><a href='#-asNote'>asNote</a> </li>
 <li class='toc3'><a href='#-asSymbol'>asSymbol</a> </li>
 <li class='toc3'><a href='#-asWarp'>asWarp</a> </li>
 <li class='toc3'><a href='#-asWebColorString'>asWebColorString</a> </li>
@@ -288,20 +289,20 @@ a.at(\commune);</textarea>
 ['+', '-', '*', { |a, b| a.rand + b.rand } ].choose.applyTo(2, 3);</textarea>
 </div><h3><a class='anchor' name='Synthesis'>Synthesis</a></h3>
 
-<p>Inside SynthDefs and UGen functions, symbols can be used to conveniently specify control inputs of different rates and with lags (see: NamedControl, ControlName, and Control).<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>val</span>, <span class='argstr'>lag</span>, <span class='argstr'>fixedLag: false</span>)</h3>
+<p>Inside SynthDefs and UGen functions, symbols can be used to conveniently specify control inputs of different rates and with lags (see: NamedControl, ControlName, and Control).<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>val</span>, <span class='argstr'>lag</span>, <span class='argstr'>fixedLag: false</span>, <span class='argstr'>spec</span>)</h3>
 <div class='method'>
-<p>Return a control rate NamedControl input with a default value (val), and if supplied, with a lag. If val is an array, the control will be multichannel.<h4>Discussion:</h4>
+<p>Return a control rate NamedControl input with a default value (val), and if supplied, with a lag. If val is an array, the control will be multichannel. A <a href="./../Classes/ControlSpec.html">ControlSpec</a> provided to the <code>spec</code> parameter will be written into the spec metadata for the current synth.<h4>Discussion:</h4>
 <textarea class='editor'>a = { SinOsc.ar(\freq.kr(440, 1.2)) }.play;
 a.set(\freq, 330);
 a.release;
 a = { SinOsc.ar(\freq.kr([440, 460], 1.2)) }.play;
 a.setn(\freq, [330, 367]);
 a.release;</textarea>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>val</span>, <span class='argstr'>lag</span>)</h3>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>val</span>, <span class='argstr'>lag</span>, <span class='argstr'>spec</span>)</h3>
 <div class='method'>
-<p>Return an audio rate NamedControl input with a default value (val), and if supplied, with a lag. If val is an array, the control will be multichannel.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-ir' href='./../Overviews/Methods.html#ir'>ir</a>(<span class='argstr'>val</span>)</h3>
+<p>Return an audio rate NamedControl input with a default value (val), and if supplied, with a lag. If val is an array, the control will be multichannel.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-ir' href='./../Overviews/Methods.html#ir'>ir</a>(<span class='argstr'>val</span>, <span class='argstr'>spec</span>)</h3>
 <div class='method'>
-<p>Return an initialization rate NamedControl input with a default value (val). If val is an array, the control will be multichannel.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-tr' href='./../Overviews/Methods.html#tr'>tr</a>(<span class='argstr'>val</span>)</h3>
+<p>Return an initialization rate NamedControl input with a default value (val). If val is an array, the control will be multichannel.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-tr' href='./../Overviews/Methods.html#tr'>tr</a>(<span class='argstr'>val</span>, <span class='argstr'>spec</span>)</h3>
 <div class='method'>
 <p>Return a TrigControl input with a default value (val). If val is an array, the control will be multichannel.<h4>Discussion:</h4>
 <textarea class='editor'>a = { Ringz.ar(T2A.ar(\trig.tr), \freq.kr(500, 1), 0.8) }.play;
@@ -387,7 +388,12 @@ a.release;</textarea>
 <p>Boolean. Defines if to consider global ControlSpecs if metadata is not given. Also takes a Function of indices that returns a Boolean. Defaults to true.<tr><td class='argumentname'>post<td class='argumentdesc'>
 <p>Boolean. Determines if to post order of Pbind pairs. Also takes a Function of indices that returns a Boolean. Defaults to false.<tr><td class='argumentname'>trace<td class='argumentdesc'>
 <p>Boolean. Determines if EventStreamPlayer should post Events when playing. Also takes a Function of indices that returns a Boolean. Defaults to false.<tr><td class='argumentname'>num<td class='argumentdesc'>
-<p>Integer. Number of Pbinds / EventStreamPlayers to be controlled. Defaults to 1.</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<p>Integer. Number of Pbinds / EventStreamPlayers to be controlled. Defaults to 1.</table></div><h3><a class='anchor' name='Extensions%20by%20wslib'>Extensions by wslib</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asNote' href='./../Overviews/Methods.html#asNote'>asNote</a>(<span class='argstr'>cents</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-asNote.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-asNote.sc</a></div>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Returns a <a href="./../Classes/Note.html">Note</a> whose MIDI pitch matches the given note name</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-*' href='./../Overviews/Methods.html#*'>*</a></h3>
 <h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-+' href='./../Overviews/Methods.html#+'>+</a></h3>
@@ -419,8 +425,6 @@ a.release;</textarea>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/instrSupport.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/instrSupport.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asLayoutElement' href='./../Overviews/Methods.html#asLayoutElement'>asLayoutElement</a></h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/Base/ext-asLayoutElement.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/Base/ext-asLayoutElement.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asNote' href='./../Overviews/Methods.html#asNote'>asNote</a>(<span class='argstr'>cents</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-asNote.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-asNote.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asSymbol' href='./../Overviews/Methods.html#asSymbol'>asSymbol</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asWarp' href='./../Overviews/Methods.html#asWarp'>asWarp</a>(<span class='argstr'>spec</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asWebColorString' href='./../Overviews/Methods.html#asWebColorString'>asWebColorString</a>(<span class='argstr'>default</span>)</h3>

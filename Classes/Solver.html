@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Solver | SuperCollider 3.10.4 Help</title>
+<!doctype html><html lang='en'><head><title>Solver | SuperCollider 3.11.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Solver';
-var scdoc_sc_version = '3.10.4';
+var scdoc_sc_version = '3.11.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -22,115 +22,404 @@ var scdoc_sc_version = '3.10.4';
 <div id='toc'>
 <div id='toctitle'>Solver:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
-<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#ODEs%20of%20the%20first%20order%20take%20the%20form:'>ODEs of the first order take the form:</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#ODEs%20of%20order%20N%20take%20the%20form:'>ODEs of order N take the form:</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
 <li class='toc3'><a href='#*newHO'>newHO</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
-<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-dt'>dt</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-order'>order</a> </li>
 <li class='toc3'><a href='#-f'>f</a> </li>
-<li class='toc3'><a href='#-initHO'>initHO</a> </li>
-<li class='toc3'><a href='#-next'>next</a> </li>
-<li class='toc3'><a href='#-order'>order</a> </li>
+<li class='toc3'><a href='#-dt'>dt</a> </li>
 <li class='toc3'><a href='#-t'>t</a> </li>
 <li class='toc3'><a href='#-y'>y</a> </li>
-</ul></ul><li class='toc1'><a href='#Help%20template'>Help template</a></li>
+<li class='toc3'><a href='#-next'>next</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'><li class='toc2'><a href='#First%20order%20ODE'>First order ODE</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Second%20order%20ODE'>Second order ODE</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#System%20of%20second%20order%20ODE'>System of second order ODE</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Chaotic%20pendulum'>Chaotic pendulum</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Authors'>Authors</a></li>
 <ul class='toc'></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
- | <span id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></span>
+ | <span id='categories'><a href='./../Browse.html#Math'>Math</a> | <a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>MathLib'>MathLib</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>MathLib>Solvers'>Solvers</a></span>
 </div><h1>Solver<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
 <div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>numerical solver of systems of Ordinary Differential Equations of any order</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/Solver/Solver.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/Solver/Solver.sc'>Solver.sc</a></div><div id='subclasses'>Subclasses: <a href="../Classes/Euler.html">Euler</a>, <a href="../Classes/RK.html">RK</a></div>
+<div id='related'>See also: <a href="./../Classes/Euler.html">Euler</a>, <a href="./../Classes/RK2.html">RK2</a>, <a href="./../Classes/RK3.html">RK3</a>, <a href="./../Classes/RK4.html">RK4</a>, <a href="./../Classes/NFunc.html">NFunc</a>, <a href="./../Classes/SystemNFunc.html">SystemNFunc</a></div>
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<p>Solver is the base class to inherit from to implement numerical solving methods for ODEs.
+<p>Part of <a href="./../Guides/MathLib.html">MathLib</a>, a diverse library of mathematical functions.<div class='warning'><span class='warninglabel'>WARNING:</span> This class can be quite cpu intensive and with small dt values can completly freeze supercollider. ODE's of higher order are solved by converting them to systems of equations of the first order.</div><h3><a class='anchor' name='ODEs%20of%20the%20first%20order%20take%20the%20form:'>ODEs of the first order take the form:</a></h3>
+
+<p> y' = F(t,y)
+<p>where F:RxR -&gt; R and y = y(t) and y' the derivative of f.
+<p>Systems of equations take the form:
+<p> dy1/dt = F1(t,y1)  ...  dyn/dt = Fn(t,yn)
+<p> or in vector form:
+<p> DY = F^(t,Y)
+<p>where F^ = { F1,...,Fn}, Y = { Y1,...,Yn}, and DY is the jacobian matrix of Y.<h3><a class='anchor' name='ODEs%20of%20order%20N%20take%20the%20form:'>ODEs of order N take the form:</a></h3>
+
+<p> y = F(t,y,dy/dt,...,dNy/dtN)
+<p>and Systems of M equation of order N take the form;
+<p> dNy1/dtN = F1(t,y,dy1/dt,...,dN-1y1/dtN-1)  ...  dNyM/dtN = FM(t,y,dyM/dt,...,dN-1yM/dtN-1)
+<p>or in vector form
+<p> DY = F^(t,Y,DY,...,DNY)<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>Solver.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>f</span>, <span class='argstr'>dt</span>, <span class='argstr'>t: 0</span>, <span class='argstr'>y: 0</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>Solver.</span><a class='method-name' name='*newHO' href='./../Overviews/Methods.html#newHO'>newHO</a>(<span class='argstr'>f</span>, <span class='argstr'>dt</span>, <span class='argstr'>t</span>, <span class='argstr'>y</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dt' href='./../Overviews/Methods.html#dt'>dt</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dt' href='./../Overviews/Methods.html#dt'>dt</a> = value</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-f' href='./../Overviews/Methods.html#f'>f</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-f' href='./../Overviews/Methods.html#f'>f</a> = value</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-initHO' href='./../Overviews/Methods.html#initHO'>initHO</a>(<span class='argstr'>af</span>, <span class='argstr'>adt</span>, <span class='argstr'>at</span>, <span class='argstr'>ay</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-next' href='./../Overviews/Methods.html#next'>next</a></h3>
+<div class='method'>
+<p>Create a solver for a one dimensional equation or system of equations.<textarea class='editor'>(
+var time = 2.5, dt = 0.01, t0 = 1, y0 =1, min= 3.5.neg, max=2;
+f = { |t,y| ((2/t)+(y*y)).neg/(2*t*y) };
+d = RK4(f, dt, t0, y0);
+d.next
+)</textarea>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>f<td class='argumentdesc'>
+<p>see <a href="#-f">-f</a> below<tr><td class='argumentname'>dt<td class='argumentdesc'>
+<p>calculation time step in seconds<tr><td class='argumentname'>t<td class='argumentdesc'>
+<p>initial time<tr><td class='argumentname'>y<td class='argumentdesc'>
+<p>initial position: a number or array of numbers</table></div><h3 class='method-code'><span class='method-prefix'>Solver.</span><a class='method-name' name='*newHO' href='./../Overviews/Methods.html#newHO'>newHO</a>(<span class='argstr'>f</span>, <span class='argstr'>dt</span>, <span class='argstr'>t</span>, <span class='argstr'>y</span>)</h3>
+<div class='method'>
+<p>Create a solver for a higher dimensional equation or system of equations.<textarea class='editor'>(
+var time = 40, dt = 0.1, t0 = 0, y0 =2.5, dy0 = 0, min= 2.5.neg, max=2.5, k=3, mass=0.5, bcoef = 0.2;
+f = { |t,y,dydt| ((k*y)+(bcoef*dydt)).neg/mass }; // harmonic oscillator
+d = RK4.newHO(f,dt,t0,[y0,dy0]);
+d.next
+)</textarea>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>f<td class='argumentdesc'>
+<p>see <a href="#-f">-f</a> below<tr><td class='argumentname'>dt<td class='argumentdesc'>
+<p>calculation time step in seconds<tr><td class='argumentname'>t<td class='argumentdesc'>
+<p>initial time<tr><td class='argumentname'>y<td class='argumentdesc'>
+<p>initial position: a number or array of numbers</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-order' href='./../Overviews/Methods.html#order'>order</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-order' href='./../Overviews/Methods.html#order'>order</a> = value</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-t' href='./../Overviews/Methods.html#t'>t</a></h3>
+<div class='method'>
+<p>Set or return the order of the ODE</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-f' href='./../Overviews/Methods.html#f'>f</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-f' href='./../Overviews/Methods.html#f'>f</a> = value</h3>
+<div class='method'>
+<p>f is the function F defining the equation DY = F^(t,Y,DY,...,DNY), and can take the following forms:<table>
+<tr><td>D ODE<td>{ |t,y| ... }<tr><td>System of 1D ODEs<td>[{ |t,y| ... },...,{ |t,y| ... }]<tr><td>N-order ODE<td>{ |t,y,dy,..., dN-1y| ... }<tr><td>System of M, N-order ODEs<td>[{ |t,y,dy1,..., dN-1y1,...,dyM,..., dN-1yM| ... } ,...,{ |t,y,dy1,..., dN-1y1,...,dyM,..., dN-1yM| ... }]</table>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dt' href='./../Overviews/Methods.html#dt'>dt</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dt' href='./../Overviews/Methods.html#dt'>dt</a> = value</h3>
+<div class='method'>
+<p>Set or return calculation time step in seconds</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-t' href='./../Overviews/Methods.html#t'>t</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-t' href='./../Overviews/Methods.html#t'>t</a> = value</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-y' href='./../Overviews/Methods.html#y'>y</a></h3>
+<div class='method'>
+<p>Set or return time in seconds</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-y' href='./../Overviews/Methods.html#y'>y</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-y' href='./../Overviews/Methods.html#y'>y</a> = value</h3>
-<h2><a class='anchor' name='Help%20template'>Help template</a></h2>
+<div class='method'>
+<p>It can take the following forms:<table>
+<tr><td>1D ODE<td>y<tr><td>System of 1D ODEs<td>[y1,...,yn]<tr><td>N-order ODE<td>[y,dy,..., dN-1y]<tr><td>System of M, N-order ODEs<td>[[y1,dy1,..., dN-1y1],...,[yM,dy1,..., dN-1yM]]</table>
 
-<p>Copy and paste the text below and save to HelpSource/Classes/Solver.schelp<textarea class='editor'>TITLE:: Solver
-summary:: _short_description_here_
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff
-
-DESCRIPTION::
-_put_long_description_here_
-
-
-First code examples: 
-
-code::
-_some_example_code_
-::
-
-CLASSMETHODS::
-
-METHOD:: new
-argument:: f
-argument:: dt
-argument:: t
-argument:: y
-
-METHOD:: newHO
-argument:: f
-argument:: dt
-argument:: t
-argument:: y
+<p>The value can be reset and the calculation will continue from there.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-next' href='./../Overviews/Methods.html#next'>next</a></h3>
+<div class='method'>
+<p>Get the next value from the solver.
+<p>In general this will be: [[y1,y'1,...,y1^(n-1)],...,[yM,y'M,...,yM^(n-1)]]</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<div class='note'><span class='notelabel'>NOTE:</span> For the gui examples the <a href="https://github.com/supercollider-quarks/ixiViews">ixiViews</a> and <a href="https://github.com/supercollider-quarks/wslib">wslib</a> quarks are needed.</div><h3><a class='anchor' name='First%20order%20ODE'>First order ODE</a></h3>
+<textarea class='editor'>(
+var time = 2.5, dt = 0.01, t0 = 1, y0 =1, min= 3.5.neg,max=2;
+f = {|t,y| ((2/t)+(y*y)).neg/(2*t*y) };
+//f = {|t,y| y }; //exponential
+a = Euler(f,dt,t0,y0);
+b = RK2(f,dt,t0,y0);
+c = RK3(f,dt,t0,y0);
+d = RK4(f,dt,t0,y0);
 
 
-INSTANCEMETHODS::
+Window.closeAll;
 
-METHOD:: order
+[a,b,c,d].do({ |i,j| (time/dt).asInteger.collect{ i.next }.plot(i.class.asString,bounds:Rect(0,200*j,600,200),minval:min,maxval:max)});
+r = 6.collect{ c.next.round(0.000001) };
+)
 
-METHOD:: t
+//checks out with http://people.revoledu.com/kardi/tutorial/ODE/Comparison%20Runge%20Kutta.htm
+// problem with k3...</textarea>
+<h3><a class='anchor' name='Second%20order%20ODE'>Second order ODE</a></h3>
+<textarea class='editor'>// the spring
+(
+var time = 40, dt = 0.1, t0 = 0, y0 =2.5, dy0 = 0, min= 2.5.neg,max=2.5, k=3, mass=0.5, bcoef = 0.2;
+f = {|t,y,dydt| ((k*y)+(bcoef*dydt)).neg/mass }; // harmonic oscillator
+a = Euler.newHO(f,dt,t0,[y0,dy0]);
+b = RK2.newHO(f,dt,t0,[y0,dy0]);
+c = RK3.newHO(f,dt,t0,[y0,dy0]);
+d = RK4.newHO(f,dt,t0,[y0,dy0]);
 
-METHOD:: initHO
-argument:: af
-argument:: adt
-argument:: at
-argument:: ay
-
-METHOD:: f
-
-METHOD:: y
-
-METHOD:: next
-
-METHOD:: dt
+Window.closeAll;
 
 
-EXAMPLES::
+[a,b,c,d].do({ |i,j| (time/dt).asInteger.collect{ i.next[0] }.plot(i.class.asString,bounds:Rect(0,220*j,600,200),minval:min,maxval:max)});
+)
 
-code::
-_some_example_code_
-::
-</textarea>
-<div class='doclink'>link::Classes/Solver::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+//gui
+// you can drag the dot
+(
+var w, time = 40, dt = 0.1, t0 = 0, y0 =2.5, dy0 = 0, min= 2.5.neg,max=2.5, k=3, mass=0.5, bcoef = 0.2,task;
+var moving = false,zoom;
+
+w = Window("Gui",Rect(100,100,520,580),false);
+w.addFlowLayout( 10@10, 20@5 ); // a shortcut method
+
+k = EZSmoothSlider(w,200@20,"k",[0.1,10,\lin].asSpec,initVal:3);
+mass = EZSmoothSlider(w,200@20,"mass",[0.1,30,\lin].asSpec,initVal:0.5);
+w.view.decorator.nextLine;
+bcoef = EZSmoothSlider(w,200@20,"bcoef",[0,1,\lin].asSpec,initVal:0.2);
+zoom = EZSmoothSlider(w,200@20,"zoom",[0,0.1,\lin].asSpec,initVal:0.01);
+
+RoundButton.new(w,60@20)
+.states_([ [ \play, Color(1.0, 1.0, 1.0, 1.0),Color.grey ],
+    [ \stop , Color(1.0, 1.0, 1.0, 1.0), Color.red ] ])
+.canFocus_(false)
+.action_{|v|
+    switch (v.value)
+    {1} {task.start }
+    {0} {task.stop; a = RK4.newHO(f,dt,t0,[y0,dy0]) };
+
+
+};
+w.view.decorator.nextLine;
+p =  ParaSpace.new(w, bounds: Rect(0,0,500,500)).createNode1(0.5,0.5);
+f = {|t,y,dydt| ((k.value*y)+(bcoef.value*dydt)).neg/mass.value };
+a = RK4.newHO(f,dt,t0,[y0,dy0]);
+
+p.nodeTrackAction_({ |node|
+    moving = true;
+    postln("started moving node "++ node.spritenum);
+    a.y =  [(node.nodeLoc1[0]-0.5)/zoom.value,0];
+    p.setNodeLoc1_(0, p.getNodeLoc1(0)[0],0.5);
+    a.y.postln;
+});
+
+p.nodeUpAction_({|node|
+    postln("stoped moving node "++ node.spritenum);
+    moving = false; });
+
+task = Task.new({
+    loop{
+        if(moving.not){ p.setNodeLoc1_(0, 0.5+(a.next[0]*zoom.value), 0.5)};
+
+        dt.wait;
+    };
+});
+
+w.front;
+w.onClose_({ task.stop})
+)</textarea>
+<h3><a class='anchor' name='System%20of%20second%20order%20ODE'>System of second order ODE</a></h3>
+<textarea class='editor'>// two springs
+//m1, m2 = mass of blocks
+//w1, w2 = width of blocks
+//k1, k2 = spring constants
+//R1, R2 = rest length of springs
+//m1 x1'' = −k1 (x1 − R1) + k2 (x2 − x1 − w1 − R2)
+//m2 x2'' = −k2 (x2 − x1 − w1 − R2)
+// from
+// http://www.myphysicslab.com/dbl_spring1.html
+
+(
+var time = 40, dt = 0.1, t0 = 0, min= 4.neg,max=4;
+var  y1_0 =  2.5, dy1_0 = 0, k1=3, mass1=0.5, bcoef1 = 0.2, r1 = -2, w1 = 0;
+var  y2_0 = -2.5, dy2_0 = 0, k2=3, mass2=0.5, bcoef2 = 0.2, r2 = 1, w2 = 0;
+
+f = [{|t,y1,dy1dt,y2,dy2dt| ((k1.neg*(y1-r1))+(k2*(y2-y1-w1-r2)))/mass1 },
+    {|t,y1,dy1dt,y2,dy2dt| (k2.neg*(y2-y1-w1-r2))/mass2 }];
+
+a = Euler.newHO(f,dt,t0,[[y1_0,dy1_0],[y2_0,dy2_0]]);
+b = RK2.newHO(f,dt,t0,[[y1_0,dy1_0],[y2_0,dy2_0]]);
+c = RK3.newHO(f,dt,t0,[[y1_0,dy1_0],[y2_0,dy2_0]]);
+d = RK4.newHO(f,dt,t0,[[y1_0,dy1_0],[y2_0,dy2_0]]);
+
+Window.closeAll;
+
+[a,b,c,d].do({ |i,j| (time/dt).asInteger.collect{ i.next[1][0] }
+    .plot(i.class.asString,bounds:Rect(0,200*j,600,200),minval:min,maxval:max)});
+)
+
+//Gui
+// drag the points
+(
+var w, time = 40, dt = 0.1, t0 = 0, min= 2.5.neg,max=2.5, task,zoom;
+var  y1_0 =  1, dy1_0 = 0, k1=3, mass1=0.5, bcoef1 = 0.2, r1 = 1, w1 =0;
+var  y2_0 = 2.2, dy2_0 = 0, k2=3, mass2=0.5, bcoef2 = 0.2, r2 = 1, w2 = 0;
+var moving = [false,false];
+w = Window("Gui",Rect(100,100,520,625),false);
+w.addFlowLayout( 10@10, 20@5 ); // a shortcut method
+
+k1 = EZSmoothSlider(w,200@20,"k1",[0.1,10,\lin].asSpec,initVal:3, labelWidth: 30);
+mass1 = EZSmoothSlider(w,200@20,"mass1",[0.1,10,\lin].asSpec,initVal:0.5, labelWidth: 40);
+bcoef1 = EZSmoothSlider(w,200@20,"bcoef1",[0,1,\lin].asSpec,initVal:0.2, labelWidth: 40);
+//w.view.decorator.nextLine;
+k2 = EZSmoothSlider(w,200@20,"k2",[0.1,10,\lin].asSpec,initVal:3, labelWidth:  40);
+mass2 = EZSmoothSlider(w,200@20,"mass2",[0.1,10,\lin].asSpec,initVal:0.5, labelWidth: 40);
+bcoef2 = EZSmoothSlider(w,200@20,"bcoef2",[0,1,\lin].asSpec,initVal:0.2, labelWidth: 40);
+w.view.decorator.nextLine;
+zoom = EZSmoothSlider(w,200@20,"zoom",[0,0.05,\lin].asSpec,initVal:0.01, labelWidth: 40);
+
+
+RoundButton.new(w,60@20)
+.states_([ [ \play, Color(1.0, 1.0, 1.0, 1.0),Color.grey ],
+    [ \stop , Color(1.0, 1.0, 1.0, 1.0), Color.red ] ])
+.canFocus_(false)
+.action_{|v|
+    switch (v.value)
+    {1} {task.start }
+    {0} {task.stop;
+        a = RK4.newHO(f,dt,t0,[[y1_0,dy1_0],[y2_0,dy2_0]]);
+    };
+
+
+};
+w.view.decorator.nextLine;
+p =  ParaSpace.new(w, bounds: Rect(0,0,500,500))
+.createNode1(0.25,0.5)
+.createNode1(0.75,0.5);
+p.paraNodes.do{ |node,i| node.string_(i.asString) };
+
+f = [{|t,y1,dy1dt,y2,dy2dt|
+    (((k1.value.neg*(y1-r1.value))+(k2.value*(y2-y1-w1.value-r2.value)))-(bcoef1.value*dy1dt))/mass1.value },
+{|t,y1,dy1dt,y2,dy2dt| ((k2.value.neg*(y2-y1-w1.value-r2.value))-(bcoef2.value*dy2dt))/mass2.value }];
+
+a = RK4.newHO(f,dt,t0,[[y1_0,dy1_0],[y2_0,dy2_0]]);
+
+p.nodeTrackAction_({|node|
+    moving[node.spritenum] = true;
+    postln("started moving node "++ node.spritenum);
+    a.y[node.spritenum] =  [(p.getNodeLoc1(node.spritenum)[0]-0.5)/zoom.value,0];
+    p.setNodeLoc1_(node.spritenum, p.getNodeLoc1(node.spritenum)[0],0.5);
+    a.y.postln;
+});
+
+p.nodeUpAction_({|node|
+    postln("stoped moving node "++ node.spritenum);
+    moving[node.spritenum] = false; });
+
+task = Task.new({
+    loop{
+        if(moving[0].not){ p.setNodeLoc1_(0, 0.5+(a.next[0][0]*zoom.value*3), 0.5)};
+        if(moving[1].not){ p.setNodeLoc1_(1, 0.5+(a.next[1][0]*zoom.value*3), 0.5)};
+
+        dt.wait;
+    };
+});
+w.front;
+w.onClose_({ task.stop})
+)</textarea>
+<h3><a class='anchor' name='Chaotic%20pendulum'>Chaotic pendulum</a></h3>
+<textarea class='editor'>(
+var w, time = 40, dt = 0.01, t0 = 0, min= 2.5.neg,max=2.5, task;
+var r, mass=0.5, bcoef = 0.2, g = 9.8,drive,freq;
+var moving = false,zoom, deltat,dtslider,timewarp;
+var theta0 = pi, dtheta0 = 0;
+w = Window("A chaotic pendulum",Rect(100,100,520,640),false);
+w.addFlowLayout( 10@10, 20@5 ); // a shortcut method
+
+drive = EZSlider(w,200@20,"drive amp",[0.1,3,\lin].asSpec,initVal:1.150);
+freq = EZSlider(w,200@20,"drive freq",[0.0,3.0,\lin].asSpec,initVal:0.666);
+r = EZSlider(w,200@20,"lenght",[0.5,1.5,\exp].asSpec,initVal:1);
+mass = EZSlider(w,200@20,"mass",[0.1,30,\lin].asSpec,initVal:1);
+bcoef = EZSlider(w,200@20,"damp",[0,1,\lin].asSpec,initVal:0.5);
+zoom = EZSlider(w,200@20,"zoom",[0,0.7,\lin].asSpec,initVal:0.3);
+w.view.decorator.nextLine;
+z = deltat =  EZSlider(w,200@20,"screen dt",[0.01,0.9,\lin].asSpec,initVal:0.05);
+y = dtslider = EZSlider(w,200@20,"physics dt",[0.001,0.3,\lin].asSpec,initVal:0.01)
+.action_({ |ez|  a.dt = dtslider.value*timewarp.value});
+timewarp = EZSlider(w,200@20,"timewarp",[0.25,4,\lin].asSpec,initVal:1)
+.action_({ |ez| a.dt = dtslider.value*timewarp.value }) ;
+EZSlider(w,200@20,"lag",[0,1,\lin].asSpec,initVal:0.15)
+.action_({ |ez| ~synth.set(\lag,ez.value) });
+
+
+~synth = { |freq = 500,lag = 0.1| SyncSaw.ar(100, Lag.kr(freq,lag), 0.1) }.play;
+
+RoundButton.new(w,60@20)
+.states_([ [ \play, Color(1.0, 1.0, 1.0, 1.0),Color.grey ],
+    [ \stop , Color(1.0, 1.0, 1.0, 1.0), Color.red ] ])
+.canFocus_(false)
+.action_{|v|
+    switch (v.value)
+    {1} {task.start;  }
+    {0} {task.stop; ~synth.stop; a = RK4.newHO(f,dtslider.value*timewarp.value,t0,[theta0,dtheta0]); };
+
+
+};
+w.view.decorator.nextLine;
+p =  ParaSpace.new(w, bounds: Rect(0,0,500,500)).createNode1(0.5,0.5).createNode1(0.5,0.5);
+p.createConnection(0, 1);
+//--------FUNC-----------
+f = {|t,theta,dthetadt|
+    (g.neg/r.value*sin(theta)) +
+    (bcoef.value.neg*dthetadt+(drive.value*cos(freq.value*2*pi*t))/(mass.value*r.value*r.value))
+};
+//--------FUNC-----------
+a = RK4.newHO(f,dtslider.value,t0,[theta0,dtheta0]);
+
+p.nodeTrackAction_({ |node|
+    moving = true;
+    //postln("started moving node "++ node.spritenum);
+    a.y =  [(node.nodeLoc1.asPoint-Point(0.5,0.5)).theta.neg+(pi/2),0];
+    a.y.postln;
+});
+
+p.nodeUpAction_({|node|
+    //postln("stoped moving node "++ node.spritenum);
+    moving = false; });
+
+
+task = Task.new({
+    var accumulator = 0, angle =  a.next[0], alpha = 0, interpolateAngle, oldangle = a.y[0];
+
+    loop{
+
+        if(moving.not){ var temp;
+            accumulator = accumulator + deltat.value;
+            //("   increased accumulator to "++ accumulator++" screendt "++deltat.value).postln;
+
+
+
+            while({accumulator &gt;= dtslider.value},{
+                oldangle = a.y[0];
+                angle = a.next[0];
+                //("********calculating physics accumulator: "++ accumulator++ " value: "++angle).postln;
+                accumulator = accumulator - dtslider.value;
+                //("   decreased accumulator to "++ accumulator).postln;
+                ~synth.set(\freq, 50+(((angle+pi).mod(2*pi)*200)));
+                if(dtslider.value &lt; deltat.value){dtslider.value.max(0.001).wait; ("   waiting physics "++[dtslider.value,deltat.value])};
+
+
+
+            });
+            alpha = accumulator/dtslider.value;
+            //("-------updating screen. accumulator: "++ accumulator++" alpha: "++alpha).postln;
+            interpolateAngle = angle*alpha + (oldangle*(1+alpha.neg));
+            temp = WFSPoint.newAZ( interpolateAngle.mod(2*pi)/(2*pi)*360,1).asPoint*zoom.value+Point(0.5,0.5);
+            p.setNodeLoc1_(0,temp.x,temp.y);
+            if(dtslider.value &gt;= deltat.value){deltat.value.max(0.001).wait; "   waiting screen"};
+
+
+
+        }
+        {dtslider.value.max(0.001).wait };
+
+    };
+});
+
+w.front;
+w.onClose_({ task.stop; ~synth.free})
+)</textarea>
+<h2><a class='anchor' name='Authors'>Authors</a></h2>
+
+<p>Miguel Negro, 2009.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Classes/Solver.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Classes/Solver.schelp</a><br>link::Classes/Solver::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
 </body></html>

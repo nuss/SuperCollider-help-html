@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Pattern Guide 08: Event Types and Parameters | SuperCollider 3.10.4 Help</title>
+<!doctype html><html lang='en'><head><title>Pattern Guide 08: Event Types and Parameters | SuperCollider 3.11.0 Help</title>
 <link rel='stylesheet' href='./../../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './../..';
 var scdoc_title = 'Pattern Guide 08: Event Types and Parameters';
-var scdoc_sc_version = '3.10.4';
+var scdoc_sc_version = '3.11.0';
 </script>
 <script src='./../../scdoc.js' type='text/javascript'></script>
 <script src='./../../docmap.js' type='text/javascript'></script>
@@ -226,6 +226,13 @@ EventTypesWithCleanup.cleanup(b);</textarea>
 </dl>
 <h3><a class='anchor' name='Miscellaneous'>Miscellaneous</a></h3>
 <dl>
+<dt>composite<dd>Perform any number of event types, given as ~types. You should ensure that parameters are compatible. It is possible, using <code>\composite</code>, to play a synth and send MIDI for the same pitches. It is not possible to use one frequency for the synth and a different one for MIDI, in the same event (you would need two different events for that case).<dl>
+<dt>types<dd>An array of Symbols, listing the Event types to be performed.</dl>
+<textarea class='editor'>MIDIClient.init;
+m = MIDIOut(0);
+
+// should play a synth *and* an external MIDI note simultaneously
+(type: \composite, types: [\note, \midi], midiout: m, degree: 0, dur: 3).play;</textarea>
 <dt>phrase<dd>See <a href="./../../Tutorials/JITLib/recursive_phrasing.html">recursive_phrasing</a>.<dt>setProperties<dd>Set variables belonging to a given object. One possible use is to control a GUI using a pattern.<dl>
 <dt>receiver<dd>The object to be modified.<dt>args<dd>The list of variable names to set in the receiver. The receiver should have a setter method -- variableName_ -- for each of these. New values will be looked up in the event.</dl>
 <textarea class='editor'>// Visualize Brownian motion

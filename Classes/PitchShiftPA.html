@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>PitchShiftPA | SuperCollider 3.10.4 Help</title>
+<!doctype html><html lang='en'><head><title>PitchShiftPA | SuperCollider 3.11.0 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'PitchShiftPA';
-var scdoc_sc_version = '3.10.4';
+var scdoc_sc_version = '3.11.0';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -24,7 +24,8 @@ var scdoc_sc_version = '3.10.4';
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*ar'>ar</a> </li>
-<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Asynchronous%20use'>Asynchronous use</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
@@ -45,11 +46,11 @@ var scdoc_sc_version = '3.10.4';
 
 <p>Phase Aligned Wavepacket (Re-)Synthesis (PAWS) pseudo-UGen, allowing for manipulating pitch and formant structure of the sound independently. This allows e.g. shifting pitch while maintaining the formant structure, or changing the formant without changing the pitch.
 <p>PitchShiftPA works only for single-voiced (monophonic) sounds and requires tracking of their fundamental frequency (e.g. using the <a href="./../Classes/Pitch.html">Pitch</a> UGen). Good quality of tracking is crucial for achieving good results.
-<p>The technique used is also known as Pitch Synchronous Overlap-Add synthesis (PSOLA) or Pitch-Synchronous Granular Synthesis (PSGS). This pseudo-UGen was created by Marcin Pączkowski at DXARTS at the University of Washington, and is based on Juan Pampin's and Joseph Anderson's implementation of Keith Lent's pitch shifting algorithm.
+<p>The technique used is also known as Pitch Synchronous Overlap-Add synthesis (PSOLA) or Pitch-Synchronous Granular Synthesis (PSGS). This pseudo-UGen was created by Marcin Pączkowski at DXARTS at the University of Washington, and is based on Juan Pampin's and Joseph Anderson's implementation of Keith Lent's pitch shifting algorithm.<div class='note'><span class='notelabel'>NOTE:</span> PitchShiftPA can also be used as a regular <a href="#Asynchronous%20use">asynchronous pitch shifter</a>.</div>
 <p>References:<ul>
 <li>Keith Lent, "An Efficient Method for Pitch Shifting Digitally Sampled Sounds", Computer Music Journal Vol. 13, No. 4 (Winter, 1989), pp. 65-71. Available online: <a href="https://www.jstor.org/stable/3679554">https://www.jstor.org/stable/3679554</a><li>DXARTS: <a href="https://dxarts.washington.edu/">https://dxarts.washington.edu/</a><li>Juan Pampin: <a href="https://dxarts.washington.edu/people/juan-pampin">https://dxarts.washington.edu/people/juan-pampin</a><li>Joseph Anderson: <a href="https://dxarts.washington.edu/people/joseph-anderson">https://dxarts.washington.edu/people/joseph-anderson</a><li>wave packet: <a href="https://en.wikipedia.org/wiki/Wave_packet">https://en.wikipedia.org/wiki/Wave_packet</a></ul>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>PitchShiftPA.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>in</span>, <span class='argstr'>freq: 440</span>, <span class='argstr'>pitchRatio: 1</span>, <span class='argstr'>formantRatio: 1</span>, <span class='argstr'>minFreq: 10</span>, <span class='argstr'>maxFormantRatio: 10</span>, <span class='argstr'>grainsPeriod: 2</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>PitchShiftPA.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>in</span>, <span class='argstr'>freq: 440</span>, <span class='argstr'>pitchRatio: 1</span>, <span class='argstr'>formantRatio: 1</span>, <span class='argstr'>minFreq: 10</span>, <span class='argstr'>maxFormantRatio: 10</span>, <span class='argstr'>grainsPeriod: 2</span>, <span class='argstr'>timeDispersion</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
 <table class='arguments'>
@@ -60,7 +61,84 @@ var scdoc_sc_version = '3.10.4';
 <p>The ratio of the formant shift (1 = original, 0.5 = octave down, 2 = octave up).<div class='note'><span class='notelabel'>NOTE:</span> formantRatio can also be set to <code>nil</code> in order to create a version of the UGen that allocates less memory. In this mode only pitch manipulation is available and the formant is not changed.</div><tr><td class='argumentname'>minFreq<td class='argumentdesc'>
 <p>Minimum frequency that can be processed (needed for allocating internal buffer). Not modulatable.<tr><td class='argumentname'>maxFormantRatio<td class='argumentdesc'>
 <p>Maximum formant ratio (needed for allocating internal buffer). Not modulatable.<tr><td class='argumentname'>grainsPeriod<td class='argumentdesc'>
-<p>Number of grains per period of the original signal, also known as 'wave packet' quality, or Q (2 grains per period = 1Q).</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>Number of grains per period of the original signal, also known as 'wave packet' quality, or Q (2 grains per period = 1Q).<tr><td class='argumentname'>timeDispersion<td class='argumentdesc'>
+<p>Amount of randomness in the frequency for triggering individual grains. This helps to minimize the amount of combing effect when multiple grains overlap (if <code>grainPeriods</code> number is higher). It is mostly useful when using PitchShiftPA as an asynchronous pitch shifter. By default it is <code>nil</code> and does not introduce any randomness.</table><h4>Discussion:</h4>
+<textarea class='editor'>s.boot;
+
+//with a buffer
+b = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01-44_1.aiff");
+(
+x = {
+    var in = PlayBuf.ar(1, b, BufRateScale.kr(b), loop: 1);
+    PitchShiftPA.ar(
+        in,
+        Pitch.kr(in)[0], //pitch tracking - we take just the frequency
+        MouseX.kr(0.5, 2), //pitchRatio
+        MouseY.kr(0.5, 2), //formantRatio
+    )
+}.play
+)
+x.free;
+
+//with live input - beware of feedback!
+(
+x = {
+    var in = SoundIn.ar(0);
+    PitchShiftPA.ar(
+        in,
+        Pitch.kr(in)[0], //pitch tracking - we take just the frequency
+        MouseX.kr(0.5, 2), //pitchRatio
+        MouseY.kr(0.5, 2), //formantRatio
+    )
+}.play
+)
+x.free;</textarea>
+
+<p>See <a href="#examples">more examples</a> below.</div><h3><a class='anchor' name='Asynchronous%20use'>Asynchronous use</a></h3>
+
+<p>PitchShiftPA can be used as a regular asynchronous pitch shifter, similarly to <a href="./../Classes/PitchShift.html">PitchShift</a>. In that scenario it does not require pitch tracking and works for polyphonic signals, but the formant is not preserved and changes with the pitch shift. The main advantage over using the regular <a href="./../Classes/PitchShift.html">PitchShift</a> is that it does not have an upper limit for the pitch shift. The processing delay will increase with increasing the pitch shift.
+<p>To use PitchShiftPA as asynchronous pitch shifter, set <code>freq</code> to a static value in the low audible range <code>(20-100)</code>, set <code>pitchRatio</code> to <code>1</code>, treat <code>formatRatio</code> as the <code>pitchRatio</code>, increase <code>grainPeriods</code> and add some <code>timeDispersion</code>.
+<p>Examples:<textarea class='editor'>s.boot;
+
+//with a signal from a buffer
+b = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01-44_1.aiff");
+(
+x.free;
+x = {
+    var in = PlayBuf.ar(1, b, BufRateScale.kr(b), loop: 1);
+    PitchShiftPA.ar(
+        in,
+        50, //instead of tracking pitch, this controls the granulation speed; this might need to be raised to minimize artifacts when shifting up by more than 5
+        1, //pitchRatio is not used and should be 1
+        MouseY.kr(0.5, 2), //formantRatio becomes actual pitch ratio
+        10, //minFreq may be lower if needed (this is the lowest value for the freq parameter)
+        20, //maxFormantRatio becomes maximum pitch ratio, may be raised if desired
+        4, //grainPeriods - more overlaps is desirable when using as asynchronous pitchshifter
+        6, //timeDispersion helps to minimize combing effect; could be also a large number, used as a granulation "effect"
+    ) * -3.dbamp;
+}.play
+)
+x.free;
+
+//with live input - beware of feedback!
+(
+x.free;
+x = {
+    var in = SoundIn.ar(0);
+    PitchShiftPA.ar(
+        in,
+        50, //granulation speed
+        1, //not used and should be 1
+        MouseY.kr(0.1, 10), //formantRatio becomes actual pitch ratio
+        10, //minFreq
+        20, //maxFormantRatio becomes maximum pitch ratio
+        4, //grainPeriods - more overlaps is desirable
+        6, //timeDispersion helps to minimize combing effect
+    ) * -3.dbamp;
+}.play
+)
+x.free;</textarea>
+<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
@@ -103,7 +181,6 @@ x = {
         MouseX.kr(-12, 12).midiratio, //pitchRatio
         nil
     )
-}.play
 )
 x.free;
 
