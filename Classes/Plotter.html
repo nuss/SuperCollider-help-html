@@ -145,22 +145,37 @@ a.value = (0..1000).normalize(0, 14pi).curdle(0.01).scramble.flat.sin;
 <tr><td class='argumentname'>argParent<td class='argumentdesc'>
 <p>Either a <a href="./../Classes/Window.html">Window</a> or <a href="./../Classes/View.html">View</a> may be passed in - then the plot is embedded. Otherwise a new <a href="./../Classes/Window.html">Window</a> is created.<tr><td class='argumentname'>argBounds<td class='argumentdesc'>
 <p>The window bounds (a <a href="./../Classes/Rect.html">Rect</a>).</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plotMode' href='./../Overviews/Methods.html#plotMode'>plotMode</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plotMode' href='./../Overviews/Methods.html#plotMode'>plotMode</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plotMode' href='./../Overviews/Methods.html#plotMode'>plotMode</a> = <span class='argstr'>modes</span></h3>
 <div class='method'>
-<p>Set the style of data display.<h4>Arguments:</h4>
+<p>Get/Set the style of data display. This can be an array of different modes for multi-channel data.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>(symbol)<td class='argumentdesc'>
+<tr><td class='argumentname'>modes<td class='argumentdesc'>
+<p>A <a href="./../Classes/Symbol.html">Symbol</a> or an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Symbol.html">Symbol</a>s.
+<p>If <code>modes.size &lt; numChannels</code>, the plots will <em>wrap</em> around the array of modes.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Symbol.html">Symbol</a>s, unless there is only one mode specified or if all modes of a multi-channel plot are the same, in which case a <a href="./../Classes/Symbol.html">Symbol</a> is returned.
 <p>Available modes:<table>
 <tr><td><code>\linear</code><td>connecting data points with linear interpolation<tr><td><code>\points</code><td>draw data points only<tr><td><code>\plines</code><td>combination of lines and points<tr><td><code>\levels</code><td>horizontal lines<tr><td><code>\steps</code><td>connecting data points with step interpolation<tr><td><code>\bars</code><td>bar graph with filled bars</table>
 
-<p></table><h4>Discussion:</h4>
+<p></div><h4>Discussion:</h4>
 <textarea class='editor'>a = (0..20).scramble.plot;
 a.plotMode = \points; a.refresh;
 a.plotMode = \plines; a.refresh;
 a.plotMode = \levels; a.refresh;
 a.plotMode = \steps; a.refresh;
 a.plotMode = \linear; a.refresh;
-a.plotMode = \bars; a.refresh;</textarea>
+a.plotMode = \bars; a.refresh;
+
+/* mixed modes */
+(
+c = [Color.red, Color.cyan, Color.green, Color.blue];
+d = 4.collect({ |i| 100.collect({ |j| sinPi(1+i.squared*j * 50.reciprocal) })});
+p = d.plot;
+p.plotColor_(c);
+p.plotMode_([\steps, \linear, \plines, \points]);
+// superpose will trigger a refresh to update colors/modes
+p.superpose_(true);
+)</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setProperties' href='./../Overviews/Methods.html#setProperties'>setProperties</a>( <span class='argstr'>... pairs</span>)</h3>
 <div class='method'>
 <p>Set properties of all plot views. Defaults are taken from <code>GUI.skin.at(\plot);</code><h4>Arguments:</h4>
@@ -267,7 +282,13 @@ plot.domain_(domain);
 <p>A more elaborate example can be found in the <a href="#examples">examples</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plotColor' href='./../Overviews/Methods.html#plotColor'>plotColor</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plotColor' href='./../Overviews/Methods.html#plotColor'>plotColor</a> = <span class='argstr'>colors</span></h3>
 <div class='method'>
-<p>Set or get the <a href="./../Classes/Color.html">Color</a>(s) of your plot. An <a href="./../Classes/Array.html">Array</a> of colors will be mapped across multichannel plot data, including when <a href="#-superpose">-superpose</a> is <code>true</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-editFunc' href='./../Overviews/Methods.html#editFunc'>editFunc</a></h3>
+<p>Set or get the colors of your data plot.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>colors<td class='argumentdesc'>
+<p>This can be an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Color.html">Color</a>s for multichannel data, or a single <a href="./../Classes/Color.html">Color</a> to map to all channels.
+<p>If <code>colors.size &lt; numChannels</code>, the plots will <em>wrap</em> around the array of colors.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Color.html">Color</a>s, unless there is only one color specified or if all colors of a multi-channel plot are the same, in which case a <a href="./../Classes/Color.html">Color</a> is returned.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-editFunc' href='./../Overviews/Methods.html#editFunc'>editFunc</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-editFunc' href='./../Overviews/Methods.html#editFunc'>editFunc</a> = value</h3>
 <div class='method'>
 <p>Supply a function which is evaluated when editing data. The function is called with the arguments: <code>plotter</code>, <code>plotIndex</code>, <code>index</code>, <code>val</code>, <code>x</code>, <code>y</code>.<h4>Discussion:</h4>
