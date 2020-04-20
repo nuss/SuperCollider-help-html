@@ -30,6 +30,7 @@ var scdoc_sc_version = '3.11.0';
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-embedInStream'>embedInStream</a> </li>
 <li class='toc3'><a href='#-maxdur'>maxdur</a> </li>
+<li class='toc3'><a href='#-mindur'>mindur</a> </li>
 <li class='toc3'><a href='#-quant'>quant</a> </li>
 <li class='toc3'><a href='#-tolerance'>tolerance</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
@@ -55,7 +56,7 @@ var scdoc_sc_version = '3.11.0';
 <tr><td><strong>Pbind's natural duration</strong><td><code>Pfindur(16, Pbind(....))</code> <strong>behavior</strong><td><code>Psync(Pbind(....), 4, 16)</code> <strong>behavior</strong><tr><td>6 beats<td>Pfindur plays only 6 beats<td>Psync rounds up to 8 beats (adds a two-beat rest)<tr><td>18 beats<td>Pfindur cuts off after 16 beats<td>Psync cuts off after 16 beats</table>
 
 <p><code>maxdur</code> may be omitted. If the Pbind stops by itself, the rest will be inserted according to <code>quant</code>, but the total duration will be unlimited.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>Psync.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>pattern</span>, <span class='argstr'>quant</span>, <span class='argstr'>maxdur</span>, <span class='argstr'>tolerance: 0.001</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Psync.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>pattern</span>, <span class='argstr'>quant</span>, <span class='argstr'>maxdur</span>, <span class='argstr'>tolerance: 0.001</span>, <span class='argstr'>mindur: 0</span>)</h3>
 <div class='method'>
 <p><h4>Arguments:</h4>
 <table class='arguments'>
@@ -63,13 +64,16 @@ var scdoc_sc_version = '3.11.0';
 <p>a pattern that returns events.<tr><td class='argumentname'>quant<td class='argumentdesc'>
 <p>rounding factor for total duration (effectively a "bar length")<tr><td class='argumentname'>maxdur<td class='argumentdesc'>
 <p>maximum duration<tr><td class='argumentname'>tolerance<td class='argumentdesc'>
-<p>difference threshhold that a pattern must exceed max to be ended.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>threshhold that the stream must exceed maxdur to be ended.<tr><td class='argumentname'>mindur<td class='argumentdesc'>
+<p>guarantees that the total duration is no less than a given limit, independent of the quant value.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-embedInStream' href='./../Overviews/Methods.html#embedInStream'>embedInStream</a>(<span class='argstr'>event</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-maxdur' href='./../Overviews/Methods.html#maxdur'>maxdur</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-maxdur' href='./../Overviews/Methods.html#maxdur'>maxdur</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mindur' href='./../Overviews/Methods.html#mindur'>mindur</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mindur' href='./../Overviews/Methods.html#mindur'>mindur</a> = value</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-quant' href='./../Overviews/Methods.html#quant'>quant</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-quant' href='./../Overviews/Methods.html#quant'>quant</a> = value</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-tolerance' href='./../Overviews/Methods.html#tolerance'>tolerance</a></h3>
