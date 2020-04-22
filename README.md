@@ -1,1 +1,1 @@
-See the rendered version of this repository on http://pustota.basislager.org/_/sc-help/Help.
+Have a look at SuperCollider help files, including help for some quarks and SC plugins: http://pustota.basislager.org/_/sc-help/Help.
