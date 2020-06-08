@@ -130,7 +130,7 @@ var scdoc_sc_version = '3.11.0';
 <div class='returnvalue'>
 <p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*use' href='./../Overviews/Methods.html#use'>use</a>(<span class='argstr'>key</span>, <span class='argstr'>spec</span>, <span class='argstr'>value</span>, <span class='argstr'>tab</span>, <span class='argstr'>slot</span>, <span class='argstr'>svItems</span>, <span class='argstr'>connectS</span>, <span class='argstr'>connectTF</span>)</h3>
 <div class='method'>
-<p>Use an arbitrary name for creating a new <a href="./../Classes/CVWidget.html">CVWidget</a> (a <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a> or a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>, depending on the argument <code>slot</code>).<div class='note'><span class='notelabel'>NOTE:</span> <strong>This is the recommended way for creating new widgets.</strong> This method should be convenient in most situations. It simply creates a new <a href="./../Classes/CVWidget.html">CVWidget</a> and returns the <a href="./../Classes/CV.html">CV</a>. As <a href="./../Classes/CV.html">CV</a> inherits from <code>Stream</code> this method may directly be used in <code>Pattern</code>s. Any reevaluation will leave a once created <a href="./../Classes/CV.html">CV</a> untouched.
+<p>Use an arbitrary name for creating a new <a href="./../Classes/CVWidget.html">CVWidget</a> (a <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a> or a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>, depending on the argument <code>slot</code>).<div class='note'><span class='notelabel'>NOTE:</span> <strong>This is the recommended way for creating new widgets.</strong> This method should be convenient in most situations. It simply creates a new <a href="./../Classes/CVWidget.html">CVWidget</a> and returns the <a href="./../Classes/CV.html">CV</a>. As <a href="./../Classes/CV.html">CV</a> inherits from <code>Stream</code> this method may directly be used in <code>Pattern</code>s. If a CVWidget under the name given in <code>*use</code> already exists it simply passes on the CV and returns before any other logic is executed. This should be fast enough even if executed at high rates.
 <p>You may omit the arguments <code>slot</code> and <code>tab</code> when creating a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> if its first slot has already been created. However, if the widget is used within patterns you always <strong>must</strong> provide the slot as execution of the pattern depends on the right CV to be returned (if omitted the widget would return an event, composed of the \lo and \hi key).</div><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>key<td class='argumentdesc'>
@@ -147,6 +147,7 @@ CVCenter.use(\slider2D, \phase, slot: \lo);     // create a 2D slider with a pha
 CVCenter.use(\slider2D, \phase, slot: \hi);     // it's safe to call CVCenter.use for same key but for the \hi slot
                                                 // the original \unipolar spec is now replaced with a \phase spec
 CVCenter.use(\multislider, [20, 1000, \exp] ! 5);        // create a CVWidgetMS (a multislider with 5 sliders) with an custom ControlSpec
+
 (
 // create 4 CVWidgetKnobs, returning an array of 5 SVs
 CVCenter.use(\sv, svItems: [
