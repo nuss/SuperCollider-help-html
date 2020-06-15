@@ -35,6 +35,7 @@ var scdoc_sc_version = '3.11.0';
 <li class='toc3'><a href='#-reset'>reset</a> </li>
 <li class='toc3'><a href='#-play'>play</a> </li>
 <li class='toc3'><a href='#-awake'>awake</a> </li>
+<li class='toc3'><a href='#-p'>p</a> </li>
 <li class='toc2'><a href='#Accessible%20instance%20variables'>Accessible instance variables</a></li>
 <ul class='toc'><li class='toc3'><a href='#-beats'>beats</a> </li>
 <li class='toc3'><a href='#-seconds'>seconds</a> </li>
@@ -42,7 +43,6 @@ var scdoc_sc_version = '3.11.0';
 </ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-fastgui'>fastgui</a> </li>
-<li class='toc3'><a href='#-p'>p</a> </li>
 <li class='toc3'><a href='#-prStart'>prStart</a> </li>
 <li class='toc3'><a href='#-prStop'>prStop</a> </li>
 <li class='toc3'><a href='#-run'>run</a> </li>
@@ -81,6 +81,8 @@ var scdoc_sc_version = '3.11.0';
 a.next.postln;
 a.next.postln;
 a.next.postln;</textarea>
+
+<p>The Function class provides its own shortcut method <code>r</code> that calls <code>Routine.new</code>, thus one can also write:<textarea class='editor'>a = r { 1.yield; 2.yield };</textarea>
 </div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>Routine.</span><a class='method-name' name='*run' href='./../Overviews/Methods.html#run'>run</a>(<span class='argstr'>func</span>, <span class='argstr'>stackSize</span>, <span class='argstr'>clock</span>, <span class='argstr'>quant</span>)</h3>
@@ -189,7 +191,50 @@ fork {
 <tr><td class='argumentname'>inBeats<td class='argumentdesc'>
 <p>The scheduling time in beats. This is equal to the current logical time (<a href="./../Classes/Thread.html#-beats">Thread: -beats</a>).<tr><td class='argumentname'>inSeconds<td class='argumentdesc'>
 <p>The scheduling time in seconds. This is equal to the current logical time (<a href="./../Classes/Thread.html#-seconds">Thread: -seconds</a>).<tr><td class='argumentname'>inClock<td class='argumentdesc'>
-<p>The clock which awoke the Routine.</table></div><h3><a class='anchor' name='Accessible%20instance%20variables'>Accessible instance variables</a></h3>
+<p>The clock which awoke the Routine.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-p' href='./../Overviews/Methods.html#p'>p</a></h3>
+<div class='method'>
+<p>Convert the routine to a (subclass of) <a href="./../Classes/Pattern.html">Pattern</a>.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <a href="./../Classes/Prout.html">Prout</a> that (in response to <code>asStream</code>) acts as a generator of independent copies of the original routine (the receiver of <code>p</code>).</div><h4>Discussion:</h4>
+
+<p>Any subclass of Pattern returns a Stream in response to <code>asStream</code>. However, the exact subclass of Stream returned depends on the class of the Pattern. In particular, a Prout returns a Routine in response to <code>asStream</code>. Thus, a way to make an independent copy of a Routine is to make a Prout from it with the method <code>p</code>, and then create a new Routine from this Prout. In the example immediately below, this second step is done explicitly by calling <code>asStream</code>, but in the context of passing arguments to other Patterns, this latter step usually happens automatically, as shown in later examples.<textarea class='editor'>(
+r = Routine { "hi".yield; "bye".yield };
+r.next.postln;    // "hi" posted
+
+q = r.p.asStream; // or just: r.p.iter
+q.next.postln;    // "hi" again
+
+r.next.postln;    // "bye" because r kept its own state, separate from q
+)</textarea>
+<div class='note'><span class='notelabel'>NOTE:</span> New routines produced by <code>.p.asStream</code> run the original routine's function from the beginning. There is no copy of the internal state of the original routine, only its function is copied. On a related note, <code>Routine.copy</code> (inherited from <code>Thread</code>) does not create a new, separate Routine; it just returns the receiver.</div>
+<p>The Routine method <code>p</code> is mostly useful in the context of using the result of Routine-returning expressions as arguments to Patterns, when the intent is to use the Routine's result as a pattern, i.e. multiple occurrences acting independently of each other.<textarea class='editor'>(
+r = (:2..5); // a seriesIter Routine
+Ptuple([r, r]).asStream.all.postln; // posts [ [ 2, 3 ], [ 4, 5 ] ]
+r.next.postln; // nil
+
+p = r.p; // make a Pattern from r; it doesn't matter that r has ended
+Ptuple([p, p]).asStream.all.postln;
+// posts [ [ 2, 2 ], [ 3, 3 ], [ 4, 4 ], [ 5, 5 ] ]
+
+// Obviously, explicitly writing the same Routine-valued subexpression twice
+// also creates separate Routines.
+Ptuple([(:2..5), (:2..5)]).asStream.all.postln;
+// posts [ [ 2, 2 ], [ 3, 3 ], [ 4, 4 ], [ 5, 5 ] ]
+)</textarea>
+
+<p>In the following example, directly reusing the same Routine object twice in a <code>Pseq</code> fails to duplicate its output, because the first embedding fully consumes the routine's (non-nil) output.<textarea class='editor'>(
+r = (:2..6);
+Pseq([r, r]).asStream.all.postln;
+// [ 2, 3, 4, 5, 6 ]
+
+p = r.p;
+Pseq([p, p]).asStream.all.postln;
+// [ 2, 3, 4, 5, 6, 2, 3, 4, 5, 6 ]
+
+Pseq([(:2..6), (:2..6)]).asStream.all.postln;
+// [ 2, 3, 4, 5, 6, 2, 3, 4, 5, 6 ]
+)</textarea>
+</div><h3><a class='anchor' name='Accessible%20instance%20variables'>Accessible instance variables</a></h3>
 
 <p>Routine inherits from <a href="./../Classes/Thread.html">Thread</a>, which allows access to some of its state:<textarea class='editor'>(
 r = Routine { arg inval;
@@ -230,7 +275,6 @@ r.clock;</textarea>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fastgui' href='./../Overviews/Methods.html#fastgui'>fastgui</a>(<span class='argstr'>name: "routine"</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extSynthdef-fastgui.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/Extensions/extSynthdef-fastgui.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-p' href='./../Overviews/Methods.html#p'>p</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prStart' href='./../Overviews/Methods.html#prStart'>prStart</a>(<span class='argstr'>inval</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prStop' href='./../Overviews/Methods.html#prStop'>prStop</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-run' href='./../Overviews/Methods.html#run'>run</a>(<span class='argstr'>inval</span>)</h3>
