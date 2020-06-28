@@ -108,7 +108,7 @@ var scdoc_sc_version = '3.11.0';
 <tr><td class='argumentname'>in<td class='argumentdesc'>
 <p>An <a href="./../Classes/Integer.html">Integer</a>, denoting the bus from which to read incoming audio.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sample' href='./../Overviews/Methods.html#sample'>sample</a>(<span class='argstr'>bool</span>, <span class='argstr'>bufnum</span>)</h3>
 <div class='method'>
-<p>Start or stop sampling. The buffer to which the sampled audio will be written to is either determined by <a href="#-setBufnum">-setBufnum</a> or, if that method has not been called in advance, the next buffer number. Sampling will usually start at the lowest buffer number in the array of consecutive buffers that have been allocated in <a href="#-setupSampler">-setupSampler</a> or, if <a href="#-randomBufferSelect">-randomBufferSelect</a> has been set to <code>true</code> at a random buffer number.<h4>Arguments:</h4>
+<p>Start or stop sampling. The buffer to which the sampled audio will be written to is either determined by <a href="#-setBufnum">-setBufnum</a> or, if that method has not been called in advance, the next buffer number. Sampling will usually start at the lowest buffer number in the array of consecutive buffers that have been allocated in <a href="#-setupSampler">-setupSampler</a> or, if <a href="#-randomBufferSelect">-randomBufferSelect</a> has been set to <code>true</code>, at a random buffer number.<div class='note'><span class='notelabel'>NOTE:</span> Calling <code>sample(false)</code> will automatically advance the buffer number for the next recording. Hence, if you want to play back the recorded audio after calling <code>sample(false)</code>, rather use <a href="#-lastBufnum">-lastBufnum</a> than <a href="#-recBufnum">-recBufnum</a>. (see example at the bottom for a minimal playback setup).</div><h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>bool<td class='argumentdesc'>
 <p>A <a href="./../Classes/Boolean.html">Boolean</a> determining whether sampling should be started or stopped.<tr><td class='argumentname'>bufnum<td class='argumentdesc'>
@@ -174,6 +174,7 @@ var scdoc_sc_version = '3.11.0';
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 <textarea class='editor'>// create a new sampler with default parameters
 ~sampler = SNSampler.new;
+
 // set up sampler: boot server, create widgets in CVCenter
 // doneAction can be set within setupSampler or later
 (
@@ -185,8 +186,10 @@ var scdoc_sc_version = '3.11.0';
     )
 }.play });
 )
+
 // record some audio
 ~sampler.sample(true);
+
 // stop recording
 // recorded audio should be played back immediately
 ~sampler.sample(false);</textarea>
