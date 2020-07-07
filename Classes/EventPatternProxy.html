@@ -33,6 +33,7 @@ var scdoc_sc_version = '3.11.0';
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-source'>source</a> </li>
 <li class='toc3'><a href='#-clear'>clear</a> </li>
+<li class='toc3'><a href='#-clock'>clock</a> </li>
 <li class='toc3'><a href='#-quant'>quant</a> </li>
 <li class='toc3'><a href='#-fadeTime'>fadeTime</a> </li>
 <li class='toc3'><a href='#-envir'>envir</a> </li>
@@ -94,7 +95,11 @@ var scdoc_sc_version = '3.11.0';
 <p>set the source (a pattern). If a quantization is given, schedule this change to the next beat ( <strong>pattern_</strong>(..) is equivalent)</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a></h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/PatternProxy.html'>PatternProxy</a></div>
 <div class='method'>
-<p>set the source to nil and stop playing</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-quant' href='./../Overviews/Methods.html#quant'>quant</a></h3>
+<p>set the source to nil and stop playing</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clock' href='./../Overviews/Methods.html#clock'>clock</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clock' href='./../Overviews/Methods.html#clock'>clock</a> = value</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/PatternProxy.html'>PatternProxy</a></div>
+<div class='method'>
+<p>get or set the instance's default clock, used by <a href="#-play">-play</a> if no other clock is specified. Defaults to TempoClock.default.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-quant' href='./../Overviews/Methods.html#quant'>quant</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-quant' href='./../Overviews/Methods.html#quant'>quant</a> = <span class='argstr'>val</span></h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/PatternProxy.html'>PatternProxy</a></div>
 <div class='method'>
@@ -128,7 +133,7 @@ r.nextN(12, ()); // the next 12 values from r</textarea>
 <p>starts the EventPatternProxy and creates a player. if you want to play multiple instances, use <a href="#-fork">-fork</a>.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>argClock<td class='argumentdesc'>
-<p>play on a certain clock, e.g. a <a href="./../Classes/TempoClock.html">TempoClock</a>.<tr><td class='argumentname'>protoEvent<td class='argumentdesc'>
+<p>play on a certain clock, e.g. a <a href="./../Classes/TempoClock.html">TempoClock</a>. If nil uses this instance's <a href="#-clock">-clock</a>, which in turn defaults to TempoClock.default.<tr><td class='argumentname'>protoEvent<td class='argumentdesc'>
 <p>an event to be used as a first input to the chain<tr><td class='argumentname'>quant<td class='argumentdesc'>
 <p>can be an array of [quant, phase, offset, outset], or an instance of <a href="./../Classes/Quant.html">Quant</a>.<tr><td class='argumentname'>doReset<td class='argumentdesc'>
 <p>if set to true, play will restart the stream if already running (a <a href="./../Classes/Boolean.html">Boolean</a>).<textarea class='editor'>// using a protoEvent
