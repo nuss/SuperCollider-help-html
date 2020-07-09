@@ -28,29 +28,30 @@ var scdoc_sc_version = '3.11.0';
 <li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-setupPlayer'>setupPlayer</a> </li>
-<li class='toc3'><a href='#-numOutChannels'>numOutChannels</a> </li>
-<li class='toc3'><a href='#-loopLengths'>loopLengths</a> </li>
-<li class='toc3'><a href='#-resume'>resume</a> </li>
-<li class='toc3'><a href='#-setLoopMaxLength'>setLoopMaxLength</a> </li>
-<li class='toc3'><a href='#-name'>name</a> </li>
+<li class='toc3'><a href='#-initDef'>initDef</a> </li>
+<li class='toc3'><a href='#-play'>play</a> </li>
 <li class='toc3'><a href='#-pause'>pause</a> </li>
+<li class='toc3'><a href='#-resume'>resume</a> </li>
 <li class='toc3'><a href='#-clear'>clear</a> </li>
 <li class='toc3'><a href='#-freeHangingNodes'>freeHangingNodes</a> </li>
+<li class='toc3'><a href='#-setLoopMaxLength'>setLoopMaxLength</a> </li>
+<li class='toc2'><a href='#Instance%20variables'>Instance variables</a></li>
+<ul class='toc'><li class='toc3'><a href='#-debug'>debug</a> </li>
+<li class='toc3'><a href='#-numOutChannels'>numOutChannels</a> </li>
+<li class='toc3'><a href='#-loopLengths'>loopLengths</a> </li>
+<li class='toc3'><a href='#-name'>name</a> </li>
 <li class='toc3'><a href='#-bufLength'>bufLength</a> </li>
 <li class='toc3'><a href='#-server'>server</a> </li>
-<li class='toc3'><a href='#-debug'>debug</a> </li>
 <li class='toc3'><a href='#-looperPlayer'>looperPlayer</a> </li>
 <li class='toc3'><a href='#-out'>out</a> </li>
 <li class='toc3'><a href='#-prSetUpControls'>prSetUpControls</a> </li>
 <li class='toc3'><a href='#-group'>group</a> </li>
 <li class='toc3'><a href='#-buffers'>buffers</a> </li>
-<li class='toc3'><a href='#-initDef'>initDef</a> </li>
 <li class='toc3'><a href='#-init'>init</a> </li>
 <li class='toc3'><a href='#-prSetSpecConstraints'>prSetSpecConstraints</a> </li>
-<li class='toc3'><a href='#-play'>play</a> </li>
 <li class='toc3'><a href='#-mode'>mode</a> </li>
 <li class='toc3'><a href='#-prInitPatternPlayer'>prInitPatternPlayer</a> </li>
-<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
@@ -93,7 +94,45 @@ var scdoc_sc_version = '3.11.0';
 <table class='arguments'>
 <tr><td class='argumentname'>bufferArray<td class='argumentdesc'>
 <p>An <a href="./../Classes/Array.html">Array</a> of buffers that will be looped in the instance. Often this will be identical with an array of buffers created when setting up an <a href="./../Classes/SNSampler.html">SNSampler</a><tr><td class='argumentname'>volumeControlNode<td class='argumentdesc'>
-<p>Optional - an <a href="./../Classes/Integer.html">Integer</a>, denoting the position of the volume control in the chain of synths and filters (defined in an <a href="./../Classes/Ndef.html">Ndef</a> or <a href="./../Classes/NodeProxy.html">NodeProxy</a>).<div class='note'><span class='notelabel'>NOTE:</span> This ID is not a regular node ID in the server tree!</div></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numOutChannels' href='./../Overviews/Methods.html#numOutChannels'>numOutChannels</a></h3>
+<p>Optional - an <a href="./../Classes/Integer.html">Integer</a>, denoting the position of the volume control in the chain of synths and filters (defined in an <a href="./../Classes/Ndef.html">Ndef</a> or <a href="./../Classes/NodeProxy.html">NodeProxy</a>).<div class='note'><span class='notelabel'>NOTE:</span> This ID is not a regular node ID in the server tree!</div></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-initDef' href='./../Overviews/Methods.html#initDef'>initDef</a>(<span class='argstr'>mode</span>, <span class='argstr'>bufferArray</span>)</h3>
+<div class='method'>
+<p>Initialize or switch the mode in which the player will play. Available modes will be the ones described in <a href="#*new">*new</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>mode<td class='argumentdesc'>
+<p>A <a href="./../Classes/Symbol.html">Symbol</a> - either <code>\grain</code>, <code>\mono</code> or <code>\ndef</code><tr><td class='argumentname'>bufferArray<td class='argumentdesc'>
+<p>Optional - an array of buffers, initialized with <a href="./../Classes/Buffer.html#*allocConsecutive">Buffer: *allocConsecutive</a>.<div class='note'><span class='notelabel'>NOTE:</span> The number of buffers must be the same as the number of buffers for which the player was initialized!</div></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-play' href='./../Overviews/Methods.html#play'>play</a></h3>
+<div class='method'>
+<p>Start playing the SNSamplePlayer. Internally this will start playing the Ndef that keeps the loopers for all buffers. You may inspect the Ndef using an <a href="./../Classes/NdefMixer.html">NdefMixer</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pause' href='./../Overviews/Methods.html#pause'>pause</a></h3>
+<div class='method'>
+<p>Pause the player. Internally this will pause the Ndef that keeps the loopers for all buffers.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resume' href='./../Overviews/Methods.html#resume'>resume</a></h3>
+<div class='method'>
+<p>Resume a paused player. Internally this will resume the Ndef that keeps the loopers for all buffers.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a>(<span class='argstr'>fadeTime: 0.2</span>)</h3>
+<div class='method'>
+<p>Clear the player. This will clear the loopers <em>and</em> all effects that have been chained to the output of the player. Once an SNSamplePlayer has been cleared it can not be restarted.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>fadeTime<td class='argumentdesc'>
+<p>A <a href="./../Classes/Float.html">Float</a> or <a href="./../Classes/Integer.html">Integer</a>, determining the fade-out time of the player in seconds.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-freeHangingNodes' href='./../Overviews/Methods.html#freeHangingNodes'>freeHangingNodes</a></h3>
+<div class='method'>
+<p>When using mode <code>\grain</code> (the default) it may happen under certain circumstances that grains are not freed properly (they remain on the server, consuming memory). In these cases calling this method will clear all nodes and free memory. Though this may have an audible effect new grains should build up automatically and it will often be preferable to have a short moment of silence than running out of memory.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setLoopMaxLength' href='./../Overviews/Methods.html#setLoopMaxLength'>setLoopMaxLength</a>(<span class='argstr'>index</span>, <span class='argstr'>length</span>)</h3>
+<div class='method'>
+<p>SNSamplePlayer has originally been designed to be used in combination with <a href="./../Classes/SNSampler.html">SNSampler</a>, allowing you to record sound sequences up to a specified length on the fly. However, sound sequences won't necessarily fill up a whole buffer which means, when looping over the buffer, silence at the end of the buffer will be part of the loop. This method tells the looper how much of the buffer should be used for looping.
+<p>The method especially makes sense in combination with the <a href="./../Classes/SNSampler.html#-doneAction">doneAction</a> of an <a href="./../Classes/SNSampler.html">SNSampler</a>. The <code>doneAction</code> can be passed a numerical <code>index</code> (the index of the buffer in the array of consecutive buffers for which the maximum loop length shall be set) and the <code>length</code> of the loop in seconds.<textarea class='editor'>// ~sampler is an existing instance of an SNSampler
+// ~looper is an existing instrance of an SNSamplePlayer
+~sampler.doneAction_({ |index, length|
+    ~looper.setLoopMaxLength(index, length);
+});</textarea>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>index<td class='argumentdesc'>
+<p>An <a href="./../Classes/Integer.html">Integer</a> or a whole-numbered <a href="./../Classes/Float.html">Float</a>, denoting the index of the buffer in the array of consecutive buffers.<tr><td class='argumentname'>length<td class='argumentdesc'>
+<p>A <a href="./../Classes/Float.html">Float</a>, denoting the length of the loop in seconds.</table></div><h3><a class='anchor' name='Instance%20variables'>Instance variables</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-debug' href='./../Overviews/Methods.html#debug'>debug</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-debug' href='./../Overviews/Methods.html#debug'>debug</a> = <span class='argstr'>bool</span></h3>
+<div class='method'>
+<p>If set to <code>true</code> the player will post information on the just played loops to the console.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bool<td class='argumentdesc'>
+<p>A <a href="./../Classes/Boolean.html">Boolean</a> (either <code>true</code> or <code>false</code>)</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numOutChannels' href='./../Overviews/Methods.html#numOutChannels'>numOutChannels</a></h3>
 <div class='method'>
 <p>(describe method here)<h4>Returns:</h4>
 <div class='returnvalue'>
@@ -101,34 +140,7 @@ var scdoc_sc_version = '3.11.0';
 <div class='method'>
 <p>(describe method here)<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resume' href='./../Overviews/Methods.html#resume'>resume</a></h3>
-<div class='method'>
-<p>(describe method here)<h4>Returns:</h4>
-<div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setLoopMaxLength' href='./../Overviews/Methods.html#setLoopMaxLength'>setLoopMaxLength</a>(<span class='argstr'>index</span>, <span class='argstr'>length</span>)</h3>
-<div class='method'>
-<p>(describe method here)<h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>index<td class='argumentdesc'>
-<p>(describe argument here)<tr><td class='argumentname'>length<td class='argumentdesc'>
-<p>(describe argument here)</table><h4>Returns:</h4>
-<div class='returnvalue'>
 <p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
-<div class='method'>
-<p>(describe method here)<h4>Returns:</h4>
-<div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pause' href='./../Overviews/Methods.html#pause'>pause</a></h3>
-<div class='method'>
-<p>(describe method here)<h4>Returns:</h4>
-<div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a>(<span class='argstr'>fadeTime: 0.2</span>)</h3>
-<div class='method'>
-<p>(describe method here)<h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>fadeTime<td class='argumentdesc'>
-<p>(describe argument here)</table><h4>Returns:</h4>
-<div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-freeHangingNodes' href='./../Overviews/Methods.html#freeHangingNodes'>freeHangingNodes</a></h3>
 <div class='method'>
 <p>(describe method here)<h4>Returns:</h4>
 <div class='returnvalue'>
@@ -139,14 +151,6 @@ var scdoc_sc_version = '3.11.0';
 <p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-server' href='./../Overviews/Methods.html#server'>server</a></h3>
 <div class='method'>
 <p>(describe method here)<h4>Returns:</h4>
-<div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-debug' href='./../Overviews/Methods.html#debug'>debug</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-debug' href='./../Overviews/Methods.html#debug'>debug</a> = <span class='argstr'>bool</span></h3>
-<div class='method'>
-<p>(describe method here)<h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>bool<td class='argumentdesc'>
-<p>(describe argument here)</table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-looperPlayer' href='./../Overviews/Methods.html#looperPlayer'>looperPlayer</a></h3>
 <div class='method'>
@@ -172,14 +176,6 @@ var scdoc_sc_version = '3.11.0';
 <div class='method'>
 <p>(describe method here)<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-initDef' href='./../Overviews/Methods.html#initDef'>initDef</a>(<span class='argstr'>mode</span>, <span class='argstr'>bufferArray</span>)</h3>
-<div class='method'>
-<p>(describe method here)<h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>mode<td class='argumentdesc'>
-<p>(describe argument here)<tr><td class='argumentname'>bufferArray<td class='argumentdesc'>
-<p>(describe argument here)</table><h4>Returns:</h4>
-<div class='returnvalue'>
 <p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-init' href='./../Overviews/Methods.html#init'>init</a>(<span class='argstr'>server</span>)</h3>
 <div class='method'>
 <p>(describe method here)<h4>Arguments:</h4>
@@ -194,10 +190,6 @@ var scdoc_sc_version = '3.11.0';
 <tr><td class='argumentname'>index<td class='argumentdesc'>
 <p>(describe argument here)<tr><td class='argumentname'>length<td class='argumentdesc'>
 <p>(describe argument here)</table><h4>Returns:</h4>
-<div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-play' href='./../Overviews/Methods.html#play'>play</a></h3>
-<div class='method'>
-<p>(describe method here)<h4>Returns:</h4>
 <div class='returnvalue'>
 <p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mode' href='./../Overviews/Methods.html#mode'>mode</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mode' href='./../Overviews/Methods.html#mode'>mode</a> = value</h3>
