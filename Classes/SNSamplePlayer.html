@@ -44,13 +44,9 @@ var scdoc_sc_version = '3.11.0';
 <li class='toc3'><a href='#-server'>server</a> </li>
 <li class='toc3'><a href='#-looperPlayer'>looperPlayer</a> </li>
 <li class='toc3'><a href='#-out'>out</a> </li>
-<li class='toc3'><a href='#-prSetUpControls'>prSetUpControls</a> </li>
 <li class='toc3'><a href='#-group'>group</a> </li>
 <li class='toc3'><a href='#-buffers'>buffers</a> </li>
-<li class='toc3'><a href='#-init'>init</a> </li>
-<li class='toc3'><a href='#-prSetSpecConstraints'>prSetSpecConstraints</a> </li>
 <li class='toc3'><a href='#-mode'>mode</a> </li>
-<li class='toc3'><a href='#-prInitPatternPlayer'>prInitPatternPlayer</a> </li>
 </ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 </ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><div id='menubar'></div>
@@ -94,11 +90,11 @@ var scdoc_sc_version = '3.11.0';
 <table class='arguments'>
 <tr><td class='argumentname'>bufferArray<td class='argumentdesc'>
 <p>An <a href="./../Classes/Array.html">Array</a> of buffers that will be looped in the instance. Often this will be identical with an array of buffers created when setting up an <a href="./../Classes/SNSampler.html">SNSampler</a><tr><td class='argumentname'>volumeControlNode<td class='argumentdesc'>
-<p>Optional - an <a href="./../Classes/Integer.html">Integer</a>, denoting the position of the volume control in the chain of synths and filters (defined in an <a href="./../Classes/Ndef.html">Ndef</a> or <a href="./../Classes/NodeProxy.html">NodeProxy</a>).<div class='note'><span class='notelabel'>NOTE:</span> This ID is not a regular node ID in the server tree!</div></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-initDef' href='./../Overviews/Methods.html#initDef'>initDef</a>(<span class='argstr'>mode</span>, <span class='argstr'>bufferArray</span>)</h3>
+<p>Optional - an <a href="./../Classes/Integer.html">Integer</a>, denoting the position of the volume control in the chain of synths and filters (defined in an <a href="./../Classes/Ndef.html">Ndef</a> or <a href="./../Classes/NodeProxy.html">NodeProxy</a>).<div class='note'><span class='notelabel'>NOTE:</span> This ID is not a regular node ID in the server tree!</div></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-initDef' href='./../Overviews/Methods.html#initDef'>initDef</a>(<span class='argstr'>argMode</span>, <span class='argstr'>bufferArray</span>)</h3>
 <div class='method'>
 <p>Initialize or switch the mode in which the player will play. Available modes will be the ones described in <a href="#*new">*new</a>.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>mode<td class='argumentdesc'>
+<tr><td class='argumentname'>argMode<td class='argumentdesc'>
 <p>A <a href="./../Classes/Symbol.html">Symbol</a> - either <code>\grain</code>, <code>\mono</code> or <code>\ndef</code><tr><td class='argumentname'>bufferArray<td class='argumentdesc'>
 <p>Optional - an array of buffers, initialized with <a href="./../Classes/Buffer.html#*allocConsecutive">Buffer: *allocConsecutive</a>.<div class='note'><span class='notelabel'>NOTE:</span> The number of buffers must be the same as the number of buffers for which the player was initialized!</div></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-play' href='./../Overviews/Methods.html#play'>play</a></h3>
 <div class='method'>
@@ -134,78 +130,66 @@ var scdoc_sc_version = '3.11.0';
 <tr><td class='argumentname'>bool<td class='argumentdesc'>
 <p>A <a href="./../Classes/Boolean.html">Boolean</a> (either <code>true</code> or <code>false</code>)</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numOutChannels' href='./../Overviews/Methods.html#numOutChannels'>numOutChannels</a></h3>
 <div class='method'>
-<p>(describe method here)<h4>Returns:</h4>
+<p>The number of output channels. This is not the same as the number of buffers. Internally each buffers plays to its own channel(s). All buffer channels will then be spread over the panorama either using <a href="./../Classes/Splay.html">Splay</a> (stereo) or <a href="./../Classes/SplayAz.html">SplayAz</a> (<code>numOutChannels</code> &gt; 2).<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loopLengths' href='./../Overviews/Methods.html#loopLengths'>loopLengths</a></h3>
+<p>An <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Integer.html">Integer</a>s</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loopLengths' href='./../Overviews/Methods.html#loopLengths'>loopLengths</a></h3>
 <div class='method'>
-<p>(describe method here)<h4>Returns:</h4>
+<p>As eplained in <a href="#-setLoopMaxLength">-setLoopMaxLength</a> a buffer may be larger than the actual audio that it contains, leaving silence at the end of the buffer. This variable contains the lengths of actually recorded audio in seconds for all buffers as set by <a href="#-setLoopMaxLength">-setLoopMaxLength</a>.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
+<p>An <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Float.html">Float</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
 <div class='method'>
-<p>(describe method here)<h4>Returns:</h4>
+<p>The name of the instance as assigned in <a href="#*new">*new</a> (internally converted to a <a href="./../Classes/Symbol.html">Symbol</a> if given as <a href="./../Classes/String.html">String</a>).<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bufLength' href='./../Overviews/Methods.html#bufLength'>bufLength</a></h3>
+<p>A <a href="./../Classes/Symbol.html">Symbol</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bufLength' href='./../Overviews/Methods.html#bufLength'>bufLength</a></h3>
 <div class='method'>
-<p>(describe method here)<h4>Returns:</h4>
+<p>The full length of the buffers as given in <a href="#*new">*new</a>. This will not be the same as actual length of audio written to them (see <a href="#-loopLengths">-loopLengths</a>).<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-server' href='./../Overviews/Methods.html#server'>server</a></h3>
+<p>A <a href="./../Classes/Integer.html">Integer</a> or <a href="./../Classes/Float.html">Float</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-server' href='./../Overviews/Methods.html#server'>server</a></h3>
 <div class='method'>
-<p>(describe method here)<h4>Returns:</h4>
-<div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-looperPlayer' href='./../Overviews/Methods.html#looperPlayer'>looperPlayer</a></h3>
+<p>The <a href="./../Classes/Server.html">Server</a> on which to play the audio - either explicitely given in <a href="#*new">*new</a> or simply <code>Server.default</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-looperPlayer' href='./../Overviews/Methods.html#looperPlayer'>looperPlayer</a></h3>
 <div class='method'>
-<p>(describe method here)<h4>Returns:</h4>
+<p>The <a href="./../Classes/Ndef.html">Ndef</a> that holds the looper as its source. The looper can basically be a <a href="./../Classes/Function.html">Function</a> or a <a href="./../Classes/Pattern.html">Pattern</a>. If desired the output can be further processed by hooking up <a href="./../Reference/NodeProxy_roles.html">NodeProxy roles</a>.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-out' href='./../Overviews/Methods.html#out'>out</a></h3>
+<p>An <a href="./../Classes/Ndef.html">Ndef</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-out' href='./../Overviews/Methods.html#out'>out</a></h3>
 <div class='method'>
-<p>(describe method here)<h4>Returns:</h4>
+<p>The <a href="./../Classes/Ndef.html">Ndef</a> that's actually playing to the out channels. The number of channels will be determined by the <code>numOutChannels</code> argument in <a href="#*new">*new</a>. If desired the output can be further processed by hooking up <a href="./../Reference/NodeProxy_roles.html">NodeProxy roles</a>.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prSetUpControls' href='./../Overviews/Methods.html#prSetUpControls'>prSetUpControls</a>(<span class='argstr'>volumeControl</span>)</h3>
+<p>An <a href="./../Classes/Ndef.html">Ndef</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-group' href='./../Overviews/Methods.html#group'>group</a></h3>
 <div class='method'>
-<p>(describe method here)<h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>volumeControl<td class='argumentdesc'>
-<p>(describe argument here)</table><h4>Returns:</h4>
+<p>The <a href="./../Classes/Group.html">Group</a>, respectively <a href="./../Classes/ParGroup.html">ParGroup</a> in which the Ndef returned by <a href="#*out">*out</a> will play. If <a href="./../Classes/Server.html#*scsynth">scsynth</a> is set engine this will resolve to <a href="./../Classes/Group.html">Group</a>. If <a href="./../Classes/Server.html#*supernova">supernova</a> is used (multicore virtualistaion) a <a href="./../Classes/ParGroup.html">ParGroup</a> will be returned. Setting the Ndef to explicit a group allows you to free all contained nodes contained in the group without stopping the player. See <a href="#-freeHangingNodes">-freeHangingNodes</a> for further explanation.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-group' href='./../Overviews/Methods.html#group'>group</a></h3>
-<div class='method'>
-<p>(describe method here)<h4>Returns:</h4>
-<div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-buffers' href='./../Overviews/Methods.html#buffers'>buffers</a></h3>
+<p>A <a href="./../Classes/Group.html">Group</a> or a <a href="./../Classes/ParGroup.html">ParGroup</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-buffers' href='./../Overviews/Methods.html#buffers'>buffers</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-buffers' href='./../Overviews/Methods.html#buffers'>buffers</a> = value</h3>
 <div class='method'>
-<p>(describe method here)<h4>Returns:</h4>
+<p>Get or set the array of consecutive buffers to be looped over.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-init' href='./../Overviews/Methods.html#init'>init</a>(<span class='argstr'>server</span>)</h3>
+<p>An <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Buffer.html">Buffer</a>s</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mode' href='./../Overviews/Methods.html#mode'>mode</a></h3>
 <div class='method'>
-<p>(describe method here)<h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>server<td class='argumentdesc'>
-<p>(describe argument here)</table><h4>Returns:</h4>
+<p>The mode to which the SNSamplePlayer has been initialized: <code>\grain</code>, <code>\mono</code> or <code>\ndef</code>.<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prSetSpecConstraints' href='./../Overviews/Methods.html#prSetSpecConstraints'>prSetSpecConstraints</a>(<span class='argstr'>index</span>, <span class='argstr'>length</span>)</h3>
-<div class='method'>
-<p>(describe method here)<h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>index<td class='argumentdesc'>
-<p>(describe argument here)<tr><td class='argumentname'>length<td class='argumentdesc'>
-<p>(describe argument here)</table><h4>Returns:</h4>
-<div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mode' href='./../Overviews/Methods.html#mode'>mode</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mode' href='./../Overviews/Methods.html#mode'>mode</a> = value</h3>
-<div class='method'>
-<p>(describe method here)<h4>Returns:</h4>
-<div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prInitPatternPlayer' href='./../Overviews/Methods.html#prInitPatternPlayer'>prInitPatternPlayer</a>(<span class='argstr'>bufferArray</span>)</h3>
-<div class='method'>
-<p>(describe method here)<h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>bufferArray<td class='argumentdesc'>
-<p>(describe argument here)</table><h4>Returns:</h4>
-<div class='returnvalue'>
-<p>(describe returnvalue here)</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<p>A <a href="./../Classes/Symbol.html">Symbol</a></div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
-<textarea class='editor'>(some example code)</textarea>
+<textarea class='editor'>// initialize a sampler
+// name = 'Sampler', 5 buffers, buffer length = 60 seconds
+~sampler = SNSampler.new;
+
+// setting up the sampler will automatically allocate the array
+// of consecutive buffers andgenerate controls within CVCenter
+~sampler.setupSampler;
+
+// initialize a player
+// name = 'Looper', buffer length = 60 seconds, mode = 'grain'
+~player = SNSamplePlayer.new;
+
+// set up the player, pass in the buffers to be used
+~player.setupPlayer(~sampler.buffers);
+
+// set a done action, to be executed sampling a sequence is done
+(
+~sampler.doneAction_({ |index, length|
+    ~player.setLoopMaxLength(index, length)
+})
+)</textarea>
 
 <p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/SNSampler/HelpSource/Classes/SNSamplePlayer.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/SNSampler/HelpSource/Classes/SNSamplePlayer.schelp</a><br>link::Classes/SNSamplePlayer::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
 </body></html>
