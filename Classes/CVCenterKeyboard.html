@@ -66,7 +66,7 @@ var scdoc_sc_version = '3.11.0';
 <div id='summary'>A MIDI keyboard implementation for CVCenter</div>
 </div>
 <div class='subheader'>
-<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenterKeyboard/CVCenterKeyboard.sc' title='/home/stefan/.local/share/SuperCollider/Extensions/CVCenterKeyboard/CVCenterKeyboard.sc'>CVCenterKeyboard.sc</a></div><div id='related'>See also: <a href="./../Classes/CVCenter.html">CVCenter</a>, <a href="./../Guides/UsingMIDI.html">Using MIDI</a></div>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenterKeyboard/CVCenterKeyboard.sc' title='/home/stefan/.local/share/SuperCollider/Extensions/CVCenterKeyboard/CVCenterKeyboard.sc'>CVCenterKeyboard.sc</a></div><div id='related'>See also: <a href="./../Classes/CVCenter.html">CVCenter</a>, <a href="./../Guides/UsingMIDI.html">Using MIDI</a>, <a href="./../Classes/CVCenterKeyboardSelect.html">CVCenterKeyboardSelect</a></div>
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
 
@@ -200,6 +200,8 @@ SynthDef.new(\square, {
 }).add;
 )
 
+Spec.add(\width, #[0.01, 0.99]);
+
 ~kb.addSynthDef(\square);
 ~kb.setUpControls(\square, \sq, bendControl: \freq);
 // switch keyboard to new SynthDef
@@ -217,7 +219,12 @@ SynthDef.new(\square, {
 <p>Optional - a <a href="./../Classes/Symbol.html">Symbol</a> denoting the tab under which the <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a>s that control the GUI will be placed in <a href="./../Classes/CVCenter.html">CVCenter</a>. The select which lets you select among theSynthDefs stored with the keyboard will not be part of CVCenter, yet it is connected (and hence synchronized) to a CVWidgetKnob.</table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>a <a href="./../Classes/CVCenterKeyboardSelect.html">CVCenterKeyboardSelect</a></div><h4>Discussion:</h4>
-<textarea class='editor'>~kb.createSelect;</textarea>
+<textarea class='editor'>~kbSelect = ~kb.createSelect;
+
+// define a TouchOSC interface, connected to your keyboard select
+// find an example layout in the 'TouchOSC' directory within the class' repository
+// adjust IP address to your device" IP address, prefix to the page that contains your interface
+~kbSelect.addOSC(NetAddr("192.168.1.16", 9000));</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-select' href='./../Overviews/Methods.html#select'>select</a></h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
