@@ -31,7 +31,9 @@ var scdoc_sc_version = '3.11.1-rc1';
 <li class='toc3'><a href='#-recBufnum'>recBufnum</a> </li>
 <li class='toc3'><a href='#-inBus'>inBus</a> </li>
 <li class='toc3'><a href='#-sample'>sample</a> </li>
+<li class='toc3'><a href='#-scope'>scope</a> </li>
 <li class='toc3'><a href='#-reset'>reset</a> </li>
+<li class='toc3'><a href='#-quit'>quit</a> </li>
 <li class='toc2'><a href='#Instance%20variables%20-%20getters%20and%20setters'>Instance variables - getters and setters</a></li>
 <ul class='toc'><li class='toc3'><a href='#-doneAction'>doneAction</a> </li>
 <li class='toc3'><a href='#-touchOSC'>touchOSC</a> </li>
@@ -52,7 +54,9 @@ var scdoc_sc_version = '3.11.1-rc1';
 </ul><li class='toc2'><a href='#Helpers'>Helpers</a></li>
 <ul class='toc'><li class='toc3'><a href='#-setInputCompressor'>setInputCompressor</a> </li>
 </ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
-</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-scopeWindow'>scopeWindow</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
 <div class='header'>
@@ -112,13 +116,17 @@ var scdoc_sc_version = '3.11.1-rc1';
 <table class='arguments'>
 <tr><td class='argumentname'>bool<td class='argumentdesc'>
 <p>A <a href="./../Classes/Boolean.html">Boolean</a> determining whether sampling should be started or stopped.<tr><td class='argumentname'>bufnum<td class='argumentdesc'>
-<p>A <a href="./../Classes/Integer.html">Integer</a>, denoting the <a href="./../Classes/Buffer.html#-bufnum">bufnum</a> to which audio shall be recorded. If not provided the sampler will either write to the next available bufnum or use a random bufnum if <a href="#-randomBufferSelect">-randomBufferSelect</a> has been set to <code>true</code>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reset' href='./../Overviews/Methods.html#reset'>reset</a>(<span class='argstr'>index</span>, <span class='argstr'>doneAction</span>)</h3>
+<p>A <a href="./../Classes/Integer.html">Integer</a>, denoting the <a href="./../Classes/Buffer.html#-bufnum">bufnum</a> to which audio shall be recorded. If not provided the sampler will either write to the next available bufnum or use a random bufnum if <a href="#-randomBufferSelect">-randomBufferSelect</a> has been set to <code>true</code>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scope' href='./../Overviews/Methods.html#scope'>scope</a></h3>
+<div class='method'>
+<p>Open a <a href="./../Classes/Stethoscope.html">Stethoscope</a>, displaying the currently recorded audio. This method will be called automatically when calling <a href="./../-setupSampler">-setupSampler</a> but can be called anytime to recreate the stethoscope e.g. if it has been closed accidently.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reset' href='./../Overviews/Methods.html#reset'>reset</a>(<span class='argstr'>index</span>, <span class='argstr'>doneAction</span>)</h3>
 <div class='method'>
 <p>Reset one or all buffers. Recorded audio will be reset to zero, the <a href="#-loopLengths">-loopLengths</a> will be reset and, if given, <code>doneAction</code> will be executed.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>index<td class='argumentdesc'>
 <p>An <a href="./../Classes/Integer.html">Integer</a>, denoting the buffer number that should be reset.<tr><td class='argumentname'>doneAction<td class='argumentdesc'>
-<p>A <a href="./../Classes/Function.html">Function</a> that will be executed upon reseting the buffer(s)</table></div><h3><a class='anchor' name='Instance%20variables%20-%20getters%20and%20setters'>Instance variables - getters and setters</a></h3>
+<p>A <a href="./../Classes/Function.html">Function</a> that will be executed upon reseting the buffer(s)</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-quit' href='./../Overviews/Methods.html#quit'>quit</a></h3>
+<div class='method'>
+<p>Quit the sampler and free all resources except CVWidgets. After calling this method a new SNSampler of the same name can be initialized. CVWidgets created for the old SNSampler will still work with the new one.</div><h3><a class='anchor' name='Instance%20variables%20-%20getters%20and%20setters'>Instance variables - getters and setters</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doneAction' href='./../Overviews/Methods.html#doneAction'>doneAction</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doneAction' href='./../Overviews/Methods.html#doneAction'>doneAction</a> = value</h3>
 <div class='method'>
@@ -171,7 +179,9 @@ var scdoc_sc_version = '3.11.1-rc1';
 <p>Slope of applied amplitude curve if control signal amplitude is above thresh. Values &lt; 1.0 achieve compression (louder signals are attenuated) whereas values &gt; 1.0 expand (louder signals are made even louder). A value of 1/3 achieves a 3:1 compression. Default: <code>0.15</code>.<tr><td class='argumentname'>clampTime<td class='argumentdesc'>
 <p>Time (in seconds) it takes for the amplitude adjustment to kick in fully after the control signal is above thresh. Usually a small value around 10ms (0.01), often set as low as 2ms (0.002). Default: <code>0.01</code>.<tr><td class='argumentname'>relaxTime<td class='argumentdesc'>
 <p>Time (in seconds) for the amplitude adjustment to be released (control signal below thresh). Usually longer than clampTime; depending on the input and control signal, setting both times too short results in (possibly unwanted) artifacts. Default: <code>0.23</code></table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scopeWindow' href='./../Overviews/Methods.html#scopeWindow'>scopeWindow</a></h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
 <textarea class='editor'>// create a new sampler with default parameters
 ~sampler = SNSampler.new;
 
