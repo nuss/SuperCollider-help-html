@@ -38,6 +38,7 @@ var scdoc_sc_version = '3.11.1';
 <ul class='toc'><li class='toc3'><a href='#-doneAction'>doneAction</a> </li>
 <li class='toc3'><a href='#-touchOSC'>touchOSC</a> </li>
 <li class='toc3'><a href='#-touchOSCPanel'>touchOSCPanel</a> </li>
+<li class='toc3'><a href='#-buffersPanel'>buffersPanel</a> </li>
 <li class='toc3'><a href='#-randomBufferSelect'>randomBufferSelect</a> </li>
 </ul><li class='toc2'><a href='#Introspection'>Introspection</a></li>
 <ul class='toc'><li class='toc3'><a href='#-recorder'>recorder</a> </li>
@@ -46,6 +47,7 @@ var scdoc_sc_version = '3.11.1';
 <li class='toc3'><a href='#-lastBufnum'>lastBufnum</a> </li>
 <li class='toc3'><a href='#-numChannels'>numChannels</a> </li>
 <li class='toc3'><a href='#-buffers'>buffers</a> </li>
+<li class='toc3'><a href='#-backupBuffers'>backupBuffers</a> </li>
 <li class='toc3'><a href='#-name'>name</a> </li>
 <li class='toc3'><a href='#-isSampling'>isSampling</a> </li>
 <li class='toc3'><a href='#-bufLength'>bufLength</a> </li>
@@ -54,10 +56,7 @@ var scdoc_sc_version = '3.11.1';
 </ul><li class='toc2'><a href='#Helpers'>Helpers</a></li>
 <ul class='toc'><li class='toc3'><a href='#-setInputCompressor'>setInputCompressor</a> </li>
 </ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
-<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-backupBuffers'>backupBuffers</a> </li>
-<li class='toc3'><a href='#-scopeWindow'>scopeWindow</a> </li>
-</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
 <div class='header'>
@@ -74,7 +73,7 @@ var scdoc_sc_version = '3.11.1';
 <h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>An SNSampler lets you record sequences of sound up to a specified length. When you instantiate a new SNSampler an array of consecutive empty buffers of equal length will be created. The length of these buffers determines how long the sequences <em>can</em> be. The actual sampling is started be executing the <a href="#-sample">-sample</a> method with a boolean argument <code>true</code>. Again executing the same method with an argument <code>false</code>. The length of the recorde sound will be stored in a variable <a href="#-loopLengths">-loopLengths</a> which stores the lengths of of all currently recorded sequences in values between <code>0</code> and <code>1</code> (<code>1</code> represents the longest possible sequence).<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='method-code'><span class='method-prefix'>SNSampler.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>name: 'Sampler'</span>, <span class='argstr'>numBuffers: 5</span>, <span class='argstr'>bufLength: 60</span>, <span class='argstr'>numChannels: 1</span>, <span class='argstr'>server</span>, <span class='argstr'>touchOSC</span>, <span class='argstr'>touchOSCPanel: 1</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>SNSampler.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>name: 'Sampler'</span>, <span class='argstr'>numBuffers: 5</span>, <span class='argstr'>bufLength: 60</span>, <span class='argstr'>numChannels: 1</span>, <span class='argstr'>server</span>, <span class='argstr'>touchOSC</span>, <span class='argstr'>touchOSCPanel: 1</span>, <span class='argstr'>buffersPanel: 4</span>)</h3>
 <div class='method'>
 <p>Create a new SNSampler instance.<h4>Arguments:</h4>
 <table class='arguments'>
@@ -137,7 +136,10 @@ var scdoc_sc_version = '3.11.1';
 <p>Set the <a href="./../Classes/NetAddr.html">NetAddr</a> under which an installation of TouchOSC will be communicating with the sampler.<div class='note'><span class='notelabel'>NOTE:</span> The port given in the NetAddr will be the port under which TouchOSC is <em>listening</em> to OSC messages coming from SuperCollider!</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-touchOSCPanel' href='./../Overviews/Methods.html#touchOSCPanel'>touchOSCPanel</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-touchOSCPanel' href='./../Overviews/Methods.html#touchOSCPanel'>touchOSCPanel</a> = value</h3>
 <div class='method'>
-<p>TouchOSC's graphical user interface is typically organized in panels. A toggle button on the first panel may be addressed through the following command name: <code>/1/toggle1</code>. The <code>touchOSCPanel</code> should allow you to specify the panel under which buttons connected to the SNSampler live.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-randomBufferSelect' href='./../Overviews/Methods.html#randomBufferSelect'>randomBufferSelect</a></h3>
+<p>TouchOSC's graphical user interface is typically organized in panels. A toggle button on the first panel may be addressed through the following command name: <code>/1/toggle1</code>. The <code>touchOSCPanel</code> should allow you to specify the panel under which buttons connected to the SNSampler live.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-buffersPanel' href='./../Overviews/Methods.html#buffersPanel'>buffersPanel</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-buffersPanel' href='./../Overviews/Methods.html#buffersPanel'>buffersPanel</a> = value</h3>
+<div class='method'>
+<p>A page in a TouchOSC GUI that is used select pre-recorded soundfiles. Default: <code>4</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-randomBufferSelect' href='./../Overviews/Methods.html#randomBufferSelect'>randomBufferSelect</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-randomBufferSelect' href='./../Overviews/Methods.html#randomBufferSelect'>randomBufferSelect</a> = value</h3>
 <div class='method'>
 <p>Determine whether the next buffer for audio recording should be selected randomly. Even if this is set to <code>true</code> SNSampler will always try to select a buffer that has not yet been used for recording (only if all buffers have already been filled it will start overwriting already recorded audio).</div><h3><a class='anchor' name='Introspection'>Introspection</a></h3>
@@ -159,7 +161,16 @@ var scdoc_sc_version = '3.11.1';
 <div class='method'>
 <p>The number of channels for each Buffer allocated when initializing a new SNSampler. Allocating the buffers is done by calling <a href="./../Classes/Buffer.html#*allocConsecutive">Buffer: *allocConsecutive</a> which only allows setting the same number of channels for all allocated buffers. By default this will be <code>1</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-buffers' href='./../Overviews/Methods.html#buffers'>buffers</a></h3>
 <div class='method'>
-<p>Returns the array of consecutive buffers, allocated when the SNSampler was initialized.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
+<p>Returns the array of consecutive buffers, allocated when the SNSampler was initialized.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-backupBuffers' href='./../Overviews/Methods.html#backupBuffers'>backupBuffers</a></h3>
+<div class='method'>
+<p>In an <a href="./../Classes/SNSamplePlayer.html">SNSamplePlayer</a> not only sounds sampled live within SNSampler can be used but also prerecorded soundfiles. If a prerecorded sound is used a buffer in the <a href="./../-buffers">-buffers</a> array will be replaced by that sound. The replaced buffer will be backed up in <code>backupBuffers</code> along with the length of the actually recorded audio in seconds under the same index as in the <code>buffers</code> array. Contrary to the <code>buffers</code> array, <code>backupBuffers</code> is an array of events:<textarea class='editor'>[
+    (buffer:&lt;buffer 1&gt;, length:&lt;length of recorded audio in buffer 1&gt;),
+    (buffer:&lt;buffer 2&gt;, length:&lt;length of recorded audio in buffer 2&gt;),
+    ...
+    (buffer:&lt;buffer N&gt;, length:&lt;length of recorded audio in buffer N&gt;),
+]</textarea>
+
+<p>Keeping the extra information on the length of the recorded audio allows for recreating the correct specs again, if the backed up buffer is used again.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
 <div class='method'>
 <p>The name of the SNSampler. By default this will be <code>'Sampler'</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isSampling' href='./../Overviews/Methods.html#isSampling'>isSampling</a></h3>
 <div class='method'>
@@ -180,10 +191,7 @@ var scdoc_sc_version = '3.11.1';
 <p>Slope of applied amplitude curve if control signal amplitude is above thresh. Values &lt; 1.0 achieve compression (louder signals are attenuated) whereas values &gt; 1.0 expand (louder signals are made even louder). A value of 1/3 achieves a 3:1 compression. Default: <code>0.15</code>.<tr><td class='argumentname'>clampTime<td class='argumentdesc'>
 <p>Time (in seconds) it takes for the amplitude adjustment to kick in fully after the control signal is above thresh. Usually a small value around 10ms (0.01), often set as low as 2ms (0.002). Default: <code>0.01</code>.<tr><td class='argumentname'>relaxTime<td class='argumentdesc'>
 <p>Time (in seconds) for the amplitude adjustment to be released (control signal below thresh). Usually longer than clampTime; depending on the input and control signal, setting both times too short results in (possibly unwanted) artifacts. Default: <code>0.23</code></table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-backupBuffers' href='./../Overviews/Methods.html#backupBuffers'>backupBuffers</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scopeWindow' href='./../Overviews/Methods.html#scopeWindow'>scopeWindow</a></h3>
-<h2><a class='anchor' name='examples'>Examples</a></h2>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
 <textarea class='editor'>// create a new sampler with default parameters
 ~sampler = SNSampler.new;
 
