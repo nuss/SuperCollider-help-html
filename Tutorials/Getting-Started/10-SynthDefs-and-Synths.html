@@ -55,28 +55,29 @@ var scdoc_sc_version = '3.11.1';
 { SinOsc.ar(440, 0, 0.2) }.play;
 
 // now here's an equivalent SynthDef
-SynthDef.new("tutorial-SinOsc", { Out.ar(0, SinOsc.ar(440, 0, 0.2)) }).play;</textarea>
+SynthDef.new("tutorial-SinOsc", { |out| Out.ar(out, SinOsc.ar(440, 0, 0.2)) }).play;</textarea>
 
-<p>SynthDef-new takes a number of arguments. The first is a name, usually in the form of a String as above. The second is in fact a Function. This argument is called a UGen Graph Function, as it tells the server how to connect together its various UGens.<h2><a class='anchor' name='SynthDefs%20vs.%20Functions'>SynthDefs vs. Functions</a></h2>
+<p>SynthDef-new takes a number of arguments. The first is a name, usually in the form of a String as above. The second is in fact a Function. This argument is called a UGen Graph Function, as it tells the server how to connect together its various UGens.<div class='note'><span class='notelabel'>NOTE:</span> Within the function braces, the <code>|out|</code> argument defines a SynthDef <em>control input</em>, which is then used as the first input to <code>Out.ar</code>. It is a good habit to provide an <code>out</code> control in every SynthDef. Review <a href="./../../Tutorials/Getting-Started/04-Functions-and-Other-Functionality.html">04. Functions and Other Functionality</a> for more about function arguments.</div><h2><a class='anchor' name='SynthDefs%20vs.%20Functions'>SynthDefs vs. Functions</a></h2>
 
 <p>This UGen Graph Function we used in the second example above is similar to the Function we used in the first one, but with one notable difference: It has an extra UGen called Out. Out writes out an ar or kr signal to one of the server's busses, which can be thought of as mixer channels or outputs. We'll discuss busses in greater detail later, but for now just be aware that they're used for playing audio out of the computer, and for reading it in from sources such as microphones.
 <p>Out takes two arguments: The first is the index number of the bus to write out on. These start from 0, which on a stereo setup is usually the left output channel. The second is either a UGen or an Array of UGens. If you provide an array (i.e. a multichannel output) then the first channel will be played out on the bus with the indicated index, the second channel on the bus with the indicated index + 1, and so on.
-<p>Here's a stereo example to make clear how this works. The SinOsc with the frequency argument of 440 Hz will be played out on bus 0 (the left channel), and the SinOsc with the frequency argument of 442 Hz will be played out on bus 1 (the right channel).<textarea class='editor'>(
-SynthDef.new("tutorial-SinOsc-stereo", { var outArray;
+<p>Here's a stereo example to make clear how this works. The SinOsc with the frequency argument of 440 Hz will be played out on the first output bus (the left channel), and the SinOsc with the frequency argument of 442 Hz will be played out on the second bus (the right channel). By default, <code>out</code> assumes bus 0 as the first channel, so the two will play on buses 0 and 1 respectively.<textarea class='editor'>(
+SynthDef.new("tutorial-SinOsc-stereo", { |out|
+    var outArray;
     outArray = [SinOsc.ar(440, 0, 0.2), SinOsc.ar(442, 0, 0.2)];
-    Out.ar(0, outArray)
+    Out.ar(out, outArray)
 }).play;
 )</textarea>
 
 <p>When you use Function-play an Out UGen is in fact created for you if you do not explicitly create one. The default bus index for this Out UGen is 0.
 <p>Both Function-play and SynthDef-play return another type of object, a Synth, which represents a synth on the server. If you store this object by assigning it to a variable you can control it's behaviour in various ways. For instance the method 'free' causes the synth on the server to stop playing and its memory and cpu resources to be freed.<textarea class='editor'>x = { SinOsc.ar(660, 0, 0.2) }.play;
-y = SynthDef.new("tutorial-SinOsc", { Out.ar(0, SinOsc.ar(440, 0, 0.2)) }).play;
+y = SynthDef.new("tutorial-SinOsc", { |out| Out.ar(out, SinOsc.ar(440, 0, 0.2)) }).play;
 x.free;    // free just x
 y.free;    // free just y</textarea>
 
 <p>This is more flexible than Cmd-., which frees all synths at once.
 <p>More often, you will want to send the corresponding byte code to the server app without immediately creating a synth. The great advantage of this is that you can play any number of copies of the SynthDef without the overhead of compiling or sending a network of unit generators. In almost all cases, use 'add', as in the next example below. See <a href="./../../Classes/SynthDef.html#-add">SynthDef: -add</a> for details.<textarea class='editor'>// execute first, by itself
-SynthDef.new("tutorial-PinkNoise", { Out.ar(0, PinkNoise.ar(0.3)) }).add;
+SynthDef.new("tutorial-PinkNoise", { |out| Out.ar(out, PinkNoise.ar(0.3)) }).add;
 
 // then:
 x = Synth.new("tutorial-PinkNoise");
@@ -92,7 +93,7 @@ z = f.play;
 x.free; y.free; z.free;
 
 // Now with a SynthDef. No randomness!
-SynthDef("tutorial-NoRand", { Out.ar(0, SinOsc.ar(440 + 200.rand, 0, 0.2)) }).add;
+SynthDef("tutorial-NoRand", { |out| Out.ar(out, SinOsc.ar(440 + 200.rand, 0, 0.2)) }).add;
 x = Synth("tutorial-NoRand");
 y = Synth("tutorial-NoRand");
 z = Synth("tutorial-NoRand");
@@ -101,7 +102,7 @@ x.free; y.free; z.free;</textarea>
 <p>Each time you create a new Synth based on the def, the frequency is the same. This is because the Function (and thus <code>200.rand</code>) is only evaluated only once, when the SynthDef is created.<h2><a class='anchor' name='Creating%20Variety%20with%20SynthDefs'>Creating Variety with SynthDefs</a></h2>
 
 <p>There are numerous ways of getting variety out of SynthDefs, however. Some things, such as randomness, can be accomplished with various UGens. One example is <a href="./../../Classes/Rand.html">Rand</a>, which calculates a random number between low and high values when a synth is first created:<textarea class='editor'>// With Rand, it works!
-SynthDef("tutorial-Rand", { Out.ar(0, SinOsc.ar(Rand(440, 660), 0, 0.2)) }).add;
+SynthDef("tutorial-Rand", { |out| Out.ar(out, SinOsc.ar(Rand(440, 660), 0, 0.2)) }).add;
 x = Synth("tutorial-Rand");
 y = Synth("tutorial-Rand");
 z = Synth("tutorial-Rand");

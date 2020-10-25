@@ -30,6 +30,9 @@ var scdoc_sc_version = '3.11.1';
 <ul class='toc'><li class='toc2'><a href='#Adding%20and%20Removing'>Adding and Removing</a></li>
 <ul class='toc'><li class='toc3'><a href='#-add'>add</a> </li>
 <li class='toc3'><a href='#-remove'>remove</a> </li>
+</ul><li class='toc2'><a href='#Testing'>Testing</a></li>
+<ul class='toc'><li class='toc3'><a href='#-includes'>includes</a> </li>
+<li class='toc3'><a href='#-findMatch'>findMatch</a> </li>
 </ul><li class='toc2'><a href='#Iteration'>Iteration</a></li>
 <ul class='toc'><li class='toc3'><a href='#-do'>do</a> </li>
 <li class='toc3'><a href='#-keyAt'>keyAt</a> </li>
@@ -46,9 +49,7 @@ var scdoc_sc_version = '3.11.1';
 <li class='toc3'><a href='#-choose'>choose</a> </li>
 <li class='toc3'><a href='#-clear'>clear</a> </li>
 <li class='toc3'><a href='#-copy'>copy</a> </li>
-<li class='toc3'><a href='#-findMatch'>findMatch</a> </li>
 <li class='toc3'><a href='#-fixCollisionsFrom'>fixCollisionsFrom</a> </li>
-<li class='toc3'><a href='#-includes'>includes</a> </li>
 <li class='toc3'><a href='#-makeEmpty'>makeEmpty</a> </li>
 <li class='toc3'><a href='#-pop'>pop</a> </li>
 <li class='toc3'><a href='#-scanFor'>scanFor</a> </li>
@@ -81,13 +82,20 @@ var scdoc_sc_version = '3.11.1';
 <h3><a class='anchor' name='Adding%20and%20Removing'>Adding and Removing</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-add' href='./../Overviews/Methods.html#add'>add</a>(<span class='argstr'>item</span>)</h3>
 <div class='method'>
-<p>Add anObject to the Set. An object which is equal to an object already in the Set will not be added.<textarea class='editor'>Set[1, 2, 3].add(4).postln;
+<p>Add an Object to the Set. An object which is equal to an object already in the Set will not be added.<textarea class='editor'>Set[1, 2, 3].add(4).postln;
 Set[1, 2, 3].add(3).postln;
 Set["abc", "def", "ghi"].add("jkl").postln;
 Set["abc", "def", "ghi"].add("def").postln;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remove' href='./../Overviews/Methods.html#remove'>remove</a>(<span class='argstr'>item</span>)</h3>
 <div class='method'>
-<p>Remove anObject from the Set.<textarea class='editor'>Set[1, 2, 3].remove(3).postln;</textarea>
+<p>Remove an Object from the Set. Element is checked for equality (not for identity).<textarea class='editor'>Set[1, 2, 3].remove(3).postln;</textarea>
+</div><h3><a class='anchor' name='Testing'>Testing</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-includes' href='./../Overviews/Methods.html#includes'>includes</a>(<span class='argstr'>item</span>)</h3>
+<div class='method'>
+<p>Returns true if the specified item is present in the Set. Elements are checked for equality (not for identity).<textarea class='editor'>Set[1, 2, 3].includes(2).postln;</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findMatch' href='./../Overviews/Methods.html#findMatch'>findMatch</a>(<span class='argstr'>item</span>)</h3>
+<div class='method'>
+<p>Returns the item, if it is present in the set. Otherwise returns nil. Element is checked for equality (not for identity).<textarea class='editor'>Set[1, 2, 3].findMatch(3).postln;</textarea>
 </div><h3><a class='anchor' name='Iteration'>Iteration</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-do' href='./../Overviews/Methods.html#do'>do</a>(<span class='argstr'>function</span>)</h3>
 <div class='method'>
@@ -98,30 +106,30 @@ Set["abc", "def", "ghi"].add("def").postln;</textarea>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sect' href='./../Overviews/Methods.html#sect'>sect</a>(<span class='argstr'>that</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-&' href='./../Overviews/Methods.html#&amp;'>&amp;</a>(<span class='argstr'>that</span>)</h3>
 <div class='method'>
-<p>Return the set theoretical intersection of this and <strong>that</strong>.<textarea class='editor'>a = Set[1, 2, 3]; b = Set[2, 3, 4, 5];
+<p>Return the set theoretical intersection of this and <strong>that</strong>. The function will search for objects occurring in both sets and return a new set containing those. Elements are checked for equality (not for identity).<textarea class='editor'>a = Set[1, 2, 3]; b = Set[2, 3, 4, 5];
 sect(a, b);
 a &amp; b // shorter syntax</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-union' href='./../Overviews/Methods.html#union'>union</a>(<span class='argstr'>that</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-|' href='./../Overviews/Methods.html#|'>|</a>(<span class='argstr'>that</span>)</h3>
 <div class='method'>
-<p>Return the set theoretical union of this and <strong>that</strong>.<textarea class='editor'>a = Set[1, 2, 3]; b = Set[2, 3, 4, 5];
+<p>Return the set theoretical union of this and <strong>that</strong>. The function combines the two sets into one without duplicates. Elements are checked for equality (not for identity).<textarea class='editor'>a = Set[1, 2, 3]; b = Set[2, 3, 4, 5];
 union(a, b);
 a | b // shorter syntax</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-difference' href='./../Overviews/Methods.html#difference'>difference</a>(<span class='argstr'>that</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='--' href='./../Overviews/Methods.html#-'>-</a>(<span class='argstr'>that</span>)</h3>
 <div class='method'>
-<p>Return the set of all items which are elements of this, but not of <strong>that</strong>.<textarea class='editor'>a = Set[1, 2, 3]; b = Set[2, 3, 4, 5];
+<p>Return the set of all items which are elements of this, but not of <strong>that</strong>. Elements are checked for equality (not for identity).<textarea class='editor'>a = Set[1, 2, 3]; b = Set[2, 3, 4, 5];
 difference(a, b);
 a - b // shorter syntax</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-symmetricDifference' href='./../Overviews/Methods.html#symmetricDifference'>symmetricDifference</a>(<span class='argstr'>that</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='---' href='./../Overviews/Methods.html#--'>--</a>(<span class='argstr'>that</span>)</h3>
 <div class='method'>
-<p>Return the set of all items which are not elements of both this and <strong>that</strong>.<textarea class='editor'>a = Set[1, 2, 3]; b = Set[2, 3, 4, 5];
+<p>Return the set of all items which are not elements of both this and <strong>that</strong>. Elements are checked for equality (not for identity).<textarea class='editor'>a = Set[1, 2, 3]; b = Set[2, 3, 4, 5];
 symmetricDifference(a, b);
 a -- b // shorter syntax</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isSubsetOf' href='./../Overviews/Methods.html#isSubsetOf'>isSubsetOf</a>(<span class='argstr'>that</span>)</h3>
 <div class='method'>
-<p>Returns true if all elements of this are also elements of <strong>that</strong>.<textarea class='editor'>a = Set[1, 2, 3, 4];
+<p>Returns true if all elements of this are also elements of <strong>that</strong>. Elements are checked for equality (not for identity). Since Set is an unordered collection, order doesn't matter in this comparison.<textarea class='editor'>a = Set[1, 2, 3, 4];
 Set[1, 2].isSubsetOf(a); // true
 Set[1, 5].isSubsetOf(a); // false</textarea>
 </div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
@@ -132,9 +140,7 @@ Set[1, 5].isSubsetOf(a); // false</textarea>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-choose' href='./../Overviews/Methods.html#choose'>choose</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-copy' href='./../Overviews/Methods.html#copy'>copy</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findMatch' href='./../Overviews/Methods.html#findMatch'>findMatch</a>(<span class='argstr'>item</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fixCollisionsFrom' href='./../Overviews/Methods.html#fixCollisionsFrom'>fixCollisionsFrom</a>(<span class='argstr'>index</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-includes' href='./../Overviews/Methods.html#includes'>includes</a>(<span class='argstr'>item</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-makeEmpty' href='./../Overviews/Methods.html#makeEmpty'>makeEmpty</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pop' href='./../Overviews/Methods.html#pop'>pop</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scanFor' href='./../Overviews/Methods.html#scanFor'>scanFor</a>(<span class='argstr'>obj</span>)</h3>

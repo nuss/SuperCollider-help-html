@@ -53,10 +53,10 @@ In.ar(0, 4); // this will return an Array of 4 OutputProxies</textarea>
 
 <p>An OutputProxy is a special kind of UGen that acts as a placeholder for some signal that will be present when the synth is running. You'll probably never need to deal with one directly, so don't worry about them. Just understand what they are so that you'll recognise them when you see them in the post window and elsewhere.
 <p>In and Out also have 'kr' methods, which will read and write control rate signals to and from control rate busses. Note that Out.kr will convert an audio rate signal to control rate (this is called 'downsampling'), but that the reverse is not true: Out.ar needs an audio rate signal as its second argument.<textarea class='editor'>// This throws an error. Can't write a control rate signal to an audio rate bus
-{Out.ar(0, SinOsc.kr)}.play;
+{ |out| Out.ar(out, SinOsc.kr) }.play;
 
 // This will work as the audio rate signal is downsampled to control rate
-{Out.kr(0, SinOsc.ar)}.scope;</textarea>
+{ |out| Out.kr(out, SinOsc.ar) }.scope;</textarea>
 
 <p>(This limitation is not universal amongst audio rate UGens, however, and most will accept control rate signals for some or all of their arguments. Some will even convert control rate inputs to audio rate if needed, filling in the extra values through a process called interpolation.)
 <p>You'll note that when multiple Synths write to the same bus, their output is summed (i.e. mixed).<textarea class='editor'>(
@@ -74,9 +74,10 @@ y = Synth("tutorial-args", ["out", 1, "freq", 770]);</textarea>
 c = Bus.audio(s);     // Get a one channel private audio Bus (one is the default)</textarea>
 
 <p>You may be wondering what a 'two channel' bus is, since we haven't mentioned these before. You should recall that when Out has an Array as its second argument it will write the channels of the Array to consecutive busses. Recall this example from <a href="./../../Tutorials/Getting-Started/10-SynthDefs-and-Synths.html">10. SynthDefs and Synths</a> :<textarea class='editor'>(
-SynthDef.new("tutorial-SinOsc-stereo", { var outArray;
+SynthDef.new("tutorial-SinOsc-stereo", { |out|
+    var outArray;
     outArray = [SinOsc.ar(440, 0, 0.2), SinOsc.ar(442, 0, 0.2)];
-    Out.ar(0, outArray); // writes to busses 0 and 1
+    Out.ar(out, outArray); // writes to busses 0 and 1
 }).play;
 )</textarea>
 
@@ -99,9 +100,9 @@ b.free; // free the indices. You can't use this Bus object after that</textarea>
 <p>But what happens if we later decide to change the number of output channels to 6? Now everything that was written to our private bus is going out one of the output channels! A Server's audio bus allocator will only assign private indices, so if you change the number of input or output channels it will take this into account when you execute your code. Again, this makes your code more flexible.<h2><a class='anchor' name='Busses%20in%20Action'>Busses in Action</a></h2>
 
 <p>So here are two examples using busses. The first is with a control rate bus.<textarea class='editor'>(
-SynthDef("tutorial-Infreq", { arg bus, freqOffset = 0;
+SynthDef("tutorial-Infreq", { arg bus, freqOffset = 0, out;
     // this will add freqOffset to whatever is read in from the bus
-    Out.ar(0, SinOsc.ar(In.kr(bus) + freqOffset, 0, 0.5));
+    Out.ar(out, SinOsc.ar(In.kr(bus) + freqOffset, 0, 0.5));
 }).add;
 
 SynthDef("tutorial-Outfreq", { arg freq = 400, bus;
@@ -178,8 +179,8 @@ x.free; y.free; z.free; b.free;</textarea>
 b = Bus.control(s, 1); b.set(880);
 c = Bus.control(s, 1); c.set(884);
 // and make a synth with two frequency arguments
-x = SynthDef("tutorial-map", { arg freq1 = 440, freq2 = 440;
-    Out.ar(0, SinOsc.ar([freq1, freq2], 0, 0.1));
+x = SynthDef("tutorial-map", { arg freq1 = 440, freq2 = 440, out;
+    Out.ar(out, SinOsc.ar([freq1, freq2], 0, 0.1));
 }).play(s);
 )
 // Now map freq1 and freq2 to read from the two busses

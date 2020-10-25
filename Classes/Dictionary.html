@@ -45,6 +45,9 @@ var scdoc_sc_version = '3.11.1';
 <li class='toc3'><a href='#-matchAt'>matchAt</a> </li>
 <li class='toc3'><a href='#-trueAt'>trueAt</a> </li>
 <li class='toc3'><a href='#-falseAt'>falseAt</a> </li>
+</ul><li class='toc2'><a href='#Testing'>Testing</a></li>
+<ul class='toc'><li class='toc3'><a href='#-includes'>includes</a> </li>
+<li class='toc3'><a href='#-includesKey'>includesKey</a> </li>
 </ul><li class='toc2'><a href='#Iteration/Enumeration'>Iteration/Enumeration</a></li>
 <ul class='toc'><li class='toc3'><a href='#-do'>do</a>  <a href='#-collect'>collect</a>  <a href='#-reject'>reject</a>  <a href='#-select'>select</a> </li>
 <li class='toc3'><a href='#-keysValuesDo'>keysValuesDo</a> </li>
@@ -87,8 +90,6 @@ var scdoc_sc_version = '3.11.1';
 <li class='toc3'><a href='#-guiBody'>guiBody</a> </li>
 <li class='toc3'><a href='#-hash'>hash</a> </li>
 <li class='toc3'><a href='#-ilisp'>ilisp</a> </li>
-<li class='toc3'><a href='#-includes'>includes</a> </li>
-<li class='toc3'><a href='#-includesKey'>includesKey</a> </li>
 <li class='toc3'><a href='#-isArgsArray'>isArgsArray</a> </li>
 <li class='toc3'><a href='#-isArgsDict'>isArgsDict</a> </li>
 <li class='toc3'><a href='#-isAssociationArray'>isAssociationArray</a> </li>
@@ -126,12 +127,12 @@ var scdoc_sc_version = '3.11.1';
 <p><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>A Dictionary is an associative collection mapping keys to values. Two keys match if they are <strong>equal</strong>. (i.e. == returns true.)
-<p>The contents of a Dictionary are <strong>unordered</strong>. You must not depend on the order of items in a Dictionary. You must only rely on equality for the keys (e.g. symbols are ok, strings not). For identity matching see: <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>The contents of a Dictionary are <strong>unordered</strong>. You must not depend on the order of items in a Dictionary. You must only rely on equality for the keys. E.g. symbols and strings can both be used as keys because the matching is done by equality (==) and not by identity (===). For identity matching, where strings can not be used as keys, see: <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> and <a href="./../Classes/Event.html">Event</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>Dictionary.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>n: 8</span>)</h3>
 <div class='method'>
 <p>Creates a Dictionary with an initial capacity for <strong>n</strong> key value mappings.</div><h3 class='method-code'><span class='method-prefix'>Dictionary.</span><a class='method-name' name='*newFrom' href='./../Overviews/Methods.html#newFrom'>newFrom</a>(<span class='argstr'>aCollection</span>)</h3>
 <div class='method'>
-<p>Creates a new Dictionary from another collection.<textarea class='editor'>d= Dictionary.newFrom(List[\a, 1, \b, 2, \c, 4]);</textarea>
+<p>Creates a new Dictionary from another collection.<textarea class='editor'>d= Dictionary.newFrom([\a, 1, \b, 2, \c, 4]);</textarea>
 
 <p><h4>Arguments:</h4>
 <table class='arguments'>
@@ -139,6 +140,8 @@ var scdoc_sc_version = '3.11.1';
 <p>any Object that responds to keysValuesDo (usually a List or an Array).</table><h4>Discussion:</h4>
 
 <p>A new Dictionary can also be created from an array of <a href="./../Classes/Association.html">Association</a>s:<textarea class='editor'>Dictionary.with(*[\a-&gt;1,\b-&gt;2,\c-&gt;3])</textarea>
+
+<p>Or from a single Association like:<textarea class='editor'>d = Dictionary[\a -&gt; 1];</textarea>
 </div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Adding%20and%20Removing'>Adding and Removing</a></h3>
@@ -165,11 +168,11 @@ d.put("abc", 10);</textarea>
 <p>key to associate with object. This can be any objects, but is often a <a href="./../Classes/Symbol.html">Symbol</a>.<tr><td class='argumentname'>value<td class='argumentdesc'>
 <p>an object</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeAt' href='./../Overviews/Methods.html#removeAt'>removeAt</a>(<span class='argstr'>key</span>)</h3>
 <div class='method'>
-<p>Remove the key and the value associated with it from the Dictionary.<textarea class='editor'>d = (monkey: 99);
+<p>Remove the key and the value associated with it from the Dictionary.<textarea class='editor'>d = Dictionary[\monkey -&gt; 99];
 d.removeAt(\monkey);</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-putAll' href='./../Overviews/Methods.html#putAll'>putAll</a>( <span class='argstr'>... dictionaries</span>)</h3>
 <div class='method'>
-<p>Add all items of each argument to the dictionary.<textarea class='editor'>d = ();
+<p>Add all items of each argument to the dictionary.<textarea class='editor'>d = Dictionary.new;
 d.putAll(Dictionary[\hello -&gt; 9, \whello -&gt; "world"], Dictionary["abd" -&gt; 6]);</textarea>
 
 <p><h4>Arguments:</h4>
@@ -177,12 +180,12 @@ d.putAll(Dictionary[\hello -&gt; 9, \whello -&gt; "world"], Dictionary["abd" -&g
 <tr><td class='argumentname'>... dictionaries<td class='argumentdesc'>
 <p>any Object that responds to keysValuesDo (usually a Dictionary).</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-putPairs' href='./../Overviews/Methods.html#putPairs'>putPairs</a>(<span class='argstr'>args</span>)</h3>
 <div class='method'>
-<p>Add all items to the dictionary, using them as key and value pairwise.<textarea class='editor'>d = ();
+<p>Add all items to the dictionary, using them as key and value pairwise.<textarea class='editor'>d = Dictionary.new;
 d.putPairs([\hello, 10, \whello, "lord", "abc", 7]);</textarea>
 </div><h3><a class='anchor' name='Accessing'>Accessing</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>key</span>)</h3>
 <div class='method'>
-<p>Access the value associated with the key.<textarea class='editor'>d = (robot: 99);
+<p>Access the value associated with the key.<textarea class='editor'>d = Dictionary[\robot -&gt; 99];
 d.at(\robot);    // Get the value associated with key
 d[\robot];    // different syntax, same behaviour
 d.at(\monkey);    // Key doesn't exist: return Nil</textarea>
@@ -190,49 +193,49 @@ d.at(\monkey);    // Key doesn't exist: return Nil</textarea>
 <div class='method'>
 <p>Access the value associated with the key. If the key does not exist, return the result of <code>function</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keys' href='./../Overviews/Methods.html#keys'>keys</a>(<span class='argstr'>species</span>)</h3>
 <div class='method'>
-<p>Return a <a href="./../Classes/Set.html">Set</a> of all keys.<textarea class='editor'>d = (hello: 9, whello: "world");
+<p>Return a <a href="./../Classes/Set.html">Set</a> of all keys.<textarea class='editor'>d = Dictionary.newFrom([\hello, 9, \whello, "world"]);
 d.keys;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-values' href='./../Overviews/Methods.html#values'>values</a></h3>
 <div class='method'>
-<p>Return a <a href="./../Classes/List.html">List</a> of all values.<textarea class='editor'>d = (hello: 9, whello: "world");
+<p>Return a <a href="./../Classes/List.html">List</a> of all values.<textarea class='editor'>d = Dictionary.newFrom([\hello, 9, \whello, "world"]);
 d.values;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-atAll' href='./../Overviews/Methods.html#atAll'>atAll</a>(<span class='argstr'>keys</span>)</h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/Collection.html'>Collection</a></div>
 <div class='method'>
-<p>Return an <a href="./../Classes/Array.html">Array</a> of all values for the given keys.<textarea class='editor'>d = (hello: 9, whello: "world", z: 99, c: 0.33);
+<p>Return an <a href="./../Classes/Array.html">Array</a> of all values for the given keys.<textarea class='editor'>d = Dictionary.newFrom([\hello, 9, \whello, "world", \z, 99, \c, 0.33]);
 d.atAll([\hello, \z, \hello, \c, \whello]);</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getPairs' href='./../Overviews/Methods.html#getPairs'>getPairs</a>(<span class='argstr'>args</span>)</h3>
 <div class='method'>
 <p>Return an <a href="./../Classes/Array.html">Array</a> with all keys and values pairwise.<h4>Discussion:</h4>
-<textarea class='editor'>d = (hello: 9, whello: 77, z: 99);
+<textarea class='editor'>d = Dictionary.newFrom([\hello, 9, \whello, 77, \z, 99]);
 d.getPairs;</textarea>
 
 <p>Note that, unlike <a href="#-asPairs">-asPairs</a>, getPairs will return nil with an empty Dictionary.<textarea class='editor'>d = Dictionary.new;
 d.getPairs;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-associationAt' href='./../Overviews/Methods.html#associationAt'>associationAt</a>(<span class='argstr'>key</span>)</h3>
 <div class='method'>
-<p>Access the <a href="./../Classes/Association.html">Association</a> that has the given key.<textarea class='editor'>d = (robot: 99);
-d.associationAt(\robot);    // Get the value associated with key</textarea>
+<p>Access the <a href="./../Classes/Association.html">Association</a> that has the given key. Element is checked for equality (not identity).<textarea class='editor'>d = Dictionary["robot" -&gt; 99];
+d.associationAt("robot");    // Get the value associated with key</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findKeyForValue' href='./../Overviews/Methods.html#findKeyForValue'>findKeyForValue</a>(<span class='argstr'>argValue</span>)</h3>
 <div class='method'>
-<p>Try to find a given value and return its key.<textarea class='editor'>d = (hello: 1, whello: 1976);
+<p>Try to find a given value and return its key. Element is checked for equality (not identity).<textarea class='editor'>d = Dictionary.newFrom([\hello, 1, \whello, 77]);
 d.findKeyForValue(1);</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-matchAt' href='./../Overviews/Methods.html#matchAt'>matchAt</a>(<span class='argstr'>key</span>)</h3>
 <div class='method'>
-<p>The dictionary's keys are used as conditions against which the arbitrary item is matched. See: <a href="./../Reference/matchItem.html">matchItem</a><div class='note'><span class='notelabel'>NOTE:</span> if an item matches multiple criteria, the value returned is arbitrary. This is because a dictionary is an unordered collection. It's the user's responsibility to make sure that criteria are mutually exclusive.</div>
+<p>The dictionary's keys are used as conditions against which the arbitrary item is matched. See: <a href="./../Reference/matchItem.html">matchItem</a>Returns the associated value or nil if no key is matching the item.<div class='note'><span class='notelabel'>NOTE:</span> if an item matches multiple criteria, the value returned is arbitrary. This is because a dictionary is an unordered collection. It's the user's responsibility to make sure that criteria are mutually exclusive.</div>
 <p><ul>
 <li>If the key is an object, the item will be matched by identity (if key === item, the value will be returned).<li>If the key is a collection, the item is matched if it's contained in the collection.<li>If the key is a function, the function is evaluated with the item as an argument and the item is matched if the function returns true.</ul>
 
 <p><textarea class='editor'>(
-d = (
-    0: \zero,
-    \abc: \alpha,
-    [1, 2, 3, 5, 8, 13, 21]: \fibonacci,
-    { |x| try { x.even } }: \even // try is needed because argument might not be a number
-    );
+d = Dictionary.newFrom([
+    0, \zero,
+    \abc, \alpha,
+    [1, 2, 3, 5, 8, 13, 21], \fibonacci,
+    { |x| try { x.even } }, \even // try is needed because argument might not be a number
+    ]);
 );
 
-d.matchAt(0)
+d.matchAt(0)    // matches both 'zero' and 'even', either may be returned
 d.matchAt(1)
 d.matchAt(2)    // matches both 'fibonacci' and 'even', either may be returned
 d.matchAt(4)
@@ -242,7 +245,16 @@ d.matchAt(\abc)</textarea>
 <p>Returns <a href="./../Classes/True.html">True</a> if the item at the key is true, otherwise false. This method is also valid in <a href="./../Classes/Object.html">Object</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-falseAt' href='./../Overviews/Methods.html#falseAt'>falseAt</a>(<span class='argstr'>key</span>)</h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/Object.html'>Object</a></div>
 <div class='method'>
-<p>Returns <a href="./../Classes/False.html">False</a> if the item at the key is not true, otherwise true. This method is inherited from <a href="./../Classes/Object.html">Object</a>.</div><h3><a class='anchor' name='Iteration/Enumeration'>Iteration/Enumeration</a></h3>
+<p>Returns <a href="./../Classes/False.html">False</a> if the item at the key is not true, otherwise true. This method is inherited from <a href="./../Classes/Object.html">Object</a>.</div><h3><a class='anchor' name='Testing'>Testing</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-includes' href='./../Overviews/Methods.html#includes'>includes</a>(<span class='argstr'>item1</span>)</h3>
+<div class='method'>
+<p>Returns true if the specified item is stored in the Dictionary as a value. Element is checked for equality (not for identity). For identity matching see subclasses: <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> or <a href="./../Classes/Event.html">Event</a>.<textarea class='editor'>var d = Dictionary.newFrom([\a, "hey", \b, "hello"]);
+d.includes("hey").postln; // -&gt; true</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-includesKey' href='./../Overviews/Methods.html#includesKey'>includesKey</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>Returns true if the specified item is stored in the Dictionary as a key. Element is checked for equality (not for identity). For identity matching see subclasses: <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> or <a href="./../Classes/Event.html">Event</a>.<textarea class='editor'>var d = Dictionary.newFrom(["hey", 1, "hello", 2]);
+d.includesKey("hey").postln; // -&gt; true</textarea>
+</div><h3><a class='anchor' name='Iteration/Enumeration'>Iteration/Enumeration</a></h3>
 
 <p>Most methods for iteration work analogously to Dictionary's superclasses, see e.g. <a href="./../Classes/Collection.html">Collection</a>.<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-do' href='./../Overviews/Methods.html#do'>do</a>(<span class='argstr'>function</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-collect' href='./../Overviews/Methods.html#collect'>collect</a>(<span class='argstr'>function</span>)</h3>
@@ -250,48 +262,47 @@ d.matchAt(\abc)</textarea>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-select' href='./../Overviews/Methods.html#select'>select</a>(<span class='argstr'>function</span>)</h3>
 <div class='method'><textarea class='editor'>// do, collect, reject, select
 d = Dictionary[\a -&gt; "hello", \b -&gt; "robot", \c -&gt; [1, 2, 3]];
-d = (a: "hello", b: "robot", c: [1, 2, 3]); // equivalent
 d.do { |item, i| [item, i].postln };
 d.collect { |item| item + 100 };
 d.reject { |item| item.size &gt; 4 };
 d.select { |item| item.size &gt; 4 };</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keysValuesDo' href='./../Overviews/Methods.html#keysValuesDo'>keysValuesDo</a>(<span class='argstr'>function</span>)</h3>
 <div class='method'>
-<p>Iterate over the associations, and evaluate the function for each, passing key and value as argument.<textarea class='editor'>d = (a: "hello", b: "robot", c: [1, 2, 3]);
+<p>Iterate over the associations, and evaluate the function for each, passing key and value as argument.<textarea class='editor'>d = Dictionary[\a -&gt; "hello", \b -&gt; "robot", \c -&gt; [1, 2, 3]];
 d.keysValuesDo { |key, value| postln("the key: " ++ key ++ " the value: " ++ value) };</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keysValuesChange' href='./../Overviews/Methods.html#keysValuesChange'>keysValuesChange</a>(<span class='argstr'>function</span>)</h3>
 <div class='method'>
-<p>Iterate over the associations, and evaluate the function for each, passing key and value as argument. Replace the value with the return value from the function (similar to <a href="#-collect">-collect</a>, but modifies the dictionary <strong>in place</strong>).<textarea class='editor'>d = (a: "hello", b: "robot", c: [1, 2, 3]);
+<p>Iterate over the associations, and evaluate the function for each, passing key and value as argument. Replace the value with the return value from the function (similar to <a href="#-collect">-collect</a>, but modifies the dictionary <strong>in place</strong>).<textarea class='editor'>d = Dictionary[\a -&gt; "hello", \b -&gt; "robot", \c -&gt; [1, 2, 3]];
 d.keysValuesChange { |key, value| "the key: " ++ key ++ " the value: " ++ value };
 d;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keysDo' href='./../Overviews/Methods.html#keysDo'>keysDo</a>(<span class='argstr'>function</span>)</h3>
 <div class='method'>
-<p>Iterate over the associations, and evaluate the function for each, passing key as argument.<textarea class='editor'>d = (a: "hello", b: "robot", c: [1, 2, 3]);
+<p>Iterate over the associations, and evaluate the function for each, passing key as argument.<textarea class='editor'>d = Dictionary[\a -&gt; "hello", \b -&gt; "robot", \c -&gt; [1, 2, 3]];
 d.keysDo { |key| postln("the key: " ++ key) };</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-associationsDo' href='./../Overviews/Methods.html#associationsDo'>associationsDo</a>(<span class='argstr'>function</span>)</h3>
 <div class='method'>
-<p>Iterate over the associations, and evaluate the function for each.<textarea class='editor'>d = (a: "hello", b: "robot", c: [1, 2, 3]);
+<p>Iterate over the associations, and evaluate the function for each.<textarea class='editor'>d = Dictionary[\a -&gt; "hello", \b -&gt; "robot", \c -&gt; [1, 2, 3]];
 d.associationsDo { |assoc| postln("the association: " ++ assoc) };</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pairsDo' href='./../Overviews/Methods.html#pairsDo'>pairsDo</a>(<span class='argstr'>function</span>)</h3>
 <div class='method'>
 <p>Iterate over the associations, and evaluate the function for each, passing key and value as argument. Identical to <a href="#-keysValuesDo">-keysValuesDo</a></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-invert' href='./../Overviews/Methods.html#invert'>invert</a></h3>
 <div class='method'>
-<p>Return a new dictionary with all the values as keys and vice versa.<textarea class='editor'>d = (a: "hello", b: "robot", c: [1, 2, 3]);
+<p>Return a new dictionary with all the values as keys and vice versa.<textarea class='editor'>d = Dictionary[\a -&gt; "hello", \b -&gt; "robot", \c -&gt; [1, 2, 3]];
 d.invert;</textarea>
 </div><h3><a class='anchor' name='Other%20instance%20methods'>Other instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-order' href='./../Overviews/Methods.html#order'>order</a>(<span class='argstr'>func</span>)</h3>
 <div class='method'>
-<p>Return an array of keys which corresponds to the order of the values of the dictionary.<textarea class='editor'>d = (a: 5, b: 7, c: 1, d: 0);
+<p>Return an array of keys which corresponds to the order of the values of the dictionary.<textarea class='editor'>d = Dictionary[\a -&gt; 5, \b -&gt; 7, \c -&gt; 1, \d -&gt; 0];
 d.order;
 d.atAll(d.order);    // returns items in order</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-powerset' href='./../Overviews/Methods.html#powerset'>powerset</a></h3>
 <div class='method'>
-<p>Return the set of all subsets: here an array of all sub-dictionaries.<textarea class='editor'>d = (a: 5, b: 7, c: 1, d: 0);
+<p>Return the set of all subsets: here an array of all sub-dictionaries.<textarea class='editor'>d = Dictionary[\a -&gt; 5, \b -&gt; 7, \c -&gt; 1, \d -&gt; 0];
 d.powerset;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-merge' href='./../Overviews/Methods.html#merge'>merge</a>(<span class='argstr'>that</span>, <span class='argstr'>func</span>, <span class='argstr'>fill: true</span>)</h3>
 <div class='method'>
-<p>Combine two dictionaries into a new one by applying a function to each value. If <strong>fill</strong> is true (default: true), values missing from one of them are kept as they are.<textarea class='editor'>d = (a: 5, b: 7, d: 0);
-e = (a: 3, b: -3, c: 1);
+<p>Combine two dictionaries into a new one by applying a function to each value. If <strong>fill</strong> is true (default: true), values missing from one of them are kept as they are.<textarea class='editor'>d = Dictionary[\a -&gt; 5, \b -&gt; 7, \d -&gt; 0];
+e = Dictionary[\a -&gt; 3, \b -&gt; -3, \c -&gt; 1];
 merge(d, e, { |a, b| a + b });
 merge(d, e, { |a, b| a + b }, false);</textarea>
 
@@ -303,13 +314,13 @@ merge(d, e, { |a, b| a + b }, false);</textarea>
 <p>a <a href="./../Classes/Boolean.html">Boolean</a>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-blend' href='./../Overviews/Methods.html#blend'>blend</a>(<span class='argstr'>that</span>, <span class='argstr'>blend: 0.5</span>, <span class='argstr'>fill: true</span>, <span class='argstr'>specs</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/SystemOverwrites/extDictBlend.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/SystemOverwrites/extDictBlend.sc</a></div>
 <div class='method'>
-<p>Blend two dictionaries into a new one by interpolating each value. If <strong>fill</strong> is true (default: true), values missing from one of them are kept as they are.<textarea class='editor'>d = (a: 5, b: 7, d: 0);
-e = (a: 3, b: -3, c: 1);
+<p>Blend two dictionaries into a new one by interpolating each value. If <strong>fill</strong> is true (default: true), values missing from one of them are kept as they are.<textarea class='editor'>d = Dictionary[\a -&gt; 5, \b -&gt; 7, \d -&gt; 0];
+e = Dictionary[\a -&gt; 3, \b -&gt; -3, \c -&gt; 1];
 blend(d, e, 0.3);
 blend(d, e, 0.3, false);
 
-d = (a: 500, b: 0.001);
-e = (a: 300, b: 0.1);
+d = Dictionary[\a -&gt; 500, \b -&gt; 0.001];
+e = Dictionary[\a -&gt; 300, \b -&gt; 0.1];
 blend(d, e, 0.3, specs: (a: \freq, b: \rq));</textarea>
 
 <p><h4>Arguments:</h4>
@@ -320,7 +331,7 @@ blend(d, e, 0.3, specs: (a: \freq, b: \rq));</textarea>
 <p>a <a href="./../Classes/Boolean.html">Boolean</a>.<tr><td class='argumentname'>specs<td class='argumentdesc'>
 <p>a dictionary of <a href="./../Classes/Spec.html">Spec</a>s that are applied to each before blending.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asSortedArray' href='./../Overviews/Methods.html#asSortedArray'>asSortedArray</a></h3>
 <div class='method'>
-<p>Return the values in a sorted array of key value pairs.<textarea class='editor'>d = (a: 5, b: 7, c: 1, d: 0);
+<p>Return the values in a sorted array of key value pairs. Sorted by key.<textarea class='editor'>d = Dictionary[\a -&gt; 5, \b -&gt; 7, \c -&gt; 1, \d -&gt; 0];
 d.asSortedArray;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asDict' href='./../Overviews/Methods.html#asDict'>asDict</a>(<span class='argstr'>mergeFunc</span>, <span class='argstr'>class</span>)</h3>
 <div class='method'>
@@ -334,7 +345,7 @@ d.asSortedArray;</textarea>
 <table class='arguments'>
 <tr><td class='argumentname'>class<td class='argumentdesc'>
 <p>The class of the collection to be returned. By default this is an <a href="./../Classes/Array.html">Array</a>.</table><h4>Discussion:</h4>
-<textarea class='editor'>d = (a: 5, b: 7, c: 1, d: 0);
+<textarea class='editor'>d = Dictionary[\a -&gt; 5, \b -&gt; 7, \c -&gt; 1, \d -&gt; 0];
 d.asPairs;</textarea>
 
 <p>Note that, unlike <a href="#-getPairs">-getPairs</a>, asPairs will return an empty Array with an empty Dictionary.<textarea class='editor'>d = Dictionary.new;
@@ -347,7 +358,8 @@ d.asPairs;</textarea>
 <table class='arguments'>
 <tr><td class='argumentname'>event<td class='argumentdesc'>
 <p>The inval, usually in an event stream. See also <a href="./../Classes/Event.html">Event</a>.
-<p>If the event is not nil, yields a copy, adding all the elements of the receiver event (this leaves the receiver unchanged). If it is nil, return the receiver.<textarea class='editor'>a = (note: 2);
+<p>If the event is not nil, yields a copy, adding all the elements of the receiver event (this leaves the receiver unchanged). If it is nil, return the receiver.
+<p>Because this pattern is mostly used in the context of events, the following code examples use the shortcut for the subclass <a href="./../Classes/Event.html">Event</a> instead of the Dictionary.<textarea class='editor'>a = (note: 2);
 b = (note: [3, 5]);
 Pseq([a, b]).play;</textarea>
 
@@ -445,8 +457,6 @@ a.detectKey({ |val, key| val &lt; 9 });</textarea>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-hash' href='./../Overviews/Methods.html#hash'>hash</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-ilisp' href='./../Overviews/Methods.html#ilisp'>ilisp</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/ilisp.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/ilisp.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-includes' href='./../Overviews/Methods.html#includes'>includes</a>(<span class='argstr'>item1</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-includesKey' href='./../Overviews/Methods.html#includesKey'>includesKey</a>(<span class='argstr'>key</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isArgsArray' href='./../Overviews/Methods.html#isArgsArray'>isArgsArray</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SynthTracker/extVarious-argsArray.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SynthTracker/extVarious-argsArray.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isArgsDict' href='./../Overviews/Methods.html#isArgsDict'>isArgsDict</a></h3>
@@ -478,17 +488,18 @@ a.put(\foo, 2.718);
 a.at(\foo);
 a[\foo] = 3.5;    // different syntax for put</textarea>
 
-<p>Event, Environment and IdentityDictionary differ mainly insofar from Dictionary as the <strong>keys</strong> are taken to be identical (===) objects (see IdentityDictionary), instead of equal (==) objects. By consequence, the subclasses are also faster for indexing. Apart from this, the subclasses add specific functionality only. Because of its very common usage, the examples often use the shortcut for the subclass Event.<textarea class='editor'>// preliminary identity and equality of strings and symbols
+<p>Event, Environment and IdentityDictionary differ mainly insofar from Dictionary as the <strong>keys</strong> are taken to be identical (===) objects (see IdentityDictionary), instead of equal (==) objects. By consequence, the subclasses are also faster for indexing. Apart from this, the subclasses add specific functionality only.<textarea class='editor'>// preliminary identity and equality of strings and symbols
 "hello" == "hello";    // true, but
 "hello" === "hello";    // false. However:
 \hello === \hello;    // true
 
-// compare
+// compare: Dictionary will only store one "hello"
 Dictionary["hello" -&gt; 0, "hello" -&gt; 1]; // Dictionary[ (hello -&gt; 1) ]
+// while Event will store both "hello" because they are not identical
 ("hello": 0, "hello": 1); // ( "hello": 1, "hello": 0 )
 
-// for symbols as keys, the behaviour is identical:
-Dictionary[\hello -&gt; 1, \hello -&gt; 0];
-( \hello: 1, \hello: 0 );</textarea>
+// for symbols as keys, Dictionary and Event show the same behaviour:
+Dictionary[\hello -&gt; 1, \hello -&gt; 0]; // Dictionary[ (hello -&gt; 0) ]
+( \hello: 1, \hello: 0 ); // ( 'hello': 0 )</textarea>
 <div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Dictionary.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Dictionary.schelp</a><br>link::Classes/Dictionary::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
 </body></html>
