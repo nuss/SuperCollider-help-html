@@ -1,0 +1,137 @@
+<!doctype html><html lang='en'><head><title>Collapse | SuperCollider 3.11.2 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Collapse';
+var scdoc_sc_version = '3.11.2';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Collapse:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-instantaneous'>instantaneous</a> </li>
+<li class='toc3'><a href='#-cancel'>cancel</a> </li>
+<li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc3'><a href='#-defer'>defer</a> </li>
+<li class='toc3'><a href='#-reschedule'>reschedule</a> </li>
+<li class='toc3'><a href='#-listDefer'>listDefer</a> </li>
+<li class='toc3'><a href='#-listInstantaneous'>listInstantaneous</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-args'>args</a> </li>
+<li class='toc3'><a href='#-cancelled'>cancelled</a> </li>
+<li class='toc3'><a href='#-clock'>clock</a> </li>
+<li class='toc3'><a href='#-delta'>delta</a> </li>
+<li class='toc3'><a href='#-func'>func</a> </li>
+<li class='toc3'><a href='#-prInit'>prInit</a> </li>
+<li class='toc3'><a href='#-prSetArgs'>prSetArgs</a> </li>
+<li class='toc3'><a href='#-started'>started</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Function'>Function</a></span>
+</div><h1>Collapse<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>A class for collapsing multiple function calls into a single one.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Collapse/Collapse.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/Collapse/Collapse.sc'>Collapse.sc</a></div><div id='related'>See also: <a href="./../Classes/Function.html">Function</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>The Collapse class is useful for deferring actions to a certain clock or scheduling them while reducing system load to a minimum. The Collapse takes a function to be deferred, a delta time span and a clock to defer to. An action is deferred by calling the defer method with arbitrary arguments. The function's value method is called with these arguments after the schedule delay. When defer is called before the function was executed, the function is deferred again by the schedule delay and the pending call is cancelled. The new arguments overwrite the previous (pending) arguments.<div class='note'><span class='notelabel'>NOTE:</span> This class was originally written by Hanns Holger Rutz (contact@sciss.de)</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>Collapse.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>func</span>, <span class='argstr'>delta: 0.0</span>, <span class='argstr'>clock</span>)</h3>
+<div class='method'>
+<p>Creates a new Collapse.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>the function to execute when deferring; nil is allowed<tr><td class='argumentname'>delta<td class='argumentdesc'>
+<p>The amount of time to defer in seconds, defaults to 0.0. The first execution of the collapse will occur after <code>delta</code>, and subsequent executions are guaranteed to have <code>delta</code> seconds in between.<tr><td class='argumentname'>clock<td class='argumentdesc'>
+<p>The clock to execute the function within, defaults to AppClock</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-instantaneous' href='./../Overviews/Methods.html#instantaneous'>instantaneous</a>( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>Similiarly to defer, this sets the function args and schedules the collapse if it hadn't been started. Unlike defer, the scheduling delay is not reset.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... args<td class='argumentdesc'>
+<p>zero or more arguments which are passed to the function upon execution</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cancel' href='./../Overviews/Methods.html#cancel'>cancel</a></h3>
+<div class='method'>
+<p>Cancel future executions of the function.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-value' href='./../Overviews/Methods.html#value'>value</a>( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>Schedule execute the function with the arguments <code>args</code>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... args<td class='argumentdesc'>
+<p>zero or more arguments which are passed to the function upon execution</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defer' href='./../Overviews/Methods.html#defer'>defer</a>( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>(Re)schedules the function for execution with the given list of arguments.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... args<td class='argumentdesc'>
+<p>Zero or more arguments which are passed to the function upon execution.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reschedule' href='./../Overviews/Methods.html#reschedule'>reschedule</a></h3>
+<div class='method'>
+<p>Resets the scheduling delay to the original delta. If the collapse was not yet scheduled, this method will do it. The cancel status is cleared.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-listDefer' href='./../Overviews/Methods.html#listDefer'>listDefer</a>(<span class='argstr'>args</span>)</h3>
+<div class='method'>
+<p>(Re)schedules the function for execution with the arguments provided as an array.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>args<td class='argumentdesc'>
+<p>an array of zero or more arguments which are passed to the function upon execution.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-listInstantaneous' href='./../Overviews/Methods.html#listInstantaneous'>listInstantaneous</a>(<span class='argstr'>args</span>)</h3>
+<div class='method'>
+<p>Similiarly to defer, this sets the function args and schedules the collapse if it hadn't been started. Unlike defer, the scheduling delay is not reset.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>args<td class='argumentdesc'>
+<p>an array of zero or more arguments which are passed to the function upon</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-args' href='./../Overviews/Methods.html#args'>args</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cancelled' href='./../Overviews/Methods.html#cancelled'>cancelled</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clock' href='./../Overviews/Methods.html#clock'>clock</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clock' href='./../Overviews/Methods.html#clock'>clock</a> = </h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-delta' href='./../Overviews/Methods.html#delta'>delta</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-func' href='./../Overviews/Methods.html#func'>func</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prInit' href='./../Overviews/Methods.html#prInit'>prInit</a>(<span class='argstr'>argFunc</span>, <span class='argstr'>argDelta</span>, <span class='argstr'>argClock</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prSetArgs' href='./../Overviews/Methods.html#prSetArgs'>prSetArgs</a>(<span class='argstr'>argArgs</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-started' href='./../Overviews/Methods.html#started'>started</a></h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>(
+~collapseDelta = 0.5; // only update the value every 05
+
+~setValue = Collapse({
+    |val|
+    ~collapsedValue.value = val;
+}, ~collapseDelta);
+
+View(bounds:300@300).front.layout_(
+    VLayout(
+        ~slider = Slider(bounds:300@40),
+        ~nowValue = NumberBox(bounds:200@60).value_(0),
+        ~collapsedValue = NumberBox(bounds:200@60).value_(0),
+        nil
+    )
+);
+
+~slider.action = {
+    |v|
+    ~nowValue.value = v.value * 100;
+    ~setValue.(v.value * 100);
+}
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Collapse/HelpSource/Classes/Collapse.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Collapse/HelpSource/Classes/Collapse.schelp</a><br>link::Classes/Collapse::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

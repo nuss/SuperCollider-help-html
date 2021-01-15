@@ -162,14 +162,22 @@ var scdoc_sc_version = '3.11.2';
 <li class='toc3'><a href='#-beginDrag'>beginDrag</a> </li>
 <li class='toc3'><a href='#-canReceiveDrag'>canReceiveDrag</a> </li>
 <li class='toc3'><a href='#-receiveDrag'>receiveDrag</a> </li>
+</ul><li class='toc2'><a href='#WindowViewRecall%20extensions'>WindowViewRecall extensions</a></li>
+<ul class='toc'><li class='toc3'><a href='#-autoRememberPosition'>autoRememberPosition</a> </li>
+<li class='toc3'><a href='#-rememberPosition'>rememberPosition</a> </li>
+<li class='toc3'><a href='#-recallPosition'>recallPosition</a> </li>
+<li class='toc3'><a href='#-resetPosition'>resetPosition</a> </li>
 </ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
-<ul class='toc'><li class='toc3'><a href='#-allChildren'>allChildren</a> </li>
+<ul class='toc'><li class='toc3'><a href='#-addDoAfter'>addDoAfter</a> </li>
+<li class='toc3'><a href='#-allChildren'>allChildren</a> </li>
 <li class='toc3'><a href='#-asFlowView'>asFlowView</a> </li>
 <li class='toc3'><a href='#-asLayoutElement'>asLayoutElement</a> </li>
 <li class='toc3'><a href='#-asMenuAction'>asMenuAction</a> </li>
 <li class='toc3'><a href='#-asPageLayout'>asPageLayout</a> </li>
+<li class='toc3'><a href='#-autoReleaseDependants'>autoReleaseDependants</a> </li>
 <li class='toc3'><a href='#-backColor'>backColor</a> </li>
+<li class='toc3'><a href='#-closeAfter'>closeAfter</a> </li>
 <li class='toc3'><a href='#-comp'>comp</a> </li>
 <li class='toc3'><a href='#-deepDo'>deepDo</a> </li>
 <li class='toc3'><a href='#-dragEnterEvent'>dragEnterEvent</a> </li>
@@ -203,10 +211,14 @@ var scdoc_sc_version = '3.11.2';
 <li class='toc3'><a href='#-resizeEvent'>resizeEvent</a> </li>
 <li class='toc3'><a href='#-scroll'>scroll</a> </li>
 <li class='toc3'><a href='#-setDragEventsEnabled'>setDragEventsEnabled</a> </li>
+<li class='toc3'><a href='#-signal'>signal</a> </li>
 <li class='toc3'><a href='#-toolTip'>toolTip</a> </li>
+<li class='toc3'><a href='#-updateOnAction'>updateOnAction</a> </li>
+<li class='toc3'><a href='#-updateOnClose'>updateOnClose</a> </li>
 <li class='toc3'><a href='#-valueActionIfChanged'>valueActionIfChanged</a> </li>
 <li class='toc3'><a href='#-vert'>vert</a> </li>
-</ul></ul></ul></div><div id='menubar'></div>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
 <div class='header'>
 <div id='label'>
@@ -866,8 +878,41 @@ View().layout_(HLayout(
 <table class='arguments'>
 <tr><td class='argumentname'>x<td class='argumentdesc'>
 <p> Current horizontal position of the mouse pointer.<tr><td class='argumentname'>y<td class='argumentdesc'>
-<p> Current vertical position of the mouse pointer.</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<p> Current vertical position of the mouse pointer.</table></div><h3><a class='anchor' name='WindowViewRecall%20extensions'>WindowViewRecall extensions</a></h3>
+
+<p>The following extensions enable easy recall of the position and size of a Window or View. To use, register a Window using autoRememberPosition when it is created.<textarea class='editor'>w = Window("my window", bounds:300@300).autoRememberPosition(\scztt, \mywindow).front;
+
+v = View(bounds:300@300).autoRememberPosition(\scztt, \myview).front;</textarea>
+
+<p>The argument to autoRememberPosition should be a unique sequence of keys that will be used as an address to store and look up the window position. Names should be constructed to avoid collision with other possible named (for example: don't use <code>w.autoRememberPosition(\server)</code>, use <code>w.autoRememberPosition(\Server, \internalServerView)</code>).
+<p>Window positions are stored in <a href="./../Classes/Archive.html">Archive</a>.global and written to disk, so positions should be recallable across application launches.<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-autoRememberPosition' href='./../Overviews/Methods.html#autoRememberPosition'>autoRememberPosition</a>( <span class='argstr'>... addr</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/WindowViewRecall/WindowViewRecall.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/WindowViewRecall/WindowViewRecall.sc</a></div>
+<div class='method'>
+<p> Automatically recall the last recorded position of this Window, and attach onMove and onResize actions to capture positions for the rest of the lifetime of this window.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... addr<td class='argumentdesc'>
+<p> One or more <a href="./../Classes/Symbol.html">Symbol</a>'s or Numbers representing a unique address to store information about this window.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rememberPosition' href='./../Overviews/Methods.html#rememberPosition'>rememberPosition</a>( <span class='argstr'>... addr</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/WindowViewRecall/WindowViewRecall.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/WindowViewRecall/WindowViewRecall.sc</a></div>
+<div class='method'>
+<p> Store and remember the current Window's position and size.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... addr<td class='argumentdesc'>
+<p> One or more <a href="./../Classes/Symbol.html">Symbol</a>'s or Numbers representing a unique address to store information about this window.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-recallPosition' href='./../Overviews/Methods.html#recallPosition'>recallPosition</a>( <span class='argstr'>... addr</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/WindowViewRecall/WindowViewRecall.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/WindowViewRecall/WindowViewRecall.sc</a></div>
+<div class='method'>
+<p> Move and resize the current Window to it's most recently stored bounds.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... addr<td class='argumentdesc'>
+<p> One or more <a href="./../Classes/Symbol.html">Symbol</a>'s or Numbers representing a unique address to store information about this window.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resetPosition' href='./../Overviews/Methods.html#resetPosition'>resetPosition</a>( <span class='argstr'>... addr</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/WindowViewRecall/WindowViewRecall.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/WindowViewRecall/WindowViewRecall.sc</a></div>
+<div class='method'>
+<p> Remove the stored bounds for the window at address addr.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... addr<td class='argumentdesc'>
+<p> One or more <a href="./../Classes/Symbol.html">Symbol</a>'s or Numbers representing a unique address to store information about this window.</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addDoAfter' href='./../Overviews/Methods.html#addDoAfter'>addDoAfter</a>(<span class='argstr'>func</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/FreeAfter/FreeAfter.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/FreeAfter/FreeAfter.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-allChildren' href='./../Overviews/Methods.html#allChildren'>allChildren</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Gui/SystemOverwrites/flowViewExtensions.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Gui/SystemOverwrites/flowViewExtensions.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asFlowView' href='./../Overviews/Methods.html#asFlowView'>asFlowView</a>(<span class='argstr'>bounds</span>)</h3>
@@ -878,8 +923,12 @@ View().layout_(HLayout(
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/Base/Menu.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/Base/Menu.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asPageLayout' href='./../Overviews/Methods.html#asPageLayout'>asPageLayout</a>(<span class='argstr'>title</span>, <span class='argstr'>bounds</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/backwardsCompatibility/flowViewSupportQt.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/backwardsCompatibility/flowViewSupportQt.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-autoReleaseDependants' href='./../Overviews/Methods.html#autoReleaseDependants'>autoReleaseDependants</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/ReleaseDependants.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/ReleaseDependants.sc</a></div>
 </h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-backColor' href='./../Overviews/Methods.html#backColor'>backColor</a> = <span class='argstr'>color</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-closeAfter' href='./../Overviews/Methods.html#closeAfter'>closeAfter</a>(<span class='argstr'>obj</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/FreeAfter/FreeAfter.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/FreeAfter/FreeAfter.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-comp' href='./../Overviews/Methods.html#comp'>comp</a>(<span class='argstr'>func</span>, <span class='argstr'>bounds</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Gui/SystemOverwrites/flowViewExtensions.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Gui/SystemOverwrites/flowViewExtensions.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-deepDo' href='./../Overviews/Methods.html#deepDo'>deepDo</a>(<span class='argstr'>function</span>)</h3>
@@ -918,12 +967,22 @@ View().layout_(HLayout(
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scroll' href='./../Overviews/Methods.html#scroll'>scroll</a>(<span class='argstr'>func</span>, <span class='argstr'>bounds</span>, <span class='argstr'>autohidesScrollers: true</span>, <span class='argstr'>autoScrolls: true</span>, <span class='argstr'>hasHorizontalScroller: true</span>, <span class='argstr'>hasVerticalScroller: true</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Gui/SystemOverwrites/flowViewExtensions.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Gui/SystemOverwrites/flowViewExtensions.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setDragEventsEnabled' href='./../Overviews/Methods.html#setDragEventsEnabled'>setDragEventsEnabled</a>(<span class='argstr'>enabled</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-signal' href='./../Overviews/Methods.html#signal'>signal</a>(<span class='argstr'>key</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/extView.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/extView.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-toolTip' href='./../Overviews/Methods.html#toolTip'>toolTip</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-toolTip' href='./../Overviews/Methods.html#toolTip'>toolTip</a> = <span class='argstr'>t</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-updateOnAction' href='./../Overviews/Methods.html#updateOnAction'>updateOnAction</a>(<span class='argstr'>should: true</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/extView.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/extView.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-updateOnClose' href='./../Overviews/Methods.html#updateOnClose'>updateOnClose</a>(<span class='argstr'>should: true</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/extView.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Connection/extView.sc</a></div>
 </h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-valueActionIfChanged' href='./../Overviews/Methods.html#valueActionIfChanged'>valueActionIfChanged</a> = <span class='argstr'>val</span></h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/Base/extValueActionIfChanged.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/Base/extValueActionIfChanged.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-vert' href='./../Overviews/Methods.html#vert'>vert</a>(<span class='argstr'>func</span>, <span class='argstr'>bounds</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Gui/SystemOverwrites/flowViewExtensions.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Gui/SystemOverwrites/flowViewExtensions.sc</a></div>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+
+<p>Normally, only <a href="#-autoRememberPosition">-autoRememberPosition</a> needs to be used to enable remembering/recall of the window position. It should be called during the creation of the Window or View - it will ensure that the previously recorded position is recalled, and it will autosave the position throughout the lifetime of the window.<textarea class='editor'>~scope = Stethoscope(s);
+~scope.window.autoRememberPosition(\Stethoscope, \my_scope);</textarea>
 <div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/View.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/View.schelp</a><br>link::Classes/View::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
 </body></html>

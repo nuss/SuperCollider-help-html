@@ -1,28 +1,27 @@
-<html><head><title>Singleton</title>
+<!doctype html><html lang='en'><head><title>Singleton | SuperCollider 3.11.2 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
 <link rel='stylesheet' href='./../frontend.css' type='text/css' />
 <link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Singleton';
+var scdoc_sc_version = '3.11.2';
+</script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
-<script src='./../prettify.js' type='text/javascript'></script>
-<script src='./../lang-sc.js' type='text/javascript'></script>
-<script type='text/javascript'>var helpRoot='./..';</script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
-<ul id='menubar'></ul>
-<body onload='fixTOC();prettyPrint()'>
-<div class='contents'>
-<div class='header'>
-<div id='label'>SuperCollider CLASSES (extension)</div>
-<div id='categories'><a href='./../Browse.html#Collections'>Collections</a></div>
-<h1>Singleton</h1>
-<div id='summary'>Base class that provides singleton-like behaviors.</div>
-</div>
-<div class='subheader'>
-<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Singleton/Singleton.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Singleton/Singleton.sc</a></div><div id='superclasses'>Inherits from: <a href="../Classes/Object.html">Object</a></div>
-</div>
+<body onload='fixTOC()'>
 <div id='toc'>
-<ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<div id='toctitle'>Singleton:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
 <li class='toc3'><a href='#*createNew'>createNew</a> </li>
@@ -39,26 +38,39 @@
 <li class='toc3'><a href='#-name'>name</a> </li>
 <li class='toc3'><a href='#-clear'>clear</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
-</ul></ul></div><h2><a class='anchor' name='description'>Description</a></h2>
+</ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Collections'>Collections</a></span>
+</div><h1>Singleton<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Base class that provides singleton-like behaviors.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Singleton/Singleton.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/Singleton/Singleton.sc'>Singleton.sc</a></div><div id='subclasses'>Subclasses: <a href="../Classes/UpdateBroadcaster.html">UpdateBroadcaster</a>, <a href="../Classes/UpdateChannel.html">UpdateChannel</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>Singleton provides a base class that easily enables singleton-like behavior in it's subclasses. In it's simplest form, the constructor for subclasses of Singleton will create a new instance of the object if it does not exist - otherwise it will return the existing instance.
 <p>Subclasses of Singleton can override several methods to provide custom behavior for the subclass. <a href="#*createNew">*createNew</a> is called when a new object needs to be constructed (this provides a parallel to the <a href="#*new">*new</a> method). <a href="#-init">-init</a> is called once the object is created. Both are guaranteed to be called ONLY when a new object is created. <a href="#-set">-set</a> is called on the object EVERY TIME the Singleton constructor is invoked.
-<p>The simplest example of using the Singleton class is of the following form:<pre class='code prettyprint lang-sc'>MyStuff : Singleton {
+<p>The simplest example of using the Singleton class is of the following form:<textarea class='editor'>MyStuff : Singleton {
     var &lt;stuff;
     init {
         stuff = List();
     }
-}</pre>
+}</textarea>
 
-<p>Usage:<pre class='code prettyprint lang-sc'>MyStuff().stuff.add("pencil");
+<p>Usage:<textarea class='editor'>MyStuff().stuff.add("pencil");
 MyStuff().stuff.add("paper");
-MyStuff().stuff.postln;  // ["pencil", "paper"]</pre>
+MyStuff().stuff.postln;  // ["pencil", "paper"]</textarea>
 
-<p>The Singleton constructor accepts a key that is used to look up the backing object, so multiple singleton objects can be stored for a single class. In this way, it behaves similarly to common "global registry" objects like Ndef, Pdef, etc.<pre class='code prettyprint lang-sc'>MyStuff(\me).stuff.addAll(["pencil", "paper"]);
+<p>The Singleton constructor accepts a key that is used to look up the backing object, so multiple singleton objects can be stored for a single class. In this way, it behaves similarly to common "global registry" objects like Ndef, Pdef, etc.<textarea class='editor'>MyStuff(\me).stuff.addAll(["pencil", "paper"]);
 MyStuff(\helen).stuff.addAll(["bicycle" "helmet"]);
-MyStuff(\me).stuff.postln; MyStuff(\helen).stuff.postln;</pre>
+MyStuff(\me).stuff.postln; MyStuff(\helen).stuff.postln;</textarea>
 
-<p>Remaining arguments to the Singleton constructor are passed to the object's <code class='code prettyprint lang-sc'>set</code> method. These can be used to set the internal state of the object. For example, if we had:<pre class='code prettyprint lang-sc'>GlobalSynth : Singleton {
+<p>Remaining arguments to the Singleton constructor are passed to the object's <code>set</code> method. These can be used to set the internal state of the object. For example, if we had:<textarea class='editor'>GlobalSynth : Singleton {
     var &lt;synth;
     set {
         |synthName, synthArgs|
@@ -68,9 +80,9 @@ MyStuff(\me).stuff.postln; MyStuff(\helen).stuff.postln;</pre>
             synth.replace(synthName, synthArgs, true);
         }
     }
-}</pre>
+}</textarea>
 
-<p>Then we could:<pre class='code prettyprint lang-sc'>GlobalSynth(\reverb,
+<p>Then we could:<textarea class='editor'>GlobalSynth(\reverb,
     \reverbDef, [\out, 0, \revTime, 10]
 );
 // This is creates a Synth(\reverbDef, args:[\out, 0, \revTime, 10])
@@ -78,15 +90,15 @@ MyStuff(\me).stuff.postln; MyStuff(\helen).stuff.postln;</pre>
 GlobalSynth(\reverb,
     \surroundReverbDef, [\out, 0, \revTime, 12]
 );
-// This replaces the previous synth with Synth(\surroundReverbDef, args:[\out, 0, \revTime, 10])</pre>
+// This replaces the previous synth with Synth(\surroundReverbDef, args:[\out, 0, \revTime, 10])</textarea>
 
-<p>The <code class='code prettyprint lang-sc'>set</code> method can be called directly as well:<pre class='code prettyprint lang-sc'>GlobalSynth(\reverb).set(\reverbDef, [\out, 0, \revTime, 4]);</pre>
+<p>The <code>set</code> method can be called directly as well:<textarea class='editor'>GlobalSynth(\reverb).set(\reverbDef, [\out, 0, \revTime, 4]);</textarea>
 
-<p>Singleton supports the <code class='code prettyprint lang-sc'>know</code> flag like Environments, so dot notation can be used to create and access Singleton's as well:<pre class='code prettyprint lang-sc'>GlobalSynth.know = true;
+<p>Singleton supports the <code>know</code> flag like Environments, so dot notation can be used to create and access Singleton's as well:<textarea class='editor'>GlobalSynth.know = true;
 GlobalSynth.reverb = \cornyEchoEffect;
-GlobalSynth.reverb = \reverbDef;</pre>
+GlobalSynth.reverb = \reverbDef;</textarea>
 
-<p>When using this pattern, the right-hand-side of the equals is passed in as the first argument - this is problematic in cases where <code class='code prettyprint lang-sc'>set</code> can take more than one argument. One way to keep the elegance of dot notation while allowing more complex arguments is to detect the type of arguments in your <code class='code prettyprint lang-sc'>set</code> method. For example:<pre class='code prettyprint lang-sc'>set {
+<p>When using this pattern, the right-hand-side of the equals is passed in as the first argument - this is problematic in cases where <code>set</code> can take more than one argument. One way to keep the elegance of dot notation while allowing more complex arguments is to detect the type of arguments in your <code>set</code> method. For example:<textarea class='editor'>set {
     |...args|
     var synthName, synthArgs;
     if ((args.size == 1) &amp;&amp; args[0].isKindOf(Array)) { args = args[0] };
@@ -94,43 +106,44 @@ GlobalSynth.reverb = \reverbDef;</pre>
     // ...
 }
 
-GlobalSynth.reverb = [\spaceReverb, [\out, 0, \revTime, 40]];</pre>
+GlobalSynth.reverb = [\spaceReverb, [\out, 0, \revTime, 40]];</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*new' href='./../Overviews/Methods.html#new'>new</a> (<span class='argstr'>name</span> <span class='argstr'>... settings</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Singleton.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>name</span> <span class='argstr'>... settings</span>)</h3>
 <div class='method'>
-<p>For Singleton subclasses to work properly, <code class='code prettyprint lang-sc'>Singleton:*new</code> must be called. This should generally not be overridden by subclasses.<h4>Arguments:</h4>
+<p>For Singleton subclasses to work properly, <code>Singleton:*new</code> must be called. This should generally not be overridden by subclasses.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>name<td class='argumentdesc'>
 <p>A name identifying the Singleton object. The internal storage is identity-based, so Symbol's should be used instead of String's.<tr><td class='argumentname'>...settings<td class='argumentdesc'>
-<p>Arguments to be forwarded to the <code class='code prettyprint lang-sc'>set</code> method of the object.</table><h4>Returns:</h4>
+<p>Arguments to be forwarded to the <code>set</code> method of the object.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>An instance of the Singleton object.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*createNew' href='./../Overviews/Methods.html#createNew'>createNew</a> ( <span class='argstr'>... args</span>)</h3>
+<p>An instance of the Singleton object.</div></div><h3 class='method-code'><span class='method-prefix'>Singleton.</span><a class='method-name' name='*createNew' href='./../Overviews/Methods.html#createNew'>createNew</a>( <span class='argstr'>... args</span>)</h3>
 <div class='method'>
-<p>This returns a new instance of your class. Override this in a subclass to provide custom behavior when constructing a new instance of your class - this is the equivalent of the normal <code class='code prettyprint lang-sc'>*new</code> method. This should not be called directly.</div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*all' href='./../Overviews/Methods.html#all'>all</a> </h3>
+<p>This returns a new instance of your class. Override this in a subclass to provide custom behavior when constructing a new instance of your class - this is the equivalent of the normal <code>*new</code> method. This should not be called directly.</div><h3 class='method-code'><span class='method-prefix'>Singleton.</span><a class='method-name' name='*all' href='./../Overviews/Methods.html#all'>all</a></h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>Returns an IdentityDictionary of all Singletons registered for this class.</div></div><h3 class='cmethodname'><span class='methprefix'>*</span><a name='*know' href='./../Overviews/Methods.html#know'>know</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*know' href='./../Overviews/Methods.html#know'>know</a> = value</h3>
+<p>Returns an IdentityDictionary of all Singletons registered for this class.</div></div><h3 class='method-code'><span class='method-prefix'>Singleton.</span><a class='method-name' name='*know' href='./../Overviews/Methods.html#know'>know</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Singleton.</span><a class='method-name' name='*know' href='./../Overviews/Methods.html#know'>know</a> = value</h3>
 <div class='method'>
-<p>If set to true, the Singleton interprets method calls as calls to the Singleton constructor. With <code class='code prettyprint lang-sc'>know = true</code>, the following are equivalent:<pre class='code prettyprint lang-sc'>Singleton(\something).set("some value");
+<p>If set to true, the Singleton interprets method calls as calls to the Singleton constructor. With <code>know = true</code>, the following are equivalent:<textarea class='editor'>Singleton(\something).set("some value");
 Singleton(\something, "some value");
 Singleton.something.set("some value");
-Singleton.something = "some value";</pre>
+Singleton.something = "some value";</textarea>
 </div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*clear' href='./../Overviews/Methods.html#clear'>clear</a> (<span class='argstr'>sing</span>)</h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*default' href='./../Overviews/Methods.html#default'>default</a> </h3>
-<h3 class='cmethodname'><span class='methprefix'>*</span><a name='*doesNotUnderstand' href='./../Overviews/Methods.html#doesNotUnderstand'>doesNotUnderstand</a> (<span class='argstr'>selector</span> <span class='argstr'>... args</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Singleton.</span><a class='method-name' name='*clear' href='./../Overviews/Methods.html#clear'>clear</a>(<span class='argstr'>sing</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Singleton.</span><a class='method-name' name='*default' href='./../Overviews/Methods.html#default'>default</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Singleton.</span><a class='method-name' name='*doesNotUnderstand' href='./../Overviews/Methods.html#doesNotUnderstand'>doesNotUnderstand</a>(<span class='argstr'>selector</span> <span class='argstr'>... args</span>)</h3>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-set' href='./../Overviews/Methods.html#set'>set</a> </h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-set' href='./../Overviews/Methods.html#set'>set</a></h3>
 <div class='method'>
-<p>This is called each time the constructor for Singleton is invoked, regardless of whether a new object is created or not. Arguments to <a href="#-new">-new</a> are forwarded to <code class='code prettyprint lang-sc'>set</code>. Override this to allow Singleton calls to set internal properties of your object.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-init' href='./../Overviews/Methods.html#init'>init</a> </h3>
+<p>This is called each time the constructor for Singleton is invoked, regardless of whether a new object is created or not. Arguments to <a href="#-new">-new</a> are forwarded to <code>set</code>. Override this to allow Singleton calls to set internal properties of your object.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-init' href='./../Overviews/Methods.html#init'>init</a></h3>
 <div class='method'>
-<p>This is called on every new Singleton object. Override this to add behavior that occurs when a new object is created.</div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
-<h3 class='imethodname'><span class='methprefix'>-</span><a name='-name' href='./../Overviews/Methods.html#name'>name</a> = value</h3>
+<p>This is called on every new Singleton object. Override this to add behavior that occurs when a new object is created.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-name' href='./../Overviews/Methods.html#name'>name</a> = value</h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>The name of the Singleton object.</div></div><h3 class='imethodname'><span class='methprefix'>-</span><a name='-clear' href='./../Overviews/Methods.html#clear'>clear</a> </h3>
+<p>The name of the Singleton object.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a></h3>
 <div class='method'>
 <p>Remove / clear this specific Singleton object. The next time the Singleton constructor is called, it will create a new object.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Singleton/HelpSource/Classes/Singleton.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Singleton/HelpSource/Classes/Singleton.schelp</a><br>link::Classes/Singleton::<br>sc version: 3.8dev</div></div></body></html>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Singleton/HelpSource/Classes/Singleton.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Singleton/HelpSource/Classes/Singleton.schelp</a><br>link::Classes/Singleton::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>
