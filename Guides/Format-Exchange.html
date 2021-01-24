@@ -1,0 +1,339 @@
+<!doctype html><html lang='en'><head><title>Ambisonic Format Exchange | SuperCollider 3.11.2 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Ambisonic Format Exchange';
+var scdoc_sc_version = '3.11.2';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Ambisonic Format Exchange:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#FOA%20source,%20HOA%20target'>FOA source, HOA target</a></li>
+<ul class='toc'><li class='toc2'><a href='#decode%20FOA%20to%20HOA1'>decode FOA to HOA1</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#encode%20HOA1%20from%20FOA'>encode HOA1 from FOA</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#HOA%20source,%20FOA%20target'>HOA source, FOA target</a></li>
+<ul class='toc'><li class='toc2'><a href='#decode%20HOA3%20to%20FOA'>decode HOA3 to FOA</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#encode%20FOA%20from%20HOA3'>encode FOA from HOA3</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#SC-HOA'>SC-HOA</a></li>
+<ul class='toc'><li class='toc2'><a href='#decode%20HOA7%20to%20SC-HOA5'>decode HOA7 to SC-HOA5</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#encode%20HOA5%20from%20SC-HOA5'>encode HOA5 from SC-HOA5</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#AmbiX'>AmbiX</a></li>
+<ul class='toc'><li class='toc2'><a href='#decode%20HOA3%20to%20AmbiX3'>decode HOA3 to AmbiX3</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#encode%20HOA3%20from%20Ambix3'>encode HOA3 from Ambix3</a></li>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Guides (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit'>Ambisonic Toolkit</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit>Guides & Tutorials'>Guides & Tutorials</a></span>
+</div><h1>Ambisonic Format Exchange<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Ambisonic format exchange examples</div>
+</div>
+<div class='subheader'>
+</div>
+<a class='anchor' name='kw_Atk'>&nbsp;</a>
+<p>To manage workflows within the ATK, and facilitate the integration of third party toolsets and exchange of Ambisonic signals, it is critical to understand Ambisonic <a href="./../Tutorials/ABCs-of-the-ATK.html#Encoding%20formats">encoding formats</a>.
+<p>On this page we'll present a few examples of exchanging between signal sets, beginning with the two equivalent forms <a href="./../Tutorials/ABCs-of-the-ATK.html#Exchanging%20formats">described earlier</a>.<ul>
+<li><em>decode</em> <strong>FOA</strong> to <strong>HOA1</strong><li><em>encode</em> <strong>HOA1</strong> from <strong>FOA</strong></ul>
+
+<p>What we'll see is that the chosen practical implementation depends upon how we imagine the format exchange. Exchange can be seen as <strong>decoding to</strong> one signal set from another, or <strong>encoding from</strong> one to the other. How we view this exchange informs what tools we will choose to use.
+<p>For successful exchange, we need to match Ambisonic:<ul>
+<li><strong>order</strong><li><strong>component ordering</strong><li><strong>component normalisation</strong><li><strong>reference radius</strong></ul>
+<h2><a class='anchor' name='FOA%20source,%20HOA%20target'>FOA source, HOA target</a></h2>
+
+<p>An FOA signal set can be directly exchanged to become an HOA set. Here we'll review FOA and HOA1.
+<p>Two different, but equivalent forms are expressed here. In choosing which form to use, the idiom is to be clear as to what we view the primary signal set to be.<div class='note'><span class='notelabel'>NOTE:</span> The question to ask: <em>Are we working in FOA or HOA1?</em></div><h3><a class='anchor' name='decode%20FOA%20to%20HOA1'>decode FOA to HOA1</a></h3>
+
+<p>FOA and HOA1 are both first order signal sets, so we know this aspect is already matched.
+<p>We can check the others:<textarea class='editor'>(
+~namespaces = [ AtkFoa, AtkHoa ];
+~messages = [ \ordering, \normalisation, \refRadius ];
+
+~messages.do({ |selector|
+    "match: ".post;
+    (
+        Message.new(~namespaces.first, selector).value ==
+        Message.new(~namespaces.last, selector).value
+    ).postln;
+});
+)</textarea>
+
+<p>Or, lump ordering and normalisation into the <strong>format</strong> keyword:<textarea class='editor'>(
+~namespaces = [ AtkFoa, AtkHoa ];
+~messages = [ \format, \refRadius ];
+
+~messages.do({ |selector|
+    "match: ".post;
+    (
+        Message.new(~namespaces.first, selector).value ==
+        Message.new(~namespaces.last, selector).value
+    ).postln;
+});
+)</textarea>
+
+<p>Viewed as <strong>decoding FOA</strong> <em>to HOA1</em>, we'll use the FOA toolset to target HOA1.
+<p>The tools for the task are:<ul>
+<li><strong>ordering &amp; normalisation</strong>: <a href="./../Classes/FoaDecoderMatrix.html#*newHoa1">FoaDecoderMatrix: *newHoa1</a><li><strong>reference radius</strong>: <a href="./../Classes/FoaNFC.html">FoaNFC</a></ul>
+
+<p>The steps are:<ol>
+<li>reset FOA reference radius from inf to 1.5 meters<li>decode FOA to HOA1</ol>
+<textarea class='editor'>// format exchange: FOA &gt;&gt; HOA1
+
+// design decoder to exchange (ordering, normalisation)
+~decoder = FoaDecoderMatrix.newHoa1;
+
+// network
+~myHoa1 = FoaDecode.ar(  // exchange (ordering, normalisation)
+    FoaNFC.ar(  // exchange (reference radius)
+        ~myFoa,
+        AtkHoa.refRadius
+    )
+    ~decoder
+);</textarea>
+<h3><a class='anchor' name='encode%20HOA1%20from%20FOA'>encode HOA1 from FOA</a></h3>
+
+<p>Viewed as <strong>encoding HOA1</strong> <em>from FOA</em>, we'll use the HOA toolset.
+<p>Framed in this way, the tools for the task are:<ul>
+<li><strong>ordering &amp; normalisation</strong>: <a href="./../Classes/HoaMatrixEncoder.html#*newFormat">HoaMatrixEncoder: *newFormat</a><li><strong>reference radius</strong>: <a href="./../Classes/HoaNFDist.html">HoaNFDist</a></ul>
+
+<p>The steps are:<ol>
+<li>encode HOA1 from FOA<li>reset HOA1 reference radius from inf to 1.5 meters</ol>
+<textarea class='editor'>// format exchange: FOA &gt;&gt; HOA1
+
+// design encoder to exchange (ordering, normalisation)
+~encoder = HoaMatrixEncoder.newFormat(
+    AtkFoa.format,
+    AtkFoa.defaultOrder  // FOA order = HOA1 order
+);
+
+// network
+~myHoa1 = HoaNFDist.ar(  // exchange (reference radius)
+    HoaEncodeMatrix.ar(  // exchange (ordering, normalisation)
+        ~myFoa,
+        ~encoder
+    ),
+    AtkFoa.defaultOrder  // FOA order = HOA1 order
+);</textarea>
+
+<p><div class='note'><span class='notelabel'>NOTE:</span> A more verbose equivalent can be found <a href="./../Guides/HOA-NFE.html#Encode%20from%20FOA">here</a>.</div><h2><a class='anchor' name='HOA%20source,%20FOA%20target'>HOA source, FOA target</a></h2>
+
+<p>A common workflow task is to return an FOA deliverable from a higher order signal set.
+<p>As part of this exchange, we'll <em>truncate</em> the harmonics of the HOA set, which is <em>lowpass filtering</em> in the spatial domain. Doing so reduces the <em>spatial sampling rate</em> and is equivalant applying the <em>Nyquist anti-aliasing filters</em> required in time domain downsampling.
+<p>From the beginning, the Ambisonic framework has been designed to be <em>hierarchical</em> in terms of spatial <em>resolution</em> and <em>distribution</em>. That is to say, spatial downsampling is part of the underlying theory and architecture.
+<p>Let's see how to express moving from the ATK's default higher order set, HOA3, and the ATK's default first order set.<div class='note'><span class='notelabel'>NOTE:</span> The question to ask: <em>Are we working in FOA or HOA3?</em></div><h3><a class='anchor' name='decode%20HOA3%20to%20FOA'>decode HOA3 to FOA</a></h3>
+
+<p>Viewed as <strong>decoding HOA3</strong> <em>to FOA</em>, we'll use the HOA3 toolset to target FOA.
+<p>The tools for the task are:<ul>
+<li><strong>ordering &amp; normalisation</strong>: <a href="./../Classes/HoaMatrixDecoder.html#*newFormat">HoaMatrixDecoder: *newFormat</a><li><strong>reference radius</strong>: <a href="./../Classes/HoaNFCtrl.html">HoaNFCtrl</a></ul>
+
+<p>And the steps:<ol>
+<li>truncate HOA3 to HOA1<li>reset HOA1 reference radius from 1.5 to 10.0 meters<a class='footnote anchor' name='footnote_org_1' href='#footnote_1'><sup>1</sup></a> <li>decode HOA1 to FOA</ol>
+<textarea class='editor'>// format exchange: HOA3 &gt;&gt; FOA
+
+// safe approx for inf - for use with HoaNFCtrl
+// this could be set to another value
+// --&gt; if overflow, reduce radius
+~foaRefRadius = 10.0;
+
+// design decoder to exchange (ordering, normalisation)
+~decoder = HoaMatrixDecoder.newFormat(
+    AtkFoa.format,
+    AtkFoa.defaultOrder  // FOA order = HOA1 order
+);
+
+// network
+~myFoa = HoaDecodeMatrix.ar(  // exchange (ordering, normalisation)
+    HoaNFCtrl.ar(  // exchange (reference radius)
+        ~myHoa3.keep(AtkFoa.defaultOrder.asHoaOrder.size),  // truncate to HOA1
+        AtkHoa.refRadius,
+        ~foaRefRadius,
+        AtkFoa.defaultOrder  // FOA order = HOA1 order
+    ),
+    ~decoder
+);</textarea>
+
+<p><div class='note'><span class='notelabel'>NOTE:</span> A more verbose equivalent can be found <a href="./../Guides/HOA-NFE.html#Decode%20to%20FOA">here</a>.</div><h3><a class='anchor' name='encode%20FOA%20from%20HOA3'>encode FOA from HOA3</a></h3>
+
+<p>Viewed as <strong>encoding FOA</strong> <em>from HOA3</em>, we'll use the FOA toolset to target HOA3.
+<p>The tools for the task are:<ul>
+<li><strong>ordering &amp; normalisation</strong>: <a href="./../Classes/FoaEncoderMatrix.html#*newHoa1">FoaEncoderMatrix: *newHoa1</a><li><strong>reference radius</strong>: <a href="./../Classes/FoaProximity.html">FoaProximity</a></ul>
+
+<p>And the steps:<ol>
+<li>truncate HOA3 to HOA1<li>encode FOA from HOA1<li>reset FOA reference radius from 1.5 to inf<a class='footnote anchor' name='footnote_org_2' href='#footnote_2'><sup>2</sup></a> </ol>
+<div class='note'><span class='notelabel'>NOTE:</span> The use of <a href="./../Classes/FoaProximity.html">FoaProximity</a> requires signal pre-conditioning. See the <a href="./../Classes/HoaNFProx.html#*ar">WARNING here</a>.</div><textarea class='editor'>// format exchange: HOA3 &gt;&gt; FOA
+
+~freq = 30.0;  // highpass freq
+
+// design encoder to exchange (ordering, normalisation)
+~encoder = FoaEncoderMatrix.newHoa1;
+
+// network
+~myFoa = FoaProximity.ar(  // exchange (reference radius)
+    HPF.ar(  // pre-condition FOA
+        FoaEncode.ar(  // exchange (ordering, normalisation)
+            ~myHoa3.keep(AtkFoa.defaultOrder.asHoaOrder.size),  // truncate to HOA1
+            ~encoder
+        ),
+        ~freq
+    ),
+    AtkHoa.refRadius
+)</textarea>
+<h2><a class='anchor' name='SC-HOA'>SC-HOA</a></h2>
+
+<p>Given a matched <strong>order</strong>, when we review the <a href="./../Tutorials/ABCs-of-the-ATK.html#SC-HOAEncodingFormat">encoding format</a> of the <a href="./../Tutorials/ABCs-of-the-ATK.html#SC-HOA">SC-HOA library</a>, we see that the only aspect requiring exchange is the <strong>reference radius</strong>.
+<p>The tool for the task is:<ul>
+<li><strong>reference radius</strong>: <a href="./../Classes/HoaNFCtrl.html">HoaNFCtrl</a></ul>
+<h3><a class='anchor' name='decode%20HOA7%20to%20SC-HOA5'>decode HOA7 to SC-HOA5</a></h3>
+
+<p>We will <strong>decode to</strong> the <a href="./../Tutorials/ABCs-of-the-ATK.html#SC-HOA">SC-HOA library</a> signal set if we'd like to use the tools found there.
+<p>Let's consider an HOA7 signal. At the time of this writing, the <a href="./../Tutorials/ABCs-of-the-ATK.html#SC-HOAEncodingFormat">highest Ambisonic order</a> supported by the <a href="./../Tutorials/ABCs-of-the-ATK.html#SC-HOA">SC-HOA library</a> is fifth order, so for successful exchange, an HOA7 signal will requiare spatial downsampling.
+<p>If you haven't already, see the discussion on <a href="#HOA%20source,%20FOA%20target">truncation, above</a>.
+<p>The steps are:<ol>
+<li>truncate HOA7 to HOA5<li>reset HOA5 reference radius from 1.5 to 1.07 meters</ol>
+
+<p>Here's an example:<textarea class='editor'>// format exchange: HOA7 &gt;&gt; SC-HOA5
+
+~scHoaOrder = 5;  // maximum supported order for SC-HOA library
+~scHoaRefRadius = 1.07;  // exact (see SC-HOA HOAEncoder default)
+// ~scHoaRefRadius = 1.0;  // ambitoos manual
+
+// network
+~myScHoa5 = HoaNFCtrl.ar(  // exchange (reference radius)
+    ~myHoa7.keep(~scHoaOrder.asHoaOrder.size),  // truncate to HOA5
+    AtkHoa.refRadius,
+    ~scHoaRefRadius,
+    ~scHoaOrder
+);</textarea>
+<h3><a class='anchor' name='encode%20HOA5%20from%20SC-HOA5'>encode HOA5 from SC-HOA5</a></h3>
+
+<p><strong>Encoding from</strong> the <a href="./../Tutorials/ABCs-of-the-ATK.html#SC-HOA">SC-HOA library</a> signal set is even more simple.
+<p>All we need to do is:<ol>
+<li>reset SC-HOA5 reference radius from 1.07 to 1.5 meters</ol>
+<textarea class='editor'>// format exchange: SC-HOA5 &gt;&gt; HOA5
+
+~scHoaOrder = AtkHoa.detectOrder(~myScHoa5.size);  // detect SC-HOA order
+~scHoaRefRadius = 1.07;  // exact (see SC-HOA HOAEncoder default)
+// ~scHoaRefRadius = 1.0;  // ambitoos manual
+
+// network
+~myHoa5 = HoaNFCtrl.ar(  // exchange (reference radius)
+    ~myScHoa5
+    ~scHoaRefRadius,
+    AtkHoa.refRadius,
+    ~scHoaOrder
+);</textarea>
+<h2><a class='anchor' name='AmbiX'>AmbiX</a></h2>
+
+<p>In the modern age of Ambisonics, <a href="https://iem.kug.ac.at/fileadmin/media/iem/projects/2011/ambisonics11_nachbar_zotter_sontacchi_deleflie.pdf">AmbiX</a> is the encoding format most commonly found.
+<p>To successfully exchange Ambisonic signals we'll need to match Ambisonic <strong>order</strong>, along with:<ul>
+<li><strong>ordering &amp; normalisation</strong><li><strong>reference radius</strong><a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a> </ul>
+<h3><a class='anchor' name='decode%20HOA3%20to%20AmbiX3'>decode HOA3 to AmbiX3</a></h3>
+
+<p>If we're planning to use an AmbiX toolset for further processing, we'll need to <strong>decode to</strong> AmbiX.
+<p>Let's consider an HOA3 signal, with is the ATK's default for HOA:<textarea class='editor'>AtkHoa.defaultOrder;</textarea>
+
+<p>The tools for the task are:<ul>
+<li><strong>ordering &amp; normalisation</strong>: <a href="./../Classes/HoaMatrixDecoder.html#*newFormat">HoaMatrixDecoder: *newFormat</a><li><strong>reference radius</strong>: <a href="./../Classes/HoaNFCtrl.html">HoaNFCtrl</a></ul>
+
+<p>The steps are:<ol>
+<li>reset HOA3 reference radius from 1.5 to 10.0 meters<a class='footnote anchor' name='footnote_org_4' href='#footnote_4'><sup>4</sup></a> <li>decode HOA3 to AmbiX3</ol>
+<div class='note'><span class='notelabel'>NOTE:</span> You'll see we're able to omit the <strong>order</strong> argument, as HOA3 is the ATK's default order for HOA encoding.</div>
+<p>Here's an example:<textarea class='editor'>// format exchange: HOA3 &gt;&gt; AmbiX3
+
+// safe approx for inf - for use with HoaNFCtrl
+// this could be set to another value
+// --&gt; if overflow, reduce radius
+~ambixRefRadius = 10.0;
+
+// design decoder to exchange (ordering, normalisation)
+~decoder = HoaMatrixDecoder.newFormat(
+    \ambix
+);
+
+// network
+~myAmbiX3 = HoaDecodeMatrix.ar(  // exchange (ordering, normalisation)
+    HoaNFCtrl.ar(  // exchange (reference radius)
+        ~myHoa3,
+        AtkHoa.refRadius,
+        ~ambixRefRadius
+        ),
+    ~decoder
+);</textarea>
+<h3><a class='anchor' name='encode%20HOA3%20from%20Ambix3'>encode HOA3 from Ambix3</a></h3>
+
+<p>If given an Ambix encoded signal, we'll need to <strong>encode from</strong> AmbiX to HOA.
+<p>Let's consider a third order AmbiX signal, which corresponds with the ATK's default HOA <strong>order</strong>:<textarea class='editor'>AtkHoa.defaultOrder;</textarea>
+
+<p>The tools for the task are:<ul>
+<li><strong>ordering &amp; normalisation</strong>: <a href="./../Classes/HoaMatrixEncoder.html#*newFormat">HoaMatrixEncoder: *newFormat</a><li><strong>reference radius</strong>: <a href="./../Classes/HoaNFCtrl.html">HoaNFCtrl</a></ul>
+
+<p>The steps are:<ol>
+<li>encode AmbiX3 to HOA3<li>reset HOA3 reference radius from 10.0 to 1.5 meters<a class='footnote anchor' name='footnote_org_5' href='#footnote_5'><sup>5</sup></a> </ol>
+<div class='note'><span class='notelabel'>NOTE:</span> As with <a href="#decoding%20HOA3%20to%20AmbiX3">decoding HOA3 to AmbiX3</a>, you'll see we're able to omit the <strong>order</strong> argument.</div>
+<p>Here's an example:<textarea class='editor'>// format exchange: AmbiX3 &gt;&gt; HOA3
+
+// safe approx for inf - for use with HoaNFCtrl
+// this could be set to another value
+~ambixRefRadius = 10.0;
+
+// design encoder to exchange (ordering, normalisation)
+~encoder = HoaMatrixEncoder.newFormat(\ambix);
+
+// network
+~myHoa3 = HoaNFCtrl.ar(  // exchange (reference radius)
+    HoaEncodeMatrix.ar(  // exchange (ordering, normalisation)
+        ~myAmbiX3,
+        ~encoder
+    ),
+    ~ambixRefRadius,
+    AtkHoa.refRadius
+);</textarea>
+
+<p><div class='footnotes'>
+<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - <a href="./../Classes/HoaNFProx.html">HoaNFProx</a> is theoretically the correct tool to use to reset the reference radius to inf. In the above illustrated algorithm we've substituted 10.0, instead. This is often regarded as "near enough", and can help avoid overflow.<div class='note'><span class='notelabel'>NOTE:</span> See the <a href="./../Classes/HoaNFProx.html#*ar">WARNING here</a>.</div>
+<p>If we do wish to use <a href="./../Classes/HoaNFProx.html#*ar">HoaNFProx: *ar</a>, the HOA1 signal should be pre-conditioned with a highpass filter to prevent overflow and excessive bass boost.
+<p>Here's an example:<textarea class='editor'>~freq = 30.0;  // highpass freq
+
+// network
+~myFoa = HoaDecodeMatrix.ar(  // exchange (ordering, normalisation)
+    HoaNFProx.ar(  // exchange (reference radius)
+        HPF.ar(  // pre-condition HOA1
+            ~myHoa3.keep(AtkFoa.defaultOrder.asHoaOrder.size),  // truncate to HOA1
+            ~freq
+        ),
+        AtkFoa.defaultOrder  // FOA order = HOA1 order
+    ),
+    ~decoder
+);</textarea>
+</div><a class='anchor' name='footnote_2'/><div class='footnote'>[<a href='#footnote_org_2'>2</a>] - If we wish to avoid using <a href="./../Classes/HPF.html">HPF</a> to precondition the FOA formatted signal, we can use <a href="./../Classes/FoaNFC.html">FoaNFC</a> to precondition instead. <a href="./../Classes/FoaNFC.html">FoaNFC</a> followed by <a href="./../Classes/FoaProximity.html">FoaProximity</a> is equivalent to the use of <a href="./../Classes/HoaNFProx.html#*ar">HoaNFProx: *ar</a> in the HOA toolset.
+<p>Here's an example:<textarea class='editor'>// safe approx for inf - for idiom equivalent HoaNFCtrl
+// this could be set to another value
+// --&gt; if overflow, reduce radius
+~foaRefRadius = 10.0;
+
+// network
+~myFoa = FoaProximity.ar(  // exchange (reference radius)
+    FoaNFC.ar(  // pre-condition FOA
+        FoaEncode.ar(  // exchange (ordering, normalisation)
+            ~myHoa3.keep(AtkFoa.defaultOrder.asHoaOrder.size),  // truncate to HOA1
+            ~encoder
+        ),
+        ~foaRefRadius
+    ),
+    AtkHoa.refRadius
+)</textarea>
+</div><a class='anchor' name='footnote_3'/><div class='footnote'>[<a href='#footnote_org_3'>3</a>] - Because of the use of AmbiX encoded soundfield microphones, we can assume the reference radius in use matches that of classic Ambisonics, i.e., inf.</div><a class='anchor' name='footnote_4'/><div class='footnote'>[<a href='#footnote_org_4'>4</a>] - See <a href="#decoding%20HOA3%20to%20FOA">earlier discussion</a>.</div><a class='anchor' name='footnote_5'/><div class='footnote'>[<a href='#footnote_org_5'>5</a>] - We could use <a href="./../Classes/HoaNFDist.html">HoaNFDist</a> to set the reference radius to inf. However, if we're planning to go back and forth between the ATK and other AmbiX toolsets, using <a href="./../Classes/HoaNFCtrl.html">HoaNFCtrl</a> is a better choice.</div></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/HelpSource/Guides/Format-Exchange.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/HelpSource/Guides/Format-Exchange.schelp</a><br>link::Guides/Format-Exchange::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -113,6 +113,11 @@ var scdoc_sc_version = '3.11.2';
 <li class='toc3'><a href='#-clip2'>clip2</a> </li>
 <li class='toc3'><a href='#-excess'>excess</a> </li>
 <li class='toc3'><a href='#-madd'>madd</a> </li>
+<li class='toc3'><a href='#-threshdb'>threshdb</a> </li>
+<li class='toc3'><a href='#-maxdb'>maxdb</a> </li>
+<li class='toc3'><a href='#-mindb'>mindb</a> </li>
+<li class='toc3'><a href='#-clipdb2'>clipdb2</a> </li>
+<li class='toc3'><a href='#-clipdb'>clipdb</a> </li>
 </ul><li class='toc2'><a href='#testing'>testing</a></li>
 <ul class='toc'><li class='toc3'><a href='#-isPositive'>isPositive</a> </li>
 <li class='toc3'><a href='#-isNegative'>isNegative</a> </li>
@@ -180,6 +185,8 @@ var scdoc_sc_version = '3.11.2';
 <li class='toc3'><a href='#-dbamp'>dbamp</a> </li>
 <li class='toc3'><a href='#-octcps'>octcps</a> </li>
 <li class='toc3'><a href='#-cpsoct'>cpsoct</a> </li>
+<li class='toc3'><a href='#-kFreq'>kFreq</a> </li>
+<li class='toc3'><a href='#-freqK'>freqK</a> </li>
 </ul><li class='toc2'><a href='#streams'>streams</a></li>
 <ul class='toc'><li class='toc3'><a href='#-storeOn'>storeOn</a> </li>
 <li class='toc3'><a href='#-printOn'>printOn</a> </li>
@@ -420,6 +427,7 @@ var scdoc_sc_version = '3.11.2';
 <div id='related'>See also: <a href="./../Classes/Polar.html">Polar</a>, <a href="./../Classes/Complex.html">Complex</a>, <a href="./../Classes/Float.html">Float</a>, <a href="./../Classes/Integer.html">Integer</a>, <a href="./../Classes/UnaryOpUGen.html">UnaryOpUGen</a>, <a href="./../Classes/BinaryOpUGen.html">BinaryOpUGen</a>, <a href="./../Guides/Tour-of-Special-Functions.html">Tour of Special Functions</a></div>
 </div>
 
+<p>
 <p><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>Base class for numbers which can be represented by a single one dimensional value.
@@ -660,6 +668,41 @@ var scdoc_sc_version = '3.11.2';
 <textarea class='editor'>(a - clip2(a,b))</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-madd' href='./../Overviews/Methods.html#madd'>madd</a>(<span class='argstr'>mul</span>, <span class='argstr'>add</span>)</h3>
 <div class='method'><textarea class='editor'>this * a + b</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-threshdb' href='./../Overviews/Methods.html#threshdb'>threshdb</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extSimpleNumber.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extSimpleNumber.sc</a></div>
+<div class='method'>
+<p>Bilateral thresholding, in terms of dB.<textarea class='editor'>a = Array.series(8, -4);
+b = a.threshdb(6.0);
+a.plot("a");
+b.plot("a.threshdb(6.0)");</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-maxdb' href='./../Overviews/Methods.html#maxdb'>maxdb</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extSimpleNumber.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extSimpleNumber.sc</a></div>
+<div class='method'>
+<p>Bilateral maximum, in terms of dB.<textarea class='editor'>a = Array.series(8, -4);
+b = a.maxdb(6.0);
+a.plot("a");
+b.plot("a.maxdb(6.0)");</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mindb' href='./../Overviews/Methods.html#mindb'>mindb</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extSimpleNumber.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extSimpleNumber.sc</a></div>
+<div class='method'>
+<p>Bilateral minimum, in terms of dB. See also, <a href="#-clip2">-clip2</a>.<textarea class='editor'>a = Array.series(8, -4);
+b = a.mindb(6.0);
+a.plot("a");
+b.plot("a.mindb(6.0)");</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clipdb2' href='./../Overviews/Methods.html#clipdb2'>clipdb2</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extSimpleNumber.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extSimpleNumber.sc</a></div>
+<div class='method'>
+<p>Bilateral clipping, in terms of dB. Clips receiver to +/- aNumber.<textarea class='editor'>a = Array.series(8, -4);
+b = a.clipdb2(6.0);
+a.plot("a");
+b.plot("a.clipdb2(6.0)");</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clipdb' href='./../Overviews/Methods.html#clipdb'>clipdb</a>(<span class='argstr'>lo</span>, <span class='argstr'>hi</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extSimpleNumber.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extSimpleNumber.sc</a></div>
+<div class='method'>
+<p>Bilateral minimum, in terms of dB. If the receiver is less than lo then answer lo, else if the receiver is greater than hi then answer hi, else answer the receiver.<textarea class='editor'>a = Array.series(8, -4);
+b = a.clipdb(0.0, 9.0);
+a.plot("a");
+b.plot("a.clipdb(0.0, 9.0)");</textarea>
 </div><h3><a class='anchor' name='testing'>testing</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isPositive' href='./../Overviews/Methods.html#isPositive'>isPositive</a></h3>
 <div class='method'>
@@ -1057,7 +1100,21 @@ a.action = {
 <div class='method'>
 <p>Convert decimal octaves to cycles per second.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cpsoct' href='./../Overviews/Methods.html#cpsoct'>cpsoct</a></h3>
 <div class='method'>
-<p>Convert cycles per second to decimal octaves.</div><h3><a class='anchor' name='streams'>streams</a></h3>
+<p>Convert cycles per second to decimal octaves.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-kFreq' href='./../Overviews/Methods.html#kFreq'>kFreq</a>(<span class='argstr'>size</span>, <span class='argstr'>sampleRate</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extSimpleNumber.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extSimpleNumber.sc</a></div>
+<div class='method'>
+<p>Convert DFT coefficient number to frequency.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>size<td class='argumentdesc'>
+<p>DFT size<tr><td class='argumentname'>sampleRate<td class='argumentdesc'>
+<p>signal sample rate. Defaults to normalized frequency.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-freqK' href='./../Overviews/Methods.html#freqK'>freqK</a>(<span class='argstr'>size</span>, <span class='argstr'>sampleRate</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extSimpleNumber.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extSimpleNumber.sc</a></div>
+<div class='method'>
+<p>Convert frequency to DFT coefficient number.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>size<td class='argumentdesc'>
+<p>DFT size<tr><td class='argumentname'>sampleRate<td class='argumentdesc'>
+<p>signal sample rate. Defaults to normalized frequency.</table></div><h3><a class='anchor' name='streams'>streams</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-storeOn' href='./../Overviews/Methods.html#storeOn'>storeOn</a>(<span class='argstr'>stream</span>)</h3>
 <div class='method'>
 <p>stores this on the given stream</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-printOn' href='./../Overviews/Methods.html#printOn'>printOn</a>(<span class='argstr'>stream</span>)</h3>

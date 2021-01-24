@@ -1,0 +1,85 @@
+<!doctype html><html lang='en'><head><title>PostOffice | SuperCollider 3.11.2 Help</title>
+<link rel='stylesheet' href='./scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./editor.css' type='text/css' />
+<link rel='stylesheet' href='./frontend.css' type='text/css' />
+<link rel='stylesheet' href='./custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./lib/jquery.min.js'></script>
+<script src='./lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = '.';
+var scdoc_title = 'PostOffice';
+var scdoc_sc_version = '3.11.2';
+</script>
+<script src='./scdoc.js' type='text/javascript'></script>
+<script src='./docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>PostOffice:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*lines'>lines</a> </li>
+<li class='toc3'><a href='#*clear'>clear</a> </li>
+<li class='toc3'><a href='#*postfunc'>postfunc</a> </li>
+<li class='toc3'><a href='#*add'>add</a> </li>
+</ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'> (extension)</span>
+<span id='categories'><a href='./Browse.html#Utilities'>Utilities</a></span>
+</div><h1>PostOffice<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>customize handling of post messages</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./Classes/Post.html">Post</a>, <a href="./Classes/Log">Log</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>PostOffice redirects posting and allows: - keeping posted lines, and - adding a function to run for every post message.
+<p>First code examples:<textarea class='editor'>PostOffice.lines; // empty
+Log.start;
+PostOffice.addLines = true;
+
+1 + 2;
+PostOffice.lines.size; // how many?
+PostOffice.lines; // post them - this will become a line too
+PostOffice.clear; // clear lines
+
+PostOffice.addLines = false;
+
+t = TextView().name_("PostOffice").front;
+
+PostOffice.postfunc = { |msg|
+    PostOffice.lines.keep(-3).join;
+    t.string = msg;
+    (dur: 0.1, note: msg.size % 48).play;
+};
+
+"whatever";
+"whatever else?";
+"whatever else? higher notes?";
+"";
+
+PostOffice.postfunc = { |msg|
+    t.string = PostOffice.lines.keep(-3).join;
+    (dur: 0.1, note: msg.size % 48).play;
+};
+
+_some_example_code_</textarea>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*lines' href='./Overviews/Methods.html#lines'>lines</a></h3>
+<div class='method'>
+<p>the current list of stored post lines</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*clear' href='./Overviews/Methods.html#clear'>clear</a></h3>
+<div class='method'>
+<p>clear list of stored post lines</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*postfunc' href='./Overviews/Methods.html#postfunc'>postfunc</a></h3>
+<div class='method'>
+<p>a function to run when a post comes in</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*add' href='./Overviews/Methods.html#add'>add</a></h3>
+<div class='method'>
+<p>add a string / post message to lines</div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/postlog/HelpSource/PostOffice.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/postlog/HelpSource/PostOffice.schelp</a><br>link::PostOffice::<br></div></div><script src='./editor.js' type='text/javascript'></script>
+</body></html>

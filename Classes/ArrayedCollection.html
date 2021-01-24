@@ -84,7 +84,10 @@ var scdoc_sc_version = '3.11.2';
 <li class='toc3'><a href='#-msgSize'>msgSize</a> </li>
 <li class='toc3'><a href='#-bundleSize'>bundleSize</a> </li>
 <li class='toc3'><a href='#-asciiPlot'>asciiPlot</a> </li>
-<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Ambisonic%20Toolkit'>Ambisonic Toolkit</a></li>
+<ul class='toc'><li class='toc3'><a href='#-detectHoaOrder'>detectHoaOrder</a> </li>
+<li class='toc3'><a href='#-clumpByHoaDegree'>clumpByHoaDegree</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-addIfNotNil'>addIfNotNil</a> </li>
 <li class='toc3'><a href='#-asArray'>asArray</a> </li>
@@ -128,7 +131,8 @@ var scdoc_sc_version = '3.11.2';
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/ArrayedCollection.sc' title='/usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/ArrayedCollection.sc'>ArrayedCollection.sc</a></div><div id='subclasses'>Subclasses: <a href="../Classes/Array.html">Array</a>, <a href="../Classes/Polynomial.html">Polynomial</a>, <a href="../Classes/RawArray.html">RawArray</a></div>
 </div>
-<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>ArrayedCollection is an abstract class, a subclass of SequenceableCollections whose elements are held in a vector of slots. Instances of ArrayedCollection have a fixed maximum size beyond which they may not grow.
 <p>Its principal subclasses are <a href="./../Classes/Array.html">Array</a> (for holding objects), and <a href="./../Classes/RawArray.html">RawArray</a>, from which <a href="./../Classes/Int8Array.html">Int8Array</a>, <a href="./../Classes/FloatArray.html">FloatArray</a>, <a href="./../Classes/Signal.html">Signal</a> etc. inherit.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
@@ -473,6 +477,21 @@ a.bundleSize;</textarea>
 <div class='method'>
 <p>For an ArrayedCollection containing numbers (e.g. audio data) this renders a plot in the post window using asterisks and spaces (works best if you use a monospace font in your post window).<textarea class='editor'>a = (0, pi/10 .. 5pi).collect{|val| val.sin};
 a.asciiPlot;</textarea>
+
+<p></div><h3><a class='anchor' name='Ambisonic%20Toolkit'>Ambisonic Toolkit</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-detectHoaOrder' href='./../Overviews/Methods.html#detectHoaOrder'>detectHoaOrder</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/Classes/extArrayedCollection.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/Classes/extArrayedCollection.sc</a></div>
+<div class='method'>
+<p>Return detected ambisonic order as an Integer.<textarea class='editor'>~order = 3;
+~coeffs = ~order.asHoaOrder.sph(0, pi/4);
+~coeffs.detectHoaOrder == ~order;</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clumpByHoaDegree' href='./../Overviews/Methods.html#clumpByHoaDegree'>clumpByHoaDegree</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/Classes/extArrayedCollection.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/Classes/extArrayedCollection.sc</a></div>
+<div class='method'>
+<p>Separates the collection into Associated Legendre degree sub-collections.
+<p>See Associated Legendre degree and Associated Legendre index in <a href="./../Guides/ATK-Glossary.html">ATK Glossary</a>.<textarea class='editor'>~order = 3;
+~coeffs = ~order.asHoaOrder.sph(0, pi/4);
+~coeffs.clumpByHoaDegree;</textarea>
 
 <p></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>

@@ -1,0 +1,515 @@
+<!doctype html><html lang='en'><head><title>HilbertW | SuperCollider 3.11.2 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'HilbertW';
+var scdoc_sc_version = '3.11.2';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>HilbertW:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*ar'>ar</a> </li>
+<li class='toc3'><a href='#*arRotate'>arRotate</a> </li>
+<li class='toc3'><a href='#*arSSB'>arSSB</a> </li>
+<li class='toc3'><a href='#*arMag'>arMag</a> </li>
+<li class='toc3'><a href='#*arPhase'>arPhase</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'><li class='toc2'><a href='#ar'>ar</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#arRotate'>arRotate</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#arSSB'>arSSB</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#arMag'>arMag</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#arPhase'>arPhase</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Frequency%20response'>Frequency response</a></li>
+<ul class='toc'><li class='toc2'><a href='#Magnitude'>Magnitude</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Phase'>Phase</a></li>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Hilbert'>Hilbert</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Hilbert>Pseudo-UGens'>Pseudo-UGens</a> | <a href='./../Browse.html#UGens'>UGens</a>&#8201;&gt;&#8201;<a href='./../Browse.html#UGens>Filters'>Filters</a>&#8201;&gt;&#8201;<a href='./../Browse.html#UGens>Filters>Nonlinear'>Nonlinear</a></span>
+</div><h1>HilbertW<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Applies the Hilbert Transform to an input signal. [1]</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Hilbert/Classes/Hilbert.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/Hilbert/Classes/Hilbert.sc'>Hilbert.sc</a></div><div id='related'>See also: <a href="./../Overviews/Hilbert-Overview.html">The Hilbert Transform Library</a>, <a href="./../Classes/HilbertWRe.html">HilbertWRe</a>, <a href="./../Classes/HilbertWIm.html">HilbertWIm</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Offers the Hilbert and related transforms and analyses of an input signal via Weaver's <em>Third Method</em>.<a class='footnote anchor' name='footnote_org_1' href='#footnote_1'><sup>1</sup></a> 
+<p>[1] this is a composite pseudo UGen. <a href="./../Classes/HilbertW.html">HilbertW</a> is built with <a href="./../Classes/DelayN.html">DelayN</a>, <a href="./../Classes/Delay1.html">Delay1</a>, <a href="./../Classes/Delay2.html">Delay2</a>, <a href="./../Classes/Impulse.html">Impulse</a>, <a href="./../Classes/LocalBuf.html">LocalBuf</a>, <a href="./../Classes/FFT.html">FFT</a>, <a href="./../Classes/IFFT.html">IFFT</a>, and <a href="./../Classes/PV_BrickWall.html">PV_BrickWall</a>. Method <a href="#*arSSB">*arSSB</a> also includes <a href="./../Classes/SinOsc.html">SinOsc</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>HilbertW.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>in</span>, <span class='argstr'>size: 2048</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p>The Hilbert Transform, returning two signals in <em>phase-quadrature</em>. Considered as a complex <em>analytic signal</em>,<a class='footnote anchor' name='footnote_org_2' href='#footnote_2'><sup>2</sup></a>  the first may be regarded as the <em>real</em> component and the second as the <em>imaginary</em>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>in<td class='argumentdesc'>
+<p>The input signal to transform.<tr><td class='argumentname'>size<td class='argumentdesc'>
+<p>The size of the FFT used for <em>Weaver Half-Band</em> filtering.<tr><td class='argumentname'>mul<td class='argumentdesc'>
+<p>Output will be multiplied by this value.<tr><td class='argumentname'>add<td class='argumentdesc'>
+<p>This value will be added to the output.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An array of channels: <code>[real, imag]</code></div></div><h3 class='method-code'><span class='method-prefix'>HilbertW.</span><a class='method-name' name='*arRotate' href='./../Overviews/Methods.html#arRotate'>arRotate</a>(<span class='argstr'>in</span>, <span class='argstr'>angle: 0.0</span>, <span class='argstr'>size: 2048</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p>Rotate<a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a>  the phase of the input.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>in<td class='argumentdesc'>
+<p>The input signal.<tr><td class='argumentname'>angle<td class='argumentdesc'>
+<p>Rotation angle, in radians.<tr><td class='argumentname'>size<td class='argumentdesc'>
+<p>The size of the FFT used for <em>Weaver Half-Band</em> filtering.<tr><td class='argumentname'>mul<td class='argumentdesc'>
+<p>Output will be multiplied by this value.<tr><td class='argumentname'>add<td class='argumentdesc'>
+<p>This value will be added to the output.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Phase rotated input.</div></div><h3 class='method-code'><span class='method-prefix'>HilbertW.</span><a class='method-name' name='*arSSB' href='./../Overviews/Methods.html#arSSB'>arSSB</a>(<span class='argstr'>in</span>, <span class='argstr'>freq: 0.0</span>, <span class='argstr'>size: 2048</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p>Single-Sideband Modulate<a class='footnote anchor' name='footnote_org_4' href='#footnote_4'><sup>4</sup></a>  (SSB) the input.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>in<td class='argumentdesc'>
+<p>The input signal.<tr><td class='argumentname'>freq<td class='argumentdesc'>
+<p>Frequency to shift by. May be positive or negative.<tr><td class='argumentname'>size<td class='argumentdesc'>
+<p>The size of the FFT used for <em>Weaver Half-Band</em> filtering.<tr><td class='argumentname'>mul<td class='argumentdesc'>
+<p>Output will be multiplied by this value.<tr><td class='argumentname'>add<td class='argumentdesc'>
+<p>This value will be added to the output.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>SSB modulated input.</div></div><h3 class='method-code'><span class='method-prefix'>HilbertW.</span><a class='method-name' name='*arMag' href='./../Overviews/Methods.html#arMag'>arMag</a>(<span class='argstr'>in</span>, <span class='argstr'>size: 2048</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p>Analyze the <em>instantaneous amplitude</em> of the input.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>in<td class='argumentdesc'>
+<p>The input signal to analyze.<tr><td class='argumentname'>size<td class='argumentdesc'>
+<p>The size of the FFT used for <em>Weaver Half-Band</em> filtering.<tr><td class='argumentname'>mul<td class='argumentdesc'>
+<p>Output will be multiplied by this value.<tr><td class='argumentname'>add<td class='argumentdesc'>
+<p>This value will be added to the output.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><em>Instantaneous amplitude</em>.</div></div><h3 class='method-code'><span class='method-prefix'>HilbertW.</span><a class='method-name' name='*arPhase' href='./../Overviews/Methods.html#arPhase'>arPhase</a>(<span class='argstr'>in</span>, <span class='argstr'>size: 2048</span>, <span class='argstr'>mul: 1</span>, <span class='argstr'>add: 0</span>)</h3>
+<div class='method'>
+<p>Analyze the <em>instantaneous phase</em> of the input.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>in<td class='argumentdesc'>
+<p>The input signal to analyze.<tr><td class='argumentname'>size<td class='argumentdesc'>
+<p>The size of the FFT used for <em>Weaver Half-Band</em> filtering.<tr><td class='argumentname'>mul<td class='argumentdesc'>
+<p>Output will be multiplied by this value.<tr><td class='argumentname'>add<td class='argumentdesc'>
+<p>This value will be added to the output.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><em>Instantaneous phase</em>, in radians.</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<h3><a class='anchor' name='ar'>ar</a></h3>
+<textarea class='editor'>/*
+
+FFT analysis functions
+
+NOTE: FFT returns linear frequency
+
+*/
+(
+~calcMag = { arg kernel;
+
+    var fftResponse, fftMag;
+
+    // FFT analysis here!
+    fftResponse = fft(
+        kernel.as(Signal),
+        Signal.newClear(kernel.size),
+        Signal.fftCosTable(kernel.size)
+    );
+
+    // find (&amp; trim magnitude)
+    fftMag = fftResponse.magnitude;
+    fftMag = fftMag.copyFromStart((kernel.size/2).asInteger);
+
+    fftMag;
+};
+
+
+~calcPha = { arg kernel;
+
+    var fftResponse, fftPha;
+
+    // FFT analysis here!
+    fftResponse = fft(
+        kernel.as(Signal),
+        Signal.newClear(kernel.size),
+        Signal.fftCosTable(kernel.size)
+    );
+
+    // find (&amp; trim phase)
+    fftPha = fftResponse.phase;
+    fftPha = fftPha.copyFromStart((kernel.size/2).asInteger);
+
+    fftPha;
+};
+
+)
+
+
+/*
+        TEST Weaver : HilbertW
+
+        Impulse Response
+*/
+(
+var size, dur, freq;
+var overSample, start;
+var plotDbMin, plotDbMax, plotDegMin, plotDegMax;
+
+// kernel size
+size = 2048;
+
+overSample = 2;
+
+// plot params
+plotDbMin = -60.0;
+plotDbMax = 6.0;
+plotDegMin = 0.0;
+plotDegMax = 180.0;
+
+start = size  - ((size/2).asInt) - s.options.blockSize;  // offset - for kernel normalized to sample delay
+
+dur = size / s.sampleRate;  // in seconds
+freq = dur.reciprocal;
+
+fork {
+    { // [real,imag]
+        HilbertW.ar(
+            Impulse.ar(freq), // imulse test, one pulse over fftbuffer size
+        size: size);
+    }.loadToFloatArray(overSample * dur, s, {
+        |arr|
+        defer {
+            arr = arr.clump(2).flop; // de-interleave
+            arr = arr.collect(_.copyRange(start, start+size-1));
+            arr.plot("[real, imag]; HilbertW; Impulse input", minval: -1, maxval: 1);
+        }
+        }
+    );
+
+    0.5.wait;
+
+    { // plot magnitude - [real,imag]
+        HilbertW.ar(
+            Impulse.ar(freq), // imulse test, one pulse over fftbuffer size
+        size: size);
+    }.loadToFloatArray(overSample * dur, s, {
+        |arr|
+        defer {
+            arr = arr.clump(2).flop; // de-interleave
+            arr = arr.collect(_.copyRange(start, start+size-1));
+            [~calcMag.value(arr.at(0)), ~calcMag.value(arr.at(1))].ampdb.plot(
+                name: "Real &amp; Imag Magnitude Response",
+                minval: plotDbMin,
+                maxval: plotDbMax
+            );
+        }
+        }
+    );
+
+    0.5.wait;
+
+    { // plot magnitude - system
+        HilbertW.ar(
+            Impulse.ar(freq), // imulse test, one pulse over fftbuffer size
+        size: size);
+    }.loadToFloatArray(overSample * dur, s, {
+        |arr|
+        defer {
+            arr = arr.clump(2).flop; // de-interleave
+            arr = arr.collect(_.copyRange(start, start+size-1));
+            ((Complex.new(~calcMag.value(arr.at(0)), ~calcMag.value(arr.at(1))).magnitude  / 2.sqrt).ampdb).plot(
+                name: "System Magnitude Response",
+                minval: plotDbMin,
+                maxval: plotDbMax
+            );
+        }
+        }
+    );
+
+    0.5.wait;
+
+    { // plot phase difference - system
+        HilbertW.ar(
+            Impulse.ar(freq), // imulse test, one pulse over fftbuffer size
+        size: size);
+    }.loadToFloatArray(overSample * dur, s, {
+        |arr|
+        defer {
+            arr = arr.clump(2).flop; // de-interleave
+            arr = arr.collect(_.copyRange(start, start+size-1));
+            (~calcPha.value(arr.at(0)) - ~calcPha.value(arr.at(1))).raddeg.plot(
+                name: "System Phase Difference",
+                minval: plotDegMin,
+                maxval: plotDegMax
+            );
+        }
+        }
+    );
+
+}
+)
+
+/*
+        TEST Weaver : HilbertW
+
+        single cosine cycle: period = size
+*/
+
+(
+var size, dur, freq;
+var overSample, start;
+
+size = 2048;
+overSample = 3;
+// plot: jump to the 2nd cycle, to account for "warm up" of Im kernel
+start = 2 * size - s.options.blockSize;  // offset - to sync cycle
+
+dur = size / s.sampleRate;  // in seconds
+freq = dur.reciprocal;
+
+{ // [real,imag]
+    HilbertW.ar(
+        SinOsc.ar(freq, pi/2), // cosine test, one cycle over fftbuffer size
+        size: size);
+}.loadToFloatArray(overSample * dur, s, {
+    |arr|
+    defer {
+        arr = arr.clump(2).flop; // de-interleave
+        arr = arr.collect(_.copyRange(start, start+size-1));
+        arr.plot("[real, imag]; HilbertW; Cosine input", minval: -1, maxval: 1);
+    }
+}
+);
+)</textarea>
+<h3><a class='anchor' name='arRotate'>arRotate</a></h3>
+<textarea class='editor'>/*
+        TEST Weaver : *arRotate
+
+        single cosine cycle: period = size
+*/
+(
+var size, dur, freq, angles;
+var overSample, start;
+
+size = 2048;
+overSample = 3;
+// plot: jump to the 2nd cycle, to account for "warm up" of Im kernel
+start = 2 * size - s.options.blockSize;  // offset - to sync cycle
+
+dur = size / s.sampleRate;  // in seconds
+freq = dur.reciprocal;
+
+angles = Array.series(9, 0, pi/4);  // in radians
+
+{
+    angles.do(
+        { arg angle, i;
+
+            { // phase rotation
+                HilbertW.arRotate(
+                    SinOsc.ar(freq, pi/2), // cosine test, one cycle over fftbuffer size
+                    angle,
+                    size: size);
+            }.loadToFloatArray(overSample * dur, s, {
+                |arr|
+                defer {
+                    arr = arr.copyRange(start, start+size-1);
+                    arr.plot(format("HilbertW *arRotate; Angle = % degrees", angle.raddeg), minval: -1, maxval: 1);
+                }
+            }
+            );
+
+            0.5.wait;
+        }
+    )
+}.fork
+)</textarea>
+<h3><a class='anchor' name='arSSB'>arSSB</a></h3>
+<textarea class='editor'>/*
+        TEST Weaver : *arSSB
+
+        single cosine cycle: period = size
+*/
+(
+var size, dur, freq, harmonics;
+var overSample, start;
+
+size = 2048;
+overSample = 3;
+// plot: jump to the 2nd cycle, to account for "warm up" of Im kernel
+start = 2 * size - s.options.blockSize;  // offset - to sync cycle
+
+dur = size / s.sampleRate;  // in seconds
+freq = dur.reciprocal;
+
+harmonics = 8;  // number of harmonics to SSB
+
+{
+    harmonics.do(
+        { arg hNum;
+            var ssbFreq;
+
+            ssbFreq = hNum * freq;
+
+            { // frequency shifting
+                HilbertW.arSSB(
+                    SinOsc.ar(freq, pi/2), // cosine test, one cycle over fftbuffer size
+                    ssbFreq,
+                    size: size);
+            }.loadToFloatArray(overSample * dur, s, {
+                |arr|
+                defer {
+                    arr = arr.copyRange(start, start+size-1);
+                    arr.plot(format("HilbertW *arSSB; Freq = % Hz", ssbFreq), minval: -1, maxval: 1);
+                }
+            }
+            );
+
+            0.5.wait;
+        }
+    )
+}.fork
+)
+
+/*
+        Sideband control: upper and lower bands
+*/
+
+// Build simple spectrum with a rolloff to shift in frequency
+(
+d = SynthDef(\help_HilbertW_ssb, { |out=0, frq=1000, shft=5000, amp=1|
+    var sig;
+    sig = Mix.ar(
+        5.collect{|i|
+            SinOsc.ar(frq * (i+1), mul: 5.reciprocal * (i+1).reciprocal)
+        }
+    );
+
+    Out.ar( out,
+        HilbertW.arSSB(
+            sig,
+            freq: shft,
+            size: 2048,
+            mul: amp,
+        )
+    )
+}).add
+)
+
+// Play the synth to a bus
+b = Bus.audio(s, 1);
+x = Synth(\help_HilbertW_ssb, [\out, b.index, \frq, 400, \shft, 3000, \amp, 0.5]);
+
+// View the spectrum
+f = s.freqscope();
+f.scope.inBus_(b.index);
+
+x.set(\shft, -3000);    // lower sidebands: negative freqency shift
+x.set(\shft, 3000);     // upper sidebands
+
+// Cleanup
+[x, b].do(_.free); f.window.close;</textarea>
+<h3><a class='anchor' name='arMag'>arMag</a></h3>
+<textarea class='editor'>/*
+        TEST Weaver : *arMag
+
+        single cosine cycle: period = size
+*/
+
+(
+var size, dur, freq, amps;
+var overSample, start;
+
+size = 2048;
+overSample = 3;
+// plot: jump to the 2nd cycle, to account for "warm up" of Im kernel
+start = 2 * size - s.options.blockSize;  // offset - to sync cycle
+
+dur = size / s.sampleRate;  // in seconds
+freq = dur.reciprocal;
+
+amps = Array.geom(9, 1, 0.5);  // amplitudes to test
+
+{
+    amps.do(
+        { arg amp;
+
+            { // frequency shifting
+                HilbertW.arMag(
+                    SinOsc.ar(freq, pi/2, amp), // cosine test, one cycle over fftbuffer size
+                    size: size);
+            }.loadToFloatArray(overSample * dur, s, {
+                |arr|
+                defer {
+                    arr = arr.copyRange(start, start+size-1);
+                    arr = arr.ampdb;
+                    arr.plot(format("HilbertW *arMag; Cosine input; Amp = % dB", amp.ampdb), minval: -48, maxval: 0);
+                }
+            }
+            );
+
+            0.5.wait;
+        }
+    )
+}.fork
+)</textarea>
+<h3><a class='anchor' name='arPhase'>arPhase</a></h3>
+<textarea class='editor'>/*
+        TEST Weaver : *arPhase
+
+        single cosine cycle: period = size
+*/
+
+(
+var size, dur, freq;
+var overSample, start;
+
+size = 2048;
+overSample = 3;
+// plot: jump to the 2nd cycle, to account for "warm up" of Im kernel
+start = 2 * size - s.options.blockSize;  // offset - to sync cycle
+
+dur = size / s.sampleRate;  // in seconds
+freq = dur.reciprocal;
+
+{ // phase
+    HilbertW.arPhase(
+        SinOsc.ar(freq, pi/2), // cosine test, one cycle over fftbuffer size
+        size: size);
+}.loadToFloatArray(overSample * dur, s, {
+    |arr|
+    defer {
+        arr = arr.copyRange(start, start+size-1);
+        arr.plot("HilbertW *arPhase; Cosine input", minval: -pi, maxval: pi);
+    }
+}
+)
+)</textarea>
+
+<p><h2><a class='anchor' name='Frequency%20response'>Frequency response</a></h2>
+<h3><a class='anchor' name='Magnitude'>Magnitude</a></h3>
+
+<p>The <code>real</code> output of <a href="./../Classes/HilbertW.html">HilbertW</a> returns an allpass magnitude response.
+<p>The <code>imag</code> magnitude response may be regarded as bandpass, with notches at DC and Nyquist.<h3><a class='anchor' name='Phase'>Phase</a></h3>
+
+<p>The <code>real</code> output of <a href="./../Classes/HilbertW.html">HilbertW</a> returns a linear phase response. As a result, the output of the system as a whole is delayed in time. The total delay, in samples, can be calculated as <code>size - blockSize</code>, where <a href="./../Classes/ServerOptions.html#-blockSize">blockSize</a> is the number of samples in one control period of the <a href="./../Classes/Server.html">Server</a> in use.
+<p>The <code>imag</code> output is offset by <code>-pi/2</code> radians with respect to <code>real</code>.<div class='footnotes'>
+<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - Weaver, Donald. “A Third Method of Generation and Detection of Single-Sideband Signals.” Proceedings of the IRE, vol. 44, no. 12, 1956, pp. 1703–1705.</div><a class='anchor' name='footnote_2'/><div class='footnote'>[<a href='#footnote_org_2'>2</a>] - Smith, J.O. “Analytic Signals and Hilbert Transform Filters”, in Mathematics of the Discrete Fourier Transform (DFT) with Audio Applications, Second Edition, <a href="https://ccrma.stanford.edu/~jos/st/Analytic_Signals_Hilbert_Transform.html">https://ccrma.stanford.edu/~jos/st/Analytic_Signals_Hilbert_Transform.html</a>, online book, 2007 edition, accessed 2017-08-08.</div><a class='anchor' name='footnote_3'/><div class='footnote'>[<a href='#footnote_org_3'>3</a>] - decrement</div><a class='anchor' name='footnote_4'/><div class='footnote'>[<a href='#footnote_org_4'>4</a>] - Aka, <em>frequency-shifting</em>.</div></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Hilbert/HelpSource/Classes/HilbertW.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Hilbert/HelpSource/Classes/HilbertW.schelp</a><br>link::Classes/HilbertW::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,0 +1,298 @@
+<!doctype html><html lang='en'><head><title>MatrixArray | SuperCollider 3.11.2 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'MatrixArray';
+var scdoc_sc_version = '3.11.2';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>MatrixArray:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*fill'>fill</a> </li>
+<li class='toc3'><a href='#*with'>with</a> </li>
+<li class='toc3'><a href='#*newClear'>newClear</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Access'>Access</a></li>
+<ul class='toc'><li class='toc3'><a href='#-rowAt'>rowAt</a> </li>
+<li class='toc3'><a href='#-colAt'>colAt</a> </li>
+<li class='toc3'><a href='#-at'>at</a> </li>
+<li class='toc3'><a href='#-matrix'>matrix</a> </li>
+<li class='toc3'><a href='#-asArray'>asArray</a> </li>
+<li class='toc3'><a href='#-transpose'>transpose</a> </li>
+<li class='toc3'><a href='#-flopped'>flopped</a> </li>
+<li class='toc3'><a href='#-rows'>rows</a> </li>
+<li class='toc3'><a href='#-cols'>cols</a> </li>
+</ul><li class='toc2'><a href='#Filtering'>Filtering</a></li>
+<ul class='toc'><li class='toc3'><a href='#-getSub'>getSub</a> </li>
+<li class='toc3'><a href='#-withoutRow'>withoutRow</a> </li>
+<li class='toc3'><a href='#-withoutCol'>withoutCol</a> </li>
+<li class='toc3'><a href='#-withoutRowCol'>withoutRowCol</a> </li>
+</ul><li class='toc2'><a href='#Manipulation'>Manipulation</a></li>
+<ul class='toc'><li class='toc3'><a href='#-put'>put</a> </li>
+<li class='toc3'><a href='#-removeRow'>removeRow</a> </li>
+<li class='toc3'><a href='#-removeCol'>removeCol</a> </li>
+<li class='toc3'><a href='#-zeroWithin'>zeroWithin</a> </li>
+<li class='toc3'><a href='#-thresh2'>thresh2</a> </li>
+</ul><li class='toc2'><a href='#Characteristic%20Values%20of%20the%20Matrix'>Characteristic Values of the Matrix</a></li>
+<ul class='toc'><li class='toc3'><a href='#-cofactor'>cofactor</a> </li>
+<li class='toc3'><a href='#-adjoint'>adjoint</a> </li>
+<li class='toc3'><a href='#-det'>det</a> </li>
+<li class='toc3'><a href='#-gram'>gram</a> </li>
+<li class='toc3'><a href='#-inverse'>inverse</a> </li>
+<li class='toc3'><a href='#-pseudoInverse'>pseudoInverse</a> </li>
+<li class='toc3'><a href='#-isSquare'>isSquare</a> </li>
+</ul><li class='toc2'><a href='#Matrix%20Operations'>Matrix Operations</a></li>
+<ul class='toc'><li class='toc3'><a href='#-*'>*</a> </li>
+<li class='toc3'><a href='#-mulMatrix'>mulMatrix</a> </li>
+<li class='toc3'><a href='#-mulNumber'>mulNumber</a> </li>
+<li class='toc3'><a href='#-mixCoeffs'>mixCoeffs</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Attribution'>Attribution</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Linear Algebra'>Linear Algebra</a> | <a href='./../Browse.html#Math'>Math</a></span>
+</div><h1>MatrixArray<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>A two-dimensional array structure to facilitate matrix operations.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MatrixArray/Classes/MatrixArray.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/MatrixArray/Classes/MatrixArray.sc'>MatrixArray.sc</a></div><div id='related'>See also: <a href="./../Classes/Matrix.html">Matrix</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A two-dimensional array structure to facilitate matrix operations. This is a partial refactoring of the <a href="./../Classes/Matrix.html">Matrix</a> class from the MathLib quark. The modifications enable much faster calculation of some matrix operations, namely the determinant (<a href="#-det">-det</a>), which subsequently speeds up the <code>inverse</code> and others. Performance is further enhanced by storing the transpose , and doing in-place operations when possible.<div class='note'><span class='notelabel'>NOTE:</span> Because this class was designed around certain methods that involve a high amount of recursion, like the <code>pseudoInverse</code>, for efficiency, many of the underlying operations are done through <a href="./../Classes/Array.html">Array</a>'s methods. As a consequence most methods will return a new <a href="./../Classes/Array.html">Array</a> rather than the <a href="./../Classes/MatrixArray.html">MatrixArray</a> object. So if you expect to call further methods on a result, the preferred pattern is to "cast" it into a new <a href="./../Classes/MatrixArray.html">MatrixArray</a> using <a href="#*with">*with</a>.</div>
+<p><div class='note'><span class='notelabel'>NOTE:</span> Certain error checks are omitted, for example in operations that require a square matrix, this shape is assumed.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>MatrixArray.</span><a class='method-name' name='*fill' href='./../Overviews/Methods.html#fill'>fill</a>(<span class='argstr'>rows</span>, <span class='argstr'>cols</span>, <span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>Fill the matrix by evaluating function.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rows<td class='argumentdesc'>
+<p>The number of rows.<tr><td class='argumentname'>cols<td class='argumentdesc'>
+<p>The number of columns.<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>The function used to fill the matrix. The function is passed <strong>row</strong> and <strong>col</strong> as arguments.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <a href="./../Classes/MatrixArray.html">MatrixArray</a>.</div></div><h3 class='method-code'><span class='method-prefix'>MatrixArray.</span><a class='method-name' name='*with' href='./../Overviews/Methods.html#with'>with</a>(<span class='argstr'>array</span>)</h3>
+<div class='method'>
+<p>Create a <a href="./../Classes/MatrixArray.html">MatrixArray</a> with values from a 2-D <a href="./../Classes/Array.html">Array</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>array<td class='argumentdesc'>
+<p>A 2-D <a href="./../Classes/Array.html">Array</a> — an array of rows.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <a href="./../Classes/MatrixArray.html">MatrixArray</a>.</div></div><h3 class='method-code'><span class='method-prefix'>MatrixArray.</span><a class='method-name' name='*newClear' href='./../Overviews/Methods.html#newClear'>newClear</a>(<span class='argstr'>rows: 1</span>, <span class='argstr'>cols: 1</span>)</h3>
+<div class='method'>
+<p>Create a <a href="./../Classes/MatrixArray.html">MatrixArray</a> of a specified size, filled with <code>nil</code>s.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rows<td class='argumentdesc'>
+<p>The number of rows.<tr><td class='argumentname'>cols<td class='argumentdesc'>
+<p>The number of columns.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <a href="./../Classes/MatrixArray.html">MatrixArray</a>.</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Access'>Access</a></h3>
+<div class='note'><span class='notelabel'>NOTE:</span> The following access methods return the objects that comprise <a href="./../Classes/MatrixArray.html">MatrixArray</a>'s state, e.g. the row <a href="./../Classes/Array.html">Array</a>s, <strong>not a copy</strong>, so use care not to unintentionally change these objects once you access them.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rowAt' href='./../Overviews/Methods.html#rowAt'>rowAt</a>(<span class='argstr'>row</span>)</h3>
+<div class='method'>
+<p>Get the row at an index.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>The row index.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/Array.html">Array</a>, not a copy!</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-colAt' href='./../Overviews/Methods.html#colAt'>colAt</a>(<span class='argstr'>col</span>)</h3>
+<div class='method'>
+<p>Get the column at an index.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>The column index.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/Array.html">Array</a>, not a copy!</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>row</span>, <span class='argstr'>col</span>)</h3>
+<div class='method'>
+<p>Get the value at <code>[row, col]</code>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>The row index.<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>The column index.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>The value stored at <code>[row, col]</code>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-matrix' href='./../Overviews/Methods.html#matrix'>matrix</a></h3>
+<div class='method'>
+<p>Get the <a href="./../Classes/MatrixArray.html">MatrixArray</a> as a 2-D array. Synonymous with <a href="#-asArray">-asArray</a>.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Array.html">Array</a>s (rows), not a copy!</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asArray' href='./../Overviews/Methods.html#asArray'>asArray</a></h3>
+<div class='method'>
+<p>Get the <a href="./../Classes/MatrixArray.html">MatrixArray</a> as a 2-D array. Synonymous with <a href="#-matrix">-matrix</a>.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Array.html">Array</a>s (rows), not a copy!</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-transpose' href='./../Overviews/Methods.html#transpose'>transpose</a></h3>
+<div class='method'>
+<p>Get the flopped matrix (transpose). This transpose is computed on first request and stored thereafter for internal use and quick access.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Array.html">Array</a>s (rows), not a copy!</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-flopped' href='./../Overviews/Methods.html#flopped'>flopped</a></h3>
+<div class='method'>
+<p>Get the flopped matrix (transpose). This transpose is computed on first request and stored thereafter for internal use and quick access.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Array.html">Array</a>s (rows), not a copy!</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rows' href='./../Overviews/Methods.html#rows'>rows</a></h3>
+<div class='method'>
+<p>Get the number of rows in the matrix.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cols' href='./../Overviews/Methods.html#cols'>cols</a></h3>
+<div class='method'>
+<p>Get the number of columns in the matrix.</div><h3><a class='anchor' name='Filtering'>Filtering</a></h3>
+
+<p>The following filter methods will return new objects (<a href="./../Classes/Array.html">Array</a>s).<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getSub' href='./../Overviews/Methods.html#getSub'>getSub</a>(<span class='argstr'>rowStart: 0</span>, <span class='argstr'>colStart: 0</span>, <span class='argstr'>rowLength</span>, <span class='argstr'>colHeight</span>)</h3>
+<div class='method'>
+<p>Get a sub-matrix from within matrix.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rowStart<td class='argumentdesc'>
+<p>Row index to begin copying.<tr><td class='argumentname'>colStart<td class='argumentdesc'>
+<p>Column index to begin copying.<tr><td class='argumentname'>rowLength<td class='argumentdesc'>
+<p>The number of elements to copy from each row.<tr><td class='argumentname'>colHeight<td class='argumentdesc'>
+<p>The number of elements to copy from each column.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A new <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Array.html">Array</a>s (rows).</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-withoutRow' href='./../Overviews/Methods.html#withoutRow'>withoutRow</a>(<span class='argstr'>row</span>)</h3>
+<div class='method'>
+<p>Get a new matrix that is this one without a specified row.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>The index of the row to omit.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A new <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Array.html">Array</a>s (rows).</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-withoutCol' href='./../Overviews/Methods.html#withoutCol'>withoutCol</a>(<span class='argstr'>col</span>)</h3>
+<div class='method'>
+<p>Get a new matrix that is this one without a specified column.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>The index of the column to omit.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A new <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Array.html">Array</a>s (rows).</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-withoutRowCol' href='./../Overviews/Methods.html#withoutRowCol'>withoutRowCol</a>(<span class='argstr'>row</span>, <span class='argstr'>col</span>)</h3>
+<div class='method'>
+<p>A convenience method, for optimized use by <a href="#-cofactor">-cofactor</a>, which, unlike <a href="#-withoutRow">-withoutRow</a> and <a href="#-withoutCol">-withoutCol</a>, returns a <a href="./../Classes/MatrixArray.html">MatrixArray</a> that is this one without a specified row and column.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>The index of the row to be removed.<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>The index of the column to be removed.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A new <a href="./../Classes/MatrixArray.html">MatrixArray</a>.</div></div><h3><a class='anchor' name='Manipulation'>Manipulation</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-put' href='./../Overviews/Methods.html#put'>put</a>(<span class='argstr'>row</span>, <span class='argstr'>col</span>, <span class='argstr'>val</span>)</h3>
+<div class='method'>
+<p>Set the value in the matrix at a location.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>A row index.<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>A column index.<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>The value to set.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeRow' href='./../Overviews/Methods.html#removeRow'>removeRow</a>(<span class='argstr'>row</span>)</h3>
+<div class='method'>
+<p>Remove a row from the matrix.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>The index of the row to remove.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>This <a href="./../Classes/MatrixArray.html">MatrixArray</a>, which is now without row <strong>row</strong>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeCol' href='./../Overviews/Methods.html#removeCol'>removeCol</a>(<span class='argstr'>col</span>)</h3>
+<div class='method'>
+<p>Remove a column from the matrix.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>The index of the column to remove.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>This <a href="./../Classes/MatrixArray.html">MatrixArray</a>, which is now without column <strong>col</strong>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-zeroWithin' href='./../Overviews/Methods.html#zeroWithin'>zeroWithin</a>(<span class='argstr'>within</span>)</h3>
+<div class='method'>
+<p><div class='warning'><span class='warninglabel'>WARNING:</span> Deprecated: use <a href="#-thresh2">-thresh2</a> instead.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-thresh2' href='./../Overviews/Methods.html#thresh2'>thresh2</a>(<span class='argstr'>thresh</span>)</h3>
+<div class='method'>
+<p>Bilateral thresholding <strong>in place</strong>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>thresh<td class='argumentdesc'>
+<p>When the input.abs &lt; thresh, the output is forced to 0. Should be a positive value.
+<p>Default is <code>-180.dbamp</code>, or <code>1e-09</code>.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>This <a href="./../Classes/MatrixArray.html">MatrixArray</a>.</div></div><h3><a class='anchor' name='Characteristic%20Values%20of%20the%20Matrix'>Characteristic Values of the Matrix</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cofactor' href='./../Overviews/Methods.html#cofactor'>cofactor</a>(<span class='argstr'>row</span>, <span class='argstr'>col</span>)</h3>
+<div class='method'>
+<p>Get the cofactor to element <code>[row, col]</code>. This is the determinant of the sub-matrix up to <code>[row, col]</code> mutiplied with <code>(-1)**(row+col)</code>.<div class='note'><span class='notelabel'>NOTE:</span> The matrix is assumed to be square (no check is performed).</div>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>The row index.<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>The column index.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <a href="./../Classes/Number.html">Number</a>, the cofactor.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-adjoint' href='./../Overviews/Methods.html#adjoint'>adjoint</a></h3>
+<div class='method'>
+<p>Return the adjoint (adjugate) of a square matrix.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A 2-D <a href="./../Classes/Array.html">Array</a>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-det' href='./../Overviews/Methods.html#det'>det</a></h3>
+<div class='method'>
+<p>Calculate the matrix determinant.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <a href="./../Classes/Number.html">Number</a>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gram' href='./../Overviews/Methods.html#gram'>gram</a></h3>
+<div class='method'>
+<p>Compute the gram matrix (the transpose of this matrix multiplied with itself).
+<p><code>T^t * T</code><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A 2-D <a href="./../Classes/Array.html">Array</a>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-inverse' href='./../Overviews/Methods.html#inverse'>inverse</a></h3>
+<div class='method'>
+<p>Compute the inverse of the matrix.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A 2-D <a href="./../Classes/Array.html">Array</a>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pseudoInverse' href='./../Overviews/Methods.html#pseudoInverse'>pseudoInverse</a></h3>
+<div class='method'>
+<p>Compute the pseudoinverse of the matrix.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A 2-D <a href="./../Classes/Array.html">Array</a>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isSquare' href='./../Overviews/Methods.html#isSquare'>isSquare</a></h3>
+<div class='method'>
+<p>Return the answer to whether the matrix is square.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <a href="./../Classes/Boolean.html">Boolean</a>.</div></div><h3><a class='anchor' name='Matrix%20Operations'>Matrix Operations</a></h3>
+<h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-*' href='./../Overviews/Methods.html#*'>*</a>(<span class='argstr'>that</span>)</h3>
+<div class='method'>
+<p>Matrix multiplication by another matrix or a number. If multiplying by another matrix, <code>this * that</code>. <code>this.cols</code> must equal <code>that.rows</code>. See also <a href="#-mulMatrix">-mulMatrix</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>that<td class='argumentdesc'>
+<p>Can be a <a href="./../Classes/Number.html">Number</a>, a <a href="./../Classes/MatrixArray.html">MatrixArray</a>, or a (2D) <a href="./../Classes/Array.html">Array</a>.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A 2-D <a href="./../Classes/Array.html">Array</a>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mulMatrix' href='./../Overviews/Methods.html#mulMatrix'>mulMatrix</a>(<span class='argstr'>mArray</span>)</h3>
+<div class='method'>
+<p>Matrix multiplication: <code>this * that</code>. <code>this.cols</code> must equal <code>that.rows</code>.
+<p><code>A(m,n) * B(n,r) = AB(m,r)</code><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>mArray<td class='argumentdesc'>
+<p>Can be a <a href="./../Classes/MatrixArray.html">MatrixArray</a>, or a (2D) <a href="./../Classes/Array.html">Array</a>.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A 2-D <a href="./../Classes/Array.html">Array</a>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mulNumber' href='./../Overviews/Methods.html#mulNumber'>mulNumber</a>(<span class='argstr'>aNumber</span>)</h3>
+<div class='method'>
+<p>Multiply the matrix by a <a href="./../Classes/Number.html">Number</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>aNumber<td class='argumentdesc'>
+<p>A <a href="./../Classes/Number.html">Number</a>.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A 2-D <a href="./../Classes/Array.html">Array</a>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mixCoeffs' href='./../Overviews/Methods.html#mixCoeffs'>mixCoeffs</a>(<span class='argstr'>coeffs</span>)</h3>
+<div class='method'>
+<p>A convenience method for "mixing" one-dimensional coefficients with this matrix, i.e. a matrix multiplication. For example, mixing ambisonic signal coefficients with a transform matrix.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>coeffs<td class='argumentdesc'>
+<p>An <a href="./../Classes/Array.html">Array</a> with a size equal to <a href="#-cols">-cols</a>.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/Array.html">Array</a> with size <code>this.rows</code>.</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>m = MatrixArray.fill(5, 5, { |r, c| rrand(0.0, 1.0) });
+n = MatrixArray.with(m.transpose);
+// The determinant of of a matrix is equal to
+// the determinant of it's transpose.
+m.det.round(1e-7) == n.det.round(1e-7)</textarea>
+<h2><a class='anchor' name='Attribution'>Attribution</a></h2>
+
+<p>This is a partial refactoring of the Matrix class from the MathLib quark originally authored by sc.solar, Till Bovermann, Christofer Fraunberger, and Dan Stowell.
+<p>This refactoring also includes a much faster determinant caclulation based on <a href="https://en.wikipedia.org/wiki/LU_decomposition">LU Decomposition</a>.
+<p>The algorithm is published in:
+<p><a href="http://web.archive.org/web/20150701223512/http://download.intel.com/design/PentiumIII/sml/24504601.pdf">Intel Application Notes AP-931, Streaming SIMD Extensions - LU Decomposition</a><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MatrixArray/HelpSource/Classes/MatrixArray.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MatrixArray/HelpSource/Classes/MatrixArray.schelp</a><br>link::Classes/MatrixArray::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

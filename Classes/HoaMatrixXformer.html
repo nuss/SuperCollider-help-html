@@ -1,0 +1,417 @@
+<!doctype html><html lang='en'><head><title>HoaMatrixXformer | SuperCollider 3.11.2 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'HoaMatrixXformer';
+var scdoc_sc_version = '3.11.2';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>HoaMatrixXformer:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*newBeam'>newBeam</a> </li>
+<li class='toc3'><a href='#*newNull'>newNull</a> </li>
+<li class='toc3'><a href='#*newReflect'>newReflect</a> </li>
+<li class='toc3'><a href='#*newRotateAxis'>newRotateAxis</a> </li>
+<li class='toc3'><a href='#*newRTT'>newRTT</a> </li>
+<li class='toc3'><a href='#*newYPR'>newYPR</a> </li>
+<li class='toc3'><a href='#*newRotate'>newRotate</a> </li>
+<li class='toc3'><a href='#*newSwapAxes'>newSwapAxes</a> </li>
+<li class='toc2'><a href='#Matrix%20&%20File'>Matrix &amp; File</a></li>
+<ul class='toc'><li class='toc3'><a href='#*newFromMatrix'>newFromMatrix</a> </li>
+<li class='toc3'><a href='#*newFromFile'>newFromFile</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Information'>Information</a></li>
+<ul class='toc'><li class='toc3'><a href='#-info'>info</a> </li>
+<li class='toc3'><a href='#-order'>order</a> </li>
+<li class='toc3'><a href='#-set'>set</a> </li>
+<li class='toc3'><a href='#-type'>type</a> </li>
+<li class='toc3'><a href='#-op'>op</a> </li>
+<li class='toc3'><a href='#-kind'>kind</a> </li>
+<li class='toc3'><a href='#-dim'>dim</a> </li>
+<li class='toc3'><a href='#-numChannels'>numChannels</a> </li>
+<li class='toc3'><a href='#-directions'>directions</a> </li>
+<li class='toc3'><a href='#-numInputs'>numInputs</a> </li>
+<li class='toc3'><a href='#-dirInputs'>dirInputs</a> </li>
+<li class='toc3'><a href='#-numOutputs'>numOutputs</a> </li>
+<li class='toc3'><a href='#-dirOutputs'>dirOutputs</a> </li>
+</ul><li class='toc2'><a href='#Matrix'>Matrix</a></li>
+<ul class='toc'><li class='toc3'><a href='#-matrix'>matrix</a> </li>
+<li class='toc3'><a href='#-thresh2'>thresh2</a> </li>
+<li class='toc3'><a href='#-asArray'>asArray</a> </li>
+</ul><li class='toc2'><a href='#File%20handling'>File handling</a></li>
+<ul class='toc'><li class='toc3'><a href='#-fileName'>fileName</a> </li>
+<li class='toc3'><a href='#-filePath'>filePath</a> </li>
+<li class='toc3'><a href='#-fileParse'>fileParse</a> </li>
+<li class='toc3'><a href='#-writeToFile'>writeToFile</a> </li>
+</ul><li class='toc2'><a href='#Analysis'>Analysis</a></li>
+<ul class='toc'><li class='toc3'><a href='#-analyzeAverage'>analyzeAverage</a> </li>
+<li class='toc3'><a href='#-analyzeDirections'>analyzeDirections</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit'>Ambisonic Toolkit</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit>Matrix & Kernel'>Matrix & Kernel</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit>Matrix & Kernel>HOA'>HOA</a></span>
+</div><h1>HoaMatrixXformer<span id='superclasses'> : <a href="../Classes/HoaMatrix.html">HoaMatrix</a> : <a href="../Classes/AtkMatrix.html">AtkMatrix</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Higher Order Ambisonic (HOA) matrix transformers</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/Classes/HoaMatrix.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/Classes/HoaMatrix.sc'>HoaMatrix.sc</a></div><div id='related'>See also: <a href="./../Classes/HoaXformMatrix.html">HoaXformMatrix</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Generate matrix transformers required by the Ambisonic Toolkit's Higher Order Ambisonic (HOA) transformer, <a href="./../Classes/HoaXformMatrix.html">HoaXformMatrix</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>HoaMatrixXformer.</span><a class='method-name' name='*newBeam' href='./../Overviews/Methods.html#newBeam'>newBeam</a>(<span class='argstr'>theta: 0</span>, <span class='argstr'>phi: 0</span>, <span class='argstr'>beamShape: 'basic'</span>, <span class='argstr'>order</span>)</h3>
+<div class='method'>
+<p>Beamform into a Higher Order Ambisonic signal (HOA).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>theta<td class='argumentdesc'>
+<p>Azimuth, in radians.<tr><td class='argumentname'>phi<td class='argumentdesc'>
+<p>Elevation, in radians.<tr><td class='argumentname'>beamShape<td class='argumentdesc'>
+<p>Keyword argument for beam shape. See <a href="./../Classes/HoaMatrixDecoder.html#Beam%20shape">discussion here</a>.<tr><td class='argumentname'>order<td class='argumentdesc'>
+<p>Ambisonic order.</table></div><h3 class='method-code'><span class='method-prefix'>HoaMatrixXformer.</span><a class='method-name' name='*newNull' href='./../Overviews/Methods.html#newNull'>newNull</a>(<span class='argstr'>theta: 0</span>, <span class='argstr'>phi: 0</span>, <span class='argstr'>beamShape: 'basic'</span>, <span class='argstr'>order</span>)</h3>
+<div class='method'>
+<p>Nullform into a Higher Order Ambisonic signal (HOA).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>theta<td class='argumentdesc'>
+<p>Azimuth, in radians.<tr><td class='argumentname'>phi<td class='argumentdesc'>
+<p>Elevation, in radians.<tr><td class='argumentname'>beamShape<td class='argumentdesc'>
+<p>Keyword argument for beam shape. See <a href="./../Classes/HoaMatrixDecoder.html#Beam%20shape">discussion here</a>.<tr><td class='argumentname'>order<td class='argumentdesc'>
+<p>Ambisonic order.</table></div><h3 class='method-code'><span class='method-prefix'>HoaMatrixXformer.</span><a class='method-name' name='*newReflect' href='./../Overviews/Methods.html#newReflect'>newReflect</a>(<span class='argstr'>mirror: 'reflect'</span>, <span class='argstr'>order</span>)</h3>
+<div class='method'>
+<p>Mirror a Higher Order Ambisonic signal (HOA).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>mirror<td class='argumentdesc'>
+<p>Keyword argument for reflection. See discussion below.<tr><td class='argumentname'>order<td class='argumentdesc'>
+<p>Ambisonic order.</table><h4>Discussion:</h4>
+
+<p>A variety of reflection transforms are offered:<table>
+<tr><td><strong>keyword</strong><td><strong>mirror</strong><tr><td><code>\reflect</code><td>Mirror across the origin. Equivalent to: <code>\flip * \flop * \flap</code>.<a class='footnote anchor' name='footnote_org_1' href='#footnote_1'><sup>1</sup></a> <tr><td><code>\flip</code><td>Mirror in the y-axis.<a class='footnote anchor' name='footnote_org_2' href='#footnote_2'><sup>2</sup></a> <tr><td><code>\flop</code><td>Mirror in the x-axis.<a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a> <tr><td><code>\flap</code><td>Mirror in the z-axis.<a class='footnote anchor' name='footnote_org_4' href='#footnote_4'><sup>4</sup></a> <tr><td><code>\CondonShortleyPhase</code><td>Condon-Shortley Phase. Equivalent to: <code>\flip * \flop</code>.<tr><td><code>\origin</code><td>Synonym for <code>\reflect</code>.<tr><td><code>\x</code><td>Synonym for <code>\flop</code>.<tr><td><code>\y</code><td>Synonym for <code>\flip</code>.<tr><td><code>\z</code><td>Synonym for <code>\flap</code>.</table>
+</div><h3 class='method-code'><span class='method-prefix'>HoaMatrixXformer.</span><a class='method-name' name='*newRotateAxis' href='./../Overviews/Methods.html#newRotateAxis'>newRotateAxis</a>(<span class='argstr'>axis: 'z'</span>, <span class='argstr'>angle: 0</span>, <span class='argstr'>order</span>)</h3>
+<div class='method'>
+<p>Rotate a Higher Order Ambisonic signal (HOA) around an axis.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>axis<td class='argumentdesc'>
+<p>Keyword argument for axis of rotation. See discussion below.<tr><td class='argumentname'>angle<td class='argumentdesc'>
+<p>Rotation angle, in radians.<tr><td class='argumentname'>order<td class='argumentdesc'>
+<p>Ambisonic order.</table><h4>Discussion:</h4>
+
+<p>Rotation about one of the three cartesian axes are offered via these keywords:<table>
+<tr><td><strong>keyword</strong><td><strong>axis of rotation</strong><tr><td><code>\x</code><td>x-axis<tr><td><code>\y</code><td>y-axis<tr><td><code>\z</code><td>z-axis<tr><td><code>\rotate</code><td>Synonym for <code>\z</code>.<tr><td><code>\tilt</code><td>Synonym for <code>\x</code>.<tr><td><code>\tumble</code><td>Synonym for <code>\y</code>.<tr><td><code>\yaw</code><td>Synonym for <code>\z</code>.<tr><td><code>\pitch</code><td>Synonym for <code>\y</code>.<tr><td><code>\roll</code><td>Synonym for <code>\x</code>.</table>
+</div><h3 class='method-code'><span class='method-prefix'>HoaMatrixXformer.</span><a class='method-name' name='*newRTT' href='./../Overviews/Methods.html#newRTT'>newRTT</a>(<span class='argstr'>rotate: 0</span>, <span class='argstr'>tilt: 0</span>, <span class='argstr'>tumble: 0</span>, <span class='argstr'>order</span>)</h3>
+<div class='method'>
+<p>Compound rotation around the z, x and y axes, applied in sequential order: rotate, tilt, tumble.<div class='note'><span class='notelabel'>NOTE:</span> <em>Extrinsic</em>, "laboratory-fixed" axes.</div><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rotate<td class='argumentdesc'>
+<p>Rotation angle around z-axis, in radians.<tr><td class='argumentname'>tilt<td class='argumentdesc'>
+<p>Rotation angle around x-axis, in radians.<tr><td class='argumentname'>tumble<td class='argumentdesc'>
+<p>Rotation angle around y-axis, in radians.<tr><td class='argumentname'>order<td class='argumentdesc'>
+<p>Ambisonic order.</table></div><h3 class='method-code'><span class='method-prefix'>HoaMatrixXformer.</span><a class='method-name' name='*newYPR' href='./../Overviews/Methods.html#newYPR'>newYPR</a>(<span class='argstr'>yaw: 0</span>, <span class='argstr'>pitch: 0</span>, <span class='argstr'>roll: 0</span>, <span class='argstr'>order</span>)</h3>
+<div class='method'>
+<p>Compound rotation around the z, y' and x" axes: yaw, pitch, roll.<div class='note'><span class='notelabel'>NOTE:</span> Mixed <em>extrinsic</em> (z-axis), <em>intrinsic</em> (y' &amp; x"-axes) rotations. This rotation differs from <a href="#*newRTT">*newRTT</a>, which is <em>extrinsic</em>.</div><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>yaw<td class='argumentdesc'>
+<p>Rotation angle around z-axis, in radians.<tr><td class='argumentname'>pitch<td class='argumentdesc'>
+<p>Rotation angle around y'-axis, in radians.<tr><td class='argumentname'>roll<td class='argumentdesc'>
+<p>Rotation angle around x"-axis, in radians.<tr><td class='argumentname'>order<td class='argumentdesc'>
+<p>Ambisonic order.</table></div><h3 class='method-code'><span class='method-prefix'>HoaMatrixXformer.</span><a class='method-name' name='*newRotate' href='./../Overviews/Methods.html#newRotate'>newRotate</a>(<span class='argstr'>r1: 0</span>, <span class='argstr'>r2: 0</span>, <span class='argstr'>r3: 0</span>, <span class='argstr'>axes: 'xyz'</span>, <span class='argstr'>order</span>)</h3>
+<div class='method'>
+<p>Compound rotation around the cartesian axes, applied in sequential order.<div class='note'><span class='notelabel'>NOTE:</span> <em>Extrinsic</em>, "laboratory-fixed" axes.</div><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>r1<td class='argumentdesc'>
+<p>Rotation angle around axis-1, in radians.<tr><td class='argumentname'>r2<td class='argumentdesc'>
+<p>Rotation angle around axis-2, in radians.<tr><td class='argumentname'>r3<td class='argumentdesc'>
+<p>Rotation angle around axis-2, in radians.<tr><td class='argumentname'>axes<td class='argumentdesc'>
+<p>Individual axes are specified via the axial keywords for <a href="#*newRotateAxis">*newRotateAxis</a>.
+<p>Specify order of rotations via concatenation. E.g., rotate, tilt, tumble: <code>\zxy</code><tr><td class='argumentname'>order<td class='argumentdesc'>
+<p>Ambisonic order.</table></div><h3 class='method-code'><span class='method-prefix'>HoaMatrixXformer.</span><a class='method-name' name='*newSwapAxes' href='./../Overviews/Methods.html#newSwapAxes'>newSwapAxes</a>(<span class='argstr'>axes: 'yz'</span>, <span class='argstr'>order</span>)</h3>
+<div class='method'>
+<p>Swap two axes of a Higher Order Ambisonic signal (HOA).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>axes<td class='argumentdesc'>
+<p>Individual axes are specified via the axial keywords for <a href="#*newRotateAxis">*newRotateAxis</a>.
+<p>Specify swap via concatenation. E.g., swap y-axis with z-azis: <code>\yz</code><tr><td class='argumentname'>order<td class='argumentdesc'>
+<p>Ambisonic order.</table></div><h3><a class='anchor' name='Matrix%20&%20File'>Matrix &amp; File</a></h3>
+<h3 class='method-code'><span class='method-prefix'>HoaMatrixXformer.</span><a class='method-name' name='*newFromMatrix' href='./../Overviews/Methods.html#newFromMatrix'>newFromMatrix</a>(<span class='argstr'>matrix</span>, <span class='argstr'>order</span>)</h3>
+<div class='method'>
+<p>Transform a Higher Order Ambisonic signal (HOA) via a directly designed spatial filter.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>matrix<td class='argumentdesc'>
+<p>A <a href="./../Classes/Matrix.html">Matrix</a> instance.<tr><td class='argumentname'>order<td class='argumentdesc'>
+<p>Ambisonic order.</table></div><h3 class='method-code'><span class='method-prefix'>HoaMatrixXformer.</span><a class='method-name' name='*newFromFile' href='./../Overviews/Methods.html#newFromFile'>newFromFile</a>(<span class='argstr'>filePathOrName</span>, <span class='argstr'>searchExtensions: true</span>, <span class='argstr'>order</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/HoaMatrix.html'>HoaMatrix</a></div>
+<div class='method'>
+<p>Create an instance by loading a matrix from a file.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>filePathOrName<td class='argumentdesc'>
+<p>Can be a path relative to your <code>/extensions/matrices/decoders</code> folder:<textarea class='editor'>Atk.getMatrixExtensionSubPath(\hoa1, \decoders).fullPath</textarea>
+
+<p>Otherwise a full path to your matrix file.<tr><td class='argumentname'>searchExtensions<td class='argumentdesc'>
+<p>Search extension paths.<tr><td class='argumentname'>order<td class='argumentdesc'>
+<p>Ambisonic order.</table><h4>Discussion:</h4>
+
+<p>See the <a href="./../Guides/Guide-to-ATK-Matrix-Files.html">Guide to ATK Matrix Files</a> for more information.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Information'>Information</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-info' href='./../Overviews/Methods.html#info'>info</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>A convenience method to post the properties of the matrix, including metadata if the matrix was loaded from a <code>.yml</code> file.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-order' href='./../Overviews/Methods.html#order'>order</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Ambisonic order.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-set' href='./../Overviews/Methods.html#set'>set</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/HoaMatrix.html'>HoaMatrix</a></div>
+<div class='method'>
+<p>Describes both the <em>signal set</em> and the <em>tool set</em>, encompassing the Ambisonic order, as well as channel ordering and normalisation.
+<p>Ambisonic Toolkit designation indicating Ambisonic order and encoding format. E.g., <code>\FOA</code>, <code>\HOA3</code>.
+<p>For instance, <code>\HOA3</code>:<table>
+<tr><td><strong>Ambisonic Order</strong><td><strong>Component Ordering</strong><td><strong>Component Normalisation</strong><tr><td>3rd<td>Ambisonic Channel Number (ACN)<td>Full 3-D normalisation (N3D)</table>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-type' href='./../Overviews/Methods.html#type'>type</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/HoaMatrix.html'>HoaMatrix</a></div>
+<div class='method'>
+<p>Ambisonic Toolkit soundfield operation designation. E.g., <code>\encode</code>, <code>\xform</code>, <code>\decode</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-op' href='./../Overviews/Methods.html#op'>op</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Answers <code>'matrix'</code>, i.e. the type of operation used to compute the resulting signals.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-kind' href='./../Overviews/Methods.html#kind'>kind</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Answers the kind.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dim' href='./../Overviews/Methods.html#dim'>dim</a></h3>
+<div class='method'>
+<p>Answers the number of encoder dimensions: 2D or 3D.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numChannels' href='./../Overviews/Methods.html#numChannels'>numChannels</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/HoaMatrix.html'>HoaMatrix</a></div>
+<div class='method'>
+<p>Answers the number of input or output channels, depending on <a href="#-type">-type</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-directions' href='./../Overviews/Methods.html#directions'>directions</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/HoaMatrix.html'>HoaMatrix</a></div>
+<div class='method'>
+<p>Answers the directions of input or output channels, depending on <a href="#-type">-type</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numInputs' href='./../Overviews/Methods.html#numInputs'>numInputs</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Number of inputs.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dirInputs' href='./../Overviews/Methods.html#dirInputs'>dirInputs</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/HoaMatrix.html'>HoaMatrix</a></div>
+<div class='method'>
+<p>A convenience method providing polymorphism with <a href="#-directions">-directions</a>, depending on <a href="#-type">-type</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numOutputs' href='./../Overviews/Methods.html#numOutputs'>numOutputs</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Number of outputs.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dirOutputs' href='./../Overviews/Methods.html#dirOutputs'>dirOutputs</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/HoaMatrix.html'>HoaMatrix</a></div>
+<div class='method'>
+<p>A convenience method providing polymorphism with <a href="#-directions">-directions</a>, depending on <a href="#-type">-type</a>.</div><h3><a class='anchor' name='Matrix'>Matrix</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-matrix' href='./../Overviews/Methods.html#matrix'>matrix</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Returns the raw coefficient Matrix.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-thresh2' href='./../Overviews/Methods.html#thresh2'>thresh2</a>(<span class='argstr'>thresh</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/HoaMatrix.html'>HoaMatrix</a></div>
+<div class='method'>
+<p>Bilateral thresholding <strong>in place</strong>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>thresh<td class='argumentdesc'>
+<p>When the <code>input.abs &lt; thresh</code>, the output is forced to 0. Should be a positive value.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asArray' href='./../Overviews/Methods.html#asArray'>asArray</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Returns the matrix as a new <a href="./../Classes/Array.html">Array</a> of rows.</div><h3><a class='anchor' name='File%20handling'>File handling</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fileName' href='./../Overviews/Methods.html#fileName'>fileName</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Answers the name of the file used to create the instance, or <code>nil</code> if not created by loading a matrix from a file.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-filePath' href='./../Overviews/Methods.html#filePath'>filePath</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Answers the path of the file used to create the instance, or <code>nil</code> if not created by loading a matrix from a file.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fileParse' href='./../Overviews/Methods.html#fileParse'>fileParse</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>If the instance was created by loading a <code>.yml</code> file, this method returns the <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> containing the parsed metadata. This can be useful if anything was stored in the metadata that can be subsequently used once reloaded, such as encoding directions, rotations, etc.<div class='note'><span class='notelabel'>NOTE:</span> For simply a quick glance at the metadata, it's recommended to use <a href="#-info">-info</a>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-writeToFile' href='./../Overviews/Methods.html#writeToFile'>writeToFile</a>(<span class='argstr'>fileNameOrPath</span>, <span class='argstr'>note</span>, <span class='argstr'>attributeDictionary</span>, <span class='argstr'>overwrite: false</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/AtkMatrix.html'>AtkMatrix</a></div>
+<div class='method'>
+<p>Write the matrix to a file<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>fileNameOrPath<td class='argumentdesc'>
+<p>A String of the file name. The file extension determines the format:<ul>
+<li><code>.yml</code> allows for additional user-specified metadata (recommended).<li><code>.txt</code> writes the matrix coefficients only, in rows.<li><code>.mosl.txt</code> creates basic matrix files compatible with the <a href="http://www.ambisonictoolkit.net/download/reaper/">ATK for Reaper</a>, a set of <a href="http://www.reaper.fm/sdk/js/js.php">JSFX plugins</a> for the <a href="http://www.reaper.fm/">Reaper</a> DAW.</ul>
+
+<p>You may provide a full path if you would like to save the file somewhere other than the default location in the Atk <code>extensions</code> folder. See the Discussion below for more information.<tr><td class='argumentname'>note<td class='argumentdesc'>
+<p>A String that is a short description or bit of info about the matrix to store for future reference.<tr><td class='argumentname'>attributeDictionary<td class='argumentdesc'>
+<p>A Dictionary containing any information that's useful to store in key:value pairs. Keys that match getters in the AtkMatrix will take precedence over the defaults. See the Discussion for more details.<tr><td class='argumentname'>overwrite<td class='argumentdesc'>
+<p>A boolean specifying whether you'd like to force overwriting an existing file of the same name and extension.</table><h4>Discussion:</h4>
+
+<p>The <a href="./../Guides/Guide-to-ATK-Matrix-Files.html">Guide to ATK Matrix Files</a> offers examples and more discussion regarding writing and reading matrices and metadata, including how to generate matrices for use in Reaper.</div><h3><a class='anchor' name='Analysis'>Analysis</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-analyzeAverage' href='./../Overviews/Methods.html#analyzeAverage'>analyzeAverage</a></h3>
+<div class='method'>
+<p>Return an average analysis of transformer amplitude and energies.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Analysis is returned in an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>, with the following keys:<table>
+<tr><td><strong>keyword</strong><td><strong>analysis</strong><tr><td><code>\amp</code><td>pressure (virtual loudspeaker sum)<tr><td><code>\rms</code><td>spherical harmonic energy<tr><td><code>\energy</code><td>virtual loudspeaker (angular) energy<tr><td><code>\meanE</code><td>transformer <em>reduced energy</em><tr><td><code>\matchWeight</code><td>transformer matching weights (a Dictionary)</table>
+
+<p>The required weights for <a href="./../Classes/HoaMatrixDecoder.html#Gain%20match">gain matching</a> are returned in the <code>\matchWeight</code> Dictionary:<table>
+<tr><td><strong>keyword</strong><td><strong>analysis</strong><tr><td><code>\amp</code><td>match weight for pressure (virtual loudspeaker sum)<tr><td><code>\rms</code><td>match weight for spherical harmonic energy<tr><td><code>\energy</code><td>match weight for virtual loudspeaker (angular) energy</table>
+</div><h4>Discussion:</h4>
+
+<p>Offers a convenient way to review modifications to the soundfield.
+<p>Rotation:<textarea class='editor'>// Axial rotation
+
+// specify parameters &amp; design
+~axis = \z
+~angle = pi/3
+~order = 3
+~xformer = HoaMatrixXformer.newRotateAxis(~axis, ~angle, ~order)
+
+// analyze average - matching weights
+~xformer.analyzeAverage.matchWeight</textarea>
+
+<p>Beamforming:<textarea class='editor'>// Beamforming
+
+// specify parameters &amp; design
+~theta = 0.0
+~phi = 0.0
+~beamShape = \basic
+~order = 3
+~xformer = HoaMatrixXformer.newBeam(~theta, ~phi, ~beamShape, ~order)
+
+// analyze average - matching weights
+~xformer.analyzeAverage.matchWeight</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-analyzeDirections' href='./../Overviews/Methods.html#analyzeDirections'>analyzeDirections</a>(<span class='argstr'>directions</span>)</h3>
+<div class='method'>
+<p>Return a directional analysis of modifications to the soundfield.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>directions<td class='argumentdesc'>
+<p>A single azimuth value, or an array of test directions. Specify in radians.
+<p>Rank 1 arrays return pantophonic, while rank 2 arrays return periphonic. E.g.,<textarea class='editor'>// 2D:
+~testDirections = [ theta0, theta1, ... thetaN ];</textarea>
+
+<p><textarea class='editor'>// 3D:
+~testDirections = [ [ theta0, phi0 ], [ theta1, phi1 ], ... [ thetaN, phiN ] ];</textarea>
+</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Analysis is returned in an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>, with the following keys:<table>
+<tr><td><strong>keyword</strong><td><strong>analysis</strong><tr><td><code>\amp</code><td>pressure (virtual loudspeaker sum)<tr><td><code>\rms</code><td>spherical harmonic energy<tr><td><code>\energy</code><td>virtual loudspeaker energy<tr><td><code>\spreadE</code><td>energy spread (a Dictionary)<tr><td><code>\rV</code><td><em>velocity localisation vector</em>, <strong>rV</strong> (a Dictionary)<tr><td><code>\rE</code><td><em>energy localisation vector</em>, <strong>rE</strong> (a Dictionary)</table>
+
+<p>Two measures of energy spread are offered in the <code>\spreadE</code> Dictionary:<table>
+<tr><td><strong>keyword</strong><td><strong>analysis</strong><tr><td><code>\cos</code><td>roll-off to ~-3dB, in radians<tr><td><code>\hvc</code><td>roll-off to ~-6dB, in radians</table>
+
+<p>Information regarding <strong>rV</strong>, the <em>velocity localisation vector</em>, is returned in the <code>\rV</code> Dictionary:<table>
+<tr><td><strong>keyword</strong><td><strong>analysis</strong><tr><td><code>\magnitudes</code><td>vector magnitudes<tr><td><code>\directions</code><td>vector directions, in radians<tr><td><code>\warp</code><td>angle distortion from test directions, in radians<tr><td><code>\rEwarp</code><td>angle distortion from <strong>rE</strong>, in radians<tr><td><code>\xyz</code><td><strong>rV</strong>, in cartesian coordinates</table>
+
+<p>Similarly, information regarding <strong>rE</strong>, the <em>energy localisation vector</em>, is returned in the <code>\rE</code> Dictionary:<table>
+<tr><td><strong>keyword</strong><td><strong>analysis</strong><tr><td><code>\magnitudes</code><td>vector magnitudes<tr><td><code>\directions</code><td>vector directions, in radians<tr><td><code>\warp</code><td>angle distortion from test directions, in radians<tr><td><code>\rVwarp</code><td>angle distortion from <strong>rV</strong>, in radians<tr><td><code>\xyz</code><td><strong>rE</strong>, in cartesian coordinates</table>
+
+<p>Offers detailed analysis of transformer performance.
+<p>Rotation:<textarea class='editor'>// Axial rotation
+
+// specify parameters &amp; design
+~axis = \z
+~angle = pi/3
+~order = 3
+~xformer = HoaMatrixXformer.newRotateAxis(~axis, ~angle, ~order)
+
+//----
+// analysis
+~numTestDirections = 16
+~testDirections = Array.regularPolygon(~numTestDirections)
+
+// analyze
+~analysis = ~xformer.analyzeDirections(~testDirections)
+
+
+~analysis.amp.abs.ampdb.round(0.01)
+~analysis.rms.sqrt.ampdb.round(0.01)
+~analysis.energy.sqrt.ampdb.round(0.01)
+
+~analysis.spreadE.cos.raddeg
+
+~analysis.rV.magnitudes
+~analysis.rV.directions.raddeg.round(0.1)
+~analysis.rV.warp.raddeg.round(0.1)
+~analysis.rV.rEwarp.raddeg.round(0.1)
+
+~analysis.rE.magnitudes
+~analysis.rE.directions.raddeg.round(0.1)
+~analysis.rE.warp.raddeg.round(0.1)</textarea>
+
+<p>Beamforming:<textarea class='editor'>// Beamforming
+
+// specify parameters &amp; design
+~theta = 0.0
+~phi = 0.0
+~beamShape = \controlled
+~order = 3
+~xformer = HoaMatrixXformer.newBeam(~theta, ~phi, ~beamShape, ~order)
+
+//----
+// analysis
+~numTestDirections = 16
+~testDirections = Array.regularPolygon(~numTestDirections)
+
+// analyze
+~analysis = ~xformer.analyzeDirections(~testDirections)
+
+
+~analysis.amp.abs.ampdb.round(0.01)
+~analysis.rms.sqrt.ampdb.round(0.01)
+~analysis.energy.sqrt.ampdb.round(0.01)
+
+~analysis.spreadE.cos.raddeg
+
+~analysis.rV.magnitudes
+~analysis.rV.directions.raddeg.round(0.1)
+~analysis.rV.warp.raddeg.round(0.1)
+~analysis.rV.rEwarp.raddeg.round(0.1)
+
+~analysis.rE.magnitudes
+~analysis.rE.directions.raddeg.round(0.1)
+~analysis.rE.warp.raddeg.round(0.1)</textarea>
+
+<p>Nullforming:<textarea class='editor'>// Nullforming
+
+// specify parameters &amp; design
+~theta = 0.0
+~phi = 0.0
+~beamShape = \controlled
+~order = 3
+~xformer = HoaMatrixXformer.newNull(~theta, ~phi, ~beamShape, ~order)
+
+//----
+// analysis
+~numTestDirections = 16
+~testDirections = Array.regularPolygon(~numTestDirections)
+
+// analyze
+~analysis = ~xformer.analyzeDirections(~testDirections)
+
+
+~analysis.amp.abs.ampdb.round(0.01)
+~analysis.rms.sqrt.ampdb.round(0.01)
+~analysis.energy.sqrt.ampdb.round(0.01)
+
+~analysis.spreadE.cos.raddeg
+
+~analysis.rV.magnitudes
+~analysis.rV.directions.raddeg.round(0.1)
+~analysis.rV.warp.raddeg.round(0.1)
+~analysis.rV.rEwarp.raddeg.round(0.1)
+
+~analysis.rE.magnitudes
+~analysis.rE.directions.raddeg.round(0.1)
+~analysis.rE.warp.raddeg.round(0.1)</textarea>
+</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+
+<p>TBD<div class='footnotes'>
+<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - HOA transform equivalent to <a href="./../Classes/FoaXformerMatrix.html#*newMirrorO">FoaXformerMatrix: *newMirrorO</a>.</div><a class='anchor' name='footnote_2'/><div class='footnote'>[<a href='#footnote_org_2'>2</a>] - HOA transform equivalent to <a href="./../Classes/FoaXformerMatrix.html#*newMirrorY">FoaXformerMatrix: *newMirrorY</a>.</div><a class='anchor' name='footnote_3'/><div class='footnote'>[<a href='#footnote_org_3'>3</a>] - HOA transform equivalent to <a href="./../Classes/FoaXformerMatrix.html#*newMirrorX">FoaXformerMatrix: *newMirrorX</a>.</div><a class='anchor' name='footnote_4'/><div class='footnote'>[<a href='#footnote_org_4'>4</a>] - HOA transform equivalent to <a href="./../Classes/FoaXformerMatrix.html#*newMirrorZ">FoaXformerMatrix: *newMirrorZ</a>.</div></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/HelpSource/Classes/HoaMatrixXformer.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/HelpSource/Classes/HoaMatrixXformer.schelp</a><br>link::Classes/HoaMatrixXformer::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>
