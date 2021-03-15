@@ -50,7 +50,7 @@ var scdoc_sc_version = '3.11.2';
 </div>
 <h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>Plays back break point envelopes. The envelopes are instances of the <a href="./../Classes/Env.html">Env</a> class. The envelope and the arguments for <code>levelScale</code>, <code>levelBias</code>, and <code>timeScale</code> are polled when the EnvGen is triggered and remain constant for the duration of the envelope.<textarea class='editor'>{ PinkNoise.ar(EnvGen.kr(Env.perc, doneAction: Done.freeSelf)) }.play</textarea>
+<p>Plays back break point envelopes. The envelopes are instances of the <a href="./../Classes/Env.html">Env</a> class. The envelope and the arguments for <code>levelScale</code>, <code>levelBias</code>, and <code>timeScale</code> are polled when the EnvGen is triggered, and at the start of a new envelope segment. All values remain constant for the duration of each segment.<textarea class='editor'>{ PinkNoise.ar(EnvGen.kr(Env.perc, doneAction: Done.freeSelf)) }.play</textarea>
 <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>EnvGen.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>envelope</span>, <span class='argstr'>gate: 1.0</span>, <span class='argstr'>levelScale: 1.0</span>, <span class='argstr'>levelBias: 0.0</span>, <span class='argstr'>timeScale: 1.0</span>, <span class='argstr'>doneAction: 0</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>EnvGen.</span><a class='method-name' name='*kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>envelope</span>, <span class='argstr'>gate: 1.0</span>, <span class='argstr'>levelScale: 1.0</span>, <span class='argstr'>levelBias: 0.0</span>, <span class='argstr'>timeScale: 1.0</span>, <span class='argstr'>doneAction: 0</span>)</h3>
@@ -59,7 +59,7 @@ var scdoc_sc_version = '3.11.2';
 <table class='arguments'>
 <tr><td class='argumentname'>envelope<td class='argumentdesc'>
 <p>An <a href="./../Classes/Env.html">Env</a> instance, or an Array of Controls. (See <a href="./../Classes/Control.html">Control</a> and the example below for how to use this.)
-<p>The envelope is polled when the EnvGen is triggered. The Env inputs can be other UGens.<tr><td class='argumentname'>gate<td class='argumentdesc'>
+<p>The envelope is polled when the EnvGen is triggered, and at the start of a new envelope segment. The Env inputs can be other UGens.<tr><td class='argumentname'>gate<td class='argumentdesc'>
 <p>This triggers the envelope and holds it open while &gt; 0. If the Env is fixed-length (e.g. Env.linen, Env.perc), the gate argument is used as a simple trigger. If it is an sustaining envelope (e.g. Env.adsr, Env.asr), the envelope is held open until the gate becomes 0, at which point is released.
 <p>If <strong>gate</strong> &lt; 0, force release with time <code>-1.0 - gate</code>. See <a href="#Forced%20release">Forced release</a> below.<tr><td class='argumentname'>levelScale<td class='argumentdesc'>
 <p>The levels of the breakpoints are multiplied by this value. This value can be modulated, but is only sampled at the start of a new envelope segment.<tr><td class='argumentname'>levelBias<td class='argumentdesc'>
