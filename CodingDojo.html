@@ -1,0 +1,145 @@
+<!doctype html><html lang='en'><head><title>CodingDojo | SuperCollider 3.11.2 Help</title>
+<link rel='stylesheet' href='./scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./editor.css' type='text/css' />
+<link rel='stylesheet' href='./frontend.css' type='text/css' />
+<link rel='stylesheet' href='./custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./lib/jquery.min.js'></script>
+<script src='./lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = '.';
+var scdoc_title = 'CodingDojo';
+var scdoc_sc_version = '3.11.2';
+</script>
+<script src='./scdoc.js' type='text/javascript'></script>
+<script src='./docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>CodingDojo:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Instance%20Variables'>Instance Variables</a></li>
+<ul class='toc'><li class='toc3'><a href='#-oscrouter'>oscrouter</a> </li>
+<li class='toc3'><a href='#-syncText'>syncText</a> </li>
+<li class='toc3'><a href='#-win'>win</a> </li>
+<li class='toc3'><a href='#-uv'>uv</a> </li>
+<li class='toc3'><a href='#-timer'>timer</a> </li>
+</ul><li class='toc2'><a href='#Session%20Interface'>Session Interface</a></li>
+<ul class='toc'><li class='toc3'><a href='#-startSession'>startSession</a> </li>
+<li class='toc3'><a href='#-pilot'>pilot</a> </li>
+<li class='toc3'><a href='#-copilot'>copilot</a> </li>
+<li class='toc3'><a href='#-nextCopilot'>nextCopilot</a> </li>
+<li class='toc3'><a href='#-myStatus'>myStatus</a> </li>
+<li class='toc3'><a href='#-order'>order</a> </li>
+<li class='toc3'><a href='#-rotate'>rotate</a> </li>
+<li class='toc3'><a href='#-startTimer'>startTimer</a> </li>
+<li class='toc3'><a href='#-resetTimer'>resetTimer</a> </li>
+</ul><li class='toc2'><a href='#Internal%20Methods'>Internal Methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-showTimer'>showTimer</a> </li>
+<li class='toc3'><a href='#-enableCodeSending'>enableCodeSending</a> </li>
+<li class='toc3'><a href='#-disableCodeSending'>disableCodeSending</a> </li>
+<li class='toc3'><a href='#-newTurn'>newTurn</a> </li>
+<li class='toc3'><a href='#-startNewTurn'>startNewTurn</a> </li>
+<li class='toc3'><a href='#-updateTurn'>updateTurn</a> </li>
+</ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'> (extension)</span>
+<span id='categories'><a href='./Browse.html#Education'>Education</a> | <a href='./Browse.html#LiveCoding'>LiveCoding</a> | <a href='./Browse.html#PairProgramming'>PairProgramming</a></span>
+</div><h1>CodingDojo<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Shared coding practice online</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./Classes/OSCRouterClient.html">OSCRouterClient</a>, <a href="./Classes/SyncText.html">SyncText</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>From <a href="https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.568.2621">https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.568.2621</a>
+<p>"A Coding Dojo is a meeting where a group of programmers gets together to learn, practice, and share experiences. This report describes the authors’ experience of creating and running an active Coding Dojo in São Paulo, Brazil, sharing the lessons learned from the experience. The role of the Dojo in the learning process is discussed, showing how it creates an environment for fostering and sharing Agile practices such as Test-Driven Development, Refactoring and Pair Programming, among others."
+<p>This class is designed and implemented by Bruno Gola, for making CodingDojo sessions by internet possible.
+<p>First code examples:<textarea class='editor'>// have 3 laptops ready, use a different name on each one:
+~myDojoID = \ada;
+~myDojoID = \coco;
+~myDojoID = \eve;
+
+// make a new CodingDojo - use all defaults
+~dojo = CodingDojo(~myDojoID, userPassword: ~myDojoID);
+
+// wait for all participants to log in ...
+// should see a red window bottom left that says 5min
+// see the connected participants:
+~dojo.oscrouter.peers.cs;
+
+// when all participants are ready, one person starts the session:
+~dojo.startSession(~dojo.oscrouter.peers);
+
+// the names shown are those for the three roles in a CodingDojo:
+// pilot - can edit, writes/changes code
+// copilot - can edit, assists, discusses
+// next copilot - becomes copilot in next round
+
+// every ~dojo.turnTime, (5 minutes by default), the roles rotate by one:
+//  pilot &lt;- copilot
+// copilot &lt;- nextCopilot
+// nextCopilot - next in order
+
+~dojo.rotate;</textarea>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*new' href='./Overviews/Methods.html#new'>new</a></h3>
+<div class='method'>
+<p>create a new CodingDojo with these arguments (largely the same as for the OSCRouterClient)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>userName<td class='argumentdesc'><tr><td class='argumentname'>password<td class='argumentdesc'><tr><td class='argumentname'>serveraddress<td class='argumentdesc'><tr><td class='argumentname'>serverport<td class='argumentdesc'><tr><td class='argumentname'>groupName<td class='argumentdesc'><tr><td class='argumentname'>groupPassword<td class='argumentdesc'></table></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Instance%20Variables'>Instance Variables</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-oscrouter' href='./Overviews/Methods.html#oscrouter'>oscrouter</a></h3>
+<div class='method'>
+<p>an <a href="./OSCRouterClient.html">OSCRouterClient</a> by which the participants are connected.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-syncText' href='./Overviews/Methods.html#syncText'>syncText</a></h3>
+<div class='method'>
+<p>the <a href="./SyncText.html">SyncText</a> object for sharing the written code.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-win' href='./Overviews/Methods.html#win'>win</a></h3>
+<div class='method'>
+<p>the window showing the timer and roles</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-uv' href='./Overviews/Methods.html#uv'>uv</a></h3>
+<div class='method'>
+<p>the UserView showing the timer and role</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-timer' href='./Overviews/Methods.html#timer'>timer</a></h3>
+<div class='method'>
+<p>a skipjack used for coding round timing.</div><h3><a class='anchor' name='Session%20Interface'>Session Interface</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-startSession' href='./Overviews/Methods.html#startSession'>startSession</a></h3>
+<div class='method'>
+<p>start a new session with an ordered list of participants. These names must be used in the oscrouter.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>participants_order<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pilot' href='./Overviews/Methods.html#pilot'>pilot</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-copilot' href='./Overviews/Methods.html#copilot'>copilot</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-nextCopilot' href='./Overviews/Methods.html#nextCopilot'>nextCopilot</a></h3>
+<div class='method'>
+<p>the names of the participants currently in these roles</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-myStatus' href='./Overviews/Methods.html#myStatus'>myStatus</a></h3>
+<div class='method'>
+<p>my role in the current round</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-order' href='./Overviews/Methods.html#order'>order</a></h3>
+<div class='method'>
+<p>the current order</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rotate' href='./Overviews/Methods.html#rotate'>rotate</a></h3>
+<div class='method'>
+<p>rotate to the next pilot/copilot/next triple, and start timer</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-startTimer' href='./Overviews/Methods.html#startTimer'>startTimer</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resetTimer' href='./Overviews/Methods.html#resetTimer'>resetTimer</a></h3>
+<div class='method'>
+<p>start and reset the timer.</div><h3><a class='anchor' name='Internal%20Methods'>Internal Methods</a></h3>
+
+<p>These usually need not be used by hand.<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-showTimer' href='./Overviews/Methods.html#showTimer'>showTimer</a></h3>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-enableCodeSending' href='./Overviews/Methods.html#enableCodeSending'>enableCodeSending</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-disableCodeSending' href='./Overviews/Methods.html#disableCodeSending'>disableCodeSending</a></h3>
+<div class='method'>
+<p>turn codeSending for CodingDojoSession_&lt;name&gt; window on and off.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-newTurn' href='./Overviews/Methods.html#newTurn'>newTurn</a></h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>newPilot<td class='argumentdesc'><tr><td class='argumentname'>newCopilot<td class='argumentdesc'><tr><td class='argumentname'>newNext<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-startNewTurn' href='./Overviews/Methods.html#startNewTurn'>startNewTurn</a></h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>pilot<td class='argumentdesc'><tr><td class='argumentname'>copilot<td class='argumentdesc'><tr><td class='argumentname'>next<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-updateTurn' href='./Overviews/Methods.html#updateTurn'>updateTurn</a></h3>
+<div class='method'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/HyperDisCo/HelpSource/CodingDojo.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/HyperDisCo/HelpSource/CodingDojo.schelp</a><br>link::CodingDojo::<br></div></div><script src='./editor.js' type='text/javascript'></script>
+</body></html>

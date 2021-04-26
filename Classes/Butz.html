@@ -1,0 +1,150 @@
+<!doctype html><html lang='en'><head><title>Butz | SuperCollider 3.11.2 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Butz';
+var scdoc_sc_version = '3.11.2';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Butz:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*add'>add</a> </li>
+<li class='toc3'><a href='#*remove'>remove</a> </li>
+<li class='toc3'><a href='#*actions'>actions</a> </li>
+<li class='toc3'><a href='#*run'>run</a> </li>
+<li class='toc3'><a href='#*show'>show</a> </li>
+<li class='toc3'><a href='#*makeWin'>makeWin</a> </li>
+<li class='toc3'><a href='#*numButz'>numButz</a> </li>
+<li class='toc3'><a href='#*style'>style</a> </li>
+<li class='toc3'><a href='#*w'>w</a> </li>
+<li class='toc3'><a href='#*butz'>butz</a> </li>
+<li class='toc3'><a href='#*setButton'>setButton</a> </li>
+<li class='toc3'><a href='#*updateButtons'>updateButtons</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*clear'>clear</a> </li>
+<li class='toc3'><a href='#*limitToScreen'>limitToScreen</a> </li>
+<li class='toc3'><a href='#*showButs'>showButs</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Utilities'>Utilities</a></span>
+</div><h1>Butz<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Dynamic list of buttons with actions</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/GUI/Butz.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/GUI/Butz.sc'>Butz.sc</a></div><div id='related'>See also: <a href="./../Classes/NamedList.html">NamedList</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Butz has a named list of actions, which it shows on a GUI as buttons. This is useful for opening multiple guis only when needed, such as several instruments and their GUIs, opening utilities like meters, custom scopes, mixers, guis for tests for setup parts (speakers), etc etc.
+<p>It shows the actions as buttons with given style, and updates dynamically when items are added.
+<p>Butz is a class-only singleton by design choice.
+<p>First code examples:<textarea class='editor'>Butz.show; // show the window for Butz
+
+// add some instrument names in the order they should appear in
+Butz.add(\manta);
+Butz.add(\AI_NUFO);
+Butz.add(\polyharpye);
+Butz.add(\blippoo);
+Butz.add(\theremax);
+Butz.add('-');
+
+// add some utility names
+Butz.add(\tdefall);
+Butz.add(\ndefmix);
+
+// some names already with actions
+Butz.add(\scope, { s.scope(4) });
+Butz.add(\meter, { s.meter(6, 6).window.moveTo(0, 0) });
+Butz.add(\testSnds); // add some names in order
+Butz.add(\MUTE, { |bt| s.mute });
+Butz.add(\UNMUTE, { |bt| s.unmute });
+
+Butz.remove(\s_meter);
+
+// add the actions later by name
+Butz.add(\tdefall, { TdefAllGui(16).moveTo(10, 800) });
+
+/// change the number of buttons and style aspectss
+Butz.style;
+Butz.numButz = 20;
+Butz.style.winExtent.x = 120;
+Butz.style.font.size = 16;
+// remake the window
+Butz.makeWin;
+
+// and add more stuff
+Butz.add(\plotTree, { s.plotTree });
+Butz.add(\drawMap);
+Butz.add(\save_scene);
+Butz.add(\chord_explo);
+
+// can access button if needed
+Butz.add(\getBut, { |bt| bt.dump });</textarea>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*add' href='./../Overviews/Methods.html#add'>add</a>(<span class='argstr'>name</span>, <span class='argstr'>action</span>)</h3>
+<div class='method'>
+<p>add a named action<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>a Symbol<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>a function</table></div><h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*remove' href='./../Overviews/Methods.html#remove'>remove</a>(<span class='argstr'>name</span>)</h3>
+<div class='method'>
+<p>remove an action by name<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>a Symbol</table></div><h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*actions' href='./../Overviews/Methods.html#actions'>actions</a></h3>
+<div class='method'>
+<p>the <code>NamedList</code> of actions</div><h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*run' href='./../Overviews/Methods.html#run'>run</a>(<span class='argstr'>name</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>run the action at that name</table></div><h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*show' href='./../Overviews/Methods.html#show'>show</a></h3>
+<div class='method'>
+<p>show the Butz window, making it if necessary</div><h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*makeWin' href='./../Overviews/Methods.html#makeWin'>makeWin</a></h3>
+<div class='method'>
+<p>make the window</div><h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*numButz' href='./../Overviews/Methods.html#numButz'>numButz</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*numButz' href='./../Overviews/Methods.html#numButz'>numButz</a> = value</h3>
+<div class='method'>
+<p>set and get number of buttons to show</div><h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*style' href='./../Overviews/Methods.html#style'>style</a></h3>
+<div class='method'>
+<p>lookup and set style options for the butz window</div><h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*w' href='./../Overviews/Methods.html#w'>w</a></h3>
+<div class='method'>
+<p>the butz window</div><h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*butz' href='./../Overviews/Methods.html#butz'>butz</a></h3>
+<div class='method'>
+<p>the list of buttons</div><h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*setButton' href='./../Overviews/Methods.html#setButton'>setButton</a>(<span class='argstr'>index</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>index<td class='argumentdesc'>
+<p>set the button at index to show the name stored at that index</table></div><h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*updateButtons' href='./../Overviews/Methods.html#updateButtons'>updateButtons</a></h3>
+<div class='method'>
+<p>update the buttons</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*clear' href='./../Overviews/Methods.html#clear'>clear</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*limitToScreen' href='./../Overviews/Methods.html#limitToScreen'>limitToScreen</a>(<span class='argstr'>rect</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>Butz.</span><a class='method-name' name='*showButs' href='./../Overviews/Methods.html#showButs'>showButs</a>(<span class='argstr'>butsToShow</span>, <span class='argstr'>wait: 0.01</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/Butz.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/Butz.schelp</a><br>link::Classes/Butz::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

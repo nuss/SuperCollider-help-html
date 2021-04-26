@@ -1,0 +1,128 @@
+<!doctype html><html lang='en'><head><title>CodeRelay | SuperCollider 3.11.2 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'CodeRelay';
+var scdoc_sc_version = '3.11.2';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>CodeRelay:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-onlyWorkingCode'>onlyWorkingCode</a> </li>
+<li class='toc3'><a href='#-private'>private</a> </li>
+<li class='toc3'><a href='#-post'>post</a> </li>
+<li class='toc3'><a href='#-free'>free</a> </li>
+<li class='toc3'><a href='#-addHistory'>addHistory</a> </li>
+<li class='toc3'><a href='#-removeHistory'>removeHistory</a> </li>
+<li class='toc3'><a href='#-makeOSCFunc'>makeOSCFunc</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Relay classes'>Relay classes</a></span>
+</div><h1>CodeRelay<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>relays code to network peers and History</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Utopia/classes/NMLRelays.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/Utopia/classes/NMLRelays.sc'>NMLRelays.sc</a></div><div id='related'>See also: <a href="./../Guides/Utopia.html">Utopia</a>, <a href="./../Classes/AddrBook.html">AddrBook</a>, <a href="./../Classes/Peer.html">Peer</a>, <a href="./../Classes/Hail.html">Hail</a>, <a href="./../Classes/Registrar.html">Registrar</a>, <a href="./../Classes/SynthDescRelay.html">SynthDescRelay</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>When evaluating code, CodeRelay sends the code as string to all the peers in its AddrBook. This can be used to create a shared code history in collaborative live coding performances.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>CodeRelay.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>addrBook</span>, <span class='argstr'>post: false</span>, <span class='argstr'>oscPath: '/codeRelay'</span>, <span class='argstr'>encryptor</span>, <span class='argstr'>codeDumpFunc</span>)</h3>
+<div class='method'>
+<p>create a new CodeRelay<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>addrBook<td class='argumentdesc'>
+<p>an AddrBook where Peers are registered<tr><td class='argumentname'>post<td class='argumentdesc'>
+<p>a flag whether to post code to the post window. default: false<tr><td class='argumentname'>oscPath<td class='argumentdesc'>
+<p>the oscPath to use for relaying. default: '/codeRelay'<tr><td class='argumentname'>encryptor<td class='argumentdesc'>
+<p>an (optional) encryptor for codeStrings.<tr><td class='argumentname'>codeDumpFunc<td class='argumentdesc'>
+<p>an optional function to relay the code strings. default nil will be replaced by a standard function which relays to all peers in the addrBook.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a new CodeRelay</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-onlyWorkingCode' href='./../Overviews/Methods.html#onlyWorkingCode'>onlyWorkingCode</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-onlyWorkingCode' href='./../Overviews/Methods.html#onlyWorkingCode'>onlyWorkingCode</a> = value</h3>
+<div class='method'>
+<p>When true, coderelay sends only code that has evaluated correctly.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a Boolean</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-private' href='./../Overviews/Methods.html#private'>private</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-private' href='./../Overviews/Methods.html#private'>private</a> = value</h3>
+<div class='method'>
+<p>When true, coderelay does not send code. Useful for temporary experiments that would clutter a performance history.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a Boolean</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-post' href='./../Overviews/Methods.html#post'>post</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-post' href='./../Overviews/Methods.html#post'>post</a> = value</h3>
+<div class='method'>
+<p>When true, coderelay will post to post window.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a Boolean</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-free' href='./../Overviews/Methods.html#free'>free</a></h3>
+<div class='method'>
+<p>remove coderelay by removing codeDumpFunc from interpreter and freeing its oscFunc.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the coderelay</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addHistory' href='./../Overviews/Methods.html#addHistory'>addHistory</a></h3>
+<div class='method'>
+<p>add History such that coderelay writes own code and relayed code into History.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the coderelay</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeHistory' href='./../Overviews/Methods.html#removeHistory'>removeHistory</a></h3>
+<div class='method'>
+<p>remove History from coderelay.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the coderelay</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-makeOSCFunc' href='./../Overviews/Methods.html#makeOSCFunc'>makeOSCFunc</a></h3>
+<div class='method'>
+<p>internal method, makes the OSCFunc that receives shared code.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the coderelay</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>// make an address book
+a = AddrBook.new; a.addMe;
+// make a hail, so other peers on other laptops can join the network
+h = Hail(a);
+
+// make a shared relay
+c = CodeRelay(a);
+c.dump;
+
+// start History and make its gui for testing
+History.start.localOff;
+History.makeWin(20@20);
+
+// code relay now sends to History window:
+c.addHistory;
+
+// silly code lines that should show up in History window,
+// or on connected peers if present
+1 + 2;
+
+42 == 23;
+
+// remove coderelay and free its resources.
+c.free;
+h.free; // same for hail and History
+History.end;</textarea>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Utopia/HelpSource/Classes/CodeRelay.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Utopia/HelpSource/Classes/CodeRelay.schelp</a><br>link::Classes/CodeRelay::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

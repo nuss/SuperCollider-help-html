@@ -1,0 +1,189 @@
+<!doctype html><html lang='en'><head><title>WinBounds | SuperCollider 3.11.2 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'WinBounds';
+var scdoc_sc_version = '3.11.2';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>WinBounds:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*stored'>stored</a> </li>
+<li class='toc3'><a href='#*put'>put</a> </li>
+<li class='toc3'><a href='#*at'>at</a> </li>
+<li class='toc3'><a href='#*storeAll'>storeAll</a> </li>
+<li class='toc3'><a href='#*restoreAll'>restoreAll</a> </li>
+<li class='toc3'><a href='#*saveString'>saveString</a> </li>
+<li class='toc3'><a href='#*putAll'>putAll</a> </li>
+<li class='toc3'><a href='#*store'>store</a> </li>
+<li class='toc3'><a href='#*storeWin'>storeWin</a> </li>
+<li class='toc3'><a href='#*restoreWin'>restoreWin</a> </li>
+<li class='toc3'><a href='#*restore'>restore</a> </li>
+<li class='toc3'><a href='#*makeFuncs'>makeFuncs</a> </li>
+<li class='toc3'><a href='#*addMake'>addMake</a> </li>
+<li class='toc3'><a href='#*make'>make</a> </li>
+<li class='toc3'><a href='#*showOrMake'>showOrMake</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*postMissingBounds'>postMissingBounds</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#GUI'>GUI</a></span>
+</div><h1>WinBounds<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>a class that stores and restores window bounds</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/WinBounds.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/WinBounds.sc'>WinBounds.sc</a></div><div id='related'>See also: <a href="./../Classes/Window.html">Window</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>WinBounds allows easy storing of window bounds in order to simplify designing and using multi-window guis. WinBounds is a class-only singleton.
+<p>First code examples:<textarea class='editor'>// make 3 windows
+Window.closeAll;
+~names = [\abc, \bcd, \cde];
+~names.do {|name, i| Window(name, Rect(20, i + 3 * 100, 180, 80)).front };
+
+// store their current positions
+WinBounds.storeAll;
+// ... they are here now:
+WinBounds.stored;
+
+Document("WinBounds_stored.scd", "// save?\n" ++ WinBounds.saveString);
+
+// jumble
+Window.allWindows.do(_.bounds_(Rect(800.rand, 800.rand, 300, 300)));
+// restore one
+WinBounds.restore("abc"); // restore one window by name
+WinBounds.restoreAll;     // restore all of them
+
+/// save current storeed bounds as code:
+
+WinBounds.saveString; // posts this:
+WinBounds.stored.putAll( (
+    'cde': Rect(20.0, 500.0, 180.0, 80.0),
+    'abc': Rect(20.0, 300.0, 180.0, 80.0),
+    'bcd': Rect(20.0, 400.0, 180.0, 80.0)
+) );
+
+// try to re-enter them from saveString:
+WinBounds.stored.clear;
+WinBounds.stored.putAll( (
+    'cde': Rect(20.0, 500.0, 180.0, 80.0),
+    'abc': Rect(20.0, 300.0, 180.0, 80.0),
+    'bcd': Rect(20.0, 400.0, 180.0, 80.0)
+) );
+
+// jumble
+Window.allWindows.do(_.bounds_(Rect(800.rand, 800.rand, 400.rand, 400.rand)));
+// should restore all 3
+WinBounds.restoreAll;</textarea>
+
+<p>WinBounds can also be use to store window-making functions,<textarea class='editor'>// store a makeFunc
+WinBounds.addMake(\WinBounds_Test, { Window("WinBounds_Test", Rect(10, 400, 200, 100)).front });
+WinBounds.makeFuncs.cs;
+// run it to make the window
+WinBounds.make(\WinBounds_Test);
+// store the bounds
+WinBounds.store(\WinBounds_Test);
+
+// close the test window
+Window.find(\WinBounds_Test).close;
+// -&gt; showOrMake remakes it
+WinBounds.showOrMake(\WinBounds_Test);
+
+// move it somewhere else
+Window.find(\WinBounds_Test).moveTo(10, 10);
+
+// -&gt; showOrMake moves it back
+WinBounds.showOrMake(\WinBounds_Test);
+
+// showOrMake also has a finishfunc which is applied to the old or new window:
+WinBounds.showOrMake(\WinBounds_Test,
+    restore: true,
+    finishFunc: { |w| w.background_(Color(0.4, 0.8, 0.4)) }
+);</textarea>
+
+<p>WinBounds uses some extensions to the Window class :<textarea class='editor'>Window.find(\abc).do(_.front);
+Window.find(\nopey).do(_.front);
+Window.find(\c).do(_.front);
+Window.findAll(\b).do(_.background_(Color.rand));
+
+Window.find(\a).moveTo(200).front;
+Window.find(\bcd).moveTo(200, 200).front;
+Window.findAll(\c).do(_.front);
+
+~locs = Window.getAll.postcs;
+Window.findAll(\c).do(_.moveTo(800.rand, 800.rand));
+Window.setAll(~locs, true);
+
+Window.getAllCS;
+
+Window("test").front;
+Window.show("test").notNil;
+*/</textarea>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*stored' href='./../Overviews/Methods.html#stored'>stored</a></h3>
+<div class='method'>
+<p>a dict with all stored bounds for windows. window names must be unique!</div><h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*put' href='./../Overviews/Methods.html#put'>put</a>(<span class='argstr'>name</span>, <span class='argstr'>bounds</span>)</h3>
+<div class='method'>
+<p>put in bounds rect by window name</div><h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>get bounds rect for key</table></div><h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*storeAll' href='./../Overviews/Methods.html#storeAll'>storeAll</a></h3>
+<div class='method'>
+<p>store bounds of all currently open windows</div><h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*restoreAll' href='./../Overviews/Methods.html#restoreAll'>restoreAll</a></h3>
+<div class='method'>
+<p>restore all open windows to their stored bounds.</div><h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*saveString' href='./../Overviews/Methods.html#saveString'>saveString</a></h3>
+<div class='method'>
+<p>returns a code string that recreates stored bounds.</div><h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*putAll' href='./../Overviews/Methods.html#putAll'>putAll</a>(<span class='argstr'>coll</span>)</h3>
+<div class='method'>
+<p>add a collection - a dict or keys-values-array - to stored dict.</div><h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*store' href='./../Overviews/Methods.html#store'>store</a>(<span class='argstr'>name</span>)</h3>
+<div class='method'>
+<p>store bounds rect of a currently open window by window name.</div><h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*storeWin' href='./../Overviews/Methods.html#storeWin'>storeWin</a>(<span class='argstr'>win</span>)</h3>
+<div class='method'>
+<p>store bounds rect of a currently open window</div><h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*restoreWin' href='./../Overviews/Methods.html#restoreWin'>restoreWin</a>(<span class='argstr'>win</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>win<td class='argumentdesc'>
+<p>restore bounds rect of a currently open windo.</table></div><h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*restore' href='./../Overviews/Methods.html#restore'>restore</a>(<span class='argstr'>name</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>restore bounds rect of a currently open window by window name.</table></div><h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*makeFuncs' href='./../Overviews/Methods.html#makeFuncs'>makeFuncs</a></h3>
+<div class='method'>
+<p>a dictionary of window-making functions</div><h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*addMake' href='./../Overviews/Methods.html#addMake'>addMake</a>(<span class='argstr'>name</span>, <span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>add a make function to makeFuncs by name</div><h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*make' href='./../Overviews/Methods.html#make'>make</a>(<span class='argstr'>name</span>)</h3>
+<div class='method'>
+<p>make the window with that name</div><h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*showOrMake' href='./../Overviews/Methods.html#showOrMake'>showOrMake</a>(<span class='argstr'>name</span>, <span class='argstr'>restore: true</span>, <span class='argstr'>finishFunc</span>)</h3>
+<div class='method'>
+<p>if a window with that name exists, move it to its position if not, make the window by running its named makefunc (see examples) s</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*postMissingBounds' href='./../Overviews/Methods.html#postMissingBounds'>postMissingBounds</a></h3>
+<h3 class='method-code'><span class='method-prefix'>WinBounds.</span><a class='method-name' name='*postMissingBounds' href='./../Overviews/Methods.html#postMissingBounds'>postMissingBounds</a> = value</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/WinBounds.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/WinBounds.schelp</a><br>link::Classes/WinBounds::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

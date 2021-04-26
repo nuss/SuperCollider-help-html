@@ -1,0 +1,74 @@
+<!doctype html><html lang='en'><head><title>Registrar | SuperCollider 3.11.2 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Registrar';
+var scdoc_sc_version = '3.11.2';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Registrar:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-free'>free</a> </li>
+<li class='toc3'><a href='#-addrBook'>addrBook</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Utopia'>Utopia</a> | <a href='./../Browse.html#External Control'>External Control</a>&#8201;&gt;&#8201;<a href='./../Browse.html#External Control>OSC'>OSC</a></span>
+</div><h1>Registrar<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Centralised Registration point for participants in a Utopia based network music system</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Utopia/classes/NMLAddressing.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/Utopia/classes/NMLAddressing.sc'>NMLAddressing.sc</a></div><div id='related'>See also: <a href="./../Guides/Utopia.html">Utopia</a>, <a href="./../Classes/Peer.html">Peer</a>, <a href="./../Classes/AddrBook.html">AddrBook</a>, <a href="./../Classes/Registrant.html">Registrant</a>, <a href="./../Classes/Hail.html">Hail</a>, <a href="./../Guides/OSC_Communication">OSC_Communication</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Registrar allows centralised registration of participants in a Utopia based network music application. Registrar can run on one of the nodes in a subnetwork, or on a separate node. (The latter can be useful where stability is a concern.) Registrar keeps track of <a href="./../Classes/Peer.html">Peer</a>s joining and leaving a subnetwork, and their online status, and distributes this information to all members.
+<p>By using different OSC paths multiple subnetworks can exist on the same physical network. Each participant in a subnetwork should create a <a href="./../Classes/Registrant.html">Registrant</a> with the same path.
+<p>Registrar holds an <a href="./../Classes/AddrBook.html">AddrBook</a> as an instance variable. This can be passed to other Utopia objects on the Registrant's node, and will be updated as appropriate.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>Registrar.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>addrBook</span>, <span class='argstr'>period: 1.0</span>, <span class='argstr'>authenticator</span>, <span class='argstr'>oscPath: '/register'</span>)</h3>
+<div class='method'>
+<p>Create a new Registrar.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>addrBook<td class='argumentdesc'>
+<p>An optional <a href="./../Classes/AddrBook.html">AddrBook</a> which this instance will use to store discovered <a href="./../Classes/Peer.html">Peer</a>s. Users can pass this to other Utopia objects, and know that it will be updated as appropriate. If nil, one will be automatically created.<tr><td class='argumentname'>period<td class='argumentdesc'>
+<p>The interval in seconds between pings to Peers being sent. Peers which have not responded for &gt; (2 * period) seconds will be marked offline.<tr><td class='argumentname'>authenticator<td class='argumentdesc'>
+<p>An optional authenticator, which is used to authenticate other Peers attempting to join the system. This should be an instance of a subclass of <a href="./../Classes/NMLAbstractAuthenticator.html">NMLAbstractAuthenticator</a>, such as <a href="./../Classes/ChallengeAuthenticator.html">ChallengeAuthenticator</a> or <a href="./../Classes/GroupPasswordAuthenticator.html">GroupPasswordAuthenticator</a>. If nil Registrar will create an instance of <a href="./../Classes/NonAuthenticator.html">NonAuthenticator</a> (no authentication).<tr><td class='argumentname'>oscPath<td class='argumentdesc'>
+<p>An OSC compliant path in the form of a <a href="./../Classes/Symbol.html">Symbol</a> or <a href="./../Classes/String.html">String</a> used to identify this subnetwork. By using different paths multiple subnetworks can exist on the same physical network. In simple cases the default ('/register') can be used.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A new Registrar instance.</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-free' href='./../Overviews/Methods.html#free'>free</a></h3>
+<div class='method'>
+<p>Free this object and its <a href="./../Classes/OSCFunc.html">OSCFunc</a>s. After this, this Registrar (and probably its AddrBook) should not be used.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addrBook' href='./../Overviews/Methods.html#addrBook'>addrBook</a></h3>
+<div class='method'>
+<p>Get this Registrar's <a href="./../Classes/AddrBook.html">AddrBook</a>. This can be passed to other Utopia objects.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/AddrBook.html">AddrBook</a>.</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>(some example code)</textarea>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Utopia/HelpSource/Classes/Registrar.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Utopia/HelpSource/Classes/Registrar.schelp</a><br>link::Classes/Registrar::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>
