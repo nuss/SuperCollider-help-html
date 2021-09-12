@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Dictionary | SuperCollider 3.11.2 Help</title>
+<!doctype html><html lang='en'><head><title>Dictionary | SuperCollider 3.12.1 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Dictionary';
-var scdoc_sc_version = '3.11.2';
+var scdoc_sc_version = '3.12.1';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -128,7 +128,12 @@ var scdoc_sc_version = '3.11.2';
 <p><h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>A Dictionary is an associative collection mapping keys to values. Two keys match if they are <strong>equal</strong>. (i.e. == returns true.)
-<p>The contents of a Dictionary are <strong>unordered</strong>. You must not depend on the order of items in a Dictionary. You must only rely on equality for the keys. E.g. symbols and strings can both be used as keys because the matching is done by equality (==) and not by identity (===). For identity matching, where strings can not be used as keys, see: <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> and <a href="./../Classes/Event.html">Event</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<p>The contents of a Dictionary are <strong>unordered</strong>. You must not depend on the order of items in a Dictionary. You must only rely on equality for the keys. E.g. symbols and strings can both be used as keys because the matching is done by equality (==) and not by identity (===). For identity matching, where strings can not be used as keys, see: <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> and <a href="./../Classes/Event.html">Event</a>.<div class='note'><span class='notelabel'>NOTE:</span> Setting <code>nil</code> as a value erases the key from the Dictionary. This means that <code>nil</code> itself can't be used as a Dictionary value.</div><textarea class='editor'>d = Dictionary();
+d.put(\a, 440);
+d.keys; // Set[\a]
+d.put(\a, nil); // removes the value 440
+d.keys; // Set[]</textarea>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>Dictionary.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>n: 8</span>)</h3>
 <div class='method'>
 <p>Creates a Dictionary with an initial capacity for <strong>n</strong> key value mappings.</div><h3 class='method-code'><span class='method-prefix'>Dictionary.</span><a class='method-name' name='*newFrom' href='./../Overviews/Methods.html#newFrom'>newFrom</a>(<span class='argstr'>aCollection</span>)</h3>
@@ -504,5 +509,6 @@ Dictionary["hello" -&gt; 0, "hello" -&gt; 1]; // Dictionary[ (hello -&gt; 1) ]
 // for symbols as keys, Dictionary and Event show the same behaviour:
 Dictionary[\hello -&gt; 1, \hello -&gt; 0]; // Dictionary[ (hello -&gt; 0) ]
 ( \hello: 1, \hello: 0 ); // ( 'hello': 0 )</textarea>
-<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Dictionary.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Dictionary.schelp</a><br>link::Classes/Dictionary::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/Dictionary.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/Dictionary.schelp</a><br>link::Classes/Dictionary::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
 </body></html>

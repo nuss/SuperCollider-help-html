@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>AbstractFunction | SuperCollider 3.11.2 Help</title>
+<!doctype html><html lang='en'><head><title>AbstractFunction | SuperCollider 3.12.1 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'AbstractFunction';
-var scdoc_sc_version = '3.11.2';
+var scdoc_sc_version = '3.12.1';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -136,6 +136,7 @@ var scdoc_sc_version = '3.11.2';
 <ul class='toc'><li class='toc3'><a href='#-applyTo'>applyTo</a> </li>
 <li class='toc3'><a href='#-asUGenInput'>asUGenInput</a> </li>
 <li class='toc3'><a href='#-sampled'>sampled</a> </li>
+<li class='toc3'><a href='#-plotGraph'>plotGraph</a> </li>
 </ul><li class='toc2'><a href='#Function%20Composition'>Function Composition</a></li>
 <ul class='toc'></ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
@@ -175,8 +176,8 @@ var scdoc_sc_version = '3.11.2';
 <li class='toc3'><a href='#-performBinaryOpOnSeqColl'>performBinaryOpOnSeqColl</a> </li>
 <li class='toc3'><a href='#-performBinaryOpOnSignal'>performBinaryOpOnSignal</a> </li>
 <li class='toc3'><a href='#-performBinaryOpOnSimpleNumber'>performBinaryOpOnSimpleNumber</a> </li>
-<li class='toc3'><a href='#-plotGraph'>plotGraph</a> </li>
 <li class='toc3'><a href='#-pow'>pow</a> </li>
+<li class='toc3'><a href='#-prReverseLazyEquals'>prReverseLazyEquals</a> </li>
 <li class='toc3'><a href='#-prepareForProxySynthDef'>prepareForProxySynthDef</a> </li>
 <li class='toc3'><a href='#-raddeg'>raddeg</a> </li>
 <li class='toc3'><a href='#-ramp'>ramp</a> </li>
@@ -195,6 +196,7 @@ var scdoc_sc_version = '3.11.2';
 <li class='toc3'><a href='#-welWindow'>welWindow</a> </li>
 <li class='toc3'><a href='#-wrap2'>wrap2</a> </li>
 <li class='toc3'><a href='#-xor'>xor</a> </li>
+<li class='toc3'><a href='#-|==|'>|==|</a> </li>
 <li class='toc3'><a href='#-||'>||</a> </li>
 </ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><div id='menubar'></div>
@@ -617,6 +619,30 @@ g = f.sampled(200);
 g.plotGraph(from:0,to:1);
 { 200.collect{ f.(rand(0.0,1.0)) } }.bench;
 { 200.collect{ g.(rand(0.0,1.0)) } }.bench;</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plotGraph' href='./../Overviews/Methods.html#plotGraph'>plotGraph</a>(<span class='argstr'>n: 500</span>, <span class='argstr'>from: 0.0</span>, <span class='argstr'>to: 1.0</span>, <span class='argstr'>name</span>, <span class='argstr'>bounds</span>, <span class='argstr'>discrete: false</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>minval</span>, <span class='argstr'>maxval</span>, <span class='argstr'>separately: true</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Math/PlotView.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Math/PlotView.sc</a></div>
+<div class='method'>
+<p>Sample the function with n points, in the range [from, to], and plot it in a Plotter. Returns a <a href="./../Classes/Plotter.html">Plotter</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>n<td class='argumentdesc'>
+<p>Number of values displayed in the plot window (500 by default).<tr><td class='argumentname'>from<td class='argumentdesc'>
+<p>Minimum value passed to the function.<tr><td class='argumentname'>to<td class='argumentdesc'>
+<p>Maximum value passed to the function.<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>See <a href="./../Reference/plot.html">plot</a><tr><td class='argumentname'>bounds<td class='argumentdesc'>
+<p>See <a href="./../Reference/plot.html">plot</a><tr><td class='argumentname'>discrete<td class='argumentdesc'>
+<p>See <a href="./../Reference/plot.html">plot</a><tr><td class='argumentname'>numChannels<td class='argumentdesc'>
+<p>See <a href="./../Reference/plot.html">plot</a><tr><td class='argumentname'>minval<td class='argumentdesc'>
+<p>See <a href="./../Reference/plot.html">plot</a><tr><td class='argumentname'>maxval<td class='argumentdesc'>
+<p>See <a href="./../Reference/plot.html">plot</a><tr><td class='argumentname'>separately<td class='argumentdesc'>
+<p>See <a href="./../Reference/plot.html">plot</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Plotter.html">Plotter</a></div><h4>Discussion:</h4>
+<textarea class='editor'>// plot x.squared transfer function with x between -1 and 1.
+// here the x-axis shows n, the number of points 
+{ |x| x.squared }.plotGraph(n: 200, from: -1, to: 1);
+
+// as plotGraph returns a Plotter, you can apply a domain spec to show x value on the x-axis
+{ |x| x.squared }.plotGraph(n: 200, from: -1, to: 1).domainSpecs_([-1, 1, \lin].asSpec).refresh;</textarea>
 </div><h3><a class='anchor' name='Function%20Composition'>Function Composition</a></h3>
 
 <p>When unary, binary or n-ary operators are applied to an abstract function, it returns an object that represents this operation, without evaluating the function: <a href="./../Classes/UnaryOpFunction.html">UnaryOpFunction</a>, <a href="./../Classes/BinaryOpFunction.html">BinaryOpFunction</a>, <a href="./../Classes/NAryOpFunction.html">NAryOpFunction</a>. Note that different subclasses like <a href="./../Classes/Pattern.html">Pattern</a> or <a href="./../Classes/UGen.html">UGen</a> have their own composition scheme analogous to the one of AbstractFunction itself. For more about functions, see <a href="./../Classes/Function.html">Function</a>.<textarea class='editor'>// compose a function that will return an array of random length
@@ -624,7 +650,24 @@ a = { |n| { 16.rand } ! n } &lt;&gt; { |x, y| rrand(4, 8) };
 a.value;
 // compose a function from a that selects only odd values
 b = { |x| x.select(_.odd) } &lt;&gt; a;
-b.value;</textarea>
+b.value;
+
+// operator composition
+// compose a function that multiplies a random integer by 2
+{ rrand(1, 5) } * 2</textarea>
+<div class='note'><span class='notelabel'>NOTE:</span> The comparison operators <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code> and <code>&gt;=</code> automatically perform function composition, as does <code>*</code> in the example above.
+<p>Equality comparisons have two possible meanings: to compare the objects as they exist right now, or a composite operator that will evaluate the operands in the future and check the equality of those results. Both are needed at different times, and are supported by different operators: <code>==</code> for an immediate equality check (which always returns a Boolean result), or <code>|==|</code> for a "lazy" equality operator to be performed later.</div><textarea class='editor'>f = { 2.rand };  // a function
+
+// eager (immediate) equality
+// false: the function as itself is not the same as '1'
+g = (f == 1);
+
+g.value;  // still false
+
+// lazy equality
+g = (f |==| 1);  // a BinaryOpFunction
+
+g.value;  // true or false, depending on f's result</textarea>
 <h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-&&' href='./../Overviews/Methods.html#&amp;&amp;'>&amp;&amp;</a>(<span class='argstr'>function</span>, <span class='argstr'>adverb</span>)</h3>
@@ -673,9 +716,8 @@ b.value;</textarea>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-performBinaryOpOnSeqColl' href='./../Overviews/Methods.html#performBinaryOpOnSeqColl'>performBinaryOpOnSeqColl</a>(<span class='argstr'>aSelector</span>, <span class='argstr'>aSeqColl</span>, <span class='argstr'>adverb</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-performBinaryOpOnSignal' href='./../Overviews/Methods.html#performBinaryOpOnSignal'>performBinaryOpOnSignal</a>(<span class='argstr'>aSelector</span>, <span class='argstr'>aSignal</span>, <span class='argstr'>adverb</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-performBinaryOpOnSimpleNumber' href='./../Overviews/Methods.html#performBinaryOpOnSimpleNumber'>performBinaryOpOnSimpleNumber</a>(<span class='argstr'>aSelector</span>, <span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plotGraph' href='./../Overviews/Methods.html#plotGraph'>plotGraph</a>(<span class='argstr'>n: 500</span>, <span class='argstr'>from: 0.0</span>, <span class='argstr'>to: 1.0</span>, <span class='argstr'>name</span>, <span class='argstr'>bounds</span>, <span class='argstr'>discrete: false</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>minval</span>, <span class='argstr'>maxval</span>, <span class='argstr'>separately: true</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Math/PlotView.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/GUI/PlusGUI/Math/PlotView.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pow' href='./../Overviews/Methods.html#pow'>pow</a>(<span class='argstr'>function</span>, <span class='argstr'>adverb</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prReverseLazyEquals' href='./../Overviews/Methods.html#prReverseLazyEquals'>prReverseLazyEquals</a>(<span class='argstr'>that</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prepareForProxySynthDef' href='./../Overviews/Methods.html#prepareForProxySynthDef'>prepareForProxySynthDef</a></h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/JITLib/ProxySpace/wrapForNodeProxy.sc'>/usr/local/share/SuperCollider/SCClassLibrary/JITLib/ProxySpace/wrapForNodeProxy.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-raddeg' href='./../Overviews/Methods.html#raddeg'>raddeg</a></h3>
@@ -697,6 +739,7 @@ b.value;</textarea>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-welWindow' href='./../Overviews/Methods.html#welWindow'>welWindow</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-wrap2' href='./../Overviews/Methods.html#wrap2'>wrap2</a>(<span class='argstr'>function: 1</span>, <span class='argstr'>adverb</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-xor' href='./../Overviews/Methods.html#xor'>xor</a>(<span class='argstr'>function</span>, <span class='argstr'>adverb</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-|==|' href='./../Overviews/Methods.html#|==|'>|==|</a>(<span class='argstr'>that</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-||' href='./../Overviews/Methods.html#||'>||</a>(<span class='argstr'>function</span>, <span class='argstr'>adverb</span>)</h3>
 <h2><a class='anchor' name='examples'>Examples</a></h2>
 <textarea class='editor'>// examples
@@ -736,5 +779,6 @@ a = blend({ 3.0.rand }, { 1000.rand }, { |frac| frac });
 a.value(0.5);
 
 a.value((0, 0.06..1)); // creates a range of values..</textarea>
-<div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/AbstractFunction.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/AbstractFunction.schelp</a><br>link::Classes/AbstractFunction::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/HelpSource/Classes/AbstractFunction.schelp'>/usr/local/share/SuperCollider/HelpSource/Classes/AbstractFunction.schelp</a><br>link::Classes/AbstractFunction::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
 </body></html>

@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>UnitTest | SuperCollider 3.11.2 Help</title>
+<!doctype html><html lang='en'><head><title>UnitTest | SuperCollider 3.12.1 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'UnitTest';
-var scdoc_sc_version = '3.11.2';
+var scdoc_sc_version = '3.12.1';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -34,7 +34,10 @@ var scdoc_sc_version = '3.11.2';
 <ul class='toc'><li class='toc3'><a href='#*brief'>brief</a> </li>
 <li class='toc3'><a href='#*full'>full</a> </li>
 <li class='toc3'><a href='#*prRunAllTestMethods'>prRunAllTestMethods</a> </li>
+<li class='toc3'><a href='#*prRunWithinSetUpClass'>prRunWithinSetUpClass</a> </li>
 <li class='toc3'><a href='#*runTestClassForClass'>runTestClassForClass</a> </li>
+<li class='toc3'><a href='#*setUpClass'>setUpClass</a> </li>
+<li class='toc3'><a href='#*tearDownClass'>tearDownClass</a> </li>
 </ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-runTestMethod'>runTestMethod</a> </li>
 <li class='toc3'><a href='#-assert'>assert</a> </li>
@@ -112,7 +115,10 @@ UnitTest.runAll;</textarea>
 <h3 class='method-code'><span class='method-prefix'>UnitTest.</span><a class='method-name' name='*brief' href='./../Overviews/Methods.html#brief'>brief</a></h3>
 <h3 class='method-code'><span class='method-prefix'>UnitTest.</span><a class='method-name' name='*full' href='./../Overviews/Methods.html#full'>full</a></h3>
 <h3 class='method-code'><span class='method-prefix'>UnitTest.</span><a class='method-name' name='*prRunAllTestMethods' href='./../Overviews/Methods.html#prRunAllTestMethods'>prRunAllTestMethods</a>(<span class='argstr'>report: true</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>UnitTest.</span><a class='method-name' name='*prRunWithinSetUpClass' href='./../Overviews/Methods.html#prRunWithinSetUpClass'>prRunWithinSetUpClass</a>(<span class='argstr'>func</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>UnitTest.</span><a class='method-name' name='*runTestClassForClass' href='./../Overviews/Methods.html#runTestClassForClass'>runTestClassForClass</a>(<span class='argstr'>class</span>, <span class='argstr'>reset: true</span>, <span class='argstr'>report: true</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>UnitTest.</span><a class='method-name' name='*setUpClass' href='./../Overviews/Methods.html#setUpClass'>setUpClass</a></h3>
+<h3 class='method-code'><span class='method-prefix'>UnitTest.</span><a class='method-name' name='*tearDownClass' href='./../Overviews/Methods.html#tearDownClass'>tearDownClass</a></h3>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-runTestMethod' href='./../Overviews/Methods.html#runTestMethod'>runTestMethod</a>(<span class='argstr'>method</span>, <span class='argstr'>report: true</span>)</h3>
 <div class='method'>
@@ -189,12 +195,12 @@ a.ifAsserts(2 == 3, "yes", { a.assert(2 == 4) }, { a.assert(1 == 1, "but this is
 <p>If not <code>nil</code>, a failure stops the tests and evaluates this function.<tr><td class='argumentname'>details<td class='argumentdesc'>
 <p>Some optional extra details which will be passed to the reporting framework for display unless brief reporting is requested (see <a href="#*passVerbosity">*passVerbosity</a>).</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-assertNoException' href='./../Overviews/Methods.html#assertNoException'>assertNoException</a>(<span class='argstr'>func</span>, <span class='argstr'>message</span>, <span class='argstr'>report: true</span>, <span class='argstr'>onFailure</span>, <span class='argstr'>details</span>)</h3>
 <div class='method'>
-<p>Make sure that a specific <a href="./../Classes/Exception.html">Exception</a> or <a href="./../Classes/Error.html">Error</a> is <strong>not</strong> thrown. For arguments, see <a href="#-assertException">-assertException</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-wait' href='./../Overviews/Methods.html#wait'>wait</a>(<span class='argstr'>condition</span>, <span class='argstr'>failureMessage</span>, <span class='argstr'>maxTime: 10.0</span>)</h3>
+<p>Make sure that a specific <a href="./../Classes/Exception.html">Exception</a> or <a href="./../Classes/Error.html">Error</a> is <strong>not</strong> thrown. For arguments, see <a href="#-assertException">-assertException</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-wait' href='./../Overviews/Methods.html#wait'>wait</a>(<span class='argstr'>predicate</span>, <span class='argstr'>failureMessage: ""</span>, <span class='argstr'>maxTime: 10.0</span>)</h3>
 <div class='method'>
-<p>Wait for a condition, consider failed after maxTime. Only valid within a test (or a routine).<textarea class='editor'>(
+<p>Wait for a predicate function to return <code>true</code>. Considers the test failed after <code>maxTime</code>. Only valid within a test (or a routine).<div class='note'><span class='notelabel'>NOTE:</span> It's best to avoid using this method in tests. See <a href="./../Classes/CondVar.html#-waitFor">CondVar: -waitFor</a> for a better option.</div><textarea class='editor'>(
 {
     s.reboot;
-    UnitTest.new.wait(s.serverRunning, "server failed to boot in time", 2);
+    UnitTest.new.wait({ s.serverRunning }, "server failed to boot in time", 2);
 }.fork
 )</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bootServer' href='./../Overviews/Methods.html#bootServer'>bootServer</a>(<span class='argstr'>server</span>)</h3>

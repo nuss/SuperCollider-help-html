@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Array | SuperCollider 3.11.2 Help</title>
+<!doctype html><html lang='en'><head><title>Array | SuperCollider 3.12.1 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Array';
-var scdoc_sc_version = '3.11.2';
+var scdoc_sc_version = '3.12.1';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -81,6 +81,7 @@ var scdoc_sc_version = '3.11.2';
 <li class='toc3'><a href='#-mirror1'>mirror1</a> </li>
 <li class='toc3'><a href='#-mirror2'>mirror2</a> </li>
 <li class='toc3'><a href='#-stutter'>stutter</a> </li>
+<li class='toc3'><a href='#-dupEach'>dupEach</a> </li>
 <li class='toc3'><a href='#-rotate'>rotate</a> </li>
 <li class='toc3'><a href='#-pyramid'>pyramid</a> </li>
 <li class='toc3'><a href='#-pyramidg'>pyramidg</a> </li>
@@ -100,6 +101,7 @@ var scdoc_sc_version = '3.11.2';
 <li class='toc3'><a href='#-multiChannelExpand'>multiChannelExpand</a> </li>
 <li class='toc3'><a href='#-source'>source</a> </li>
 <li class='toc3'><a href='#-fork'>fork</a> </li>
+<li class='toc3'><a href='#-poll'>poll</a> </li>
 <li class='toc3'><a href='#-dpoll'>dpoll</a> </li>
 <li class='toc3'><a href='#-atIdentityHash'>atIdentityHash</a> </li>
 <li class='toc3'><a href='#-atIdentityHashInPairs'>atIdentityHashInPairs</a> </li>
@@ -107,7 +109,9 @@ var scdoc_sc_version = '3.11.2';
 <li class='toc3'><a href='#-asCompileString'>asCompileString</a> </li>
 <li class='toc3'><a href='#-isValidUGenInput'>isValidUGenInput</a> </li>
 <li class='toc3'><a href='#-asRawOSC'>asRawOSC</a> </li>
-<li class='toc3'><a href='#-connectToNode'>connectToNode</a> </li>
+<li class='toc2'><a href='#Bela'>Bela</a></li>
+<ul class='toc'><li class='toc3'><a href='#-belaScope'>belaScope</a> </li>
+</ul><li class='toc3'><a href='#-connectToNode'>connectToNode</a> </li>
 <li class='toc3'><a href='#-connectToBuffer'>connectToBuffer</a> </li>
 <li class='toc3'><a href='#-connectToBus'>connectToBus</a> </li>
 <li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
@@ -159,7 +163,6 @@ var scdoc_sc_version = '3.11.2';
 <li class='toc3'><a href='#-namemidi'>namemidi</a> </li>
 <li class='toc3'><a href='#-namename'>namename</a> </li>
 <li class='toc3'><a href='#-numChannels'>numChannels</a> </li>
-<li class='toc3'><a href='#-poll'>poll</a> </li>
 <li class='toc3'><a href='#-prUnarchive'>prUnarchive</a> </li>
 <li class='toc3'><a href='#-prUnlace'>prUnlace</a> </li>
 <li class='toc3'><a href='#-proxyControlClass'>proxyControlClass</a> </li>
@@ -381,7 +384,7 @@ y.foldAt(5).postln; // this returns the value at index 1</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-replace' href='./../Overviews/Methods.html#replace'>replace</a>(<span class='argstr'>find</span>, <span class='argstr'>replace</span>)</h3>
 <div class='supmethod'>From superclass: <a href='./../Classes/ArrayedCollection.html'>ArrayedCollection</a></div>
 <div class='method'>
-<p>Return a new array in which a number of elements have been replaced by another.<textarea class='editor'>a = (0..10) ++ (0..10);
+<p>Return a new array in which a number of elements have been replaced by another. Elements are checked for equality (not for identity).<textarea class='editor'>a = (0..10) ++ (0..10);
 a.replace([4, 5, 6], 100);
 a.replace([4, 5, 6], [1734, 1985, 1860]);</textarea>
 
@@ -509,13 +512,20 @@ z.postln;</textarea>
 <p>Return a new Array which is the receiver made into a palindrome. The receiver is unchanged.<textarea class='editor'>[1, 2, 3, 4].mirror.postln;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mirror1' href='./../Overviews/Methods.html#mirror1'>mirror1</a></h3>
 <div class='method'>
-<p>Return a new Array which is the receiver made into a palindrome with the last element removed. This is useful if the list will be repeated cyclically, the first element will not get played twice. The receiver is unchanged.<textarea class='editor'>[1, 2, 3, 4].mirror1.postln;</textarea>
+<p>Return a new Array which is the receiver made into a palindrome with the last element removed. This is useful if the list will be repeated cyclically, the first element will not get played twice. The receiver is unchanged. If the receiver is a single-element array, a copy is returned.<textarea class='editor'>[1, 2, 3, 4].mirror1.postln;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mirror2' href='./../Overviews/Methods.html#mirror2'>mirror2</a></h3>
 <div class='method'>
 <p>Return a new Array which is the receiver concatenated with a reversal of itself. The center element is duplicated. The receiver is unchanged.<textarea class='editor'>[1, 2, 3, 4].mirror2.postln;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stutter' href='./../Overviews/Methods.html#stutter'>stutter</a>(<span class='argstr'>n: 2</span>)</h3>
-<div class='method'>
+<div class='method'><div class='note'><span class='notelabel'>NOTE:</span> It is recommended to use <code>dupEach</code> instead. This method is retained for backwards compatibility.</div>
 <p>Return a new Array whose elements are repeated n times. The receiver is unchanged.<textarea class='editor'>[1, 2, 3].stutter(2).postln;</textarea>
+
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>n<td class='argumentdesc'>
+<p>Number of repeats.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dupEach' href='./../Overviews/Methods.html#dupEach'>dupEach</a>(<span class='argstr'>n: 2</span>)</h3>
+<div class='method'>
+<p>Return a new Array whose elements are repeated n times. The receiver is unchanged.<textarea class='editor'>[1, 2, 3].dupEach(2).postln;</textarea>
 
 <p><h4>Arguments:</h4>
 <table class='arguments'>
@@ -655,13 +665,10 @@ Routine {
     "join = a.size (default).".postcln;
     a.fork; \doneAll.postln;
 }.play;
-)
-
-poll(trig, label, trigid)
-apply an array of Poll units to an array of UGens (see those helpfiles for more details).
-
-s.boot;
-(
+)</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-poll' href='./../Overviews/Methods.html#poll'>poll</a>(<span class='argstr'>trig: 10</span>, <span class='argstr'>label</span>, <span class='argstr'>trigid: -1</span>)</h3>
+<div class='method'>
+<p>apply an array of Poll units to an array of UGens (see those helpfiles for more details).<textarea class='editor'>(
 x = {
     SinOsc.ar([0.1, 0.2], 0).poll * 0.1
 }.play;
@@ -685,7 +692,17 @@ x.free</textarea>
 <p>Returns true. Arrays are valid UGen inputs.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asRawOSC' href='./../Overviews/Methods.html#asRawOSC'>asRawOSC</a></h3>
 <div class='method'>
 <p>Returns the OSC message as an Int8Array. Receiver must be a bundle.<textarea class='editor'>[0.1, [\s_new, \default, -1, 1, 1, \freq, 1961]].asRawOSC;</textarea>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-connectToNode' href='./../Overviews/Methods.html#connectToNode'>connectToNode</a>(<span class='argstr'>server</span>, <span class='argstr'>nodeID</span>)</h3>
+</div><h3><a class='anchor' name='Bela'>Bela</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-belaScope' href='./../Overviews/Methods.html#belaScope'>belaScope</a>(<span class='argstr'>scopeChannel</span>, <span class='argstr'>server</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/Bela/BelaScope.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Audio/Bela/BelaScope.sc</a></div>
+<div class='method'>
+<p>Send this Array's content to Bela's Oscilloscope (see <a href="./../Classes/BelaScope.html">BelaScope</a> for required setup)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>scopeChannel<td class='argumentdesc'>
+<p>Bela's oscilloscope channel to start scoping on. This has to be a non-negative number, and can't be changed after scoping starts.<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>The server on which BelaScope is running. If not specified, it looks for the first server for which BelaScope was already initialized. If none is found, it attempts to initialize a <a href="./../Classes/BelaScope.html">BelaScope</a> instance on <a href="./../Server#*default">Server: *default</a>.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>This Array.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-connectToNode' href='./../Overviews/Methods.html#connectToNode'>connectToNode</a>(<span class='argstr'>server</span>, <span class='argstr'>nodeID</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/Conductor/classes/CV/ConnectCVToNodes.sc</a></div>
 <div class='method'>
 <p>The receiver is a flat array of name/value pairs. See <a href="./../Classes/CV.html#Server%20connections">CV: Server connections</a> for some applicabable examples.<h4>Arguments:</h4>
@@ -793,7 +810,6 @@ x.free</textarea>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-namename' href='./../Overviews/Methods.html#namename'>namename</a>(<span class='argstr'>cents</span>, <span class='argstr'>sign</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numChannels' href='./../Overviews/Methods.html#numChannels'>numChannels</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-poll' href='./../Overviews/Methods.html#poll'>poll</a>(<span class='argstr'>trig: 10</span>, <span class='argstr'>label</span>, <span class='argstr'>trigid: -1</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prUnarchive' href='./../Overviews/Methods.html#prUnarchive'>prUnarchive</a>(<span class='argstr'>slotArray</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prUnlace' href='./../Overviews/Methods.html#prUnlace'>prUnlace</a>(<span class='argstr'>clumpSize: 2</span>, <span class='argstr'>numChan: 1</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-proxyControlClass' href='./../Overviews/Methods.html#proxyControlClass'>proxyControlClass</a></h3>

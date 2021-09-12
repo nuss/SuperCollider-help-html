@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Slider | SuperCollider 3.11.2 Help</title>
+<!doctype html><html lang='en'><head><title>Slider | SuperCollider 3.12.1 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Slider';
-var scdoc_sc_version = '3.11.2';
+var scdoc_sc_version = '3.12.1';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -262,32 +262,31 @@ a.removeAction(f);
 // or remove all, of course
 a.action = nil;</textarea>
 <h3><a class='anchor' name='Use%20Slider%20for%20triggering%20sounds'>Use Slider for triggering sounds</a></h3>
-<textarea class='editor'>    (
-        s.waitForBoot({
-            
-            SynthDef(\pluck, { |out, freq=55|
-                Out.ar(out,
-                    Pluck.ar(WhiteNoise.ar(0.06),
-                        EnvGen.kr(Env.perc(0,4), 1.0, doneAction: Done.freeSelf),
-                        freq.reciprocal,
-                        freq.reciprocal,
-                        10,
-                        coef:0.1)
-                );
-            }).add;
+<textarea class='editor'>(
+s.waitForBoot({
+
+    SynthDef(\pluck, { |out, freq=55|
+        Out.ar(out,
+            Pluck.ar(WhiteNoise.ar(0.06),
+                EnvGen.kr(Env.perc(0,4), 1.0, doneAction: Done.freeSelf),
+                freq.reciprocal,
+                freq.reciprocal,
+                10,
+                coef:0.1)
+        );
+    }).add;
 
 
-            w = Window.new("Hold arrow keys to trigger sound",
-                Rect(300, Window.screenBounds.height - 300, 400, 100)).front;
-            a = Slider(w, Rect(50, 20, 300, 40)).value_(0.5).step_(0.05).focus
-            .action_({
-                // trigger a synth with varying frequencies
-                Synth(\pluck, [\freq, 55 + (1100 * a.value)]);
-                w.view.background_(Gradient(Color.rand,Color.rand));
-            })
-        });
-
-    )</textarea>
+    w = Window.new("Hold arrow keys to trigger sound",
+        Rect(300, Window.screenBounds.height - 300, 400, 100)).front;
+    a = Slider(w, Rect(50, 20, 300, 40)).value_(0.5).step_(0.05).focus
+    .action_({
+        // trigger a synth with varying frequencies
+        Synth(\pluck, [\freq, 55 + (1100 * a.value)]);
+        w.view.background_(Gradient(Color.rand,Color.rand));
+    })
+});
+)</textarea>
 <h3><a class='anchor' name='Change%20background%20color%20of%20Window'>Change background color of Window</a></h3>
 <textarea class='editor'>(
 w = Window("RGB fader", Rect(100, 500, 400, 400))

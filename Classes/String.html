@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>String | SuperCollider 3.11.2 Help</title>
+<!doctype html><html lang='en'><head><title>String | SuperCollider 3.12.1 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'String';
-var scdoc_sc_version = '3.11.2';
+var scdoc_sc_version = '3.12.1';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -46,7 +46,8 @@ var scdoc_sc_version = '3.11.2';
 <li class='toc3'><a href='#->='>&gt;=</a> </li>
 <li class='toc3'><a href='#-=='>==</a> </li>
 <li class='toc3'><a href='#-!='>!=</a> </li>
-</ul><li class='toc2'><a href='#Posting%20strings'>Posting strings</a></li>
+</ul><li class='toc2'><a href='#Fuzzy%20string%20comparison'>Fuzzy string comparison</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Posting%20strings'>Posting strings</a></li>
 <ul class='toc'><li class='toc3'><a href='#-post'>post</a> </li>
 <li class='toc3'><a href='#-postln'>postln</a> </li>
 <li class='toc3'><a href='#-postc'>postc</a>  <a href='#-postcln'>postcln</a> </li>
@@ -484,7 +485,14 @@ b.collect(_.asHexString(2)) // [ F0, 9F, 98, 82 ]</textarea>
 <div class='method'>
 <p>Returns a <a href="./../Classes/Boolean.html">Boolean</a> whether the two Strings are not equal.<textarea class='editor'>"same" != "same"; // false
 "same" != "Same";</textarea>
-</div><h3><a class='anchor' name='Posting%20strings'>Posting strings</a></h3>
+</div><h3><a class='anchor' name='Fuzzy%20string%20comparison'>Fuzzy string comparison</a></h3>
+
+<p>With fuzzy comparison, the strings don't need to match exactly - we can work out how similar they are, and make decisions based on that. This behaviour is inherited from the <a href="./../Classes/SequenceableCollection.html#-editDistance">SequenceableCollection: -editDistance</a>, and is documented fully there, but to provide an example:<textarea class='editor'>"hello".editDistance("hallo"); // 1 (substitution)
+"hello".editDistance("hell"); // 1 (deletion)
+"hello".editDistance("helloo"); // 1 (addition)
+"hello".editDistance("hllo"); // 1 (removal)
+"hello".editDistance("haldo"); // 2 (substitutions)</textarea>
+<h3><a class='anchor' name='Posting%20strings'>Posting strings</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-post' href='./../Overviews/Methods.html#post'>post</a></h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/postlog/SystemOverwrites/extPost.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/postlog/SystemOverwrites/extPost.sc</a></div>
 <div class='method'>
@@ -800,19 +808,20 @@ Post &lt;&lt;&lt; "Store this on Post";</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-unixCmdGetStdOut' href='./../Overviews/Methods.html#unixCmdGetStdOut'>unixCmdGetStdOut</a>(<span class='argstr'>maxLineLength: 1024</span>)</h3>
 <div class='method'>
 <p>Similar to <a href="#-unixCmd">-unixCmd</a> except that the stdout of the process is returned (<strong>synchronously</strong>) rather than sent to the post window.<textarea class='editor'>~listing = "ls Help".unixCmdGetStdOut; // Grab
-~listing.reverse.as(Array).stutter.join.postln; // Mangle</textarea>
+~listing.reverse.as(Array).dupEach.join.postln; // Mangle</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-systemCmd' href='./../Overviews/Methods.html#systemCmd'>systemCmd</a></h3>
 <div class='method'>
 <p>Executes a UNIX command <strong>synchronously</strong> using the standard shell (sh).<h4>Returns:</h4>
 <div class='returnvalue'>
-<p>Error code of the UNIX command</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-runInTerminal' href='./../Overviews/Methods.html#runInTerminal'>runInTerminal</a>(<span class='argstr'>shell: "sh"</span>)</h3>
+<p>Error code of the UNIX command</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-runInTerminal' href='./../Overviews/Methods.html#runInTerminal'>runInTerminal</a>(<span class='argstr'>shell: "/bin/sh"</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/linux/extString_linux.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/linux/extString_linux.sc</a></div>
 <div class='method'>
 <p>Execute the String in a new terminal window (<strong>asynchronously</strong>).<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>shell<td class='argumentdesc'>
 <p>The shell used to execute the string.</table><h4>Discussion:</h4>
-<div class='note'><span class='notelabel'>NOTE:</span> On macOS, the string is incorporated into a temporary script file and executed using the shell.</div>
+<div class='note'><span class='notelabel'>NOTE:</span> On macOS and Linux, the string is incorporated into a temporary script file and executed using the shell.</div>
+<p><div class='note'><span class='notelabel'>NOTE:</span> On Linux, it is possible to choose a specific terminal emulator to be used, otherwise sclang tries to find one by itself. See <a href="./../Classes/LinuxPlatform.html#*runInTerminalCmd">LinuxPlatform: *runInTerminalCmd</a>.</div>
 <p>Example:<textarea class='editor'>"echo ---------Hello delightful SuperCollider user----------".runInTerminal;</textarea>
 </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setenv' href='./../Overviews/Methods.html#setenv'>setenv</a>(<span class='argstr'>value</span>)</h3>
 <div class='method'>

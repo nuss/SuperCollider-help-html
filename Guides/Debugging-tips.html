@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Debugging tips | SuperCollider 3.11.2 Help</title>
+<!doctype html><html lang='en'><head><title>Debugging tips | SuperCollider 3.12.1 Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,7 +12,7 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Debugging tips';
-var scdoc_sc_version = '3.11.2';
+var scdoc_sc_version = '3.12.1';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
@@ -316,7 +316,7 @@ CALL STACK:
 <p>To see the results of a pattern, use the .trace method. Each output value from the pattern gets posted to the main output.<textarea class='editor'>s.boot;
 SynthDescLib.global.read;
 
-p = Pbind(\degree, Pwalk((0..14), Pstutter(Pwhite(1, 4, inf), Prand(#[-2, -1, 1, 2], inf)), Pseq(#[-1, 1], inf), 0), \delta, 0.25, \sustain, 0.2, \instrument, \default).trace.play;
+p = Pbind(\degree, Pwalk((0..14), Pdup(Pwhite(1, 4, inf), Prand(#[-2, -1, 1, 2], inf)), Pseq(#[-1, 1], inf), 0), \delta, 0.25, \sustain, 0.2, \instrument, \default).trace.play;
 
 p.stop;</textarea>
 <h3><a class='anchor' name='Debugging%20infinite%20loops%20or%20recursion'>Debugging infinite loops or recursion</a></h3>
