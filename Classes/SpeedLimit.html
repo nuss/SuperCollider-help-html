@@ -23,105 +23,96 @@ var scdoc_sc_version = '3.12.1';
 <div id='toctitle'>SpeedLimit:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
-<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
-</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
-<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-action'>action</a> </li>
-<li class='toc3'><a href='#-delta'>delta</a> </li>
 <li class='toc3'><a href='#-dt'>dt</a> </li>
 <li class='toc3'><a href='#-filterValue'>filterValue</a> </li>
-<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-now'>now</a> </li>
 <li class='toc3'><a href='#-lastTime'>lastTime</a> </li>
 <li class='toc3'><a href='#-latestArgs'>latestArgs</a> </li>
-<li class='toc3'><a href='#-now'>now</a> </li>
 <li class='toc3'><a href='#-scheduled'>scheduled</a> </li>
-</ul></ul><li class='toc1'><a href='#Help%20template'>Help template</a></li>
+<li class='toc3'><a href='#-delta'>delta</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
- | <span id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></span>
+ | <span id='categories'><a href='./../Browse.html#Control'>Control</a></span>
 </div><h1>SpeedLimit<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
 <div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>limit speed of incomming control messages</div>
 </div>
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/SpeedLimit.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/SpeedLimit.sc'>SpeedLimit.sc</a></div></div>
 <h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
-<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<p>Some control sources run at very fast rates, which may cause too much CPU load by running triggered functions too often. SpeedLimit limits these by keeping a minimum time between updates, while making sure slower messages are executed immediately.
+<p>First code examples:<textarea class='editor'>// make a SpeedLimit class with an action and a minimum waittime:
+// its
+// and time and args for actually evaluated calls;
+// should always do very last message too.
+(
+a = SpeedLimit(
+    // the action: post triggered time since last action,
+    // and the args coming into the function - here, a message countup/down
+    { |...args|
+        ("*** doit: " + [ (Main.elapsedTime - a.lastTime).round(0.001), args ]).postln
+    },
+    // dt, the minimum time to wait before retriggering
+    0.1
+);
+)
+// run test: messages speed up from 0.2 ... 0.01
+// messages thin out as they get faster,
+// and the last message always happens
+(
+fork {
+    (5..100).do { |n|
+        var dt = (1 / n).round(0.001);
+        //
+        "    send: %, %\n".postf(n, dt);
+        // this calls action with triggers filtered by speedlimit:
+        a.filterValue(n);
+        dt.wait;
+    }
+};
+)</textarea>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>SpeedLimit.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>action</span>, <span class='argstr'>dt: 0.1</span>)</h3>
-<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<div class='method'>
+<p>make a new speedlimit<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>the action to run when triggered<tr><td class='argumentname'>dt<td class='argumentdesc'>
+<p>the minimum time to wait before re-triggering</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-action' href='./../Overviews/Methods.html#action'>action</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-action' href='./../Overviews/Methods.html#action'>action</a> = value</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-delta' href='./../Overviews/Methods.html#delta'>delta</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dt' href='./../Overviews/Methods.html#dt'>dt</a></h3>
+<div class='method'>
+<p>the action to run when triggered</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dt' href='./../Overviews/Methods.html#dt'>dt</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dt' href='./../Overviews/Methods.html#dt'>dt</a> = value</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-filterValue' href='./../Overviews/Methods.html#filterValue'>filterValue</a>( <span class='argstr'>... args</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-init' href='./../Overviews/Methods.html#init'>init</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lastTime' href='./../Overviews/Methods.html#lastTime'>lastTime</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-latestArgs' href='./../Overviews/Methods.html#latestArgs'>latestArgs</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-now' href='./../Overviews/Methods.html#now'>now</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scheduled' href='./../Overviews/Methods.html#scheduled'>scheduled</a></h3>
-<h2><a class='anchor' name='Help%20template'>Help template</a></h2>
+<div class='method'>
+<p>the minimum time to wait before re-triggering</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-filterValue' href='./../Overviews/Methods.html#filterValue'>filterValue</a>( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>Trigger speedLimit action, if limiting permits. this is used in place of triggeredFunction.value(*args);<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... args<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-now' href='./../Overviews/Methods.html#now'>now</a></h3>
+<div class='method'>
+<p>last time a trigger, i.e. a call to filterValue came in a.now //</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lastTime' href='./../Overviews/Methods.html#lastTime'>lastTime</a></h3>
+<div class='method'>
+<p>last time the action ran</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-latestArgs' href='./../Overviews/Methods.html#latestArgs'>latestArgs</a></h3>
+<div class='method'>
+<p>the list of latest arguments received</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scheduled' href='./../Overviews/Methods.html#scheduled'>scheduled</a></h3>
+<div class='method'>
+<p>flag whether there is currently a scheduled next trigger</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-delta' href='./../Overviews/Methods.html#delta'>delta</a></h3>
+<div class='method'>
+<p>difference between lastTime and incoming now</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>_some_example_code_</textarea>
 
-<p>Copy and paste the text below and save to HelpSource/Classes/SpeedLimit.schelp<textarea class='editor'>TITLE:: SpeedLimit
-summary:: _short_description_here_
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff
-
-DESCRIPTION::
-_put_long_description_here_
-
-
-First code examples: 
-
-code::
-_some_example_code_
-::
-
-CLASSMETHODS::
-
-METHOD:: new
-argument:: action
-argument:: dt
-
-
-INSTANCEMETHODS::
-
-METHOD:: now
-
-METHOD:: scheduled
-
-METHOD:: latestArgs
-
-METHOD:: init
-
-METHOD:: filterValue
-argument::  ... args
-
-METHOD:: action
-
-METHOD:: lastTime
-
-METHOD:: delta
-
-METHOD:: dt
-
-
-EXAMPLES::
-
-code::
-_some_example_code_
-::
-</textarea>
-<div class='doclink'>link::Classes/SpeedLimit::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/SpeedLimit.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/SpeedLimit.schelp</a><br>link::Classes/SpeedLimit::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
 </body></html>

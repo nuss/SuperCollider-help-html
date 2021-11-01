@@ -115,7 +115,8 @@ var scdoc_sc_version = '3.12.1';
 </ul><li class='toc3'><a href='#-setControls'>setControls</a> </li>
 <li class='toc2'><a href='#Extensions%20by%20CVCenter'>Extensions by CVCenter</a></li>
 <ul class='toc'><li class='toc3'><a href='#-cvcGui'>cvcGui</a> </li>
-</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc3'><a href='#-seti'>seti</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-addChild'>addChild</a> </li>
 <li class='toc3'><a href='#-addDoAfter'>addDoAfter</a> </li>
@@ -196,7 +197,6 @@ var scdoc_sc_version = '3.12.1';
 <li class='toc3'><a href='#-setBus'>setBus</a> </li>
 <li class='toc3'><a href='#-setGroup'>setGroup</a> </li>
 <li class='toc3'><a href='#-setNodeMap'>setNodeMap</a> </li>
-<li class='toc3'><a href='#-seti'>seti</a> </li>
 <li class='toc3'><a href='#-shouldAddObject'>shouldAddObject</a> </li>
 <li class='toc3'><a href='#-softSet'>softSet</a> </li>
 <li class='toc3'><a href='#-softVol'>softVol</a> </li>
@@ -292,7 +292,7 @@ a.numChannels; // nil.</textarea>
 <p>The overlap time between successive source replacements which all instances have by default. Each instance has its own value which can be set via <code>fadeTime_</code>.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>NodeProxy.</span><a class='method-name' name='*test_seti' href='./../Overviews/Methods.html#test_seti'>test_seti</a></h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/NodeProxy_Extensions/extNodeProxy.sc'>/home/stefan/.local/share/SuperCollider/Extensions/NodeProxy_Extensions/extNodeProxy.sc</a></div>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/NodeProxy_Extensions_SN/extNodeProxy.sc'>/home/stefan/.local/share/SuperCollider/Extensions/NodeProxy_Extensions_SN/extNodeProxy.sc</a></div>
 <h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
 <h3><a class='anchor' name='Listening%20to%20the%20output'>Listening to the output</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-play' href='./../Overviews/Methods.html#play'>play</a>(<span class='argstr'>out</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>group</span>, <span class='argstr'>multi: false</span>, <span class='argstr'>vol</span>, <span class='argstr'>fadeTime</span>, <span class='argstr'>addAction</span>)</h3>
@@ -686,7 +686,55 @@ p.source = { arg f=400, c = 400; PMOsc.ar(f , c, 4, 0, 0.1) };
 <p><code>(widgetName1: #[controlName1_lo, controlName1_hi], widgetName2: #[controlName2_lo, controlName2_hi], … widgetNameN: #[controlNameN_lo, controlNameN_hi])</code>
 <p>Defining pairs2D is <strong>only</strong> necessary if 1-dimensional controls shall be combined in a CVWidget2D - 2-dimensional controls will automatically result in a CVWidget2D.</table><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>this (a <a href="./../Classes/NodeProxy.html">NodeProxy</a>, an <a href="./../Classes/Ndef.html">Ndef</a> or a <a href="./../Classes/ProxySpace.html">ProxySpace</a>-slot)</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<p>this (a <a href="./../Classes/NodeProxy.html">NodeProxy</a>, an <a href="./../Classes/Ndef.html">Ndef</a> or a <a href="./../Classes/ProxySpace.html">ProxySpace</a>-slot)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-seti' href='./../Overviews/Methods.html#seti'>seti</a>( <span class='argstr'>... args</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/NodeProxy_Extensions_SN/extNodeProxy.sc'>/home/stefan/.local/share/SuperCollider/Extensions/NodeProxy_Extensions_SN/extNodeProxy.sc</a></div>
+<div class='method'>
+<p>Set part of an arrayed control, analog to <a href="./../Classes/Synth.html#-seti">Synth: -seti</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... args<td class='argumentdesc'>
+<p>A sequence of <strong>name, index, value</strong> triplets.<dl>
+<dt>name<dd>The name of the arrayed control<dt>index<dd>The index into the array<dt>value<dd>The new value to set, can be an array to set a range of elements.</dl>
+</table><h4>Discussion:</h4>
+<textarea class='editor'>// 5 channel NodeProxy, for convenience initialized in an Ndef
+(
+Ndef(\sin).mold(5, \audio, \elastic);
+Ndef(\sin)[0] = {
+    SinOsc.ar(
+        \freq.kr([200, 201, 202, 204, 205]),
+        SinOsc.kr(\phase.kr([0, 0, 0, 0, 0])).range(0, 2pi)
+    )
+}
+)
+
+// out mixer: mix down to 2 channels and spread channels across panorama
+(
+Ndef(\out).mold(2, \audio, \elastic);
+Ndef(\out)[0] = {
+    // 5 channel input
+    Splay.ar(\in.ar(0!5), level: \amp.kr(0.3))
+}
+)
+
+// route Ndef(\sin) through Ndef(\out)
+(
+Ndef(\out) &lt;&lt;&gt; Ndef(\sin);
+Ndef(\out).play;
+)
+
+// change frequency and phase in 4th channel
+Ndef(\sin).seti(\freq, 3, 137, \phase, 1, 11)
+
+// 1st channel 310hz, 3rd 207hz
+Ndef(\sin).seti(\freq, [0, 2], [310, 207])
+
+// exceeding indices, argument arrays of different length
+// 34 % 5 =&gt; 4, 12 % 5 =&gt; 2, 56 % 5 =&gt; 1
+Ndef(\sin).seti(\freq, [34, 12, 56], [376, 199])
+Ndef(\sin).getKeysValues // -&gt; [ [ freq, [ 310, 376, 199, 137, 376 ] ] ]
+
+Ndef.clear(10)</textarea>
+
+<p></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addChild' href='./../Overviews/Methods.html#addChild'>addChild</a>(<span class='argstr'>proxy</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addDoAfter' href='./../Overviews/Methods.html#addDoAfter'>addDoAfter</a>(<span class='argstr'>func</span>)</h3>
@@ -799,8 +847,6 @@ p.source = { arg f=400, c = 400; PMOsc.ar(f , c, 4, 0, 0.1) };
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setBus' href='./../Overviews/Methods.html#setBus'>setBus</a>(<span class='argstr'>argBus</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setGroup' href='./../Overviews/Methods.html#setGroup'>setGroup</a>(<span class='argstr'>args</span>, <span class='argstr'>useLatency: false</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setNodeMap' href='./../Overviews/Methods.html#setNodeMap'>setNodeMap</a>(<span class='argstr'>map</span>, <span class='argstr'>xfade: true</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-seti' href='./../Overviews/Methods.html#seti'>seti</a>( <span class='argstr'>... args</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/NodeProxy_Extensions/extNodeProxy.sc'>/home/stefan/.local/share/SuperCollider/Extensions/NodeProxy_Extensions/extNodeProxy.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-shouldAddObject' href='./../Overviews/Methods.html#shouldAddObject'>shouldAddObject</a>(<span class='argstr'>obj</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-softSet' href='./../Overviews/Methods.html#softSet'>softSet</a>(<span class='argstr'>param</span>, <span class='argstr'>val</span>, <span class='argstr'>within: 0.025</span>, <span class='argstr'>mapped: true</span>, <span class='argstr'>lastVal</span>, <span class='argstr'>spec</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/JITLib/GUI/extSoftSet.sc'>/usr/local/share/SuperCollider/SCClassLibrary/JITLib/GUI/extSoftSet.sc</a></div>
