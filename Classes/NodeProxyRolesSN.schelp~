@@ -1,0 +1,72 @@
+TITLE:: NodeProxyRolesSN
+summary:: A utility class for NodeProxy, defining additional NodeProxy roles
+categories:: NodeProxy, NodeProxy roles
+related:: Classes/NodeProxy, Reference/NodeProxy_roles
+
+DESCRIPTION::
+NodeProxyRolesSN simply provides additional link::Reference/NodeProxy_roles::. As such it provides no methods as user interface. Only link::Classes/Class#*initClass#*initClass:: is implemented which initializes the strong::NodeProxy roles::.
+
+SECTION:: NodeProxy roles
+
+DEFINITIONLIST::
+
+## \setm -> event pattern
+|| This role is different in so far as it can operate on nodes produced by a pattern (playing in a link::Classes/PatternPlayer::) as if they where constantly running synths. I.e. their controls are set like in a link::Classes/Pmono:: for as long as the node is living. Running pattern's and the role's own timing are independently defined by whatever is in the Pdef on the one hand and the code::\setm::'s associated Pbind on the other.
+NOTE::A similar thing may be achieved by providing a link::Classes/Group:: to each link::Classes/Pbind:: in the link::Classes/Pdef::. This way controls within each grain produced within a Pbind can be set like one can set a specific control within a continously playing link::Classes/Synth::.
+::
+
+code::
+// mono SynthDef with a gate
+(
+SynthDef(\simple, {
+	var env = EnvGen.kr(Env.asr, \gate.kr(1), doneAction: Done.freeSelf),
+	sin = SinOsc.ar(\freq.kr(111)),
+	saw = Saw.ar(\sawfreq.kr(110));
+	Out.ar(\out.kr(0), SelectX.ar(\which.kr, [sin, saw]) * env * \amp.kr(0.5));
+}).add;
+)
+
+// a five channel Pdef
+(
+Pdef(\simple,
+	Ppar({ |i|
+		Pbind(
+			\instrument, \simple,
+			\freq, Pseq(#[67, 43, 60, 62, 71].midicps, inf),
+			\dur, Prand(#[1, 2, 3, 7], inf),
+			\channelOffset, i
+		)
+	} ! 5)
+)
+)
+
+(
+// five channel Ndef, holding the Pdef
+Ndef(\simple).mold(5, \audio, \elastic);
+Ndef(\simple)[0] = Pdef(\simple);
+
+// spread over stereo panorama
+Ndef(\out, { Splay.ar(\in.ar(0!5)) });
+Ndef(\out) <<> Ndef(\simple);
+Ndef(\out).play
+)
+
+// NodeProxy role, applied to each channel
+(
+5.do { |i|
+	Ndef(\simple)[i+1] = \setm -> Pbind(
+		\freq, Pwhite(100.0, 500.0),
+		\sawfreq, Prand([67, 43, 60, 62, 71].midicps, inf),
+		\which, Pwhite(0.3, 1.0),
+		\dur, Prand(#[3, 0.2, 0.01, 5.0, 0.7], inf),<
+		\channelOffset, i
+	)
+}
+)
+
+// take out NodeProxy role
+5.do { |i| Ndef(\simple)[i+1] = nil };
+::
+::
+
+PRIVATE:: *initClass
