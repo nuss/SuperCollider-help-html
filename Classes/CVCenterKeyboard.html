@@ -251,15 +251,17 @@ Spec.add(\width, #[0.01, 0.99]);
 <p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-freeHangingNodes' href='./../Overviews/Methods.html#freeHangingNodes'>freeHangingNodes</a></h3>
 <div class='method'>
 <p>On a CVCenterKeyboard every keystroke generates a new synth node. Sometimes these may hang, meaning they don't stop playing when the finger is lifted from the key. This method frees all currently playing nodes. You may go on playing the keyboard afterwards.</div><h3><a class='anchor' name='Building%20a%20Filter%20Chain'>Building a Filter Chain</a></h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addOutProxy' href='./../Overviews/Methods.html#addOutProxy'>addOutProxy</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>numChannels: 2</span>, <span class='argstr'>useNdef: false</span>, <span class='argstr'>outbus</span>, <span class='argstr'>play: true</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addOutProxy' href='./../Overviews/Methods.html#addOutProxy'>addOutProxy</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>numChannels: 2</span>, <span class='argstr'>useNdef: false</span>, <span class='argstr'>transbus</span>, <span class='argstr'>outbus</span>, <span class='argstr'>play: true</span>)</h3>
 <div class='method'>
 <p>The method creates a <a href="./../Classes/NodeProxy.html">NodeProxy</a> or optionally an <a href="./../Classes/Ndef.html">Ndef</a> and routes the keyboard's output through it. This means one can easily add filters (e.g. through a <a href="./../Reference/NodeProxy_roles.html">NodeProxy role</a>) and do other kinds of NodeProxy trickery. If <code>useNdef</code> is set to <code>true</code> the resulting Ndef will also appear in an <a href="./../Classes/NdefMixer.html">NdefMixer</a>.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>synthDefName<td class='argumentdesc'>
 <p>a <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a>, denoting a SynthDef, optional - if not given the SynthDef name that is returned by <a href="#-currentSynthDef">-currentSynthDef</a> will be used. This is important in so far as the method needs to know the name of the out argument in the SynthDef.<tr><td class='argumentname'>numChannels<td class='argumentdesc'>
 <p>an <a href="./../Classes/Integer.html">Integer</a>, denoting the number of output channels<tr><td class='argumentname'>useNdef<td class='argumentdesc'>
-<p>if set to <code>true</code> the resulting proxy will be an Ndef rather than a NodeProxy<tr><td class='argumentname'>outbus<td class='argumentdesc'>
-<p>the output bus to which the proxy should play. If omitted the out bus of the SynthDef is assumed</table><h4>Returns:</h4>
+<p>if set to <code>true</code> the resulting proxy will be an Ndef rather than a NodeProxy<tr><td class='argumentname'>transbus<td class='argumentdesc'>
+<p>if set, the output of the current keyboard Synth will be sent to this bus and filters within the subsequent filter chain (the <a href="#-outProxy">-outProxy</a>) will read their input from this bus. This should avoid that any other sound being played on the bus are effected by the filter chain.<tr><td class='argumentname'>outbus<td class='argumentdesc'>
+<p>the output bus to which the proxy should play. If omitted the out bus of the SynthDef is assumed<tr><td class='argumentname'>play<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a> denoting whether <a href="#-outProxy">-outProxy</a> should be playing immediatley. Default: <code>true</code></table><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>a CVCenterKeyboard</div><h4>Discussion:</h4>
 <textarea class='editor'>~kb.addOutProxy(useNdef: true);
@@ -291,12 +293,13 @@ NdefMixer.new;</textarea>
 <p>a CVCenterKeyboard</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-outProxy' href='./../Overviews/Methods.html#outProxy'>outProxy</a></h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>a <a href="./../Classes/NodeProxy.html">NodeProxy</a> or an <a href="./../Classes/Ndef.html">Ndef</a> or <code>nil</code> if not output proxy exists</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mapBus' href='./../Overviews/Methods.html#mapBus'>mapBus</a>(<span class='argstr'>ctrlname</span>, <span class='argstr'>bus</span>)</h3>
+<p>a <a href="./../Classes/NodeProxy.html">NodeProxy</a> or an <a href="./../Classes/Ndef.html">Ndef</a> or <code>nil</code> if no output proxy exists</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mapBus' href='./../Overviews/Methods.html#mapBus'>mapBus</a>(<span class='argstr'>ctrlname</span>, <span class='argstr'>bus</span>)</h3>
 <div class='method'>
-<p>Take an audio bus and map it some control within the playing keyboard Synths.<h4>Arguments:</h4>
+<p>Take an audio bus and map it to some control within the playing keyboard Synths.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>ctrlname<td class='argumentdesc'>
-<p>a control within one or more SynthDefs used within the keyboard, to be given as <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a>. argument: bus a <a href="./../Classes/Bus.html">Bus</a> setting the control denoted by the <code>ctrlname</code> argument</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mappedBusses' href='./../Overviews/Methods.html#mappedBusses'>mappedBusses</a></h3>
+<p>a control within one or more SynthDefs used within the keyboard, to be given as <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a>.<tr><td class='argumentname'>bus<td class='argumentdesc'>
+<p>a <a href="./../Classes/Bus.html">Bus</a> setting the control denoted by the <code>ctrlname</code> argument</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mappedBusses' href='./../Overviews/Methods.html#mappedBusses'>mappedBusses</a></h3>
 <div class='method'>
 <p>Returns an <a href="./../Classes/Event.html">Event</a> holding representations of all Busses under their given control name. A bus representation holds an array of <a href="./../Classes/Bus.html#-subBus">subBusses</a> <a href="./../Classes/Bus.html#-asMap">converted to mapping symbols</a>:
 <p><code>numBusses.collect{ |i| bus.subBus(i).asMap }</code>
