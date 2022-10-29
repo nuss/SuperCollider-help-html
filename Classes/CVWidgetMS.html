@@ -23,56 +23,141 @@ var scdoc_sc_version = '3.12.2';
 <div id='toctitle'>CVWidgetMS:</div>
 <span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 </ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
-<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
-</ul><li class='toc1'><a href='#Help%20template'>Help template</a></li>
+<ul class='toc'><li class='toc3'><a href='#-split'>split</a> </li>
+<li class='toc3'><a href='#-size'>size</a> </li>
+<li class='toc3'><a href='#-cvArray'>cvArray</a> </li>
+<li class='toc3'><a href='#-open'>open</a> </li>
+<li class='toc2'><a href='#GUI-elements'>GUI-elements</a></li>
+<ul class='toc'><li class='toc3'><a href='#-mSlider'>mSlider</a> </li>
+<li class='toc3'><a href='#-numVal'>numVal</a> </li>
+<li class='toc3'><a href='#-midiBut'>midiBut</a> </li>
+<li class='toc3'><a href='#-oscBut'>oscBut</a> </li>
+<li class='toc3'><a href='#-specBut'>specBut</a> </li>
+<li class='toc3'><a href='#-actionsBut'>actionsBut</a> </li>
+<li class='toc3'><a href='#-calibViews'>calibViews</a> </li>
+<li class='toc3'><a href='#-background'>background</a> </li>
+<li class='toc3'><a href='#-stringColor'>stringColor</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-unsplit'>unsplit</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
 <ul class='toc'></ul></ul></div><div id='menubar'></div>
 <div class='contents'>
 <div class='header'>
 <div id='label'>
 <span id='folder'>Classes (extension)</span>
- | <span id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></span>
+ | <span id='categories'><a href='./../Browse.html#GUI'>GUI</a> | <a href='./../Browse.html#Conductor'>Conductor</a> | <a href='./../Browse.html#External Control'>External Control</a>&#8201;&gt;&#8201;<a href='./../Browse.html#External Control>MIDI'>MIDI</a> | <a href='./../Browse.html#External Control'>External Control</a>&#8201;&gt;&#8201;<a href='./../Browse.html#External Control>OSC'>OSC</a></span>
 </div><h1>CVWidgetMS<span id='superclasses'> : <a href="../Classes/CVWidget.html">CVWidget</a> : <a href="../Classes/Object.html">Object</a></span>
 <div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
-<div id='summary'>(Undocumented class)</div>
+<div id='summary'>a control-widget that can either be embedded in other views or opened as a standalone-widget, offering easy connections with external MIDI-/OSC-hard- and software.</div>
 </div>
 <div class='subheader'>
-<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter2/widgets/CVWidgetMS.sc' title='/home/stefan/.local/share/SuperCollider/Extensions/CVCenter2/widgets/CVWidgetMS.sc'>CVWidgetMS.sc</a></div></div>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/CVWidgetMS.sc' title='/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/CVWidgetMS.sc'>CVWidgetMS.sc</a></div><div id='related'>See also: <a href="./../Classes/CVCenter.html">CVCenter</a>, <a href="./../Classes/CV.html">CV</a>, <a href="./../Classes/CVWidget.html">CVWidget</a>, <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a>, <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>, <a href="./../Classes/CV.html">CV</a>, <a href="./../Classes/CCResponder.html">CCResponder</a>, <a href="./../Classes/OSCresponderNode.html">OSCresponderNode</a></div>
+</div>
 <h2><a class='anchor' name='description'>Description</a></h2>
 
-<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
-<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>A CVWidgetMS is widget that can be used to set e.g. <em>arrayed</em> controls in running <a href="./../Classes/Synth.html">Synth</a>s, <a href="./../Classes/Ndef.html">Ndef</a>s, <a href="./../Classes/ProxySpace.html">ProxySpace</a> slots, <a href="./../Classes/NodeProxy.html">NodeProxy</a>s, <a href="./../Classes/Patch.html">Patch</a>es and other other values that can be set at runtime. Also it may be used in connection with <a href="./../Classes/Pattern.html">Pattern</a>s. Typically it uses a <a href="./../Classes/ControlSpec.html">ControlSpec</a> that has more than one slot for its minval, maxval, default value or step-size.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>CVWidgetMS.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>parent</span>, <span class='argstr'>widgetCV</span>, <span class='argstr'>name</span>, <span class='argstr'>connectMSlider</span>, <span class='argstr'>connectTextField</span>, <span class='argstr'>bounds</span>, <span class='argstr'>defaultAction</span>, <span class='argstr'>setup</span>, <span class='argstr'>controllersAndModels</span>, <span class='argstr'>cvcGui</span>, <span class='argstr'>persistent</span>, <span class='argstr'>numSliders: 5</span>, <span class='argstr'>server</span>)</h3>
+<div class='method'>
+<p>Create a new CVWidgetMS. To display the widget on screen you must call <a href="./../Classes/CVWidget.html#front">front</a> on the resulting object.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>parent<td class='argumentdesc'>
+<p>an instance of <a href="./../Classes/Window.html">Window</a> or <a href="./../Classes/View.html">View</a> - optional. If none is given the it will be created internally.<tr><td class='argumentname'>widgetCV<td class='argumentdesc'>
+<p>an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/CV.html">CV</a>s - optional. If none is given it will be created internally. The array may hold an arbitrary number of <a href="./../Classes/CV.html">CV</a>s.<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a> - optional. If none is given the widget will be named "multislider".<tr><td class='argumentname'>bounds<td class='argumentdesc'>
+<p>a <a href="./../Classes/Rect.html">Rect</a> - optional. If none is given the widget will be created with a default size.<tr><td class='argumentname'>defaultAction<td class='argumentdesc'>
+<p>optional - a <a href="./../Classes/Function.html">Function</a> or a <a href="./../Classes/String.html">String</a> that compiles to one when <a href="./../Classes/String.html#-interpret">interpret</a> is called on it. If an argument is added to the function it will provide the widget's <a href="./../Classes/CV.html">CV</a>. E.g.: <code>{ arg cv; cv.value.postln }</code><tr><td class='argumentname'>setup<td class='argumentdesc'>
+<p>optional - an <a href="./../Classes/Event.html">Event</a> containing the following optional keys:<dl>
+<dt>midiMode<dd>see <a href="./../Classes/CVWidget.html#-setMidiMode">CVWidget: -setMidiMode</a>. default: an <a href="./../Classes/Array.html">Array</a> with a size given in argument <code>numSliders</code>, all slots filled with <code>0</code><dt>midiMean<dd>see <a href="./../Classes/CVWidget.html#-setMidiMean">CVWidget: -setMidiMean</a>. default: an <a href="./../Classes/Array.html">Array</a> with a size given in argument <code>numSliders</code>, all slots filled with <code>64</code><dt>midiResolution<dd>see <a href="./../Classes/CVWidget.html#-setMidiResolution">CVWidget: -setMidiResolution</a>. default: an <a href="./../Classes/Array.html">Array</a> with a size given in argument <code>numSliders</code>, all slots filled with <code>1</code><dt>softWithin<dd>see <a href="./../Classes/CVWidget.html#-setSoftWithin">CVWidget: -setSoftWithin</a>. default: an <a href="./../Classes/Array.html">Array</a> with a size given in argument <code>numSliders</code>, all slots filled with <code>0.1</code><dt>ctrlButtonBank<dd>see <a href="./../Classes/CVWidget.html#-setCtrlButtonBank">CVWidget: -setCtrlButtonBank</a>. default: an <a href="./../Classes/Array.html">Array</a> with a size given in argument <code>numSliders</code>, all slots filled with <code>nil</code><dt>calibrate<dd>see <a href="./../Classes/CVWidget.html#-setCalibrate">CVWidget: -setCalibrate</a>. default: an <a href="./../Classes/Array.html">Array</a> with a size given in argument <code>numSliders</code>, all slots filled with <code>true</code></dl>
+<tr><td class='argumentname'>controllersAndModels<td class='argumentdesc'>
+<p>if a widget wraps a <a href="./../Classes/CV.html">CV</a> that has been created within some CVWidget the models and controllers of that other widget can be added here. However, it is <em>not</em> recommended to do so as there are specific methods that allow you to recreate widgets that have already been closed. See also <a href="./../Classes/CVWidget.html#-wdgtControllersAndModels">CVWidget: -wdgtControllersAndModels</a><tr><td class='argumentname'>cvcGui<td class='argumentdesc'>
+<p>a multi-purpose argument: usually you will not set anything here. It is used with the <a href="#-open">-open</a> method resp. <a href="./../Classes/CVCenter.html">CVCenter</a>. Within these it is used to pass in OSC-/MIDI-responders resp. the widgets MIDI-/OSC-environment. See also <a href="./../Classes/CVWidget.html#-midiOscEnv">CVWidget: -midiOscEnv</a><tr><td class='argumentname'>persistent<td class='argumentdesc'>
+<p>a multi-purpose argument: usually you will not set anything here. It is used with the <a href="#-open">-open</a> method resp. <a href="./../Classes/CVCenter.html">CVCenter</a>. Within these it is used to pass in OSC-/MIDI-responders resp. the widgets MIDI-/OSC-environment. See also <a href="./../Classes/CVWidget.html#-midiOscEnv">CVWidget: -midiOscEnv</a><tr><td class='argumentname'>numSliders<td class='argumentdesc'>
+<p>an <a href="./../Classes/Integer.html">Integer</a> determining how many sliders the <a href="./../Classes/MultiSliderView.html">MultiSliderView</a> shall have<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>only used for <a href="./../Classes/SwingOSC">SwingOSC</a> compatability (untested)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this (a <code>CVWidgetMS</code>)</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
-<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><h2><a class='anchor' name='Help%20template'>Help template</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-split' href='./../Overviews/Methods.html#split'>split</a></h3>
+<div class='method'>
+<p>Split the internal multi-dimensional <a href="./../Classes/CV.html">CV</a> into an array of one-dimensional CVs. This is especially useful for the usage in <a href="./../Classes/Pattern.html">Pattern</a>s. Once a CV has been split, it will return the split CVs in a variable <code>cvArray</code>. Calling the method repeatedly will not try to split the CV again. Hence, it should be safe to call <code>split</code> within Pattern code.<textarea class='editor'>// a CVWidgetMS holding a 5-dimensional CV
+w = CVWidgetMS(nil, CV([20!5, 20000!5, \exp].asSpec, 200!5), "freq", true, true).front;
+// we cannot insert the internal CV in w directly into the Pattern
+// as a Pseq requires an array. Hence, we split the CV into an array of CVs
+s.waitForBoot { p = Pbind(\freq, Pseq(w.split, inf)).play };
+p.stop;
+w.close;</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-size' href='./../Overviews/Methods.html#size'>size</a></h3>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cvArray' href='./../Overviews/Methods.html#cvArray'>cvArray</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/CVWidget.html'>CVWidget</a></div>
+<div class='method'>
+<p><a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> only.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/CV.html">CV</a>s after applying the method <a href="./../Classes/CVWidgetMS.html#-split">split</a> on a given CVWidgetMS.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-open' href='./../Overviews/Methods.html#open'>open</a>(<span class='argstr'>window</span>, <span class='argstr'>wdgtBounds</span>)</h3>
+<div class='method'>
+<p>If a widget has been created with the argument <code>persistent</code> set to true the user may reopen the widget with this method. This is basically a workaround due to the fact that GUIs in SuperCollider usually can't be opened again once they have been closed (even though executing the variable storing the the regarding object still returns the object). However, rather than reopening the old widget this method will create a new one, holding all properties, the CV and MIDI-/OSC-responders. In order to make this work as desired one should apply the following syntax where <code>x</code> holds the instance of the initially created widget:
+<p><code>x = x.open // the old widget was stored in x which will afterwards hold the new widget</code>
+<p>See example in <a href="./../Classes/CVWidget.html#reusable_widgets">CVWidget: reusable_widgets</a><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>window<td class='argumentdesc'>
+<p>a <a href="./../Classes/Window.html">Window</a> or <code>nil</code> - if none is provided the window will be created internally<tr><td class='argumentname'>wdgtBounds<td class='argumentdesc'>
+<p>a <a href="./../Classes/Rect.html">Rect</a> or <code>nil</code> - if none is provided the bounds of the old widget will be used.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <code>CVWidgetMS</code></div></div><h3><a class='anchor' name='GUI-elements'>GUI-elements</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mSlider' href='./../Overviews/Methods.html#mSlider'>mSlider</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/MultiSliderView.html">MultiSliderView</a>, displaying or setting the current value of the widget's <a href="./../Classes/CV.html">CV</a>.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/MultiSliderView.html">MultiSliderView</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numVal' href='./../Overviews/Methods.html#numVal'>numVal</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/TextView.html">TextView</a>, displaying or setting the current value of the widget's <a href="./../Classes/CV.html">CV</a> as an <a href="./../Classes/Array.html">Array</a> of numbers (truncated to 2 decimal places).<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/TextView.html">TextView</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiBut' href='./../Overviews/Methods.html#midiBut'>midiBut</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/Button.html">Button</a> that opens the MIDI-tab of the widget's <a href="./../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a> (also executed by <a href="./../Classes/CVWidget.html#Shortcuts">shortcut</a> 'm')<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Button.html">Button</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-oscBut' href='./../Overviews/Methods.html#oscBut'>oscBut</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/Button.html">Button</a> that opens the OSC-tab of the widget's <a href="./../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a> (also executed by <a href="./../Classes/CVWidget.html#Shortcuts">shortcut</a> 'o')<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Button.html">Button</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-specBut' href='./../Overviews/Methods.html#specBut'>specBut</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/Button.html">Button</a> that opens the Spec-tab of the widget's <a href="./../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a> (also executed by <a href="./../Classes/CVWidget.html#Shortcuts">shortcut</a> 's')<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Button.html">Button</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-actionsBut' href='./../Overviews/Methods.html#actionsBut'>actionsBut</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/Button.html">Button</a> that opens the Actions-tab of the widget's <a href="./../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a> (also executed by <a href="./../Classes/CVWidget.html#Shortcuts">shortcut</a> 'a')<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Button.html">Button</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-calibViews' href='./../Overviews/Methods.html#calibViews'>calibViews</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/List.html">List</a> of <a href="./../Classes/View.html">View</a>s, each displaying the current <a href="./../Classes/CVWidget.html#getCalibration">(OSC) calibration</a>-status of one slider within the multi-slider of the widget: green means calibration is active, red means it's currently off. The views are displayed as a bar beneath the multi-slider of the widget.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/List.html">List</a> of <a href="./../Classes/View.html">View</a>s</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-background' href='./../Overviews/Methods.html#background'>background</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-background' href='./../Overviews/Methods.html#background'>background</a> = <span class='argstr'>color</span></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/CVWidget.html'>CVWidget</a></div>
+<div class='method'>
+<p>Get or set the background-color of the widget. Tne setter for this method is implemented within CVWidgetMS while the getter is implemented as a global getter for all CVWidgets in <a href="./../Classes/CVWidget.html">CVWidget</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>color<td class='argumentdesc'>
+<p>a <a href="./../Classes/Color.html">Color</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Color.html">Color</a> (getter) or <code>this</code> (a <code>CVWidgetMS</code>) (setter)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stringColor' href='./../Overviews/Methods.html#stringColor'>stringColor</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stringColor' href='./../Overviews/Methods.html#stringColor'>stringColor</a> = <span class='argstr'>color</span></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/CVWidget.html'>CVWidget</a></div>
+<div class='method'>
+<p>Get or set the string-color of the widget. Tne setter for this method is implemented within CVWidgetMS while the getter is implemented as a global getter for all CVWidgets in <a href="./../Classes/CVWidget.html">CVWidget</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>color<td class='argumentdesc'>
+<p>a <a href="./../Classes/Color.html">Color</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Color.html">Color</a> (getter) or <code>this</code> (a <code>CVWidgetMS</code>) (setter)</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-unsplit' href='./../Overviews/Methods.html#unsplit'>unsplit</a></h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
 
-<p>Copy and paste the text below and save to HelpSource/Classes/CVWidgetMS.schelp<textarea class='editor'>TITLE:: CVWidgetMS
-summary:: _short_description_here_
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff
-
-DESCRIPTION::
-_put_long_description_here_
-
-
-First code examples: 
-
-code::
-_some_example_code_
-::
-
-CLASSMETHODS::
-
-
-INSTANCEMETHODS::
-
-
-EXAMPLES::
-
-code::
-_some_example_code_
-::
-</textarea>
-<div class='doclink'>link::Classes/CVWidgetMS::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+<p>See examples in <a href="./../Classes/CVWidget.html#examples">CVWidget: examples</a><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/CVWidgetMS.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/CVWidgetMS.schelp</a><br>link::Classes/CVWidgetMS::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
 </body></html>
