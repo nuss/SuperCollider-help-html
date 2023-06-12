@@ -1,0 +1,211 @@
+<!doctype html><html lang='en'><head><title>Smooth Clipping and Folding | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Smooth Clipping and Folding';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Smooth Clipping and Folding:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'><li class='toc2'><a href='#Ex.%201:%20Different%20types%20of%20folding'>Ex. 1: Different types of folding</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%202:%20Generating%20rich%20spectra%20by%20folding%20sine%20waves'>Ex. 2: Generating rich spectra by folding sine waves</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%203:%20Applying%20modulated%20folding%20to%20LFO%20sources'>Ex. 3: Applying modulated folding to LFO sources</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%204:%20Buffer%20scratching%20with%20folded%20signal%20as%20position%20control'>Ex. 4: Buffer scratching with folded signal as position control</a></li>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Tutorials (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>WaveFolding'>WaveFolding</a></span>
+</div><h1>Smooth Clipping and Folding<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>a suite of pseudo ugens for smooth clipping and folding</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Guides/Introduction_to_miSCellaneous.html">Introduction to miSCellaneous</a>, <a href="./../Classes/SmoothClipS.html">SmoothClipS</a>, <a href="./../Classes/SmoothClipQ.html">SmoothClipQ</a>, <a href="./../Classes/SmoothFoldS.html">SmoothFoldS</a>, <a href="./../Classes/SmoothFoldQ.html">SmoothFoldQ</a>, <a href="./../Classes/SmoothFoldS2.html">SmoothFoldS2</a>, <a href="./../Classes/SmoothFoldQ2.html">SmoothFoldQ2</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Wave folding is a synthesis technique from analog days, going back to Donald Buchla and the tradition of west coast synthesis. Smooth clipping and folding pseudo ugens from miSCellaneous lib come in variants which include quadratic and sinusoidal waveshaping and allow clipping and folding without aliasing. This can also be used for buffer scratching, a synthesis technique which I have been experimenting with recently with great fun.<h2><a class='anchor' name='examples'>Examples</a></h2>
+
+<p><a class='anchor' name='Ex.%201'>&nbsp;</a><h3><a class='anchor' name='Ex.%201:%20Different%20types%20of%20folding'>Ex. 1: Different types of folding</a></h3>
+<textarea class='editor'>// A typical usage is preamplifying a signal, here we start with a sine wave, compare plots
+
+{
+    [
+        // just smooth clipping
+        SmoothClipS.ar(SinOsc.ar(50) * 10), 
+        
+        // folding with main lib's Fold ugen
+        Fold.ar(SinOsc.ar(50) * 10, -1, 1), 
+        
+        // folding with rather low smoothing 
+        // wave shaper is partiallly a sine wave
+        SmoothFoldS.ar(SinOsc.ar(50) * 10, smoothAmount: 0.3), 
+        
+        // folding with maximum smoothing 
+        // wave shaper is full sine wave
+        SmoothFoldS.ar(SinOsc.ar(50) * 10, smoothAmount: 1), 
+        
+        // wave is folded back only to border ranges
+        SmoothFoldS.ar(SinOsc.ar(50) * 10, foldRange: 0.3),
+
+        // folding with different sizes of border ranges
+        SmoothFoldS2.ar(SinOsc.ar(50) * 10, foldRangeLo: 0.5, foldRangeHi: 0.2)
+    ]
+}.plot(1/50)</textarea>
+<div class='image'><img src='attachments/Smooth_Clipping_and_Folding/fold_examples.png'/></div>
+
+<p><a class='anchor' name='Ex.%202'>&nbsp;</a><h3><a class='anchor' name='Ex.%202:%20Generating%20rich%20spectra%20by%20folding%20sine%20waves'>Ex. 2: Generating rich spectra by folding sine waves</a></h3>
+<textarea class='editor'>// Folding ugens do multichannel expansion, let two anticyclic sines control the fold range,
+// control smoothing amount with MouseX
+
+(
+x = {
+    var source = SinOsc.ar(50);
+    SmoothFoldS.ar(source, -0.1, 0.1, SinOsc.kr(0.05, [0, pi]).range(0.1, 1), MouseX.kr(0, 1))
+}.scope
+)
+
+x.release
+
+
+// Compare with the parabolic smoothing variant, the difference isn't great in this case
+
+(
+x = {
+    var source = SinOsc.ar(50);
+    SmoothFoldQ.ar(source, -0.1, 0.1, SinOsc.kr(0.05, [0, pi]).range(0.1, 1), MouseX.kr(0, 1))
+}.scope
+)
+
+x.release
+
+
+// slow modulations of source frequency with independant LFOs 
+
+(
+x = {
+    var source = SinOsc.ar(50 * { LFDNoise3.kr(0.1).range(0.98, 1.02) } ! 2);
+    SmoothFoldS.ar(source, -0.1, 0.1, SinOsc.kr(0.05, [0, pi]).range(0.1, 1))
+}.scope
+)
+
+x.release
+
+
+// Adding more complexity by applying preamplification (causes more folding) and adding an offset,
+// these operations are also L/R-independant 
+
+(
+x = {
+    var source = SinOsc.ar(
+        50 * { LFDNoise3.kr(0.1).range(0.98, 1.02) } ! 2,
+        0,
+        { LFDNoise3.kr(0.15).range(0.5, 3) } ! 2,
+        { LFDNoise3.kr(0.2).range(-2, 2) } ! 2
+    );
+    SmoothFoldS.ar(source, -0.1, 0.1, SinOsc.kr(0.05, [0, pi]).range(0.1, 1))
+}.scope
+)
+
+x.release</textarea>
+
+<p><a class='anchor' name='Ex.%203'>&nbsp;</a><h3><a class='anchor' name='Ex.%203:%20Applying%20modulated%20folding%20to%20LFO%20sources'>Ex. 3: Applying modulated folding to LFO sources</a></h3>
+<textarea class='editor'>// the other way round, take a lfo source and modulate folding parameters, here the relative folding range
+
+(
+x = {
+    var source = LFDNoise3.ar(0.3!2).range(0.5, 1);
+    SmoothFoldS.ar(source, -0.1, 0.1, SinOsc.ar([50, 50.1]).range(0.1, 1) )
+}.scope
+)
+
+x.release
+
+
+// modulating fold bounds
+
+(
+x = {
+    var source = LFDNoise3.ar(0.3!2).range(0.5, 1);
+    var bounds = SinOsc.ar([50, 50.1]).range(0.02, 0.1);
+    SmoothFoldS.ar(source, bounds.neg, bounds)
+}.scope
+)
+
+x.release
+
+
+// modulating bounds and range
+
+(
+x = {
+    var source = LFDNoise3.ar(0.3!2).range(0.5, 1);
+    var range = SinOsc.ar([50, 50.1]).range(0.02, 0.1);
+    SmoothFoldS.ar(source, range.neg, range, SinOsc.ar([200, 200.1]).range(0.5, 1))
+}.scope
+)
+
+x.release</textarea>
+
+<p><a class='anchor' name='Ex.%204'>&nbsp;</a><h3><a class='anchor' name='Ex.%204:%20Buffer%20scratching%20with%20folded%20signal%20as%20position%20control'>Ex. 4: Buffer scratching with folded signal as position control</a></h3>
+<textarea class='editor'>// Interesting micro textures can be generated that way.
+// Technically this is waveshaping with an audio buffer as transfer function and the folded signal as source.
+
+// compare with granulation, sound file from buffer granulation tutorial
+
+b = Buffer.read(s, Platform.miSCellaneousDirs[0] +/+ "Sounds" +/+ "kitchen_sounds_1.wav");
+// This searches the most likely extension places for the miSCellaneous folder.
+// In case of an extraordinary install situation or a removed sound file, pass the concerned path.
+
+
+(
+SynthDef(\bufScratchFold, { |bufnum = 0, globalFreq = 0.7, localOscSize = 0.01, foldRange = 0.28,
+    localFreq = 0.87, preAmp = 1.4, smoothAmount = 0.36|
+    var sig = BufRd.ar(
+        1,
+        bufnum,
+        (
+            // define global and local movement
+            LFDNoise3.ar(globalFreq).range(0.2, 0.7) +
+            SmoothFoldS.ar(
+                // adding space by decorrelating the local scratching / oscillation
+                LFTri.ar(localFreq * ({ LFDNoise3.ar(0.2).range(0.999, 1.001) } ! 2)) * preAmp,
+                foldRange: foldRange,
+                smoothAmount: smoothAmount
+            ) * localOscSize
+        ) * BufFrames.ir(bufnum)
+    );
+    // as local oscillation can stick with positive or negative values, a dc leaker is recommended 
+    Out.ar(0, LeakDC.ar(sig) * EnvGate.new)
+}).add
+)
+
+x = Synth(\bufScratchFold, [bufnum: b])
+
+x.set(\preAmp, 5.4)
+x.set(\foldRange, 0.08)
+x.set(\localFreq, 0.5)
+x.set(\localOscSize, 0.05)
+x.set(\foldRange, 0.02)
+x.set(\localFreq, 0.1)
+
+x.release</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Smooth_Clipping_and_Folding.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Smooth_Clipping_and_Folding.schelp</a><br>link::Tutorials/Smooth_Clipping_and_Folding::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

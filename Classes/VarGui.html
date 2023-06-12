@@ -1,0 +1,1113 @@
+<!doctype html><html lang='en'><head><title>VarGui | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'VarGui';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>VarGui:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'><li class='toc2'><a href='#Some%20Important%20Issues%20Regarding%20VarGui'>Some Important Issues Regarding VarGui</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#GUI%20specific'>GUI specific</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*load'>load</a> </li>
+<li class='toc3'><a href='#*load_old'>load_old</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-gui'>gui</a> </li>
+<li class='toc3'><a href='#-update'>update</a> </li>
+<li class='toc3'><a href='#-updateVarSliders'>updateVarSliders</a> </li>
+<li class='toc3'><a href='#-updateSynthSliders'>updateSynthSliders</a> </li>
+<li class='toc3'><a href='#-font'>font</a> </li>
+<li class='toc3'><a href='#-addSliderAction'>addSliderAction</a> </li>
+<li class='toc3'><a href='#-startMIDIlearn'>startMIDIlearn</a> </li>
+<li class='toc3'><a href='#-stopMIDIlearn'>stopMIDIlearn</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'><li class='toc2'><a href='#Ex.%201a:%20step%20sequencer'>Ex. 1a: step sequencer</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%201b:%20step%20sequencer%20with%20MIDI'>Ex. 1b: step sequencer with MIDI</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%201c:%20more%20step%20sequencers,%20quantization,%20slider%20modifiers'>Ex. 1c: more step sequencers, quantization, slider modifiers</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%201d:%20step%20sequencer,%20stream%20players%20in%20same%20environment'>Ex. 1d: step sequencer, stream players in same environment</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%201e:%20step%20sequencer%20and%20replacements%20with%20PLx'>Ex. 1e: step sequencer and replacements with PLx</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%202:%20stream%20players%20and%20synths%20in%20one%20VarGui'>Ex. 2: stream players and synths in one VarGui</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%203:%20granular%20synthesis%20with%20Tasks'>Ex. 3: granular synthesis with Tasks</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%204a:%20interaction%20of%20synth%20and%20stream%20players,%20control%20synth%20controlling%20pbind%20synths'>Ex. 4a: interaction of synth and stream players, control synth controlling pbind synths</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%204b:%20interaction%20of%20synth%20and%20stream%20players,%20pbind%20and%20control%20synth%20controlling%20audio%20synth'>Ex. 4b: interaction of synth and stream players, pbind and control synth controlling audio synth</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%205a:%20reordering%20of%20var%20control'>Ex. 5a: reordering of var control</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%205b:%20reordering%20of%20synth%20control'>Ex. 5b: reordering of synth control</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%206a:%20non%20standard%20usage:%20passing%20Synths'>Ex. 6a: non standard usage: passing Synths</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%206b:%20non%20standard%20usage:%20setting%20sliders%20from%20outside'>Ex. 6b: non standard usage: setting sliders from outside</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%206c:%20non%20standard%20usage:%20setting%20values%20for%20plotting'>Ex. 6c: non standard usage: setting values for plotting</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%207:%20color%20grouping'>Ex. 7: color grouping</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%208:%20EZSmoothSlider,%20EZRoundSlider'>Ex. 8: EZSmoothSlider, EZRoundSlider</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%209:%20slider%20step%20precision'>Ex. 9: slider step precision</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%2010:%20MIDI%20learn%20functionality%20with%20sliders'>Ex. 10: MIDI learn functionality with sliders</a></li>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>GUI'>GUI</a> | <a href='./../Browse.html#GUI'>GUI</a></span>
+</div><h1>VarGui<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>slider / player gui to set envir variables and synth controllers and play synths, event patterns and tasks</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/VarGui.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/VarGui.sc'>VarGui.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Guides/Introduction_to_miSCellaneous.html">Introduction to miSCellaneous</a>, <a href="./../Tutorials/VarGui_shortcut_builds.html">VarGui shortcut builds</a>, <a href="./../Tutorials/HS_with_VarGui.html">HS with VarGui</a>, <a href="./../Tutorials/Event_patterns_and_LFOs.html">Event patterns and LFOs</a>, <a href="./../Tutorials/Event_patterns_and_Functions.html">Event patterns and Functions</a>, <a href="./../Tutorials/Buffer_Granulation.html">Buffer Granulation</a>, <a href="./../Tutorials/Live_Granulation.html">Live Granulation</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>SC setups may contain discrete and continuous control, e.g. using combinations of Pbinds, Tasks and Synths. There are many possible ways of interaction between such elements, sometimes there is the alternative to control things by server or language (e.g. Pbinds versus Demand Ugens) but often one needs to have both. VarGui is a multi purpose slider and player GUI, originally intended for indentifying parameters to be reused in other setups. Pbinds and Tasks can easily refer to environmental variables - in case of Pbinds e.g. via Pfunc, Plazy, Pcollect, but more conveniently via the dynamic scope <a href="./../Tutorials/PLx_suite.html">PLx suite</a> - so VarGui can control environmental variables and synth controllers. For using event patterns with functional code and the related scoping features see <a href="./../Tutorials/Event_patterns_and_Functions.html">Event patterns and Functions</a>. VarGui was not intended for performance, however (since miSCellaneous v0.4) it includes a player section. Players can be used in different (reset) modes, states of synths and streams are reflected by colors, it also works with wslib slider classes (<a href="#Ex.%208">Ex.8</a>). For quick GUI generation using SynthDef metadata for controlspecs and / or automatic Pbind builds see <a href="./../Tutorials/VarGui_shortcut_builds.html">VarGui shortcut builds</a>. As both VarGui help files are quite full of details, a more general overview, including some exercises, is given in <a href="./../Guides/Introduction_to_miSCellaneous.html">Introduction to miSCellaneous</a>.<h3><a class='anchor' name='Some%20Important%20Issues%20Regarding%20VarGui'>Some Important Issues Regarding VarGui</a></h3>
+
+<p>VarGui allows to choose SynthDefs or Synths, Events patterns or EventStreamPlayers and Task functions or Tasks as input. It is recommended to take the more general objects (SynthDefs, Event patterns, Task functions) as then derived Synths, EventStreamPlayers and Tasks are newly generated and the latter are run in newly generated Environments. If you follow this it is very unlikely to accidentally break gui representation of data (though it's not strict MVC paradigm).
+<p>On the other hand there are special cases when you might want to pass Synth objects / synth nodes, Tasks or EventStreamPlayers directly (e.g. <a href="./../Tutorials/HS_with_VarGui.html">HS with VarGui</a>). Then a bit more care has to be taken as, although a VarGui instance doesn't allow to poll more than one GUI window from it, nothing prevents you from refering to identical Synth objects / synth nodes, Tasks, EventsStreamPlayers or environmental variables with different VarGui instances. This is not recommended as, obviously, a possible source of confusion.
+<p>If you are passing a Synth directly and moreover its SynthDef is not known to SynthDescLib setting a single component of an arrayed control also causes setting of all components below (no other choice at the moment, however, a very special case). <h3><a class='anchor' name='GUI%20specific'>GUI specific</a></h3>
+
+<p>With miSCellaneous v0.16 (March 2017) backwards compatibility with Cocoa and SwingOSC is no longer supported, now cross-platform Qt is standard. VarGui was originally written with Cocoa as reference, though restrcitions on Qt are minor. <ol>
+<li>With Qt mouseDown is the hardcoded mode of player action, which anyway could be regarded as standard usage.<li>Moving several sliders in parallel (<a href="#Ex.%201c">Ex.1c</a>) works on all platforms and with wslib sliders. <li>Combined slider movement with modifier keys can differ in the necessary order of key pressing and mouse clicking. In Qt you can (and with the Cmd modifier involved you have to) press thereafter.<li>With EZSlider you can jump to a certain slider position by clicking at an arbitrary position in the slider field. With wslib sliders you can choose modes \jump and \move (<a href="#Ex.%208">Ex.8</a>). <li>Combined synth / stream player button actions with Caps-lock are currently not working with Qt.</ol>
+
+<p>You can list styles by <code>GUI.availableStyles</code> and set with <code>GUI.style = \myFavoriteStyle</code><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>VarGui.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>varCtr</span>, <span class='argstr'>synthCtr</span>, <span class='argstr'>stream</span>, <span class='argstr'>synth</span>, <span class='argstr'>clock</span>, <span class='argstr'>quant</span>, <span class='argstr'>varEnvirGroups</span>, <span class='argstr'>envir</span>, <span class='argstr'>synthCtrGroups</span>, <span class='argstr'>assumePlaying</span>, <span class='argstr'>assumeRunning</span>, <span class='argstr'>assumeEnded</span>, <span class='argstr'>server</span>)</h3>
+<div class='method'>
+<p>Create a new VarGui object, which holds control specifications.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>varCtr<td class='argumentdesc'>
+<p><strong>specPairs</strong> or a collection of <strong>specPairs</strong>, where <strong>specPairs</strong> is a collection of the form <strong>[ key, spec, ...</strong> <strong>]</strong> where <strong>key</strong> is the symbol of the environmental variable to be set and <strong>spec</strong> must be one of those:<ul>
+<li>Collection of the form <strong>[</strong> <strong>minval, maxval, warp, step, default</strong> <strong>]</strong>, defining the corresponding ControlSpec, or a collection of specs of this form for an arrayed control if the environmental variable should have the value of a collection itself. <strong>step</strong> is used for the derivation of slider step size.<li>Symbol refering to a ControlSpec globally stored in Spec.specs or a collection thereof for arrayed control. ControlSpec.step is used for the derivation of slider step size.<li>SimpleNumber for a dummy slider with fixed value.</ul>
+
+<p>If <strong>specPairs</strong> or single components of a collection of <strong>specPairs</strong> are nil and the corresponding <strong>stream</strong> arg is a Symbol or String pointing to a SynthDef, it will be tried to derive controls from corresponding SynthDef metadata resp. global ControlSpecs (see <a href="./../Tutorials/VarGui_shortcut_builds.html">VarGui shortcut builds</a>).
+<p>Variables are set in environments that are either given implicitely (1) or explicitely (2):<ol>
+<li>by eventstream players / tasks passed to <strong>stream</strong> - they are already bound to an environment - or newly generated together with eventstream players or tasks from  patterns or functions passed to <strong>stream</strong>. <li>by <strong>envir</strong>. This allows setting of variables in Environments in case of absent stream players.</ol>
+
+<p>From explicit or implicit <strong>envir</strong> input an ordered collection of non-identical environments is derived, which, without one of the above infos, will consist of currentEnvironment only.<ul>
+<li>If <strong>varCtr</strong> is already grouped as a collection of <strong>specPairs</strong> then variables from i-th <strong>specPairs</strong> will be set in the i-th environment of the derived collection. <li>If <strong>varCtr</strong> is given as a flat collection and <strong>specPairs</strong> contains no multiple keys then variables are set in the first resp. only environment in question. <li>If <strong>varCtr</strong> is given as a flat collection and <strong>specPairs</strong> contains multiple keys then <strong>varEnvirGroups</strong>  is needed to map variables to environments (<a href="#Ex.%205a">Ex.5a</a>).</ul>
+
+<p>Note that the i-th environment means the i-th non-identical environment, not necessarily (in the case of environments implicitely given by eventstream players / tasks) the environment of the i-th stream. Defaults to nil.<tr><td class='argumentname'>synthCtr<td class='argumentdesc'>
+<p><strong>specPairs</strong> or a collection of <strong>specPairs</strong>, where <strong>specPairs</strong> is a collection of the form <strong>[ key, spec, ...</strong> <strong>]</strong> where <strong>key</strong> is the symbol of the control arg to be set and <strong>spec</strong> must be one of those:<ul>
+<li>Collection of the form <strong>[</strong> <strong>minval, maxval, warp, step, default</strong> <strong>]</strong>, defining the corresponding ControlSpec or a collection of specs of this form for an arrayed control. <strong>step</strong> is used for the derivation of slider step size.<li>Symbol refering to a ControlSpec globally stored in Spec.specs or a collection thereof for arrayed control. ControlSpec.step is used for the derivation of slider step size.<li>SimpleNumber for a dummy slider with fixed value.</ul>
+
+<p>If <strong>specPairs</strong> or single components of a collection of <strong>specPairs</strong> are nil, it will be tried to derive controls from SynthDef metadata resp. global ControlSpecs (see <a href="./../Tutorials/VarGui_shortcut_builds.html">VarGui shortcut builds</a>).<ul>
+<li>If <strong>synthCtr</strong> is already grouped as a collection of <strong>specPairs</strong> then controls from i-th <strong>specPairs</strong> will be used for setting the i-th synth. <li>If <strong>synthCtr</strong> is given as a flat collection and <strong>specPairs</strong> contains no multiple keys then controls will be used for setting the only synth in question.<li>If <strong>synthCtr</strong> is given as a flat collection and <strong>specPairs</strong> contains multiple keys then <strong>synthCtrGroups</strong>  is needed to map synth controls to synths (<a href="#Ex.%205b">Ex.5b</a>).</ul>
+
+<p>Defaults to nil.<tr><td class='argumentname'>stream<td class='argumentdesc'>
+<p>Expects Pattern, EventStreamPlayer, Function, Task or a collection thereof, determining the number of stream players. Patterns / Functions are used as templates for EventStreamPlayers / Tasks in  environments generated at init time. If <strong>stream</strong> is unequal nil variables given by  <strong>varCtr</strong> will be set in the environments derived from it. Size of <strong>stream</strong> must at least equal and may exceed the number of <strong>varCtr</strong> groups, which (see above) may be given by <strong>varCtr</strong> itself (if a grouped collection of <strong>specPairs</strong>) or <strong>varCtrGroups</strong>.  Correspondence between environments of variables and eventstream / task players  is optionally indicated in the GUI - however the user is responsible for defining  patterns and task functions that really involve the variables to be set ! Defaults to nil.<tr><td class='argumentname'>synth<td class='argumentdesc'>
+<p>Input to which synth controls are mapped. Expects Symbol refering to a SynthDef,  Synth, nodeID or collection thereof.  Size of <strong>synth</strong> must at least equal and may exceed the number of synthCtr groups, which (see above) may be given by <strong>synthCtr</strong> itself (if a grouped collection of <strong>specPairs</strong>) or <strong>synthCtrGroups</strong>.  It is recommended to refer to "known" SynthDefs (SynthDescLib), best by  passing Symbols or also registered Synths, otherwise the correct synth state must be given explicitely by <strong>assumePlaying</strong>, <strong>assumeRunning</strong> resp. <strong>assumeEnded</strong>, which is a nearby source of error and confusion. Defaults to nil.<tr><td class='argumentname'>clock<td class='argumentdesc'>
+<p>TempoClock, nil or collection thereof for playing streams. Passed clocks have precedence over implicitely given clocks (running eventstream players  or tasks as <strong>stream</strong> input) in case of resuming from pause state. Defaults to the default TempoClock. quant - Quant, Float, nil or collection thereof used as quant data for playing streams. Will be used in case of resuming from pause state for running  eventstream players or tasks given as <strong>stream</strong> input. Defaults to Quant.default (none).<tr><td class='argumentname'>quant<td class='argumentdesc'>
+<p>Quant, Float, nil or collection thereof used as quant data for playing streams. Will be used in case of resuming from pause state for running  eventstream players or tasks given as <strong>stream</strong> input. Defaults to Quant.default (none).<tr><td class='argumentname'>varEnvirGroups<td class='argumentdesc'>
+<p>SequenceableCollection of Collections of Integer. Expects ordered partition of the number N of <strong>specPairs</strong> given to <strong>varCtr</strong> as a flat collection,  also counting multiple occurences, thus defining a mapping: variable keys -&gt; environments. Must be a valid partition of N (taking all integers i &lt; N, 0 included, each only once).  Its size must not exceed the number of implicitely or explicitely given environments (see <strong>varCtr</strong>). E.g. for 3 environments and 6 variables [[2], [0,1,5], [4,3]] would be valid. Defaults to nil.<tr><td class='argumentname'>envir<td class='argumentdesc'>
+<p>SequenceableCollection of Environments. Environments to be used for variable setting in case of absent stream players, only admissible if <strong>stream</strong> is nil. Defaults to nil.<tr><td class='argumentname'>synthCtrGroups<td class='argumentdesc'>
+<p>SequenceableCollection of Collections of Integer. Expects ordered partition of the number N of <strong>specPairs</strong> given to <strong>synthCtr</strong> as a flat collection, also counting multiple occurences, thus defining a mapping: synth control keys -&gt; environments. Must be a valid partition of N (taking all integers i &lt; N, 0 included, each only once).  Its size must not exceed the size of <strong>synth</strong>. Defaults to nil.<tr><td class='argumentname'>assumePlaying<td class='argumentdesc'>
+<p>Boolean, nil or collection thereof, then size must equal the number of synths given by <strong>synth</strong> or <strong>synthCtr</strong>. Player state information for (unregistered) synths or nodeIDs,  booleans are not accepted if corresponding items in <strong>synth</strong> are instances of Symbol or String. Defaults to nil.<tr><td class='argumentname'>assumeRunning<td class='argumentdesc'>
+<p>Boolean, nil or collection thereof, then size must equal the number of synths given by <strong>synth</strong> or <strong>synthCtr</strong>. Player state information for (unregistered) synths or nodeIDs,  booleans are not accepted if corresponding items in <strong>synth</strong> are instances of Symbol or String. Defaults to nil.<tr><td class='argumentname'>assumeEnded<td class='argumentdesc'>
+<p>Boolean, nil or collection thereof, then size must equal the number of synths given by <strong>synth</strong> or <strong>synthCtr</strong>. Player state information for (unregistered) synths or nodeIDs,  booleans are not accepted if corresponding items in <strong>synth</strong> are instances of Symbol or String. Defaults to nil.<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>The server to send node messages to.  Defaults to the local server.</table><h4>Discussion:</h4>
+
+<p><a class='anchor' name='gt_1'>&nbsp;</a><textarea class='editor'>(
+s = Server.local;
+Server.default = s;
+s.boot;
+)</textarea>
+
+<p>Pbind defined with variable to be controlled while playing. Pfunc's function is evaluated at playtime of each Event and gets the value of the variable ~midi in the environment in which the EventStreamPlayer will be playing.<textarea class='editor'>p = Pbind(\midinote, Pfunc { ~midi } + Pseq([0, 3, 5, 7], inf), \dur, 0.2)</textarea>
+
+<p>VarGui to set this variable. As a pattern is given as stream arg the derived EventStreamPlayer will run in a new environment which is generated at VarGui init time.<textarea class='editor'>v = VarGui([\midi, [50, 70, \lin, 1, 55]], stream: p).gui;</textarea>
+
+<p>Try out basic slider and player functionality.
+<p><strong>Playing:</strong><div class='image'><img src='attachments/VarGui/player_1.png'/></div>
+
+<p>Background of player button lightening yellow. Functionality of the reset button depends on the active mode. The green background of the reset mode button indicates that the reset button will reset while playing and its background will flash yellow.
+<p>The text field on the right side indicates whether an eventstream player or a task is playing, that on the left side shows the index of the environment in which the stream is playing. This is mainly useful if more stream players and variables of same names in different environments are involved - below the players there is a toggle button to indicate the envir index in slider name fields.
+<p><strong>Pausing:</strong> <div class='image'><img src='attachments/VarGui/player_2.png'/></div>
+
+<p>Now pushing the play button will resume the stream where it has been paused, pushing the reset button (if the reset mode button has green background) will reset and play the stream.
+<p><strong>Pausing and reset:</strong><div class='image'><img src='attachments/VarGui/player_3.png'/></div>
+
+<p>This state can be reached from playing, pausing or ended stream when pushing the reset button under reset mode pause (orange background). Now only the play button can play the (reset) stream.
+<p><strong>Stream has ended:</strong><div class='image'><img src='attachments/VarGui/player_4.png'/></div>
+
+<p>E.g. if an eventstream player has encountered nil, reset button's background will become red. Now it needs the reset button to go on and its action - pause or play - depends on the active mode. 
+<p><a class='anchor' name='synth_0'>&nbsp;</a><textarea class='editor'>// synth definition with raising frequency
+
+(
+SynthDef(\synth_0, { |devFactor = 0.1, devFreq = 10, amp = 0.1|
+    var freq = XLine.kr(400, 1200, 10); 
+    Out.ar(0, SinOsc.ar(SinOsc.ar(devFreq, 0, devFactor * freq, freq), mul: amp).dup(2) * EnvGate.new) 
+}).add;
+)</textarea>
+
+<p>VarGui to play synth of above definition and set synth args, player functionality with different stop / renew modes. Notification must be on. Note that pause, stop and resume actions cause sending of run / free messages, thus possibly audible clicks. To avoid that work with amp = 0 or use a gated envelope and a gate control slider with only values 0 and 1 or use Synths of limited duration as in Ex. 2.<textarea class='editor'>(
+VarGui(
+    synthCtr: [\devFactor, [0, 0.99, \lin, 0.01, 0.5], 
+        \devFreq, [1, 100, \lin, 0.1, 70],
+        \amp, [0, 0.3, \lin, 0.001, 0.1]], 
+    synth: \synth_0
+).gui;
+)</textarea>
+
+<p>Latency options (buttons and boxes below the player section): bundle latency of synth player actions can be set to nil, a custom value (button abbrieviation c) or global server latency (abbr. s), these two values can be set in the boxes below. Settings can be used to sync synth and stream players, if both contained in a GUI.
+<p>Synth players work similar as stream players, but there are more options. There is an addtional stop mode button that determines how and if renewing (creating new synth nodes of same definition) is handled.
+<p>If, as above, a synth is given by a reference to a known SynthDef VarGui will start with a basicNew Synth object, indicated by white background of the synth's number field:<div class='image'><img src='attachments/VarGui/player_5.png'/></div>
+
+<p>Rate type (audio) is indicated in the field on the right. From this state a node on the server will be created by pause (newPaused) or play (new):<div class='image'><img src='attachments/VarGui/player_6.png'/></div>
+
+<p>Now playing and pausing work as usual. The red and blue background of the stop mode button indicates that the red stop button will become a blue renew button as soon as the Synth is stopped (node freed). In addition to the renew modes play (green) and pause (orange) there is also a renew mode basic new (white):<div class='image'><img src='attachments/VarGui/player_7.png'/></div>
+
+<p>If stop mode is set to renew (blue) the renew button will never change its function. Under renew mode play (green) every renew will free a Synth and immediately start a new (background flashing yellow):<div class='image'><img src='attachments/VarGui/player_8.png'/></div>
+
+<p>If stop mode is set to stop (red background), the stop / renew button will change to red:<div class='image'><img src='attachments/VarGui/player_9.png'/></div>
+
+<p>The renew mode button loses its function (greyed out) and stopping just frees the Synth:<div class='image'><img src='attachments/VarGui/player_10.png'/></div>
+
+<p>Now stop mode would have to be changed in order to play a new Synth.
+<p>General functionality buttons:<div class='image'><img src='attachments/VarGui/main_buttons.png'/></div>
+
+<p><strong>Update</strong>
+<p>Unless the VarGui window was generated with option updateNow set to false (which could be desired e.g. for a start with Synth defaults), variables and synth controls are set to slider values at gui init time, normally updating is not required. As for most uses VarGui would generate new separate environments for passed event patterns and task functions, there is no update mechanism implemented if these variables would be changed otherwise. Analagously controls of Synths played (and probably just yet generated) by a VarGui player could of course be set by means other than a VarGui slider action. Anyway both situations seem to be exceptional (you could hardly do so just by an oversight), though you can update to all slider values manually.
+<p><strong>Save</strong>
+<p>Opens a dialog to save the current slider state as an array of four items: varCtr as flattened array of specPairs, synthCtr as flattened array of specPairs, varEnvirGroups, synthCtrGroups (which are only stored as groupings in case of multiple key occurences, nil optherwise). Player data and synth information is not stored. For loading from a file you would have to pass this (see the load method below).
+<p><strong>Stop</strong>
+<p>Free all synths and stop all streams. You can also use modifier keys for stopping groups of players, e.g. Shift-click on a stream players's pause button to stop all streams. Freeing all synths in the same way only works if all synth players can be stopped by their stop buttons at this time.</div><h3 class='method-code'><span class='method-prefix'>VarGui.</span><a class='method-name' name='*load' href='./../Overviews/Methods.html#load'>load</a>(<span class='argstr'>pathname</span>, <span class='argstr'>filename</span>, <span class='argstr'>stream</span>, <span class='argstr'>synth</span>, <span class='argstr'>clock</span>, <span class='argstr'>quant</span>, <span class='argstr'>varEnvirGroups</span>, <span class='argstr'>envir</span>, <span class='argstr'>synthCtrGroups</span>, <span class='argstr'>assumePlaying</span>, <span class='argstr'>assumeRunning</span>, <span class='argstr'>assumeEnded</span>, <span class='argstr'>server</span>)</h3>
+<div class='method'>
+<p>Create a VarGui, that loads a stored slider state (<strong>varCtr</strong> and <strong>synthCtr</strong> data) from the specified file, which has probably been saved before via dialog. See also <a href="./../Tutorials/VarGui_shortcut_builds.html#6">VarGui shortcut builds: 6</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>pathname<td class='argumentdesc'>
+<p>Pathname string.<tr><td class='argumentname'>filename<td class='argumentdesc'>
+<p>Filename string.<tr><td class='argumentname'>stream<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>synth<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>clock<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>quant<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>varEnvirGroups<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>envir<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>synthCtrGroups<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>assumePlaying<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>assumeRunning<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>assumeEnded<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.</table></div><h3 class='method-code'><span class='method-prefix'>VarGui.</span><a class='method-name' name='*load_old' href='./../Overviews/Methods.html#load_old'>load_old</a>(<span class='argstr'>pathname</span>, <span class='argstr'>filename</span>, <span class='argstr'>stream</span>, <span class='argstr'>synth</span>, <span class='argstr'>clock</span>, <span class='argstr'>quant</span>, <span class='argstr'>varEnvirGroups</span>, <span class='argstr'>envir</span>, <span class='argstr'>synthCtrGroups</span>, <span class='argstr'>assumePlaying</span>, <span class='argstr'>assumeRunning</span>, <span class='argstr'>assumeEnded</span>, <span class='argstr'>server</span>)</h3>
+<div class='method'>
+<p>Create a VarGui, that loads a stored slider state from the specified file. This is for loading slider states that have been saved with miSCellaneous v0.3 or earlier, thus ignoring the synth control slider label. Though old code examples will not necessarily work after just replacing load by load_old as other conventions have changed too. Maybe you'd also have to change <strong>synth</strong> and <strong>stream</strong> (former <strong>players</strong>) or add <strong>assumePlaying</strong> and <strong>assumeRunning</strong> args.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>pathname<td class='argumentdesc'>
+<p>Pathname string.<tr><td class='argumentname'>filename<td class='argumentdesc'>
+<p>Filename string.<tr><td class='argumentname'>stream<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>synth<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>clock<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>quant<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>varEnvirGroups<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>envir<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>synthCtrGroups<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>assumePlaying<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>assumeRunning<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>assumeEnded<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>see <a href="./../Classes/VarGui.html#*new">VarGui: *new</a>.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gui' href='./../Overviews/Methods.html#gui'>gui</a>(<span class='argstr'>sliderHeight: 18</span>, <span class='argstr'>sliderWidth</span>, <span class='argstr'>labelWidth: 75</span>, <span class='argstr'>numberWidth: 45</span>, <span class='argstr'>sliderType: 'standard'</span>, <span class='argstr'>sliderMode: 'jump'</span>, <span class='argstr'>playerHeight: 18</span>, <span class='argstr'>precisionSpan: 10</span>, <span class='argstr'>stepEqualZeroDiv: 100</span>, <span class='argstr'>tryColumnNum: 1</span>, <span class='argstr'>allowSynthsBreak: true</span>, <span class='argstr'>allowVarsBreak: true</span>, <span class='argstr'>allowSynthBreak: true</span>, <span class='argstr'>allowArrayBreak: true</span>, <span class='argstr'>allowEnvirBreak: true</span>, <span class='argstr'>minPartitionSize: 0</span>, <span class='argstr'>sliderPriority: 'var'</span>, <span class='argstr'>playerPriority: 'stream'</span>, <span class='argstr'>streamPlayerGroups</span>, <span class='argstr'>synthPlayerGroups</span>, <span class='argstr'>comboPlayerGroups</span>, <span class='argstr'>font: "Helvetica"</span>, <span class='argstr'>colorsLo</span>, <span class='argstr'>colorsHi</span>, <span class='argstr'>colorDeviation</span>, <span class='argstr'>ctrButtonGreyCenter</span>, <span class='argstr'>ctrButtonGreyDev</span>, <span class='argstr'>greyMode: false</span>, <span class='argstr'>varColorGroups</span>, <span class='argstr'>synthColorGroups</span>, <span class='argstr'>name</span>, <span class='argstr'>updateNow: true</span>, <span class='argstr'>sliderFontHeight: 12</span>, <span class='argstr'>playerFontHeight: 12</span>, <span class='argstr'>maxWindowWidth: 1500</span>, <span class='argstr'>maxWindowHeight: 700</span>)</h3>
+<div class='method'>
+<p>Create a gui window.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>sliderHeight<td class='argumentdesc'>
+<p>Gui slider height. Defaults to 18. <tr><td class='argumentname'>sliderWidth<td class='argumentdesc'>
+<p>Gui slider width. Depends on number of columns if not given explicitely. <tr><td class='argumentname'>labelWidth<td class='argumentdesc'>
+<p>Slider label width. Default depends on platform and gui scheme (70 or 75). <tr><td class='argumentname'>numberWidth<td class='argumentdesc'>
+<p>Slider numberbox width. Default depends on platform and gui scheme (40 or 45). <tr><td class='argumentname'>sliderType<td class='argumentdesc'>
+<p>One of the Symbols \standard, \smooth, \round. Both latter refer to EZSmoothSlider and EZRoundSlider from wslib (Quark), which needs to be installed for that choice. See <a href="#Ex.%208">Ex.8</a> . Defaults to \standard.<tr><td class='argumentname'>sliderMode<td class='argumentdesc'>
+<p>One of the Symbols \jump, \move. Only relevant in case of sliderType \smooth or \round. Determines behaviour if slider field is clicked apart from the knob. See <a href="#Ex.%208">Ex.8</a>. Defaults to \jump. <tr><td class='argumentname'>playerHeight<td class='argumentdesc'>
+<p>Gui player height. Defaults to 18. <tr><td class='argumentname'>precisionSpan<td class='argumentdesc'>
+<p>Integer. Precision span to be regarded for representation of controlspec step. See <a href="#Ex.%209">Ex.9</a>. Defaults to 10. <tr><td class='argumentname'>stepEqualZeroDiv<td class='argumentdesc'>
+<p>Integer. Division to be assumed if controlspec step equals 0. See <a href="#Ex.%209">Ex.9</a>. Defaults to 100. <tr><td class='argumentname'>tryColumnNum<td class='argumentdesc'>
+<p>Integer. VarGui tries to arrange variable and control sliders in this number of columns if possible under the restrictions of <strong>maxWindowWidth</strong>, <strong>sliderWidth</strong>, <strong>minPartitionSize</strong> and the following allow options. Internally a list of possible break indices is derived and then a partition as equal in size as possible is searched for. See <a href="#Ex.%205a">Ex.5a</a>, <a href="#Ex.%205b">Ex.5b</a>. Defaults to 1.<tr><td class='argumentname'>allowSynthsBreak<td class='argumentdesc'>
+<p>Boolean. Determines if all synth control sliders should be grouped within one column. Defaults to true. <tr><td class='argumentname'>allowVarsBreak<td class='argumentdesc'>
+<p>Boolean. Determines if all variable control sliders should be grouped within one column. Defaults to true. <tr><td class='argumentname'>allowSynthBreak<td class='argumentdesc'>
+<p>Boolean. Determines if control sliders of one synth should be grouped within one column. Setting false only has an effect if synth controls are ordered in connected groups. Defaults to true.<tr><td class='argumentname'>allowArrayBreak<td class='argumentdesc'>
+<p>Boolean. Determines if control sliders of an arrayed control (variable or synth) should be  grouped within one column. Defaults to true. <tr><td class='argumentname'>allowEnvirBreak<td class='argumentdesc'>
+<p>Boolean. Determines if control sliders of one environment should be grouped within one column. Setting false only has an effect if environmental variables are ordered in connected groups. Defaults to true. <tr><td class='argumentname'>minPartitionSize<td class='argumentdesc'>
+<p>Integer. Determines the minimum number of sliders of same type that may be grouped  in a different column. Defaults to 0. <tr><td class='argumentname'>sliderPriority<td class='argumentdesc'>
+<p>Symbol \var or \synth. Determines if variable or synth control sliders should be listed first. Defaults to \var. <tr><td class='argumentname'>playerPriority<td class='argumentdesc'>
+<p>Symbol \stream or \synth. Determines if stream or synth players should be listed first. Defaults to \stream. <tr><td class='argumentname'>streamPlayerGroups<td class='argumentdesc'>
+<p>Grouping of number of stream players (E.g. [[0], [1,2]] is a valid grouping of 3 players).  Defines control group for modifier option of stream playing.  Defaults to the grouping of all streamPlayers.<tr><td class='argumentname'>synthPlayerGroups<td class='argumentdesc'>
+<p>Grouping of number of synth players.  Defines control group for modifier option of synth playing. Defaults to the grouping of all synthPlayers.<tr><td class='argumentname'>comboPlayerGroups<td class='argumentdesc'>
+<p><strong>*** currently not working ***</strong> Grouping of number of synth and stream players.  Defines control group for modifier option of combined synth and stream playing. Defaults to the grouping of all synth- and streamPlayers.<tr><td class='argumentname'>font<td class='argumentdesc'>
+<p>GUI font as String. Defaults to "Helvetica".<tr><td class='argumentname'>colorsLo<td class='argumentdesc'>
+<p>Low RGB value for color space, in which distinct slider colors for logical groups (synth, environment)  and background are chosen by random. Must be between 0 and 1. Defaults to 0.25 in color mode  and 0.4 in grey mode. <tr><td class='argumentname'>colorsHi<td class='argumentdesc'>
+<p>Hi RGB value for color space, in which distinct slider colors for logical groups (synth, environment)  and background are chosen by random. Must be between 0 and 1. Defaults to 0.7 in color mode  and 0.6 in grey mode. <tr><td class='argumentname'>colorDeviation<td class='argumentdesc'>
+<p>Nonnegative SimpleNumber. Determines the maximum amount of color deviation within a  logical slider group (synth, environment). Within the maximum deviation distinct colors are ramdomly chosen,  but arrayed controls get the same color. Defaults to 0.12 in color mode and 0 in grey mode. ctrButtonGreyCenter - Float between 0 and 1. Determines the grey center from which button colors deviate  by the amount of <strong>ctrButtonGreyDev</strong>. Defaults to 0.5. <tr><td class='argumentname'>ctrButtonGreyCenter<td class='argumentdesc'>
+<p>Float between 0 and 1. Determines the grey center from which button colors deviate by the amount of <strong>ctrButtonGreyDev</strong>. Defaults to 0.5. <tr><td class='argumentname'>ctrButtonGreyDev<td class='argumentdesc'>
+<p>Float between 0 and 1. Determines the intensity of button colors deviating from ctrButtonGreyCenter. Defaults to 0.8 in color mode and 0.65 in grey mode.<tr><td class='argumentname'>greyMode<td class='argumentdesc'>
+<p>Boolean. Determines if color or grey mode is chosen. Defaults to false.<tr><td class='argumentname'>varColorGroups<td class='argumentdesc'>
+<p>Grouping of colors of variable control sliders. Overrules automatic color grouping. All indices &lt; n (number of sliders) must occur exactly once. E.g. [[0], [1,2]] would be valid for n = 3. See <a href="#Ex.%207">Ex.7</a>.<tr><td class='argumentname'>synthColorGroups<td class='argumentdesc'>
+<p>Grouping of colors of synth control sliders. Overrules automatic color grouping. All indices &lt; n (number of sliders) must occur exactly once. E.g. [[0], [1,2]] would be valid for n = 3.  See <a href="#Ex.%207">Ex.7</a>.<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>Symbol or String. Name to be displayed in the GUI window title bar. If not given explicitely types of controls and players are indicated.<tr><td class='argumentname'>updateNow<td class='argumentdesc'>
+<p>Boolean. Determines if controls and variables should be set to slider values at GUI build time. To keep sliders in sync with control this is done by default - however there may be cases when it is desirable to start with other values, e.g. the synth's defaults. If set to false slider values will not be set before the slider is moved or before all values are set by the update method or the corresponding button. <tr><td class='argumentname'>sliderFontHeight<td class='argumentdesc'>
+<p>Float. Adapts to sliderHeight if value nil is given (default).  Normally this doesn't have to be set except with very small <strong>sliderHeight</strong> and/or certain fonts. <tr><td class='argumentname'>playerFontHeight<td class='argumentdesc'>
+<p>Float. Defaults to 12. <tr><td class='argumentname'>maxWindowWidth<td class='argumentdesc'>
+<p>Float. Defaults to 1500.<tr><td class='argumentname'>maxWindowHeight<td class='argumentdesc'>
+<p>Float. Defaults to 700.
+<p><a class='anchor' name='gt_0'>&nbsp;</a></table><h4>Discussion:</h4>
+
+<p>SynthDef <a href="#synth_0">synth_0</a> from above, number of synth players multiplied by expanding single control. For multiple slider and player button control see the modifier options explained in <a href="#Ex.%201c">Ex.1c</a>.<textarea class='editor'>(
+v = VarGui(
+    synthCtr: [\devFactor, [0, 0.99, \lin, 0.01, 0.5], 
+        \devFreq, [1, 100, \lin, 0.1, 70],
+        \amp, [0, 0.2, \lin, 0.001, 0.02]] ! 6, 
+    synth: \synth_0 ! 6
+).gui;
+)</textarea>
+
+<p>GUI appearance customization: close window (only one window per VarGui instance allowed) and try again with same or other color options. <textarea class='editor'>v.gui;
+
+v.gui(colorDeviation: 0, colorsLo: 0.4, colorsHi: 0.9);
+
+v.gui(greyMode: true);</textarea>
+
+<p>Force slider arrangement in 2 columns, controls of each synth should only be in one column.<textarea class='editor'>v.gui(colorDeviation: 0, tryColumnNum: 2, allowSynthBreak: false);</textarea>
+
+<p>You can save a slider state snapshot by button / dialog to the file "XY", only slider states (flattened spacPair collections) and groupings are stored,  you have to pass synth data with load. <textarea class='editor'>VarGui.load("PathToXY", "XY", synth: \synth_0 ! 6).gui;</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-update' href='./../Overviews/Methods.html#update'>update</a></h3>
+<div class='method'>
+<p>Update variables and controllers to current slider values. Like update button action. Unless the VarGui window was generated with option <strong>updateNow</strong> set to false,  variables and controllers are immediately set to slider values and normally updating is not required. </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-updateVarSliders' href='./../Overviews/Methods.html#updateVarSliders'>updateVarSliders</a>(<span class='argstr'>key</span>, <span class='argstr'>varNum: 0</span>, <span class='argstr'>val</span>, <span class='argstr'>indexOffset: 0</span>, <span class='argstr'>updateNow: true</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/extVarGui_4.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/extVarGui_4.sc</a></div>
+<div class='method'>
+<p>Update variable sliders.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>Variable name given as Symbol. <tr><td class='argumentname'>varNum<td class='argumentdesc'>
+<p>Integer. Index of variable occurence in given <strong>varCtr</strong>. Defaults to 0.<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>Float. May also be collection, then a sequence of variable sliders is set. <tr><td class='argumentname'>indexOffset<td class='argumentdesc'>
+<p>Integer. Updating will start at this index in case <strong>key</strong> refers to arrayed control. Defaults to 0.<tr><td class='argumentname'>updateNow<td class='argumentdesc'>
+<p>Boolean. Determines if variables should immediately be updated with sliders. Defaults to true.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-updateSynthSliders' href='./../Overviews/Methods.html#updateSynthSliders'>updateSynthSliders</a>(<span class='argstr'>key</span>, <span class='argstr'>synthIndex</span>, <span class='argstr'>val</span>, <span class='argstr'>indexOffset: 0</span>, <span class='argstr'>updateNow: true</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/extVarGui_4.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/extVarGui_4.sc</a></div>
+<div class='method'>
+<p>Update synth sliders.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>Synth control name given as Symbol.<tr><td class='argumentname'>synthIndex<td class='argumentdesc'>
+<p>Integer. Index of synth in given <strong>synthCtr</strong>. Defaults to 0.<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>Float. Maybe also be collection, then a sequence of synth sliders is set. <tr><td class='argumentname'>indexOffset<td class='argumentdesc'>
+<p>Integer. Updating will start at this index in case <strong>key</strong> refers to arrayed control. Defaults to 0.<tr><td class='argumentname'>updateNow<td class='argumentdesc'>
+<p>Boolean. Determines if synth controls should immediately be updated with sliders. Defaults to true.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-font' href='./../Overviews/Methods.html#font'>font</a>(<span class='argstr'>font: "Helvetica"</span>, <span class='argstr'>sliderFontHeight: 16</span>, <span class='argstr'>playerFontHeight: 12</span>)</h3>
+<div class='method'>
+<p>Set GUI font.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>font<td class='argumentdesc'>
+<p>String. Defaults to "Helvetica".<tr><td class='argumentname'>sliderFontHeight<td class='argumentdesc'>
+<p>Integer. Defaults to 12.<tr><td class='argumentname'>playerFontHeight<td class='argumentdesc'>
+<p>Integer. Defaults to 12.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addSliderAction' href='./../Overviews/Methods.html#addSliderAction'>addSliderAction</a>(<span class='argstr'>function</span>, <span class='argstr'>type</span>, <span class='argstr'>index</span>, <span class='argstr'>envir</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/extVarGui_5.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/extVarGui_5.sc</a></div>
+<div class='method'>
+<p>Add an action to be evaluated as sliderView's mouseUpAction.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>function<td class='argumentdesc'>
+<p>Function.<tr><td class='argumentname'>type<td class='argumentdesc'>
+<p>Slider type, expects \var or \synth. Defaults to \var.<tr><td class='argumentname'>index<td class='argumentdesc'>
+<p>Integer. Slider index of given type.<tr><td class='argumentname'>envir<td class='argumentdesc'>
+<p>Environment where function should be evaluated. If not specified and <strong>type</strong> equals \var the environment associated with the variable will be taken.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-startMIDIlearn' href='./../Overviews/Methods.html#startMIDIlearn'>startMIDIlearn</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/extVarGui_6.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/extVarGui_6.sc</a></div>
+<div class='method'>
+<p>Start learining mode for receiving MIDI cc messages for slider control, see <a href="#Ex.%2010">Ex.10</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stopMIDIlearn' href='./../Overviews/Methods.html#stopMIDIlearn'>stopMIDIlearn</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/extVarGui_6.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/extVarGui_6.sc</a></div>
+<div class='method'>
+<p>Stop learining mode for receiving MIDI cc messages for slider control, see <a href="#Ex.%2010">Ex.10</a>.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+
+<p><a class='anchor' name='Ex.%201a'>&nbsp;</a><h3><a class='anchor' name='Ex.%201a:%20step%20sequencer'>Ex. 1a: step sequencer</a></h3>
+<textarea class='editor'>(
+s = Server.local;
+Server.default = s;
+s.boot;
+)</textarea>
+
+<p>There are different ways to read a sequence of values from a settable array assigned to an envir variable. PLseq is convenient, for a comparison with Plazy, Pfunc etc. see <a href="./../Tutorials/PLx_suite.html">PLx suite</a>. In all cases the EventStreamPlayer can be played in an arbitrary environment, from which ~seq will be taken. This holds true for Patterns with functional code like Pfunc and also for PLseq, the latter has an envir arg which defaults to \current. Note that all PLx Patterns default to repeats = inf, ListPatterns as Pseq default to repeats = 1.<textarea class='editor'>(
+SynthDef(\synth_1a, { |freq = 400, preAmp = 5, amp = 0.1|
+    var src = SinOsc.ar(freq, 0, mul: preAmp).tanh ! 2;
+    OffsetOut.ar(0, src * amp * EnvGen.ar(Env.perc, doneAction: 2))
+}).add;
+)
+
+(
+p = Pbind(
+    \instrument, \synth_1a,
+    \preAmp, PL(\preAmp),  // or Pfunc { ~preAmp }    
+    \amp, PL(\amp), // or Pfunc { ~amp }    
+    \midinote, PLseq(\seq) + PL(\seqAdd), 
+    \dur, 0.2
+);
+)</textarea>
+
+<p><code>~seq</code> will be set and read in the new Environment, which will be generated at VarGui init time.<textarea class='editor'>(
+~specPairs = [\seq, [36, 60, \lin, 1, 36] ! 5, 
+    \seqAdd, [0, 12, \lin, 1, 0],
+    \amp, [0, 0.3, \lin, 0.01, 0.1],
+    \preAmp, [5, 50, \lin, 0.01, 20]];
+
+v = VarGui(~specPairs, stream: p).gui;
+)</textarea>
+
+<p><a class='anchor' name='Ex.%201b'>&nbsp;</a><h3><a class='anchor' name='Ex.%201b:%20step%20sequencer%20with%20MIDI'>Ex. 1b: step sequencer with MIDI</a></h3>
+<textarea class='editor'>(
+// connect a MIDI device, allNotesOff with CmdPeriod useful
+
+MIDIClient.init;
+m = MIDIOut(0);
+g = { 16.do({ |i| m.allNotesOff(i) }) };
+CmdPeriod.add(g); 
+
+
+p = Pbind(
+    \type, \midi,
+    \midiout, m, 
+    \chan, 0,
+
+    \amp, PL(\amp),
+    \midinote, PLseq(\seq) + PL(\seqAdd), 
+    \dur, 0.2
+);
+)
+
+(
+v = VarGui([\seq, [36, 60, \lin, 1, 36] ! 5, 
+    \seqAdd, [0, 12, \lin, 1, 0],
+    \amp, [0, 1, \lin, 0.01, 0.8]],
+    stream: p
+).gui;
+)
+
+// remove if not needed anymore
+
+CmdPeriod.remove(g);</textarea>
+
+<p><a class='anchor' name='Ex.%201c'>&nbsp;</a><h3><a class='anchor' name='Ex.%201c:%20more%20step%20sequencers,%20quantization,%20slider%20modifiers'>Ex. 1c: more step sequencers, quantization, slider modifiers</a></h3>
+
+<p>SynthDef from <a href="#Ex.%201a">Ex.1a</a> , four players from a Pbind, four varCtr specifications with shifted range.<textarea class='editor'>(
+p = Pbind(
+    \instrument, \synth_1a,
+    \preAmp, PL(\preAmp), 
+    \amp, PL(\amp), 
+    \midinote, PLseq(\seq) + PL(\seqAdd), 
+    \dur, 0.2
+);
+
+~spec = 4.collect { |i| [\seq, [12*i + 24, 12*i + 48, \lin, 1, 24*i + 36] ! 5, 
+    \seqAdd, [0, 12, \lin, 1, 0],
+    \amp, [0, 0.15, \lin, 0.01, 0.07 - (0.01 * i)],
+    \preAmp, [5, 50, \lin, 0.01, 20]] };
+)
+
+// run all players in sync by passing a quant arg
+
+v = VarGui(~spec, stream: p!4, quant: 0.2).gui(tryColumnNum: 2, streamPlayerGroups: [[0,3], [1,2]]);
+
+
+// EventStreamPlayers derived from Pbind are run in 
+// four newly generated environments,
+// variables, as their names are passed four times in spec, 
+// are automatically set in these Environments in order.
+// Envir index display can be toggled with the button on the right.  
+
+
+v.envirs; // get envirs
+
+// try slider action with modifier keys</textarea>
+<div class='note'><span class='notelabel'>NOTE:</span> In Qt you can press modifier keys before and thereafter. Caps-lock is currently replaced by Cmd, with Cmd modifier involved you *have* to press thereafter. 
+<p>Modifiers allow to control groups of sliders, values in other sliders are clipped to the according range. The following rules apply to synth and var control sliders separately, combined synth and var controls of same name work with Caps on cocoa and Cmd elsewise (<a href="#Ex.%202">Ex.2</a>).<ul>
+<li>Shift: within an arrayed control all sliders below are set to the handled value or clipped.<li>Shift + Ctrl: within an arrayed control all sliders above are set to the handled value or clipped.<li>Alt: controls of same name (in different envirs or different synths) are set to the handled value or clipped.<li>Alt + Shift, Alt + Shift + Ctrl: Accordingly for arrayed controls of same name.</ul>
+
+<p>Modifier keys also apply to synth and stream player actions, the following to synth OR stream player combinations either:<ul>
+<li>Shift: button action with all players <li>Shift + Ctrl: button action with all players of this state<li>Shift + Alt: button action with all players of this group (if synthPlayerGroups / streamPlayerGroups was defined)<li>Shift + Ctrl + Alt: button action with all players of this state and group ( --- " --- )</ul>
+</div>
+<p><a class='anchor' name='Ex.%201d'>&nbsp;</a><h3><a class='anchor' name='Ex.%201d:%20step%20sequencer,%20stream%20players%20in%20same%20environment'>Ex. 1d: step sequencer, stream players in same environment</a></h3>
+
+<p>You can try to benefit from eventstream players having variables in common.  SynthDef from <a href="#Ex.%201a">Ex.1a</a> , second Pbind derived from p without pitch offset as parallel pattern.<textarea class='editor'>(
+p = Pbind(
+    \instrument, \synth_1a,
+    \preAmp, PL(\preAmp), 
+    \amp, PL(\amp), 
+    \midinote, PLseq(\seq) + PL(\seqAdd), 
+    \dur, 0.2
+);
+
+q = Pbindf(p, \midinote, PLseq(\seq));
+
+v = VarGui([\seq, { [48, 84, \lin, 1, rrand(48, 84)] } ! 5, 
+    \seqAdd, [0, 12, \lin, 1, 7],
+    \amp, [0, 0.3, \lin, 0.01, 0.07],
+    \preAmp, [5, 50, \lin, 0.01, 20]],
+    stream: [q,p].collect(_.asESP), 
+    // so currentEnvironment is given implicitely by both ESPs and used for setting
+    quant: 1 
+    // ensures that players, also if started separately for the first time, 
+    // will play the sequence in sync
+).gui;
+)
+
+// stopping and resuming of a single player may break parallelism 
+// Shift-clicked reset syncs again</textarea>
+
+<p><a class='anchor' name='Ex.%201e'>&nbsp;</a><h3><a class='anchor' name='Ex.%201e:%20step%20sequencer%20and%20replacements%20with%20PLx'>Ex. 1e: step sequencer and replacements with PLx</a></h3>
+
+<p>SynthDef from <a href="#Ex.%201a">Ex.1a</a><textarea class='editor'>(
+// SynthDef from (1a)
+
+// Pbind with PL as placeholder for pitch patterns
+// master VarGui with player
+// start and set seq
+
+
+p = Pbind(
+    \instrument, \synth_1a,
+    \preAmp, PL(\preAmp), 
+    \amp, PL(\amp), 
+    \midinote, PL(\a) + PL(\seqAdd), 
+    \dur, 0.2
+);
+
+
+// ESP as stream arg: variables will be read from (build time) current Environment.
+
+~basePat = PLseq(\seq);
+~a = ~basePat;
+
+v = VarGui([\seq, [36, 60, \lin, 1, 36] ! 5,
+    \seqAdd, [0, 12, \lin, 1, 0],
+    \amp, [0, 0.1, \lin, 0.001, 0.05],
+    \preAmp, [5, 50, \lin, 0.01, 20]],
+    stream: p.asESP).gui(name: \seq); 
+
+// control spec array builder for midi range 
+
+~pitchSpec = { |key = \seq, default = 60, step = 1, lo = 24, hi = 96|
+    var spec = default.asArray.collect([lo, hi, \lin, step, _]);
+    [key, (spec.size == 1).if { spec.flatten }{ spec }];
+};
+)
+
+
+// replace while playing:
+
+// chord sequence 
+
+( 
+~chordPat = PLseq(\seq) + [0, 7];
+~a = ~chordPat;
+)
+
+
+// random sequence with new VarGui for lead voice bounds
+
+(
+VarGui(~pitchSpec.(\b, [75, 85], 0.01)).gui(name: \random);
+
+~randPat = Pfunc { rrand(~b[0], ~b[1]) } + [0, -13.3, -17.7];
+~a = ~randPat;
+)
+
+// accumulation sequence with new VarGui 
+
+(
+VarGui(~pitchSpec.(\accum, { rrand(40,80) }!7 )).gui(name: \accum);
+
+~accPat = Ptuple( [ PL(\accum), PLseq((0..6)) ] ).collect { |x| x[0].keep(x[1]) - x[1] };
+~a = ~accPat;
+)
+
+
+// switch between PLs and set values in VarGui windows
+
+
+~a = ~basePat;
+
+~a = ~chordPat;
+
+~a = ~randPat;
+
+~a = ~accPat;</textarea>
+
+<p><a class='anchor' name='Ex.%202'>&nbsp;</a><h3><a class='anchor' name='Ex.%202:%20stream%20players%20and%20synths%20in%20one%20VarGui'>Ex. 2: stream players and synths in one VarGui</a></h3>
+<textarea class='editor'>(
+// Pbind with default synth
+// ~freq can be a collection, then pitch or chord are shifted by ~freqFac,
+// ascending (~step &gt; 0) or descending (~step &lt; 0) groups of 4 items
+
+p = Pbind(
+    \dur, 0.4,
+    \amp, PL(\amp),
+    \freq, PL(\step) ** PLseq((0..3)) * PL(\freq) * PL(\freqFac)    
+);
+
+// Synth producing an ascending line, it ends as envelope params are defined,
+// end notifications will be reflected in the VarGui
+
+SynthDef(\synth_2, { |out = 0, freq = #[600, 700, 900, 1000], freqFac = 1, 
+    amp = 0.1, ampFac = 0.5, preAmp = 5, attTime = 0.2, relTime = 2, susTime = 6|
+    var src = SinOsc.ar(freq * XLine.kr(freqFac/2, freqFac, attTime + susTime), 0, mul: preAmp).tanh ! 2;
+    Out.ar(0, src * amp * ampFac * EnvGen.ar(Env.linen(attTime, susTime, relTime), doneAction: 2))
+}).add;
+)</textarea>
+
+<p>Try multiple slider movements with modifier keys as described in <a href="#Ex.%201c">Ex.1c</a>. As synth args and variables are identically named they can be controlled with linked slider movements using Cmd. Accordingly stream and synth player buttons can also be pressed in parallel.<textarea class='editor'>(
+v = VarGui([\freq, [600, 700, 900, 1000].collect([400, 1200, \lin, 0.01, _]),
+    \freqFac, [0.25, 1.25, \lin, 0.01, 1],
+    \amp, [0.0, 0.1, \lin, 0.001, 0.03],
+    \step, [0.7, 1.25, \lin, 0.01, 1.03]] ! 2, 
+   
+    [\freq, [600, 700, 900, 1000].collect([400, 1200, \lin, 0.01, _]),
+    \freqFac, [0.25, 1.25, \lin, 0.01, 1],
+    \attTime, [0.02, 2, \lin, 0.01, 0.2],
+    \relTime, [0.02, 2, \lin, 0.01, 2],
+    \susTime, [0.1, 10, \lin, 0.01, 5],
+    \amp, [0.0, 0.1, \lin, 0.001, 0.03],
+    \preAmp, [5, 50, \lin, 0.01, 20]] ! 2,
+   
+    p!2, 
+    \synth_2 ! 2, 
+    quant: 0.4
+).gui(tryColumnNum: 2, allowSynthsBreak: false, allowEnvirBreak: false  
+/*, colorDeviation: 0 */
+/*, sliderPriority: \synth, playerPriority: \synth */
+)
+)</textarea>
+
+<p><a class='anchor' name='Ex.%203'>&nbsp;</a><h3><a class='anchor' name='Ex.%203:%20granular%20synthesis%20with%20Tasks'>Ex. 3: granular synthesis with Tasks</a></h3>
+<textarea class='editor'>(
+// Synth definition for single synthesized grains, waveform to be selected by type 
+
+SynthDef(\synth_3, { arg out = 0, freqLo = 1000, freqHi = 10000, amp = 0.1, type = 0, pan;
+    var env = EnvGen.kr(Env.perc(0.001, 0.003, amp),doneAction:2), freq;
+    freq = Rand(freqLo, freqHi);
+    OffsetOut.ar(out, Pan2.ar(Select.ar(type, [FSinOsc.ar(freq), Saw.ar(freq), Pulse.ar(freq)]), pan) * env) 
+}).add;
+
+// Task function definition. Although Tasks can be passed directly to VarGui as stream arg, 
+// Functions have the advantage that the generated Tasks (as EventStreamPlayers with given Pbinds) 
+// will be played in different environments automatically.
+ 
+f = {
+    loop {
+        s.sendBundle(0.2, ["/s_new","synth_3", -1,0,0, 
+            \out, 0, 
+            \type, ~type, 
+            \amp, ~amp,
+            \freqLo, ~freqMid / ~freqIntvl.sqrt,
+            \freqHi, ~freqMid * ~freqIntvl.sqrt,
+            \pan, [1, -1].choose * ~pan]
+        );  
+        [~durShort, ~durLong].choose.wait;
+    }
+};
+)
+
+
+(
+v = VarGui( 3.collect { |i| [\type, [0, 2, \lin, 1, i],
+    \freqMid, [100, 8000, \lin, 1, 500 + (2000 * i)],
+    \freqIntvl, [1, 2.0, \lin, 0.01, 1.4],
+    \amp, [0.0, 0.2, \lin, 0.01, 0.05 * (i + 1)],
+    \pan, [0.0, 1.0, \lin, 0.01, 0.8],
+    \durShort, [0.005, 0.01, \lin, 0.001, 0.01],
+    \durLong, [0.01, 0.05, \lin, 0.001, 0.02]
+    ] },
+    // f!3 doesn't collect Functions as there is already a short notation for 
+    // collecting Function values of Integers, e.g. (_*3)!5
+    stream: 3.collect { f }
+).gui(colorDeviation: 0);
+)</textarea>
+
+<p><a class='anchor' name='Ex.%204a'>&nbsp;</a><h3><a class='anchor' name='Ex.%204a:%20interaction%20of%20synth%20and%20stream%20players,%20control%20synth%20controlling%20pbind%20synths'>Ex. 4a: interaction of synth and stream players, control synth controlling pbind synths</a></h3>
+
+<p>Pbind producing a sequence of short events, each pbind-driven synth reading frequency from a control bus<textarea class='editor'>( 
+// control synth
+
+SynthDef(\synth_4_kr, {|out = 0, devFreq = 0.5, midiCenter = 60, midiDev = 10|
+    Out.kr(out, LFDNoise3.kr(devFreq, midiDev, midiCenter))
+}).add;
+
+// audio synth
+// mix of sine and pulse, interval, basic frequency read from control bus
+
+SynthDef(\synth_4_ar, {|out = 0, in = 0, soundMix = 0.5, pulseWidth = 0.5, indexLR = 0,
+    att = 0.005, rel = 0.1, amp = 0.1, midiInt = 3, midiAdd = 0|
+    var mix, freq1, freq2, fr;
+    freq1 = (In.kr(in, 1) + midiAdd).midicps;
+    freq2 = freq1 * midiInt.midicps / 0.midicps;
+    fr = [Select.kr(indexLR, [freq1, freq2]), Select.kr(1-indexLR, [freq1, freq2])];
+    mix = (SinOsc.ar(fr, 0, amp) * (1 - soundMix)) + (Pulse.ar(fr, pulseWidth, amp) * soundMix);
+    Out.ar(out, EnvGen.ar(Env.perc(att, rel), doneAction: 2) * mix)
+}).add;
+
+
+x = Pbind(\instrument, \synth_4_ar,
+    \dur, 0.1,
+    \in, PL(\in),
+    \amp, PL(\amp),
+    \midiInt, Pfunc { rrand(~int[0], ~int[1]) }, // interval bounds
+    \rel, Pfunc { ~rel.choose }, // short and long release time
+    \soundMix, Pwhite(0.1, 0.9),
+    \indexLR, PLrand([0, 1])
+);
+)
+
+
+(
+// in GUI start control synth before EventStreamPlayer
+// then try playing with sliders and pausing / resuming the control synth
+
+c = Bus.control(s,1).index;
+
+VarGui([\in, [c, c, \lin, 1, c], // bus fixed, display only
+    \int, [3,4].collect([0, 19, \lin, 0.1, _]), 
+    \rel, [0.01, 0.15].collect([0.01, 0.4, \lin, 0.005, _]), 
+    \amp, [0.0, 0.3, \lin, 0.01, 0.15]],
+
+    [\midiCenter, [45, 80, \lin, 0.1, 70],
+    \midiDev, [0, 20, \lin, 0.1, 20], 
+    \devFreq, [0.1, 15, \lin, 0.1, 1],
+    \out, c], // bus fixed, display only
+    x, \synth_4_kr
+).gui(sliderPriority: \synth, playerPriority: \synth)
+)</textarea>
+
+<p><a class='anchor' name='Ex.%204b'>&nbsp;</a><h3><a class='anchor' name='Ex.%204b:%20interaction%20of%20synth%20and%20stream%20players,%20pbind%20and%20control%20synth%20controlling%20audio%20synth'>Ex. 4b: interaction of synth and stream players, pbind and control synth controlling audio synth</a></h3>
+
+<p>Audio synth controlled by LFO pitch synth and a Pbind setting synth args (like Pmono). PLx ListPatterns taken here as they default to repeats = inf.<textarea class='editor'>(
+y = Pbind(\type, \set,
+    // sequencing of durations and amplitudes quite fixed, just global tempo and amp control
+    \dur, PLshufn([0.15, 0.15, 0.35]) / PL(\tempo),
+    \amp, PLrand([0.05, 0.12, 0.2]) * PL(\amp),
+    \soundMix, PLseq([0.1, 0.5, 0.9]),
+    \indexLR, PLrand([0, 1]),
+
+    \midiInt, Pfunc { rrand(0, ~intMax) },
+    \args, [\amp, \soundMix, \midiInt, \indexLR] // args to be set must be listed
+);
+
+
+// In GUI start control synth (#0) first, then audio synth (#1) and EventStreamPlayer,
+// then try playing with sliders and pausing / resuming the control synth and EventStreamPlayer.
+
+
+d = Bus.control(s,1).index;
+
+VarGui([ \tempo, [0.7, 1.2, \lin, 0.01, 1], 
+    \amp, [0.0, 1.5, \lin, 0.01, 0.7], 
+    \intMax, [-12, 12.0, \lin, 0.1, 8]],
+
+    [[\midiCenter, [45, 80, \lin, 0.1, 60],
+    \midiDev, [0, 20, \lin, 0.1, 1.5], 
+    \devFreq, [0.1, 15, \lin, 0.1, 10],
+    \out, d], // just display bus indices
+    [\in, d,
+    \out, 0,
+    \rel, 10000]], // ignore Env.perc definition
+
+    y, [\synth_4_kr,\synth_4_ar] 
+).gui(sliderPriority: \synth, playerPriority: \synth)
+)</textarea>
+
+<p><a class='anchor' name='Ex.%205a'>&nbsp;</a><h3><a class='anchor' name='Ex.%205a:%20reordering%20of%20var%20control'>Ex. 5a: reordering of var control</a></h3>
+
+<p>One may want to have controls grouped per name, not per Environment (resp. Pbind, Task, Synth),  this can be achieved by passing a flat (not grouped) array of specPairs and the appropriate grouping, there are methods implemented for that special case of reordering:
+<p>SynthDef from <a href="#Ex.%201a">Ex.1a</a><textarea class='editor'>(
+p = Pbind(
+    \instrument, \synth_1a,
+    \preAmp, PL(\preAmp),    
+    \amp, PL(\amp),
+    \midinote, Pfunc { ~midi + rrand(~midiDev.neg, ~midiDev) }, 
+    \dur, 0.2
+);
+
+// flat specPairs array without multiple keys
+
+~specPairs = [\midi, [24, 80, \lin, 1, 36],
+    \midiDev, [0, 0.5, \lin, 0.01, 0.25],
+    \amp, [0, 0.3, \lin, 0.01, 0.1],
+    \preAmp, [5, 50, \lin, 0.01, 25]];
+
+// get flat expansion of specPairs and appropriate groups
+
+~specPairsDupped = ~specPairs.specPairsDup(5).postln;
+~specPairsGroups = ~specPairs.specPairsDupGroups(5);
+)
+
+
+// parallel slider movement with Alt (not an array here but identically named variables in different envirs)
+// parallel player action with Shift-click
+
+(
+v = VarGui(
+    ~specPairsDupped, 
+    stream: p!5, 
+    varEnvirGroups: ~specPairsGroups, 
+    quant: 0.2
+).gui(colorDeviation: 0);
+)
+
+// compare implicit mapping by passing a grouped collection of specPairs as varCtr arg
+
+(
+v = VarGui(
+    ~specPairs!5, 
+    stream: p!5, 
+    quant: 0.2
+).gui(colorDeviation: 0);
+)
+
+// Note that in the case of not connected varEnvirGroups the column break gui option
+// allowEnvirBreak is ignored, means always set to true.</textarea>
+
+<p><a class='anchor' name='Ex.%205b'>&nbsp;</a><h3><a class='anchor' name='Ex.%205b:%20reordering%20of%20synth%20control'>Ex. 5b: reordering of synth control</a></h3>
+<textarea class='editor'>(
+SynthDef(\synth_5b, { |devFactor = 0.1, devFreq = 10, amp = 0.1|
+    var freq = XLine.kr(2000, 400, 3); 
+    Out.ar(0, Pan2.ar(SinOsc.ar(SinOsc.ar(devFreq, 0, devFactor * freq, freq), mul: amp), LFDNoise3.ar(2)) * EnvGate.new) 
+}).add;
+
+
+~specPairs = [\devFactor, [0, 0.99, \lin, 0.01, 0.5], 
+    \devFreq, [1, 100, \lin, 0.1, 70],
+    \amp, [0, 0.02, \lin, 0.001, 0.01]];
+
+~num = 10; // ~num = 20;  use gui args sliderHeight and tryColumnNum for larger nums
+
+v = VarGui(
+    synthCtr: ~specPairs.specPairsDup(~num), 
+    synth: \synth_5b ! ~num,
+    synthCtrGroups: ~specPairs.specPairsDupGroups(~num)
+).gui(colorDeviation: 0 /* ,sliderHeight: 12, tryColumnNum: 2 */);
+)
+
+// compare implicit mapping by passing a grouped collection of specPairs as synthCtr arg
+
+(
+~num = 10;
+
+v = VarGui(
+    synthCtr: ~specPairs ! ~num, 
+    synth: \synth_5b ! ~num
+).gui(colorDeviation: 0);
+)
+
+// Note that in the case of not connected synthCtrGroups the column break gui option
+// allowSynthBreak is ignored, means always set to true.</textarea>
+
+<p><a class='anchor' name='Ex.%206a'>&nbsp;</a><h3><a class='anchor' name='Ex.%206a:%20non%20standard%20usage:%20passing%20Synths'>Ex. 6a: non standard usage: passing Synths</a></h3>
+
+<p>Passing symbols or strings as synth args, refering to known (added) SynthDefs, is recommended. However also Synths or nodeIDs can be given, but the player would have to know their state, so Synths should be registered.<textarea class='editor'>(
+SynthDef(\sine, { |freq = 400, amp = 0.1| Out.ar(0, SinOsc.ar(freq, mul: amp)) }).add;
+SynthDef(\pulse, { |freq = 400, amp = 0.1| Out.ar(0, Pulse.ar(freq, mul: amp)) }).add;
+)
+
+(
+x = Synth(\sine).register;
+y = Synth(\pulse).register;
+)
+
+// pause pulse 
+
+y.run(false);
+
+// VarGui checks state, definition is known, new Synths of same definition can be started
+
+v = VarGui(synth: [x,y]).gui;
+
+
+// With nodeIDs or non-registered Synths VarGui demands addtional state info
+
+(
+x = { SinOsc.ar(400, mul: 0.1) }.play;
+y = { Pulse.ar(700, mul: 0.01) }.play;
+)
+
+y.run(false);
+
+// no new Synths from temporary synth definition
+
+v = VarGui(synth: [x,y], assumePlaying: true, assumeRunning: [true, false]).gui;</textarea>
+
+<p><a class='anchor' name='Ex.%206b'>&nbsp;</a><h3><a class='anchor' name='Ex.%206b:%20non%20standard%20usage:%20setting%20sliders%20from%20outside'>Ex. 6b: non standard usage: setting sliders from outside</a></h3>
+<textarea class='editor'>(
+// synth definition with arrayed control
+
+SynthDef(\vibes, { |amp = 0.005, devFactor = 0.1, devFreq = 10, devDisturb = 0.1| 
+    var freq = \midi.kr(20!30).midicps;
+    Out.ar(0, Mix.fill(30, {|i| [i.even.if {0}{1}, i.even.if {1}{0}] * 
+        SinOsc.ar(SinOsc.ar(devFreq * LFDNoise3.ar(0.5, devDisturb), 
+            0, devFactor * freq[i], freq[i]), mul: amp) } )) 
+}).add;
+)
+
+
+// open gui with random midi values first, start playing 
+
+(
+v = VarGui( 
+    synthCtr: [\devFactor, [0, 0.01, \lin, 0.001, 0.005],
+        \devFreq, [0, 1, \lin, 0.01, 0.5], 
+        \devDisturb, [0, 0.99, \lin, 0.01, 0.1], 
+        \amp, [0, 0.05, \lin, 0.001, 0.005],
+        \midi, 30.collect { [45.0, 95, \lin, 0.01, rrand(45,95)] }
+    ], 
+    synth: \vibes
+).gui;
+)
+
+
+// update whole control array with one random value
+// second arg synth index
+
+v.updateSynthSliders(\midi, 0, rrand(50, 80.0)!30);
+
+
+// update random group, fourth arg start index
+// evaluate several times
+
+v.updateSynthSliders(\midi, 0, rrand(50, 80.0)!5, rrand(0,25));
+
+
+// phase shift gui
+
+(
+p = Pbind(
+    \dur, 0.07,
+    \type, \rest,
+    \i, Pseries(),
+    \do, Pfunc { |e| v.updateSynthSliders(\midi, 0, (e.i / 5).sin * 25 + 70, e.i % 30) }
+).play(AppClock)
+)
+
+
+// stop updating
+
+p.stop;</textarea>
+
+<p><a class='anchor' name='Ex.%206c'>&nbsp;</a><h3><a class='anchor' name='Ex.%206c:%20non%20standard%20usage:%20setting%20values%20for%20plotting'>Ex. 6c: non standard usage: setting values for plotting</a></h3>
+<textarea class='editor'>// By setting a slider hook arbitrary actions can be triggered with lifting a slider handle.
+// A slider hook can e.g. trigger the refreshing of a plot of parametric functions.
+
+(
+p = Plotter("move slider to plot", bounds: Rect(200, 200, 700, 500));
+
+// number of plots in window
+
+n = 5; 
+
+// VarGui with random init params
+
+v = VarGui({ [
+    \a, { [0, 10, \lin, 0.01, rrand(0.0, 10)] } ! 2,
+    \b, { [0, 10, \lin, 0.01, rrand(0.0, 10)] } ! 2] } ! n,
+    envir: () ! n
+).gui;
+
+// definition of parametric function, environment of variables will be defined later on
+
+f = { |x| (x * ~a[0]).sin * ~b[0] + ((x * ~a[1]).sin * ~b[1]) }; 
+
+// evaluation points
+
+x = (0, 0.1..20);
+
+// add slider hook, index not defined, everything will be refreshed with arbitrary sliderView mouseUp
+
+v.addSliderAction { p.value_(v.envirs.collect { |e| f.inEnvir(e).(x) }).refresh };
+
+// slider movements affecting more than one plot can be achieved with modifier combinations including alt
+)</textarea>
+
+<p><a class='anchor' name='Ex.%207'>&nbsp;</a><h3><a class='anchor' name='Ex.%207:%20color%20grouping'>Ex. 7: color grouping</a></h3>
+<textarea class='editor'>// By default color grouping is based on logical separations:
+// different synths and environments, different variables and controls, arrays.
+
+// But apart of that there might exist more related controls
+// and you'd like to overrule default color grouping.
+// Especially with a large number of sliders a useful color grouping makes
+// control much more convenient (also see Buffer Granulation examples). 
+
+
+// SynthDef where freq and amp controls could be grouped
+
+(
+SynthDef(\synth_7, { |freq = 400, freqOsc = 10, freqDev = 0.03, preAmp = 5, amp = 0.1|
+    var src = SinOsc.ar(SinOsc.ar(freqOsc, 0, freqDev * freq, freq), 0, mul: preAmp).tanh ! 2;
+    Out.ar(0, src * amp * EnvGate())
+}).add;
+)
+
+
+
+// The clumps method is fine for grouping
+
+(
+~g = (0..4).clumps([3,2]);
+
+~synthCtr = [
+    \freq, [20, 5000, \exp, 0, 80],
+    \freqOsc, [0, 20.0, \lin, 0, 10],
+    \freqDev, [0, 0.5, \lin, 0, 0.03],
+    \preAmp, [5, 50, \lin, 0.01, 20],
+    \amp, [0, 0.2, \lin, 0.01, 0.03]
+];
+)
+
+
+// GUI with one Synth
+
+VarGui(synth: \synth_7, synthCtr: ~synthCtr).gui(synthColorGroups: ~g);    
+
+
+// GUI with two Synths and separate colors for the second
+
+VarGui(synth: \synth_7!2, synthCtr: ~synthCtr!2).gui(synthColorGroups: ~g+5 ++ ~g);    
+
+
+// Duplicating colors
+
+(
+~h = [~g, ~g+5].flop.collect(_.flat);  // or ~h = ~g.collect { |x| x + 5 ++ x };
+
+VarGui(synth: \synth_7!2, synthCtr: ~synthCtr!2).gui(synthColorGroups: ~h);    
+)</textarea>
+
+<p><a class='anchor' name='Ex.%208'>&nbsp;</a><h3><a class='anchor' name='Ex.%208:%20EZSmoothSlider,%20EZRoundSlider'>Ex. 8: EZSmoothSlider, EZRoundSlider</a></h3>
+<textarea class='editor'>// EZSlider is used as default slider type.
+// With wslib installed (Quark) you can choose 
+// its slider types EZSmoothSlider and EZRoundSlider 
+// as gui option
+
+
+VarGui(synth: \default).gui(sliderType: \smooth);    
+
+VarGui(synth: \default).gui(sliderType: \round);    
+
+
+// you can choose from their modes \jump (\default) or \move as general option
+
+VarGui(synth: \default).gui(sliderType: \smooth, sliderMode: \move);    
+
+
+// if you want to set individually you can refer to sliders directly
+// compare different slider behaviour of Synth 0 and 1
+
+(
+v = VarGui(synth: \default!2).gui(sliderType: \smooth, sliderMode: \move);
+
+v.synthCtrSliders.first.sliderView.mode_(\jump)
+)
+
+// For multiple slider handling see Ex 1c.
+
+// Very small numbers are forced to exponential notation (see also Ex. 9).</textarea>
+
+<p><a class='anchor' name='Ex.%209'>&nbsp;</a><h3><a class='anchor' name='Ex.%209:%20slider%20step%20precision'>Ex. 9: slider step precision</a></h3>
+<textarea class='editor'>// VarGui makes some adaptions concerning slider step sizes and rounding
+// depending on passed controlspec step size
+// in order to unify slightly different behaviour of GUI kits
+// and set parameters automatically also for very small step sizes.
+
+// For this reason (and because of multiple slider handling) 
+// scaling by modifiers is disabled by default.
+// You can have a finer control by moving the mouse over the NumberBox,
+// this also works with modifiers for multiple sliders (Ex.1c, Ex.2).
+
+
+VarGui([\a, [0, 1, \lin, 0.1, 0]]).gui;
+
+VarGui([\a, [0, 1, \lin, 0.01, 0]]).gui;
+
+VarGui([\a, [0, 1, \lin, 0.001, 0]]).gui;
+
+
+
+VarGui([\a, [0, 100, \lin, 1, 0]]).gui;
+
+VarGui([\a, [0, 10000, \lin, 10, 0]]).gui;
+
+VarGui([\a, [0, 10000, \lin, 100, 0]]).gui;
+
+
+// controlspec step = 0 causes division of range by 100
+
+VarGui([\a, [0, 1, \lin, 0, 0]]).gui;
+
+VarGui([\a, [0, 0.1, \lin, 0, 0]]).gui;
+
+VarGui([\a, [0, 1000, \lin, 0, 0]]).gui;
+
+
+// division parameter can be changed
+
+VarGui([\a, [0, 1000, \lin, 0, 0]]).gui(stepEqualZeroDiv: 10);
+
+VarGui([\a, [0, 0.1, \lin, 0, 0]]).gui(stepEqualZeroDiv: 10);
+
+
+
+// in case of very long numbers it may be necessary to adapt numberWidth
+
+VarGui([\a, [0, 0.001, \lin, 0, 0]]).gui(numberWidth: 70);
+
+
+// In general ranges are adapted to step size if necessary - 
+// this is ControlSpec's standard behaviour
+
+VarGui([\a, [1000, 5000, \lin, 1000.001, 0]]).gui(numberWidth: 70);
+
+
+// a rather exotic option: 
+// precisionSpan defaults to 10 and fails here ...
+
+VarGui([\a, [10000000, 50000000, \lin, 10000000.001, 0]]).gui(numberWidth: 100);
+
+
+// ... but resolves this
+
+VarGui([\a, [10000000, 50000000, \lin, 10000000.001, 0]]).gui(precisionSpan: 12, numberWidth: 100);</textarea>
+
+<p><a class='anchor' name='Ex.%2010'>&nbsp;</a><h3><a class='anchor' name='Ex.%2010:%20MIDI%20learn%20functionality%20with%20sliders'>Ex. 10: MIDI learn functionality with sliders</a></h3>
+
+<p>Connect your midi device, maybe you have to restart SC then. As gui example e.g. take SynthDefs and Pbind from <a href="#Ex.%204a">Ex.4a</a>, evaluate both code blocks. It must be possible to refer to the VarGui instance (e.g. v = VarGui(...))<textarea class='editor'>// start MIDI
+
+MIDIIn.connectAll
+
+// on your device define desired knobs, faders etc. to send cc messages
+// probably you want to control different parameters, so define different cc numbers
+ 
+// start learning mode
+
+v.startMIDIlearn
+
+
+// now assignment can happen by selecting a slider box
+// it gets a focus (blue border, sometimes not very well visible)
+// then send midi cc with the fader/knob of your choice
+// sending data with different cc number, while the same slider is still or again selected, will overwrite
+
+// end of learning has to be defined
+
+v.stopMIDIlearn
+
+
+// adaption of control can be done by recalling the learning mode
+
+v.startMIDIlearn
+
+...
+
+v.stopMIDIlearn</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/VarGui.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/VarGui.schelp</a><br>link::Classes/VarGui::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

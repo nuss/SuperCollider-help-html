@@ -1,0 +1,892 @@
+<!doctype html><html lang='en'><head><title>Ambisonic Enlightenment | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Ambisonic Enlightenment';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Ambisonic Enlightenment:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#Introduction'>Introduction</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Panorama%20Laws'>Panorama Laws</a></li>
+<ul class='toc'><li class='toc2'><a href='#Stereo%20with%20Pan2'>Stereo with Pan2</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Quad%20with%20PanAz'>Quad with PanAz</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Quad%20with%20PanB2%20&%20DecodeB2'>Quad with PanB2 &amp; DecodeB2</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Optimized%20Quad%20with%20HOA1'>Optimized Quad with HOA1</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Octa%20with%20PanAz'>Octa with PanAz</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Optimized%20Octa%20with%20HOA3'>Optimized Octa with HOA3</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Spatial%20Nyquist%20filters'>Spatial Nyquist filters</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Isotropy'>Isotropy</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Ambisonic%20Order'>Ambisonic Order</a></li>
+<ul class='toc'><li class='toc2'><a href='#Effective%20radius%20&%20frequency'>Effective radius &amp; frequency</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Spherical%20basis%20functions'>Spherical basis functions</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Spherical%20&%20angular%20SSR'>Spherical &amp; angular SSR</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Array%20resolution'>Array resolution</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Localisation%20measures'>Localisation measures</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Ambisonic%20Soundfield%20Model'>Ambisonic Soundfield Model</a></li>
+<ul class='toc'><li class='toc2'><a href='#Virtual%20loudspeakers%20&%20microphone'>Virtual loudspeakers &amp; microphone</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Near-field%20travelling%20wave'>Near-field travelling wave</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Far-field%20travelling%20wave'>Far-field travelling wave</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Basic%20travelling%20wave'>Basic travelling wave</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Travelling%20waveforms'>Travelling waveforms</a></li>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Tutorials (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit'>Ambisonic Toolkit</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit>Guides & Tutorials'>Guides & Tutorials</a></span>
+</div><h1>Ambisonic Enlightenment<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>On ways to think Ambisonic, a Novice's guide</div>
+</div>
+<div class='subheader'>
+</div>
+<a class='anchor' name='kw_Atk'>&nbsp;</a>
+<p>Ambisonics is a <em>holophonic</em> soundfield sampling and synthesis technique.<h2><a class='anchor' name='Introduction'>Introduction</a></h2>
+
+<p>Jérôme Daniel in his landmark paper introducing NFC-HOA, describes Ambisonics as "a very versatile approach for the spatial encoding and rendering of sound fields," and lists the following advantages of the technique: <a class='footnote anchor' name='footnote_org_1' href='#footnote_1'><sup>1</sup></a> <ul>
+<li>A <em>rational</em> encoding of spatial acoustic information, and moreover independent from the reproduction layout.<li>A <em>flexible</em> and <em>scalable</em> spatial sound representation: one can transform the sound field, and also adapt it to transmission constraints or reproduction capabilities by keeping only a subset of signals (variable spatial resolution).<li>A <em>variable geometry</em> rendering: a decoder can be suitably designed according to the loudspeaker array geometry, and also for binaural rendering over headphones.<li>A quite <em>optimal way to achieve "holophonic" sound field reconstruction</em> by means of a given number of loudspeakers, which makes Higher Order Ambisonics (HOA) comparable and even preferable to Wave Field Synthesis (WFS) in some conditions.</ul>
+
+<p>________________
+<p>Stepping onto our path towards enlightenment we'll begin by considering Ambisonics in the context of pair-wise <strong>panorama laws</strong>. We'll observe how the <em>angular</em> component of Ambisonics is similar to, but an optimized form of a panning technique with which we're familiar.
+<p>We'll then consider the meaning of <strong>Ambisonic order</strong>, the spatial resolution of the technique. We'll see how order relates to:<ul>
+<li><em>radial</em> and <em>frequency domain</em> resolution<li><em>spherical</em> and <em>angular</em> resolution<li>physical loudspeaker resolution<li>localisation measures</ul>
+
+<p>Our discussion then closes with a brief review of the <strong>Near-Field Controlled Ambsionic Soundfield Model</strong>. This is perhaps Daniel's most important contribution to the art, and moves the radius of the <em>basic wave</em> from infinity (classic, Gerzonic Ambisonics), to the mid-field.
+<p>We build a visualisation using a collection of <em>virtual loudspeakers</em> (secondary sources) and a <em>virtual microphone</em> (soundfield sampler). We then review three different <em>travelling waves</em>, observing the resulting encoding coefficients and returned encoded signals.<h2><a class='anchor' name='Panorama%20Laws'>Panorama Laws</a></h2>
+
+<p>A <em>panorama law</em>, aka <em>panning law</em>, is a rule detailing how a loudspeaker array synthesizes a spatial sound image. This rule may act by creating <em>amplitude</em>, <em>phase</em> and <em>time</em> differences between loudspeakers to synthesize the desired <em>phantom image</em>. In practice, not all of these aspects are always touched, and different panning laws may emphasize one aspect over another.
+<p>In the discussion here we'll compare <em>pair-wise panning</em> laws with those returned by Ambisonics. Also, we'll restrict the Ambisonic laws to <em>basic</em> panning. I.e., sources to be panned and target loudspeakers are at the <em>reference radius</em>.<div class='note'><span class='notelabel'>NOTE:</span> When we do this, we are reviewing the <em>angular</em> component of Ambisonic panning laws.
+<p>We'll review <em>radial</em> aspects later.</div><h3><a class='anchor' name='Stereo%20with%20Pan2'>Stereo with Pan2</a></h3>
+
+<p>Let's begin with the two channel stereophonic <em>sine-cosine panning law</em>, <a class='footnote anchor' name='footnote_org_2' href='#footnote_2'><sup>2</sup></a>  as this is the panning law used by SuperCollider's <a href="./../Classes/Pan2.html">Pan2</a> UGen. From the help, we see this is described as a "Two channel equal power panner". In other words, the panorama effect is a result of acting on the amplitude scaling of an input signal, scaling in an <em>equal power</em> distribution between two loudspeakers.
+<p>If we look at the <a href="https://github.com/supercollider/supercollider/blob/3.11/server/plugins/PanUGens.cpp#L792-L816">source code</a>, we can see the function used is <em>sine</em>.
+<p>Let's make a plot to visualize...<textarea class='editor'>~size = 4096;  // SC's Pan2 size
+
+~pos = Array.interpolation(~size, -1.0, 1.0);  // pan position
+
+// sine-cosine panning law
+(
+~sinCosLaw = (pi / 4 * Array.with(
+    (~pos.neg + 1),  // left
+    (~pos + 1)  // right
+)
+).sin;
+);
+
+// plot!
+~sinCosLaw.at(0).plot("sin-cos: left");
+~sinCosLaw.at(1).plot("sin-cos: right");</textarea>
+
+<p>What we see is that we have a rule to govern how much signal is passed to the left and right to synthesize a <em>phantom image</em>.<h3><a class='anchor' name='Quad%20with%20PanAz'>Quad with PanAz</a></h3>
+
+<p>Reviewing the help for <a href="./../Classes/PanAz.html">PanAz</a>, we see it described as a "Multichannel equal power panner." When we peek at the <a href="https://github.com/supercollider/supercollider/blob/3.11/server/plugins/PanUGens.cpp#L1304-L1346">source code</a>, we can see that sine appears.
+<p>With the settings listed just below, <a href="./../Classes/PanAz.html">PanAz</a> will return the exact same rule as <a href="./../Classes/Pan2.html">Pan2</a>:<textarea class='editor'>PanAz.ar(2, in, pos: (0.5 * ~myPos), level: 1.0, width: 2.0, orientation: 0.5)  // Pan2</textarea>
+
+<p>________________
+<p>Given the default arguments, and setting <strong>numChans</strong> to four:<textarea class='editor'>PanAz.ar(4, in, pos: 0.0, level: 1.0, width: 2.0, orientation: 0.5)</textarea>
+
+<p>will return a <em>pair-wise equal power</em> quadraphonic panning rule.
+<p>Let's go ahead and test this panner with <a href="./../Classes/DC.html">DC</a> and plot the results. We're starting at the left speaker and panning counter-clockwise all the way around:<textarea class='editor'>s.boot;  // wait for the server to boot...
+
+// Quad w/ PanAz: FL, FR, BR, BL
+(
+var dur = 0.1;
+{
+    PanAz.ar(4, DC.ar(1), Line.ar(0.25.neg, 2.25.neg, 0.1), orientation: 0.5)
+}.plot(dur)
+)</textarea>
+
+<p>What we see here is the amplitude scaling rule for all four speakers in order to pan a sound in a counter-clockwise rotation around the array. We can see that no more than two loudspeakers are active at once.
+<p>Also, note that the rule can be described as a collection of <em>windows in space</em> or <em>spatial windows</em>.
+<p>Keep this plot open, as we're going to compare this rule with Ambisonics.<h3><a class='anchor' name='Quad%20with%20PanB2%20&%20DecodeB2'>Quad with PanB2 &amp; DecodeB2</a></h3>
+
+<p>Here we'll start with two of SuperCollider's FOA built ins <a href="./../Classes/PanB2.html">PanB2</a> and <a href="./../Classes/DecodeB2.html">DecodeB2</a> to build a quadraphonic panner.<a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a>  This first UGen is a <em>basic</em> 2D encoder, and the second is a <em>controlled opposites</em>, aka cardioid, 2D decoder. Following an Ambisonic encoder with an Ambisonic decoder returns a panning law:<textarea class='editor'>// Quad w/ PanB2 -&gt; DecodeB2: FL, FR, BR, BL
+(
+var dur = 0.1;
+var numChans = 4;
+{
+    var foa;
+    foa = PanB2.ar(DC.ar(1), Line.ar(0.25.neg, 2.25.neg, 0.1));  // start the law
+    DecodeB2.ar(numChans, foa.at(0), foa.at(1), foa.at(2))  // finish the law
+}.plot(dur)
+)</textarea>
+<div class='note'><span class='notelabel'>NOTE:</span> We've split the law between <a href="./../Classes/PanB2.html">PanB2</a> &amp; <a href="./../Classes/DecodeB2.html">DecodeB2</a>!</div>
+<p>In comparing the laws for <a href="#Quad%20with%20PanAz">Quad with PanAz</a> and <a href="#Quad%20with%20PanB2%20&%20DecodeB2">Quad with PanB2 &amp; DecodeB2</a> we'll notice two things immediately. The spatial windows for :<ol>
+<li><strong>Quad with PanAz</strong> are sharply clipped<li><strong>Quad with PanB2 &amp; DecodeB2</strong> are very smooth</ol>
+
+<p><a href="./../Classes/PanAz.html">PanAz</a> offers a parameter to adjust the amount of clipping by changing its <strong>width</strong> argument. We can modify the law, so it looks a bit more like what we see with <a href="./../Classes/PanB2.html">PanB2</a> and <a href="./../Classes/DecodeB2.html">DecodeB2</a>:<textarea class='editor'>// Quad w/ PanAz: FL, FR, BR, BL
+// width = 4
+(
+var dur = 0.1;
+{
+    PanAz.ar(4, DC.ar(1), Line.ar(0.25.neg, 2.25.neg, 0.1), width: 4, orientation: 0.5)
+}.plot(dur)
+)</textarea>
+<div class='note'><span class='notelabel'>NOTE:</span> While reduced, there is are still sharp edges in the windows!</div>
+<p>In <em>time domain</em> signal processing, sharp window shapes are associated with <em>frequency domain aliasing</em><a class='footnote anchor' name='footnote_org_4' href='#footnote_4'><sup>4</sup></a> .
+<p>In the <em>spatial domain</em>, sharp windows are associated with <em>spatial domain aliasing</em>.<h3><a class='anchor' name='Optimized%20Quad%20with%20HOA1'>Optimized Quad with HOA1</a></h3>
+
+<p>The original architects of classic first order Ambisonics were <em>deeply concerned</em> about the <em>spatial domain aliasing</em> found in the quad recordings of the <a href="https://en.wikipedia.org/wiki/Quadraphonic_sound">Age of Quadraphonic Sound</a>. One of their goals was to reduce or remove the spatial distortions found in these recordings.
+<p>Their solution was to offer three different panning laws on finishing off the rule. These choices are equivalent to <a href="./../Classes/PanAz.html">PanAz</a>'s <strong>width</strong> parameter, but instead of being an ad hoc choice, the different laws for Ambisonics are defined against optimization criteria.
+<p>The ATK uses the parameter name <strong>beam shape</strong> within the HOA toolset.<a class='footnote anchor' name='footnote_org_5' href='#footnote_5'><sup>5</sup></a> 
+<p>Three standard <em>spatial windows</em> are offered:<table>
+<tr><td><strong>keyword</strong><td><strong>beam shape</strong><td><strong>localisation vector</strong><td><strong>virtual microphone</strong><tr><td><code>\basic</code><td>strict soundfield<td>maximum velocity rV<td>Hyper-cardioid<tr><td><code>\energy</code><td>energy optimised<td>maximum energy rE<td>Super-cardioid<tr><td><code>\controlled</code><td>controlled opposites<td>minimum diametric energy<td>Cardioid</table>
+
+<p>In the codeblock immediately below you'll notice that the HOA toolset code for making an <em>Ambisonic equivalent panner</em> for quad is much more verbose. As a result, we have much greater control.
+<p>We'll use the ATK's <em>projection decoder</em>, <a href="./../Classes/HoaMatrixDecoder.html#*newProjection">HoaMatrixDecoder: *newProjection</a>, to create the quad decoder. <a href="./../Classes/HoaMatrixDecoder.html#*newProjection">newProjection</a> is a very simple, but powerful decoder. It quickly calculates the matrices required for decoders where space has been sampled equally. To design a 2D decoder, we just supply the vertices of a regular polygon.<a class='footnote anchor' name='footnote_org_6' href='#footnote_6'><sup>6</sup></a> <div class='note'><span class='notelabel'>NOTE:</span> In practice, we'd usually use <a href="./../Classes/HoaMatrixDecoder.html#*newPanto">HoaMatrixDecoder: *newPanto</a> to return a quadraphonic, or other regular polygon, decoder, as it designs the required polygon internally. For ease of comparison we've used <a href="./../Classes/HoaMatrixDecoder.html#*newProjection">newProjection</a> for the following examples, so as to directly map to the output ordering <a href="./../Classes/PanAz.html">PanAz</a> returns.</div>
+<p>Go ahead and try each of the three window choices.<textarea class='editor'>// Quad w/ HOA1: FL, FR, BR, BL
+(
+var dur = 0.1;
+var numChans = 4;
+var order = 1;  // ambisonic order
+var decoder = HoaMatrixDecoder.newProjection( // design
+    Array.regularPolygon(numChans, \side, pi).rotate(1).neg,  // quad
+    // \basic,  // strict soundfield
+    // \energy,  // energy optimised
+    \controlled,  // controlled opposites &lt;- same as DecodeB2
+    \amp,
+    order
+);
+{
+    var hoa;
+    hoa = HoaEncodeDirection.ar(  // start the law
+        DC.ar(1),  // DC
+        Line.ar(0, 2pi, 0.1, add: pi/4),
+        0,
+        AtkHoa.refRadius,
+        order
+    );
+
+    HoaDecodeMatrix.ar(hoa, decoder)  // finish the law
+}.plot(dur)
+)</textarea>
+
+<p>With <em>basic</em> and <em>energy</em>, we see the scaling function drops below zero in places. If plotted in a polar form, we'd see the familiar tails of first order hyper-cardiod and super-cardioid microphones.
+<p>Look closely to find where these tails appear in the windows. Of particular interest, by dropping below zero they are inverted in polarity. They appear at their peaks when there are a peaks in the loudspeaker opposite. We can say, where one loudspeaker pushes, the opposite pulls.<div class='note'><span class='notelabel'>NOTE:</span> In Ambisonics, the loudspeakers all work together to create the panorama.</div>
+<p>(Feel free to close the open plots.)<h3><a class='anchor' name='Octa%20with%20PanAz'>Octa with PanAz</a></h3>
+
+<p>Let's try a pair-wise <a href="https://en.wikipedia.org/wiki/Octophonic_sound">octaphanic rule</a> with <a href="./../Classes/PanAz.html">PanAz</a>.
+<p>For convenience, we'll use an array where the first loudspeaker is in at front center, and we'll start the test from directly behind, so that the plot returns the first window centered. As before, the panning angle will rotate counter-clockwise.<textarea class='editor'>// Octa w/ PanAz: FC, ...
+(
+var dur = 0.1;
+{
+    PanAz.ar(8, DC.ar(1), Line.ar(1, 1.neg, 0.1), orientation: 0)
+}.plot(dur)
+)</textarea>
+
+<p>This plot really gives a clear sense that <em>panning laws</em> are <em>spatial windows</em>. We see each window offset in space. (Keep this plot open.)
+<p>Now let's do the same analysis, but just keep the window for the first loudspeaker:<textarea class='editor'>// Octa w/ PanAz: FC only!
+(
+var dur = 0.1;
+{
+    PanAz.ar(8, DC.ar(1), Line.ar(1, 1.neg, 0.1), orientation: 0).first
+}.plot(dur, minval: -1, maxval: 1)
+)</textarea>
+
+<p>(And, keep this plot open, too!)<h3><a class='anchor' name='Optimized%20Octa%20with%20HOA3'>Optimized Octa with HOA3</a></h3>
+
+<p>Go ahead and try each of the three window choices.<textarea class='editor'>// Octa w/ HOA3: FC...
+(
+var dur = 0.1;
+var numChans = 8;
+var order = 3;  // ambisonic order
+var decoder = HoaMatrixDecoder.newProjection( // design
+    Array.regularPolygon(numChans, \vertex, pi).neg,  // octa
+    // \basic,  // strict soundfield
+    // \energy,  // energy optimised
+    \controlled,  // controlled opposites
+    \amp,
+    order
+);
+{
+    var hoa;
+    hoa = HoaEncodeDirection.ar(  // start the law
+        DC.ar(1),  // DC
+        Line.ar(pi.neg, pi, 0.1),
+        0,
+        AtkHoa.refRadius,
+        order
+    );
+
+    HoaDecodeMatrix.ar(hoa, decoder)  // finish the law
+}.plot(dur)
+)</textarea>
+
+<p>(After inspection, feel free to close these.)
+<p>And, another plot, keeping just the front center loudspeaker:<textarea class='editor'>// Octa w/ HOA3: FC only!
+(
+var dur = 0.1;
+var numChans = 8;
+var order = 3;  // ambisonic order
+var decoder = HoaMatrixDecoder.newProjection( // design
+    Array.regularPolygon(numChans, \vertex, pi).neg,  // octa
+    // \basic,  // strict soundfield
+    // \energy,  // energy optimised
+    \controlled,  // controlled opposites
+    \amp,
+    order
+);
+{
+    var hoa;
+    hoa = HoaEncodeDirection.ar(  // start the law
+        DC.ar(1),  // DC
+        Line.ar(pi.neg, pi, 0.1),
+        0,
+        AtkHoa.refRadius,
+        order
+    );
+
+    HoaDecodeMatrix.ar(hoa, decoder).first  // finish the law
+}.plot(dur, minval: -1, maxval: 1)
+)</textarea>
+
+<p>(After inspection, feel free to close these.)
+<p>Let's do one more plot, where we compare the window shape of pair-wise octaphonic with HOA3 <em>strict soundfield</em>:<textarea class='editor'>// Octa w/ PanAz vs HOA3: FC only!
+(
+var dur = 0.1;
+var numChans = 8;
+var order = 3;  // ambisonic order
+var decoder = HoaMatrixDecoder.newProjection( // design
+    Array.regularPolygon(numChans, \vertex, pi).neg,  // octa
+    \basic,  // strict soundfield
+    \energy,
+    order
+);
+{
+    var hoa;
+    hoa = HoaEncodeDirection.ar(  // start the law
+        DC.ar(1),  // DC
+        Line.ar(pi.neg, pi, 0.1),
+        0,
+        AtkHoa.refRadius,
+        order
+    );
+
+    Array.with(
+        PanAz.ar(8, DC.ar(1), Line.ar(1, 1.neg, 0.1), orientation: 0).first,
+        HoaDecodeMatrix.ar(hoa, decoder).first  // finish the law
+    )
+}.plot(dur, minval: -1, maxval: 1)
+)</textarea>
+
+<p>What we're seeing here is that in the main lobe of the two windows, the octaphonic pair-wise law is similar to the HOA3 strict soundfield law. That's interesting, in that it indicates that pair-wise octaphonic panning gives something in the neighborhood of Ambisonics!<a class='footnote anchor' name='footnote_org_7' href='#footnote_7'><sup>7</sup></a> 
+<p>(go ahead and quit the server)<textarea class='editor'>s.quit</textarea>
+
+<p>(and close the open plot windows, except for the last one comparing pair-wise and basic HOA3)<h3><a class='anchor' name='Spatial%20Nyquist%20filters'>Spatial Nyquist filters</a></h3>
+
+<p>This isn't completely obvious, and seems counter intuitive, but an expert in windows for filtering will see the two plots as related. The HOA3 law <em>looks like</em> a smoothed version of the pair-wise law.
+<p>Let's do a little experiment.
+<p>The pair-wise window for the sine-cosine panning law is actually a zero padded <a href="https://en.wikipedia.org/wiki/Window_function#Sine_window">Sine window</a>.<a class='footnote anchor' name='footnote_org_8' href='#footnote_8'><sup>8</sup></a> 
+<p>When we compare the sine window with a windowed sinc, we see some remarkable similarities with our previous plot:<textarea class='editor'>(
+~size = 4096;
+~numChans = 8;
+
+// pair-wise law
+~pairWise8 = Signal.zeroFill(~size).overDub(
+    Signal.zeroFill(2 * ~size / ~numChans).addSine(0.5, 1.0, 0.0),
+    ((~size / 2) - (~size / ~numChans)).asInteger
+);
+
+// windowed sinc
+~lowpass = Signal.windowedSinc(~size, 0.00085, 1).normalize;  // not far off...
+
+[ ~pairWise8.as(Array), ~lowpass.as(Array) ].plot("Octa: Sine Window &amp; Windowed Sinc", minval: -1, maxval: 1)
+)</textarea>
+
+<p>A windowed sinc is a lowpass filter. Frequency domain anti-aliasing filters are often designed by starting with a windowed sinc.
+<p>For more insight, let's review the frequency response of these two:<textarea class='editor'>(
+[
+    (~pairWise8.rdftZoom(30, 0, 29).magnitude.normalize + -90.dbamp).ampdb,
+    (~lowpass.rdftZoom(30, 0, 29).magnitude.normalize + -90.dbamp).ampdb
+].plot("Octa: Sine Window &amp; Windowed Sinc Magnitude (dB)")
+)</textarea>
+
+<p>What we are seeing here is that the windowed sinc is a fairly well behaved lowpass filter with a flat top and a smooth roll off. This isn't the case with the sine window.
+<p>Because we can, let's directly view the frequency response of the HOA3 strict soundfield panning law.<textarea class='editor'>~numChans = 8;
+~order = 3;  // ambisonic order
+
+// design decoder
+~decoder = HoaMatrixDecoder.newProjection( // design
+    Array.regularPolygon(~numChans, \vertex, pi).neg,  // octa
+    \basic,  // strict soundfield
+    \energy,
+    ~order
+);
+
+// make a new decoder - just the first (front) channel
+~frontChanDecoder = HoaMatrixDecoder.newFromMatrix(
+    ~decoder.getSub(0, 0, ~order.asHoaOrder.size, 1),
+    ~decoder.directions.keep(1),  // first channel only
+    ~order
+);
+
+// analyze directional response - return basic pan law for HOA3
+~testDirections = Array.interpolation(~size, pi.neg, pi);
+~basicWindow8 = ~frontChanDecoder.analyzeDirections(~testDirections).amp.as(Signal);
+
+
+// view pairwise and actual HOA3 law
+[ ~pairWise8.as(Array), ~basicWindow8.as(Array) ].plot("Octa: Sine Window &amp; HOA3 Basic", minval: -1, maxval: 1);
+
+// frequency response of the two
+[
+    (~pairWise8.rdftZoom(30, 0, 29).magnitude.normalize + -90.dbamp).ampdb,
+    (~basicWindow8.rdftZoom(30, 0, 29).magnitude.normalize + -90.dbamp).ampdb
+].plot("Octa: Sine Window &amp; HOA3 Basic Magnitude (dB)")</textarea>
+
+<p>What we're seeing is that the HOA3 basic (strict) panning law has a well behaved lowpass response in the frequency domain when viewed as a time domain window.
+<p>________________
+<p>In the spatial domain, the Ambisonic panning law acts as a <em>spatial lowpass filter</em>. Its role is as a <em>spatial anti-aliasing filter</em>, aka a <em>spatial Nyquist fiter</em>.
+<p>Let's see how this works in practice by going back to quad comparing a pair-wise quad law with an HOA3 quad law:<textarea class='editor'>~numChans = 4;
+~order = 3;  // ambisonic order
+
+// pair-wise law
+~pairWise4 = Signal.zeroFill(~size).overDub(
+    Signal.zeroFill(2 * ~size / ~numChans).addSine(0.5, 1.0, 0.0),
+    ((~size / 2) - (~size / ~numChans)).asInteger
+);
+
+// design decoder
+~decoder = HoaMatrixDecoder.newProjection( // design
+    Array.regularPolygon(~numChans, \vertex, pi).neg,  // quad
+    \basic,  // strict soundfield
+    \energy,
+    ~order
+);
+
+// make a new decoder - just the first (front) channel
+~frontChanDecoder = HoaMatrixDecoder.newFromMatrix(
+    ~decoder.getSub(0, 0, ~order.asHoaOrder.size, 1),
+    ~decoder.directions.keep(1),  // first channel only
+    ~order
+);
+
+// analyze directional response - return basic pan law for HOA3
+~testDirections = Array.interpolation(~size, pi.neg, pi);
+~basicWindow4 = ~frontChanDecoder.analyzeDirections(~testDirections).amp.as(Signal);
+
+
+// view pairwise and actual HOA3 law
+[ ~pairWise4.as(Array), ~basicWindow4.as(Array) ].plot("Quad: Sine Window &amp; HOA3 Basic", minval: -1, maxval: 1);
+
+// frequency response of the two
+[
+    (~pairWise4.rdftZoom(30, 0, 29).magnitude.normalize + -90.dbamp).ampdb,
+    (~basicWindow4.rdftZoom(30, 0, 29).magnitude.normalize + -90.dbamp).ampdb
+].plot("Quad: Sine Window &amp; HOA3 Basic Magnitude (dB)")</textarea>
+
+<p>Remarkably, when we go back to quad from HOA3, we see that the panning law window has opened up again!
+<p>This opening up is <em>spatial smoothing</em>, aka <em>lowpass filtering</em> in the <em>spatial domain</em>.
+<p>If we bother to do a check, we'll find that the quad law for HOA3 (when using the <em>projection decoder</em>) is the same as the one for HOA1.
+<p>This is a result of the Ambisonic laws applying a <em>spatial anti-aliasing filter</em>.
+<p>Also, we can see by inspecting the window frequency response, the spatial cutoff is higher for the octaphonic array. The octaphonic array has a higher <em>spatial sampling rate</em>. For HOA3 with the quadraphonic array, the <em>spatial anti-aliasing filter</em> rejects spatial detail that would otherwise alias.
+<p>In contrast, the pair-wise laws are very leaky. They have higher cutoffs, but significantly more <em>spatial aliasing</em>.
+<p>________________
+<p><a class='anchor' name='nyquistTakeways'>&nbsp;</a><strong>Important takeaways</strong><ul>
+<li><em>panning laws</em> are <em>spatial filters</em><li><em>spatial smoothing</em> is <em>spatial lowpass filtering</em><li>loudspeaker arrays have a <em>spatial sampling rate</em><li>we use <em>anti-aliasing filters</em> to <em>avoid spatial aliasing</em></ul>
+
+<p>(feel free to close any open plots)<h3><a class='anchor' name='Isotropy'>Isotropy</a></h3>
+
+<p>Maintaining <a href="https://en.wikipedia.org/wiki/Isotropy">isotropy</a> is one of the more important concerns in the design of Ambisonic panning laws.
+<p>Let's directly compare the panning laws of pair-wise sine-cosine quad with those of HOA basic quad.
+<p>The example code below makes a single window for each law. The directional amplitude and power response of the two arrays are then simulated. The plots returned illustrate these two measures for both arrays.<textarea class='editor'>// ----------------
+// single window, to compare
+~size = 4096;
+
+~numChans = 4;
+~order = 3;  // ambisonic order
+
+// pair-wise law
+~pairWise4 = Signal.zeroFill(~size).overDub(
+    Signal.zeroFill(2 * ~size / ~numChans).addSine(0.5, 1.0, 0.0),
+    ((~size / 2) - (~size / ~numChans)).asInteger
+);
+
+// design decoder
+~decoder = HoaMatrixDecoder.newProjection( // design
+    Array.regularPolygon(~numChans, \vertex, pi).neg,  // quad
+    \basic,  // strict soundfield
+    \energy,
+    ~order
+);
+
+// make a new decoder - just the first (front) channel
+~frontChanDecoder = HoaMatrixDecoder.newFromMatrix(
+    ~decoder.getSub(0, 0, ~order.asHoaOrder.size, 1),
+    ~decoder.directions.keep(1),  // first channel only
+    ~order
+);
+
+// analyze directional response - return basic pan law for HOA3
+~testDirections = Array.interpolation(~size, pi.neg, pi);
+~basicWindow4 = ~frontChanDecoder.analyzeDirections(~testDirections).amp.as(Signal);
+
+
+// pair-wise
+~pairWise4Amp = Signal.zeroFill(~size);
+~pairWise4Pow = Signal.zeroFill(~size);
+
+// HOA basic
+~basicWindow4Amp = Signal.zeroFill(~size);
+~basicWindow4Pow = Signal.zeroFill(~size);
+
+~numChans.do({ |i|
+    // pair-wise amp &amp; pow
+    ~pairWise4Amp.overDub(
+        ~pairWise4.rotate((i / ~numChans * ~size).asInteger)
+    );
+    ~pairWise4Pow.overDub(
+        ~pairWise4.squared.rotate((i / ~numChans * ~size).asInteger)
+    );
+    // HOA basic amp &amp; pow
+    ~basicWindow4Amp.overDub(
+        ~basicWindow4.rotate((i / ~numChans * ~size).asInteger)
+    );
+    ~basicWindow4Pow.overDub(
+        ~basicWindow4.squared.rotate((i / ~numChans * ~size).asInteger)
+    )
+});
+
+// view pairwise and HOA3 law
+[ ~pairWise4.as(Array), ~basicWindow4.as(Array) ].plot("Quad Window: Sine &amp; HOA3 Basic", minval: -1, maxval: 1);
+
+// view pairwise and HOA3 amp
+([ ~pairWise4Amp.normalize.as(Array), ~basicWindow4Amp.normalize.as(Array) ] + (-90.dbamp)).ampdb.plot("Quad Amp: Sine &amp; HOA3 Basic (dB)", minval: -5, maxval: 5);
+
+// view pairwise and HOA3 pow
+([ ~basicWindow4Amp.normalize.as(Array), ~basicWindow4Pow.normalize.as(Array) ] + (-90.dbamp)).ampdb.plot("Quad Pow: Sine &amp; HOA3 Basic (dB)", minval: -5, maxval: 5);</textarea>
+
+<p>Here's what we see when we inspect these plots:<ol>
+<li><em>both</em> the pair-wise and the HOA basic laws are <em>equal power</em><li><em>only</em> the HOA basic law is <em>equal amplitude</em></ol>
+
+<p>The HOA quad law is <em>isotropic</em> for both of these measures.<div class='note'><span class='notelabel'>NOTE:</span> For this review, we've made these measures of the HOA law in a brute force manner. The HOA decoder tools offer the usual formalized measures via a convenient interface. See: <a href="./../Classes/HoaMatrixDecoder.html#Analysis">HoaMatrixDecoder: Analysis</a>.</div><h2><a class='anchor' name='Ambisonic%20Order'>Ambisonic Order</a></h2>
+
+<p>From the <a href="./../Guides/ATK-Glossary.html">ATK Glossary</a>:<dl>
+<dt>Ambisonic order<a class='anchor' name='kw_order'>&nbsp;</a><dd>Specifies the maximum <em>Associated Legendre degree</em>, ℓ, of a given signal set.</dl>
+
+<p><em>Ambisonic order</em> indicates the <em>Associated Legendre degree</em> to which the detail of an Ambisonic soundfield is known.
+<p>There are a number of ways to consider the <em>meaning of Ambisonic order</em>. As Ambisonics is a <em>holophonic</em> technique, we'll begin by considering the <strong>effictive radius</strong> of soundfield resynthesis. We'll consider practical aspects of <strong>spatial sampling</strong> in the spherical and angular domains. And, then end with a brief discussion of <strong>localisation measures</strong>.
+<p>The ATK includes a class, <a href="./../Classes/HoaOrder.html">HoaOrder</a>, which can offer formalized understandings of these various aspects of an Ambisonic soundfield. We'll use this lens in much of the discussion that follows.<h3><a class='anchor' name='Effective%20radius%20&%20frequency'>Effective radius &amp; frequency</a></h3>
+
+<p>When we recall the <a href="./../Tutorials/ABCs-of-the-ATK.html#Tetrahedral%20Recording">OUTRS tetrahedral recording experiment</a>, the origins of Ambisonics as a soundfield sampling technique become clear. The soundfield is sampled at a single point with a measurement array. We <em>exactly know the soundfield</em> at this point.<a class='footnote anchor' name='footnote_org_9' href='#footnote_9'><sup>9</sup></a> 
+<p>Surprisingly, we also know the soundfield further away from the sampling point, in a frequency dependent way. This is the <em>effective radius</em>:<dl>
+<dt>effective radius<dd>Radius of the volume (or area) of exact soundfield reconstruction.</dl>
+
+<p>Let's plot the <em>effective radius</em> against <em>Ambisonic order</em>:<textarea class='editor'>/*
+plot effective radius against effective order
+_fixed_ freq
+*/
+(
+~effFreq = 700.0;  // hearing half band
+/* ~effFreq = 1000.0;  // hearing duplex theory */
+
+~effOrders = Array.series(10, 0);  // orders to test
+
+~radii = ~effOrders.collect({ |order| HoaOrder.new(order).radiusAtFreq(~effFreq) });
+~radii.plot("Effective radius (m) @ % Hz".format(~effFreq), maxval: ~radii.last.ceil);
+)</textarea>
+
+<p>Ambisonic order is on the x-axis and effective radius in meters is on the y-axis. We're measuring at 700 Hz (or 1000 Hz, if you choose). This plot illustrates: as Ambisonic order increases, the region of exact soundfield reproduction also increases.
+<p>In particular, at fifth order, we can expect a region of nearly radius = 0.4 meter to be <em>exactly</em> reconstructed for frequencies at and below 700 Hz.
+<p>Let's try another plot:<textarea class='editor'>/*
+plot effective bandwidth against effective order
+_fixed_ radius
+*/
+(
+// choose a radius to test..
+// ~effRadius = 1.5;  // @ refRadius
+// ~effRadius = 0.5;  // 4 peeps
+~effRadius = 0.25;  // 2 peeps
+// ~effRadius =  (0.18 / 2);  // head
+
+~effFreq = 700.0;  // hearing half band
+/* ~effFreq = 1000.0;  // hearing duplex theory */
+
+~effOrders = Array.series(10, 0);
+
+~effFreqs = ~effOrders.collect({ |order| HoaOrder.new(order).freqAtRadius(~effRadius) });
+
+// log bandwidth
+~effFreqs.cpsoct.put(0, 0).plot("Effective octave @ radius % (m)".format(~effRadius), maxval: ~effFreq.cpsoct);
+)</textarea>
+
+<p>As with our previous plot, Ambisonic order is on the x-axis. The y-axis is frequency, but on a log scale of decimal octaves. For instance:<textarea class='editor'>5.octcps</textarea>
+
+<p>This plot illustrates: as Ambisonic order increases, the cutoff frequency of exact soundfield reproduction also increases.
+<p>In particular, at third order, we can expect a region radius = 0.25 meter to be <em>exactly</em> reconstructed below 5.3333 decimal octaves:<textarea class='editor'>5.3333.octcps</textarea>
+
+<p>Knowing the effective radius and effective frequency helps us decide which Ambisonic panning law to use. If the target for playback is a large audience, choosing the <em>strict soundfield</em> law is not necessarily ideal. The <em>energy optimised</em> or <em>controlled opposites</em> laws are better choices.
+<p>________________
+<p><strong>Frequency dependent laws</strong>
+<p>Classic FOA employs the <em>psycho-acoustic shelf filter</em><a class='footnote anchor' name='footnote_org_10' href='#footnote_10'><sup>10</sup></a>  to select the strict law at low frequencies and the energy law at highs. The ATK's HOA toolset includes a fiter kernel designer to do the job.<a class='footnote anchor' name='footnote_org_11' href='#footnote_11'><sup>11</sup></a>  Frequency dependent laws have traditionally been advised for studio and near-field listening. For example:<textarea class='editor'>// --------------------------------------
+// find effective freq with respect to radius &amp; order
+(
+~effRadius = 0.18 / 2;   // head: single listener
+~order = 3;
+
+~effFreq = HoaOrder.new(~order).freqAtRadius(~effRadius);
+)</textarea>
+
+<p>A single listener can expect a third order soundfield to be reproduced exactly, up to 1820 Hz. Above this point, the energy optimised law is the better choice, as the soundfield isn't exactly reconstructed.<h3><a class='anchor' name='Spherical%20basis%20functions'>Spherical basis functions</a></h3>
+
+<p>From the <a href="./../Guides/ATK-Glossary.html">ATK Glossary</a>:<dl>
+<dt>spherical harmonics (SH)<a class='anchor' name='kw_spherical'>&nbsp;</a><a class='anchor' name='kw_harmonic'>&nbsp;</a><dd>A complete set of orthogonal, Fourier <em>basis functions</em> on the sphere. For Ambisonics, a set of real form harmonics truncated to a highest <em>Associated Legendre</em> degree, i.e., a given <em>Ambisonic order</em>, encodes a soundfield. See <a href="https://en.wikipedia.org/wiki/Spherical_harmonics">Spherical harmonics</a>.</dl>
+
+<p>Open the following pages:<textarea class='editor'>(
+"https://en.wikipedia.org/wiki/File:Spherical_Harmonics_deg5.png#/media/File:Spherical_Harmonics_deg5.png".openOS;
+"https://en.wikipedia.org/wiki/File:Rotating_spherical_harmonics.gif#/media/File:Rotating_spherical_harmonics.gif".openOS;
+)</textarea>
+
+<p>The first of these illustrates Spherical Harmonics (SH) up to degree 5; these are the SH for fifth order. We can understand these bubble shapes as illustrating the 3D polar response patterns of each SH. If we like, we can think of these as virtual microphones.
+<p>The second illustrates up to degree 4, so these are for fourth order. (We convert a fifth order soundfield to fourth by discarding the SH of degree 5.) These are illustrated as heat maps. Only one side of the "tree" is shown. The symmetries of the sectoral and tesseral SH are shown via the rotating SH.
+<p>More from the <a href="./../Guides/ATK-Glossary.html">ATK Glossary</a>:<dl>
+<dt>sectoral modes<a class='anchor' name='kw_sectoral'>&nbsp;</a><a class='anchor' name='kw_modes'>&nbsp;</a><dd>Spherical modes where <em>AL degree</em> and <em>AL index</em> are related ℓ = |m|. These modes encode azimuth. See <a href="https://en.wikipedia.org/wiki/Spherical_harmonics#Visualization_of_the_spherical_harmonics">Visualization of the spherical harmonics</a> and <a href="http://mathworld.wolfram.com/SectorialHarmonic.html">Sectorial Harmonic</a>.<dt>tesseral modes<a class='anchor' name='kw_tesseral'>&nbsp;</a><a class='anchor' name='kw_modes'>&nbsp;</a><dd>Spherical modes not included as <em>sectoral</em> or <em>zonal</em>, encoding both azimuth and elevation. See <a href="https://en.wikipedia.org/wiki/Spherical_harmonics#Visualization_of_the_spherical_harmonics">Visualization of the spherical harmonics</a> and <a href="http://mathworld.wolfram.com/TesseralHarmonic.html">Tesseral Harmonic</a>.<dt>zonal modes<a class='anchor' name='kw_zonal'>&nbsp;</a><a class='anchor' name='kw_modes'>&nbsp;</a><dd>Spherical modes where <em>AL index</em> m = 0. These modes encode elevation. See <a href="https://en.wikipedia.org/wiki/Spherical_harmonics#Visualization_of_the_spherical_harmonics">Visualization of the spherical harmonics</a> and <a href="http://mathworld.wolfram.com/ZonalHarmonic.html">Zonal Harmonic</a>.</dl>
+
+<p>The spherical harmonics are the basis functions against which we measure the shape of a soundfield.
+<p>A zero-th order soundfield is a soundield without any shape; it has energy only in degree zero.<h3><a class='anchor' name='Spherical%20&%20angular%20SSR'>Spherical &amp; angular SSR</a></h3>
+
+<p>It becomes immediately clear that Ambisonic order can be directly understood as a kind of <em>spherical domain spatial sampling rate</em>. The higher the order, the more spherical harmonics.
+<p>Let's explore some details. We'll begin by considering:<textarea class='editor'>// three different orders
+~hoaOrder1 = 1.asHoaOrder;
+~hoaOrder3 = 3.asHoaOrder;
+~hoaOrder5 = 5.asHoaOrder;</textarea>
+
+<p><strong>In 3D, aka Periphonic</strong>
+<p>How resolved, in terms of numbers of harmonics, are each of these?<textarea class='editor'>~hoaOrder1.size;  // -&gt; 4
+~hoaOrder3.size;  // -&gt; 16
+~hoaOrder5.size;  // -&gt; 36</textarea>
+
+<p>We see that as order increases, so does the number of SH in the spherical domain. We can think of <em>Ambisonic order</em> as directly indicating a <em>spatial sampling rate</em> in the <em>spherical domain</em>.
+<p>For translations of soundfields to the <em>angular domain</em>, the ATK uses <em>spherical t-designs</em>. We can find the mimimum size design required for each order by observing the returned value:<textarea class='editor'>TDesignLib.getHoaDesigns(order: ~hoaOrder1.order).first[\numPoints];
+TDesignLib.getHoaDesigns(order: ~hoaOrder3.order).first[\numPoints];
+TDesignLib.getHoaDesigns(order: ~hoaOrder5.order).first[\numPoints];</textarea>
+
+<p><strong>3D Soundfield Spatial Sampling Rates</strong>
+<p>The table below compares the number of coefficients required for the spherical and angular domains:<a class='footnote anchor' name='footnote_org_12' href='#footnote_12'><sup>12</sup></a> <table>
+<tr><td><strong>order</strong><td><strong>spherical SR</strong><td><strong>angular SR</strong><tr><td>1<td>4<td>4<tr><td>3<td>16<td>24<tr><td>5<td>36<td>60</table>
+
+<p>One way we can read the table immediately above is to understand that spherical harmonics are a fairly efficient way to represent a soundfield. For fifth order, we need only 36 harmonics, but in the angular domain, 24 more <em>spatial samples</em> are required for the job.
+<p><strong>In 2D, aka Pantophonic</strong>
+<p>How resolved, in terms of numbers of harmonics, are each of these?<textarea class='editor'>~hoaOrder1.indices(subset: \sectoral).size;  // -&gt; 3
+~hoaOrder3.indices(subset: \sectoral).size;  // -&gt; 7
+~hoaOrder5.indices(subset: \sectoral).size;  // -&gt; 11</textarea>
+
+<p>The sectoral harmonics, aka modes, encode the 2D soundfield. You can see we need significantly less harmonics here.
+<p><strong>2D Soundfield Spatial Sampling Rates</strong>
+<p>The usual practice is to consider the angular sampling rate for 2D to be +1 that of the spherical, as doing so returns more stable image synthesis.<a class='footnote anchor' name='footnote_org_13' href='#footnote_13'><sup>13</sup></a> <table>
+<tr><td><strong>order</strong><td><strong>spherical SR</strong><td><strong>angular SR</strong><tr><td>1<td>3<td>4<tr><td>3<td>7<td>8<tr><td>5<td>11<td>12</table>
+
+<p>The rule for 2D arrays is:<textarea class='editor'>~numSpkrs = (~order * 2) + 2</textarea>
+<h3><a class='anchor' name='Array%20resolution'>Array resolution</a></h3>
+
+<p>As we saw above with <a href="#Spatial%20Nyquist%20filters">Spatial Nyquist filters</a>, an actual loudspeaker array has spatial Nyquist frequency. For instance, a quad decoder will only be able to synthesize a first order Ambisonic soundfield. This becomes apparent when we evaluate the rule of thumb immediately above.
+<p>For a regular polygon, 2D, we can re-write the rule as:<a class='footnote anchor' name='footnote_org_14' href='#footnote_14'><sup>14</sup></a> <textarea class='editor'>~order = ((~numSpkrs / 2) - 1).ceil.asInteger</textarea>
+
+<p>The same principle is true for 3D loudspeaker arrays.<a class='footnote anchor' name='footnote_org_15' href='#footnote_15'><sup>15</sup></a>  If we are designing an isotropic (equal in space) decoder, the degree of resolution is limited by the number of loudspeakers available. For instance, a cube can <em>only</em> be first order:<textarea class='editor'>~order = 1;  // yes!
+// ~order = 3;  // no!!
+~numChans = 8;  // cube
+
+// find t-design
+TDesign.newHoa(~numChans, order: ~order);</textarea>
+<h3><a class='anchor' name='Localisation%20measures'>Localisation measures</a></h3>
+
+<p>Another way we can understand Ambisonic order, and panning law choices (beam shapes) is to consider the localisation measures Ambisonics is designed to optimize:<dl>
+<dt>velocity localisation vector (rV)<dd>Vector quantity offering an estimate of the perceived localisation of a phantom source at low frequency, predicting imaging up to around 1.5 kHz. Can be found as the real part of <em>acoustic admittance</em>, the <em>active acoustic admittance</em>.<dt>energy localisation vector (rE)<dd>Vector quantity offering an estimate of the perceived localisation of a phantom source in terms of energy, expected to predict imaging between 500 and 5000 Hz.</dl>
+
+<p>The <em>strict soundfield</em> option maximizes <strong>rV</strong>, where <strong>rE</strong> is <em>energy optimised</em>. For off center listeners, <strong>rE</strong> is usually preferred.
+<p>Let's try a plot:<textarea class='editor'>/*
+plot rE against order order
+beam: energy
+*/
+(
+~beamShape = \energy;  // energy optimised
+
+// ~dim = 3;  // 3D
+~dim = 2;  // 2D
+
+~orders = Array.series(10, 0);  // orders to test
+
+~rEs = ~orders.collect({ |order| HoaOrder.new(order).rE(~beamShape, ~dim) });
+~rEs.plot("%D: rE for % law".format(~dim, ~beamShape), maxval: ~rEs.last.ceil);
+)</textarea>
+
+<p>What we see here is that for a third order 2D array, the energy localisation measure for a synthesized Ambisonic image is more that 90% that of a real sound. We expect this energy optimized 2D array to be well defined in terms of energy.
+<p>Try:<textarea class='editor'>/*
+plot rE against order order
+beam: cardioid
+*/
+(
+~beamShape = \controlled;  // controlled opposites
+
+// ~dim = 3;  // 3D
+~dim = 2;  // 2D
+
+~orders = Array.series(10, 0);  // orders to test
+
+~rEs = ~orders.collect({ |order| HoaOrder.new(order).rE(~beamShape, ~dim) });
+~rEs.plot("%D: rE for % law".format(~dim, ~beamShape), maxval: ~rEs.last.ceil);
+)</textarea>
+
+<p>For the <em>controlled opposites</em> law, we require fifth order to get above the 90% threshold.<h2><a class='anchor' name='Ambisonic%20Soundfield%20Model'>Ambisonic Soundfield Model</a></h2>
+
+<p>Classic, aka Gerzonic, Ambisonics has always included the <a href="./../Guides/HOA-NFE.html">Near-Field Effect (NFE)</a> within its theoretical framework. This inclusion, however, hasn't tended to be especially visible to users on the encoding side of the panning laws. As a result many users are only familiar with <em>basic encoding</em>, where the encoding coefficients are real.
+<p>In classic Ambisonics, <em>basic encoding</em> is <em>planewave encoding</em>.
+<p>________________
+<p>Daniel's <em>Near-Field Compensated Higher Order Ambisonics (NFC-HOA)</em><a class='footnote anchor' name='footnote_org_16' href='#footnote_16'><sup>16</sup></a>  introduces the <em>Near-Field Effect (NFE)</em> <strong>reference radius</strong> into the Ambisonic framework to formalize what we might call the <em>Near-Field Controlled Ambsionic Soundfield Model (NFC-ASM)</em>.
+<p>In practice, we can view this model as a collection of virtual loudspeakers at the <em>reference radius</em> with a virtual microphone at the center.
+<p>In theory, this isn't quite the whole story. Recall from our discussion of <a href="#Panorama%20Laws">Panorama Laws</a> that we should view the loudspeakers as a collection of spatial window functions, or basis functions, with <em>look directions</em>. Similarly we should view the microphone as another collection of spatial basis functions, the spherical harmonics. The number of each of these is governed by the principles <a href="#Spherical%20&%20angular%20SSR">outlined above</a>.
+<p>The soundfield can be represented in both angular and spherical forms.
+<p>________________
+<p>We'll start with constructing a visualisation of the model. Then we'll consider encoding three different <em>travelling waves</em>. We'll finish up with synthesizing the associated waveforms, directly from the calculated encoding coefficients.
+<p>In designing the encoding coefficients for these different travelling waves, you'll see that the encoding law is split between <em>angular</em> and <em>radial</em> encoding. Radial encoding what allows us to move either side of the <em>reference radius</em>, and is where our <em>near-field control</em> is found.<h3><a class='anchor' name='Virtual%20loudspeakers%20&%20microphone'>Virtual loudspeakers &amp; microphone</a></h3>
+
+<p>We'll start building our model by evenly distributing a number of points evenly over the surface of a sphere. As discussed <a href="#Spherical%20&%20angular%20SSR">above</a>, we'll find a <em>spherical t-design</em> which has an angular spatial sampling rate high enough to meet the spherical sampling rate of a selected order:<textarea class='editor'>~order = AtkHoa.defaultOrder;  // HOA3
+~hoaOrder = HoaOrder.new(~order);  // HoaOrder instance
+
+// find smallest t-design
+~numChans = TDesignLib.getHoaDesigns(order: ~order).first[\numPoints];
+
+// get t-design
+~tdesign = TDesign.newHoa(~numChans, order: ~order);  // t-design suitable for HOA3</textarea>
+
+<p>Given this spherical design, we'll now explicitly collect <a href="./../Classes/Spherical.html">Spherical</a> coordinate instances, setting the radius of these to the <em>reference radius</em>.<textarea class='editor'>(
+~tdirs = ~tdesign.directions;  // t-design direcitons (rho = 1)
+~vspkrDirs = ~tdirs.collect({ |dir|  // include reference radius
+    Spherical.new(
+        AtkHoa.refRadius,
+        dir.first,
+        dir.last
+        )
+})
+)</textarea>
+
+<p>Let's now use <a href="./../Classes/PointView.html">PointView</a> to view this array of virtual loudspeakers at the reference radius:<textarea class='editor'>// let's view with PointView: t-design first
+(
+~pv = PointView.new;
+~pv.directions_(~vspkrDirs);  // set directions
+~pv.pointColors_(Color.yellow);  // yellow
+~pv.connections_(\triangulation);  // set triang mesh
+~pv.axisScale_(1.0);
+~pv.front;  // move to front
+)</textarea>
+
+<p>Go ahead and touch the GUI with your mouse or pointer to re-orient the display.
+<p>Now, let's add a virtual soundfield microphone:<textarea class='editor'>// --
+// add a virtual microphone!!
+~vmicDir = Spherical.new(0.0, 0.0, 0.0);  // origin
+
+~pv.directions_(~vspkrDirs ++ [ ~vmicDir ], false);  // don't reset connections!
+~pv.highlightPoints([ ~vspkrDirs.size ]);  // highight the microphone
+
+~pv.front;  // move to front</textarea>
+
+<p>This is it!
+<p>We can imagine the <em>NFC-ASM</em> to be a collection of virtual loudspeakers evenly distributed across the surface of a sphere. The radius of the sphere is the <em>reference radius</em>. At the origin of the sphere is a virtual soundfield microphone.
+<p>Easy, peasy!!
+<p>When we're done inspecting:<textarea class='editor'>~pv.removeHighlight</textarea>
+<h3><a class='anchor' name='Near-field%20travelling%20wave'>Near-field travelling wave</a></h3>
+
+<p>The radial part of Ambisonic encoding (the start of the panning law) is frequency dependent, so for this demonstration we'll need to specify a frequency:<textarea class='editor'>// radial encoding is frequency dependent!
+// ~freq = 2.75.octcps  // A2
+~freq = 1.75.octcps  // A1</textarea>
+<div class='note'><span class='notelabel'>NOTE:</span> Usually we'd use <a href="./../Classes/HoaEncodeDirection.html">HoaEncodeDirection</a> to encode a travelling wave when building a UGen graph. When using this UGen we don't need to specify a frequency. The included frequency dependent radial filter <a href="./../Classes/DegreeCtrl.html">DegreeCtrl</a> does the job for us.</div>
+<p>Let's now specify a <em>near-field</em> source, encoded at half the reference radius. We'll use a shorthand of naming a travelling wave within the reference radius as a <em>near-field source</em>.<textarea class='editor'>// add a virtual source (near)
+~nearRadius = 0.5 * AtkHoa.refRadius;
+~nearDir = Spherical.new(~nearRadius, pi/6, pi/12);
+
+// update PointView directions
+~pv.directions_(~vspkrDirs ++ [ ~vmicDir, ~nearDir ], false);  // don't reset connections!
+~pv.highlightPoints([ ~vspkrDirs.size + 1 ]);  // highight the new point
+~pv.front;  // move to front</textarea>
+
+<p>We can see this source is within the virtual loudspeaker array.
+<p>Now let's design the encoding coefficients. You'll see we design the angular and radial coefficients separately, and then bring them together for the final encoding law:<textarea class='editor'>(
+// coefficients for this near source (focused)
+~nearAngular = ~hoaOrder.sph(  // angular coeffs
+    ~nearDir.theta,
+    ~nearDir.phi
+);
+~nearRadial = ~hoaOrder.ctrlWeights(  // radial coeffs
+    ~freq,  // freq
+    ~nearDir.rho,  // encoding radius
+    AtkHoa.refRadius  // reference radius
+)[~hoaOrder.l];
+
+// combine angular and radial
+~nearCoeffs = ~nearAngular * ~nearRadial;  // all together!
+)</textarea>
+
+<p>The designed coefficients are <a href="./../Classes/Complex.html">Complex</a>. We have both real and imaginary parts for each coefficient!
+<p>When we inspect the magnitude and phase of the encoding coefficients, we're reviewing the magnitude and phase changes that are required to synthesize Ambisonic encoding of a sinusoid at the frequency we specified above:<textarea class='editor'>// inspect &amp; plot magnitude &amp; phase
+~nearMag = ~nearCoeffs.magnitude;
+~nearPha = ~nearCoeffs.phase;
+
+// human readable
+~nearMag.ampdb.round(0.01);  // dB
+~nearPha.raddeg.round(0.01);  // degrees</textarea>
+
+<p>Let's plot these values:<textarea class='editor'>[ (~nearMag + 180.neg.dbamp).ampdb.clip(-20, 20), ~nearPha.raddeg ].plot("Near source: Magnitude (dB) &amp; Phase (deg)", discrete: true)</textarea>
+<div class='note'><span class='notelabel'>NOTE:</span> Leave this plot window open. We'll compare with other travelling wave encodings, below.</div><h3><a class='anchor' name='Far-field%20travelling%20wave'>Far-field travelling wave</a></h3>
+
+<p>Let's now specify a <em>far-field</em> source. Like above, we'll use a shorthand of naming a travelling wave beyond the reference radius as a <em>far-field source</em>.
+<p>This source is at one and a half times the reference radius (more like, <em>far-ish</em>, actually.<a class='footnote anchor' name='footnote_org_17' href='#footnote_17'><sup>17</sup></a> ):<textarea class='editor'>// add a virtual source (far-ish)
+~farRadius = 1.5 * AtkHoa.refRadius;
+~farDir = Spherical.new(~farRadius, pi/6, pi/12);
+
+// update PointView directions
+~pv.removeHighlight;
+~pv.directions_(~vspkrDirs ++ [ ~vmicDir, ~nearDir, ~farDir ], false);  // don't reset connections!
+~pv.highlightPoints([ ~vspkrDirs.size + 1, ~vspkrDirs.size + 2 ]);  // highight the source points
+~pv.front;  // move to front</textarea>
+
+<p>Now we can see both the near-field and the far-field source.
+<p>And, the far-field encoding coefficients:<textarea class='editor'>(
+// coefficients for this far source
+~farAngular = ~hoaOrder.sph(  // angular coeffs
+    ~farDir.theta,
+    ~farDir.phi
+);
+~farRadial = ~hoaOrder.ctrlWeights(  // radial coeffs
+    ~freq,  // freq
+    ~farDir.rho,  // encoding radius
+    AtkHoa.refRadius  // reference radius
+)[~hoaOrder.l];
+
+// combine angular and radial
+~farCoeffs = ~farAngular * ~farRadial;  // all together!
+)</textarea>
+
+<p>We can inspect:<textarea class='editor'>// inspect &amp; plot magnitude &amp; phase
+~farMag = ~farCoeffs.magnitude;
+~farPha = ~farCoeffs.phase;
+
+~farMag.ampdb.round(0.01);  // dB
+~farPha.raddeg.round(0.01);  // degrees</textarea>
+
+<p>And plot:<textarea class='editor'>[ (~farMag + 180.neg.dbamp).ampdb.clip(-20, 20), ~farPha.raddeg ].plot("Far source: Magnitude (dB) &amp; Phase (deg)", discrete: true)</textarea>
+<div class='note'><span class='notelabel'>NOTE:</span> Leave this plot window open. We'll continue to compare with other travelling wave encodings.</div>
+<p>When we compare the magnitude plots of the near and far-field travelling waves, we notice the two are substantially different. In particular, we see the near-field source has high gains in high harmonics, while in the far-field source we see the gains rolling off.
+<p>We can also notice that the phases are shifted in opposite rotations on camparison. E.g., positive phases for near-field are negative for far-field.
+<p>Let's compare the angular and radial coefficients for this pair:<textarea class='editor'>// compare
+~farAngular == ~nearAngular;  // yes!
+~farRadial == ~nearRadial;  // no!!</textarea>
+
+<p>So, yes, this test confirms that our two travelling waves have the same angular encoding. They have the same <em>look direction</em>.<h3><a class='anchor' name='Basic%20travelling%20wave'>Basic travelling wave</a></h3>
+
+<p>Recall from our discussion <a href="#Ambisonic%20Soundfield%20Model">above</a>: <em>basic</em> panning, aka <em>basic</em> encoding encodes a source at the <em>reference radius</em>.
+<p>Let's specify this:<textarea class='editor'>// add a virtual source (basic)
+~basicRadius = AtkHoa.refRadius;
+~basicDir = Spherical.new(~basicRadius, pi/6, pi/12);
+
+// update PointView directions
+~pv.removeHighlight;
+~pv.directions_(~vspkrDirs ++ [ ~vmicDir, ~nearDir, ~farDir, ~basicDir ], false);  // don't reset connections!
+~pv.highlightPoints([ ~vspkrDirs.size + 1, ~vspkrDirs.size + 2, ~vspkrDirs.size + 3 ]);  // highight the source points
+~pv.front;  // move to front</textarea>
+
+<p>Now we can see near-field, far-field and basic sources.<div class='note'><span class='notelabel'>NOTE:</span> These are all <em>spherical travelling waves</em>!</div>
+<p>Now let's synthesize the coefficients of the basic source:<textarea class='editor'>// coefficients for basic source
+~basicAngular = ~hoaOrder.sph(  // angular coeffs
+    ~basicDir.theta,
+    ~basicDir.phi
+);
+~basicRadial = ~hoaOrder.ctrlWeights(  // radial coeffs (notice anything?)
+    ~freq,  // freq
+    ~basicDir.rho,  // encoding radius
+    AtkHoa.refRadius  // reference radius
+)[~hoaOrder.l];
+
+// combine angular and radial
+~basicCoeffs = ~basicAngular * ~basicRadial  // all together!</textarea>
+
+<p>Inspect:<textarea class='editor'>// inspect &amp; plot magnitude &amp; phase
+~basicMag = ~basicCoeffs.magnitude;
+~basicPha = ~basicCoeffs.phase;
+
+~basicMag.ampdb.round(0.01);  // dB
+~basicPha.raddeg.round(0.01);  // degrees</textarea>
+
+<p>Notice, for the basic travelling wave, the phase of the encoding coefficients is either 0 or 180 degrees.
+<p>This corresponds to, the coefficients for basic encoding having no imaginary components:<textarea class='editor'>~basicCoeffs == ~basicCoeffs.real;  // test!
+
+~basicCoeffs.imag == Array.fill(~basicCoeffs.size, { 0.0 });  // all zeros!!</textarea>
+
+<p>Plot, and compare with our other plots:<textarea class='editor'>[ (~basicMag + 180.neg.dbamp).ampdb.clip(-20, 20), ~basicPha.raddeg ].plot("Basic source: Magnitude (dB) &amp; Phase (deg)", discrete: true)</textarea>
+
+<p>One thing we can see is that as a source moves away from the reference radius, this change is encoded in both magnitude and phase changes.
+<p>Let's directly test the encoding coefficients:<textarea class='editor'>// compare
+(~basicAngular == ~nearAngular) &amp;&amp; (~basicAngular == ~farAngular);  // yes!
+(~basicRadial == ~nearRadial) &amp;&amp; (~basicRadial == ~farRadial);  // no!!</textarea>
+
+<p>So, yes, the angular coefficients are the same. The differences are in the radial coefficients.<div class='note'><span class='notelabel'>NOTE:</span> When you're ready, feel free to close the travelling wave coefficient plots.</div><h3><a class='anchor' name='Travelling%20waveforms'>Travelling waveforms</a></h3>
+
+<p>As we work with Ambisonic signals, we'll become accustomed to reviewing encoded waveforms. Let's now take the opportunity to synthesize and review a single cycle of our three sources.<textarea class='editor'>// waveform synthesis parameters
+(
+~size = 4096;
+~gain = 0.0;  // dB
+~phase = 0;  // radians
+)</textarea>
+
+<p>For ease of viewing, we'll truncate our coefficients from HOA3 to HOA1:<textarea class='editor'>// collect HOA1 magnitudes and phases for plotting
+(
+~hoaOrder1 = HoaOrder.new(1);
+
+~nearMagPha = [ ~nearMag, ~nearPha].flop.keep(~hoaOrder1.size);
+~basicMagPha = [ ~basicMag, ~basicPha].flop.keep(~hoaOrder1.size);
+~farMagPha = [ ~farMag, ~farPha].flop.keep(~hoaOrder1.size);
+)</textarea>
+
+<p>Synthesize and plot:<textarea class='editor'>(
+[ \near, \basic, \far ].do({ |wave|
+    var dir = currentEnvironment[(wave ++ \Dir).asSymbol];
+    var plotMagPha = currentEnvironment[(wave ++ \MagPha).asSymbol];
+    var scale = plotMagPha.flop.first.maxItem.dbamp;  // rescale plot, for no clipping
+
+    var sig = plotMagPha.collect({ |magPhas|
+        var mag = magPhas.at(0);
+        var phas = magPhas.at(1);
+        mag * Array.newFrom(
+            Signal.cosineFill(
+                ~size,
+                [ ~gain.dbamp ],
+                [ ~phase + phas ]
+            )
+        )
+    });
+
+    sig.plot(
+        "% % Hz: [ %, %, % ]".format(
+            wave.asString,
+            ~freq,
+            dir.rho,
+            dir.theta.raddeg,
+            dir.phi.raddeg
+        ),
+        minval: -1 * scale,
+        maxval: scale
+    )
+})
+)</textarea>
+
+<p>When we cycle through these three plots, it becomes apparent that the first channel, degree zero, remains the same for all three travelling waves.
+<p>We see that the space of the sound is to be found in the higher degrees, and is encoded in both magnitude and phase.<div class='footnotes'>
+<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - J. Daniel, "Spatial Sound Encoding Including Near Field Effect: Introducing Distance Coding Filters and a Viable, New Ambisonic Format," Paper 16, 23rd International Conference: Signal Processing in Audio Recording and Reproduction (2003 May.). Permalink: <a href="http://www.aes.org/e-lib/browse.cfm?elib=12321">http://www.aes.org/e-lib/browse.cfm?elib=12321</a></div><a class='anchor' name='footnote_2'/><div class='footnote'>[<a href='#footnote_org_2'>2</a>] - <a href="https://www.researchgate.net/publication/228381059_Classic_stereo_imaging_transforms-a_review">See Classic Stereo Imaging Transforms—A Review</a>.</div><a class='anchor' name='footnote_3'/><div class='footnote'>[<a href='#footnote_org_3'>3</a>] - Building a panner by directly connecting an encoder and a decoder is known as <em>Ambisonic equivalent panning</em>, aka <em>AEP</em>.</div><a class='anchor' name='footnote_4'/><div class='footnote'>[<a href='#footnote_org_4'>4</a>] - See <a href="https://en.wikipedia.org/wiki/Window_function">Window function</a></div><a class='anchor' name='footnote_5'/><div class='footnote'>[<a href='#footnote_org_5'>5</a>] - The FOA toolset uses the name <strong>k</strong>.<div class='note'><span class='notelabel'>NOTE:</span> We could have called this parameter <em>spatial window</em> or even <em>panning law</em>. The term <em>beam shape</em> appears to be a preferred name in the HOA technical literature.</div></div><a class='anchor' name='footnote_6'/><div class='footnote'>[<a href='#footnote_org_6'>6</a>] - This is what SuperCollider's <a href="./../Classes/DecodeB2.html">DecodeB2</a> is doing under the hood.</div><a class='anchor' name='footnote_7'/><div class='footnote'>[<a href='#footnote_org_7'>7</a>] - Maybe that's why people like octaphonic sound?</div><a class='anchor' name='footnote_8'/><div class='footnote'>[<a href='#footnote_org_8'>8</a>] - Surprised?</div><a class='anchor' name='footnote_9'/><div class='footnote'>[<a href='#footnote_org_9'>9</a>] - Neglecting measurement errors having to do with the actual spatio-frequency response of the microphone. E.g, the spatial aliasing limit of the microphone, and other factors.</div><a class='anchor' name='footnote_10'/><div class='footnote'>[<a href='#footnote_org_10'>10</a>] - <a href="./../Classes/FoaPsychoShelf.html">FoaPsychoShelf</a></div><a class='anchor' name='footnote_11'/><div class='footnote'>[<a href='#footnote_org_11'>11</a>] - <a href="./../Classes/Signal.html#*hoaMultiBandFocl">Signal: *hoaMultiBandFocl</a></div><a class='anchor' name='footnote_12'/><div class='footnote'>[<a href='#footnote_org_12'>12</a>] - Using the energy criteria for t-designs as described by Zotter, et al.
+<p>Zotter, F., Frank, M., &amp; Sontacchi, A. (2010). The Virtual T-Design Ambisonics-Rig Using VBAP. EAA Euroregio Ljubljana 2010.
+<p>Zotter, Franz, and Frank, Matthias. Ambisonics. Springer, 2019.</div><a class='anchor' name='footnote_13'/><div class='footnote'>[<a href='#footnote_org_13'>13</a>] - "In playback, to get a perfectly panning-invariant loudness measure E of the continuous panning function and also the perfectly oriented rE vector of constant spread arccos(|rE|), the parameter t must be t ≥ 2N + 1. In 2D, all regular polygons are t-designs with L = t + 1 points.
+<p>We can use the smallest set of 2N + 2... as optimal 2D layout."
+<p>Zotter, Franz, and Frank, Matthias. Ambisonics. Springer, 2019. (p. 60)</div><a class='anchor' name='footnote_14'/><div class='footnote'>[<a href='#footnote_org_14'>14</a>] - This will return the number of sectoral harmonics required.</div><a class='anchor' name='footnote_15'/><div class='footnote'>[<a href='#footnote_org_15'>15</a>] - There are some specific caveats if we're willing to accept a design that is not isotropic.</div><a class='anchor' name='footnote_16'/><div class='footnote'>[<a href='#footnote_org_16'>16</a>] - I prefer to name the technique as <em>Near-Field Controlled</em>, so as not to confuse with the usage of the term <em>Near-Field Compensated</em> in classic Ambisonics.</div><a class='anchor' name='footnote_17'/><div class='footnote'>[<a href='#footnote_org_17'>17</a>] - 10 meters is a better choice, as the encoding approaches that of a planewave.</div></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/HelpSource/Tutorials/ATK-Enlightenment.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/HelpSource/Tutorials/ATK-Enlightenment.schelp</a><br>link::Tutorials/ATK-Enlightenment::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

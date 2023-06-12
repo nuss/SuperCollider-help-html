@@ -1,0 +1,216 @@
+<!doctype html><html lang='en'><head><title>MP3 | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'MP3';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>MP3:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*lamepath'>lamepath</a> </li>
+<li class='toc3'><a href='#*curlpath'>curlpath</a> </li>
+<li class='toc3'><a href='#*readToBuffer'>readToBuffer</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*checkForExecutable'>checkForExecutable</a> </li>
+<li class='toc3'><a href='#*oggdecpath'>oggdecpath</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-start'>start</a> </li>
+<li class='toc3'><a href='#-fifo'>fifo</a> </li>
+<li class='toc3'><a href='#-playing'>playing</a> </li>
+<li class='toc3'><a href='#-stop'>stop</a> </li>
+<li class='toc3'><a href='#-restart'>restart</a> </li>
+<li class='toc3'><a href='#-finish'>finish</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-format'>format</a> </li>
+<li class='toc3'><a href='#-lameproc'>lameproc</a> </li>
+<li class='toc3'><a href='#-mode'>mode</a> </li>
+<li class='toc3'><a href='#-path'>path</a> </li>
+<li class='toc3'><a href='#-pid'>pid</a> </li>
+<li class='toc3'><a href='#-sampleRate'>sampleRate</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>MP3'>MP3</a></span>
+</div><h1>MP3<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Read an MP3 file or stream, or write an MP3 file (can also read Ogg)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MP3/MP3.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/MP3/MP3.sc'>MP3.sc</a></div></div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class is a wrapper for the *nix command-line tools curl and lame, making it easy to access MP3 files and MP3 (shoutcast/icecast) internet streams. This implies two caveats:<ul>
+<li>It will work on Mac OSX, Linux, and other unix-like systems, but is extremely unlikely to work on Windows.<li>You must have curl and lame installed on your system. curl is a generic tool for internet downloading, and is available on most systems. lame is a tool commonly used for MP3 encoding/decoding.</ul>
+
+<p>To tell this class where your system's lame and curl programs are, you can check/set the class variables (you could add a line to your startup file to set them):<textarea class='editor'>MP3.lamepath;
+MP3.curlpath;
+
+// To check that there's a file at the expected path
+File.exists(MP3.lamepath)
+File.exists(MP3.curlpath)</textarea>
+
+<p>For file writing, the class tells lame to expect 16-bit raw audio data at 44.1 kHz, so this is what you must output - see the example below. (The reason for writing as raw data is that the "fifo" trick excludes the possibility of the fileseeking which is required for writing soundfile headers.)
+<p>Ogg format files can be read (despite the name of the class!) as long as you have the oggdec command-line tool installed. To tell the class that it should expect an ogg file rather than an MP3, set the constructor's "format" argument (the third argument) to \ogg.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>MP3.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>path</span>, <span class='argstr'>mode: 'readfile'</span>, <span class='argstr'>format: 'mp3'</span>)</h3>
+<div class='method'>
+<p>Create an audio stream from an MP3 file.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>A path or URL to the MP3 data.<tr><td class='argumentname'>mode<td class='argumentdesc'>
+<p>One of <code>\readfile</code> to read from a file, or <code>\readurl</code> to read from a URL, or <code>\writefile</code> to write to a file. The default is <code>\readfile</code>.<tr><td class='argumentname'>format<td class='argumentdesc'>
+<p>Set this to <code>\ogg</code> if you're reading an OGG file rather than an MP3.</table></div><h3 class='method-code'><span class='method-prefix'>MP3.</span><a class='method-name' name='*lamepath' href='./../Overviews/Methods.html#lamepath'>lamepath</a></h3>
+<h3 class='method-code'><span class='method-prefix'>MP3.</span><a class='method-name' name='*lamepath' href='./../Overviews/Methods.html#lamepath'>lamepath</a> = value</h3>
+<div class='method'>
+<p>The path to the lame executable.</div><h3 class='method-code'><span class='method-prefix'>MP3.</span><a class='method-name' name='*curlpath' href='./../Overviews/Methods.html#curlpath'>curlpath</a></h3>
+<h3 class='method-code'><span class='method-prefix'>MP3.</span><a class='method-name' name='*curlpath' href='./../Overviews/Methods.html#curlpath'>curlpath</a> = value</h3>
+<div class='method'>
+<p>The path to the curl executable.</div><h3 class='method-code'><span class='method-prefix'>MP3.</span><a class='method-name' name='*readToBuffer' href='./../Overviews/Methods.html#readToBuffer'>readToBuffer</a>(<span class='argstr'>server</span>, <span class='argstr'>path</span>, <span class='argstr'>startFrame: 0</span>, <span class='argstr'>numFrames</span>, <span class='argstr'>action</span>, <span class='argstr'>bufnum</span>, <span class='argstr'>lameopts: ""</span>)</h3>
+<div class='method'>
+<p>Load a static buffer from an MP3 file into a Buffer, without streaming.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>The server on which to allocate the buffer.<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>The path of the MP3 file (no URLs here).<tr><td class='argumentname'>startFrame<td class='argumentdesc'>
+<p>The first frame of the soundfile to read. The default is 0, which is the beginning of the file.<tr><td class='argumentname'>numFrames<td class='argumentdesc'>
+<p>The number of frames to read. The default is -1, which will read the whole file.<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>A Function to be evaluated once the file has been read and this Buffer's instance variables have been updated. The function will be passed this Buffer as an argument.<tr><td class='argumentname'>bufnum<td class='argumentdesc'>
+<p>An explicitly specified buffer number. Generally this is not needed.<tr><td class='argumentname'>lameopts<td class='argumentdesc'>
+<p>Additional comand-line options to pass into the lame executable.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>MP3.</span><a class='method-name' name='*checkForExecutable' href='./../Overviews/Methods.html#checkForExecutable'>checkForExecutable</a>(<span class='argstr'>path</span>, <span class='argstr'>execname</span>, <span class='argstr'>varname</span>, <span class='argstr'>otherposs</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>MP3.</span><a class='method-name' name='*oggdecpath' href='./../Overviews/Methods.html#oggdecpath'>oggdecpath</a></h3>
+<h3 class='method-code'><span class='method-prefix'>MP3.</span><a class='method-name' name='*oggdecpath' href='./../Overviews/Methods.html#oggdecpath'>oggdecpath</a> = value</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-start' href='./../Overviews/Methods.html#start'>start</a>(<span class='argstr'>lameopts: ""</span>)</h3>
+<div class='method'>
+<p>Begin queueing up the MP3 data, i.e. before you start your SC DiskIn/DiskOut synth.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>lameopts<td class='argumentdesc'>
+<p>Additional comand-line options to pass into the lame executable.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fifo' href='./../Overviews/Methods.html#fifo'>fifo</a></h3>
+<div class='method'>
+<p>The path to stream into a Buffer.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-playing' href='./../Overviews/Methods.html#playing'>playing</a></h3>
+<div class='method'>
+<p>Is the MP3 currently (still) playing? i.e. it is true if you have started the MP3 and not yet stopped it. This flag will revert back to false if the MP3 file finishes, even if you haven't called the .stop method.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stop' href='./../Overviews/Methods.html#stop'>stop</a></h3>
+<div class='method'>
+<p>Stop queueing.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-restart' href='./../Overviews/Methods.html#restart'>restart</a></h3>
+<div class='method'>
+<p>Stop, and then immediately start.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-finish' href='./../Overviews/Methods.html#finish'>finish</a></h3>
+<div class='method'>
+<p>Stop and clean up the stream file.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-format' href='./../Overviews/Methods.html#format'>format</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lameproc' href='./../Overviews/Methods.html#lameproc'>lameproc</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mode' href='./../Overviews/Methods.html#mode'>mode</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-path' href='./../Overviews/Methods.html#path'>path</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pid' href='./../Overviews/Methods.html#pid'>pid</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sampleRate' href='./../Overviews/Methods.html#sampleRate'>sampleRate</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sampleRate' href='./../Overviews/Methods.html#sampleRate'>sampleRate</a> = value</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>// Let's read in an internet radio stream and warp it a bit.
+// First we need a synthdef:
+s.boot;
+(
+SynthDef("help_mp3_01", { |bufnum = 0|
+    var son, wibble;
+    son = DiskIn.ar(2, bufnum);
+    wibble = LFPar.kr(0.1).range(0.5, 2.0);
+    son = PitchShift.ar(son, pitchRatio: wibble);
+    Out.ar(0, son);
+}).load(s);
+)
+
+// Now let's create the MP3 object and cue it into a Buffer.
+
+// Choose one of these two:
+// (a) a stream URL - note the use of the second argument to indicate a remote stream
+m = MP3("http://icecast.commedia.org.uk:8000/resonance.mp3", \readurl);
+// (b) a local file
+m = MP3("/Users/dan/Music/SqueezeTheTrigger(Version1).mp3");
+m = MP3("/Users/danstowell/Music/ManiAyer.mp3");
+
+m.start;
+// Now you can use it almost like any other file, by reading from m.fifo
+b = Buffer.cueSoundFile(s, m.fifo, 0, 2);
+x = Synth("help_mp3_01", [\bufnum, b.bufnum], addAction:\addToTail);
+m.playing;
+// You can stop and restart the piping (with a bit of a delay) - note what happens
+m.stop;
+m.playing;
+m.start;
+m.playing;
+// Please remember to tidy up after yourself:
+x.free;
+b.close; b.free;
+m.finish;
+
+/////////////////////////////////////////////////////
+
+// Reading into a buffer is possible, but you *must* specify the number of (uncompressed) frames to read.
+m = MP3("http://icecast.commedia.org.uk:8000/resonance.mp3", \readurl);
+m.start;
+b= Buffer.read(s, m.fifo, 0, 50000);
+// After a second or two, should be able to play a snatch of the stream
+b.play;
+
+// Please remember to tidy up after yourself:
+b.close; b.free;
+m.finish;
+
+/////////////////////////////////////////////////////
+
+// Alternatively, a method is provided for reading a local MP3 file more easily (won't work on streams)
+s.boot;
+b = MP3.readToBuffer(s, "/Users/dan/Music/SqueezeTheTrigger(Version1).mp3")
+b.play;
+
+b.free;
+
+/////////////////////////////////////////////////////
+
+// Writing an MP3 file using DiskOut. See the DiskOut helpfile for more on this.
+(
+SynthDef("help_mp3_02", { |bufnum = 0|
+    var son;
+    son = SinOsc.ar(SinOsc.ar(Line.kr(1, 100, 10, doneAction:2)).range(220, 550)) * 0.1;
+    son = son.dup;
+    Out.ar(0, son);
+    DiskOut.ar(bufnum, son);
+}).load(s);
+)
+// Create an MP3 object for writing
+m = MP3("recordings/mp3test.mp3", \writefile);
+m.start;
+// allocate a disk i/o buffer
+b = Buffer.alloc(s, 65536, 2);
+// Start writing
+b.write(m.fifo, "raw", "int16", 0, 0, true);
+
+x = Synth("help_mp3_02", [\bufnum, b.bufnum], addAction:\addToTail);
+
+// once the writing has stopped, tidy up
+b.close; b.free;
+m.finish;</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MP3/HelpSource/Classes/MP3.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MP3/HelpSource/Classes/MP3.schelp</a><br>link::Classes/MP3::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

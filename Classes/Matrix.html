@@ -1,0 +1,744 @@
+<!doctype html><html lang='en'><head><title>Matrix | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Matrix';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Matrix:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*newClear'>newClear</a> </li>
+<li class='toc3'><a href='#*with'>with</a> </li>
+<li class='toc3'><a href='#*withFlatArray'>withFlatArray</a> </li>
+<li class='toc3'><a href='#*newIdentity'>newIdentity</a> </li>
+<li class='toc3'><a href='#*newDiagonal'>newDiagonal</a> </li>
+<li class='toc3'><a href='#*newDFT'>newDFT</a> </li>
+<li class='toc3'><a href='#*newIDFT'>newIDFT</a> </li>
+<li class='toc3'><a href='#*fill'>fill</a> </li>
+<li class='toc3'><a href='#*mul'>mul</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-rows'>rows</a> </li>
+<li class='toc3'><a href='#-cols'>cols</a> </li>
+<li class='toc3'><a href='#-shape'>shape</a> </li>
+<li class='toc3'><a href='#-postmln'>postmln</a> </li>
+<li class='toc3'><a href='#-doRow'>doRow</a> </li>
+<li class='toc3'><a href='#-doCol'>doCol</a> </li>
+<li class='toc3'><a href='#-doMatrix'>doMatrix</a> </li>
+<li class='toc3'><a href='#-colsDo'>colsDo</a> </li>
+<li class='toc3'><a href='#-rowsDo'>rowsDo</a> </li>
+<li class='toc2'><a href='#Changing%20Matrices'>Changing Matrices</a></li>
+<ul class='toc'><li class='toc3'><a href='#-put'>put</a> </li>
+<li class='toc3'><a href='#-putRow'>putRow</a> </li>
+<li class='toc3'><a href='#-putCol'>putCol</a> </li>
+<li class='toc3'><a href='#-fillRow'>fillRow</a> </li>
+<li class='toc3'><a href='#-fillCol'>fillCol</a> </li>
+<li class='toc3'><a href='#-exchangeRow'>exchangeRow</a> </li>
+<li class='toc3'><a href='#-exchangeCol'>exchangeCol</a> </li>
+</ul><li class='toc2'><a href='#Return%20Arrays'>Return Arrays</a></li>
+<ul class='toc'><li class='toc3'><a href='#-at'>at</a> </li>
+<li class='toc3'><a href='#-get'>get</a> </li>
+<li class='toc3'><a href='#-getRow'>getRow</a> </li>
+<li class='toc3'><a href='#-getCol'>getCol</a> </li>
+<li class='toc3'><a href='#-getDiagonal'>getDiagonal</a> </li>
+<li class='toc3'><a href='#-asArray'>asArray</a> </li>
+<li class='toc3'><a href='#-flat'>flat</a> </li>
+</ul><li class='toc2'><a href='#Return%20Matrices'>Return Matrices</a></li>
+<ul class='toc'><li class='toc3'><a href='#-fromRow'>fromRow</a> </li>
+<li class='toc3'><a href='#-fromCol'>fromCol</a> </li>
+<li class='toc3'><a href='#-getSub'>getSub</a> </li>
+<li class='toc3'><a href='#-addRow'>addRow</a> </li>
+<li class='toc3'><a href='#-addCol'>addCol</a> </li>
+<li class='toc3'><a href='#-insertRow'>insertRow</a> </li>
+<li class='toc3'><a href='#-insertCol'>insertCol</a> </li>
+<li class='toc3'><a href='#-removeRow'>removeRow</a> </li>
+<li class='toc3'><a href='#-removeCol'>removeCol</a> </li>
+<li class='toc3'><a href='#-collect'>collect</a> </li>
+<li class='toc3'><a href='#-sub'>sub</a> </li>
+<li class='toc3'><a href='#-flop'>flop</a> </li>
+<li class='toc3'><a href='#-adjoint'>adjoint</a> </li>
+<li class='toc3'><a href='#-inverse'>inverse</a> </li>
+<li class='toc3'><a href='#-gram'>gram</a> </li>
+<li class='toc3'><a href='#-pseudoInverse'>pseudoInverse</a> </li>
+<li class='toc3'><a href='#-*'>*</a> </li>
+<li class='toc3'><a href='#-+'>+</a> </li>
+<li class='toc3'><a href='#--'>-</a> </li>
+<li class='toc3'><a href='#-center'>center</a> </li>
+<li class='toc3'><a href='#-thresh2'>thresh2</a> </li>
+</ul><li class='toc2'><a href='#Return%20Characteristic%20Values'>Return Characteristic Values</a></li>
+<ul class='toc'><li class='toc3'><a href='#-sum'>sum</a> </li>
+<li class='toc3'><a href='#-sumRow'>sumRow</a> </li>
+<li class='toc3'><a href='#-sumCol'>sumCol</a> </li>
+<li class='toc3'><a href='#-sumRows'>sumRows</a> </li>
+<li class='toc3'><a href='#-sumCols'>sumCols</a> </li>
+<li class='toc3'><a href='#-grammian'>grammian</a> </li>
+<li class='toc3'><a href='#-mean'>mean</a> </li>
+<li class='toc3'><a href='#-cov'>cov</a> </li>
+<li class='toc3'><a href='#-covML'>covML</a> </li>
+</ul><li class='toc2'><a href='#Return%20Characteristic%20Values%20of%20Square%20Matrices'>Return Characteristic Values of Square Matrices</a></li>
+<ul class='toc'><li class='toc3'><a href='#-det'>det</a> </li>
+<li class='toc3'><a href='#-cofactor'>cofactor</a> </li>
+<li class='toc3'><a href='#-trace'>trace</a> </li>
+<li class='toc3'><a href='#-norm'>norm</a> </li>
+</ul><li class='toc2'><a href='#Testing'>Testing</a></li>
+<ul class='toc'><li class='toc3'><a href='#-isSquare'>isSquare</a> </li>
+<li class='toc3'><a href='#-isSingular'>isSingular</a> </li>
+<li class='toc3'><a href='#-isRegular'>isRegular</a> </li>
+<li class='toc3'><a href='#-isSymmetric'>isSymmetric</a> </li>
+<li class='toc3'><a href='#-isAntiSymmetric'>isAntiSymmetric</a> </li>
+<li class='toc3'><a href='#-isPositive'>isPositive</a> </li>
+<li class='toc3'><a href='#-isNonNegative'>isNonNegative</a> </li>
+<li class='toc3'><a href='#-isNormal'>isNormal</a> </li>
+<li class='toc3'><a href='#-isZero'>isZero</a> </li>
+<li class='toc3'><a href='#-isIntegral'>isIntegral</a> </li>
+<li class='toc3'><a href='#-isIdentity'>isIdentity</a> </li>
+<li class='toc3'><a href='#-isDiagonal'>isDiagonal</a> </li>
+<li class='toc3'><a href='#-isOrthogonal'>isOrthogonal</a> </li>
+<li class='toc3'><a href='#-isIdempotent'>isIdempotent</a> </li>
+<li class='toc3'><a href='#-=='>==</a> </li>
+</ul><li class='toc2'><a href='#Unary%20Operators:%20matrix.uop'>Unary Operators: matrix.uop</a></li>
+<ul class='toc'><li class='toc3'><a href='#-neg'>neg</a> </li>
+<li class='toc3'><a href='#-bitNot'>bitNot</a> </li>
+<li class='toc3'><a href='#-abs'>abs</a> </li>
+<li class='toc3'><a href='#-ceil'>ceil</a> </li>
+<li class='toc3'><a href='#-floor'>floor</a> </li>
+<li class='toc3'><a href='#-frac'>frac</a> </li>
+<li class='toc3'><a href='#-sign'>sign</a> </li>
+<li class='toc3'><a href='#-squared'>squared</a> </li>
+<li class='toc3'><a href='#-cubed'>cubed</a> </li>
+<li class='toc3'><a href='#-sqrt'>sqrt</a> </li>
+<li class='toc3'><a href='#-exp'>exp</a> </li>
+<li class='toc3'><a href='#-reciprocal'>reciprocal</a> </li>
+</ul><li class='toc2'><a href='#Binary%20Operators'>Binary Operators</a></li>
+<ul class='toc'><li class='toc3'><a href='#-/'>/</a> </li>
+<li class='toc3'><a href='#-div'>div</a> </li>
+<li class='toc3'><a href='#-%'>%</a> </li>
+<li class='toc3'><a href='#-**'>**</a> </li>
+<li class='toc3'><a href='#-min'>min</a> </li>
+<li class='toc3'><a href='#-max'>max</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-addNumber'>addNumber</a> </li>
+<li class='toc3'><a href='#-choleski'>choleski</a> </li>
+<li class='toc3'><a href='#-choleskiSolve'>choleskiSolve</a> </li>
+<li class='toc3'><a href='#-crout'>crout</a> </li>
+<li class='toc3'><a href='#-croutPivot'>croutPivot</a> </li>
+<li class='toc3'><a href='#-croutPivotSolve'>croutPivotSolve</a> </li>
+<li class='toc3'><a href='#-croutSolve'>croutSolve</a> </li>
+<li class='toc3'><a href='#-doolittle'>doolittle</a> </li>
+<li class='toc3'><a href='#-doolittlePivot'>doolittlePivot</a> </li>
+<li class='toc3'><a href='#-doolittlePivotSolve'>doolittlePivotSolve</a> </li>
+<li class='toc3'><a href='#-doolittleSolve'>doolittleSolve</a> </li>
+<li class='toc3'><a href='#-flatten'>flatten</a> </li>
+<li class='toc3'><a href='#-gauss'>gauss</a> </li>
+<li class='toc3'><a href='#-lowerTriangularInverse'>lowerTriangularInverse</a> </li>
+<li class='toc3'><a href='#-lowerTriangularSolve'>lowerTriangularSolve</a> </li>
+<li class='toc3'><a href='#-mul'>mul</a> </li>
+<li class='toc3'><a href='#-mulMatrix'>mulMatrix</a> </li>
+<li class='toc3'><a href='#-mulNumber'>mulNumber</a> </li>
+<li class='toc3'><a href='#-postSub'>postSub</a> </li>
+<li class='toc3'><a href='#-printItemsOn'>printItemsOn</a> </li>
+<li class='toc3'><a href='#-removeAt'>removeAt</a> </li>
+<li class='toc3'><a href='#-solve'>solve</a> </li>
+<li class='toc3'><a href='#-subNumber'>subNumber</a> </li>
+<li class='toc3'><a href='#-unitLowerTriangularInverse'>unitLowerTriangularInverse</a> </li>
+<li class='toc3'><a href='#-unitLowerTriangularSolve'>unitLowerTriangularSolve</a> </li>
+<li class='toc3'><a href='#-unitUpperTriangularInverse'>unitUpperTriangularInverse</a> </li>
+<li class='toc3'><a href='#-unitUpperTriangularSolve'>unitUpperTriangularSolve</a> </li>
+<li class='toc3'><a href='#-upperTriangularInverse'>upperTriangularInverse</a> </li>
+<li class='toc3'><a href='#-upperTriangularSolve'>upperTriangularSolve</a> </li>
+</ul></ul><li class='toc1'><a href='#Authors'>Authors</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Math'>Math</a> | <a href='./../Browse.html#Linear Algebra'>Linear Algebra</a> | <a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>MathLib'>MathLib</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>MathLib>Matrix'>Matrix</a></span>
+</div><h1>Matrix<span id='superclasses'> : <a href="../Classes/Array.html">Array</a> : <a href="../Classes/ArrayedCollection.html">ArrayedCollection</a> : <a href="../Classes/SequenceableCollection.html">SequenceableCollection</a> : <a href="../Classes/Collection.html">Collection</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>an ordered 2-dimensional array of numbers</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/Matrix.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/Matrix.sc'>Matrix.sc</a></div><div id='related'>See also: <a href="./../Classes/Spherical.html">Spherical</a>, <a href="./../Classes/Point.html">Point</a>, <a href="./../Classes/Polar.html">Polar</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Matrices are a 2-dimensional <a href="./../Classes/Array.html">Array</a> whose slots may only contain (at the moment 'real' ) numbers. Their shape is fully described by the number of rows and columns(cols). Each element can be adressed by 2 indices (row,col), where row (col) ranges between 0 and rows-1 (cols-1). For a lesson on matrices, read your math books from school. Or this reference if you like it the hard way:  <a href="http://www.ee.ic.ac.uk/hp/staff/dmb/matrix/intro.html#Intro">http://www.ee.ic.ac.uk/hp/staff/dmb/matrix/intro.html#Intro</a>
+<p><strong>Array2D</strong>Matrix uses an array-of-rows–notation. This is the same concept as found in <a href="./../Classes/Array2D.html">Array2D</a>. As a subclass of <a href="./../Classes/Array.html">Array</a>, Matrix responds to far more methods than given in this helpfile. Be aware of strange results when using them. This is meant to support only the basic matrix manipulations. Most of this is not designed for realtime action. Too slow, not optimized.
+<p>Part of <a href="./../Guides/MathLib.html">MathLib</a>, a diverse library of mathematical functions.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*newClear' href='./../Overviews/Methods.html#newClear'>newClear</a>(<span class='argstr'>rows: 1</span>, <span class='argstr'>cols: 1</span>)</h3>
+<div class='method'>
+<p>Create a new Matrix of shape (rows, cols) filled with zeros. <code>Matrix.newClear(3,3).postln;</code><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rows<td class='argumentdesc'>
+<p>rows<tr><td class='argumentname'>cols<td class='argumentdesc'>
+<p>cols</table></div><h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*with' href='./../Overviews/Methods.html#with'>with</a>(<span class='argstr'>array</span>)</h3>
+<div class='method'>
+<p>Create a new Matrix whose rows are filled with the given subarrays.
+<p><code>Matrix.with([[1,2,3],[4,5,6],[7,8,9]]).postln;</code><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>array<td class='argumentdesc'>
+<p>array</table></div><h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*withFlatArray' href='./../Overviews/Methods.html#withFlatArray'>withFlatArray</a>(<span class='argstr'>rows</span>, <span class='argstr'>cols</span>, <span class='argstr'>array</span>)</h3>
+<div class='method'>
+<p>Create a new Matrix from a 1-dimensional array of shape (rows , cols). <code>Matrix.withFlatArray(3,3,[1,2,3,4,5,6,7,8,9]).postln;</code><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rows<td class='argumentdesc'>
+<p>rows<tr><td class='argumentname'>cols<td class='argumentdesc'>
+<p>cols<tr><td class='argumentname'>array<td class='argumentdesc'>
+<p>array</table></div><h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*newIdentity' href='./../Overviews/Methods.html#newIdentity'>newIdentity</a>(<span class='argstr'>n</span>)</h3>
+<div class='method'>
+<p>Create a new identity matrix of shape (n,n). <code>Matrix.newIdentity(3).postln;</code><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>n<td class='argumentdesc'>
+<p>n</table></div><h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*newDiagonal' href='./../Overviews/Methods.html#newDiagonal'>newDiagonal</a>(<span class='argstr'>diagonal</span>)</h3>
+<div class='method'>
+<p>Create a new square <a href="https://en.wikipedia.org/wiki/Diagonal_matrix">diagonal matrix</a>.<textarea class='editor'>Matrix.newDiagonal(Array.series(8));  // Integer
+Matrix.newDiagonal(Array.series(8.0));  // Float</textarea>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>diagonal<td class='argumentdesc'>
+<p>An array of values with which to fill the diagonal.</table></div><h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*newDFT' href='./../Overviews/Methods.html#newDFT'>newDFT</a>(<span class='argstr'>n</span>)</h3>
+<div class='method'>
+<p>Create a new discrete Fourier transform matrix of shape (n,n). <code>Matrix.newDFT(3).postln;</code><textarea class='editor'>n = 51; // DFT size
+
+// Make a sinusoidal test signal (3 partials: 1st, 3rd and 10th)
+x = Matrix.withFlatArray(n, 1, n collect: { |i| sin(2pi*i/(n - 1)) + sin(6pi*i/(n - 1)) + sin(20pi*i/(n - 1)) })
+
+// Calculate Fourier transform
+y = Matrix.newDFT(n)*x
+
+// Plot spectrum
+y.flat.abs.plot(discrete: true)
+
+// Recover original signal from Fourier transform
+z = Matrix.newIDFT(n)*y
+z.flat.real.plot;
+x.flat.plot;</textarea>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>n<td class='argumentdesc'>
+<p>n</table></div><h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*newIDFT' href='./../Overviews/Methods.html#newIDFT'>newIDFT</a>(<span class='argstr'>n</span>)</h3>
+<div class='method'>
+<p>Create a new inverse discrete Foutier transform matrix of shape (n,n). <code>Matrix.newIDFT(3).postln;</code><textarea class='editor'>// Show discrete Fourier transform is unitary
+n = 3;
+(Matrix.newDFT(n)*Matrix.newIDFT(n)).real.postln;</textarea>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>n<td class='argumentdesc'>
+<p>n</table></div><h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*fill' href='./../Overviews/Methods.html#fill'>fill</a>(<span class='argstr'>rows</span>, <span class='argstr'>cols</span>, <span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>fill the matrix by evaluating function. function is passed two arguments: row, col<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rows<td class='argumentdesc'>
+<p>rows<tr><td class='argumentname'>cols<td class='argumentdesc'>
+<p>cols<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>function</table></div><h3 class='method-code'><span class='method-prefix'>Matrix.</span><a class='method-name' name='*mul' href='./../Overviews/Methods.html#mul'>mul</a>(<span class='argstr'>m1: 0</span>, <span class='argstr'>m2: 0</span>)</h3>
+<div class='method'><textarea class='editor'>a = [[1,2],[3,4]];
+b = [[1,2],[1,2]];
+
+Matrix.mul(a,b);</textarea>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>m1<td class='argumentdesc'>
+<p>ArrayA<tr><td class='argumentname'>m2<td class='argumentdesc'>
+<p>ArrayB</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rows' href='./../Overviews/Methods.html#rows'>rows</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the number of rows</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cols' href='./../Overviews/Methods.html#cols'>cols</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the number of columns</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-shape' href='./../Overviews/Methods.html#shape'>shape</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the number of rows and columns as array [rows, cols]</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-postmln' href='./../Overviews/Methods.html#postmln'>postmln</a></h3>
+<div class='method'>
+<p>post the matrix as 2D representation.<textarea class='editor'>Matrix.withFlatArray(3,3,[1,2,3,4,5,6,7,8,9]).postln;
+Matrix.withFlatArray(3,3,[1,2,3,4,5,6,7,8,9]).postmln;</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doRow' href='./../Overviews/Methods.html#doRow'>doRow</a>(<span class='argstr'>row</span>, <span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>evaluate function for each element of row; function is passed two arguments: item, col<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>row<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>function</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doCol' href='./../Overviews/Methods.html#doCol'>doCol</a>(<span class='argstr'>col</span>, <span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>evaluate function for each element of col; function is passed two arguments: item, row<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>col<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>function</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doMatrix' href='./../Overviews/Methods.html#doMatrix'>doMatrix</a>(<span class='argstr'>function</span>)</h3>
+<div class='method'>
+<p>evaluate function for each element ; function is passed three arguments: item, row,col;<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>function<td class='argumentdesc'>
+<p>function</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-colsDo' href='./../Overviews/Methods.html#colsDo'>colsDo</a>(<span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>Iterate over the columns. Each column will be passed to <strong>func</strong> in turn.<textarea class='editor'>a = Matrix.newIdentity(4);
+a.colsDo({ |item, i| format("Col %: ", i).post; (item * i).postln;});</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rowsDo' href='./../Overviews/Methods.html#rowsDo'>rowsDo</a>(<span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>Iterate over the rows. Each row will be passed to <strong>func</strong> in turn.<textarea class='editor'>a = Matrix.newIdentity(4);
+a.rowsDo({ |item, i| format("Row %: ", i).post; (item * i).postln;});</textarea>
+</div><h3><a class='anchor' name='Changing%20Matrices'>Changing Matrices</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-put' href='./../Overviews/Methods.html#put'>put</a>(<span class='argstr'>row</span>, <span class='argstr'>col</span>, <span class='argstr'>val</span>)</h3>
+<div class='method'>
+<p>put a single element at (row, col)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>row<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>col<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>value</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-putRow' href='./../Overviews/Methods.html#putRow'>putRow</a>(<span class='argstr'>row</span>, <span class='argstr'>vals</span>)</h3>
+<div class='method'>
+<p>put a row of elements at (row)
+<p><code>Matrix.newClear(3,3).putRow(0,[2,4,6]).postln</code><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>row<tr><td class='argumentname'>vals<td class='argumentdesc'>
+<p>values</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-putCol' href='./../Overviews/Methods.html#putCol'>putCol</a>(<span class='argstr'>col</span>, <span class='argstr'>vals</span>)</h3>
+<div class='method'>
+<p>put a column of elements at (col)
+<p><code>Matrix.newClear(3,3).putCol(1,[2,4,6]).postln</code><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>col<tr><td class='argumentname'>vals<td class='argumentdesc'>
+<p>values</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fillRow' href='./../Overviews/Methods.html#fillRow'>fillRow</a>(<span class='argstr'>row</span>, <span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>fill a row by evaluating function for each element; function is passed two arguments: row, col.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>row<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>function</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fillCol' href='./../Overviews/Methods.html#fillCol'>fillCol</a>(<span class='argstr'>col</span>, <span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>fill a column by evaluating function for each element; function is passed two arguments: row, col.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>col<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>function</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-exchangeRow' href='./../Overviews/Methods.html#exchangeRow'>exchangeRow</a>(<span class='argstr'>posA</span>, <span class='argstr'>posB</span>)</h3>
+<div class='method'>
+<p>exchange two rows<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>posA<td class='argumentdesc'>
+<p>rowA<tr><td class='argumentname'>posB<td class='argumentdesc'>
+<p>rowB</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-exchangeCol' href='./../Overviews/Methods.html#exchangeCol'>exchangeCol</a>(<span class='argstr'>posA</span>, <span class='argstr'>posB</span>)</h3>
+<div class='method'>
+<p>exchange two cols<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>posA<td class='argumentdesc'>
+<p>colA<tr><td class='argumentname'>posB<td class='argumentdesc'>
+<p>colB</table></div><h3><a class='anchor' name='Return%20Arrays'>Return Arrays</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>row</span>, <span class='argstr'>col</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>row<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>col</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-get' href='./../Overviews/Methods.html#get'>get</a>(<span class='argstr'>row</span>, <span class='argstr'>col</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>row<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>col</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>element at (row,col)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getRow' href='./../Overviews/Methods.html#getRow'>getRow</a>(<span class='argstr'>row</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>row</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an array from row</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getCol' href='./../Overviews/Methods.html#getCol'>getCol</a>(<span class='argstr'>col</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>col</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an array from column</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getDiagonal' href='./../Overviews/Methods.html#getDiagonal'>getDiagonal</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an array from the diagonal elements</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asArray' href='./../Overviews/Methods.html#asArray'>asArray</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an array of rows</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-flat' href='./../Overviews/Methods.html#flat'>flat</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a one slot array of all elements</div></div><h3><a class='anchor' name='Return%20Matrices'>Return Matrices</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fromRow' href='./../Overviews/Methods.html#fromRow'>fromRow</a>(<span class='argstr'>row</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>row</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a new matrix from row</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fromCol' href='./../Overviews/Methods.html#fromCol'>fromCol</a>(<span class='argstr'>col</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>col</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a new matrix from column</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getSub' href='./../Overviews/Methods.html#getSub'>getSub</a>(<span class='argstr'>rowStart: 0</span>, <span class='argstr'>colStart: 0</span>, <span class='argstr'>rowLength</span>, <span class='argstr'>colHeight</span>)</h3>
+<div class='method'>
+<p>get a sub-matrix from within matrix.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rowStart<td class='argumentdesc'>
+<p>Row index to begin copying.<tr><td class='argumentname'>colStart<td class='argumentdesc'>
+<p>Column index to begin copying.<tr><td class='argumentname'>rowLength<td class='argumentdesc'>
+<p>The number of elements to copy from each row.<tr><td class='argumentname'>colHeight<td class='argumentdesc'>
+<p>The number of elements to copy from each column.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a new matrix</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addRow' href='./../Overviews/Methods.html#addRow'>addRow</a>(<span class='argstr'>rowVals</span>)</h3>
+<div class='method'>
+<p>add a row (values) to the matrix and return. receiver is unchanged.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rowVals<td class='argumentdesc'>
+<p>values</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addCol' href='./../Overviews/Methods.html#addCol'>addCol</a>(<span class='argstr'>colVals</span>)</h3>
+<div class='method'>
+<p>add a column (values) to the matrix and return. receiver is unchanged.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>colVals<td class='argumentdesc'>
+<p>values</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-insertRow' href='./../Overviews/Methods.html#insertRow'>insertRow</a>(<span class='argstr'>col</span>, <span class='argstr'>rowVals</span>)</h3>
+<div class='method'>
+<p>insert a row (values) in matrix and return. receiver is unchanged.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>col<tr><td class='argumentname'>rowVals<td class='argumentdesc'>
+<p>values</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-insertCol' href='./../Overviews/Methods.html#insertCol'>insertCol</a>(<span class='argstr'>row</span>, <span class='argstr'>colVals</span>)</h3>
+<div class='method'>
+<p>insert a column (values) in matrix and return. receiver is unchanged.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>row<tr><td class='argumentname'>colVals<td class='argumentdesc'>
+<p>values</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeRow' href='./../Overviews/Methods.html#removeRow'>removeRow</a>(<span class='argstr'>row</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>row</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a new matrix without row</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeCol' href='./../Overviews/Methods.html#removeCol'>removeCol</a>(<span class='argstr'>col</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>col</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a new matrix without column</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-collect' href='./../Overviews/Methods.html#collect'>collect</a>(<span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>function</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a new matrix by evaluating function for each element. function is passed three arguments: item, row, col.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sub' href='./../Overviews/Methods.html#sub'>sub</a>(<span class='argstr'>row</span>, <span class='argstr'>col</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>row<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>col</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a submatrix that results from matrix by crossing out row and col</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-flop' href='./../Overviews/Methods.html#flop'>flop</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the transpose of matrix</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-adjoint' href='./../Overviews/Methods.html#adjoint'>adjoint</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the adjoint or adjugate of a square matrix</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-inverse' href='./../Overviews/Methods.html#inverse'>inverse</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the inverse of a square matrix</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gram' href='./../Overviews/Methods.html#gram'>gram</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the gram matrix (the transpose of matrix multiplied with matrix)  T^t * T</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pseudoInverse' href='./../Overviews/Methods.html#pseudoInverse'>pseudoInverse</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the pseudoInverse of a matrix</div></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-*' href='./../Overviews/Methods.html#*'>*</a>(<span class='argstr'>that</span>)</h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the result of matrix multiplication: matrix * matrix2 matrix.cols must equal matrix2.rows
+<p>multiplication with aNumber for each element</div></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-+' href='./../Overviews/Methods.html#+'>+</a>(<span class='argstr'>summand2</span>)</h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(matrix + matrix2) matrix must have the same shape as matrix2
+<p>summation with aNumber for each element</div></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='--' href='./../Overviews/Methods.html#-'>-</a>(<span class='argstr'>summand2</span>)</h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(matrix - matrix2) matrix must have the same shape as matrix2
+<p>subtraction with aNumber for each element</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-center' href='./../Overviews/Methods.html#center'>center</a>(<span class='argstr'>mean</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>mean<td class='argumentdesc'>
+<p>mean</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a matrix centred around the mean vector (which will be calculated for you if not supplied)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-thresh2' href='./../Overviews/Methods.html#thresh2'>thresh2</a>(<span class='argstr'>thresh</span>, <span class='argstr'>adverb</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p>Bilateral thresholding.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>thresh<td class='argumentdesc'>
+<p>When the <code>input.abs &lt; thresh</code>, the output is forced to <code>0</code>. Should be a positive value.<tr><td class='argumentname'>adverb<td class='argumentdesc'>
+<p>Optional, for processing Collections. See <a href="./../Reference/Adverbs.html">Adverbs for Binary Operators</a>.</table><h4>Discussion:</h4>
+<textarea class='editor'>(
+var m = Matrix.with(Array.rand(9, -9, 9).clump(3));
+var t = m.thresh(3);
+var t2 = m.thresh2(3);
+" original".postln; m.postmln;
+" thresh".postln;   t.postmln;
+" thresh2".postln;  t2.postmln;
+"";
+)</textarea>
+</div><h3><a class='anchor' name='Return%20Characteristic%20Values'>Return Characteristic Values</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sum' href='./../Overviews/Methods.html#sum'>sum</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the sum of all elements</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sumRow' href='./../Overviews/Methods.html#sumRow'>sumRow</a>(<span class='argstr'>row</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>row</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the sum of all elements of desired row</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sumCol' href='./../Overviews/Methods.html#sumCol'>sumCol</a>(<span class='argstr'>col</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>col</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the sum of all elements of desired column</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sumRows' href='./../Overviews/Methods.html#sumRows'>sumRows</a>(<span class='argstr'>function</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>function<td class='argumentdesc'>
+<p>function</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an array giving the sum for every row</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sumCols' href='./../Overviews/Methods.html#sumCols'>sumCols</a>(<span class='argstr'>function</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>function<td class='argumentdesc'>
+<p>function</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an array giving the sum for every column</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-grammian' href='./../Overviews/Methods.html#grammian'>grammian</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the grammian of a matrix (determinant of the gram matrix)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mean' href='./../Overviews/Methods.html#mean'>mean</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the mean array, calculated over the rows</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cov' href='./../Overviews/Methods.html#cov'>cov</a>(<span class='argstr'>mean</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>mean<td class='argumentdesc'>
+<p>mean</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the sample covariance, if rows represent observations</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-covML' href='./../Overviews/Methods.html#covML'>covML</a>(<span class='argstr'>mean</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>mean<td class='argumentdesc'>
+<p>mean</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the Maximum-Likelihood covariance estimate, if rows represent observations and the distribution is assumed to be Gaussian</div></div><h3><a class='anchor' name='Return%20Characteristic%20Values%20of%20Square%20Matrices'>Return Characteristic Values of Square Matrices</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-det' href='./../Overviews/Methods.html#det'>det</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the determinant</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cofactor' href='./../Overviews/Methods.html#cofactor'>cofactor</a>(<span class='argstr'>row</span>, <span class='argstr'>col</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>row<td class='argumentdesc'>
+<p>row<tr><td class='argumentname'>col<td class='argumentdesc'>
+<p>col</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the cofactor to element (row, col) this is the determinant of the matrix.sub(row, col) mutiplied with (-1)**(row+col)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-trace' href='./../Overviews/Methods.html#trace'>trace</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the trace of matrix: (sum of the diagonal elements)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-norm' href='./../Overviews/Methods.html#norm'>norm</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the euclidean norm of matrix ( sqrt( tr [ A*A(T) ] ) )</div></div><h3><a class='anchor' name='Testing'>Testing</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isSquare' href='./../Overviews/Methods.html#isSquare'>isSquare</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true for (n x n) - matrices</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isSingular' href='./../Overviews/Methods.html#isSingular'>isSingular</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true if determiant is zero</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isRegular' href='./../Overviews/Methods.html#isRegular'>isRegular</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true if determiant is Non-zero</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isSymmetric' href='./../Overviews/Methods.html#isSymmetric'>isSymmetric</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true if matrix is symmetric</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isAntiSymmetric' href='./../Overviews/Methods.html#isAntiSymmetric'>isAntiSymmetric</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true if matrix is antisymmetric</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isPositive' href='./../Overviews/Methods.html#isPositive'>isPositive</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true if matrix is strictly positive</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isNonNegative' href='./../Overviews/Methods.html#isNonNegative'>isNonNegative</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true if matrix is positive / non negative (zeros allowed)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isNormal' href='./../Overviews/Methods.html#isNormal'>isNormal</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true if matrix is normal</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isZero' href='./../Overviews/Methods.html#isZero'>isZero</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true for a zero matrix</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isIntegral' href='./../Overviews/Methods.html#isIntegral'>isIntegral</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true if matrix is integral An Integral matrix is one whose elements are all integers.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isIdentity' href='./../Overviews/Methods.html#isIdentity'>isIdentity</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true if matrix is an identity matrix (the diagonal elements are all 1; the nondigonal elements are all zero)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isDiagonal' href='./../Overviews/Methods.html#isDiagonal'>isDiagonal</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true if matrix is diagonal a(i,j)=0 unless i=j.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isOrthogonal' href='./../Overviews/Methods.html#isOrthogonal'>isOrthogonal</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true if matrix is orthogonal (the matrix multiplied with its transpose is an identity matrix)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isIdempotent' href='./../Overviews/Methods.html#isIdempotent'>isIdempotent</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true if matrix is idempotent (the squared matrix equals itself)</div></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-==' href='./../Overviews/Methods.html#=='>==</a>(<span class='argstr'>matrix2</span>)</h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>true if matrix equals matrix2</div></div><h3><a class='anchor' name='Unary%20Operators:%20matrix.uop'>Unary Operators: matrix.uop</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-neg' href='./../Overviews/Methods.html#neg'>neg</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bitNot' href='./../Overviews/Methods.html#bitNot'>bitNot</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-abs' href='./../Overviews/Methods.html#abs'>abs</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-ceil' href='./../Overviews/Methods.html#ceil'>ceil</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-floor' href='./../Overviews/Methods.html#floor'>floor</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-frac' href='./../Overviews/Methods.html#frac'>frac</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sign' href='./../Overviews/Methods.html#sign'>sign</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-squared' href='./../Overviews/Methods.html#squared'>squared</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cubed' href='./../Overviews/Methods.html#cubed'>cubed</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sqrt' href='./../Overviews/Methods.html#sqrt'>sqrt</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-exp' href='./../Overviews/Methods.html#exp'>exp</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reciprocal' href='./../Overviews/Methods.html#reciprocal'>reciprocal</a></h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>new matrices.</div></div><h3><a class='anchor' name='Binary%20Operators'>Binary Operators</a></h3>
+
+<p>usage: matrix bop aNumber or: aNumber bop matrix<h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-/' href='./../Overviews/Methods.html#/'>/</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-div' href='./../Overviews/Methods.html#div'>div</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-%' href='./../Overviews/Methods.html#%'>%</a>(<span class='argstr'>that</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/Object.html'>Object</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'></span><a class='method-name' name='-**' href='./../Overviews/Methods.html#**'>**</a>(<span class='argstr'>that</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/Object.html'>Object</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-min' href='./../Overviews/Methods.html#min'>min</a>(<span class='argstr'>aNumber</span>, <span class='argstr'>adverb</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-max' href='./../Overviews/Methods.html#max'>max</a>(<span class='argstr'>aNumber: 0</span>, <span class='argstr'>adverb</span>)</h3>
+<div class='supmethod'>From superclass: <a href='./../Classes/SequenceableCollection.html'>SequenceableCollection</a></div>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>new matrices</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addNumber' href='./../Overviews/Methods.html#addNumber'>addNumber</a>(<span class='argstr'>aNumber</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-choleski' href='./../Overviews/Methods.html#choleski'>choleski</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-choleskiSolve' href='./../Overviews/Methods.html#choleskiSolve'>choleskiSolve</a>(<span class='argstr'>b</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-crout' href='./../Overviews/Methods.html#crout'>crout</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-croutPivot' href='./../Overviews/Methods.html#croutPivot'>croutPivot</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-croutPivotSolve' href='./../Overviews/Methods.html#croutPivotSolve'>croutPivotSolve</a>(<span class='argstr'>b</span>, <span class='argstr'>pivot</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-croutSolve' href='./../Overviews/Methods.html#croutSolve'>croutSolve</a>(<span class='argstr'>b</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doolittle' href='./../Overviews/Methods.html#doolittle'>doolittle</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doolittlePivot' href='./../Overviews/Methods.html#doolittlePivot'>doolittlePivot</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doolittlePivotSolve' href='./../Overviews/Methods.html#doolittlePivotSolve'>doolittlePivotSolve</a>(<span class='argstr'>b</span>, <span class='argstr'>pivot</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doolittleSolve' href='./../Overviews/Methods.html#doolittleSolve'>doolittleSolve</a>(<span class='argstr'>b</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-flatten' href='./../Overviews/Methods.html#flatten'>flatten</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gauss' href='./../Overviews/Methods.html#gauss'>gauss</a>(<span class='argstr'>b</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lowerTriangularInverse' href='./../Overviews/Methods.html#lowerTriangularInverse'>lowerTriangularInverse</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lowerTriangularSolve' href='./../Overviews/Methods.html#lowerTriangularSolve'>lowerTriangularSolve</a>(<span class='argstr'>b</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mul' href='./../Overviews/Methods.html#mul'>mul</a>(<span class='argstr'>multplier2</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mulMatrix' href='./../Overviews/Methods.html#mulMatrix'>mulMatrix</a>(<span class='argstr'>aMatrix</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mulNumber' href='./../Overviews/Methods.html#mulNumber'>mulNumber</a>(<span class='argstr'>aNumber</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-postSub' href='./../Overviews/Methods.html#postSub'>postSub</a>(<span class='argstr'>rowStart: 0</span>, <span class='argstr'>colStart: 0</span>, <span class='argstr'>rowLength</span>, <span class='argstr'>colHeight</span>, <span class='argstr'>round: 0.001</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-printItemsOn' href='./../Overviews/Methods.html#printItemsOn'>printItemsOn</a>(<span class='argstr'>stream</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeAt' href='./../Overviews/Methods.html#removeAt'>removeAt</a>(<span class='argstr'>row</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-solve' href='./../Overviews/Methods.html#solve'>solve</a>(<span class='argstr'>b</span>, <span class='argstr'>method: 'crout'</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-subNumber' href='./../Overviews/Methods.html#subNumber'>subNumber</a>(<span class='argstr'>aNumber</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-unitLowerTriangularInverse' href='./../Overviews/Methods.html#unitLowerTriangularInverse'>unitLowerTriangularInverse</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-unitLowerTriangularSolve' href='./../Overviews/Methods.html#unitLowerTriangularSolve'>unitLowerTriangularSolve</a>(<span class='argstr'>b</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-unitUpperTriangularInverse' href='./../Overviews/Methods.html#unitUpperTriangularInverse'>unitUpperTriangularInverse</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-unitUpperTriangularSolve' href='./../Overviews/Methods.html#unitUpperTriangularSolve'>unitUpperTriangularSolve</a>(<span class='argstr'>b</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-upperTriangularInverse' href='./../Overviews/Methods.html#upperTriangularInverse'>upperTriangularInverse</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-upperTriangularSolve' href='./../Overviews/Methods.html#upperTriangularSolve'>upperTriangularSolve</a>(<span class='argstr'>b</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/LinearSystem.sc</a></div>
+<h2><a class='anchor' name='Authors'>Authors</a></h2>
+<ul>
+<li>sc.solar(at)studiobeige.de (Original author)<li>Till Bovermann</ul>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Classes/Matrix.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Classes/Matrix.schelp</a><br>link::Classes/Matrix::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

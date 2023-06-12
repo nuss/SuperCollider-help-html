@@ -1,0 +1,413 @@
+<!doctype html><html lang='en'><head><title>PLbindef | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'PLbindef';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>PLbindef:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-clear'>clear</a> </li>
+<li class='toc3'><a href='#-sourceEnvir'>sourceEnvir</a> </li>
+<li class='toc3'><a href='#-refEnvir'>refEnvir</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#Examples'>Examples</a></li>
+<ul class='toc'><li class='toc2'><a href='#Ex.1)%20Setting%20key%20streams'>Ex.1) Setting key streams</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.2)%20PLbindef%20with%20EventShortcuts'>Ex.2) PLbindef with EventShortcuts</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.3)%20PLbindef%20with%20VarGui'>Ex.3) PLbindef with VarGui</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.4)%20PLbindef%20with%20PbindFx'>Ex.4) PLbindef with PbindFx</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.5)%20Passing%20a%20refEnvir'>Ex.5) Passing a refEnvir</a></li>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>PLx suite'>PLx suite</a> | <a href='./../Browse.html#Streams-Patterns-Events'>Streams-Patterns-Events</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Streams-Patterns-Events>PLx suite'>PLx suite</a></span>
+</div><h1>PLbindef<span id='superclasses'> : <a href="../Classes/Pbindef.html">Pbindef</a> : <a href="../Classes/Pdef.html">Pdef</a> : <a href="../Classes/EventPatternProxy.html">EventPatternProxy</a> : <a href="../Classes/TaskProxy.html">TaskProxy</a> : <a href="../Classes/PatternProxy.html">PatternProxy</a> : <a href="../Classes/Pattern.html">Pattern</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>wrapper for Pbindef which allows replacement in object prototyping style</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/PLbindef.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/PLbindef.sc'>PLbindef.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Tutorials/PLx_suite.html">PLx suite</a>, <a href="./../Classes/PLbindefPar.html">PLbindefPar</a>, <a href="./../Classes/PLbindefEnvironment.html">PLbindefEnvironment</a>, <a href="./../Classes/PLbindefParEnvironment.html">PLbindefParEnvironment</a>, <a href="./../Classes/EventShortcuts.html">EventShortcuts</a>, <a href="./../Tutorials/PLx_and_live_coding_with_Strings.html">PLx and live coding with Strings</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>PLbindef works like a normal Pbindef and, like the latter, uses Pdef's global bookkeeping, but replacement of key streams can be done in object prototyping style with a dedicated PLbindefEnvironment, which also holds player methods. This hybrid Environment is itself assigned to the PLbindef's name in an Environment of choice, by default the current Environment. Setting can thus be done in very condensed syntax, also in combination with <a href="./../Classes/EventShortcuts.html">EventShortcuts</a>. For more info on object prototyping see <a href="./../Classes/Environment.html#Using%20Environments%20as%20object%20prototypes">Environment: Using Environments as object prototypes</a>.<div class='note'><span class='notelabel'>NOTE:</span> PLbindefs are registered globally in the same Dictionary as Pdefs, Pbindefs and PLbindefPars. It's recommended to do cleanup with <code>remove</code> or <code>Pdef.removeAll</code> after using PLbindef / PLbindefPar as in examples below. Otherwise unwanted or strange behaviour might be caused by leftover sources when playing a new PLbindef / PLbindefPar example with the same key. With SC &gt;= 3.7 occasional posts of the default parent event occur with Pbindef, so also with PLbindef, this doesn't cause problems though.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>PLbindef.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>Creates a new PLbindef object or sets sources as with Pbindef.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... args<td class='argumentdesc'>
+<p>First arg should be the name, followed by key/value pairs for the Pbindef. The last arg can be an optional environment which determines where the corresponding PLbindefEnvironment should be stored, by default this is the current Environment at instantiation time.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a></h3>
+<div class='method'>
+<p>As with <a href="./../Classes/Pdef.html#-clear">Pdef: -clear</a>, but in addition remove name entry from <strong>refEnvir</strong>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sourceEnvir' href='./../Overviews/Methods.html#sourceEnvir'>sourceEnvir</a></h3>
+<div class='method'>
+<p>Getter for PLbindef's PLbindefEnvironment.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-refEnvir' href='./../Overviews/Methods.html#refEnvir'>refEnvir</a></h3>
+<div class='method'>
+<p>Getter for the Environment where PLbindef's PLbindefEnvironment is associated with PLbindef's key.
+<p><a class='anchor' name='above'>&nbsp;</a></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='Examples'>Examples</a></h2>
+<textarea class='editor'>(
+s = Server.local;
+Server.default = s;
+s.boot;
+)
+
+// synthdefs to play with
+
+(
+SynthDef(\noise_grain, { |out = 0, freq = 400, att = 0.005, rel = 0.1, rq = 0.1, amp = 0.1|
+    var sig = { WhiteNoise.ar } ! 2;
+    sig = BPF.ar(sig, freq, rq) *
+        EnvGen.ar(Env.perc(att, rel, amp), doneAction: 2) *
+        (rq ** -1) * (250 / (freq ** 0.8));
+    OffsetOut.ar(out, sig);
+}).add;
+
+SynthDef(\sin_grain, { |out = 0, freq = 400, att = 0.005, rel = 0.1, amp = 0.1|
+    var sig = { SinOsc.ar(freq, Rand(0, 2pi)) } ! 2;
+    sig = sig * EnvGen.ar(Env.perc(att, rel, amp), doneAction: 2);
+    OffsetOut.ar(out, sig);
+}).add;
+
+SynthDef(\saw_grain, { |out = 0, freq = 400, att = 0.005, rel = 0.1, amp = 0.1|
+    var sig = { VarSaw.ar(freq, Rand(0, 1)) } ! 2;
+    sig = sig * EnvGen.ar(Env.perc(att, rel, amp), doneAction: 2);
+    OffsetOut.ar(out, sig);
+}).add;
+)</textarea>
+<h3><a class='anchor' name='Ex.1)%20Setting%20key%20streams'>Ex.1) Setting key streams</a></h3>
+<textarea class='editor'>// start with a fresh global Dictionary
+
+Pdef.removeAll
+
+// store PLbindef under key \x
+
+(
+PLbindef(\x,
+    \instrument, \sin_grain,
+    \dur, 0.2,
+    \midinote, Pwhite(60, 90)
+)
+)
+
+// PLbindefEnvironment has been made and assigned to the variable ~x in currentEnvironment, check
+
+~x
+
+
+// now the PLbindefEnvironment can also be treated as a player
+
+~x.play
+
+
+// set params while playing
+
+~x.att = Pwhite(0.01, 0.2)
+
+~x.midinote = 75
+
+~x.att = 0.01
+
+~x.dur = 0.02
+
+~x.midinote = Pbrown(60, 90, 1.5)
+
+
+// prototype underscore syntax
+
+~x.midinote_(Pbrown(70, 80, 3))
+
+
+
+// pause
+
+~x.stop
+
+// resume
+
+~x.play
+
+
+
+// use method 'value' for parallel setting
+
+~x.(\dur, 0.05, \midinote, Pwhite(70.0, 72))
+
+
+// sequential underscore setting
+
+~x.dur_(0.07).midinote_(Pwhite(72.0, 74))
+
+
+// Pbindef syntax of setting also still possible
+
+PLbindef(\x, \dur, 0.1, \midinote, Pwhite(80, 81.0))
+
+
+~x.stop
+
+// cleanup
+
+~x.remove</textarea>
+<h3><a class='anchor' name='Ex.2)%20PLbindef%20with%20EventShortcuts'>Ex.2) PLbindef with EventShortcuts</a></h3>
+
+<p>Use SynthDefs from <a href="./../Classes/PLbindef.html#above">above</a>.<textarea class='editor'>// syntax can be more condensed with EventShortcuts, turn it on, post defaults
+
+EventShortcuts.on
+
+EventShortcuts.postCurrent
+
+
+(
+PLbindef(\u,
+    \i, \saw_grain,
+    \d, 0.2,
+    \m, Pwhite(60, 90)
+)
+)
+
+~u.play
+
+~u.d = 0.1
+
+
+~u.m = Pn(Plazy { Pseries(rrand(50, 70), 1.5, 20) })
+
+~u.m = ~u.m + [0, 4, 7]
+
+~u.i = PLseq([\sin_grain, \saw_grain])
+
+
+~u.a = Pn(Pseries(0.05, 0.01, 20))
+
+~u.m = 70
+
+
+// stop + cleanup in one
+
+~u.remove</textarea>
+<h3><a class='anchor' name='Ex.3)%20PLbindef%20with%20VarGui'>Ex.3) PLbindef with VarGui</a></h3>
+
+<p>Use SynthDef from <a href="./../Classes/PLbindef.html#above">above</a>.<textarea class='editor'>// start with gui and define pitch sequence with sliders
+
+(
+p = PLbindef(\z,
+    \i, \saw_grain,
+    \d, 0.2,
+    \m, PLseq(\midi)
+);
+
+VarGui([\midi, [50, 90, \lin, 1, 60] ! 7], stream: p).gui;
+)
+
+
+~z.m = PLseq(\midi) + [0, 5, 8]
+
+~z.m = ~z.m + PLseq([-1, 0, 1] * 12)
+
+// stop with gui, then do cleanup
+
+~z.remove</textarea>
+<h3><a class='anchor' name='Ex.4)%20PLbindef%20with%20PbindFx'>Ex.4) PLbindef with PbindFx</a></h3>
+
+<p>See also <a href="./../Classes/PbindFx.html#Ex.%207c">Ex.7c: Replacement with Pbindef</a> <textarea class='editor'>// boot server with extended resources
+
+(
+s.options.numPrivateAudioBusChannels = 1024;
+s.options.memSize = 8192 * 16;
+s.reboot;
+)
+
+(
+SynthDef(\echo, { |out, in, maxEchoDelta = 0.2, echoDelta = 0.1,
+    decayTime = 1, amp = 1, mix = 1|
+    var sig, inSig = In.ar(in, 2);
+    sig = DelayL.ar(
+        CombL.ar(inSig, maxEchoDelta, echoDelta, decayTime, amp),
+        maxEchoDelta,
+        maxEchoDelta - echoDelta
+    );
+    Out.ar(out, (1 - mix) * inSig + (sig * mix));
+}).add;
+
+SynthDef(\wah, { |out, in, resLo = 200, resHi = 5000,
+    cutOffMoveFreq = 0.5, rq = 0.1, amp = 1, mix = 1|
+    var sig, inSig = In.ar(in, 2);
+    sig = RLPF.ar(
+        inSig,
+        LinExp.kr(LFDNoise3.kr(cutOffMoveFreq), -1, 1, resLo, resHi),
+        rq,
+        amp
+    ).softclip;
+    Out.ar(out, (1 - mix) * inSig + (sig * mix));
+}).add;
+
+SynthDef(\noise_grain, { |out = 0, freq = 400, att = 0.005, rel = 0.1, rq = 0.1, amp = 0.1|
+    var sig = { WhiteNoise.ar } ! 2;
+    sig = BPF.ar(sig, freq, rq) *
+        EnvGen.ar(Env.perc(att, rel, amp), doneAction: 2) *
+        (rq ** -1) * (250 / (freq ** 0.8));
+    OffsetOut.ar(out, sig);
+}).add;
+
+SynthDef(\sin_grain, { |out = 0, freq = 400, att = 0.005, rel = 0.1, amp = 0.1|
+    var sig = { SinOsc.ar(freq, Rand(0, 2pi)) } ! 2;
+    sig = sig * EnvGen.ar(Env.perc(att, rel, amp), doneAction: 2);
+    OffsetOut.ar(out, sig);
+}).add;
+    
+SynthDef(\saw_grain, { |out = 0, freq = 400, att = 0.005, rel = 0.1, amp = 0.1|
+    var sig = { VarSaw.ar(freq, Rand(0, 1)) } ! 2;
+    sig = sig * EnvGen.ar(Env.perc(att, rel, amp), doneAction: 2);
+    OffsetOut.ar(out, sig);
+}).add;
+)
+
+// prepare EventShortcuts for additional keys
+
+(
+EventShortcuts.addOnBase(\default, \fxs, (
+    dec: \decayTime,
+    cd: \cleanupDelay,
+    cf: \cutOffMoveFreq,
+    fxo: \fxOrder,
+    dta: \echoDelta
+), true);
+
+EventShortcuts.makeCurrent(\fxs);
+
+EventShortcuts.on;
+)
+
+
+(
+// source and fxs passed as PLbindefs
+
+k = [\q, \echo, \wah];
+
+PLbindef(\q,
+    \i, PLrand([\noise_grain, \saw_grain]),
+    \d, 0.25,
+    \m, PLseq([60, 60, 60, 62]),
+    \fxo, PLseq([0, 0, 1, 2]),
+    // echo introduces delay, so do delay if no echo
+    \lag, Pfunc { |e| e.fxo.asArray.includes(1).if { 0 }{ 0.2 } },
+    \a, 0.1,
+    \att, 0.01,
+    \rel, 0.1,
+
+    \cd, Pkey(\att)+ Pkey(\rel) + 0.001
+);
+
+PLbindef(\echo,
+    \fx, \echo,
+    \dta, 0.06,
+    \a, 0.5,
+    \dec, Pwhite(0.3, 1.8),
+    \cd, Pkey(\dec)
+);
+
+PLbindef(\wah,
+    \fx, \wah,
+    \cf, Pwhite(1, 3),
+    \a, 0.5,
+    \cd, 0.01
+);
+
+
+p = PbindFx(*k.collect(PLbindef(_))); // PbindFx(*(k.collect { |x| PLbindef(x) }));
+
+q = p.play;
+)
+
+
+
+// manipulate midinotes
+
+~q.m = ~q.m + PLseq([0, 12, -12])
+
+~q.m = ~q.m + PLrand([0, [0, -4]])
+
+~q.m = ~q.m + PLrand([0, [0, -7]])
+
+
+// rhythm
+
+~q.d = PLshufn([1, 1, 2, 1] / 8)
+
+
+// echo param and fx order sequence
+
+~echo.dta = Pwhite(0.03, 0.08)
+
+~q.fxo = PLseq([0, 0, 1, 2, 1, [1, 2]])
+
+
+
+~q.m = 48
+
+// produce overtone series with echodelta
+
+~echo.dta = 1 / 24.midicps / PLseq((1..16))
+
+
+// this also works in chords ("fx expansion")
+// source is processed twice per event
+
+~echo.dta = 1 / [24, 26.7].midicps / PLseq((1..16))
+
+
+
+// cleanup
+
+q.stop
+
+Pdef.removeAll</textarea>
+<h3><a class='anchor' name='Ex.5)%20Passing%20a%20refEnvir'>Ex.5) Passing a refEnvir</a></h3>
+<textarea class='editor'>// on occasion it might be desirable to control from a dedicated Environment
+
+Pdef.removeAll
+
+(
+PLbindef(\a,
+    \instrument, \sin_grain,
+    \dur, 0.2,
+    \midinote, Pwhite(60, 90),
+    e = ()
+)
+)
+
+e.use { ~a.play }
+
+e[\a].stop
+
+e.a.play
+
+e.a.stop
+
+e.a.remove</textarea>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PLbindef.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PLbindef.schelp</a><br>link::Classes/PLbindef::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

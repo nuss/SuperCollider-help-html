@@ -1,0 +1,83 @@
+<!doctype html><html lang='en'><head><title>RedRLE | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'RedRLE';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>RedRLE:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*encode'>encode</a> </li>
+<li class='toc3'><a href='#*decode'>decode</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Red'>Red</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Red>redTools'>redTools</a></span>
+</div><h1>RedRLE<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>run-length compression/decompression</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redTools/RedRLE.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redTools/RedRLE.sc'>RedRLE.sc</a></div><div id='related'>See also: <a href="./../Classes/RedBase64.html">RedBase64</a>, <a href="./../Classes/RedHuffman.html">RedHuffman</a>, <a href="./../Classes/RedLZ77.html">RedLZ77</a>, <a href="./../Classes/RedLZ78.html">RedLZ78</a>, <a href="./../Classes/RedLZSS.html">RedLZSS</a>, <a href="./../Classes/RedLZW.html">RedLZW</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>See <a href="http://en.wikipedia.org/wiki/Run-length_encoding">http://en.wikipedia.org/wiki/Run-length_encoding</a>
+<p>Performs well with highly repetitive data e.g. <code>[0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3]</code>. Performs very bad with data containing repeating patterns e.g. <code>[0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3]</code>.<div class='note'><span class='notelabel'>NOTE:</span> Works with <a href="./../Classes/Integer.html">Integer</a>, <a href="./../Classes/Float.html">Float</a> and <a href="./../Classes/Symbol.html">Symbol</a>. Can also take a <a href="./../Classes/String.html">String</a> instead of an <a href="./../Classes/Array.html">Array</a>.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>RedRLE.</span><a class='method-name' name='*encode' href='./../Overviews/Methods.html#encode'>encode</a>(<span class='argstr'>input</span>)</h3>
+<div class='method'>
+<p>Returns an array with length, value pairs.</div><h3 class='method-code'><span class='method-prefix'>RedRLE.</span><a class='method-name' name='*decode' href='./../Overviews/Methods.html#decode'>decode</a>(<span class='argstr'>input</span>)</h3>
+<div class='method'>
+<p>Array must be length, value pairs.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>a= [0, 0, 0, 0, 0, 1, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 0.5, 0.5, 0.5, \abc, \abc, \abc];
+b= RedRLE.encode(a);
+b.size/a.size;    //compressed to 55%
+c= RedRLE.decode(b);
+c==a;
+
+
+a= "WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWW";    //string instead of array
+a.size;
+b= RedRLE.encode(a);
+b.size/a.size;    //compressed to 21%
+c= RedRLE.decode(b);
+c.size;
+a==c.join;
+
+
+a= "JOEYNJOEYNJOEYJOEYNJOEYNJOEYJOEYNJOEYNJOEYJOEYNJOEYNJOEY".ascii;
+a.size;
+b= RedRLE.encode(a);
+b.size/c.size;    //expanded to 167%. performs really bad with non-repeating values
+c= RedRLE.decode(b);
+c.size;
+a==c;
+c.collect{|x| x.asAscii}.join;</textarea>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedRLE.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedRLE.schelp</a><br>link::Classes/RedRLE::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

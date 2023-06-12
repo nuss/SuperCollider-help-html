@@ -1,0 +1,94 @@
+<!doctype html><html lang='en'><head><title>PLbindefParEnvironment | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'PLbindefParEnvironment';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>PLbindefParEnvironment:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-put'>put</a> </li>
+<li class='toc3'><a href='#-superPut'>superPut</a> </li>
+<li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc3'><a href='#-num'>num</a> </li>
+<li class='toc3'><a href='#-name'>name</a> </li>
+<li class='toc3'><a href='#-plbindefPar'>plbindefPar</a> </li>
+<li class='toc3'><a href='#-at'>at</a> </li>
+<li class='toc3'><a href='#-play'>play</a> </li>
+<li class='toc3'><a href='#-reset'>reset</a> </li>
+<li class='toc3'><a href='#-stop'>stop</a> </li>
+<li class='toc3'><a href='#-clear'>clear</a> </li>
+<li class='toc3'><a href='#-remove'>remove</a> </li>
+<li class='toc3'><a href='#-subPLbindefs'>subPLbindefs</a> </li>
+<li class='toc3'><a href='#-subEnvirs'>subEnvirs</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>PLx suite'>PLx suite</a> | <a href='./../Browse.html#Streams-Patterns-Events'>Streams-Patterns-Events</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Streams-Patterns-Events>PLx suite'>PLx suite</a></span>
+</div><h1>PLbindefParEnvironment<span id='superclasses'> : <a href="../Classes/Environment.html">Environment</a> : <a href="../Classes/IdentityDictionary.html">IdentityDictionary</a> : <a href="../Classes/Dictionary.html">Dictionary</a> : <a href="../Classes/Set.html">Set</a> : <a href="../Classes/Collection.html">Collection</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Environment made by PLbindefPar to play and set its sources</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/PLbindefPar.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/PLbindefPar.sc'>PLbindefPar.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Tutorials/PLx_suite.html">PLx suite</a>, <a href="./../Classes/PLbindef.html">PLbindef</a>, <a href="./../Classes/PLbindefPar.html">PLbindefPar</a>, <a href="./../Classes/PLbindefEnvironment.html">PLbindefEnvironment</a>, <a href="./../Classes/EventShortcuts.html">EventShortcuts</a>, <a href="./../Tutorials/PLx_and_live_coding_with_Strings.html">PLx and live coding with Strings</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Instances of this class are made as side effect of PLbindefPar creation, assigned to PLbindefPar's name in an Environment of choice (by default the current one) and used as player interface and to set PLbindef's sources in condensed syntax. They are not thought to be created explicitely though. A PLbindefParEnvironment contains the references to its PLbindefs as Associations of indices to PLbindefEnvironments. See <a href="./../Classes/PLbindefPar.html">PLbindefPar</a> for examples.<div class='note'><span class='notelabel'>NOTE:</span> For setting, getting, playing, stopping and resetting subsets of PLbindefs in prototyping syntax the class TempPLbindefParEnvironment is involved (see <a href="./../Classes/PLbindefPar.html#Ex.%201">Ex.1</a> in PLbindefPar's help). The user doesn't need to care about this class, instances are generated implicitely and might occur in the post window.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>PLbindefParEnvironment.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>n: 8</span>, <span class='argstr'>proto</span>, <span class='argstr'>parent</span>, <span class='argstr'>know: true</span>, <span class='argstr'>name</span>, <span class='argstr'>num</span>, <span class='argstr'>plbindefPar</span>, <span class='argstr'>plbindefs</span>)</h3>
+<div class='method'>
+<p>Creates a new PLbindefParEnvironment object with arguments of IdentityDictionary. In contrast to the latter <strong>know</strong> defaults to true, which allows setting sources of the PLbindefPar in object prototyping style. <strong>name</strong> is used for the corresponding key of the PLbindefPar. <strong>num</strong> is the number of parallel patterns in the PLbindefPar. <strong>plbindefPar</strong> is the corresponding PLbindefPar, <strong>plbindefs</strong> might be passed. Normally not be used explicitely.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-put' href='./../Overviews/Methods.html#put'>put</a>(<span class='argstr'>key</span>, <span class='argstr'>obj</span>)</h3>
+<div class='method'>
+<p>Associates <strong>obj</strong> with Symbol <strong>key</strong> and updates the stored PLbindefEnvironments depending on the class of <strong>obj</strong>. For a SequenceableCollection items are assigned in the PLbindefEnvironments of corresponding indices (method 'wrapAt' is used for handling cases of smaller collections). Other types of passed objects are assigned in all PLbindefEnvironments. </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-superPut' href='./../Overviews/Methods.html#superPut'>superPut</a>(<span class='argstr'>key</span>, <span class='argstr'>obj</span>)</h3>
+<div class='method'>
+<p>Associates <strong>obj</strong> with Symbol <strong>key</strong> mimicing <a href="./../Classes/IdentityDictionary.html#-put">IdentityDictionary: -put</a>. </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-value' href='./../Overviews/Methods.html#value'>value</a>( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>Expects key/value pairs and applies <strong>put</strong>. Optionally the first arg can be an Integer or a collection of Integers, specifying the PLbindefs to be set.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-num' href='./../Overviews/Methods.html#num'>num</a></h3>
+<div class='method'>
+<p>Getter for PLbindefPar's number of parallel PLbindefs.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
+<div class='method'>
+<p>Getter for PLbindefPar's key.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plbindefPar' href='./../Overviews/Methods.html#plbindefPar'>plbindefPar</a></h3>
+<div class='method'>
+<p>Getter for the corrresponding PLbindefPar.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>item</span>)</h3>
+<div class='method'>
+<p>For Integers it works as <a href="./../Classes/IdentityDictionary.html#-at">IdentityDictionary: -at</a>, for SequenceableCollections of Integers it enables setting and getting as well as playing, stopping, resetting and clearing of sources of corresponding PLbindefs by using a TempPLbindefParEnvironment (see <a href="./../Classes/PLbindefPar.html#Ex.%201">Ex.1</a> in PLbindefPar's help). </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-play' href='./../Overviews/Methods.html#play'>play</a>(<span class='argstr'>clock</span>, <span class='argstr'>protoEvent</span>, <span class='argstr'>quant</span>, <span class='argstr'>doReset: false</span>)</h3>
+<div class='method'>
+<p>Plays all PLbindefs of the corresponding PLbindefPar with passed arguments.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reset' href='./../Overviews/Methods.html#reset'>reset</a></h3>
+<div class='method'>
+<p>Resets all PLbindefs of the corresponding PLbindefPar.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stop' href='./../Overviews/Methods.html#stop'>stop</a></h3>
+<div class='method'>
+<p>Stops all PLbindefs of the corresponding PLbindefPar.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a></h3>
+<div class='method'>
+<p>Clears all PLbindefs of the corresponding PLbindefPar and delete references to sourceEnvir and refEnvir.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remove' href='./../Overviews/Methods.html#remove'>remove</a></h3>
+<div class='method'>
+<p>Removes the corresponding PLbindefPar and all related PLbindefs from the global entry, delete references to sourceEnvir and refEnvir.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-subPLbindefs' href='./../Overviews/Methods.html#subPLbindefs'>subPLbindefs</a></h3>
+<div class='method'>
+<p>Returns corresponding PLbindefs.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-subEnvirs' href='./../Overviews/Methods.html#subEnvirs'>subEnvirs</a></h3>
+<div class='method'>
+<p>Returns corresponding PLbindefEnvironments.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PLbindefParEnvironment.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PLbindefParEnvironment.schelp</a><br>link::Classes/PLbindefParEnvironment::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

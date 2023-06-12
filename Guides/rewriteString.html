@@ -1,0 +1,533 @@
+<!doctype html><html lang='en'><head><title>Stream variant of a Lindenmayer system | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Stream variant of a Lindenmayer system';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Stream variant of a Lindenmayer system:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#rewriteString'>rewriteString</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Examples'>Examples</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Links%20on%20the%20net'>Links on the net</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Authors'>Authors</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Guides (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>MathLib'>MathLib</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>MathLib>L-system'>L-system</a></span>
+</div><h1>Stream variant of a Lindenmayer system<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Stream variant of a Lindenmayer system</div>
+</div>
+<div class='subheader'>
+</div>
+<a class='anchor' name='kw_MathLib'>&nbsp;</a><h2><a class='anchor' name='rewriteString'>rewriteString</a></h2>
+
+<p>An initial stream, the <strong>axiom</strong>, is recursively rewritten, using a set of <strong>production rules</strong>. In a classic <em>Lindenmayer system (L-system)</em>, each <strong>level</strong> of rewriting is done at once, rewriting the whole string.
+<p>This can be also done in a depth-first traversal through all levels, taking in a stream and resulting in a stream.
+<p>The L-system's restrictions to a general <em>generative grammar</em> is a fixed order in which the rules are applied, and no principal distinction between terminal and nonterminal symbols.
+<p>If one of the two special characters <code>&lt;</code> and <code>&gt;</code> appear in a set of rules, they are interpreted as <em>context</em> in order to form a <em>context-sensitive generative grammar</em>. Everything that falls outside the closure, such as <code>A</code> and <code>B</code> in <code>A&lt;X&gt;B</code> are not rewritten. <code>X</code> is rewritten only if <code>AXB</code> match.
+<p>The class <a href="./../Classes/Prewrite.html">Prewrite</a> by James McCartney does a similar thing with objects, whereby their identity is used as a lookup. This is more efficient, but does not allow for the combinatorics that a pure string rewriting system does.
+<p>Part of <a href="./../Guides/MathLib.html">MathLib</a>, a diverse library of mathematical functions.<h2><a class='anchor' name='Examples'>Examples</a></h2>
+<textarea class='editor'>// stream a string as axiom. 1 level of rewiting
+(
+var axiom, rules;
+axiom = "hello Aristide".iter; // create a stream from a string
+rules = [
+    "r" -&gt; "rr",
+    "i" -&gt; "ou",
+    "u" -&gt; "i"
+];
+z = axiom.rewriteString(rules);
+z.all.join; // stream all characters into one string
+)
+
+
+
+// the same doing the rewriting all at once:
+(
+var rules;
+rules = [
+    "r" -&gt; "rr",
+    "i" -&gt; "ou",
+    "u" -&gt; "i"
+];
+"hello Aristide".rewriteString(rules);
+)
+
+
+// cantor set
+
+"_".rewriteString(["_" -&gt; "_ _", " " -&gt; "   "], 4);
+
+// fibonacci numbers
+(
+var r;
+r = "A";
+10.do {
+    r = r.rewriteString(["A" -&gt; "B", "B" -&gt; "AB"]);
+    r.postln;
+    r.size.postln;
+}
+)
+
+// thue-morse L-system
+(
+var r;
+r = "a";
+6.do {
+    r = r.rewriteString(["a" -&gt; "ab", "b" -&gt; "ba"]);
+    r.postln;
+}
+)
+
+
+// streaming the 45th..50th generation of an l-system
+
+(
+var z;
+(45..50).do { arg i;
+    z = Pseq("aaa", 1).asStream.rewriteString(["a" -&gt; "bb", "b" -&gt; "abb"], i);
+    z.nextN(40).reject(_.isNil).join.postln;
+}
+)
+
+
+
+
+// using a stream as axiom has certain advantages,
+// because it does not have to be known from the beginning.
+// it would be even possible to make the axiom dependent on the productions.
+
+
+// using a random stream of letters as axiom
+(
+k = Prout { 50.do { "abcde".choose.yield } };
+c = [
+    "a" -&gt;"aa", "b" -&gt; "bb", "c" -&gt; "dd", "d" -&gt; "dxx", "x" -&gt; "y"
+];
+
+)
+
+// 1 level of rewriting
+(
+z = k.asStream.rewriteString(c);
+z.all.join;
+)
+
+// 5 levels of rewriting
+(
+z = k.asStream.rewriteString(c, 5); // 5 x rewriting
+z.all.join;
+)
+
+
+// if the input stream returns nil, the output stream finishes and returns nil asl well.
+// it can be resumend if the input stream resumes.
+
+(
+a = "abc";
+k = Prout { 100.do { a.yield } };
+z = k.asStream.rewriteString(c, 5); // 5 x rewriting
+z.nextN(20).join.postln;
+a = nil;
+z.nextN(50).join.postln;
+a = "c";
+z.nextN(50).join.postln;
+""
+)
+
+
+// increasing the level of rewriting by reusing the same stream
+(
+r = "hello aristide".iter;
+c = [
+    "r" -&gt; "ri",
+    "i" -&gt; "ou",
+    "u" -&gt; "i"
+];
+z = r.rewriteString(c,8);
+)
+
+
+// calculate the first 8 characters
+z.nextN(5).join;
+
+// now add a next level and continue streaming:
+(
+z = z.rewriteString(c);
+z.nextN(8).join;
+)
+
+// take the rest
+z.all.join;
+
+
+
+
+
+// the rules can contain functions as values. The function is evaluated passing in
+// the current string cache, the rewriting level (generation) and the rules themselves.
+
+
+(
+k = Prout { 3.do { "abcd".choose.yield } };
+c = [
+    "a" -&gt; "xaa",
+    "b" -&gt; "x",
+    "d" -&gt; "dxx",
+    "c" -&gt; { arg count, level, rules; if(level.even) {"Z"} {"P"}  },
+]
+)
+
+// post 5 variations
+(
+5.do {
+    var z;
+    z = k.asStream.rewriteString(c, 6);
+    z.all.join.postcs;
+    "\n".post;
+}
+)
+
+
+// a stochastic thue-morse L-system.
+// systems like this resemble markov chains
+(
+var r;
+r = "a";
+8.do {
+    r = r.rewriteString([
+        "a" -&gt; { ["ab", "b"].choose },
+        "b" -&gt; { ["ba", "a"].choose }
+    ]);
+    r.postln;
+}
+)
+
+// context-sensitive chomsky-grammar:
+// "X&lt;A&gt;Y", where X,A,Y is any number of characters.
+
+(
+var rules;
+r = "xuabcyyyyxcccxx";
+rules = [
+    "a&lt;b&gt;c" -&gt; "Z",
+    "xx" -&gt; "?",
+    "y&lt;xcc" -&gt; "P",
+    "x&gt;u" -&gt; "...",
+    "." -&gt; "_.",
+    "Zcc" -&gt; "abc"
+];
+r.rewriteString(rules, 1).postcs;
+r.rewriteString(rules, 2).postcs;
+r.rewriteString(rules, 3).postcs;
+r.rewriteString(rules, 4).postcs;
+r.rewriteString(rules, 5).postcs;
+""
+)
+
+/* returns:
+"...uaZccyyyyPc?"
+"_._._.uaabcyyyyPc?"
+"__.__.__.uaaZccyyyyPc?"
+"___.___.___.uaaabcyyyyPc?"
+"____.____.____.uaaaZccyyyyPc?"
+*/
+
+
+// classical context-sensitive l-system for modeling movement along an axis
+
+(
+var r, rules;
+r = "aa......aa......";
+rules = [
+    "a&lt;."     -&gt; "a",
+    "a&gt;a"    -&gt; "."
+];
+
+15.do { |i|
+    r.postcs;
+    r = r.rewriteString(rules, 1);
+};
+)
+
+
+//    Penrose tile (without screen graphics)
+(
+
+var angle = 36 / 360 * 2pi;
+var r = "[X]++[X]++[X]++[X]++[X]";
+
+var rules = [
+    "W" -&gt; "YF++ZF----XF[-YF----WF]++ ",
+    "X" -&gt; "+YF--ZF[---WF--XF]+",
+    "Y" -&gt; "-WF++XF[+++YF++ZF]-",
+    "Z" -&gt; "--YF++++WF[+ZF++++XF]--XF",
+    "F" -&gt; ""
+];
+
+2.do {
+    r = r.rewriteString(rules).postln
+}
+)
+
+
+
+// sound examples ////////////////////////////////////////////////////////
+
+(
+SynthDef("sinegrain",
+    { arg out=0, freq=440, dur=0.05;
+        var env;
+        env = EnvGen.kr(Env.perc(0.01, dur, 0.2), doneAction:2);
+        Out.ar(out, SinOsc.ar(freq, 0, env))
+}).memStore;
+)
+
+
+// translating characters in melody
+(
+k = Pseq("ab");
+c = [
+    "a" -&gt; "ba",
+    "b" -&gt; "ca"
+];
+d = Dictionary[
+    $a -&gt; 0,
+    $b -&gt; 5,
+    $c -&gt; 3
+];
+
+z = Pdict(d, // apply homomorphism (final translation)
+    k.asStream.rewriteString(c, 5)
+);
+
+Pbind(
+    \instrument, \sinegrain,
+    \degree, z,
+    \dur, 0.1
+).play;
+)
+
+
+// which is the same as:
+(
+k = Pseq([0, 5]);
+c = IdentityDictionary[
+    0 -&gt; [5, 0],
+    5 -&gt; [3, 0]
+];
+
+z = Prewrite(k, c, 5);
+Pbind(
+    \instrument, \sinegrain,
+    \degree, z,
+    \dur, 0.1
+).play;
+)
+
+
+
+
+// the following would be hard with Prewrite, because
+// the new string is a combination of previous ones
+// ("aa" -&gt; "_", "ab" -&gt; "c")
+
+(
+k = Pseq("abx");
+c = [
+    "aa" -&gt; "_",
+    "ab" -&gt; "c",
+    "a" -&gt; "ba",
+    "b" -&gt; "ca",
+    "c" -&gt; "ac"
+
+];
+d = Dictionary[
+    $a -&gt; 0,
+    $b -&gt; 5,
+    $c -&gt; 3,
+    $_ -&gt; 8,
+    $x -&gt; [5, 7]
+];
+k.asStream.rewriteString(c, 10).all.join.postln;
+z = Pdict(d, k.asStream.rewriteString(c, 10));
+
+Pbind(
+    \instrument, \sinegrain,
+    \degree, z,
+    \octave, 5,
+    \dur, 0.1
+).play;
+)
+
+
+
+
+
+
+// two levels in parallel:
+
+(
+k = Pseq("abx");
+c = [
+    "aa" -&gt; "_",
+    "a" -&gt; "ba",
+    "b" -&gt; "ca",
+    "c" -&gt; "ac"
+
+];
+d = Dictionary[
+    $a -&gt; 0,
+    $b -&gt; 5,
+    $c -&gt; 3,
+    $_ -&gt; 9,
+    $x -&gt; Pseq((0..15), 2) // end phrase
+];
+
+z = Ptuple([
+    Pdict(d, k.asStream.rewriteString(c, 8)),
+    Pdict(d, k.asStream.rewriteString(c, 9)) + 2 // modal transpose
+]).trace;
+
+Pbind(
+    \instrument, \sinegrain,
+    \degree, z,
+    \dur, 0.1
+).play;
+)
+
+
+
+
+
+
+
+// rule order tests /////////////////////////////////////////////////////////
+
+
+// the rules are applied in order. The first match is used to translate
+// the current string.
+
+
+
+
+
+(
+k = Pseq("ba");
+c = [
+    "ab" -&gt; "c",
+    "a" -&gt; "ba"
+
+];
+k.asStream.rewriteString(c, 6).all.join.postcs; // "bbbbbbba"
+)
+
+(
+k = Pseq("ab");
+c = [
+    "ab" -&gt; "c",
+    "a" -&gt; "ba"
+
+];
+k.asStream.rewriteString(c, 6).all.join.postcs; // "c"
+)
+
+(
+k = Pseq("ab");
+c = [
+    "a" -&gt; "ba",
+    "ab" -&gt; "c"
+
+];
+k.asStream.rewriteString(c, 6).all.join.postcs; // "bbbbbbab"
+)
+
+
+//////////////////////////////////////////
+
+
+(
+var w, b, u, f, z, level=0;
+
+w = SCWindow("test", Rect(40, 240, 200, 200)).front;
+w.view.decorator = FlowLayout(w.bounds.copy.left_(30).top_(30));
+b = { |i| { |j|
+    var c = ({ "abcd".choose } ! 3).join;
+    SCButton(w, Rect(0,0, 30,25))
+    .states_([[c, Color.black]])
+    .action_({ f.(c) })
+    .font_(Font(\Georgia, 11))
+} ! 4; w.view.decorator.nextLine } ! 4;
+
+w.view.decorator.nextLine;
+SCButton(w, Rect(0,0, 30,25))
+.states_({ |i| [i.asString, Color.black]} ! 16)
+.action_({ |b| level = b.value });
+
+r = [
+    "aa" -&gt; "aba.b",
+    "ba" -&gt; "....aa",
+    "c" -&gt; "ddba",
+    "." -&gt; "b.",
+    "dd" -&gt; { #[".c", "c.", "ld"].choose }
+];
+
+(
+SynthDef(\p, { |out = 0, freq=400, amp=0.4, sustain=0.04|
+    OffsetOut.ar(out,
+        SinOsc.ar(freq)
+        * XLine.ar(amp, amp * 0.001, sustain, doneAction: 2)
+    );
+}).memStore;
+);
+
+u = { |str|
+    fork {
+        var m = str.iter.rewriteString(r, level);
+        var b;
+        Char.nl.post;
+        loop {
+            b = m.next;
+            if(a.notNil and: b.isNil) { "\n".post };
+            (b ? "").post;
+            if(b.isNil) { nil.yield };
+            Synth.grain(\p, [\freq, b.ascii - 97 * 200 + 300]);
+            0.04.wait;
+        }
+    }
+};
+
+f = { |c| u.(c); };
+w.onClose = { u.stop };
+)</textarea>
+<h2><a class='anchor' name='Links%20on%20the%20net'>Links on the net</a></h2>
+<textarea class='editor'>(
+[
+    // "http://www.math.okstate.edu/mathdept/dynamics/lecnotes/node15.html",
+    "http://en.wikipedia.org/wiki/Lindenmayer_system",
+    "http://en.wikipedia.org/wiki/Chomsky_grammar",
+    "http://swiki.hfbk-hamburg.de:8888/MusicTechnology/279",
+    "http://www.avatar.com.au/courses/Lsystems/"
+].do({ |item| item.openOS })
+)</textarea>
+<h2><a class='anchor' name='Authors'>Authors</a></h2>
+
+<p>Julian Rohrhuber, 2005.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Guides/rewriteString.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Guides/rewriteString.schelp</a><br>link::Guides/rewriteString::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

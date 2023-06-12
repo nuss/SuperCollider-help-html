@@ -1,0 +1,464 @@
+<!doctype html><html lang='en'><head><title>CV | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'CV';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>CV:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Creation'>Creation</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*viewDictionary'>viewDictionary</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*buildViewDictionary'>buildViewDictionary</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*runTests'>runTests</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Setting%20the%20range%20of%20values%20on%20existing%20CVs'>Setting the range of values on existing CVs</a></li>
+<ul class='toc'><li class='toc3'><a href='#-spec'>spec</a> </li>
+<li class='toc3'><a href='#-sp'>sp</a> </li>
+<li class='toc3'><a href='#-db'>db</a> </li>
+</ul><li class='toc2'><a href='#Accessing'>Accessing</a></li>
+<ul class='toc'><li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc3'><a href='#-input'>input</a> </li>
+<li class='toc3'><a href='#-windex'>windex</a> </li>
+<li class='toc3'><a href='#-indexedBy'>indexedBy</a> </li>
+<li class='toc3'><a href='#-embedInStream'>embedInStream</a> </li>
+<li class='toc3'><a href='#-asInput'>asInput</a> </li>
+<li class='toc3'><a href='#-asOSCArgEmbeddedArray'>asOSCArgEmbeddedArray</a> </li>
+<li class='toc3'><a href='#-split'>split</a> </li>
+<li class='toc3'><a href='#-next'>next</a> </li>
+<li class='toc3'><a href='#-size'>size</a> </li>
+<li class='toc3'><a href='#-touch'>touch</a> </li>
+<li class='toc3'><a href='#-asControlInput'>asControlInput</a> </li>
+</ul><li class='toc2'><a href='#CV%20connections%20using%20SimpleControllers'>CV connections using SimpleControllers</a></li>
+<ul class='toc'><li class='toc3'><a href='#-addController'>addController</a> </li>
+<li class='toc3'><a href='#-removeAllControllers'>removeAllControllers</a> </li>
+</ul><li class='toc2'><a href='#GUI%20connections'>GUI connections</a></li>
+<ul class='toc'><li class='toc3'><a href='#-connect'>connect</a> </li>
+</ul><li class='toc2'><a href='#Server%20connections'>Server connections</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Summary%20of%20Node%20related%20connection%20methods'>Summary of Node related connection methods</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Reading%20and%20writing%20CVs%20in%20functions%20and%20patterns'>Reading and writing CVs in functions and patterns</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#CVs%20and%20external%20input'>CVs and external input</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-action'>action</a> </li>
+<li class='toc3'><a href='#-cvWidgetConnect'>cvWidgetConnect</a> </li>
+<li class='toc3'><a href='#-cvWidgetDisconnect'>cvWidgetDisconnect</a> </li>
+<li class='toc3'><a href='#-default'>default</a> </li>
+<li class='toc3'><a href='#-disconnect'>disconnect</a> </li>
+<li class='toc3'><a href='#-numControllers'>numControllers</a> </li>
+<li class='toc3'><a href='#-prDefault'>prDefault</a> </li>
+<li class='toc3'><a href='#-reset'>reset</a> </li>
+<li class='toc3'><a href='#-setValue'>setValue</a> </li>
+</ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Conductor'>Conductor</a> | <a href='./../Browse.html#Control'>Control</a> | <a href='./../Browse.html#Libraries'>Libraries</a> | <a href='./../Browse.html#Quarks'>Quarks</a> | <a href='./../Browse.html#Streams-Events-Patterns'>Streams-Events-Patterns</a></span>
+</div><h1>CV<span id='superclasses'> : <a href="../Classes/Stream.html">Stream</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>A single floating point value or an array of such values constrained to a specific numerical range by a ControlSpec.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVmin/classes/CV.sc' title='/home/stefan/.local/share/SuperCollider/Extensions/CVmin/classes/CV.sc'>CV.sc</a></div><div id='subclasses'>Subclasses: <a href="../Classes/EV.html">EV</a>, <a href="../Classes/SV.html">SV</a></div>
+<div id='related'>See also: <a href="./../Classes/Conductor.html">Conductor</a>, <a href="./../Classes/ControlSpec.html">ControlSpec</a>, <a href="./../Classes/Stream.html">Stream</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A CV models a single <a href="./../Classes/Float.html">Float</a> or an <a href="./../Classes/Array.html">Array</a> of such values constrained to a specific numerical range by a <a href="./../Classes/ControlSpec.html">ControlSpec</a>.
+<p>CV is derived from <a href="./../Classes/Stream.html">Stream</a> so it can be used directly in Stream and <a href="./../Classes/Pattern.html">Pattern</a> definitions. <code>CV:connect(view)</code> will connect a CV to a GUI ControlView in both Cocoa and Qt (as well as Swing).
+<p>GUI representations. A similar set of methods have been defined that connect argument arrays consisting of keys and CVs to <a href="./../Classes/Node.html">Node</a>s, <a href="./../Classes/Bus.html">Bus</a>es, <a href="./../Classes/Buffer.html">Buffer</a>s, and <a href="./../Classes/NodeProxy.html">NodeProxy</a>s.
+<p>An <a href="./../Classes/SV.html">SV</a> is a CV that models an index into an array of <a href="./../Classes/Symbol.html">Symbol</a>s. The array is held in the instance variable items. The symbol corresponding to the CV's current value can be accessed with the method <a href="./../Classes/SV.html#-item">SV: -item</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Creation'>Creation</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CV.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>spec: 'unipolar'</span>, <span class='argstr'>value</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>spec<td class='argumentdesc'>
+<p>Any object that responds to <code>asSpec</code> (<code>nil</code>, a <a href="./../Classes/Symbol.html">Symbol</a>, a <a href="./../Classes/ControlSpec.html">ControlSpec</a>, an <a href="./../Classes/Array.html">Array</a>) with a <a href="./../Classes/ControlSpec.html">ControlSpec</a>. Some common ControlSpecs include:<textarea class='editor'>\unipolar, \bipolar, \freq, \lofreq, \midfreq, \widefreq, \phase, \rq, \audiobus, \controlbus, \midi, \midinote, \midivelocity, \db, \amp, \boostcut, \pan, \detune, \rate, \beats, \delay</textarea>
+<tr><td class='argumentname'>default<td class='argumentdesc'>
+<p>The initial value is constrained to lie within the range of the spec.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <code>CV</code></div></div><h3 class='method-code'><span class='method-prefix'>CV.</span><a class='method-name' name='*viewDictionary' href='./../Overviews/Methods.html#viewDictionary'>viewDictionary</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CV.</span><a class='method-name' name='*viewDictionary' href='./../Overviews/Methods.html#viewDictionary'>viewDictionary</a> = value</h3>
+<div class='method'>
+<p>An <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>, holding the various view-classes for various gui-elements that may be used with CV as its keys and the class that syncs the view's value to the CV's value as its values:<textarea class='editor'>// Qt
+IdentityDictionary[
+    (RangeSlider -&gt; CVSyncProps.new),
+    (EZGui -&gt; CVSyncValue),
+    (NumberBox -&gt; CVSyncValue),
+    (Slider -&gt; CVSyncInput),
+    (PopUpMenu -&gt; SVSync),
+    (ListView -&gt; SVSync),
+    (Knob -&gt; CVSyncInput),
+    (Slider2D -&gt; CVSyncProps.new),
+    (Button -&gt; CVSyncValue),
+    (MultiSliderView -&gt; CVSyncMulti),
+    (TextView -&gt; CVSyncText),
+    (TextField -&gt; CVSyncText),
+    (StaticText -&gt; CVSyncText),
+]</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>CV.</span><a class='method-name' name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a></h3>
+<div class='method'>
+<p>Calls <a href="#*buildViewDictionary">*buildViewDictionary</a> on startup.</div><h3 class='method-code'><span class='method-prefix'>CV.</span><a class='method-name' name='*buildViewDictionary' href='./../Overviews/Methods.html#buildViewDictionary'>buildViewDictionary</a></h3>
+<div class='method'>
+<p>As the name suggests this method builds the <a href="#*viewDictionary">viewDictionary</a> and prepares the various connectable view-elements (sliders, number-boxes etc.) for the use with CV. The method also takes care of the different GUI-schemes (Cocoa, Qt, Swing).</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CV.</span><a class='method-name' name='*runTests' href='./../Overviews/Methods.html#runTests'>runTests</a></h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Setting%20the%20range%20of%20values%20on%20existing%20CVs'>Setting the range of values on existing CVs</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-spec' href='./../Overviews/Methods.html#spec'>spec</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-spec' href='./../Overviews/Methods.html#spec'>spec</a> = value</h3>
+<div class='method'>
+<p>Set the <a href="./../Classes/ControlSpec.html">ControlSpec</a> and (optionally) a default value - see also <a href="#*new">*new</a><textarea class='editor'>a = CV(\freq);
+a.spec;
+a.spec_(\bipolar, -1);
+a.spec;</textarea>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>(s)<td class='argumentdesc'>
+<p>any object that responds to asSpec (<code>nil</code>, a <a href="./../Classes/Symbol.html">Symbol</a>, a <a href="./../Classes/ControlSpec.html">ControlSpec</a> or an <a href="./../Classes/Array.html">Array</a>) with a ControlSpec<tr><td class='argumentname'>(v)<td class='argumentdesc'>
+<p>the initial value of the CV</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sp' href='./../Overviews/Methods.html#sp'>sp</a>(<span class='argstr'>default: 0</span>, <span class='argstr'>lo: 0</span>, <span class='argstr'>hi: 0</span>, <span class='argstr'>step: 0</span>, <span class='argstr'>warp: 'lin'</span>)</h3>
+<div class='method'>
+<p>Set the values of the CV's <a href="./../Classes/ControlSpec.html">ControlSpec</a> explicitely.<textarea class='editor'>a = CV(\freq);
+a.spec;
+a.sp(0, 0, 100);
+a.spec;</textarea>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>default<td class='argumentdesc'>
+<p>inital value<tr><td class='argumentname'>lo<td class='argumentdesc'>
+<p>smallest possible value<tr><td class='argumentname'>hi<td class='argumentdesc'>
+<p>highest possible value<tr><td class='argumentname'>step<td class='argumentdesc'>
+<p>smallest incremental change<tr><td class='argumentname'>warp<td class='argumentdesc'>
+<p>either 'linear' or 'exponential'
+<p>In the case of exponential warp, min and max must be non-zero and the same sign.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-db' href='./../Overviews/Methods.html#db'>db</a></h3>
+<div class='method'>
+<p>Set the CV's spec to
+<p><code>ControlSpec(-100, 20, \lin, 1, 0)</code><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the CV</div></div><h3><a class='anchor' name='Accessing'>Accessing</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-value' href='./../Overviews/Methods.html#value'>value</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-value' href='./../Overviews/Methods.html#value'>value</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>Set or get the current value of the CV.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>Usually a <a href="./../Classes/Float.html">Float</a> or an <a href="./../Classes/Integer.html">Integer</a>. If the CV's ControlSpec's <code>minval</code>, <code>maxval</code>, <code>step</code> and/or <code>default</code> is an array it may also be an <a href="./../Classes/Array.html">Array</a> of numeric values.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>if used as a getter the current value of the CV</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-input' href='./../Overviews/Methods.html#input'>input</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-input' href='./../Overviews/Methods.html#input'>input</a> = <span class='argstr'>in</span></h3>
+<div class='method'>
+<p>Similar as <a href="#-value">-value</a> but requires or returns a number ranging form 0 to 1 that corresponds to postion of the current value between min and max.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>in<td class='argumentdesc'>
+<p>a number between 0 and 1</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>if used as a getter the current value of the CV normalized to a value between 0 and 1</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-windex' href='./../Overviews/Methods.html#windex'>windex</a></h3>
+<div class='method'>
+<p>Interprets the value of the CV as a probability table and returns a weighted random value.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-indexedBy' href='./../Overviews/Methods.html#indexedBy'>indexedBy</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>For use in Patterns: uses the value of key in the current Event as an index and returns the indexed value<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the value indexed by <code>key</code></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-embedInStream' href='./../Overviews/Methods.html#embedInStream'>embedInStream</a></h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the yielded value of the CV</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asInput' href='./../Overviews/Methods.html#asInput'>asInput</a>(<span class='argstr'>val</span>)</h3>
+<div class='method'>
+<p>Return the in unmapped value of the given argument <code>val</code> (determined by the CV's <a href="./../CLasses/ControlSpec">ControlSpec</a>). If an array of values is given an array of unmapped values will be returned. The given value <strong>will not</strong> alter the CV's value.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>a single numerical value or an array of numerical values</table><h4>Discussion:</h4>
+<textarea class='editor'>c = CV(\freq);
+c.asInput(100) // 0.23299000144534 - the unmapped value (input) for a frequency of 100 Hz</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asOSCArgEmbeddedArray' href='./../Overviews/Methods.html#asOSCArgEmbeddedArray'>asOSCArgEmbeddedArray</a>(<span class='argstr'>array</span>)</h3>
+<div class='method'>
+<p>Appends the CV's current value as OSC compliant argument to the given <a href="./../Classes/Array.html">Array</a><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>array<td class='argumentdesc'>
+<p>Usually an <a href="./../Classes/Array.html">Array</a> of numerical values.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an OSC compliant representation of the CV's value appended to a given array</div><h4>Discussion:</h4>
+<textarea class='editor'>c = CV.new;
+c.value_([0.1, 0.2, 0.3]);
+c.asOSCArgEmbeddedArray([1, 2, 3, 4, 5]).postcs; // [1, 2, 3, 4, $[, 0.1, 0.2, 0.3, $]]</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-split' href='./../Overviews/Methods.html#split'>split</a></h3>
+<div class='method'>
+<p>Split a multi-value CV into an array of CVs.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/Array.html">Array</a> of CVs</div><h4>Discussion:</h4>
+<textarea class='editor'>c = CV([[0, 0, 0, 0, 0], [5, 5, 5, 5, 5]].asSpec);
+c.split; // [ a CV, a CV, a CV, a CV, a CV ]</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-next' href='./../Overviews/Methods.html#next'>next</a></h3>
+<div class='method'>
+<p>As CV inherits from <a href="./../Classes/Stream.html">Stream</a> this method implements the method defined in the Stream interface. Calling this method simply returns the CV's value.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <a href="./../Classes/Float.html">Float</a> or an <a href="./../Classes/Integer.html">Integer</a> or an <a href="./../Classes/Array.html">Array</a> of numeric values</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-size' href='./../Overviews/Methods.html#size'>size</a></h3>
+<div class='method'>
+<p>Return the size of the CV's internal ControlSpec. I.e. a CV's value or input will be a single numeric value if the ControlSpec<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/Integer.html">Integer</a> denoting the size of the CV's value</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-touch' href='./../Overviews/Methods.html#touch'>touch</a>(<span class='argstr'>dur</span>, <span class='argstr'>delta</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVmin/classes/extCVForTouch.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVmin/classes/extCVForTouch.sc</a></div>
+<div class='method'>
+<p></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asControlInput' href='./../Overviews/Methods.html#asControlInput'>asControlInput</a></h3>
+<div class='method'></div><h3><a class='anchor' name='CV%20connections%20using%20SimpleControllers'>CV connections using SimpleControllers</a></h3>
+
+<p>When a CV's value is changed a changed message (identified by the symbol <code>\synch</code>) is send to update any dependant objects. For example, <code>action_(function)</code> creates a <a href="./../Classes/SimpleController.html">SimpleController</a> which is added to the dependants of the CV and evaluated whenever the CV changes value. This same basic mechanism is used to connect the CV to GUIs, server, objects, and some other objects in the language. Most of this is more or less hidden from view.
+<p>Under normal circumstances, CV connections are automatically removed when the targeted <a href="./../Classes/Control.html">Control</a>, <a href="./../Classes/Bus.html">Bus</a> or <a href="./../Classes/View.html">View</a> is deleted. If there is a program error, it is possible that connections will persist and will need to be explicitly removed.<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addController' href='./../Overviews/Methods.html#addController'>addController</a>(<span class='argstr'>function</span>)</h3>
+<div class='method'>
+<p>Create and return a dependant <a href="./../Classes/SimpleController.html">SimpleController</a> that evaluates the function whenever the CV's value is altered. Though the method takes a function as argument it is important to understand that it creates a new SimpleController. The function can not be updated or altered later, only the controller can be removed and a new one be added. The first argument passed to the function will always be the CV itself, making it easy to query the CV's current value or input.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>function<td class='argumentdesc'>
+<p>an arbitrary <a href="./../Classes/Function.html">Function</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/SimpleController.html">SimpleController</a></div><h4>Discussion:</h4>
+<textarea class='editor'>a = CV(\freq);
+// action_ returns a SimpleController
+// for an explicit removal it may be stored in a variable
+c = a.addController({ |cv| "the value of a is now %\n".postf(cv.value) });
+a.input_(0.7); // try with different values between 0 and 1
+a.value_(456); // or set the value explicitely
+// only remove c
+c.remove;
+a.input_(0.3); // no posts anymore
+// add the SimpleController again
+c = a.addController({ |cv| "the value of a is now %\n".postf(cv.value) });
+// and another one
+d = a.addController({ |cv| "the input of a is now %\n".postf(cv.input) });
+a.value_(456); // both, c and d's functions are triggered
+a.release; // remove all dependants at once</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeAllControllers' href='./../Overviews/Methods.html#removeAllControllers'>removeAllControllers</a></h3>
+<div class='method'>
+<p>Remove all <a href="./../Classes/SimpleController.html">SimpleController</a>s that have been added with <a href="#-addController">-addController</a>. Possibly it's more important to be able to remove single controllers. However, some CVs create controllers behind the sceneswhen being instantiated. The method aims to be a clean-up possibility, removing sideeffects.<div class='note'><span class='notelabel'>NOTE:</span> <code>removeAllControllers</code> will only remove actions that have been added to the CV while keeping synchronisations with sliders and other views. However, CV also inherits a method <a href="./../Classes/Object.html#-release">Object: -release</a> which will completly uninitialize the CV, removing all dependants.</div></div><h3><a class='anchor' name='GUI%20connections'>GUI connections</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-connect' href='./../Overviews/Methods.html#connect'>connect</a>(<span class='argstr'>view</span>)</h3>
+<div class='method'>
+<p>Connects a CV to a view. <a href="./../Classes/Array.html">Array</a> defines connect to allow a set of CVs to be connected to a view with multiple control values (i.e., <a href="./../Classes/Slider2D.html">Slider2D</a>).
+<p>The following methods establish connections <a href="./../Classes/View.html">View</a>s and CVs.<textarea class='editor'>// pseudo-code
+Slider-connect(aCV)
+NumberBox-connect(aCV)
+Slider2D-connect([xCV, yCV])
+RangeSlider-connect([loCV, hiCV])
+MultiSliderView-connect(aCV)    // for CVs with multiple values
+PopupMenu-connect(aCV)    // for SVs, displays SV-items
+ListView-connect(aCV)    // for SVs
+TextField-connect(aCV) // for multidimensional CVs
+TextView-connect(aCV) // for multidimensional CVs, needs a keyDownAction or keyUpAction to update the CV
+StaticText-connection(aCV) // for multidimensional CVs, non-editable</textarea>
+
+<p>One CV can be connected to many views but each view is connected to only one CV. When a CV's value changes, it is relayed to all of its dependants including the source of the the change. That way, the GUI accurately reflects the new value of the CV. See the behavior of 'b' in the following example.<div class='note'><span class='notelabel'>NOTE:</span> The following example provides a generic graphic interface to two CVs. Subsequent examples depend on that window, so leave it open until you are finished working through the help file. (The interpreter variables 'a' and 'b' contain the CVs used by the examples, so they should be left unaltered.)</div><textarea class='editor'>(
+// create a couple of CVs
+a = CV(\freq);
+b = CV.new.sp(-10,-100,20, 10);
+
+// make a window
+w = Window("CV Demo", Rect(64, 0, 400, 300)).front;
+w.view.decorator = FlowLayout(w.view.bounds);
+
+// CVs can be connected to Slider and NumberBox.
+z = NumberBox(w, Rect(0, 0, 50, 20));
+a.connect(z);
+
+y = Slider(w, Rect(50, 0, 150, 20));
+a.connect(y);
+
+w.view.decorator.nextLine;
+
+b.connect(NumberBox(w, Rect(0, 0, 50, 20)));
+b.connect(Slider(w, Rect(50, 0, 150, 20)));
+
+w.view.decorator.nextLine;
+
+//    Pairs of CVs can be connected to RangeSlider, Slider2D
+[a,b].connect(RangeSlider(w, Rect(0, 0, 200, 20)));
+
+w.view.decorator.nextLine;
+[a,b].connect(Slider2D(w, Rect(0, 0, 200, 200)));
+)</textarea>
+
+<p>An example connecting a MultiSliderView<textarea class='editor'>(
+// create a CV with a 'multi-dimensional' ControlSpec
+c = CV([20, 20000, \exp, 0.0, { 20.rrand(20000) }!7, " hz"].asSpec);
+
+x = Window("CV MultiSlider Demo", Rect(100, 100, 400, 300)).front;
+x.view.decorator = f = FlowLayout(x.view.bounds);
+m = MultiSliderView(x, f.innerBounds.width@f.innerBounds.height);
+c.connect(m);
+c.action_({ |cv| "the CV's value is now %\n".postf(cv.value) });
+)</textarea>
+<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>view<td class='argumentdesc'>
+<p>a <a href="./../Classes/View.html">View</a>, usable with a CV. See <a href="#*viewDictionary">*viewDictionary</a> to for an overview of qualified views.</table></div><h3><a class='anchor' name='Server%20connections'>Server connections</a></h3>
+
+<p>OSC commands (i.e., <code>/n_set</code>,  <code>/s_new</code>) specify initial values of parameters as a flat <a href="./../Classes/Array.html">Array</a> of pairs consisting of a name and its initial value:<textarea class='editor'>[frequency: 440, amplitude: 1, ...]</textarea>
+
+<p>"Extended argument arrays" allow CVs to be used in place of the initial value. This is the standard syntax for establishing connections between CVs and a server. In an extended argument array, the CV's value can be altered before being sent, multiple CV's can determine the value to be sent, and the value to be sent can be determined by a function (here <code>freq</code> is just meant as an example key):<table>
+<tr><td><strong>value</strong><td>[freq: 440]<tr><td><strong>CV</strong><td>[freq: aCV]<tr><td><strong>altered CV</strong><td>[freq: [aCV, aCV.midicps]]<tr><td><strong>combination</strong><td>[freq: [[aCV, bCV], aCV.midicps + bCV]]<tr><td><strong>function</strong><td><code>[freq: [aCV, { aCV.midicps.value + 33.rand }]</code></table>
+
+<p>For example, the method <a href="./../Classes/Synth.html#*controls">Synth: *controls</a> is identical to <a href="./../Classes/Synth.html#*new">Synth: *new</a> except the <code>args</code> parameter is extended:<textarea class='editor'>// basic CV connection
+(
+Synth.controls("default", [
+    freq: a
+]);
+)
+
+// modified CV connection
+(
+Synth.controls("default", [
+    amp: [b, b.dbamp],
+    freq: a
+]);
+)
+
+// multiple modified connection
+(
+Synth.controls("default", [
+    freq: [
+        [a,b], a + b
+    ],
+    amp: [
+        [a,b], (a.cpsmidi.neg/4 + b).dbamp
+    ]
+]);
+)</textarea>
+
+<p>In the previous two examples, the modifying expression is actually a combination of <a href="./../Classes/Stream.html">Stream</a>s altered with <a href="./../Overviews/Operators.html#Binary%20Operators">binary</a> and <a href="./../Overviews/Operators.html#Unary%20Operators">unary operators</a>. This is concise, but in some cases, it may be necessary to use a <a href="./../Classes/Function.html">Function</a> to define the modification.<div class='note'><span class='notelabel'>NOTE:</span> Within a function definition it is necessary to explicitly extract the value of the CV using a <a href="./../Classes/CV.html#-value">value</a> message.</div><textarea class='editor'>// a Function modifying the CV connection
+(
+Synth.controls("default", [
+    freq: [b, {
+        var index;
+        (index = b.value + 100 /12 ).asInteger;
+        [100,200,300,400,500, 600].mirror.at(index)
+    }],
+    amp: [
+        [a,b], { (a.value.cpsmidi.neg/4 + b.value).dbamp }
+    ]
+])
+)</textarea>
+<h3><a class='anchor' name='Summary%20of%20Node%20related%20connection%20methods'>Summary of Node related connection methods</a></h3>
+<dl>
+<dt>Array<dd><a href="./../Classes/Array.html#-connectToNode">Array: -connectToNode</a>: the receiver is a flat array of name/value pairs
+<p><a href="./../Classes/Array.html#-connectToBuffer">Array: -connectToBuffer</a>: the receiver is an array of CVs
+<p><a href="./../Classes/Array.html#-connectToBus">Array: -connectToBus</a>: the receiver is an array of CVs.<dt>Node<dd><a href="./../Classes/Node.html#-setControls">Node: -setControls</a>: connects CVs to named controls<dt>NodeProxy<dd><a href="./../Classes/NodeProxy.html#-setControls">NodeProxy: -setControls</a>: connects CVs to named controls<textarea class='editor'>(
+c = CV.new.sp(-20, -100, 120);
+p = NodeProxy.audio(s, 2);
+p.play; //play to hardware output, return a group with synths
+p.setControls([f: a, c: [b, { \freq.asSpec.map(b.input)}]]);
+b.input_(0.5);
+p.source = { arg f=400, c = 400; PMOsc.ar(f , c, 4, 0, 0.1) };
+)</textarea>
+
+<p><dt>Synth<dd><a href="./../Classes/Synth.html#*controls">Synth: *controls</a>: the same as <a href="./../Classes/Synth.html#*new">Synth: *new</a> but allows CVs to be used in the args array<dt>Bus<dd><a href="./../Classes/Bus.html#*controls">Bus: *controls</a>:<textarea class='editor'>(
+c = { arg f = 400,  a = -20, pan = 0; Pan2.ar(SinOsc.ar(f, 0, a.dbamp), pan) }.play;
+d = Bus.controls([a, b], s);
+[a, b].connectToBus(d.server, d.index);
+Routine({
+    // need to make sure the synth has been created...
+    s.sync;
+    c.map(\f, d.index, \a, d.index + 1);
+}).play;
+)</textarea>
+
+<p><a href="./../Classes/Bus.html#-setControls">Bus: -setControls</a>: connects CVs to consecutive buses<textarea class='editor'>(
+c = { arg f = 400, a = -20, pan = 0; Pan2.ar(SinOsc.ar(f, 0, a.dbamp), pan) }.play;
+d = Bus.control(s, 3);
+d.setControls([a, b]);
+[a, b].connectToBus(d.server, d.index);
+Routine({
+    // need to make sure the synth has been created...
+    s.sync;
+    c.map(\f, d.index, \a, d.index + 1);
+}).play;
+)</textarea>
+</dl>
+<h3><a class='anchor' name='Reading%20and%20writing%20CVs%20in%20functions%20and%20patterns'>Reading and writing CVs in functions and patterns</a></h3>
+<dl>
+<dt>Tasks<dd>Within a <a href="./../Classes/Function.html">Function</a>, CVs are accessed using <a href="#-value">value</a> and <a href="#-input">value</a> and altered using <a href="#-value">value_</a> and <a href="#-input">input_</a>.<textarea class='editor'>(
+Task({
+    10.do({
+        // print the value scaled to the range [0, 1]
+        a.input.post; " ".post;
+        // print the actual value
+        a.value.postln;
+        // select a new value at random
+        a.input_(1.0.rand);
+        // the weighting of values will conform to the warp
+        // with \exp, values fall uniformly in each octave
+        wait(0.1);
+    })
+}).play(AppClock)
+)</textarea>
+
+<p><dt>Patterns<dd>Within a pattern definition, a CV can directly substitute for a <a href="./../Classes/Pattern.html">Pattern</a>:<textarea class='editor'>(
+SynthDescLib.global.read;
+Pbind(
+    \instrument, \default,
+    \freq, a,
+    \db, b,
+    \dur, 0.2
+).play(quant: 0);
+)</textarea>
+
+<p><a href="./../Classes/Pfunc.html">Pfunc</a> can be used to change the CV from within a Pattern:<textarea class='editor'>(
+SynthDescLib.global.read;
+Pbind(
+    \instrument, \default,
+    \freq, Pwhite(100, 1000).round(100),
+    \placeholder, Pfunc({ arg ev; a.value_(ev.at(\freq)) }),
+    \db, b,
+    \dur, 0.2
+).play;
+)</textarea>
+</dl>
+<h3><a class='anchor' name='CVs%20and%20external%20input'>CVs and external input</a></h3>
+
+<p>The <a href="#-input">input_(in)</a> method makes it easy to connect a CV to any control source:<textarea class='editor'>// MIDI
+(
+MIDIClient.init;
+MIDIIn.connect(0, 0);
+MIDIIn.control = { arg src, chan, num, val;    a.input_(val/127) }
+)</textarea>
+
+<p>The methods <a href="#-input">input and input_</a> are also used by <a href="./../Classes/CVPreset.html">CVPreset</a> to allow interpolations between settings that follow warp of the CV's <a href="./../Classes/ControlSpec.html">ControlSpec</a>.<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-action' href='./../Overviews/Methods.html#action'>action</a> = <span class='argstr'>function</span></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVmin/deprecated/deprecated_CV.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVmin/deprecated/deprecated_CV.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cvWidgetConnect' href='./../Overviews/Methods.html#cvWidgetConnect'>cvWidgetConnect</a>(<span class='argstr'>view</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extCV.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extCV.sc</a></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cvWidgetDisconnect' href='./../Overviews/Methods.html#cvWidgetDisconnect'>cvWidgetDisconnect</a>(<span class='argstr'>object</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extCV.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/extCV.sc</a></div>
+</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-default' href='./../Overviews/Methods.html#default'>default</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-disconnect' href='./../Overviews/Methods.html#disconnect'>disconnect</a>(<span class='argstr'>view</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numControllers' href='./../Overviews/Methods.html#numControllers'>numControllers</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-prDefault' href='./../Overviews/Methods.html#prDefault'>prDefault</a>(<span class='argstr'>val</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reset' href='./../Overviews/Methods.html#reset'>reset</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setValue' href='./../Overviews/Methods.html#setValue'>setValue</a>(<span class='argstr'>v</span>)</h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVmin/classes/extCVForTouch.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVmin/classes/extCVForTouch.sc</a></div>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVmin/HelpSource/Classes/CV.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVmin/HelpSource/Classes/CV.schelp</a><br>link::Classes/CV::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

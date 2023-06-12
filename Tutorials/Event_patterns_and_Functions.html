@@ -1,0 +1,286 @@
+<!doctype html><html lang='en'><head><title>Event patterns and Functions | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Event patterns and Functions';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Event patterns and Functions:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Functions%20in%20Environments'>Functions in Environments</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Streams%20in%20Environments'>Streams in Environments</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Event%20streams%20in%20Environments'>Event streams in Environments</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#EventStreamPlayers%20in%20Environments'>EventStreamPlayers in Environments</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Tutorials (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>General Tutorials'>General Tutorials</a> | <a href='./../Browse.html#Streams-Patterns-Events'>Streams-Patterns-Events</a></span>
+</div><h1>Event patterns and Functions<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>using event patterns with functional elements</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Guides/Introduction_to_miSCellaneous.html">Introduction to miSCellaneous</a>, <a href="./../Tutorials/PLx_suite.html">PLx suite</a>, <a href="./../Classes/VarGui.html">VarGui</a>, <a href="./../Tutorials/VarGui_shortcut_builds.html">VarGui shortcut builds</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This is a tutorial file about event patterns with functional code. Features concerning scope are regarded along a line from Functions to Streams, Streams of Events and EventStreamPlayers. These general characteristics allow to generate a parametrized family of EventStreamPlayers from a single event pattern definition and are used as a base for controlling EventStreamPlayers with <a href="./../Classes/VarGui.html">VarGui</a> . For a convenience way to generate Patterns with environment-dependent reference see <a href="./../Tutorials/PLx_suite.html">PLx suite</a> .<h2><a class='anchor' name='Functions%20in%20Environments'>Functions in Environments</a></h2>
+
+<p>Environments are a standard way to separate namespaces in SuperCollider. Functions may include <strong>environmental variables</strong> and then <strong>dynamic scope</strong> comes into play: variables get the value from the context in which the Function is <strong>evaluated</strong>. Anyway a specific environment can be linked with the Function, the latter will hold for Streams polled from Patterns with certain functional code - it's just the environment in which the stream has been generated from the pattern.
+<p>Take a simple Function with one argument and assign it to the <strong>interpreter variable</strong> f:<textarea class='editor'>f = { |x| x*2 + ~a };
+
+// equivalent:
+
+f = { |x| x*2 + currentEnvironment[\a] };
+
+// now set the variable in the Environment (context) in which to evaluate the Function later on
+
+~a = 1;
+
+// equivalent:
+// currentEnvironment[\a] = 1;
+
+// not surprising the result of the following operation:
+
+f.value(1); 
+
+// or shorter: 
+// f.(1)
+
+-&gt; 3
+
+// now evaluation in new environment, value taken from there:
+
+(
+e = Environment[\a -&gt; 5];
+e.use { f.value(1) };
+)
+
+-&gt; 7
+
+// with inEnvir a new Function is bound to a specific Environment
+
+(
+g = f.inEnvir(e);
+g.(1);
+)
+
+-&gt; 7
+
+
+f.(1);
+
+-&gt; 3</textarea>
+
+<p>So either by evaluating the original Function in different Environments or, equivalently, by deriving new Functions from the original attached to different Environments we create a parametrized family of Functions. The Function's basic behaviour is pretty simple (x*2), in dependance of the context it is just varied (a linear offset is added). With more environmental variables a much greater complexity could be introduced, though possibly obscuring the basic behaviour.
+<p>This priciple can now easily be extended to Streams, Streams of Events and EventStreamPlayers. We define the basic behaviour of an event stream with an event pattern (Pbind), then enrich the event pattern with functional code and can have a huge variety of EventStreamPlayers in different Environments with different parameter sets - all playable and modifiable in realtime (in parallel or independentely) and all polled from one single event pattern definition! Step by step:<h2><a class='anchor' name='Streams%20in%20Environments'>Streams in Environments</a></h2>
+
+<p>What happens in the case of a Stream that will repeatedly evaluate a Function?<textarea class='editor'>// the Pfunc just describes what a Stream, polled from it, should do (evaluate a Function by the method next)
+// the Pfunc itself is not bound to a specific Environment
+
+p = Pfunc { ~a };
+
+// by making a Stream an Environment (the current) is attached
+
+(
+q = p.asStream;
+~a = 1;
+q.next;
+)
+
+-&gt; 1
+
+// next value of (Func)Stream demanded in new Environment will be taken from old defining context 
+
+(
+~a = 2;
+e = Environment[\a -&gt; 5];
+e.use { q.next };
+)
+
+-&gt; 2
+
+
+// vice versa Stream defined in new Environment takes next value from there 
+// also if evaluated in other Environment
+
+(
+r = e.use { p.asStream };
+r.next;
+)
+
+
+-&gt; 5</textarea>
+
+<p>Indeed, Streams derived from the simple Pfunc don't do much here, they just reflect values in the Environment in which they are defined. As with Functions in the first example Pfuncs can be combined with other Patterns to modify their behaviour. So a family of related Streams (common attributes) can be polled from a single pattern.<textarea class='editor'>// try above with new pattern 
+// here the common attributes are: period length = 2, magnitude relation of items = 1:10) 
+
+p = Pseq([1,10], inf) * Pfunc { ~a };</textarea>
+
+<p>An even more generalized operation is the use of Pcollect, which defines the following Stream behaviour: Output of the source stream will be taken as input by the collecting stream, as with Pfunc the Function defined in Pcollect will live in the Environment in which the Stream has been polled from the Pattern. The above could also be written like this:<textarea class='editor'>p = Pcollect({ |x| x * ~a }, Pseq([1,10], inf));
+
+p = Pseq([1,10], inf).collect({ |x| x * ~a });
+
+p = Pseq([1,10], inf).collect(_*~a);    // short form (partial application), don't overrely on it in more complicated cases</textarea>
+
+<p>There is another Pattern engaging Functions, thus allowing to benefit from environment-dependance: Plazy. it evaluates a Function that returns a Pattern to be embedded in a stream. For repeated embedding the Plazy can be wrapped into a Pn. If a generated Pattern repeats infinitely, there will not be any further evaluation. So when using Plazy have a close look at the inner Pattern's repeat arg.<textarea class='editor'>// with each evaluation of Plazy's Function a new random sequence of length = 2 will be generated and repeated 3 times
+// maximum range of the whole sequence is controlled by the environmental variable ~a
+
+(
+p = Pn(Plazy { Pseq({ rand2(~a) } ! 2, 3) });
+q = p.asStream;
+~a = 3;
+q.nextN(60);
+)
+
+// instead of using an Environment we can use an instance of its subclass Event which has handy syntax. 
+// new empty Event:  
+
+();
+
+// new Event with var ~a set, range enlarged:  
+
+(
+e = (a: 10);
+r = e.use { p.asStream };
+r.nextN(60);
+)
+
+// compare, both streams are demanded values in same Environment, but they are attached to different ones
+
+q.nextN(60);</textarea>
+
+<p>This example was still similar to the ones before, basically a loop modified by a factor. But imagine that a Plazy could give out arbitrary new Patterns, the choice itself could depend on an environment-dependant parameter.<h2><a class='anchor' name='Event%20streams%20in%20Environments'>Event streams in Environments</a></h2>
+
+<p>One step closer to the sound: let's define an event pattern with single patterns that contain functional code. Again the pattern itself is neutral concerning the relation to Environments ...<textarea class='editor'>(
+p = Pbind(
+    \dur, Pfunc { ~a },
+    \midinote, Pfunc { ~b }
+);
+)
+
+// ... but the stream is not neutral. It's bound to the current environment.
+
+(
+q = p.asStream;
+
+~a = 0.5;
+~b = 60;
+)
+
+// define a new Environment - an Event, as syntax is handy.
+
+e = (a: 1, b: 70);
+
+// So we have two surrounding Events as variable spaces, in which Streams of Events can live.
+// Don't be confused by that, the stream-generated Events are a different story.
+
+// now check a next element of the event stream in the new environment (event). 
+// The method next must itself be passed an event -
+// the result stems from the former current event, in which the event stream was generated
+
+e.use { q.next(()) };
+
+-&gt; ( 'dur': 0.5, 'midinote': 60 )
+
+// double check - also the second event stream belongs to its defining context
+
+(
+e.use { r = p.asStream; };
+r.next(());
+)
+
+-&gt; ( 'dur': 1, 'midinote': 70 )</textarea>
+<h2><a class='anchor' name='EventStreamPlayers%20in%20Environments'>EventStreamPlayers in Environments</a></h2>
+
+<p>Not much will change by the last transition, EventStreamPlayers are also attached to environments.<textarea class='editor'>(
+s = Server.local;
+Server.default = s;
+s.boot;
+)
+
+(
+p = Pbind(
+    \dur, Pfunc { ~a },
+    \midinote, Pfunc { ~b }
+);
+)
+
+// define two Environments (Events) with EventStreamPlayers attached to it
+
+(
+e = (a: 0.2, b: 60);
+f = (a: 0.4, b: 67);
+
+e.use { q = p.asEventStreamPlayer };
+f.use { r = p.asEventStreamPlayer };
+)
+
+
+// play the players with different init data in sync
+
+(
+q.play(quant: 0.2);
+r.play(quant: 0.2);
+)
+
+
+// now change envir variables while playing
+// the stream will take new values at the next evaluation
+
+f.b = 65;
+
+e.b = 62;
+
+(
+q.stop;
+r.stop;
+)</textarea>
+
+<p>The VarGui interface can be used to control running EventStreamPlayers in that way. They may be passed directly, then their attached Environments will be taken for variable setting: <textarea class='editor'>// start playing from gui
+
+(
+v = VarGui([[
+        \a, [0.2, 0.8, \lin, 0.2, 0.2],
+        \b, [48, 80, \lin, 1, 58]
+    ],[
+        \a, [0.2, 0.8, \lin, 0.2, 0.4],
+        \b, [48, 80, \lin, 1, 67]
+    ]], stream: [q, r], quant: 0.2
+).gui;
+)
+
+// so you could still set from outside
+    
+f.b = 65;</textarea>
+
+<p>But also the event pattern can be passed directly (recommended). Then new separate Environments will be generated automatically,  changing envir variables by accident is very unlikely.<textarea class='editor'>(
+v = VarGui({ [
+    \a, [0.2, 0.8, \lin, 0.2, 0.2 * (4.rand + 1) ],
+    \b, [48, 80, \lin, 1, 48.rrand(80) ]
+    ] } ! 10, stream: p ! 10, quant: 0.2
+).gui(tryColumnNum: 2);
+)
+
+// however, environments are accessible if necessary
+    
+v.envirs;</textarea>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Event_patterns_and_Functions.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Tutorials/Event_patterns_and_Functions.schelp</a><br>link::Tutorials/Event_patterns_and_Functions::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

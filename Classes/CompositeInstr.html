@@ -1,0 +1,91 @@
+<!doctype html><html lang='en'><head><title>CompositeInstr | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'CompositeInstr';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>CompositeInstr:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-b'>b</a> </li>
+<li class='toc3'><a href='#-index'>index</a> </li>
+<li class='toc3'><a href='#-storeArgs'>storeArgs</a> </li>
+<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-findUniqueNameForArg'>findUniqueNameForArg</a> </li>
+<li class='toc3'><a href='#-valueArray'>valueArray</a> </li>
+<li class='toc3'><a href='#-outSpec'>outSpec</a> </li>
+<li class='toc3'><a href='#-guiClass'>guiClass</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>crucial'>crucial</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>crucial>Instr'>Instr</a></span>
+</div><h1>CompositeInstr<span id='superclasses'> : <a href="../Classes/PappliedInstr.html">PappliedInstr</a> : <a href="../Classes/Instr.html">Instr</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>two Instr combined together with function composition</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/Instr.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/Instr.sc'>Instr.sc</a></div><div id='related'>See also: <a href="./../Classes/Instr.html">Instr</a>, <a href="./../Guides/Instr-functional-tricks.html">Instr Functional Tricks</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Two Instr chained one into the next.
+<p>In mathematics, function composition is the application of one function to the results of another. For instance, the functions f: X → Y and g: Y → Z can be composed by computing the output of g when it has an argument of f(x) instead of x.
+<p>In audio this is most often thought of as filtering. An Instr can be filtered through another Instr and this results in a CompositeInstr. This CompositeInstr has inputs and outputs and can be used like any Instr. It is a still a function.<textarea class='editor'>(
+f = Instr("eperc",{ arg audio,dur=2.0; audio * EnvGen.kr(Env.sine(dur)) });
+
+t = Instr("tonez",{ arg freq=300; Saw.ar(freq) });
+
+// this creates a link::CompositeInstr::
+// t is plugged into f
+o = t &lt;&gt;&gt; f;
+
+o.gui;
+
+Patch(o).rand.gui
+)</textarea>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>CompositeInstr.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>a</span>, <span class='argstr'>b</span>, <span class='argstr'>index: 0</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>a<td class='argumentdesc'><tr><td class='argumentname'>b<td class='argumentdesc'><tr><td class='argumentname'>index<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-b' href='./../Overviews/Methods.html#b'>b</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-b' href='./../Overviews/Methods.html#b'>b</a> = value</h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-index' href='./../Overviews/Methods.html#index'>index</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-index' href='./../Overviews/Methods.html#index'>index</a> = value</h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-storeArgs' href='./../Overviews/Methods.html#storeArgs'>storeArgs</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-init' href='./../Overviews/Methods.html#init'>init</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-findUniqueNameForArg' href='./../Overviews/Methods.html#findUniqueNameForArg'>findUniqueNameForArg</a>(<span class='argstr'>argName</span>, <span class='argstr'>argNames</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>argName<td class='argumentdesc'><tr><td class='argumentname'>argNames<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-valueArray' href='./../Overviews/Methods.html#valueArray'>valueArray</a>(<span class='argstr'>args</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>args<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-outSpec' href='./../Overviews/Methods.html#outSpec'>outSpec</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-outSpec' href='./../Overviews/Methods.html#outSpec'>outSpec</a> = value</h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-guiClass' href='./../Overviews/Methods.html#guiClass'>guiClass</a></h3>
+<div class='method'></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/CompositeInstr.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/CompositeInstr.schelp</a><br>link::Classes/CompositeInstr::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

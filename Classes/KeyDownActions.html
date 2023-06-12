@@ -1,0 +1,133 @@
+<!doctype html><html lang='en'><head><title>KeyDownActions | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'KeyDownActions';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>KeyDownActions:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*keyCodes'>keyCodes</a> </li>
+<li class='toc3'><a href='#*arrowsModifiersQt'>arrowsModifiersQt</a> </li>
+<li class='toc3'><a href='#*arrowsModifiersCocoa'>arrowsModifiersCocoa</a> </li>
+<li class='toc3'><a href='#*modifiersQt'>modifiersQt</a> </li>
+<li class='toc3'><a href='#*modifiersCocoa'>modifiersCocoa</a> </li>
+<li class='toc2'><a href='#Setting%20Shortcuts'>Setting Shortcuts</a></li>
+<ul class='toc'><li class='toc3'><a href='#*setShortcuts'>setShortcuts</a> </li>
+<li class='toc3'><a href='#*globalShortcuts'>globalShortcuts</a> </li>
+<li class='toc3'><a href='#*globalShortcutsEnabled'>globalShortcutsEnabled</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#GUI'>GUI</a> | <a href='./../Browse.html#External Control'>External Control</a>&#8201;&gt;&#8201;<a href='./../Browse.html#External Control>Keyboard'>Keyboard</a></span>
+</div><h1>KeyDownActions<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>a class supplying editable platform-specific key-mappings</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/KeyDownActions.sc' title='/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/KeyDownActions.sc'>KeyDownActions.sc</a></div><div id='subclasses'>Subclasses: <a href="../Classes/KeyCodesEditor.html">KeyCodesEditor</a>, <a href="../Classes/KeyDownActionsEditor.html">KeyDownActionsEditor</a></div>
+<div id='related'>See also: <a href="./../Classes/KeyDownActionsEditor.html">KeyDownActionsEditor</a>, <a href="./../Classes/KeyCodesEditor.html">KeyCodesEditor</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>KeyDownActions supplies key-mappings for different platforms as classvars. Furthermore it's responsible for handling global shortcuts. Global shortcuts that work independently from SClang or any GUI. The actions connected to the shortcuts can be invoked independently from which application is currently the frontmost.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*keyCodes' href='./../Overviews/Methods.html#keyCodes'>keyCodes</a></h3>
+<h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*keyCodes' href='./../Overviews/Methods.html#keyCodes'>keyCodes</a> = value</h3>
+<div class='method'>
+<p>An <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>, containing key-mappings in key-value pairs: e.g.<textarea class='editor'>$e -&gt; 14,</textarea>
+
+<p>or<textarea class='editor'>\esc -&gt; 53,</textarea>
+
+<p>A key can be a single <a href="./../Classes/Char.html">Char</a> or a <a href="./../Classes/Symbol.html">Symbol</a>, the number is the keycode returned for the key. The snippet creates a window that has a keyDownAction associated which posts key-value pairs for arbitrary keystrokes. You may use this code if the default keyCodes doesn't match the ones on your platform. Edit keyCodes by using the <a href="./../Classes/KeyCodesEditor.html">KeyCodesEditor</a>.<textarea class='editor'>(
+w = Window("keyDown action");
+w.view.keyDownAction_({ |view, char, mod, unicode, keycode, key|
+    "\t\t\t% -&gt; \t\t\t\t%,\n".postf(char.asCompileString, keycode);
+});
+w.front;
+)</textarea>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*arrowsModifiersQt' href='./../Overviews/Methods.html#arrowsModifiersQt'>arrowsModifiersQt</a></h3>
+<h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*arrowsModifiersQt' href='./../Overviews/Methods.html#arrowsModifiersQt'>arrowsModifiersQt</a> = value</h3>
+<div class='method'>
+<p>This special classvar turned out to be necessary as the modifiers when using the arrow-keys are different to the ones using other keys. Use the following snippet to determine (arrow) modifiers on your platform (you may use the same code to test the result of the other modifier related classvars as well).<textarea class='editor'>(
+w = Window("keyDown (arrow) modifiers");
+w.view.keyDownAction_({ |view, char, mod, unicode, keycode, key|
+    "\t\t\t% (%) -&gt; \t\t\t\t%,\n".postf(char.asCompileString, keycode, mod);
+});
+w.front;
+)</textarea>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*arrowsModifiersCocoa' href='./../Overviews/Methods.html#arrowsModifiersCocoa'>arrowsModifiersCocoa</a></h3>
+<h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*arrowsModifiersCocoa' href='./../Overviews/Methods.html#arrowsModifiersCocoa'>arrowsModifiersCocoa</a> = value</h3>
+<div class='method'>
+<p>Same as arrowsModifiersQt. Even though this variable exists using Linux too it has no relevance there.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*modifiersQt' href='./../Overviews/Methods.html#modifiersQt'>modifiersQt</a></h3>
+<h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*modifiersQt' href='./../Overviews/Methods.html#modifiersQt'>modifiersQt</a> = value</h3>
+<div class='method'>
+<p>Normal modifiers using Qt<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*modifiersCocoa' href='./../Overviews/Methods.html#modifiersCocoa'>modifiersCocoa</a></h3>
+<h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*modifiersCocoa' href='./../Overviews/Methods.html#modifiersCocoa'>modifiersCocoa</a> = value</h3>
+<div class='method'>
+<p>Normal modifiers using Cocoa<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3><a class='anchor' name='Setting%20Shortcuts'>Setting Shortcuts</a></h3>
+<h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*setShortcuts' href='./../Overviews/Methods.html#setShortcuts'>setShortcuts</a>(<span class='argstr'>view</span>, <span class='argstr'>shortcutsDict</span>)</h3>
+<div class='method'>
+<p>Set the key-down actions of the given <a href="./../Classes/View.html">View</a> according to the shortcuts given in shortcutsDict.<div class='note'><span class='notelabel'>NOTE:</span> Though argument view will usually be a <a href="./../Classes/View.html">View</a> or one of its subclasses it can be any object that responds to a method named <code>keyDownAction</code>. Note also the corresponding instance method <a href="./../Classes/KeyDownActionsEditor.html#-setShortcuts">KeyDownActionsEditor: -setShortcuts</a></div><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>view<td class='argumentdesc'>
+<p>a <a href="./../Classes/View.html">View</a> or any object that responds to <code>keyDownAction</code><tr><td class='argumentname'>shortcutsDict<td class='argumentdesc'>
+<p>a <a href="./../Classes/Dictionary.html">Dictionary</a> or (better) an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> defining the key-down actions that shall be added to the given view. The dictionary must be formatted as follows:<textarea class='editor'>IdentityDictionary[
+    &lt;Symbol containing a key or key combination&gt; -&gt; (
+        func: &lt;a Function&gt;,
+        keyCode: KeyDownActions.keyCodes[&lt;a Char&gt;],
+        modifierQt: KeyDownActions.&lt;modifiersQt or arrowsModifiersQt&gt;[&lt;modifier key&gt;],
+        modifierCocoa: KeyDownActions.&lt;modifiersCocoa or arrowsModifiersCocoa&gt;[&lt;modifier key&gt;]
+    ),
+    /* ... more slots ... */
+]</textarea>
+</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this (<code>KeyDownActions</code>)</div></div><h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*globalShortcuts' href='./../Overviews/Methods.html#globalShortcuts'>globalShortcuts</a></h3>
+<h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*globalShortcuts' href='./../Overviews/Methods.html#globalShortcuts'>globalShortcuts</a> = value</h3>
+<div class='method'>
+<p>Set or get global shortcuts. Global shortcuts will independently from the program that is currently the frontmost one. However, they depend on a <a href="./../Classes/Synth.html">Synth</a> that listen's to the user's keystrokes. The listening <a href="./../Classes/Synth.html">Synth</a> will use one <a href="./../Classes/UGen.html">UGen</a> per key. Also note that global shortcuts can only use a single keystroke (no combination of modifier and key).<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*globalShortcutsEnabled' href='./../Overviews/Methods.html#globalShortcutsEnabled'>globalShortcutsEnabled</a></h3>
+<h3 class='method-code'><span class='method-prefix'>KeyDownActions.</span><a class='method-name' name='*globalShortcutsEnabled' href='./../Overviews/Methods.html#globalShortcutsEnabled'>globalShortcutsEnabled</a> = <span class='argstr'>bool</span></h3>
+<div class='method'>
+<p>Enable or disable global shortcuts.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bool<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a> (if used as getter)</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/KeyDownActions.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/KeyDownActions.schelp</a><br>link::Classes/KeyDownActions::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

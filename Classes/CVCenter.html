@@ -1,0 +1,831 @@
+<!doctype html><html lang='en'><head><title>CVCenter | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'CVCenter';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>CVCenter:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Basic%20usage'>Basic usage</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*front'>front</a> </li>
+<li class='toc3'><a href='#*use'>use</a> </li>
+<li class='toc3'><a href='#*put'>put</a> </li>
+</ul><li class='toc2'><a href='#Connecting%20Nodes%20(Groups,%20Synths)%20and%20NodeProxies'>Connecting Nodes (Groups, Synths) and NodeProxies</a></li>
+<ul class='toc'><li class='toc3'><a href='#*connectToNode'>connectToNode</a> </li>
+</ul><li class='toc2'><a href='#Setup%20options%20(classvar%20getters%20and%20setters)'>Setup options (classvar getters and setters)</a></li>
+<ul class='toc'><li class='toc3'><a href='#*midiMode'>midiMode</a> </li>
+<li class='toc3'><a href='#*midiResolution'>midiResolution</a> </li>
+<li class='toc3'><a href='#*ctrlButtonBank'>ctrlButtonBank</a> </li>
+<li class='toc3'><a href='#*midiMean'>midiMean</a> </li>
+<li class='toc3'><a href='#*softWithin'>softWithin</a> </li>
+</ul><li class='toc2'><a href='#Convenience%20methods'>Convenience methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*at'>at</a> </li>
+<li class='toc3'><a href='#*removeAt'>removeAt</a> </li>
+<li class='toc3'><a href='#*removeAll'>removeAll</a> </li>
+<li class='toc3'><a href='#*removeAtTab'>removeAtTab</a> </li>
+<li class='toc3'><a href='#*removeTab'>removeTab</a> </li>
+<li class='toc3'><a href='#*addActionAt'>addActionAt</a> </li>
+<li class='toc3'><a href='#*removeActionAt'>removeActionAt</a> </li>
+<li class='toc3'><a href='#*activateActionAt'>activateActionAt</a> </li>
+<li class='toc3'><a href='#*getCmdNamesAndAddressesInUse'>getCmdNamesAndAddressesInUse</a> </li>
+<li class='toc3'><a href='#*snapShots'>snapShots</a> </li>
+<li class='toc3'><a href='#*saveSnapshot'>saveSnapshot</a> </li>
+<li class='toc3'><a href='#*deleteSnapshots'>deleteSnapshots</a> </li>
+</ul><li class='toc2'><a href='#Setting%20GUI-properties'>Setting GUI-properties</a></li>
+<ul class='toc'><li class='toc3'><a href='#*bounds'>bounds</a> </li>
+<li class='toc3'><a href='#*alwaysOnTop'>alwaysOnTop</a> </li>
+<li class='toc3'><a href='#*numMsSlotsPerColumn'>numMsSlotsPerColumn</a> </li>
+<li class='toc3'><a href='#*isClosed'>isClosed</a> </li>
+<li class='toc3'><a href='#*guiMoveTo'>guiMoveTo</a> </li>
+<li class='toc3'><a href='#*guiMoveTo'>guiMoveTo</a> </li>
+<li class='toc3'><a href='#*guiChangeDimensions'>guiChangeDimensions</a> </li>
+<li class='toc3'><a href='#*renameTab'>renameTab</a> </li>
+<li class='toc3'><a href='#*widgetsAtTab'>widgetsAtTab</a> </li>
+<li class='toc3'><a href='#*getTab'>getTab</a> </li>
+<li class='toc3'><a href='#*widgetConnectGUI'>widgetConnectGUI</a> </li>
+</ul><li class='toc2'><a href='#Saving%20and%20loading%20setups'>Saving and loading setups</a></li>
+<ul class='toc'><li class='toc3'><a href='#*saveSetup'>saveSetup</a> </li>
+<li class='toc3'><a href='#*loadSetup'>loadSetup</a> </li>
+</ul><li class='toc2'><a href='#More%20classvars%20and%20internal%20values'>More classvars and internal values</a></li>
+<ul class='toc'><li class='toc3'><a href='#*setup'>setup</a> </li>
+<li class='toc3'><a href='#*all'>all</a> </li>
+<li class='toc3'><a href='#*cvWidgets'>cvWidgets</a> </li>
+<li class='toc3'><a href='#*window'>window</a> </li>
+<li class='toc3'><a href='#*tabs'>tabs</a> </li>
+<li class='toc3'><a href='#*childViews'>childViews</a> </li>
+<li class='toc3'><a href='#*shortcuts'>shortcuts</a> </li>
+<li class='toc3'><a href='#*scv'>scv</a> </li>
+<li class='toc3'><a href='#*guix'>guix</a> </li>
+<li class='toc3'><a href='#*guiy'>guiy</a> </li>
+<li class='toc3'><a href='#*guiwidth'>guiwidth</a> </li>
+<li class='toc3'><a href='#*guiheight'>guiheight</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*setupPath'>setupPath</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'><li class='toc2'><a href='#Auto-generating%20CVWidgets%20within%20CVCenter%20GUI%20from%20running%20Synths,%20NodeProxies,%20Ndefs%20and%20ProxySpaces%20and%20Instr/Patch'>Auto-generating CVWidgets within CVCenter GUI from running Synths, NodeProxies, Ndefs and ProxySpaces and Instr/Patch</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#CVCenter%20and%20Patterns'>CVCenter and Patterns</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Using%20CVWidgetMS%20in%20Patterns'>Using CVWidgetMS in Patterns</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Shortcuts'>Shortcuts</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#GUI'>GUI</a> | <a href='./../Browse.html#Conductor'>Conductor</a> | <a href='./../Browse.html#External Control'>External Control</a>&#8201;&gt;&#8201;<a href='./../Browse.html#External Control>MIDI'>MIDI</a> | <a href='./../Browse.html#External Control'>External Control</a>&#8201;&gt;&#8201;<a href='./../Browse.html#External Control>OSC'>OSC</a></span>
+</div><h1>CVCenter<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>CVCenter is a collection of CVs and provides a GUI for easy use in connection with external hard- and software like MIDI- and OSC-controllers.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/CVCenter.sc' title='/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/CVCenter.sc'>CVCenter.sc</a></div><div id='related'>See also: <a href="./../Classes/CVWidget.html">CVWidget</a>, <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a>, <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>, <a href="./../Classes/CV.html">CV</a>, <a href="./../Classes/CCResponder.html">CCResponder</a>, <a href="./../Classes/OSCresponderNode.html">OSCresponderNode</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>CVCenter lets you collect an arbitrary number of <a href="./../Classes/CV.html">CV</a>s (you need to have the Conductor-quark installed) and use them to easily create control-widgets for <a href="./../Classes/Synth.html">Synth</a>s, <a href="./../Classes/Ndef.html">Ndef</a>s or <a href="./../Classes/Pattern.html">Pattern</a>-keys. Or even more basically: any value that can be set at runtime. For each <a href="./../Classes/CV.html">CV</a> a widget will be created within the main CVCenter-GUI that combines an arbitrary number of <a href="./../Classes/TabbedView2.html">TabbedView2</a>s, filled with your widgets.
+<p><strong>What's a CV?</strong>
+<p>A <a href="./../Classes/CV.html">CV</a> models a value constrained by a <a href="./../Classes/ControlSpec.html">ControlSpec</a>. The value can be a single <a href="./../Classes/Float.html">Float</a> or an array of Floats. Whenever the <a href="./../Classes/CV.html">CV</a>'s value changes, it sends a changed message labeled 'synch'. This way dependants (such as GUI objects or server value) can be updated with <a href="./../Classes/SimpleController.html">SimpleController</a>s. A <a href="./../Classes/CV.html">CV</a>'s value can be read with the 'value' message.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Basic%20usage'>Basic usage</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>cvs</span> <span class='argstr'>... setUpArgs</span>)</h3>
+<div class='method'>
+<p>Initializes CVCenter by creating its classvars <code>all</code>, <code>cvWidgets</code> and more private ones.<div class='note'><span class='notelabel'>NOTE:</span> It shouldn't be necessary to initialize CVCenter with an explicit call to <strong>*new</strong>. Rather use <strong>*use</strong> whenever possible as (will call <strong>*new</strong> internally)</div><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>cvs<td class='argumentdesc'>
+<p>an Array, a Dictionary or an Event, containing the widget name(s) and its/their internal CV(s):<tr><td class='argumentname'>... setUpArgs<td class='argumentdesc'>
+<p>An arbitrary number of key/value pairs. The following keys are currently supported:<dl>
+<dt><strong>midiMode</strong><dd><table>
+<tr><td><code>0</code><td>MIDI-controllers that yield values from 0-127<tr><td><code>1</code><td>MIDI-controller that yield de-/incremental values</table>
+
+<p> (for a detailed explanation see: <a href="#*midiMode">*midiMode</a>)<dt><strong>midiResolution</strong><dd>- only applies when midiMode is set to <code>1</code> - default: 1 (for a detailed explanation see: <a href="#*midiResolution">*midiResolution</a>)<dt><strong>midiMean</strong><dd>- only applies when midiMode is set to <code>1</code> - default: 64 (for a detailed explanation see: <a href="#*midiMean">*midiMean</a>)<dt><strong>softwithin</strong><dd>- only applies when midiMode is set to <code>0</code> - default: 0.1 (for a detailed explanation see: <a href="#*softWithin">*softWithin</a>)<dt><strong>ctrlButtonBank</strong><dd>- default: nil (for a detailed explanation see: <a href="#*ctrlButtonBank">*ctrlButtonBank</a>)</dl>
+
+<p>For a detailed description of the above listet arguments see the descriptions of the according classvar-methods.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*front' href='./../Overviews/Methods.html#front'>front</a>(<span class='argstr'>tab</span> <span class='argstr'>... cvs</span>)</h3>
+<div class='method'>
+<p>Creates and fronts the CVCenter GUI if it's closed or nil. Sends the GUI to front if it's in the background. If CVs are passed in as key/value pairs it adds them as widgets to the GUI under the given tab if given or the one that's currently in front.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>tab<td class='argumentdesc'>
+<p>a String or a Symbol, indicating the label of a tab. If none is provided the widgets will be added to "default" or any other tab that's currently in front. If an event containing the keys <code>\hi</code> and <code>\hi</code> gets passed in the widget will be a CVWidget2D.<tr><td class='argumentname'>... cvs<td class='argumentdesc'>
+<p>key/value pairs: <code>\wdgtName1, a CV, \wdgtName2, (lo: a CV, hi: a CV) ...  \wdgtNameN, a CV</code></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*use' href='./../Overviews/Methods.html#use'>use</a>(<span class='argstr'>key</span>, <span class='argstr'>spec</span>, <span class='argstr'>value</span>, <span class='argstr'>tab</span>, <span class='argstr'>slot</span>, <span class='argstr'>svItems</span>, <span class='argstr'>connectS</span>, <span class='argstr'>connectTF</span>)</h3>
+<div class='method'>
+<p>Use an arbitrary name for creating a new <a href="./../Classes/CVWidget.html">CVWidget</a> (a <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a> or a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>, depending on the argument <code>slot</code>).<div class='note'><span class='notelabel'>NOTE:</span> <strong>This is the recommended way for creating new widgets.</strong> This method should be convenient in most situations. It simply creates a new <a href="./../Classes/CVWidget.html">CVWidget</a> and returns the <a href="./../Classes/CV.html">CV</a>. As <a href="./../Classes/CV.html">CV</a> inherits from <code>Stream</code> this method may directly be used in <code>Pattern</code>s. If a CVWidget under the name given in <code>*use</code> already exists it simply passes on the CV and returns before any other logic is executed. This should be fast enough even if executed at high rates.
+<p>You may omit the arguments <code>slot</code> and <code>tab</code> when creating a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> if its first slot has already been created. However, if the widget is used within patterns you always <strong>must</strong> provide the slot as execution of the pattern depends on the right CV to be returned (if omitted the widget would return an event, composed of the \lo and \hi key).</div><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> or a <a href="./../Classes/String.html">String</a> - the resulting <a href="./../Classes/CV.html">CV</a> will be put into <a href="#*all">CVCenter.all</a> under this name and the widget will be labeled the same. If the given key resembles to the name of an existing <a href="./../Classes/ControlSpec.html">ControlSpec</a> it can be used automatically for the resulting CV's spec (if 'spec' hasn't been given explictely as the second argument). If the key consists of valid a ControlSpec-name and numeric characters only (e.g. 'freq 1' but not 'my freq') the spec's name will be extracted automatically.<tr><td class='argumentname'>spec<td class='argumentdesc'>
+<p>a <a href="./../Classes/ControlSpec.html">ControlSpec</a> - default: <code>ControlSpec.new</code><tr><td class='argumentname'>value<td class='argumentdesc'>
+<p>a default value for the <a href="./../Classes/CV.html">CV</a> - default: the <a href="./../Classes/ControlSpec.html">ControlSpec</a>'s default value<tr><td class='argumentname'>tab<td class='argumentdesc'>
+<p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a> - the tab under which the widget will appear. If not provided the widget will be added under the tab that's currently in front.<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>only needed if a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> shall be created. Either <code>\lo</code> or <code>\hi</code><tr><td class='argumentname'>svItems<td class='argumentdesc'>
+<p>if given, an <a href="./../Classes/SV.html">SV</a> will be returned instead of a <a href="./../Classes/CV.html">CV</a> (SV is a subclass of CV). An SV allows you to create dropdown menus, controlled by a CV. <code>svItems</code> must be given as an array of <a href="./../Classes/String.html">String</a>s/<a href="./../Classes/Symbol.html">Symbol</a>s or an array of arrays of <a href="./../Classes/String.html">String</a>s/<a href="./../Classes/Symbol.html">Symbol</a>s. While a one-dimensional array will create a singe SV the latter will produce an array of SVs, one for each nested array.<tr><td class='argumentname'>connectS<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a>, indicating whether the resulting CVWidget's sliders should be connected instantly (fast moving sliders can put can put quite some weight on the CPU, so sometimes it may be useful to not connect them)<tr><td class='argumentname'>connectTF<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a>, indicating whether textfields in the resulting CVWidget should be connected instantly (see note on argument 'connectS').<textarea class='editor'>CVCenter.use(\knob, \freq);                     // create a CVWidgetKnob with a frequency ControlSpec
+CVCenter.use(\slider2D, \phase, slot: \lo);     // create a 2D slider with a phase ControlSpec for the \lo slot
+                                                // a \hi slot with a default \unipolar ControlSpec will be created as well
+CVCenter.use(\slider2D, \phase, slot: \hi);     // it's safe to call CVCenter.use for same key but for the \hi slot
+                                                // the original \unipolar spec is now replaced with a \phase spec
+CVCenter.use(\multislider, [20, 1000, \exp] ! 5);        // create a CVWidgetMS (a multislider with 5 sliders) with an custom ControlSpec
+
+(
+// create 4 CVWidgetKnobs, returning an array of 5 SVs
+CVCenter.use(\sv, svItems: [
+    [\white, \black],
+    [\green, \yellow],
+    [\orange, \blue],
+    [\pink, \brown]
+])
+)
+
+(
+// create a window, holding 4 popup menus and connect them to the just created SVs
+w = Window("SV multi test", Rect(0, 0, 350, 200));
+p = 4.collect { |i|
+    PopUpMenu(w, Rect(20, 20+(i*40), w.view.bounds.width-40, 40))
+};
+w.front;
+
+p.do { |pop, i|
+    CVCenter.at((\sv ++ "["++i++"]").asSymbol).connect(pop)
+}
+)</textarea>
+</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/CV.html">CV</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*put' href='./../Overviews/Methods.html#put'>put</a>( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>Put new <a href="./../Classes/CV.html">CV</a>s into CVCenter<div class='note'><span class='notelabel'>NOTE:</span> It shouldn't be necessary to initialize CVCenter with an explicit call to <strong>*new</strong>. Rather use <strong>*use</strong> whenever possible as (<strong>*use</strong> uses <strong>*put</strong> internally)</div>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... args<td class='argumentdesc'>
+<p>key/value pairs: <code>\wdgtName1, a CV, \wdgtName2, (lo: a CV, hi: a CV),  \wdgtNameN, a CV</code>If the number of arguments is odd and the last one is a <a href="./../Classes/Boolean.html">Boolean</a> this will indicate whether already contained values will be overwritten (default: <code>false</code>)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3><a class='anchor' name='Connecting%20Nodes%20(Groups,%20Synths)%20and%20NodeProxies'>Connecting Nodes (Groups, Synths) and NodeProxies</a></h3>
+
+<p>It is possible to create GUIs from running Synths, NodeProxies (Ndefs as well as ProxySpaces) with one simple method-call. You can find thes methods documented in <a href="./../Classes/Synth.html#-cvcGui">Synth: -cvcGui</a> resp <a href="./../Classes/NodeProxy.html#-cvcGui">NodeProxy: -cvcGui</a>.<textarea class='editor'>(
+SynthDef(\simpleSine, { |freq=220, amp=0.3|
+    Out.ar(0, SinOsc.ar([freq, freq+1], mul: amp))
+}).add // SynthDefs *must* be 'added' or 'stored'
+)
+
+x = Synth(\simpleSine).cvcGui;
+x.free;
+CVCenter.removeAll; // remove widgets from CVCenter again</textarea>
+
+<p>For more complex SynthDefs the cvcGui-method will take care for special requirements like arrayed controls and treat them adequately.
+<p>If the user has already created widgets in CVCenter and wants to connect controls of a running Synth or a NodeProxy to these the following method might be suitable:<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*connectToNode' href='./../Overviews/Methods.html#connectToNode'>connectToNode</a>(<span class='argstr'>node</span>, <span class='argstr'>kvArray</span>, <span class='argstr'>environment</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>node<td class='argumentdesc'>
+<p>mandatory - a <a href="./../Classes/Group.html">Group</a>, a <a href="./../Classes/Synth.html">Synth</a>, a <a href="./../Classes/NodeProxy.html">NodeProxy</a>, an <a href="./../Classes/Ndef.html">Ndef</a> or a slot in a <a href="./../Classes/ProxySpace.html">ProxySpace</a> (pushed or not) whose controls shall be connected to the widgets in CVCenter. The objects can be given as variables (a, b, c, d...), environment-variables (~mySynth). Also variables can be given as strings/symbols (e.g. a as <code>"a"</code> or <code>\a</code>).<tr><td class='argumentname'>kvArray<td class='argumentdesc'>
+<p>mandatory - an <a href="./../Classes/Array.html">Array</a> consisting of pairs of control-name(s) / widget-name(s):<dl>
+<dt>a 1-dimensional control:<dd>control-name: ["widgetName"]<dt>an arrayed control:<dd>control-name: ["widget-name1", "widget-name2",... "widgetNameN"]<dt>2 controls combined in a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>:<dd>#[control-name1, control-name2]: ["widget2D-name"]<dt>a 2-dimensional control in a single control-name:<dd>2D-control-name: ["widget2D-name"]</dl>
+<tr><td class='argumentname'>environment<td class='argumentdesc'>
+<p>optional - if the object is given as slot in an array or dictionary the method will try to look it up in the given environment.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)
+<p>A simple example<textarea class='editor'>(
+SynthDef(\connectTest, { |freq=#[220, 222, 227, 238], ampLeft=0.3, ampRight=0.3|
+    var son = SinOsc.ar(freq);
+    Out.ar(0, Splay.ar(son) * [ampLeft, ampRight]);
+}).add
+)
+
+(
+#[lo, hi].do({ |slot| CVCenter.use(\amp, slot: slot) }); // a 2D-widget for 'amp'
+4.do({ |i| CVCenter.use("freq"++(i+1)) }); // 4 single widgets for the freq-control (4 slots)
+)
+
+x = Synth(\connectTest);
+
+(
+CVCenter.connectToNode(x, [
+    freq: ["freq1", "freq2", "freq3", "freq4"],
+    #[ampLeft, ampRight]: ["amp"]
+])
+)
+
+x.free;
+CVCenter.removeAll;</textarea>
+<div class='note'><span class='notelabel'>NOTE:</span> If the user doesn't provide the object in a variable or the variable-name can't be determined fallback-actions will be created ( <code>s.sendBundle(s.latency, [...])</code>). However, these will address the object's nodeID. If the object gets removed and recreated with a new nodeID the actions will stop working.</div></div></div><h3><a class='anchor' name='Setup%20options%20(classvar%20getters%20and%20setters)'>Setup options (classvar getters and setters)</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*midiMode' href='./../Overviews/Methods.html#midiMode'>midiMode</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*midiMode' href='./../Overviews/Methods.html#midiMode'>midiMode</a> = value</h3>
+<div class='method'>
+<p>Different MIDI-devices may have different output modes: either values from 0-127 or an in-/decremental value (e.g. -1 or +1). These modes may be taken in account as follows:<table>
+<tr><td><code>0</code><td>the device outputs a values 0-127<tr><td><code>1</code><td>the device outputs in-/decremental values</table>
+
+<p><code>midiMode</code> can be set at runtime and will be reflected in all widgets, i.e. all currently connectected devices will be switched to the new mode immediately.
+<p>default: <code>0</code><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*midiResolution' href='./../Overviews/Methods.html#midiResolution'>midiResolution</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*midiResolution' href='./../Overviews/Methods.html#midiResolution'>midiResolution</a> = value</h3>
+<div class='method'>
+<p>When <code>midiMode</code> has been set to 1, this method allows to set the resolution (= stepsize) of the connected hardware MIDI-sliders.
+<p>standard-value: 1 lower values -&gt; higher resolution (lower stepsize) higher values -&gt; lower resolution (bigger stepsize)
+<p>default: <code>1</code><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*ctrlButtonBank' href='./../Overviews/Methods.html#ctrlButtonBank'>ctrlButtonBank</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*ctrlButtonBank' href='./../Overviews/Methods.html#ctrlButtonBank'>ctrlButtonBank</a> = value</h3>
+<div class='method'>
+<p>Some MIDI-devices provide several banks of sliders. I.e. a device may be equipped with 16 hardware-sliders and 4 banks that can be switched. So, slider 1 in bank 2 is slider nr. 17, slider 3 in bank 3 is slider nr. 35. By default these sliders would have to be addressed in a <a href="./../Classes/CCResponder.html">CCResponder</a> as 16 (slider 17) and 34 (slider 35) which makes it hard to immediately get the right slider from what is displayed within the GUI. <code>ctrlButtonBank</code> translates the hardware-layout in a way that makes it easy to see the slider's bank and number: slider 17 becomes 2:1 (bank 2,  nr. 1).
+<p>default: <code>nil</code><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*midiMean' href='./../Overviews/Methods.html#midiMean'>midiMean</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*midiMean' href='./../Overviews/Methods.html#midiMean'>midiMean</a> = value</h3>
+<div class='method'>
+<p>Devices which output a in-/decremtal may output a standard value + in-/decrement. <code>midiMean</code> gets automatically subtracted from this value, so in-/decrement remains. Applies only if midiMode is set to <code>1</code>.
+<p>default: <code>64</code><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*softWithin' href='./../Overviews/Methods.html#softWithin'>softWithin</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*softWithin' href='./../Overviews/Methods.html#softWithin'>softWithin</a> = value</h3>
+<div class='method'>
+<p>If <code>midiMode</code> has been set to <code>0</code> moving a widget-slider will set the CV to a new value. However, if a MIDI-slider is connected to that widget, moving the MIDI-slider will set the CV's value immediatly to the value that is stored in the MIDI-slider i.e. a "jump" will happen. <code>softWithin</code> will ease this behavior by setting the CV's value only if the slider gets within <code>softWithin/2</code>. Applies only if midiMode is set to <code>0</code>.
+<p>default: <code>0.1</code><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3><a class='anchor' name='Convenience%20methods'>Convenience methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>Return the <a href="./../Classes/CV.html">CV</a> at the given key. If the key belongs to a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a> an <a href="./../Classes/Event.html">Event</a> will rather be returned, containing 2 CVs: <code>\lo</code> and <code>\hi</code>. If your code relies on a CV being returned by this method, make sure you call the right slot (e.G.: <code>CVCenter.at(\myKey).lo</code>).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> or a <a href="./../Classes/String.html">String</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/CV.html">CV</a> resp. an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*removeAt' href='./../Overviews/Methods.html#removeAt'>removeAt</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>Remove a given widget including its <a href="./../Classes/CV.html">CV</a>(s). . Existing OSC- or MIDI-connections will be resolved automatically.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> or <a href="./../Classes/String.html">String</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*removeAll' href='./../Overviews/Methods.html#removeAll'>removeAll</a>( <span class='argstr'>... keys</span>)</h3>
+<div class='method'>
+<p>Remove given <a href="./../Classes/CVWidget.html">CVWidget</a>s including their <a href="./../Classes/CV.html">CV</a>s or all. Existing OSC- or MIDI-connections will be resolved automatically.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... keys<td class='argumentdesc'>
+<p>widget-keys, given as <a href="./../Classes/String.html">String</a>s or <a href="./../Classes/Symbol.html">Symbol</a>s. If no keys are given <strong>all</strong> widgets will be removed.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*removeAtTab' href='./../Overviews/Methods.html#removeAtTab'>removeAtTab</a>(<span class='argstr'>label</span>)</h3>
+<div class='method'>
+<p>Remove <a href="./../Classes/CVWidget.html">CVWidget</a>s under a given tab and remove the tab.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>label<td class='argumentdesc'>
+<p>The name of the tab as <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*removeTab' href='./../Overviews/Methods.html#removeTab'>removeTab</a>(<span class='argstr'>label</span>)</h3>
+<div class='method'>
+<p>Remove <a href="./../Classes/CVWidget.html">CVWidget</a>s under a given tab and remove the tab.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>label<td class='argumentdesc'>
+<p>The name of the tab as <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*addActionAt' href='./../Overviews/Methods.html#addActionAt'>addActionAt</a>(<span class='argstr'>key</span>, <span class='argstr'>name</span>, <span class='argstr'>action</span>, <span class='argstr'>slot</span>, <span class='argstr'>active: true</span>)</h3>
+<div class='method'>
+<p>Add an action given in <code>action</code> to a widget's CV given in <code>key</code> under the name <code>name</code><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> or <a href="./../Classes/String.html">String</a> - representing a <a href="./../Classes/CVWidget.html">CVWidget</a> resp. its <a href="./../Classes/CV.html">CV</a><tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> or a <a href="./../Classes/String.html">String</a> - the name under which the action will be added. The action may be removed or deactivated again by referring to this name.<tr><td class='argumentname'>action<td class='argumentdesc'>
+<p>a <a href="./../Classes/Function.html">Function</a> or a <a href="./../Classes/String.html">String</a> that compiles to a function - if one or more arguments are added, the first will automatically be a representation of the CV. The function can also be provided as a string that compiles to a function when you call <code>interpret</code> on it.<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>a <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a> - either <code>\hi</code> or <code>\lo</code>. Only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a><tr><td class='argumentname'>active<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a> - activate or deactivate the action. default: <code>true</code></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*removeActionAt' href='./../Overviews/Methods.html#removeActionAt'>removeActionAt</a>(<span class='argstr'>key</span>, <span class='argstr'>name</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Remove an action from a widget's CV given in <code>key</code> under the name <code>name</code><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> or <a href="./../Classes/String.html">String</a> - representing a <a href="./../Classes/CVWidget.html">CVWidget</a> resp. its <a href="./../Classes/CV.html">CV</a>s<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> or a <a href="./../Classes/String.html">String</a> - the name under which the action is stored.<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>a <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a> - either <code>\hi</code> or <code>\lo</code>. Only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*activateActionAt' href='./../Overviews/Methods.html#activateActionAt'>activateActionAt</a>(<span class='argstr'>key</span>, <span class='argstr'>name</span>, <span class='argstr'>activate</span>, <span class='argstr'>slot</span>)</h3>
+<div class='method'>
+<p>Activates or deactivates an action at <code>key</code> (representing the widget) and <code>name</code> (the name under which the action is stored)<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> or <a href="./../Classes/String.html">String</a> - representing a <a href="./../Classes/CVWidget.html">CVWidget</a> resp. its <a href="./../Classes/CV.html">CV</a>s<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a> or a <a href="./../Classes/String.html">String</a> - the name under which the action is stored.<tr><td class='argumentname'>activate<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a><dl>
+<dt>true<dd>- activate the action<dt>false<dd>- deactivate the action</dl>
+<tr><td class='argumentname'>slot<td class='argumentdesc'>
+<p>a <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a> - either <code>\hi</code> or <code>\lo</code>. Only needed if the widget is a <a href="./../Classes/CVWidget2D.html">CVWidget2D</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*getCmdNamesAndAddressesInUse' href='./../Overviews/Methods.html#getCmdNamesAndAddressesInUse'>getCmdNamesAndAddressesInUse</a></h3>
+<div class='method'>
+<p>Return the <a href="./../Classes/NetAddr.html">Adresses</a> and OSC command names that are currently in use in an <a href="./../Classes/Array.html">Array</a> of arrays. The address denotes the address from which the regarding command is being sent. If no NetAddr is defined within the responder the address should be <code>nil</code>. E.g.:<textarea class='editor'>[ [ a NetAddr(192.168.1.4, 55395), /my/cmd1 ], [ a NetAddr(192.168.1.4, 55395), /my/cmd2 ], [ a NetAddr(192.168.1.4, 55395), /my/cmd3 ], [ a NetAddr(192.168.1.4, 55395), /my/cmd3 ], [ a NetAddr(192.168.1.4, 55395), /my/cmd4 ] ]</textarea>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a nested <a href="./../Array">Array</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*snapShots' href='./../Overviews/Methods.html#snapShots'>snapShots</a></h3>
+<div class='method'>
+<p>Returns currently saved snapshots - an <a href="./../Classes/Event.html">Event</a> holding snapshots under the timestamp or custom name when they were saved as key and an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> of keys and values of all current <a href="./../Classes/CVWidget.html">CVWidget</a>s resp. their internal <a href="./../Classes/CV.html">CV</a>(s) as values<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*saveSnapshot' href='./../Overviews/Methods.html#saveSnapshot'>saveSnapshot</a>(<span class='argstr'>dialog: false</span>)</h3>
+<div class='method'>
+<p>Save a snapshot of all values of all <a href="./../Classes/CVWidget.html">CVWidget</a>s currently held in CVCenter. The snapshot will immediatly appear in the 'select snapshot' dropdown at the bottom of the CVCenter GUI. Selecting a snapshot will set the CVWidgets contained in the snapshot to its coresponding value in the snapshot.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>dialog<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a> denoting whether the snapshot name can be set in a dialog (default: <code>false</code> - the snapshot's name will be the current timestamp)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*deleteSnapshots' href='./../Overviews/Methods.html#deleteSnapshots'>deleteSnapshots</a></h3>
+<div class='method'>
+<p>Deletes all currently saved snapshots<h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3><a class='anchor' name='Setting%20GUI-properties'>Setting GUI-properties</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*bounds' href='./../Overviews/Methods.html#bounds'>bounds</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*bounds' href='./../Overviews/Methods.html#bounds'>bounds</a> = <span class='argstr'>rect</span></h3>
+<div class='method'>
+<p>Get or set the current bounds of the CVCenter GUI.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rect<td class='argumentdesc'>
+<p>A <code>Rect</code>.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*alwaysOnTop' href='./../Overviews/Methods.html#alwaysOnTop'>alwaysOnTop</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*alwaysOnTop' href='./../Overviews/Methods.html#alwaysOnTop'>alwaysOnTop</a> = <span class='argstr'>bool</span></h3>
+<div class='method'>
+<p>Determine whether CVCenter resp. its childviews should always be on top of other views.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bool<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*numMsSlotsPerColumn' href='./../Overviews/Methods.html#numMsSlotsPerColumn'>numMsSlotsPerColumn</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*numMsSlotsPerColumn' href='./../Overviews/Methods.html#numMsSlotsPerColumn'>numMsSlotsPerColumn</a> = value</h3>
+<div class='method'>
+<p>A special method that allows the user to determine how many slots a multislider-widget shall display in 1 columns at max (even though this value refers to the maximum number od slots in one column a multislider-widget will always stretch over at least 2 colums). If this number gets exceeded a multislider widget will automatically stretch over 3 columns. default: <code>15</code>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>(value)<td class='argumentdesc'>
+<p>an <a href="./../Classes/Integer.html">Integer</a> indicating how many slots shall be displayed within one column. default: <code>15</code></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*isClosed' href='./../Overviews/Methods.html#isClosed'>isClosed</a></h3>
+<div class='method'>
+<p>Returns true if no childviews exists (i.e. <a href="#*childViews">*childViews</a> is empty) and the main window is closed (closing the main window should automatically close all childviews as well).<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiMoveTo' href='./../Overviews/Methods.html#guiMoveTo'>guiMoveTo</a>(<span class='argstr'>point</span>)</h3>
+<div class='method'>
+<p>Moves the GUI to a given position on screen.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>point<td class='argumentdesc'>
+<p>a <a href="./../Classes/Point.html">Point</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiMoveTo' href='./../Overviews/Methods.html#guiMoveTo'>guiMoveTo</a>(<span class='argstr'>point</span>)</h3>
+<div class='method'>
+<p>Moves the GUI to a given position on screen.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>point<td class='argumentdesc'>
+<p>a <a href="./../Classes/Point.html">Point</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiChangeDimensions' href='./../Overviews/Methods.html#guiChangeDimensions'>guiChangeDimensions</a>(<span class='argstr'>point</span>)</h3>
+<div class='method'>
+<p>Set the GUI's dimension to the given value.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>point<td class='argumentdesc'>
+<p>a <a href="./../Classes/Point.html">Point</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*renameTab' href='./../Overviews/Methods.html#renameTab'>renameTab</a>(<span class='argstr'>oldName</span>, <span class='argstr'>newName</span>)</h3>
+<div class='method'>
+<p>Set a tab-name from <code>oldName</code> to <code>newName</code><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>oldName<td class='argumentdesc'>
+<p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a><tr><td class='argumentname'>newName<td class='argumentdesc'>
+<p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*widgetsAtTab' href='./../Overviews/Methods.html#widgetsAtTab'>widgetsAtTab</a>(<span class='argstr'>label</span>)</h3>
+<div class='method'>
+<p>Get an <a href="./../Classes/Array.html">Array</a> containing all widgets (names) under the give tab.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>label<td class='argumentdesc'>
+<p>a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a> representing the name of the selected tab</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Array.html">Array</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*getTab' href='./../Overviews/Methods.html#getTab'>getTab</a>(<span class='argstr'>wdgtName</span>)</h3>
+<div class='method'>
+<p>Get the tab label for the given widget name<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>wdgtName<td class='argumentdesc'>
+<p>a <a href="./../Classes/Symbol.html">Symbol</a>, denoting the widget name</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the tab label as <a href="./../Classes/Symbol.html">Symbol</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*widgetConnectGUI' href='./../Overviews/Methods.html#widgetConnectGUI'>widgetConnectGUI</a>(<span class='argstr'>key</span>, <span class='argstr'>connectSliders</span>, <span class='argstr'>connectTextFields</span>)</h3>
+<div class='method'>
+<p>Drawing sliders in a widget while they're moved from outside (e.g. when they're set from some other application outside SuperCollider via OSC) may cost a lot of CPU power. Via this method the connection to sliders and number boxes can be suspended and hence CPU power may be freed for other processes.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>a <a href="./../Classes/String.html">String</a> or <a href="./../Classes/Symbol.html">Symbol</a> denoting the widget whose sliders, numberboxes shall be disconnected<tr><td class='argumentname'>connectSliders<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a> or <code>nil</code>, telling CVCenter to connect or disconnect the slider(s) for the widget denoted by the argument <code>key</code><tr><td class='argumentname'>connectTextFields<td class='argumentdesc'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a> or <code>nil</code>, telling CVCenter to connect or disconnect the number box(es) for the widget denoted by the argument <code>key</code></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3><a class='anchor' name='Saving%20and%20loading%20setups'>Saving and loading setups</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*saveSetup' href='./../Overviews/Methods.html#saveSetup'>saveSetup</a>(<span class='argstr'>path</span>)</h3>
+<div class='method'>
+<p>Save all widgets and tabs resp. their actions, connected MIDI- and OSC-responders into a setup-file on disk. A once stored setup can be loaded again with <code>loadSetup</code> and all its responders can get reinitialized automatically.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>optional - expects the full path to the location where the setup shall be stored disk. If given no file-save dialog will be displayed.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*loadSetup' href='./../Overviews/Methods.html#loadSetup'>loadSetup</a>(<span class='argstr'>path</span>, <span class='argstr'>addToExisting: false</span>, <span class='argstr'>autoConnectOSC: true</span>, <span class='argstr'>oscConnectToIP: true</span>, <span class='argstr'>oscRestrictToPort: false</span>, <span class='argstr'>activateCalibration: false</span>, <span class='argstr'>resetCalibration: false</span>, <span class='argstr'>autoConnectMIDI: true</span>, <span class='argstr'>midiConnectSrc: false</span>, <span class='argstr'>midiConnectChannel: false</span>, <span class='argstr'>midiConnectCtrl: true</span>, <span class='argstr'>loadActions: true</span>, <span class='argstr'>midiSrcID</span>, <span class='argstr'>oscIPAddress</span>, <span class='argstr'>loadShortcuts: true</span>, <span class='argstr'>loadSnapshots: true</span>, <span class='argstr'>connectSliders</span>, <span class='argstr'>connectNumBoxes</span>)</h3>
+<div class='method'>
+<p>Loads a saved setup and creates the CVCenter GUI with all widgets stored in the setup. For the user's convenience arguments for this method are defined explicitely, allowing the IDE to automatically list their names when the method's name gets typed. Also one may use the dialog provided by <a href="./../Classes/CVCenterLoadDialog.html">CVCenterLoadDialog</a> that allows selecting options by checkboxes and dropdown-lists.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>optional - expects the full path to the location where the setup shall be stored to disk. If given no file-open dialog will be displayed.<tr><td class='argumentname'>addToExisting<td class='argumentdesc'>
+<p>If CVCenter GUI has already been initialized and contains some widgets and <code>addToExisting</code> is set to <code>true</code> the setup will rather add widgets to the already existing ones. <strong>default</strong>: <code>false</code><tr><td class='argumentname'>autoConnectOSC<td class='argumentdesc'>
+<p>If set to <code>true</code> OSC-responders will be initialized automatically. <strong>default</strong>: <code>true</code><tr><td class='argumentname'>oscConnectToIP<td class='argumentdesc'>
+<p>If set to <code>true</code> OSC-responders will be initialized with a <a href="./../Classes/NetAddr.html">NetAddr</a> bound to the IP-address stored with the setup up (if the setup has been saved with an IP-address). If set to <code>false</code> the OSC-responders will listen to commands coming from any IP-address. However, if responders should listen to an explicit IP-address that is not the same as the one that was saved with the setup the <a href="./../Classes/CVCenterLoadDialog.html">CVCenterLoadDialog</a> still allows the user to detect a valid IP-address to be used with all OSC-responders. By default <code>oscConnectToIP</code> is set to <code>true</code><tr><td class='argumentname'>oscRestrictToPort<td class='argumentdesc'>
+<p>If set to true all OSC-responders loaded from the setup will listen to the expliciit port stored with the setup (if a port has been saved with the setup). However, it is usually not recommended to restrict listening to a specific port as ports may easily change between sessions. Hence, this argument is set to <code>false</code> by default.<tr><td class='argumentname'>activateCalibration<td class='argumentdesc'>
+<p>If set to <code>true</code> the regarding widget will try to determine the range of incoming (OSC) values and adjust itself to it if necessary. However, this might not be the desired behaviour if the widget has already been calibrated when the setup was first saved. Hence, this argument is set to <code>false</code> by default.<tr><td class='argumentname'>resetCalibration<td class='argumentdesc'>
+<p>If set to <code>true</code> the calibration from invoming (OSC) values will start anew from <code>0, 0</code> (low constraint, high constraint). default: <code>false</code>.<tr><td class='argumentname'>autoConnectMIDI<td class='argumentdesc'>
+<p>If set to <code>true</code> MIDI-responders will be initialized automatically. <strong>default</strong>: <code>true</code><tr><td class='argumentname'>midiConnectSrc<td class='argumentdesc'>
+<p>If set to true MIDI-responders will only listen to the ID stored with the setup (if an ID has been stored with the setup). default: <code>false</code>.<tr><td class='argumentname'>midiConnectChannel<td class='argumentdesc'>
+<p>If set to true MIDI-responders will only listen to a channel stored with the setup (if a channel has been stored with the setup). default: <code>false</code>.<tr><td class='argumentname'>midiConnectCtrl<td class='argumentdesc'>
+<p>If set to true MIDI-responders will only listen to a controller-nr. stored with the setup. default: <code>true</code>.<tr><td class='argumentname'>loadActions<td class='argumentdesc'>
+<p>If set to <code>true</code> actions will be initialized automatically. <strong>default</strong>: <code>true</code><tr><td class='argumentname'>midiSrcID<td class='argumentdesc'>
+<p>Optional - all MIDI-responders will be initialized using this ID as an identification of the MIDI-device that is going to be used. Replaces any ID that has been saved with the setup.<tr><td class='argumentname'>oscIPAddress<td class='argumentdesc'>
+<p>Optional - all OSC-responders will be initialized using this IP-address. Replaces any IP-address stored with the setup.<tr><td class='argumentname'>loadShortcuts<td class='argumentdesc'>
+<p>If set to true currently active shortcuts in CVCenter, CVWidgets and CVWidgetEditors will be replaced by the shortcuts saved with the setup. By default saving a setup will always save all currently active shortcuts. default: <code>true</code></table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3><a class='anchor' name='More%20classvars%20and%20internal%20values'>More classvars and internal values</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*setup' href='./../Overviews/Methods.html#setup'>setup</a></h3>
+<div class='method'>
+<p>returns the current setup:<ul>
+<li><code>midiMode</code><li><code>midiResolution</code><li><code>midiMean</code><li><code>ctrlButtonBank</code><li><code>softWithin</code></ul>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*all' href='./../Overviews/Methods.html#all'>all</a></h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>, containing all CVs added to CVCenter</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*cvWidgets' href='./../Overviews/Methods.html#cvWidgets'>cvWidgets</a></h3>
+<div class='method'>
+<p>all widgets (currently either <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a>s or <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>s) displayed within the main GUI of CVCenter<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>, containing all <a href="./../Classes/CVWidget.html">CVWidget</a>s</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*window' href='./../Overviews/Methods.html#window'>window</a></h3>
+<div class='method'>
+<p>The main window of CVCenter<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an instance of <a href="./../Classes/Window.html">Window</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*tabs' href='./../Overviews/Methods.html#tabs'>tabs</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/TabbedView2.html">TabbedView2</a>, containing the widgets<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/TabbedView2.html">TabbedView2</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*childViews' href='./../Overviews/Methods.html#childViews'>childViews</a></h3>
+<div class='method'>
+<p>An <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> keeping the parent windows of detached tabs: Any tab may be detached in this version of CVCenter as the GUI is now based on <a href="./../Classes/TabbedView2.html">TabbedView2</a> instead of <a href="./../Classes/TabbedView.html">TabbedView</a>. Moreover, tabs can be dragged between childviews (or the main window and a childview) by clicking its label and holding cmd (Mac) or ctrl (Linux, Windows). The structure of <code>childViews</code> is the following:<textarea class='editor'>IdentityDictionary[
+    parent window 1 (a TopView) -&gt; (
+        tabs: (
+            tab 1 (a TabbedViewTab): (
+                widgets: [widget-name 1, widget-name 2, ... widget-name n]
+            ),
+            tab 1 (a TabbedViewTab): (
+                widgets: [widget-name 1, widget-name 2, ... widget-name n]
+            ),
+            ...
+            tab n (a TabbedViewTab): (
+                widgets: [widget-name 1, widget-name 2, ... widget-name n]
+            )
+        )
+    ),
+    parent window 2 (a TopView) -&gt; (
+        tabs: (
+            tab 1 (a TabbedViewTab): (
+                widgets: [widget-name 1, widget-name 2, ... widget-name n]
+            ),
+            tab 1 (a TabbedViewTab): (
+                widgets: [widget-name 1, widget-name 2, ... widget-name n]
+            ),
+            ...
+            tab n (a TabbedViewTab): (
+                widgets: [widget-name 1, widget-name 2, ... widget-name n]
+            )
+        )
+    ),
+    ...
+    parent window n (a TopView) -&gt; (
+        tabs: (
+            tab 1 (a TabbedViewTab): (
+                widgets: [widget-name 1, widget-name 2, ... widget-name n]
+            ),
+            tab 1 (a TabbedViewTab): (
+                widgets: [widget-name 1, widget-name 2, ... widget-name n]
+            ),
+            ...
+            tab n (a TabbedViewTab): (
+                widgets: [widget-name 1, widget-name 2, ... widget-name n]
+            )
+        )
+    )
+]</textarea>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*shortcuts' href='./../Overviews/Methods.html#shortcuts'>shortcuts</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*shortcuts' href='./../Overviews/Methods.html#shortcuts'>shortcuts</a> = value</h3>
+<div class='method'>
+<p>An <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> containing all currently defined shortcuts for CVCenter. Though this is a getter/setter it is recomended to add/remove shortcuts via the GUI within the <a href="./../Classes/CVCenterPreferences.html">preferences-interface</a> (changes will become active after recompilation of the class-library) or the <a href="./../Classes/CVCenterShortcutsEditor.html">shortcuts-interface</a> (changes become active immediatly but get reset after recompilation of the class-library).
+<p>See <a href="./../Classes/KeyDownActions.html">KeyDownActions</a> for more information about the internal structure of the <code>shortcuts</code> dictionary resp. the workings of shortcuts in general. Also have a look at the list of <a href="#Shortcuts">default shortcuts</a> that can be modified by the user at any time.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*scv' href='./../Overviews/Methods.html#scv'>scv</a></h3>
+<div class='method'>
+<p>An <a href="./../Classes/Event.html">Event</a> containing various objects that do not necessarily belong to CVCenter but are related to it. E.g. when a shortcut opens a window that window may be added to scv so other shortcuts can refer to it later. Basically <code>scv</code> has been introduced as the concept of configurable shortcuts seperate shortcut-actions from CVCenter. Hence, variables in these actions can't get initialized belonging to CVCenter automatically. However, a classvar holding a dictionary that can be filled up later solves the problem.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guix' href='./../Overviews/Methods.html#guix'>guix</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guix' href='./../Overviews/Methods.html#guix'>guix</a> = value</h3>
+<div class='method'>
+<p>The x-position at which the GUI will be created - has no direct effect besides when being set ahead from initializing CVCenter.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiy' href='./../Overviews/Methods.html#guiy'>guiy</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiy' href='./../Overviews/Methods.html#guiy'>guiy</a> = value</h3>
+<div class='method'>
+<p>The y-position at which the GUI will be created - has no direct effect besides when being set ahead from initializing CVCenter.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiwidth' href='./../Overviews/Methods.html#guiwidth'>guiwidth</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiwidth' href='./../Overviews/Methods.html#guiwidth'>guiwidth</a> = value</h3>
+<div class='method'>
+<p>The GUI-width - has no direct effect besides when being set ahead from initializing CVCenter.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiheight' href='./../Overviews/Methods.html#guiheight'>guiheight</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*guiheight' href='./../Overviews/Methods.html#guiheight'>guiheight</a> = value</h3>
+<div class='method'>
+<p>The GUI-height - has no direct effect besides when being set ahead from initializing CVCenter.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p><code>this</code> (CVCenter)</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*setupPath' href='./../Overviews/Methods.html#setupPath'>setupPath</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenter.</span><a class='method-name' name='*setupPath' href='./../Overviews/Methods.html#setupPath'>setupPath</a> = value</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>// create a couple of CVWidgets under the tab "test"
+// and add an action
+CVCenter.use(\knobTest, tab: \test);
+CVCenter.addActionAt(\knobTest, \testFunc, { |cv| "knobTest: %\n".postf(cv.value) }, active: false);
+CVCenter.use(\test2D, tab: \test, slot: \lo);
+// arguments 'tab' and 'slot' may be omitted when creating the 'hi' slot as the widget knows under which
+// tab it's living and which slot has already been created. Also the operation doesn't depend
+// on a CV being returned
+CVCenter.use(\test2D);
+CVCenter.addActionAt(\test2D, \testFunc, { |cv| "test2D lo: %\n".postf(cv.value) }, \lo);
+CVCenter.addActionAt(\test2D, \testFunc, { |cv| "test2D hi: %\n".postf(cv.value) }, \hi);
+
+// action activation and deactivation
+// watch the "actions"-button at the bottom of the widget
+// turn the knob to see the effect
+CVCenter.activateActionAt(\knobTest, \testFunc, true);
+CVCenter.activateActionAt(\knobTest, \testFunc, false);
+CVCenter.activateActionAt(\knobTest, \testFunc, true);
+
+// some sound
+Server.default.waitForBoot{ a = { |freq1, freq2, amp| SinOsc.ar([freq1, freq2]) * amp }.play };
+
+// set suitable specs for synth's controls
+CVCenter.cvWidgets[\knobTest].setSpec(\amp);
+#[lo, hi].do({ |slot| CVCenter.cvWidgets[\test2D].setSpec(\freq, slot) });
+
+// add actions that set the controls in a
+CVCenter.addActionAt(\knobTest, \setAmp, { |cv| a !? { a.set(\amp, cv.value) }});
+CVCenter.addActionAt(\test2D, \setFreq1, { |cv| a !? { a.set(\freq1, cv.value) }}, \lo);
+CVCenter.addActionAt(\test2D, \setFreq2, { |cv| a !? { a.set(\freq2, cv.value) }}, \hi);
+
+// CVCenter will not open another gui if one is already present
+// if the GUI is in the background it will be sent to front
+CVCenter.front;
+
+// close the GUI and open it again
+// all widgets should just work as before
+CVCenter.window.close;
+CVCenter.front;
+
+// free the synth and remove all widgets
+a.free;
+CVCenter.removeAll;</textarea>
+
+<p><a class='anchor' name='cvcGui'>&nbsp;</a><h3><a class='anchor' name='Auto-generating%20CVWidgets%20within%20CVCenter%20GUI%20from%20running%20Synths,%20NodeProxies,%20Ndefs%20and%20ProxySpaces%20and%20Instr/Patch'>Auto-generating CVWidgets within CVCenter GUI from running Synths, NodeProxies, Ndefs and ProxySpaces and Instr/Patch</a></h3>
+<textarea class='editor'>// a SynthDef, including some arrayed controls
+(
+SynthDef('dynKlank', { |impFreq1, impFreq2, freqs1=#[800, 1071, 1153, 1723], freqs2=#[789, 1067, 1150, 1720], ringtimes1=#[1, 1, 1, 1], ringtimes2=#[1, 1, 1, 1]|
+    var signal1, signal2;
+    signal1 = DynKlank.ar(`[freqs1, nil, ringtimes1 ], Impulse.ar(impFreq1, 0, 0.1));
+    signal2 = DynKlank.ar(`[freqs2, nil, ringtimes2 ], Impulse.ar(impFreq2, 0, 0.1));
+    Out.ar(0, [signal1, signal2]);
+},
+// specs, defined within the SynthDef's metadata will be considered when auto-creating the GUI
+metadata: (
+    specs: (
+        freqs1: \freq,
+        freqs2: \freq,
+        impFreq1: [0.1, 5],
+        impFreq2: [0.1, 5],
+        ringtimes1: [1, 20],
+        ringtimes2: [1, 20]
+    )
+)).add; // must use 'add' or 'store' if the GUI shall be auto-generated
+)
+
+(
+Server.default.waitForBoot {
+    a = Synth(\dynKlank);
+    // GUI creation - note that actions within widgets representing arrayed controls will
+    // rather use setn to set the regarding controls
+    // have a look at the Synth helpfile to see all possible arguments for cvcGui
+    a.cvcGui(pairs2D: (impFreqs: #[impFreq1, impFreq2]));
+};
+)
+
+
+/////////////////////////////////// CVCenter and Ndefs /////////////////////////////////////////////////
+
+Ndef(\sawTest, { |damping| SinOsc.ar(damping * VarSaw.ar(\sawFreq.kr([100, 101]))).tanh * \amp.kr(0.5) });
+
+// Ndefs don't have metadata but you may add some specs ahead from creation
+Spec.add(\sawFreq, \freq);
+Spec.add(\damping, #[200, 20000, \exp, 0.0, 1000, " Hz"]);
+
+// create the GUI
+// have a look at the NodeProxy helpfile to see all possible arguments for cvcGui
+Ndef(\sawTest).cvcGui;
+
+// play the Ndef (turn the knobs if you don't hear anything immediately)
+Server.default.waitForBoot{ Ndef(\sawTest).play };
+
+// clean up
+CVCenter.removeAll;
+Ndef(\sawTest).clear(10);
+
+
+/////////////////////////////////// the same thing in NodeProxy-style /////////////////////////////////
+
+a = NodeProxy.new.play; // play to hardware output.
+// set the source
+a.source = { |damping| SinOsc.ar(damping * VarSaw.ar(\sawFreq.kr([100, 101]))).tanh * \amp.kr(0.5) };
+
+// specs should already be declared within the above example
+a.cvcGui
+
+a.clear(10)
+
+CVCenter.removeAll
+
+
+/////////////////////////////////// as ProxySpace, pushed //////////////////////////////////////////////
+
+p = ProxySpace.push(s);
+~sawTest = { |damping| SinOsc.ar(damping * VarSaw.ar(\sawFreq.kr([100, 101]))).tanh * \amp.kr(0.5) };
+
+Server.default.waitForBoot{ ~sawTest.play };
+
+// specs should already be there
+~sawTest.cvcGui;
+
+~sawTest.clear(10);
+p.clean;
+p.pop;
+CVCenter.removeAll;
+
+
+/////////////////////////////////// as ProxySpace, not pushed //////////////////////////////////////////
+
+p = ProxySpace.new;
+
+p[\sawTest] = { |damping| SinOsc.ar(damping * VarSaw.ar(\sawFreq.kr([100, 101]))).tanh * \amp.kr(0.5) };
+
+Server.default.waitForBoot{ p[\sawTest].play };
+
+p[\sawTest].cvcGui;
+
+p[\sawTest].clear(10);
+p.clean;
+p.pop;
+CVCenter.removeAll;
+
+
+/////////////////////////////////// Instr/Patch support ////////////////////////////////////////////////
+
+(
+Instr(\saw, { |amp = 0.5|
+    Splay.ar(LFSaw.ar(NamedControl.kr(\freq, [ 110, 112, 222, 334, 556 ]), 0, amp));
+});
+
+Instr(\rlpf, { |in, ffreq = 1000, famp = 1, rq = 0.1|
+    RLPF.ar(in, ffreq, rq) * famp;
+});
+)
+
+i = Instr(\saw) &lt;&gt;&gt; Instr(\rlpf);
+p = i.play;
+p.cvcGui;
+
+// clean up when done
+p.stop;
+CVCenter.removeAll;</textarea>
+<h3><a class='anchor' name='CVCenter%20and%20Patterns'>CVCenter and Patterns</a></h3>
+<textarea class='editor'>// declare some SynthDef first
+(
+SynthDef(\hihat, { |out=0, atk=0.01, rel=0.1, curve=(-4.0), amp=0.5, freq=300, rq=0.5, pan=0|
+    var env, son;
+    env = Env.perc(atk, rel, curve:curve);
+    son = BPF.ar(WhiteNoise.ar, freq, rq);
+    Out.ar(out, Pan2.ar(son * EnvGen.ar(env, doneAction: 2) * amp, pos:pan));
+}).add;
+)
+
+// something to change the tempo
+t = TempoClock.default;
+t.tempo_(2);
+CVCenter.use(\tempo, #[1.0, 3.0], t.tempo, tab: \hihat);
+CVCenter.addActionAt(\tempo, \setTempo, { |cv| t.tempo_(cv.value) });
+
+// the pattern
+// no .action_ needed here - CVs can be embedded in patterns just like any other pattern
+// you can at any time change the Pdef, add new widgets to CVCenter by calling CVCenter.use(\someKey)
+// NOTE: If you're adding 2D-widgets (CVWidget2D) you *must* explicitly declare their slots ('hi' or 'lo')
+// as the output depends on what is returned by CVCenter:use
+(
+Pdef(\hiHat,
+    Pbind(*[
+        instrument: \hihat,
+        dur: Pwrand([1/4, Pwrand([Pn(1/4, 4), Pn(1/8, 2)], [2, 5].normalizeSum, 1)], [16, 9].normalizeSum, inf),
+        freq: 20000,
+        atk: 0.0001,
+        rel: Pgauss(0.04, Pwhite(0.02, CVCenter.use(\rel, value: 0.2, tab: \hihat))).abs,
+        curve: Pgauss(-4.0, 1.0),
+        amp: CVCenter.use(\amp, \amp, tab: \hihat),
+        rq: Pwhite(0.1, 1.0),
+        pan: Pgauss(0.0, 1.0),
+    ])
+)
+)
+
+Pdef(\hiHat).play;
+Pdef(\hiHat).stop;</textarea>
+
+<p><h3><a class='anchor' name='Using%20CVWidgetMS%20in%20Patterns'>Using CVWidgetMS in Patterns</a></h3>
+
+<p>multi-slider widgets can be used in patterns as well. However, their usage differs.<textarea class='editor'>// a synth, utilizing an arrayed control
+(
+SynthDef(\poly, { |atk=0.02, level=0.7, rel=1.5, curve=(-4), freqMod=1, gate=1, amp=1.0|
+    var env, son;
+    env = EnvGen.kr(Env.perc(atk, rel, level, curve), gate, doneAction: 2);
+    son = LeakDC.ar(SinOsc.ar(\freq.kr({ |i| i }!5)).cubed.cubed.scaleneg(freqMod) * env);
+    Out.ar(0, Splay.ar(son).tanh);
+}).add;
+)
+
+// for the arrayed control create a CVWidgetMS *ahead* from using it in the pattern
+// otherwise we get a conflict due to the different clocks for GUI related things
+// (AppClock - the widget creation in CVCenter GUI) and the pattern playing on TempoClock
+// setting freq - where going to use the 'note'-event.
+// Hence, we're calling the widget degree rather than freq.
+CVCenter.use(\degree, #[0, 11, \lin, 1, 2]!5);
+// a CVWidgetMS for setting rythmic sequences
+CVCenter.use(\dur, #[0.1, 1, \lin, 0.1, 0.3]!10);
+
+// the pattern
+(
+Pdef(\poly,
+    Pbind(*[
+        instrument: \poly,
+        // rather than setting freq in hz we determine the degree in a scale
+        // instead of Prout{} the shortcut p{} can be used
+        note: PdegreeToKey( Prout({ loop {
+            CVCenter.at(\degree).embedInStream
+        }}), Scale.dorian),
+        // dur cannot be set individually for each channel
+        dur: Pseq(CVCenter.cvWidgets[\dur].split, inf),
+        curve: CVCenter.use(\curve, #[-4.0, 4.0].asSpec),
+        rel: Pwhite(0.8, 2.0),
+        atk: Pwhite(0.01, 0.03),
+        freqMod: Pwhite(
+            CVCenter.use(\freqModLo, \pan, slot: \lo),
+            CVCenter.use(\freqModLo, \pan, slot: \hi)
+        ),
+        level: CVCenter.use(\amp),
+    ])//.trace
+)
+)
+
+Pdef(\poly).play;
+Pdef(\poly).stop;</textarea>
+
+<p><h2><a class='anchor' name='Shortcuts'>Shortcuts</a></h2>
+
+<p>When CVCenter GUI is sent to front a number of shortcuts apply. Most of these shortcuts will open new windows. However, if the regarding window is already open (and maybe hidden under another window) it will rather be brought to front again than opened in another window.<div class='note'><span class='notelabel'>NOTE:</span> All shortcuts are configurable by the user. Handling shortcuts is basically handled by a class named <a href="./../Classes/KeyDownActions.html">KeyDownActions</a>. They can be altered (actions as well as the action-triggering key-combinations), removed or new shortcuts can be added. This can be done manually by editing <a href="#*shortcuts">*shortcuts</a> (not recommended) or using the <a href="./../Classes/KeyDownActionsEditor.html">KeyDownActionsEditor</a> in the <a href="./../Classes/CVCenterPreferences.html">preferences-interface</a> (persistent) or editing short-term shortcuts in the <a href="./../Classes/CVCenterShortcutsEditor.html">shortcuts-editor</a> (shortcuts will be valid until next recompilation of the class-library). However, this is still an experimental feature. Especially in detached tabs shortcuts may not work as expected</div>
+<p><dl>
+<dt>arrow right<dd>Navigate through the tabs of the CVCenter GUI - ascending. If the end has been reached the selection will wrap to the first tab.<dt>arrow left<dd>Navigate through the tabs of the CVCenter GUI - descending. If the beginning has been reached the selection will wrap to the last tab.<dt>alt arrow right<dd>Select and focus first widget in alphabetical order, activating widget-shortcuts. Repeating the same shortcut will select and focus the next widget in alphabetical order.<dt>alt arrow left<dd>Select and focus last widget in alphabetical order, activating widget-shortcuts. Repeating the same shortcut will select and focus the previous widget in alphabetical order.<dt>0-9<dd>Select tabs and focus them. The numbers represent the order of the tabs.<dt>s<dd>Save the current CVCenter setup to disk.<dt>l<dd>Load a CVCenter setup from disks.<dt>p<dd>Open the CVCenter prferences dialog.<dt>d<dd>Detach the tab currently focused tab in the CVCenter GUI.<dt>shift c<dd>Activate OSC calibration for all widgets.<dt>alt shift c<dd>Deactivate OSC calibration for all widgets.<dt>shift r<dd>Reset and restart OSC calibration for all widgets.<dt>alt c<dd>Open the <a href="./../Classes/OSCCommands.html">OSCCommands</a> GUI. This will also trigger <a href="./../Classes/OSCCommands.html#*collect">OSCCommands: *collect</a><dt>o<dd>See a list of already connected OSC-controllers (see also: <a href="./../Classes/CVCenterControllersMonitor.html">CVCenterControllersMonitor</a>).<dt>m<dd>See a list of already connected MIDI-controllers (see also: <a href="./../Classes/CVCenterControllersMonitor.html">CVCenterControllersMonitor</a>).<dt>alt s<dd>Open the shortcuts-editor. Shortcuts edited here will persist until the next library-recompilation (unless the option "write to preferences" is selected).<dt>shift esc<dd>Close all open CVWidget(MS)Editors.<dt>e<dd>If <a href="./../Classes/MasterEQ.html">MasterEQ</a> from the <a href="./../Classes/Quark.html">Quark</a> <code>wslib</code> is installed, open it.<dt>h<dd>Start the <a href="./../Classes/History.html">History</a> and open its GUI.<dt>shift h<dd>End the <a href="./../Classes/History.html">History</a>, close its GUI a and (if Patform.ideName != "scqt") open a new <a href="./../Classes/Document.html">Document</a> containing the recorded <a href="./../Classes/History.html">History</a>.<div class='note'><span class='notelabel'>NOTE:</span> <code>History.document</code> will only work with GUI-systems that support <a href="./../Classes/Document.html">Document</a>. When using the new SC-IDE consider using <a href="./../Classes/History.html#-saveCS">History.saveCS</a> ( <code>History.saveCS(path, forward)</code>)</div>
+<p><dt>n<dd>Open an <a href="./../Classes/NdefMixer.html">NdefMixer</a> for the default <a href="./../Classes/Server.html">Server</a><dt>shift p<dd>Open a new <a href="./../Classes/PdefAllGui.html">PdefAllGui</a>.<dt>alt p<dd>Open a new <a href="./../Classes/PdefnAllGui.html">PdefnAllGui</a>.<dt>t<dd>Open a new <a href="./../Classes/TdefAllGui.html">TdefAllGui</a>.<dt>a<dd>If the <a href="./../Classes/Quark.html">Quark</a> <a href="./../Classes/AllGui.html">AllGui</a> is installed open a new <a href="./../Classes/AllGui.html">AllGui</a>.</dl>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/CVCenter.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/CVCenter.schelp</a><br>link::Classes/CVCenter::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

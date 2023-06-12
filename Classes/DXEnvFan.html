@@ -1,0 +1,662 @@
+<!doctype html><html lang='en'><head><title>DXEnvFan | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'DXEnvFan';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>DXEnvFan:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'><li class='toc2'><a href='#Credits'>Credits</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*ar'>ar</a> </li>
+<li class='toc3'><a href='#*kr'>kr</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#Examples'>Examples</a></li>
+<ul class='toc'><li class='toc2'><a href='#Ex.1:%20Basic%20types%20of%20crossfades'>Ex.1: Basic types of crossfades</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.2:%20Sequencing%20crossfade%20types%20and%20parameters'>Ex.2: Sequencing crossfade types and parameters</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.3:%20The%20'zeroThr'%20arg'>Ex.3: The 'zeroThr' arg</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.4:%20The%20'bus'%20arg'>Ex.4: The 'bus' arg</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.5:%20PlayBuf%20crossfading'>Ex.5: PlayBuf crossfading</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.6:%20Granulation,%20sequencing%20of%20fxs%20and%20fx%20parameters%20per%20grain'>Ex.6: Granulation, sequencing of fxs and fx parameters per grain</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.7:%20Multichannel%20expansion'>Ex.7: Multichannel expansion</a></li>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>DX suite'>DX suite</a></span>
+</div><h1>DXEnvFan<span id='superclasses'> : <a href="../Classes/AbstractDX.html">AbstractDX</a> : <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>returns crossfade envelopes according to demand-rate control</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/DX/AbstractDX.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/DX/AbstractDX.sc'>AbstractDX.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Guides/Introduction_to_miSCellaneous.html">Introduction to miSCellaneous</a>, <a href="./../Tutorials/DX_suite.html">DX suite</a>, <a href="./../Classes/DXMix.html">DXMix</a>, <a href="./../Classes/DXMixIn.html">DXMixIn</a>, <a href="./../Classes/DXEnvFanOut.html">DXEnvFanOut</a>, <a href="./../Classes/DXFan.html">DXFan</a>, <a href="./../Classes/DXFanOut.html">DXFanOut</a>, <a href="./../Tutorials/Buffer_Granulation.html">Buffer Granulation</a>, <a href="./../Tutorials/Live_Granulation.html">Live Granulation</a>, <a href="./../Classes/PbindFx.html">PbindFx</a>, <a href="./../Tutorials/kitchen_studies.html">kitchen studies</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>DXEnvFan returns the multichannel envelope signal, which is used by DXMix / DXMixIn / DXFan / DXFanOut implicitely. It can be used as envelope and trigger at the same time, which leads to applications such as crossfading PlayBufs and different kinds of granulation, using a buffer or not. <div class='note'><span class='notelabel'>NOTE:</span> As interface and conventions of DX ugens are nearly identical, I didn't double examples for all features. It's recommended to start with the <a href="./../Tutorials/DX_suite.html">DX suite</a> overview and go through the help file examples in this order: <a href="./../Classes/DXMix.html#Ex.1">DXMix</a> - <a href="./../Classes/DXMixIn.html#Ex.1">DXMixIn</a> - <a href="./../Classes/DXEnvFan.html#Ex.1">DXEnvFan</a> - <a href="./../Classes/DXEnvFanOut.html#Ex.1">DXEnvFanOut</a> - <a href="./../Classes/DXFan.html#Ex.1">DXFan</a> - <a href="./../Classes/DXFanOut.html#Ex.1">DXFanOut</a>. Some general conventions are treated in detail in the following examples: fades and steps in <a href="./../Classes/DXMix.html#Ex.2">DXMix, Ex.2</a> – width and offset arguments in <a href="./../Classes/DXMix.html#Ex.3">DXMix, Ex.3</a> – multichannel expansion in <a href="./../Classes/DXMix.html#Ex.6">DXMix, Ex.6</a> – crossfade types in <a href="./../Classes/DXEnvFan.html#Ex.1">Ex.1</a>.</div><div class='note'><span class='notelabel'>NOTE:</span> PanAz.ar's args pos and orientation were scaled wrongly in SC versions up to 3.8. DX ugens neutralize this bug by inverse scaling, so it should actually work the same with SC versions before 3.9 with the exception of examples with modulatable width (disabled in earlier versions). I didn't encounter differences in any other test examples, however I'd rather recommend a SC version from 3.9 onwards, if you have the choice.</div><div class='note'><span class='notelabel'>NOTE:</span> Depending on the multichannel sizes it might be necessary to increase server resources, i.e. the number of interconnect buffers (e.g. s.options.numWireBufs = 256; s.reboot). See <a href="./../Classes/DXMix.html#Ex.8">DXMix, Ex.8</a> and <a href="./../Classes/DXEnvFan.html#Ex.2">Ex.2</a>, <a href="./../Classes/DXEnvFan.html#Ex.4">Ex.4</a> for aspects of CPU demand.</div><div class='note'><span class='notelabel'>NOTE:</span> In my tests timing was exact up to one sample. So when used for granulation DX ugens avoid the inevitable inccuracies of language-based triggering in realtime. However care has to be taken: fade and step times must be larger than the duration of a control cycle. With default values sampleRate = 44100 Hz and blockSize = 64, this equals ca. 0.00145 sec. If you go below, the fade mechanism is messed up and you get jumps and clicks. Accordingly with fadeModes 3 and 4 you have to ensure that the remaining 'real' stepTime, which is calculated by stepTime minus fadeTime, is larger than this threshold. But as a workaround you can always lower the blocksize. See <a href="./../Classes/DXFan.html#Ex.4">DXFan, Ex.4</a> for aspects of granulation with high trigger rates / short grain durations.</div><div class='note'><span class='notelabel'>NOTE:</span> The current implementation is bound to counting with Dseries and – inherent to 32 bit floats – the integer accuracy limit of 2 ** 24 - 1 = 16777215. This can be an issue with setups that are using extreme short durations for hours.</div><h3><a class='anchor' name='Credits'>Credits</a></h3>
+
+<p>Thanks to Wouter Snoei for his PlayBufCF class. It gave me a lot of inspiration for DX ugens – although in the end the implementation with PanAz and DemandEnvGen is quite different. Thanks also to Till Bovermann for ironing out a longstanding bug in PanAz.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>DXEnvFan.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>out</span>, <span class='argstr'>fadeTime: 1</span>, <span class='argstr'>stepTime: 1</span>, <span class='argstr'>fadeMode: 0</span>, <span class='argstr'>sine: 1</span>, <span class='argstr'>equalPower: 1</span>, <span class='argstr'>power: 1</span>, <span class='argstr'>curve: 0</span>, <span class='argstr'>allowTypeSeq: 0</span>, <span class='argstr'>fadeRate: 'ar'</span>, <span class='argstr'>maxFadeNum: inf</span>, <span class='argstr'>maxWidth: 2</span>, <span class='argstr'>width: 2</span>, <span class='argstr'>initOutOffset: 0</span>, <span class='argstr'>maxDynOutOffset: 1</span>, <span class='argstr'>dynOutOffset: 0</span>, <span class='argstr'>allowFadeEnd: 1</span>, <span class='argstr'>size: 2</span>, <span class='argstr'>bus</span>, <span class='argstr'>zeroThr</span>, <span class='argstr'>doneAction: 0</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>out<td class='argumentdesc'>
+<p>Determines the sequence of channels between which the envelopes should be crossfaded. A channel index, a demand rate or other ugen returning channel indices or a SequenceableCollection of such, causing multichannel expansion. If in this case the overall multichannel size is larger than the size of <strong>out</strong> and the latter contains demand rate ugens, they must all be wrapped into Functions.<tr><td class='argumentname'>fadeTime<td class='argumentdesc'>
+<p>A fade time, a demand rate or other ugens returning fade times or a SequenceableCollection of such, causing multichannel expansion. If in this case the overall multichannel size is larger than the size of <strong>fadeTime</strong> and the latter contains demand rate ugens, they must all be wrapped into Functions. The interpretation of <strong>fadeTime</strong> depends on <strong>fadeMode</strong>. <strong>fadeTime</strong> must be larger than the duration of a control cycle. Defaults to 1.<tr><td class='argumentname'>stepTime<td class='argumentdesc'>
+<p>A step time, a demand rate or other ugens returning step times or a SequenceableCollection of such, causing multichannel expansion. If in this case the overall multichannel size is larger than the size of <strong>stepTime</strong> and the latter contains demand rate ugens, they must all be wrapped into Functions. The interpretation of <strong>stepTime</strong> depends on <strong>fadeMode</strong>. <strong>stepTime</strong> must be larger than the duration of a control cycle. Defaults to 1.<tr><td class='argumentname'>fadeMode<td class='argumentdesc'>
+<p>Integers between 0 and 4 or a SequenceableCollection of such, causing multichannel expansion. Not modulatable.<ul>
+<li>fadeMode = 0: only fadeTimes are used, no steps<li>fadeMode = 1: alternate steps and fades, begin with step; <strong>stepTime</strong> means time without fade<li>fadeMode = 2: alternate fades and steps, begin with fade; <strong>stepTime</strong> means time without fade<li>fadeMode = 3: alternate steps and fades, begin with step; <strong>stepTime</strong> means sum of step and fade, thus <strong>stepTime</strong> must be larger than <strong>fadeTime</strong>, the difference must be larger than the duration of a control cycle<li>fadeMode = 4: alternate fades and steps, begin with fade; <strong>stepTime</strong> means sum of fade and step, thus <strong>stepTime</strong> must be larger than <strong>fadeTime</strong>, the difference must be larger than the duration of a control cycle</ul>
+
+<p>Defaults to 0.<tr><td class='argumentname'>sine<td class='argumentdesc'>
+<p>Determines the crossfade type: sine-based or not. A Boolean, 0 or 1 or a demand rate or other ugen returning <strong>sine</strong> numbers or a SequenceableCollection of such, causing multichannel expansion. If in this case the overall multichannel size is larger than the size of <strong>sine</strong> and the latter contains demand rate ugens, they must all be wrapped into Functions. Modulating this arg is only possible if <strong>allowTypeSeq</strong> equals 1. Defaults to 1. <tr><td class='argumentname'>equalPower<td class='argumentdesc'>
+<p>Determines if crossfading of equal power type (square root) should be applied. A Boolean, 0 or 1 or a demand rate or other ugen returning <strong>equalPower</strong> numbers or a SequenceableCollection of such, causing multichannel expansion. If in this case the overall multichannel size is larger than the size of <strong>equalPower</strong> and the latter contains demand rate ugens, they must all be wrapped into Functions. Modulating this arg is only possible if <strong>allowTypeSeq</strong> equals 1. Defaults to 1. <tr><td class='argumentname'>power<td class='argumentdesc'>
+<p>This only comes into play if <strong>equalPower</strong> equals 0, then it's applied to the crossfade amplitude. If power and curve are passed, power applies before. A positive Number or a demand rate or other ugen returning positive <strong>power</strong> numbers or a SequenceableCollection of such, causing multichannel expansion. If in this case the overall multichannel size is larger than the size of <strong>power</strong> and the latter contains demand rate ugens, they must all be wrapped into Functions. Sequencing this arg with demand rate ugens is only possible if <strong>allowTypeSeq</strong> equals 1. Defaults to 1. <tr><td class='argumentname'>curve<td class='argumentdesc'>
+<p>This only comes into play if <strong>equalPower</strong> equals 0, then it's applied to the crossfade amplitude according to the lincurve mapping. If power and curve are passed, power applies before. A Number or a demand rate or other ugen returning <strong>curve</strong> numbers or a SequenceableCollection of such, causing multichannel expansion. If in this case the overall multichannel size is larger than the size of <strong>curve</strong> and the latter contains demand rate ugens, they must all be wrapped into Functions. Sequencing this arg with demand rate ugens is only possible if <strong>allowTypeSeq</strong> equals 1. Calculation of curvature is not giving reliable results when <strong>width</strong> and / or <strong>dynOutOffset</strong> are being modulated at the same time. Defaults to 0. <tr><td class='argumentname'>allowTypeSeq<td class='argumentdesc'>
+<p>Enables sequencing of <strong>sine</strong>, <strong>equalPower</strong>, <strong>power</strong> and <strong>curve</strong> with demand rate ugens and modulating of <strong>sine</strong> and <strong>equalPower</strong> with other ugens. A Boolean, 0 or 1 or a SequenceableCollection of such, causing multichannel expansion. Not modulatable. As this requires more ugens running in parallel it is disabled by default = 0.<tr><td class='argumentname'>fadeRate<td class='argumentdesc'>
+<p>One of the Symbols \ar and \kr, determining the crossfade rate used by PanAz or a SequenceableCollection of such, causing multichannel expansion. Not modulatable. Defaults to \ar. <tr><td class='argumentname'>maxFadeNum<td class='argumentdesc'>
+<p>Integer determining the maximum number of fades, after which <strong>doneAction</strong> applies. A SequenceableCollection causes multichannel expansion. Not modulatable. Defaults to inf.<tr><td class='argumentname'>maxWidth<td class='argumentdesc'>
+<p>An Integer determining the maximum <strong>width</strong> or a SequenceableCollection of such, causing multichannel expansion, <strong>width</strong> goes into PanAz's width arg. <strong>maxWidth</strong> increases the internally used and potentially needed number of parallel channels. Not modulatable. Defaults to 2.<tr><td class='argumentname'>width<td class='argumentdesc'>
+<p>Integer, Float, UGen (only from SC 3.9 onwards) or a SequenceableCollection of such, causing multichannel expansion. Not modulatable in versions earlier than SC 3.9. It determines the width according to PanAz's width arg. Note that a ugen's output must not exceed <strong>maxWidth</strong>. Defaults to 2.<tr><td class='argumentname'>initOutOffset<td class='argumentdesc'>
+<p>An Integer or Float or a SequenceableCollection of such, causing multichannel expansion. Determines an initial offset for PanAz's pos arg. This can be useful for a start with full or reduced width. Not modulatable. Defaults to 0.<tr><td class='argumentname'>maxDynOutOffset<td class='argumentdesc'>
+<p>An Integer or Float or a SequenceableCollection of such, causing multichannel expansion. Determines the maximum <strong>dynOutOffset</strong> to be expected. <strong>maxDynOutOffset</strong> increases the internally used and potentially needed number of parallel channels. Not modulatable. Defaults to 1.<tr><td class='argumentname'>dynOutOffset<td class='argumentdesc'>
+<p>UGen, Integer or Float or a SequenceableCollection of such, causing multichannel expansion. By passing a ugen the movement between buses can be modulated. Note that a ugen's output must not exceed <strong>maxDynOutOffset</strong>. Defaults to 0.<tr><td class='argumentname'>allowFadeEnd<td class='argumentdesc'>
+<p>Integer, Boolean or a SequenceableCollection of such, causing multichannel expansion. Determines if a demand rate input to in with finite length will be monitored, which needs a quite complicated trigger logic and more running ugens. If set to 0, the behaviour after the end of <strong>in</strong> is undefined. Defaults to 1.<tr><td class='argumentname'>size<td class='argumentdesc'>
+<p>Integer or a SequenceableCollection of such, causing multichannel expansion. Determines the size of the returned multichannel envelope signal. Not modulatable. Defaults to 2.<tr><td class='argumentname'>bus<td class='argumentdesc'>
+<p>Bus, bus index or a SequenceableCollection of such, causing multichannel expansion. Determines whether a private multichannel bus should be used for channel switching. This is recommended for larger width sizes (&gt; 10 or so) as otherwise the number of ugens might result in an overflow error. Not modulatable. Defaults to nil.<tr><td class='argumentname'>zeroThr<td class='argumentdesc'>
+<p>A Number or a ugen returning <strong>zeroThr</strong> numbers or a SequenceableCollection of such, causing multichannel expansion. Determines if output values below this threshold are replaced by 0. This makes sense if the output signal is used as trigger (e.g. with DXEnvFan). In the case of low power numbers small inaccuracies are amplified, this is avoided with an appropriate zeroThr (e.g. = 0.001), as the operation is applied before taking the power. As this requires more ugens running in parallel it is disabled by default = nil.<tr><td class='argumentname'>doneAction<td class='argumentdesc'>
+<p>Integer or a SequenceableCollection of such, causing multichannel expansion. Determines the doneAction after <strong>maxFadeNum</strong> is exceeded. Defaults to 0.</table></div><h3 class='method-code'><span class='method-prefix'>DXEnvFan.</span><a class='method-name' name='*kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>out</span>, <span class='argstr'>fadeTime: 1</span>, <span class='argstr'>stepTime: 1</span>, <span class='argstr'>fadeMode: 0</span>, <span class='argstr'>sine: 1</span>, <span class='argstr'>equalPower: 1</span>, <span class='argstr'>power: 1</span>, <span class='argstr'>curve: 0</span>, <span class='argstr'>allowTypeSeq: 0</span>, <span class='argstr'>fadeRate: 'kr'</span>, <span class='argstr'>maxFadeNum: inf</span>, <span class='argstr'>maxWidth: 2</span>, <span class='argstr'>width: 2</span>, <span class='argstr'>initOutOffset: 0</span>, <span class='argstr'>maxDynOutOffset: 1</span>, <span class='argstr'>dynOutOffset: 0</span>, <span class='argstr'>allowFadeEnd: 1</span>, <span class='argstr'>size: 2</span>, <span class='argstr'>bus</span>, <span class='argstr'>zeroThr</span>, <span class='argstr'>doneAction: 0</span>)</h3>
+<div class='method'></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='Examples'>Examples</a></h2>
+
+<p><a class='anchor' name='Ex.1'>&nbsp;</a><textarea class='editor'>(
+// load with extended resources
+s = Server.local;
+Server.default = s;
+s.options.numWireBufs = 256; 
+s.reboot;
+)</textarea>
+<h3><a class='anchor' name='Ex.1:%20Basic%20types%20of%20crossfades'>Ex.1: Basic types of crossfades</a></h3>
+<textarea class='editor'>// For normal crossfades the default values - equal power panning of sine type - should be fine,
+// other types of crossfade envelopes can be taken for other purposes such as granular synthesis.
+
+
+// default width 2, default equal power crossfading
+
+// employs crossfading from PanAz, which results in envelopes of sine type, from which
+// the square root is taken
+
+(
+{
+    DXEnvFan.ar(
+        Dseq([3,2,1,4,5,6,7,0], inf),
+        size: 8,
+        fadeTime: 0.01,
+        // fadeMode: 1,
+        // stepTime: 0.015
+    )
+}.plot(0.1)
+)
+
+
+// when dropping equalPower we get the pure sine envelope
+// higher width
+
+(
+{
+    DXEnvFan.ar(
+        Dseq([3,2,1,4,5,6,7,0], inf),
+        size: 8,
+        fadeTime: 0.01,
+        maxWidth: 8,
+        width: 5.5,
+        equalPower: 0,
+        // fadeMode: 1,
+        // stepTime: 0.015
+    )
+}.plot(0.1)
+)
+
+
+// type sine = 0 switches to a linear curve base,
+// with default equalPower = 1 this leads to a square root envelope
+
+
+(
+{
+    DXEnvFan.ar(
+        Dseq([3,2,1,4,5,6,7,0], inf),
+        size: 8,
+        fadeTime: 0.01,
+        sine: 0,
+        // fadeMode: 1,
+        // stepTime: 0.015
+    )
+}.plot(0.1)
+)
+
+
+// a linear curve base without equalPower means a linear crossfade
+
+(
+{
+    DXEnvFan.ar(
+        Dseq([3,2,1,4,5,6,7,0], inf),
+        size: 8,
+        fadeTime: 0.01,
+        sine: 0,
+        equalPower: 0,
+        // fadeMode: 1,
+        // stepTime: 0.015
+    )
+}.plot(0.1)
+)
+
+
+// if equalPower is set to 0 you can choose a power
+// check alternative values for sine and power also
+
+(
+{
+    DXEnvFan.ar(
+        Dseq([3,2,1,4,5,6,7,0], inf),
+        size: 8,
+        fadeTime: 0.01,
+        equalPower: 0,
+        sine: 0,  // 1
+        power: 3, // 0.3
+        // fadeMode: 1,
+        // stepTime: 0.015
+    )
+}.plot(0.1)
+)
+
+
+// power can be a ugen too
+
+(
+{
+    DXEnvFan.ar(
+        Dseq([3,2,1,4,5,6,7,0], inf),
+        size: 8,
+        fadeTime: 0.01,
+        equalPower: 0,
+        sine: 1,  // 1
+        power: SinOsc.ar(10, -pi/2).range(0.5, 10),
+        // fadeMode: 1,
+        // stepTime: 0.015
+    )
+}.plot(0.1)
+)
+
+
+// if equalPower is set to 0 you can also choose a curve arg
+// which is passed as curvature to lincurve
+
+(
+{
+    DXEnvFan.ar(
+        Dseq([3,2,1,4,5,6,7,0], inf),
+        size: 8,
+        fadeTime: 0.01,
+        equalPower: 0,
+        curve: 3,  // -3
+        sine: 0,
+        // fadeMode: 1,
+        // stepTime: 0.015
+    )
+}.plot(0.1)
+)
+
+
+// curve can be a ugen too
+
+(
+{
+    DXEnvFan.ar(
+        Dseq([3,2,1,4,5,6,7,0], inf),
+        size: 8,
+        fadeTime: 0.01,
+        curve: Line.ar(5, -5, 0.1),  // -3
+        sine: 0,
+        equalPower: 0,
+        // fadeMode: 1,
+        // stepTime: 0.015
+    )
+}.plot(0.1)
+)
+
+
+// Passing a dynOutOffset arg - wobbled sliding
+
+(
+{
+    DXEnvFan.ar(
+        Dseq([3,2,1,4,5,6,7,0], inf),
+        size: 8,
+        fadeTime: 0.01,
+        dynOutOffset: SinOsc.ar(150).range(0, 1),
+        // fadeMode: 1,
+        // stepTime: 0.015
+    )
+}.plot(0.1)
+)
+
+
+// This is not recommended:
+// With dynOutOffset or modulated width a curve arg leads to irregularities
+
+(
+{
+    DXEnvFan.ar(
+        Dseq([3,2,1,4,5,6,7,0], inf),
+        size: 8,
+        fadeTime: 0.01,
+        dynOutOffset: SinOsc.ar(150).range(0, 1),
+        equalPower: 0,
+        curve: 1,
+        // fadeMode: 1,
+        // stepTime: 0.015
+    )
+}.plot(0.1)
+)
+
+
+// out can also be a ugen, but note that with equalPower (default)
+// blending the same channel leads to amplitude pikes,
+// to avoid that take a linear crossfade
+
+(
+{
+    DXEnvFan.ar(
+        LFDNoise3.ar(15).range(0, 7),
+        size: 8,
+        fadeTime: 0.01,
+        stepTime: 0.02,
+        fadeMode: 1,
+        sine: 0, 
+        equalPower: 1  // compare 0
+    )
+}.plot(1)
+)</textarea>
+
+<p><a class='anchor' name='Ex.2'>&nbsp;</a><h3><a class='anchor' name='Ex.2:%20Sequencing%20crossfade%20types%20and%20parameters'>Ex.2: Sequencing crossfade types and parameters</a></h3>
+<textarea class='editor'>// sequencing crossfade types and parameters must be allowed explicitely as 
+// it is more CPU-costy
+
+// alternate linear and pure sine
+(
+{
+    DXEnvFan.ar(
+        Dseq([3,2,1,4,5,6,7,0], inf),
+        size: 8,
+        fadeTime: 0.01,
+        allowTypeSeq: 1,
+        sine: Dseq([0, 1], inf),
+        equalPower: 0, // Dseq([0, 1], inf)
+        // fadeMode: 1,
+        // stepTime: 0.015
+    )
+}.plot(0.1)
+)
+
+
+// curvature sequencing
+
+(
+{
+    DXEnvFan.ar(
+        Dseq([3,2,1,4,5,6,7,0], inf),
+        size: 8,
+        fadeTime: 0.01,
+        allowTypeSeq: 1,
+        sine: 0,
+        equalPower: 0, 
+        curve: Dseq([-3, -3, 3, 3], inf),
+        // fadeMode: 1,
+        // stepTime: 0.015
+    )
+}.plot(0.1)
+)</textarea>
+
+<p><a class='anchor' name='Ex.3'>&nbsp;</a><h3><a class='anchor' name='Ex.3:%20The%20'zeroThr'%20arg'>Ex.3: The 'zeroThr' arg</a></h3>
+<textarea class='editor'>// There might occur small inaccuracies in the calculation of crossfade values.
+// This is irrelevant in most cases, but if you use the output signal as trigger
+// it is definitely unwanted.
+// You can supress such if you set an appropriate zero threshold.
+
+
+// The effect of unwanted envelope segments especially becomes apparent
+// with small power values that blow up values near 0.
+// Values below the zeroThr are set to 0 before applying power or curvature.
+
+// Compare version without passing zeroThr.
+
+(
+{
+    DXEnvFan.ar(
+        Dseq([3,2,1,4,5,6,7,0], inf),
+        size: 8,
+        fadeTime: 0.01,
+        equalPower: 0,
+        sine: 0,
+        power: 0.3,
+        fadeMode: 1,
+        stepTime: 0.015,
+        zeroThr: 0.002
+    )
+}.plot(0.3)
+)</textarea>
+
+<p><a class='anchor' name='Ex.4'>&nbsp;</a><h3><a class='anchor' name='Ex.4:%20The%20'bus'%20arg'>Ex.4: The 'bus' arg</a></h3>
+<textarea class='editor'>// As channel switching with DXEnvFan / DXFan is implemented by "watcher ugens",
+// it becomes costy if the number of output channels increases (growth of quadratic order).
+// The effort is lowered significantly if you pass a reserved bus for this or use DXEnvFanOut,
+// this also concerns DXFan / DXFanOut.
+
+(
+// load with extended resources
+s = Server.local;
+Server.default = s;
+s.options.numPrivateAudioBusChannels = 256;
+s.options.memSize = 8192 * 4;
+s.options.numWireBufs = 512;
+s.reboot;
+)
+
+
+// on my machine this example needs ca. 2.5 % CPU (818 ugens) ...
+
+(
+x = {
+    DXEnvFan.ar(
+        Dshuf((0..29), inf),
+        size: 30,
+        fadeTime: 0.005
+    ) * 0.25
+}.play
+)
+
+x.release
+
+// ... whereas this needs ca. 0.6 % CPU (167 ugens)
+
+(
+a = Bus.audio(s, 30);
+
+x = {
+    DXEnvFan.ar(
+        Dshuf((0..29), inf),
+        size: 30,
+        fadeTime: 0.005,
+        bus: a
+    ) * 0.25
+}.play
+)
+
+x.release
+
+(
+a.free;
+b.free;
+)
+
+
+
+// care has to be taken with buses and multichannel expansion:
+
+// here two buses have to passed as otherwise we get a wrong result,
+// the same bus would be taken for different calculations at the same time
+
+(
+a = Bus.audio(s, 8);
+b = Bus.audio(s, 8);
+
+{
+    Mix(DXEnvFan.ar(
+        [Dseq((0..7), inf), Dseq((7..0), inf)],
+        size: 8,
+        fadeTime: 0.01,
+        equalPower: 0,
+        bus: [a, b]
+    ))
+}.plot(0.1)
+)
+
+(
+a.free;
+b.free;
+)</textarea>
+
+<p><a class='anchor' name='Ex.5'>&nbsp;</a><h3><a class='anchor' name='Ex.5:%20PlayBuf%20crossfading'>Ex.5: PlayBuf crossfading</a></h3>
+<textarea class='editor'>// Here a two channel envelope signal is used to crossfade between
+// two channels of a PlayBuf, as rates are close we get a trill effect.
+
+// Note that the envelope signal is used three times:
+
+// as a trigger to the startPos within PlayBuf
+// as a trigger for the demand ugen that determines the startPos within PlayBuf
+// as an envelope for the PlayBuf
+
+b = Buffer.read(s, Platform.miSCellaneousDirs[0] +/+ "Sounds" +/+ "kitchen_sounds_1.wav");
+
+(
+x = {
+    var sig, env = DXEnvFan.ar(
+        Dseq([0, 1], inf),
+        fadeMode: 3,
+        stepTime: 0.05,
+        fadeTime: 0.01,
+        // to ensure right triggering set zeroThr
+        zeroThr: 0.002
+    );
+
+    sig = PlayBuf.ar(
+        1,
+        b,
+        [1, 1.1] * BufRateScale.kr(b),
+        env,
+        Demand.ar(
+            env,
+            0,
+            Dstutter(
+                5,
+                Dwhite(0.1, 0.9)
+            ) * BufFrames.ir(b)
+        )
+    ) * 1.2 * env;
+    // do a bit correlation
+    Splay.ar(sig, 0.8)
+}.play
+)
+
+x.release
+
+
+// L and R get different mixes,
+// both take the same envelope trigger which switches
+// between PlayBufs of different rates, the difference between L and R
+// comes from different random start positions.
+
+(
+x = {
+    var buf, env = DXEnvFan.ar(
+        Dseq([Dshuf((0..4)), Dshuf((5..7))], inf),
+        size: 8,
+        fadeMode: 3,
+        stepTime: 0.2,
+        fadeTime: 0.02,
+        zeroThr: 0.002
+    );
+
+    { 
+        Mix(PlayBuf.ar(
+            1,
+            b,
+            { |j| j / 4 + 0.3 } ! 8 * BufRateScale.kr(b),
+            env,
+            Demand.ar(env, 0, Drand((2..5)/10, inf) * BufFrames.ir(b)),
+            loop: 0,
+        ) * env) 
+    } ! 2 ;
+}.play
+)
+
+
+x.release
+
+// variant with multichannel expansion
+// two 8 ch trigger envelopes are used for L and R mixes
+(
+x = {
+    var buf, env = DXEnvFan.ar(
+        [Dseq((0..7), inf), Diwhite(0, 7)],
+        size: 8,
+        fadeMode: 3,
+        stepTime: 0.2,
+        fadeTime: 0.02,
+        zeroThr: 0.002
+    );
+
+    { |i| Mix(PlayBuf.ar(
+        1,
+        b,
+        { |j| j / 4 + 0.3 } ! 8 * BufRateScale.kr(b),
+        env[i],
+        // same positions go parallel
+        Demand.ar(env[i], 0, Dstutter(8, Dseq((2..5)/10, inf)) * BufFrames.ir(b)),
+        loop: 0,
+    ) * env[i]) } ! 2 ;
+}.play
+)
+
+x.release</textarea>
+
+<p><a class='anchor' name='Ex.6'>&nbsp;</a><h3><a class='anchor' name='Ex.6:%20Granulation,%20sequencing%20of%20fxs%20and%20fx%20parameters%20per%20grain'>Ex.6: Granulation, sequencing of fxs and fx parameters per grain</a></h3>
+<textarea class='editor'>b = Buffer.read(s, Platform.miSCellaneousDirs[0] +/+ "Sounds" +/+ "kitchen_sounds_1.wav");
+
+// sequencing of band pass frequency
+// see also Buffer Granulation tutorial, Ex. 1f
+
+(
+a = Bus.audio(s, 8);
+
+x = {
+    var sig, env = DXEnvFan.ar(
+        Dseq((0..7), inf),
+        size: 8,
+        maxWidth: 8,
+        width: 5,
+        fadeTime: 0.01,
+        // to ensure right triggering set zeroThr
+        zeroThr: 0.002,
+        bus: a
+    );
+
+    sig = PlayBuf.ar(
+        1,
+        b,
+        BufRateScale.kr(b),
+        env,
+        Demand.ar(env, 0, Dbrown(0.2, 0.5, 0.0025) * BufFrames.ir(b)),
+        loop: 0,
+    ) * env;
+    
+    // multichannel trigger polls from single sequencing source
+    // ensure non-zero filter freq for later triggers with max
+    sig = BPF.ar(sig, Demand.ar(env, 0, Dbrown(200, 2000, 100)).max(200), 0.1);
+
+    // do a bit correlation
+    Splay.ar(sig, 0.6) * 7
+}.play
+)
+
+x.release
+
+a.free
+
+
+
+// sequencing of different fxs
+
+(
+a = Bus.audio(s, 8);
+
+x = {
+    var sig, env = DXEnvFan.ar(
+        Drand((0..7), inf),
+        size: 8,        
+        maxWidth: 8,
+        // oscillation of overlap
+        width: LFDNoise3.ar(1).range(2, 6),
+        fadeTime: 0.015,
+        // to ensure right triggering set zeroThr
+        zeroThr: 0.002,
+        bus: a
+    );
+
+    sig = PlayBuf.ar(
+        1,
+        b,
+        BufRateScale.kr(b),
+        env,
+        Demand.ar(env, 0, Dbrown(0.2, 0.5, 0.005) * BufFrames.ir(b)),
+        loop: 0,
+    ) * env;
+
+    // selection of fxs as well as fx params triggered with envelope
+    // ring modulation, bit crusher and band pass
+    sig = Select.ar(Demand.ar(env, 0, Dstutter(Diwhite(5, 30), Dxrand([0, 1, 2], inf))), [
+        sig * SinOsc.ar(Demand.ar(env, 0, Dbrown(250, 1000, 200))) * 1.5,
+        sig.round(2 ** Demand.ar(env, 0, Dbrown(-1, -4, 1))).lag(0.005) * 1.5,
+        // ensure non-zero filter freq for later triggers with max
+        BPF.ar(sig, Demand.ar(env, 0, Dbrown(200, 2000, 200)).max(200), 0.2) * 5
+    ]);
+
+    // do a bit correlation
+    Splay.ar(sig, 0.6)
+}.play
+)
+
+x.release
+
+a.free</textarea>
+
+<p><a class='anchor' name='Ex.7'>&nbsp;</a><h3><a class='anchor' name='Ex.7:%20Multichannel%20expansion'>Ex.7: Multichannel expansion</a></h3>
+<textarea class='editor'>// Not as complicated options as with DXMix
+// we get an array of multichannel envelopes, here a mix of them
+
+(
+{
+    Mix(DXEnvFan.ar(
+        (0..3).collect { |i| Dseq((0..3).rotate(i), inf) },
+        fadeTime: [0.01, 0.05],
+        size: 4,
+        width: 1
+    ))
+}.plot(0.2)
+)
+
+// see Ex.4 for a delicate case with bus args</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/DXEnvFan.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/DXEnvFan.schelp</a><br>link::Classes/DXEnvFan::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

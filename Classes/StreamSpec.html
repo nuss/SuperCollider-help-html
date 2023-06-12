@@ -1,0 +1,87 @@
+<!doctype html><html lang='en'><head><title>StreamSpec | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'StreamSpec';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>StreamSpec:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-constrain'>constrain</a> </li>
+<li class='toc3'><a href='#-canAccept'>canAccept</a> </li>
+<li class='toc3'><a href='#-rate'>rate</a> </li>
+<li class='toc3'><a href='#-defaultControl'>defaultControl</a> </li>
+<li class='toc3'><a href='#-minval'>minval</a> </li>
+<li class='toc3'><a href='#-maxval'>maxval</a> </li>
+<li class='toc3'><a href='#-clipLo'>clipLo</a> </li>
+<li class='toc3'><a href='#-clipHi'>clipHi</a> </li>
+<li class='toc3'><a href='#-color'>color</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Spec'>Spec</a> | <a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>crucial'>crucial</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>crucial>Spec'>Spec</a> | <a href='./../Browse.html#Streams-Patterns-Events'>Streams-Patterns-Events</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Streams-Patterns-Events>Patterns'>Patterns</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Streams-Patterns-Events>Patterns>Spec'>Spec</a></span>
+</div><h1>StreamSpec<span id='superclasses'> : <a href="../Classes/HasItemSpec.html">HasItemSpec</a> : <a href="../Classes/NonControlSpec.html">NonControlSpec</a> : <a href="../Classes/Spec.html">Spec</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>datatype specifying that the input or output is stream or pattern</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/MoreSpecs.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/MoreSpecs.sc'>MoreSpecs.sc</a></div><div id='related'>See also: <a href="./../Classes/Pattern.html">Pattern</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>a StreamSpec specifies an input that will be used in a stream or pattern.
+<p>It is a <a href="./../Classes/HasItemSpec.html">HasItemSpec</a> subclass and as such the Stream is specified to return items according to the itemSpec.<textarea class='editor'>StreamSpec( [ 0.01, 8.0,\exp ] )
+    // a stream of values between 0.01 and 8.0
+    // any control should use an exponential fader
+
+StreamSpec( EnvSpec(Env.linen) )
+    // a stream of envelopes.
+    // the default envelope is an Env.linen, though
+    // the stream may return any kind of envelope.</textarea>
+
+<p>The most common use is for InstrSpawner and InstrGateSpawner. These spawn single usually short events just like Patterns, so only an initial value is needed, not a continous control input.
+<p>The default control is an IrNumberEditor, though usually you will be more interested in using Patterns as inputs. An IrNumberEditor forces a Synth input of rate \ir and then on each iteration will return the current value of the NumberEditor.
+<p>An IrNumberEditor or a Pattern (any object that returns a rate of \stream) will result in the creation of an .ir rate input to the synth function. Then on each spawning, the synth is created and on that .ir rate input is passed in the next value of the stream.
+<p>Note that 4.asStream will return an endless stream of 4, and is thus compatible for use as a StreamSpec input.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-constrain' href='./../Overviews/Methods.html#constrain'>constrain</a>(<span class='argstr'>value</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>value<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-canAccept' href='./../Overviews/Methods.html#canAccept'>canAccept</a>(<span class='argstr'>ting</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>ting<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rate' href='./../Overviews/Methods.html#rate'>rate</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defaultControl' href='./../Overviews/Methods.html#defaultControl'>defaultControl</a>(<span class='argstr'>val</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>val<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-minval' href='./../Overviews/Methods.html#minval'>minval</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-maxval' href='./../Overviews/Methods.html#maxval'>maxval</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clipLo' href='./../Overviews/Methods.html#clipLo'>clipLo</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clipHi' href='./../Overviews/Methods.html#clipHi'>clipHi</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-color' href='./../Overviews/Methods.html#color'>color</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/instrSupport.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/instrSupport.sc</a></div>
+<div class='method'></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/StreamSpec.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/StreamSpec.schelp</a><br>link::Classes/StreamSpec::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

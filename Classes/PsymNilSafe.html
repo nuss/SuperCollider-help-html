@@ -1,0 +1,87 @@
+<!doctype html><html lang='en'><head><title>PsymNilSafe | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'PsymNilSafe';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>PsymNilSafe:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-maxNull'>maxNull</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-embedInStream'>embedInStream</a> </li>
+</ul></ul><li class='toc1'><a href='#Example'>Example</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>Other patterns'>Other patterns</a></span>
+</div><h1>PsymNilSafe<span id='superclasses'> : <a href="../Classes/Psym.html">Psym</a> : <a href="../Classes/FilterPattern.html">FilterPattern</a> : <a href="../Classes/Pattern.html">Pattern</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Psym variant that avoids hangs if all referenced patterns return nil</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/OtherPatterns.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/OtherPatterns.sc'>OtherPatterns.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Classes/Psym.html">Psym</a>, <a href="./../Tutorials/PLx_and_live_coding_with_Strings.html">PLx and live coding with Strings</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This adapts an idea of James Harkins' PnNilSafe (ddwPatterns quark) for Psym. If all patterns in the Dictinonary return nil, then Psym's embedInStream can produce an infinite loop, as it never yields. PnNilSafe can't be wrapped around Psym, but the check with logical time can be built into Psym itself. The wrapping into PsymNilSafe can shortly be written by applying <a href="./../Classes/Pattern.html#-symplay">Pattern: -symplay</a> instead of <a href="./../Classes/Pattern.html#-play">Pattern: -play</a>. See <a href="./../Tutorials/PLx_and_live_coding_with_Strings.html">PLx and live coding with Strings</a> for more examples.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>PsymNilSafe.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>pattern</span>, <span class='argstr'>dict</span>, <span class='argstr'>maxNull: 128</span>)</h3>
+<div class='method'>
+<p>Creates a new PsymNilSafe object. <strong>pattern</strong> expects a pattern of Symbols, <strong>dict</strong> the lookup dictionary and <strong>defaults</strong> to the current Environment. <strong>maxNull</strong> is the number of events with delta = 0 after which PsymNilSafe's method 'embedInStream' yields and thus stops a potentially endless loop. <strong>maxNull</strong> defaults to 128.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-maxNull' href='./../Overviews/Methods.html#maxNull'>maxNull</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-maxNull' href='./../Overviews/Methods.html#maxNull'>maxNull</a> = value</h3>
+<div class='method'>
+<p>Getter and setter for PsymNilSafe's variable maxNull.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-embedInStream' href='./../Overviews/Methods.html#embedInStream'>embedInStream</a>(<span class='argstr'>inval</span>)</h3>
+<h2><a class='anchor' name='Example'>Example</a></h2>
+<textarea class='editor'>(
+s = Server.local;
+Server.default = s;
+s.boot;
+)
+
+(
+x = Pbind(\midinote, Pseries(60, 1, 10), \dur, 0.5).asStream;
+y = Pbind(\midinote, Pseries(90, -1, 10), \dur, 0.5).asStream;
+
+z = Pseq([2, 3, 1, 2], 1).asStream;
+
+~a = Pfuncn({ x.next(()) }, { z.next });
+~b = Pfuncn({ y.next(()) }, { z.next });
+
+PsymNilSafe(Pseq("ab", inf)).trace.play;
+
+// shorter with method 'symplay':
+// trace indicates all events with delta = 0 (maxNull = 128) in the post window
+// Pseq("ab", inf).trace.symplay
+
+
+// ATTENTION: with Psym the example leads to a SC hang !
+// Psym(Pseq("ab", inf), currentEnvironment).trace.play
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PsymNilSafe.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PsymNilSafe.schelp</a><br>link::Classes/PsymNilSafe::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,0 +1,251 @@
+<!doctype html><html lang='en'><head><title>AbstractCVWidgetEditor | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'AbstractCVWidgetEditor';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>AbstractCVWidgetEditor:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*allEditors'>allEditors</a> </li>
+<li class='toc3'><a href='#*shortcuts'>shortcuts</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-front'>front</a> </li>
+<li class='toc3'><a href='#-isClosed'>isClosed</a> </li>
+<li class='toc2'><a href='#Shortcuts-related%20methods'>Shortcuts-related methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-setShortcuts'>setShortcuts</a> </li>
+<li class='toc3'><a href='#-scv'>scv</a> </li>
+</ul><li class='toc2'><a href='#GUI%20properties%20and%20elements'>GUI properties and elements</a></li>
+<ul class='toc'><li class='toc3'><a href='#-window'>window</a> </li>
+<li class='toc3'><a href='#-tabs'>tabs</a> </li>
+</ul><li class='toc2'><a href='#The%20"Spec"-tab'>The "Spec"-tab</a></li>
+<ul class='toc'><li class='toc3'><a href='#-specField'>specField</a> </li>
+<li class='toc3'><a href='#-specsList'>specsList</a> </li>
+<li class='toc3'><a href='#-specsListSpecs'>specsListSpecs</a> </li>
+</ul><li class='toc2'><a href='#The%20"MIDI"-tab:%20widget-settings'>The "MIDI"-tab: widget-settings</a></li>
+<ul class='toc'><li class='toc3'><a href='#-midiResolutionNB'>midiResolutionNB</a> </li>
+<li class='toc3'><a href='#-midiModeSelect'>midiModeSelect</a> </li>
+<li class='toc3'><a href='#-midiMeanNB'>midiMeanNB</a> </li>
+<li class='toc3'><a href='#-softWithinNB'>softWithinNB</a> </li>
+<li class='toc3'><a href='#-ctrlButtonBankField'>ctrlButtonBankField</a> </li>
+</ul><li class='toc2'><a href='#The%20"MIDI"-tab:%20MIDI-connecting'>The "MIDI"-tab: MIDI-connecting</a></li>
+<ul class='toc'><li class='toc3'><a href='#-midiInitBut'>midiInitBut</a> </li>
+<li class='toc3'><a href='#-midiSourceSelect'>midiSourceSelect</a> </li>
+<li class='toc3'><a href='#-midiLearnBut'>midiLearnBut</a> </li>
+<li class='toc3'><a href='#-midiSrcField'>midiSrcField</a> </li>
+<li class='toc3'><a href='#-midiChanField'>midiChanField</a> </li>
+<li class='toc3'><a href='#-midiCtrlField'>midiCtrlField</a> </li>
+</ul><li class='toc2'><a href='#The%20"OSC"-tab'>The "OSC"-tab</a></li>
+<ul class='toc'><li class='toc3'><a href='#-portRestrictor'>portRestrictor</a> </li>
+<li class='toc3'><a href='#-deviceListMenu'>deviceListMenu</a> </li>
+<li class='toc3'><a href='#-deviceDropDown'>deviceDropDown</a> </li>
+<li class='toc3'><a href='#-cmdListMenu'>cmdListMenu</a> </li>
+<li class='toc3'><a href='#-nameField'>nameField</a> </li>
+<li class='toc3'><a href='#-indexField'>indexField</a> </li>
+<li class='toc3'><a href='#-alwaysPosField'>alwaysPosField</a> </li>
+<li class='toc3'><a href='#-mappingSelect'>mappingSelect</a> </li>
+<li class='toc3'><a href='#-calibBut'>calibBut</a> </li>
+<li class='toc3'><a href='#-connectorBut'>connectorBut</a> </li>
+</ul><li class='toc2'><a href='#The%20"Actions"-tab'>The "Actions"-tab</a></li>
+<ul class='toc'><li class='toc3'><a href='#-actionsUIs'>actionsUIs</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'><li class='toc2'><a href='#Shortcuts'>Shortcuts</a></li>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#GUI'>GUI</a> | <a href='./../Browse.html#Conductor'>Conductor</a> | <a href='./../Browse.html#External Control'>External Control</a>&#8201;&gt;&#8201;<a href='./../Browse.html#External Control>MIDI'>MIDI</a> | <a href='./../Browse.html#External Control'>External Control</a>&#8201;&gt;&#8201;<a href='./../Browse.html#External Control>OSC'>OSC</a></span>
+</div><h1>AbstractCVWidgetEditor<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>the abstract superclass for CVWidgetEditor and CVWidgetMSEditor</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/AbstractCVWidgetEditor.sc' title='/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/AbstractCVWidgetEditor.sc'>AbstractCVWidgetEditor.sc</a></div><div id='subclasses'>Subclasses: <a href="../Classes/CVWidgetEditor.html">CVWidgetEditor</a>, <a href="../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a></div>
+<div id='related'>See also: <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a>, <a href="./../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a>, <a href="./../Classes/CVCenter.html">CVCenter</a>, <a href="./../Classes/CV.html">CV</a>, <a href="./../Classes/CVWidget.html">CVWidget</a>, <a href="./../Classes/CVWidgetKnob.html">CVWidgetKnob</a>, <a href="./../Classes/CVWidget2D.html">CVWidget2D</a>, <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a>, <a href="./../Classes/CCResponder.html">CCResponder</a>, <a href="./../Classes/OSCresponderNode.html">OSCresponderNode</a>, <a href="./../Classes/SimpleController.html">SimpleController</a>, <a href="./../Classes/ControlSpec.html">ControlSpec</a>, <a href="./../Classes/OSCCommands.html">OSCCommands</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p><a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a> and <a href="./../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a> let you edit a <a href="./../Classes/CVWidget.html">CVWidget</a>s properties in a GUI. <code>AbstractCVWidgetEditor</code> as abstract superclass of both classes provides those for both classes.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>AbstractCVWidgetEditor.</span><a class='method-name' name='*allEditors' href='./../Overviews/Methods.html#allEditors'>allEditors</a></h3>
+<div class='method'>
+<p>An <a href="./../Classes/Event.html">Event</a> containing the currently opened editors, widget-names are kept in the keys:<dl>
+<dt>CVWidgetKnob<dd>- the editor itself is stored in <code>allEditors[&lt;widget-name&gt;][\editor]</code><dt>CVWidget2D<dd>- both, <code>\lo</code> and <code>\hi</code>, have their own editor: <code>allEditors[&lt;widget-name&gt;][\hi or \lo][\editor]</code><dt>CVWidgetMS<dd>- the global editor (a <a href="./../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a>) and the sub-editors (all <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a>s) are stored in <code>allEditors</code>: in <code>allEditors[&lt;widget-name&gt;][&lt;index&gt;][\editor]</code> all sub-editors (<a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a>s for each slot) are stored, <code>allEditors[&lt;widget-name&gt;][\editor]</code> keeps the global <a href="./../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a>.</dl>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3 class='method-code'><span class='method-prefix'>AbstractCVWidgetEditor.</span><a class='method-name' name='*shortcuts' href='./../Overviews/Methods.html#shortcuts'>shortcuts</a></h3>
+<h3 class='method-code'><span class='method-prefix'>AbstractCVWidgetEditor.</span><a class='method-name' name='*shortcuts' href='./../Overviews/Methods.html#shortcuts'>shortcuts</a> = value</h3>
+<div class='method'>
+<p>An <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> containing all currently defined shortcuts for any CVWidget(MS)Editor. Though this is a getter/setter it is recomended to add/remove shortcuts via the GUI within the <a href="./../Classes/CVCenterPreferences.html">preferences-interface</a> (changes will become active after recompilation of the class-library) or the <a href="./../Classes/CVCenterShortcutsEditor.html">shortcuts-interface</a> (changes become active immediatly but get reset after recompilation of the class-library).<div class='note'><span class='notelabel'>NOTE:</span> In order to change an existing shortcut it is not enough to update the shortcuts-classvar. The user will also have to call <a href="./../Classes/KeyDownActions.html#*setShortcuts">KeyDownActions: *setShortcuts</a> once.</div>
+<p>See a list of predefined shortcuts in the <a href="#Shortcuts">Shortcuts</a> section of this document.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-front' href='./../Overviews/Methods.html#front'>front</a>(<span class='argstr'>tab</span>)</h3>
+<div class='method'>
+<p>Bring the editor given by the receiver to front.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>tab<td class='argumentdesc'>
+<p>the tab-index to be focused when the editor is sent to front:<ul>
+<li><code>0</code> - the "Spec"-tab<li><code>1</code> - the "MIDI"-tab<li><code>2</code> - the "OSC"-tab<li><code>3</code> - the "Actions"-tab</ul>
+</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a> or a <a href="./../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isClosed' href='./../Overviews/Methods.html#isClosed'>isClosed</a></h3>
+<div class='method'>
+<p>Return a <a href="./../Classes/Boolean.html">Boolean</a>, indicating whether the editor is closed (the widget <em>must</em> have been opened previously)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Boolean.html">Boolean</a></div></div><h3><a class='anchor' name='Shortcuts-related%20methods'>Shortcuts-related methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setShortcuts' href='./../Overviews/Methods.html#setShortcuts'>setShortcuts</a>: METHOD NOT FOUND!</h3>
+<div class='method'>
+<p>After the <a href="#*shortcuts">*shortcuts</a> have been set this method must be called in order to make them active (if shortcuts have been set via GUI this will be handled internally).<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a> or a <a href="./../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scv' href='./../Overviews/Methods.html#scv'>scv</a></h3>
+<div class='method'>
+<p>An <a href="./../Classes/Event.html">Event</a> containing various objects that do not necessarily belong to the widget-editor but are related to it. E.g. when a shortcut opens a window that window may be added to scv so other shortcuts can refer to it later. Basically <code>scv</code> has been introduced as the concept of configurable shortcuts seperate shortcut-actions from the widget-editor. Hence, variables in these actions can't get initialized belonging to the widget-editor automatically. However, <code>scv</code> holding a dictionary that can be filled up later solves the problem.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3><a class='anchor' name='GUI%20properties%20and%20elements'>GUI properties and elements</a></h3>
+
+<p>The following methods return representations of elements that are common to <a href="./../Classes/CVWidgetEditor.html">CVWidgetEditor</a> as well as <a href="./../Classes/CVWidgetMSEditor.html">CVWidgetMSEditor</a><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-window' href='./../Overviews/Methods.html#window'>window</a></h3>
+<div class='method'>
+<p>The <a href="./../Classes/Window.html">Window</a> object the editor is embedded into.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Window.html">Window</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-tabs' href='./../Overviews/Methods.html#tabs'>tabs</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/TabbedView2.html">TabbedView2</a>, containing the tabs "Spec", "MIDI", "OSC" and "Actions". Each one can be reached via <code>tabs.views</code> which contains the individual <a href="./../Classes/TabbedViewTab.html">TabbedViewTab</a>s.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/TabbedView2.html">TabbedView2</a></div></div><h3><a class='anchor' name='The%20"Spec"-tab'>The "Spec"-tab</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-specField' href='./../Overviews/Methods.html#specField'>specField</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/TextField.html">TextField</a> that let's the user define a custom <a href="./../Classes/ControlSpec.html">ControlSpec</a>. This can be done in various ways:<ul>
+<li><strong>providing a regular ControlSpec</strong>: <code>ControlSpec(20, 20000, \exp, 0.0, 440, " Hz")</code>)<li><strong>providing the name of a predefined spec as a Symbol</strong>: <code>\freq</code> - further internal processing will call <code>.asSpec</code> on it.<li><strong>providing an Array</strong>: <code>#[20, 20000, \exp, 0.0, 440, " Hz"]</code> - further internal processing will call <code>.asSpec</code> on it.</ul>
+
+<p><div class='note'><span class='notelabel'>NOTE:</span> If the widget is a <a href="./../Classes/CVWidgetMS.html">CVWidgetMS</a> values entered in this field may get treated differently as multi-slider widgets wrap multi-dimensional specs. hence, if you enter e.g. <code>\freq</code> as spec <strong>it will automatically expand to an adequate multi-dimensional ControlSpec</strong>.</div><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/TextField.html">TextField</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-specsList' href='./../Overviews/Methods.html#specsList'>specsList</a></h3>
+<div class='method'>
+<p>a <a href="./../Classes/PopUpMenu.html">PopUpMenu</a> (drop-down), allowing to select from the list of predefined <a href="./../Classes/ControlSpec.html">ControlSpec</a>s, setting the widget's <a href="./../Classes/CV.html">CV</a>'s spec to the selected one.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/PopUpMenu.html">PopUpMenu</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-specsListSpecs' href='./../Overviews/Methods.html#specsListSpecs'>specsListSpecs</a></h3>
+<div class='method'>
+<p>The <a href="./../Classes/List.html">List</a> of currently available <a href="./../Classes/ControlSpec.html">ControlSpec</a>s<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/List.html">List</a> of <a href="./../Classes/ControlSpec.html">ControlSpec</a>s</div></div><h3><a class='anchor' name='The%20"MIDI"-tab:%20widget-settings'>The "MIDI"-tab: widget-settings</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiResolutionNB' href='./../Overviews/Methods.html#midiResolutionNB'>midiResolutionNB</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/NumberBox.html">NumberBox</a>, allowing the user to set the widget's <code>midiResolution</code> (<a href="./../Classes/CVWidget.html#-getMidiResolution">CVWidget: -getMidiResolution</a>, <a href="./../Classes/CVWidget.html#-setMidiResolution">CVWidget: -setMidiResolution</a>).<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/NumberBox.html">NumberBox</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiModeSelect' href='./../Overviews/Methods.html#midiModeSelect'>midiModeSelect</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/PopUpMenu.html">PopUpMenu</a>, allowing the user to set the widget's <code>midiMode</code> (<a href="./../Classes/CVWidget.html#-getMidiMode">CVWidget: -getMidiMode</a>, <a href="./../Classes/CVWidget.html#-setMidiMode">CVWidget: -setMidiMode</a>).<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/PopUpMenu.html">PopUpMenu</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiMeanNB' href='./../Overviews/Methods.html#midiMeanNB'>midiMeanNB</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/NumberBox.html">NumberBox</a>, allowing the user to set the widget's <code>midiMean</code> (<a href="./../Classes/CVWidget.html#-getMidiMean">CVWidget: -getMidiMean</a>, <a href="./../Classes/CVWidget.html#-setMidiMean">CVWidget: -setMidiMean</a>)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/NumberBox.html">NumberBox</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-softWithinNB' href='./../Overviews/Methods.html#softWithinNB'>softWithinNB</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/NumberBox.html">NumberBox</a>, allowing the user to set the widget's <code>softWithin</code> (<a href="./../Classes/CVWidget.html#-getSoftWithin">CVWidget: -getSoftWithin</a>, <a href="./../Classes/CVWidget.html#-setSoftWithin">CVWidget: -setSoftWithin</a>)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/NumberBox.html">NumberBox</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-ctrlButtonBankField' href='./../Overviews/Methods.html#ctrlButtonBankField'>ctrlButtonBankField</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/TextField.html">TextField</a>, allowing the user to set the widget's <code>ctrlButtonBank</code> value (<a href="./../Classes/CVWidget.html#-getCtrlButtonBank">CVWidget: -getCtrlButtonBank</a>, <a href="./../Classes/CVWidget.html#-setCtrlButtonBank">CVWidget: -setCtrlButtonBank</a>).<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/TextField.html">TextField</a></div></div><h3><a class='anchor' name='The%20"MIDI"-tab:%20MIDI-connecting'>The "MIDI"-tab: MIDI-connecting</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiInitBut' href='./../Overviews/Methods.html#midiInitBut'>midiInitBut</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/Button.html">Button</a>, either starting or restarting MIDI. Also the button displays the current MIDI-state.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Button.html">Button</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiSourceSelect' href='./../Overviews/Methods.html#midiSourceSelect'>midiSourceSelect</a></h3>
+<div class='method'>
+<p>If MIDI is active (indicated by the button "restart MIDI") one can select among available MIDI-devices here. The numerical source-ID gets inserted into <a href="#-midiSrcField">-midiSrcField</a>.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/PopUpMenu.html">PopUpMenu</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiLearnBut' href='./../Overviews/Methods.html#midiLearnBut'>midiLearnBut</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/Button.html">Button</a> that, if clicked, either triggers the MIDI-learn functionality (button-label: "L") or creates a <a href="./../Classes/CCResponder.html">CCResponder</a> for the values entered in -midiSrc, -midiChan or/and -midiCtrl (button-label: "C"). If a CCResponder is present the button-label gets changed to "X" - upon clicking the responder gets removed again.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <a href="./../Classes/Button.html">Button</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiSrcField' href='./../Overviews/Methods.html#midiSrcField'>midiSrcField</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/TextField.html">TextField</a> that allows the user to set a MIDI source-ID. If selected from <a href="#-midiSourceSelect">-midiSourceSelect</a> this field should get filled automatically.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/TextField.html">TextField</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiChanField' href='./../Overviews/Methods.html#midiChanField'>midiChanField</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/TextField.html">TextField</a> that allows the user to set a MIDI-channel resp. the field will show the channel if a MIDI-connection is present.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/TextField.html">TextField</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiCtrlField' href='./../Overviews/Methods.html#midiCtrlField'>midiCtrlField</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/TextField.html">TextField</a> that allows the user to set a MIDI-contoller resp. the field will show the controller-Nr. if a MIDI-connection is present.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/TextField.html">TextField</a></div></div><h3><a class='anchor' name='The%20"OSC"-tab'>The "OSC"-tab</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-portRestrictor' href='./../Overviews/Methods.html#portRestrictor'>portRestrictor</a></h3>
+<div class='method'>
+<p>A checkbox, forcing the OSC-responder to listen to a specific port only.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/CheckBox.html">CheckBox</a> (Qt) or a <a href="./../Classes/Button.html">Button</a>, faking a checkbox (Cocao)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-deviceListMenu' href='./../Overviews/Methods.html#deviceListMenu'>deviceListMenu</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/PopUpMenu.html">PopUpMenu</a>, displaying physical devices or apps stored to disc under a certain name. Devices can be stored after hitting the green "new" button on the right side of the interface. For more information have a look at <a href="./../Classes/OSCCommands.html">OSCCommands</a>.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/PopUpMenu.html">PopUpMenu</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-deviceDropDown' href='./../Overviews/Methods.html#deviceDropDown'>deviceDropDown</a></h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cmdListMenu' href='./../Overviews/Methods.html#cmdListMenu'>cmdListMenu</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/PopUpMenu.html">PopUpMenu</a>, allowing the user to select among possible command-names. The selected one will be filled into <a href="#-nameField">-nameField</a> automatically.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/PopUpMenu.html">PopUpMenu</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-nameField' href='./../Overviews/Methods.html#nameField'>nameField</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/TextField.html">TextField</a>, allowing to set an OSC command-name (e.g. <code>/my/cmd/name</code>). This field will get filled out with a meaningful name if one's selected from the 'command-names' drop-down.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/TextField.html">TextField</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-indexField' href='./../Overviews/Methods.html#indexField'>indexField</a></h3>
+<div class='method'>
+<p>a <a href="./../Classes/NumberBox.html">NumberBox</a>, allowing the user to select the slot of OSC-message. The widget's <a href="./../Classes/CV.html">CV</a>'s value will get set to the value in that slot.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/NumberBox.html">NumberBox</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-alwaysPosField' href='./../Overviews/Methods.html#alwaysPosField'>alwaysPosField</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/StaticText.html">StaticText</a> displaying an auto-correction value for the incoming value. Auto-correction means that incoming values will always be shifted into positive, allowing input-mappings expontial to linear or exponential to exponential even though the (real) input-range is zero-crossing.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p><a href="./../Classes/StaticText.html">StaticText</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mappingSelect' href='./../Overviews/Methods.html#mappingSelect'>mappingSelect</a></h3>
+<div class='method'>
+<p>(describe method here)<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>(describe returnvalue here)</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-calibBut' href='./../Overviews/Methods.html#calibBut'>calibBut</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/Button.html">Button</a> which starts/stops OSC-calibration. Calibration means that the constraints of the incoming value in the OSC-message are constantly being checked and readjusted if necessary.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Button.html">Button</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-connectorBut' href='./../Overviews/Methods.html#connectorBut'>connectorBut</a></h3>
+<div class='method'>
+<p>A <a href="./../Classes/Button.html">Button</a> to connect and disconnect. Behind the scenes this button triggers <a href="./../Classes/CVWidget.html#-oscConnect">CVWidget: -oscConnect</a> or <a href="./../Classes/CVWidget.html#-oscDisconnect">CVWidget: -oscDisconnect</a>.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/Button.html">Button</a></div></div><h3><a class='anchor' name='The%20"Actions"-tab'>The "Actions"-tab</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-actionsUIs' href='./../Overviews/Methods.html#actionsUIs'>actionsUIs</a></h3>
+<div class='method'>
+<p>An <a href="./../Classes/Event.html">Event</a> that contains all elements of a graphical editor for each action.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Event.html">Event</a></div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>w = CVWidgetKnob(nil, nil, "test").front;
+e = CVWidgetEditor(w, 1); // open the 'MIDI'-tab</textarea>
+<h3><a class='anchor' name='Shortcuts'>Shortcuts</a></h3>
+
+<p>Within every CVWidget(MS)Editor a number of shortcuts apply. All of these are configurable by the user. For more Information have a look at <a href="./../Classes/KeyDownActions.html">KeyDownActions</a>, <a href="./../Classes/CVCenterPreferences.html">CVCenterPreferences</a> or <a href="./../Classes/CVCenterShortcutsEditor.html">CVCenterShortcutsEditor</a><dl>
+<dt>s<dd>Focus the "Spec"-tab.<dt>m<dd>Focus the "MIDI"-tab.<dt>o<dd>Focus the "OSC"-tab.<dt>a<dd>Focus the "Actions"-tab.<dt>c<dd>Open the <a href="./../Classes/OSCCommands.html">OSCCommands</a> window and start collecting incomming OSC-commands.<dt>esc<dd>Close the editor.</dl>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/AbstractCVWidgetEditor.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenter/CVCenter/HelpSource/Classes/AbstractCVWidgetEditor.schelp</a><br>link::Classes/AbstractCVWidgetEditor::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

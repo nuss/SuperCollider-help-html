@@ -1,0 +1,225 @@
+<!doctype html><html lang='en'><head><title>MemoRoutine | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'MemoRoutine';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>MemoRoutine:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-next'>next</a> </li>
+<li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc3'><a href='#-resume'>resume</a> </li>
+<li class='toc3'><a href='#-run'>run</a> </li>
+<li class='toc3'><a href='#-lastValue'>lastValue</a> </li>
+<li class='toc3'><a href='#-lastValues'>lastValues</a> </li>
+<li class='toc3'><a href='#-at'>at</a> </li>
+<li class='toc3'><a href='#-bufSize'>bufSize</a> </li>
+<li class='toc3'><a href='#-reset'>reset</a> </li>
+<li class='toc3'><a href='#-stop'>stop</a> </li>
+<li class='toc3'><a href='#-count'>count</a> </li>
+<li class='toc3'><a href='#-copyItems'>copyItems</a> </li>
+<li class='toc3'><a href='#-copySets'>copySets</a> </li>
+<li class='toc3'><a href='#-routine'>routine</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>PSx stream patterns'>PSx stream patterns</a> | <a href='./../Browse.html#Streams-Patterns-Events'>Streams-Patterns-Events</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Streams-Patterns-Events>PSx stream patterns'>PSx stream patterns</a></span>
+</div><h1>MemoRoutine<span id='superclasses'> : <a href="../Classes/Stream.html">Stream</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Routine-like object which stores last values</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/MemoRoutine.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/MemoRoutine.sc'>MemoRoutine.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Tutorials/PSx_stream_patterns.html">PSx stream patterns</a>, <a href="./../Classes/Routine.html">Routine</a>, <a href="./../Classes/PS.html">PS</a>, <a href="./../Classes/PSdup.html">PSdup</a>, <a href="./../Classes/PSrecur.html">PSrecur</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A MemoRoutine behaves like a Routine, though it is not defined as a subclass of it. It stores last values, the maximum buffer size can be defined. MemoRoutine is internally used by PSx and related Pattern classes, which therefore also remember their last value(s). <h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>MemoRoutine.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>func</span>, <span class='argstr'>stackSize: 512</span>, <span class='argstr'>bufSize: 1</span>, <span class='argstr'>copyItems: 0</span>, <span class='argstr'>copySets: 1</span>)</h3>
+<div class='method'>
+<p>Creates a MemoRoutine instance with the given Function.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>Function to instantiate the Routine with.<tr><td class='argumentname'>stackSize<td class='argumentdesc'>
+<p>Call stack depth, defaults to 512.<tr><td class='argumentname'>bufSize<td class='argumentdesc'>
+<p>Number of last values to store, defaults to 1.<tr><td class='argumentname'>copyItems<td class='argumentdesc'>
+<p>Determines if and how to copy items, which are returned by method next  (run, value, resume) and which are either non-Sets or member of Sets, into the buffer.  Takes Integer 0 (or false or Symbol \false), 1 (or true or Symbol \true) or 2 (or Symbol \deep).  Other values are interpreted as 0. Defaults to 0.
+<p>0: storage of original item 
+<p>1: storage of copied item
+<p>2: storage of deepCopied item<tr><td class='argumentname'>copySets<td class='argumentdesc'>
+<p>Determines if to copy Sets (and hence Events),  which are returned by method next (run, value, resume), into the buffer.  Takes Integer 0 (or false or Symbol \false), 1 (or true or Symbol \true).  Other values are interpreted as 0. Defaults to 1.
+<p>0: storage of original Set 
+<p>1: storage of copied Set<div class='note'><span class='notelabel'>NOTE:</span> The distinction of copying items and sets makes sense in the case of event streams. Per default Events are copied (<strong>copySets</strong> == 1), not their values (<strong>copyItems</strong> == 0). By playing Events those are used to store additional data (synth ids, msgFuncs …) which is mostly not of interest when refering to the event stream, e.g. with PSx patterns which use MemoRoutine - copied Events will not contain this additional data. If values of Events or values returned directly by the stream (being no kind of Sets) are unstructured then copying makes no sense, this is the normal case, so <strong>copyItems</strong> defaults to 0. When going to alter the ouput, you might want to set <strong>copyItems</strong> to 1 for a MemoRoutine returning simple arrays or 2 for nested arrays (deepCopy). For deepCopying Events you'd have to set <strong>copySets</strong> to 1 and <strong>copyItems</strong> to 2 (an option <strong>copySets</strong> == 2 doesn't exist as it would be contradictory in combination with <strong>copyItems</strong> &lt; 2).</div></table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-next' href='./../Overviews/Methods.html#next'>next</a>(<span class='argstr'>inval</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>inval<td class='argumentdesc'>
+<p>Same conventions with method yield as with aRoutine.next.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-value' href='./../Overviews/Methods.html#value'>value</a>(<span class='argstr'>inval</span>)</h3>
+<div class='method'>
+<p>Same as next.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resume' href='./../Overviews/Methods.html#resume'>resume</a>(<span class='argstr'>inval</span>)</h3>
+<div class='method'>
+<p>Same as next.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-run' href='./../Overviews/Methods.html#run'>run</a>(<span class='argstr'>inval</span>)</h3>
+<div class='method'>
+<p>Same as next.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lastValue' href='./../Overviews/Methods.html#lastValue'>lastValue</a></h3>
+<div class='method'>
+<p>Last value.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lastValues' href='./../Overviews/Methods.html#lastValues'>lastValues</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lastValues' href='./../Overviews/Methods.html#lastValues'>lastValues</a> = value</h3>
+<div class='method'>
+<p>Instance variable getter method for array of stored last values.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>i</span>)</h3>
+<div class='method'>
+<p>Returns ith item of array of last values (keep in mind reversed order: last value first).</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bufSize' href='./../Overviews/Methods.html#bufSize'>bufSize</a></h3>
+<div class='method'>
+<p>Size of array of last values.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reset' href='./../Overviews/Methods.html#reset'>reset</a></h3>
+<div class='method'>
+<p>Resets the MemoRoutine by resetting its Routine.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stop' href='./../Overviews/Methods.html#stop'>stop</a></h3>
+<div class='method'>
+<p>Stops the MemoRoutine by stopping its Routine.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-count' href='./../Overviews/Methods.html#count'>count</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-count' href='./../Overviews/Methods.html#count'>count</a> = value</h3>
+<div class='method'>
+<p>Instance variable getter and setter methods. Counts each call of next / value / resume / run. </div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-copyItems' href='./../Overviews/Methods.html#copyItems'>copyItems</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-copyItems' href='./../Overviews/Methods.html#copyItems'>copyItems</a> = value</h3>
+<div class='method'>
+<p>Instance variable getter and setter methods.  If used directly the Integer copy code must be passed (see above).</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-copySets' href='./../Overviews/Methods.html#copySets'>copySets</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-copySets' href='./../Overviews/Methods.html#copySets'>copySets</a> = value</h3>
+<div class='method'>
+<p>Instance variable getter and setter methods.  If used directly the Integer copy code must be passed (see above).</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-routine' href='./../Overviews/Methods.html#routine'>routine</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-routine' href='./../Overviews/Methods.html#routine'>routine</a> = value</h3>
+<div class='method'>
+<p>Instance variable getter and setter methods. </div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>(
+// a MemoRoutine
+
+m = MemoRoutine(
+    { |inval| 1000.do { |i| inval = i.yield } },
+    bufSize: 50
+);
+)
+
+m.nextN(5);    
+
+
+// get last value
+
+m.lastValue;
+
+m[0];
+
+
+// get last values, order is from last to earlier
+
+m.lastValues;
+
+
+// get value before last value
+
+m[1];
+
+
+
+// get more values
+
+m.nextN(100);    
+
+
+
+// first values are lost now
+
+m.lastValues;
+
+
+// as loop in m is restricted you might call .all
+// as stop is indicated by the return of nil, 
+// the array lastValues contains nil as first item
+
+m.all;
+
+m.lastValues;
+
+
+
+// Per default a MemoRoutine is just storing the last values,
+// with structured data types this can cause surprises 
+
+(
+// a MemoRoutine
+
+m = MemoRoutine(
+    { |inval| var a = [[2,1], [4,3]]; 1000.do { inval = a.choose.yield } },
+    bufSize: 50
+);
+)
+
+// generate some values
+
+m.nextN(10);
+
+// apply a method on last values
+
+(
+x = m.lastValue;
+x.sort;
+)
+
+// as sort is destructive one of MemoRoutine's arrays is altered now !
+
+m.nextN(10);
+
+
+
+// to avoid such you can simply do .copy.sort which doesn't alter lastValues,
+// but you can also store copied values in the buffer by passing a flag with
+// instantiation of the MemoRoutine
+
+(
+// a MemoRoutine which stores copied arrays
+
+m = MemoRoutine(
+    { |inval| var a = [[2,1], [4,3]]; 1000.do { inval = a.choose.yield } },
+    bufSize: 100,
+    copyItems: 1 // 1, true or \true for copy, 2 or \deep for deepCopy
+);
+)
+
+m.nextN(10);
+
+(
+x = m.lastValue;
+x.sort;
+)
+
+// order not altered with next items
+
+m.nextN(10);
+
+// however the concerned array stored as item in lastValues remains altered
+
+m[10];</textarea>
+
+<p> <div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/MemoRoutine.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/MemoRoutine.schelp</a><br>link::Classes/MemoRoutine::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>
