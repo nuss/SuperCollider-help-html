@@ -1,0 +1,183 @@
+<!doctype html><html lang='en'><head><title>SyncText | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./editor.css' type='text/css' />
+<link rel='stylesheet' href='./frontend.css' type='text/css' />
+<link rel='stylesheet' href='./custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./lib/jquery.min.js'></script>
+<script src='./lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = '.';
+var scdoc_title = 'SyncText';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./scdoc.js' type='text/javascript'></script>
+<script src='./docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>SyncText:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*all'>all</a> </li>
+<li class='toc3'><a href='#*defaultText'>defaultText</a> </li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-textID'>textID</a> </li>
+<li class='toc3'><a href='#-userID'>userID</a> </li>
+<li class='toc3'><a href='#-relayAddr'>relayAddr</a> </li>
+<li class='toc3'><a href='#-currText'>currText</a> </li>
+<li class='toc3'><a href='#-textDoc'>textDoc</a> </li>
+<li class='toc3'><a href='#-showDoc'>showDoc</a> </li>
+<li class='toc3'><a href='#-enableSend'>enableSend</a>  <a href='#-disableSend'>disableSend</a> </li>
+<li class='toc3'><a href='#-sendEnabled'>sendEnabled</a> </li>
+<li class='toc3'><a href='#-lock'>lock</a>  <a href='#-unlock'>unlock</a> </li>
+<li class='toc3'><a href='#-lock'>lock</a> </li>
+<li class='toc3'><a href='#-sendEnabled'>sendEnabled</a> </li>
+<li class='toc2'><a href='#mostly%20for%20internal%20use%20(and%20debugging)'>mostly for internal use (and debugging)</a></li>
+<ul class='toc'><li class='toc3'><a href='#-incomingVersions'>incomingVersions</a> </li>
+<li class='toc3'><a href='#-lastReceived'>lastReceived</a> </li>
+<li class='toc3'><a href='#-lastSent'>lastSent</a> </li>
+<li class='toc3'><a href='#-docLocalID'>docLocalID</a> </li>
+<li class='toc3'><a href='#-requestText'>requestText</a> </li>
+<li class='toc3'><a href='#-setCurr'>setCurr</a> </li>
+<li class='toc3'><a href='#-setDocText'>setDocText</a> </li>
+<li class='toc3'><a href='#-sendSyncText'>sendSyncText</a> </li>
+<li class='toc3'><a href='#-synced'>synced</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'> (extension)</span>
+<span id='categories'><a href='./Browse.html#Undocumented classes'>Undocumented classes</a></span>
+</div><h1>SyncText<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>sync text across computers</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./Classes/OSCRouterClient.html">OSCRouterClient</a>, <a href="./Guides/OSC_communication.html">OSC Communication</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>SyncText keeps a text string synchronized across computers via the internet using OSCRouterClient. This is useful for shared coding practice, for learning, performances, and other uses.
+<p>First code examples:<textarea class='editor'>// if needed, close old synctext help docs to avoid confusion
+Document.allDocuments.do { |doc|
+    if (doc.title.contains("synctext_help")) { doc.close }
+};
+
+// make two OSCRouterClients and SyncTexts that share their text content.
+// typically these live on two different computers,
+// but for testing, this also works on a single computer
+
+// client and synctext 1
+~oscli1 = OSCRouterClient(\oscli1, 'syncTextTest', userPassword: \oscli1pw).join;
+~tx1 = SyncText('synctext_help', ~oscli1.userName, ~oscli1);
+
+~tx1.currText;
+~tx1.showDoc;
+
+// (typically on computer 2:
+~oscli2 = OSCRouterClient(\oscli2, 'syncTextTest', userPassword: \oscli2pw).join;
+~tx2 = SyncText('synctext_help', ~oscli2.userName, ~oscli2);
+
+~tx2.currText;
+~tx2.showDoc;
+
+/// then type something in synxtext_help_oscli1,
+// and check that it shows up on synxtext_help_oscli2;
+// then check vice versa!
+
+
+// make a second synctext with two users,
+// to check that it works independently of synctext_help:
+~tx3 = SyncText('synctext_help2', ~oscli1.userName, ~oscli1).showDoc;
+~tx4 = SyncText('synctext_help2', ~oscli2.userName, ~oscli2).showDoc;
+// try writing to the four docs: the 2 ..help2 docs should sync,
+// and the 2 ..help docs should still sync independently.
+
+
+// Choose how much debug/sync posting you want:
+SyncText.verbosity = 0; // silence
+SyncText.verbosity = 1; // normal posting
+SyncText.verbosity = 2; // detailed posting for debugging complex setups
+
+// compare contents of ~tx1 and ~tx2 - should be the same:
+~tx1.currText.cs;
+~tx2.currText.cs;
+
+/// test SyncText access by name:
+SyncText.all;
+// lookup of instances works both with bare textID and textID_name:
+~tx1 === SyncText('synctext_help', 'oscli1')
+
+///// SyncText can be created incomplete without textID and relayAddr,
+///// but currently there is no way to update them
+SyncText('testNoID');
+SyncText('testID', 'user');</textarea>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*new' href='./Overviews/Methods.html#new'>new</a></h3>
+<div class='method'>
+<p>make a new SyncText with<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>textID<td class='argumentdesc'>
+<p>an ID for the text (same on different computers)<tr><td class='argumentname'>userID<td class='argumentdesc'>
+<p>an ID for the local user (different on each computers)<tr><td class='argumentname'>relayAddr<td class='argumentdesc'>
+<p>An OSCRouterClient or similar to connect the SyncTexts.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*all' href='./Overviews/Methods.html#all'>all</a></h3>
+<div class='method'>
+<p>all known syncTexts</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*defaultText' href='./Overviews/Methods.html#defaultText'>defaultText</a></h3>
+<div class='method'>
+<p>the text that a new syncText gets when no text is found online.</div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-textID' href='./Overviews/Methods.html#textID'>textID</a></h3>
+<div class='method'>
+<p>the id for the synced text</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-userID' href='./Overviews/Methods.html#userID'>userID</a></h3>
+<div class='method'>
+<p>the id for the local user/computer</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-relayAddr' href='./Overviews/Methods.html#relayAddr'>relayAddr</a></h3>
+<div class='method'>
+<p>the relay to use for sync messages</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-currText' href='./Overviews/Methods.html#currText'>currText</a></h3>
+<div class='method'>
+<p>the current synced text</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-textDoc' href='./Overviews/Methods.html#textDoc'>textDoc</a></h3>
+<div class='method'>
+<p>the document that shows and edits currText</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-showDoc' href='./Overviews/Methods.html#showDoc'>showDoc</a></h3>
+<div class='method'>
+<p>find or make and show a document for currText</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-enableSend' href='./Overviews/Methods.html#enableSend'>enableSend</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-disableSend' href='./Overviews/Methods.html#disableSend'>disableSend</a></h3>
+<div class='method'>
+<p>enable and disable sync-sending on currText</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sendEnabled' href='./Overviews/Methods.html#sendEnabled'>sendEnabled</a></h3>
+<div class='method'>
+<p>flag whether currently sync-sending or not</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lock' href='./Overviews/Methods.html#lock'>lock</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-unlock' href='./Overviews/Methods.html#unlock'>unlock</a></h3>
+<div class='method'>
+<p>lock and unlock editing of currText on textDoc</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lock' href='./Overviews/Methods.html#lock'>lock</a></h3>
+<div class='method'>
+<p>flag whether editing currently locked</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sendEnabled' href='./Overviews/Methods.html#sendEnabled'>sendEnabled</a></h3>
+<div class='method'>
+<p>flag whether currently sync-sending or not</div><h3><a class='anchor' name='mostly%20for%20internal%20use%20(and%20debugging)'>mostly for internal use (and debugging)</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-incomingVersions' href='./Overviews/Methods.html#incomingVersions'>incomingVersions</a></h3>
+<div class='method'>
+<p>different versions of the synced text as last sent from synced users.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lastReceived' href='./Overviews/Methods.html#lastReceived'>lastReceived</a></h3>
+<div class='method'>
+<p>the last received version of the synced text</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lastSent' href='./Overviews/Methods.html#lastSent'>lastSent</a></h3>
+<div class='method'>
+<p>the last sent version of the synced text</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-docLocalID' href='./Overviews/Methods.html#docLocalID'>docLocalID</a></h3>
+<div class='method'>
+<p>a local ID merging textID and userID.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-requestText' href='./Overviews/Methods.html#requestText'>requestText</a></h3>
+<div class='method'>
+<p>ask other nodes for the current text usually not needed to do explicitly.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setCurr' href='./Overviews/Methods.html#setCurr'>setCurr</a></h3>
+<div class='method'>
+<p>set currText by hand. usually only needed internally.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setDocText' href='./Overviews/Methods.html#setDocText'>setDocText</a></h3>
+<div class='method'>
+<p>set text in textDoc by hand usually never needed internally.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sendSyncText' href='./Overviews/Methods.html#sendSyncText'>sendSyncText</a></h3>
+<div class='method'>
+<p>send text to sync to otherName. usually never needed internally, happens when requested.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>otherName<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-synced' href='./Overviews/Methods.html#synced'>synced</a></h3>
+<div class='method'>
+<p>whether the text is currently synced or not. this is false when SyncText is made, and true after synced to incoming text or after timeout.</div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>_some_example_code_</textarea>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/HyperDisCo/HelpSource/SyncText.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/HyperDisCo/HelpSource/SyncText.schelp</a><br>link::SyncText::<br></div></div><script src='./editor.js' type='text/javascript'></script>
+</body></html>

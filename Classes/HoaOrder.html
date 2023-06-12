@@ -1,0 +1,219 @@
+<!doctype html><html lang='en'><head><title>HoaOrder | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'HoaOrder';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>HoaOrder:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-order'>order</a> </li>
+<li class='toc2'><a href='#(ℓ,%20m)%20&%20HOA%20indices'>(ℓ, m) &amp; HOA indices</a></li>
+<ul class='toc'><li class='toc3'><a href='#-lm'>lm</a> </li>
+<li class='toc3'><a href='#-l'>l</a> </li>
+<li class='toc3'><a href='#-m'>m</a> </li>
+<li class='toc3'><a href='#-indices'>indices</a> </li>
+</ul><li class='toc2'><a href='#Coefficients'>Coefficients</a></li>
+<ul class='toc'><li class='toc3'><a href='#-size'>size</a> </li>
+<li class='toc3'><a href='#-sph'>sph</a> </li>
+<li class='toc3'><a href='#-normalisation'>normalisation</a> </li>
+<li class='toc3'><a href='#-reflection'>reflection</a> </li>
+</ul><li class='toc2'><a href='#Radial%20&%20NFE'>Radial &amp; NFE</a></li>
+<ul class='toc'><li class='toc3'><a href='#-radiusAtFreq'>radiusAtFreq</a> </li>
+<li class='toc3'><a href='#-freqAtRadius'>freqAtRadius</a> </li>
+<li class='toc3'><a href='#-proxWeights'>proxWeights</a> </li>
+<li class='toc3'><a href='#-distWeights'>distWeights</a> </li>
+<li class='toc3'><a href='#-ctrlWeights'>ctrlWeights</a> </li>
+<li class='toc3'><a href='#-foclWeights'>foclWeights</a> </li>
+</ul><li class='toc2'><a href='#Beaming%20&%20Decoder%20matching'>Beaming &amp; Decoder matching</a></li>
+<ul class='toc'><li class='toc3'><a href='#-beamWeights'>beamWeights</a> </li>
+<li class='toc3'><a href='#-matchWeight'>matchWeight</a> </li>
+</ul><li class='toc2'><a href='#Decoder%20performance'>Decoder performance</a></li>
+<ul class='toc'><li class='toc3'><a href='#-spreadE'>spreadE</a> </li>
+<li class='toc3'><a href='#-meanE'>meanE</a> </li>
+<li class='toc3'><a href='#-rV'>rV</a> </li>
+<li class='toc3'><a href='#-rE'>rE</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit'>Ambisonic Toolkit</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit>Coefficients & Theory'>Coefficients & Theory</a></span>
+</div><h1>HoaOrder<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Higher Order Ambisonic (HOA) indexing &amp; coefficients</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/Classes/HoaOrder.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/Classes/HoaOrder.sc'>HoaOrder.sc</a></div><div id='related'>See also: <a href="./../Classes/HoaLm.html">HoaLm</a>, <a href="./../Classes/HoaDegree.html">HoaDegree</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Higher Order Ambisonic (HOA) <em>component</em> indexing, coefficients and performance, by order.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>HoaOrder.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>order</span>)</h3>
+<div class='method'>
+<p>Create a new instance.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>order<td class='argumentdesc'>
+<p>Ambisonic order.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-order' href='./../Overviews/Methods.html#order'>order</a></h3>
+<div class='method'>
+<p>Return higher order ambisonic order.</div><h3><a class='anchor' name='(ℓ,%20m)%20&%20HOA%20indices'>(ℓ, m) &amp; HOA indices</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lm' href='./../Overviews/Methods.html#lm'>lm</a></h3>
+<div class='method'>
+<p>Return an array of Associated Legendre degrees (ℓ) and indices (m).</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-l' href='./../Overviews/Methods.html#l'>l</a></h3>
+<div class='method'>
+<p>Return an array of Associated Legendre degrees (ℓ).</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-m' href='./../Overviews/Methods.html#m'>m</a></h3>
+<div class='method'>
+<p>Return an array of Associated Legendre indices (m).</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-indices' href='./../Overviews/Methods.html#indices'>indices</a>(<span class='argstr'>ordering: 'acn'</span>, <span class='argstr'>subset: 'all'</span>)</h3>
+<div class='method'>
+<p>Return Higher Order Ambisonic (HOA) indices.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>ordering<td class='argumentdesc'>
+<p><em>Component</em> <strong>ordering</strong> scheme:<table>
+<tr><td><code>\acn</code><td>Ambisonic Channel Number (ACN)<tr><td><code>\sid</code><td>Single Index Designation (SID)<tr><td><code>\fuma</code><td>Furse-Malham (FuMa)</table>
+<tr><td class='argumentname'>subset<td class='argumentdesc'><table>
+<tr><td><code>\all</code><td>All indices<tr><td><code>\zonal</code><td><a href="http://mathworld.wolfram.com/ZonalHarmonic.html">Zonal</a><tr><td><code>\sectoral</code><td><a href="http://mathworld.wolfram.com/SectorialHarmonic.html">Sectoral</a><tr><td><code>\tesseral</code><td><a href="http://mathworld.wolfram.com/TesseralHarmonic.html">Tesseral</a><tr><td><code>\rotate</code><td>Rotation around z-axis, aka yaw</table>
+</table></div><h3><a class='anchor' name='Coefficients'>Coefficients</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-size' href='./../Overviews/Methods.html#size'>size</a></h3>
+<div class='method'>
+<p>Return number of ambisonic <em>components</em>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sph' href='./../Overviews/Methods.html#sph'>sph</a>(<span class='argstr'>theta: 0</span>, <span class='argstr'>phi: 0</span>)</h3>
+<div class='method'>
+<p>Return N3D normalized angular encoding coefficients.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>theta<td class='argumentdesc'>
+<p>Azimuth, in radians.<tr><td class='argumentname'>phi<td class='argumentdesc'>
+<p>Elevation, in radians.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-normalisation' href='./../Overviews/Methods.html#normalisation'>normalisation</a>(<span class='argstr'>scheme: 'n3d'</span>)</h3>
+<div class='method'>
+<p>Return <em>component</em> <strong>normalisation</strong> coefficients.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>scheme<td class='argumentdesc'>
+<p><em>Component</em> <strong>normalisation</strong> schemes:<table>
+<tr><td><code>\n3d</code><td>Orthonormal basis for 3D decomposition (N3D)<tr><td><code>\sn3d</code><td>Semi-normalised basis for 3D decomposition (SN3D)<tr><td><code>\n2d</code><td>Orthonormal basis for 2D decomposition (N2D)<tr><td><code>\sn2d</code><td>Semi-normalised basis for 2D decomposition (SN2D)<tr><td><code>\maxN</code><td>Maximum normalisation (maxN)<tr><td><code>\MaxN</code><td>Gerzon / Furse-Malham (MaxN)<tr><td><code>\fuma</code><td>Synonym for MaxN (FuMa)</table>
+</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reflection' href='./../Overviews/Methods.html#reflection'>reflection</a>(<span class='argstr'>mirror: 'reflect'</span>)</h3>
+<div class='method'>
+<p>Return <em>component</em> reflection coefficients.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>mirror<td class='argumentdesc'><table>
+<tr><td><code>\reflect</code><td>Mirror across the origin. Equivalent to: <code>\flip * \flop * \flap</code>.<tr><td><code>\flip</code><td>Mirror in the y-axis.<tr><td><code>\flop</code><td>Mirror in the x-axis.<tr><td><code>\flap</code><td>Mirror in the z-axis.<tr><td><code>\CondonShortleyPhase</code><td>Condon-Shortley Phase. Equivalent to: <code>\flip * \flop</code>.<tr><td><code>\origin</code><td>Synonym for <code>\reflect</code>.<tr><td><code>\x</code><td>Synonym for <code>\flop</code>.<tr><td><code>\y</code><td>Synonym for <code>\flip</code>.<tr><td><code>\z</code><td>Synonym for <code>\flap</code>.</table>
+</table></div><h3><a class='anchor' name='Radial%20&%20NFE'>Radial &amp; NFE</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-radiusAtFreq' href='./../Overviews/Methods.html#radiusAtFreq'>radiusAtFreq</a>(<span class='argstr'>freq</span>, <span class='argstr'>speedOfSound</span>)</h3>
+<div class='method'>
+<p>Return the <em>effective decoding radius</em>, in meters.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>freq<td class='argumentdesc'>
+<p>Frequency, in Hz.<tr><td class='argumentname'>speedOfSound<td class='argumentdesc'>
+<p>Speed of sound, in meters per second.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-freqAtRadius' href='./../Overviews/Methods.html#freqAtRadius'>freqAtRadius</a>(<span class='argstr'>radius</span>, <span class='argstr'>speedOfSound</span>)</h3>
+<div class='method'>
+<p>Return the <em>effective decoding frequency</em>, in Hz.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>radius<td class='argumentdesc'>
+<p>Radius, in meters.<tr><td class='argumentname'>speedOfSound<td class='argumentdesc'>
+<p>Speed of sound, in meters per second.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-proxWeights' href='./../Overviews/Methods.html#proxWeights'>proxWeights</a>(<span class='argstr'>freq</span>, <span class='argstr'>radius</span>, <span class='argstr'>speedOfSound</span>)</h3>
+<div class='method'>
+<p>Return complex near-field effect proximity radial filtering coefficients, collected by Associated Legendre degree (ℓ).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>freq<td class='argumentdesc'>
+<p>Frequency, in Hz.<tr><td class='argumentname'>radius<td class='argumentdesc'>
+<p>Radius, in meters.<tr><td class='argumentname'>speedOfSound<td class='argumentdesc'>
+<p>Speed of sound, in meters per second.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-distWeights' href='./../Overviews/Methods.html#distWeights'>distWeights</a>(<span class='argstr'>freq</span>, <span class='argstr'>radius</span>, <span class='argstr'>speedOfSound</span>)</h3>
+<div class='method'>
+<p>Return complex near-field effect distance radial filtering coefficients, collected by Associated Legendre degree (ℓ).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>freq<td class='argumentdesc'>
+<p>Frequency, in Hz.<tr><td class='argumentname'>radius<td class='argumentdesc'>
+<p>Radius, in meters.<tr><td class='argumentname'>speedOfSound<td class='argumentdesc'>
+<p>Speed of sound, in meters per second.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-ctrlWeights' href='./../Overviews/Methods.html#ctrlWeights'>ctrlWeights</a>(<span class='argstr'>freq</span>, <span class='argstr'>encRadius</span>, <span class='argstr'>decRadius</span>, <span class='argstr'>speedOfSound</span>)</h3>
+<div class='method'>
+<p>Return complex near-field effect control radial filtering coefficients, collected by Associated Legendre degree (ℓ).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>freq<td class='argumentdesc'>
+<p>Frequency, in Hz.<tr><td class='argumentname'>encRadius<td class='argumentdesc'>
+<p>Encoding radius, in meters.<tr><td class='argumentname'>decRadius<td class='argumentdesc'>
+<p>Decoding radius, in meters.<tr><td class='argumentname'>speedOfSound<td class='argumentdesc'>
+<p>Speed of sound, in meters per second.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-foclWeights' href='./../Overviews/Methods.html#foclWeights'>foclWeights</a>(<span class='argstr'>freq</span>, <span class='argstr'>radius</span>, <span class='argstr'>window: 'reg'</span>, <span class='argstr'>speedOfSound</span>)</h3>
+<div class='method'>
+<p>Return real near-field effect focalisation radial filtering coefficients, collected by Associated Legendre degree (ℓ).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>freq<td class='argumentdesc'>
+<p>Frequency, in Hz.<tr><td class='argumentname'>radius<td class='argumentdesc'>
+<p>Radius, in meters.<tr><td class='argumentname'>window<td class='argumentdesc'>
+<p>Angular weighting window.<table>
+<tr><td><code>\reg</code><td>Regularised<a class='footnote anchor' name='footnote_org_1' href='#footnote_1'><sup>1</sup></a> <tr><td><code>\hp</code><td>(Butterworth) High Pass<a class='footnote anchor' name='footnote_org_2' href='#footnote_2'><sup>2</sup></a> <tr><td><code>\cos</code><td>Cosine<a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a> <tr><td><code>\sin</code><td>Sine<a class='footnote anchor' name='footnote_org_4' href='#footnote_4'><sup>4</sup></a> </table>
+<tr><td class='argumentname'>speedOfSound<td class='argumentdesc'>
+<p>Speed of sound, in meters per second.</table></div><h3><a class='anchor' name='Beaming%20&%20Decoder%20matching'>Beaming &amp; Decoder matching</a></h3>
+
+<p>Three standard beam shapes are offered:<table>
+<tr><td><strong>keyword</strong><td><strong>beam shape</strong><td><strong>localisation vector</strong><td><strong>virtual microphone</strong><tr><td><code>\basic</code><td>strict soundfield<td>maximum velocity rV<td>Hyper-cardioid<tr><td><code>\energy</code><td>energy optimised<td>maximum energy rE<td>Super-cardioid<tr><td><code>\controlled</code><td>controlled opposites<td>minimum diametric energy<td>Cardioid</table>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-beamWeights' href='./../Overviews/Methods.html#beamWeights'>beamWeights</a>(<span class='argstr'>beamShape: 'basic'</span>, <span class='argstr'>dim: 3</span>)</h3>
+<div class='method'>
+<p>Return beamforming coefficients, collected by Associated Legendre degree (ℓ).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>beamShape<td class='argumentdesc'>
+<p>Keyword argument for beam shape. See <a href="#Beaming%20&%20Decoder%20matching">above</a>.<tr><td class='argumentname'>dim<td class='argumentdesc'>
+<p>The number of dimensions: 2D or 3D.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-matchWeight' href='./../Overviews/Methods.html#matchWeight'>matchWeight</a>(<span class='argstr'>beamShape: 'basic'</span>, <span class='argstr'>dim: 3</span>, <span class='argstr'>match: 'amp'</span>, <span class='argstr'>numChans</span>)</h3>
+<div class='method'>
+<p>Return matching weight for an ambisonic decoder.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>beamShape<td class='argumentdesc'>
+<p>Keyword argument for beam shape. See <a href="#Beaming%20&%20Decoder%20matching">above</a>.<tr><td class='argumentname'>dim<td class='argumentdesc'>
+<p>The number of dimensions: 2D or 3D.<tr><td class='argumentname'>match<td class='argumentdesc'>
+<p>Matching criteria:<table>
+<tr><td><code>\amp</code><td>pressure (loudspeaker sum)<tr><td><code>\rms</code><td>spherical harmonic energy<tr><td><code>\energy</code><td>loudspeaker energy</table>
+<tr><td class='argumentname'>numChans<td class='argumentdesc'>
+<p>Number of loudspeakers.<div class='note'><span class='notelabel'>NOTE:</span> Must be set when choosing <code>match: \energy</code>.</div></table></div><h3><a class='anchor' name='Decoder%20performance'>Decoder performance</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-spreadE' href='./../Overviews/Methods.html#spreadE'>spreadE</a>(<span class='argstr'>beamShape: 'basic'</span>, <span class='argstr'>dim: 3</span>)</h3>
+<div class='method'>
+<p>Return the half angle of the maximum average energy spread for an ambisonic decoder.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>beamShape<td class='argumentdesc'>
+<p>Keyword argument for beam shape. See <a href="#Beaming%20&%20Decoder%20matching">above</a>.<tr><td class='argumentname'>dim<td class='argumentdesc'>
+<p>The number of dimensions: 2D or 3D.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>An <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a> of values:<table>
+<tr><td><code>\cos</code><td>roll-off to ~-3dB, in radians<tr><td><code>\hvc</code><td>roll-off to ~-6dB, in radians</table>
+</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-meanE' href='./../Overviews/Methods.html#meanE'>meanE</a>(<span class='argstr'>beamShape: 'basic'</span>, <span class='argstr'>dim: 3</span>)</h3>
+<div class='method'>
+<p>Return <em>reduced energy</em> for an ambisonic decoder.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>beamShape<td class='argumentdesc'>
+<p>Keyword argument for beam shape. See <a href="#Beaming%20&%20Decoder%20matching">above</a>.<tr><td class='argumentname'>dim<td class='argumentdesc'>
+<p>The number of dimensions: 2D or 3D.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rV' href='./../Overviews/Methods.html#rV'>rV</a>(<span class='argstr'>beamShape: 'basic'</span>, <span class='argstr'>dim: 3</span>)</h3>
+<div class='method'>
+<p>Return maximum average magnitude of the velocity localisation vector (rV) for an ambisonic decoder.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>beamShape<td class='argumentdesc'>
+<p>Keyword argument for beam shape. See <a href="#Beaming%20&%20Decoder%20matching">above</a>.<tr><td class='argumentname'>dim<td class='argumentdesc'>
+<p>The number of dimensions: 2D or 3D.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rE' href='./../Overviews/Methods.html#rE'>rE</a>(<span class='argstr'>beamShape: 'basic'</span>, <span class='argstr'>dim: 3</span>)</h3>
+<div class='method'>
+<p>Return maximum average magnitude of the energy localisation vector (rE) for an ambisonic decoder.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>beamShape<td class='argumentdesc'>
+<p>Keyword argument for beam shape. See <a href="#Beaming%20&%20Decoder%20matching">above</a>.<tr><td class='argumentname'>dim<td class='argumentdesc'>
+<p>The number of dimensions: 2D or 3D.</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+
+<p>TBD<div class='footnotes'>
+<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - S. Favrot and J. Buchholz. 2010. “Impact of Regularization of near Field Coding Filters for 2D and 3D Higher-Order Ambisonics on Auditory Distance Cues.” in Proc. of the 2nd International Symposium on Ambisonics and Spherical Acoustics. Paris.</div><a class='anchor' name='footnote_2'/><div class='footnote'>[<a href='#footnote_org_2'>2</a>] - J. Daniel. 2003. “Spatial sound encoding including near field effect: Introducing distance coding filters and a viable, new ambisonic format,” in Proc. of the 23rd International Conference of the Audio Engineering Society.</div><a class='anchor' name='footnote_3'/><div class='footnote'>[<a href='#footnote_org_3'>3</a>] - J. Ahrens and S. Spors. 2009. “Spatial encoding and decoding of focused virtual sound sources,” in Proc. of the 1st Ambisonics Symposium. Paris.</div><a class='anchor' name='footnote_4'/><div class='footnote'>[<a href='#footnote_org_4'>4</a>] - A sine function variation of the window proposed by Ahrens &amp; Spors.</div></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/HelpSource/Classes/HoaOrder.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/HelpSource/Classes/HoaOrder.schelp</a><br>link::Classes/HoaOrder::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

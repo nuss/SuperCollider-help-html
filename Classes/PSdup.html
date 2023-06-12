@@ -1,0 +1,167 @@
+<!doctype html><html lang='en'><head><title>PSdup | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'PSdup';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>PSdup:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-psxPat'>psxPat</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>PSx stream patterns'>PSx stream patterns</a> | <a href='./../Browse.html#Streams-Patterns-Events'>Streams-Patterns-Events</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Streams-Patterns-Events>PSx stream patterns'>PSx stream patterns</a></span>
+</div><h1>PSdup<span id='superclasses'> : <a href="../Classes/PStream.html">PStream</a> : <a href="../Classes/Plazy.html">Plazy</a> : <a href="../Classes/Pattern.html">Pattern</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Pattern which returns last values from other patterns via PSx</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/PS.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/PS.sc'>PS.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Tutorials/PSx_stream_patterns.html">PSx stream patterns</a>, <a href="./../Classes/MemoRoutine.html">MemoRoutine</a>, <a href="./../Classes/PS.html">PS</a>, <a href="./../Classes/PSrecur.html">PSrecur</a>, <a href="./../Classes/PSloop.html">PSloop</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>PSdup uses the storage functionality of other PSx patterns. To track a value stream or event stream from a pattern you'd have to wrap the pattern into a PSx.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>PSdup.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>psxPat</span>, <span class='argstr'>length: inf</span>, <span class='argstr'>bufSize: 1</span>, <span class='argstr'>copyItems: 0</span>, <span class='argstr'>copySets: 1</span>)</h3>
+<div class='method'>
+<p>Creates a new PSdup object.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>psxPat<td class='argumentdesc'>
+<p>Source pattern, must be a PSx pattern.<tr><td class='argumentname'>length<td class='argumentdesc'>
+<p>Number of output items, may be pattern or stream, defaults to inf.<tr><td class='argumentname'>bufSize<td class='argumentdesc'>
+<p>Size of buffer to store last values, defaults to 1.<tr><td class='argumentname'>copyItems<td class='argumentdesc'>
+<p>Determines if and how to copy the last items from <strong>psxPat</strong>'s buffer which are either non-Sets or member of Sets. Takes Integer 0 (or false or Symbol \false), 1 (or true or Symbol \true) or 2 (or Symbol \deep). Other values are interpreted as 0. Defaults to 0.
+<p>0: original item
+<p>1: copy item
+<p>2: deepCopy item<tr><td class='argumentname'>copySets<td class='argumentdesc'>
+<p>Determines if and how to copy the last items from <strong>psxPat</strong>'s buffer which are Sets. Takes Integer 0 (or false or Symbol \false), 1 (or true or Symbol \true). Other values are interpreted as 0. Defaults to 1.
+<p>0: original Set
+<p>1: copy Set<div class='note'><span class='notelabel'>NOTE:</span> The distinction of copying items and sets makes sense in the case of event streams. Per default Events are copied (<strong>copySets</strong> == 1), not their values (<strong>copyItems</strong> == 0). By playing Events those are used to store additional data (synth ids, msgFuncs …) which is mostly not of interest when refering to the event stream, e.g. with PSx patterns which use MemoRoutine - copied Events will not contain this additional data. If values of Events or values returned directly by the stream (being no kind of Sets) are unstructured then copying makes no sense, this is the normal case, so copyItems defaults to 0. When going to alter the ouput, you might want to set <strong>copyItems</strong> to 1 for a PSx returning simple arrays or 2 for nested arrays (deepCopy). For deepCopying Events you'd have to set <strong>copySets</strong> to 1 and <strong>copyItems</strong> to 2 (an option <strong>copySets</strong> == 2 doesn't exist as it would be contradictory in combination with <strong>copyItems</strong> &lt; 2).</div><div class='note'><span class='notelabel'>NOTE:</span> Copy options concern copying into PSdup's buffer as well as the output of a Stream derived from the PSdup. When such a Stream is outputting copies this prevents unintended altering of items stored in the buffer of <strong>psxPat</strong>. On the other hand storing copies in PSdup's buffer prevents these from being altered unintendedly.</div></table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-psxPat' href='./../Overviews/Methods.html#psxPat'>psxPat</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-psxPat' href='./../Overviews/Methods.html#psxPat'>psxPat</a> = value</h3>
+<div class='method'>
+<p>Instance variable getter and setter methods.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>(
+s = Server.local;
+Server.default = s;
+s.boot;
+)
+
+// copying of value patterns
+// PSdup needs a PSx as input, as its value storage is used,
+// so it's easiest to wrap the original pattern into a PS
+
+(
+p = PS(Pseries());
+q = PSdup(p);
+
+// PSx patterns have a state and, in this regard, behave like Streams.
+// However, like other Patterns, for generating they must be made to Streams
+// which are the objects actually returning items.
+
+x = p.asStream;
+y = q.asStream;
+)
+
+// y follows x (as in the array left is evaluated before right)
+
+(
+a = [];
+10.do { a = a.add([x.next, y.next]) };
+a;
+)
+
+
+// get values from original Pattern / Stream
+
+x.nextN(10)
+
+// now y copies the last value of x resp. p
+
+y.nextN(10)
+
+
+
+// data sharing with event patterns
+
+(
+p = Pbind(
+    \midinote, Pwhite(60, 90) + PLrand([0, 0, [0, -3]]),
+    \dur, PLrand([0.2, 0.4]),
+    \amp, PLrand([0.07, 0.12, 0.2]),
+    \type, Pfunc { 0.1.coin.if { \rest }{ \note } },
+    \pan, 1
+);
+
+q = PS(p);
+
+// use PSdup as base for alterings
+// it takes the last event stored in PS(p)
+
+r = Pbindf(Padd(\midinote, PLrand([1,2,4,5]), PSdup(q)), \pan, -1);
+
+// as in general with event stream data sharing it's recommended to invent a small delta
+// between streams, here this is extended to a clear echo
+
+t = Ptpar([0, q, 0.1, r]).trace.play;
+)
+
+t.stop;
+
+
+// data sharing with event patterns, more voices
+
+
+(
+p = Pbind(
+    \midinote, Pwhite(50.0, 65),
+    \dur, PLrand([0.7, 0.9, 1.2]),
+    \amp, PLrand([0.1, 0.15, 0.2]),
+    \legato, 0.1
+);
+
+q = PS(p);
+
+// make pattern maker Function for parametrized alterings
+
+f = { |div, add| Padd(\midinote, add, Pmul(\dur, 1 / div, PSdup(q))) };
+d = 0.001;
+
+t = Ptpar([
+    0, q,
+    d, f.(2, 5 + PLrand([0, [0, 12.05]])),
+    d*2, f.(4, 7 + PLrand([0, [0, 12.1]])),
+    d*3, f.(8, 10 + PLrand([0, [0, 12.2]]))
+]).play
+)
+
+
+t.stop;</textarea>
+
+<p> <div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PSdup.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PSdup.schelp</a><br>link::Classes/PSdup::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

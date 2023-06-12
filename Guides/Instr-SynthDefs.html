@@ -1,0 +1,103 @@
+<!doctype html><html lang='en'><head><title>Instr SynthDefs | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Instr SynthDefs';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Instr SynthDefs:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#An%20Instr%20is%20not%20a%20SynthDef'>An Instr is not a SynthDef</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#Dynamic%20SynthDef%20architecture'>Dynamic SynthDef architecture</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Guides (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>crucial'>crucial</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>crucial>Instr'>Instr</a></span>
+</div><h1>Instr SynthDefs<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>How Instr make SynthDefs</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./../Guides/Patch-client-server-magic.html">Patch magic tricks</a></div>
+</div>
+<h2><a class='anchor' name='An%20Instr%20is%20not%20a%20SynthDef'>An Instr is not a SynthDef</a></h2>
+
+<p>An Instr is a function that creates SynthDefs.
+<p>Each argument in the function for a SynthDef creates a Control input to the Synth that will eventually play on the server.
+<p>An Instr can also include extra arguments that will be used in building the SynthDef, but will not be Control inputs on the final synth.
+<p>For instance an Integer may be passed in:<textarea class='editor'>// caution: mind the feedback. AudioIn
+(
+Instr(\qAllpassA,{    arg audio,decay=1,maxDelay=0.3,quantity=4,chanDiff=0.1;
+
+    // this is wrapping the sound in layers of Allpass delays
+    (quantity.asInteger).do({
+            var x;
+            audio =
+                 AllpassL.ar(audio, maxDelay,
+                 [rrand(0.01,maxDelay),rrand(0.01,maxDelay)],
+                 decay)
+         });
+    audio
+});
+
+Patch(\qAllpassA,[
+    { AudioIn.ar([1,2]) },
+    1,
+    0.3,
+    8.rand + 2 // quantity of Allpass layers
+]).play
+
+)</textarea>
+
+<p>The first input to the synth is a stereo audio rate input, the others were fixed floats that did not require synth inputs.
+<p>Envelopes, fixed floats, fixed integers, Samples etc. can be passed into Instr functions.
+<p>When Patch is used to specify the inputs to the function some of these inputs will be reduced to fixed values (integers, floats, Envelopes etc.), and the resulting SynthDef will contain those inputs hard-coded. Using different Patches, it is possible to write many SynthDefs from the same Instr.<textarea class='editor'>    Instr(\rlpf,{ arg input,ffreq=400,rq=0.1;
+        RLPF.ar( input, ffreq, rq )
+    });</textarea>
+
+<p> If the input supplied is stereo, the synthDef produced will be stereo.<textarea class='editor'>(
+    Patch(\rlpf,[
+        Patch({ Saw.ar([400,440],0.1) }) // in stereo
+    ]).play
+)</textarea>
+
+<p>It is possible to play another Instr inside of your Instr:<textarea class='editor'>(
+    Instr(\sawfilter,{ arg freq,ffreq,rq;
+        Instr.ar(\rlpf, [ Saw.ar(freq,0.1) , ffreq, rq ])
+    })
+)</textarea>
+
+<p>and thus get further reuse out of your library of functions. Here the \rlpf that is used inside doesn't produce a synth def, but is used as a simple function in the ugenGraph of the \sawfilter Instr which does make a synthDef.<h2><a class='anchor' name='Dynamic%20SynthDef%20architecture'>Dynamic SynthDef architecture</a></h2>
+
+<p>You can design Instr to take parameters that are used only in the building of the SynthDef. This can be used to select from different kinds of filters or to build a mini-modular synth.<textarea class='editor'>Instr(\upOrDown, {arg upDown=0;
+    var line;
+    if (upDown&gt;0,
+        {line = Line.kr(1,0,5)}, // upDown&gt;0 ==&gt; pitch goes up
+        {line = Line.kr(0,1,5)}  // upDown 0 or less ==&gt; pitch goes down
+    );
+    SinOsc.ar(440*line,0,0.2);
+},[
+    StaticIntegerSpec(0,1)
+]);
+
+Patch(\upOrDown, [ 0]).play</textarea>
+
+<p>The upDown param acts as a switch between different synth def architectures. If your Instr library is well designed you can acheive very sophisticated sound structures with automatic optimizations and code reuse.
+<p>Note that the Patch would assume upDown to be a modulatable control input (with a default of 0.0) without the StaticIntegerSpec making it clear that its a static integer.
+<p>see also <a href="./../Guides/Patch-client-server-magic.html">Patch magic tricks</a><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Guides/Instr-SynthDefs.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Guides/Instr-SynthDefs.schelp</a><br>link::Guides/Instr-SynthDefs::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

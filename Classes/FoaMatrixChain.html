@@ -1,0 +1,132 @@
+<!doctype html><html lang='en'><head><title>FoaMatrixChain | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'FoaMatrixChain';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>FoaMatrixChain:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'><li class='toc2'><a href='#Transform%20Chain%20Structure'>Transform Chain Structure</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-addTransform'>addTransform</a> </li>
+<li class='toc3'><a href='#-removeTransform'>removeTransform</a> </li>
+<li class='toc3'><a href='#-replaceTransform'>replaceTransform</a> </li>
+<li class='toc3'><a href='#-setParam'>setParam</a> </li>
+<li class='toc3'><a href='#-addChain'>addChain</a> </li>
+<li class='toc3'><a href='#-removeChain'>removeChain</a> </li>
+<li class='toc3'><a href='#-chainXForms'>chainXForms</a> </li>
+<li class='toc3'><a href='#-curXformMatrix'>curXformMatrix</a> </li>
+<li class='toc3'><a href='#-chains'>chains</a> </li>
+<li class='toc3'><a href='#-reset'>reset</a> </li>
+<li class='toc3'><a href='#-clear'>clear</a> </li>
+<li class='toc3'><a href='#-verbose'>verbose</a> </li>
+<li class='toc3'><a href='#-postChain'>postChain</a> </li>
+<li class='toc3'><a href='#-getLinkByKey'>getLinkByKey</a> </li>
+<li class='toc3'><a href='#-xFormDict'>xFormDict</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit'>Ambisonic Toolkit</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit>Utilities'>Utilities</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit>Utilities>FOA'>FOA</a></span>
+</div><h1>FoaMatrixChain<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Chain multiple FoaXformerMatrix transforms.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/Classes/FoaMatrixChain.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/Classes/FoaMatrixChain.sc'>FoaMatrixChain.sc</a></div><div id='related'>See also: <a href="./../Classes/FoaXformDisplay.html">FoaXformDisplay</a>, <a href="./../Classes/FoaXformerMatrix.html">FoaXformerMatrix</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A utility to chain multiple <a href="./../Classes/FoaXformerMatrix.html">FoaXformerMatrix</a> transforms. While it can be used as a standalone utility, it was primarily designed for internal use by <a href="./../Classes/FoaXformDisplay.html">FoaXformDisplay</a>.<h3><a class='anchor' name='Transform%20Chain%20Structure'>Transform Chain Structure</a></h3>
+
+<p>An FoaMatrixChain generates a node structure of transforms in both series and parallel. Parallel chains can tap "outputs" from nodes in other chains. The <strong>final</strong> output (retrieved with <a href="#-curXformMatrix">-curXformMatrix</a>) is always the last transform node of the last chain. However the resultant matrix at each node in the chain is also stored.
+<p>An FoaMatrixChain may actually be composed of multiple "chains" of transforms in parallel. By default, each node in the chain reads in the matrix from the previous transform, or the last transform of the previous chain in the case of a new parallel chain. The first node in a chain can optionally read in any previous node in the tree, and some transforms can also read a previous node into its input. For example in the <code>add</code> transform takes a previous node as an argument to be added to its input matrix. This structure will become apparent when using the interface provided with <a href="./../Classes/FoaXformDisplay.html">FoaXformDisplay</a>.
+<p>Many of the instance methods have arguments asking <strong>whichChain</strong> followed by an <strong>index</strong>. This refers to which parallel chain (a zero-based index), followed by the index of the node (transform) within that chain. For example if you have three parallel chains, and you want to specify the second node position in the last parallel chain, then <code>whichChan: 2, index: 1</code>.<div class='note'><span class='notelabel'>NOTE:</span> When modifying the matrix chain, you must call <a href="#-chainXForms">-chainXForms</a> in order for the chain and its variables to update. At that point <a href="#-curXformMatrix">-curXformMatrix</a> will return the resultant transform matrix.</div><h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>FoaMatrixChain.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>verbose: false</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>verbose<td class='argumentdesc'>
+<p>A <a href="./../Classes/Boolean.html">Boolean</a> specifying whether the transform chain is posted whenever a transform is changed, added or removed.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addTransform' href='./../Overviews/Methods.html#addTransform'>addTransform</a>(<span class='argstr'>xformName</span>, <span class='argstr'>whichChain</span>, <span class='argstr'>index</span> <span class='argstr'>... params</span>)</h3>
+<div class='method'>
+<p>Insert a transform into the chain.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>xformName<td class='argumentdesc'>
+<p>A <a href="./../Classes/Symbol.html">Symbol</a> corresponding to the transform's name, as listed by key in <code>.xFormDict.keys</code>.<tr><td class='argumentname'>whichChain<td class='argumentdesc'>
+<p>A chain index, zero-based.<tr><td class='argumentname'>index<td class='argumentdesc'>
+<p>A index in the chain specified by <strong>whichChain</strong>.<tr><td class='argumentname'>... params<td class='argumentdesc'>
+<p>Initial parameters to supply the transform, in the order they are listed in the controls, which can be viewed with, for example, <code>.xFormDict['press'].controls</code>. This param order and default values corresponds to the order defined in the <a href="./../Classes/FoaXformerMatrix.html">FoaXformerMatrix</a>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeTransform' href='./../Overviews/Methods.html#removeTransform'>removeTransform</a>(<span class='argstr'>whichChain</span>, <span class='argstr'>index</span>)</h3>
+<div class='method'>
+<p>Remove a transform from the chain.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>whichChain<td class='argumentdesc'>
+<p>Which chain index.<tr><td class='argumentname'>index<td class='argumentdesc'>
+<p>Index of the transform in the specified chain.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-replaceTransform' href='./../Overviews/Methods.html#replaceTransform'>replaceTransform</a>(<span class='argstr'>newXformName</span>, <span class='argstr'>whichChain</span>, <span class='argstr'>index</span> <span class='argstr'>... params</span>)</h3>
+<div class='method'>
+<p>Similar to <strong>addTransform</strong>, but rather than inserting, it replaces the transform at the specified chain/index location.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setParam' href='./../Overviews/Methods.html#setParam'>setParam</a>(<span class='argstr'>whichChain</span>, <span class='argstr'>index</span>, <span class='argstr'>ctlDex</span>, <span class='argstr'>value</span>)</h3>
+<div class='method'>
+<p>Set a parameter of one of the transforms in the chain(s).<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>whichChain<td class='argumentdesc'>
+<p>A chain index, zero-based.<tr><td class='argumentname'>index<td class='argumentdesc'>
+<p>A index in the chain specified by <strong>whichChain</strong>.<tr><td class='argumentname'>ctlDex<td class='argumentdesc'>
+<p>The index of the parameter in the <code>.controls</code> array corresponding to the transform being changed.<tr><td class='argumentname'>value<td class='argumentdesc'>
+<p>The new value for the transform parameter.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addChain' href='./../Overviews/Methods.html#addChain'>addChain</a>(<span class='argstr'>index</span>)</h3>
+<div class='method'>
+<p>Add a parallel processing chain. The default head of the chain will be the tail of the preceeding chain.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>index<td class='argumentdesc'>
+<p>Index at which to insert the new chain.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeChain' href='./../Overviews/Methods.html#removeChain'>removeChain</a>(<span class='argstr'>index</span>)</h3>
+<div class='method'>
+<p>Remove one of the parallel processing chains at <strong>index</strong>. Note that any transform inputs reading from nodes in this chain will be reset to <code>'A0'</code>, the orginal unaffected input soundfield.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-chainXForms' href='./../Overviews/Methods.html#chainXForms'>chainXForms</a></h3>
+<div class='method'>
+<p>Perform the calculation of "chaining" all the transforms together. This should be called after any alteration to the transform chain, which will in turn update the <a href="#-curXformMatrix">-curXformMatrix</a> variable.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-curXformMatrix' href='./../Overviews/Methods.html#curXformMatrix'>curXformMatrix</a></h3>
+<div class='method'>
+<p>Get the resultant transform from the chain.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-chains' href='./../Overviews/Methods.html#chains'>chains</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A 2D <code>Array</code> of FoaMatrixChainLinks whose state can be queried to return it's transform name, control parameter values, and resultant matrix up to that point in the chain, by <strong>.name</strong>, <strong>.controlStates</strong>, and <strong>.mtx</strong>, repsectively.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reset' href='./../Overviews/Methods.html#reset'>reset</a></h3>
+<div class='method'>
+<p>Reset the processing chain, starting over from an unaffected input soundfield.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a></h3>
+<div class='method'>
+<p>Same as reset.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-verbose' href='./../Overviews/Methods.html#verbose'>verbose</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-verbose' href='./../Overviews/Methods.html#verbose'>verbose</a> = value</h3>
+<div class='method'>
+<p>A <a href="./../Classes/Boolean.html">Boolean</a> specifying whether the transform chain is posted whenever a transform is changed, added or removed.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-postChain' href='./../Overviews/Methods.html#postChain'>postChain</a></h3>
+<div class='method'>
+<p>Post the current processing chains, with the transform names and parameters formatted to view easily.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getLinkByKey' href='./../Overviews/Methods.html#getLinkByKey'>getLinkByKey</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>Get a transform "link" in the chain by its alpha-numeric key.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>An alpha-numeric key, e.g. <code>'B2'</code> would return the third (<code>'2'</code>) transform "link" in the second parallel chain (<code>'B'</code>)</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <code>FoaMatrixChainLink</code> whose state can be queried to return it's transform name, control parameter values, and resultant matrix up to that point in the chain, by <strong>.name</strong>, <strong>.controlStates</strong>, and <strong>.mtx</strong>, repsectively.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-xFormDict' href='./../Overviews/Methods.html#xFormDict'>xFormDict</a></h3>
+<div class='method'><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A <code>Dictionary</code> containing specifications for all of the valid transforms and their controls.</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/HelpSource/Classes/FoaMatrixChain.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/HelpSource/Classes/FoaMatrixChain.schelp</a><br>link::Classes/FoaMatrixChain::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

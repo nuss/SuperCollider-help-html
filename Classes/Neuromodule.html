@@ -1,0 +1,377 @@
+<!doctype html><html lang='en'><head><title>Neuromodule | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Neuromodule';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Neuromodule:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-theta'>theta</a> </li>
+<li class='toc3'><a href='#-numCells'>numCells</a> </li>
+<li class='toc3'><a href='#-x'>x</a> </li>
+<li class='toc3'><a href='#-weights'>weights</a> </li>
+<li class='toc3'><a href='#-outs'>outs</a> </li>
+<li class='toc3'><a href='#-next'>next</a> </li>
+<li class='toc2'><a href='#Combining%20and%20modifying%20modules'>Combining and modifying modules</a></li>
+<ul class='toc'><li class='toc3'><a href='#-fillMissing'>fillMissing</a> </li>
+<li class='toc3'><a href='#-addAll'>addAll</a> </li>
+<li class='toc3'><a href='#-merge'>merge</a> </li>
+<li class='toc3'><a href='#-rewire'>rewire</a> </li>
+</ul><li class='toc2'><a href='#Visualization'>Visualization</a></li>
+<ul class='toc'><li class='toc3'><a href='#-dotStructure'>dotStructure</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-copy'>copy</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Streams-Patterns-Events'>Streams-Patterns-Events</a></span>
+</div><h1>Neuromodule<span id='superclasses'> : <a href="../Classes/Stream.html">Stream</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Dynamic time-discrete neuromodule</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Neuromodule/Classes/Neuromodule.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/Neuromodule/Classes/Neuromodule.sc'>Neuromodule.sc</a></div></div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Neuromodules are a model for experimenting with the temporal dynamics of time-discrete neural networks, following <em>Frank Pasemann, Complex dynamics and the structure of small neural networks, Network: Comput. Neural Syst. 13, 2002, pp. 195--216</em>.
+<p>They implement the map:<div class='image'><img src='neuromodule-form.png'/></div>
+
+<p>In other words,<textarea class='editor'>x = (0..n-1).collect { |i|
+            theta.wrapAt(i).value(inval) + (0..n-1).sum { |j|
+                weights.wrapAt(i).wrapAt(j).value(inval) * tanh(x.at(j))
+            }
+        };</textarea>
+
+<p>"The widespread recurrent structures found in biological neural networks imply the possibility of complex neural dynamics and, in fact, oscillatory and chaotic activity has been observed frequently in brains. This suggests that complex dynamics may play an important role for specific functions of the brain. Therefore, these dynamical properties have found increasing attention in recent years; but it still remains an open question to what extent and through which kind of mechanisms oscillatory and chaotic dynamics can contribute to effective signal processing in the brain." (p. 195f.)<div class='image'><img src='2-module.png'/><br><b>This iso-periodic diagram shows the "metric landscape" of a 2-module (numbers denoting the cycle length). The plot is in the (w11,w12)-subspace for fixed parameters w21 = −6, θ1 = −3, θ2 = 4. (image from Pasemann 2002, p. 201).</b></div>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>Neuromodule.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>x</span>, <span class='argstr'>theta</span>, <span class='argstr'>weights</span>, <span class='argstr'>outs</span>)</h3>
+<div class='method'>
+<p>Return a new instance.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>x<td class='argumentdesc'>
+<p>Array of initial values for each node. This sets the size of the network.<tr><td class='argumentname'>theta<td class='argumentdesc'>
+<p>Bias for each node. This is typically where an external input enters.<tr><td class='argumentname'>weights<td class='argumentdesc'>
+<p>Array of arrays of values (postive or negative real numbers), which specify the strength of a connection. See also below: <a href="#-weights">-weights</a><tr><td class='argumentname'>outs<td class='argumentdesc'>
+<p>Array of indices, which nodes are used as output. When none is given, all nodes are output.<textarea class='editor'>a = Neuromodule([0, 0], [2, -1], [[-3, 2], [-2, 0]]);
+a.nextN(8);
+Pbind(\note, a * 20, \dur, 0.04, \legato, 0.1).play;
+a.weights = { { 1.0.rand2 } ! 2 } ! 2; // random nets quickly converge ...</textarea>
+</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-theta' href='./../Overviews/Methods.html#theta'>theta</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-theta' href='./../Overviews/Methods.html#theta'>theta</a> = value</h3>
+<div class='method'>
+<p>Set or get the current bias values. This can be a number, or anything that responds to <code>value</code> by retuning thomething that responds to the math operations, e.g. a Stream, andother Neuromodule, or a Function.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Array</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numCells' href='./../Overviews/Methods.html#numCells'>numCells</a></h3>
+<div class='method'>
+<p>Number of nodes in the network.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Integer</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-x' href='./../Overviews/Methods.html#x'>x</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-x' href='./../Overviews/Methods.html#x'>x</a> = value</h3>
+<div class='method'>
+<p>Set or get the current node values.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Array</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-weights' href='./../Overviews/Methods.html#weights'>weights</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-weights' href='./../Overviews/Methods.html#weights'>weights</a> = value</h3>
+<div class='method'>
+<p>Set or get the current weights. Each weight can be a number, or anything that responds to <code>value</code> by retuning thomething that responds to the math operations, e.g. a Stream, andother Neuromodule, or a Function.
+<p>A simple example with size = 2 shows the meaning of the values in the array:<textarea class='editor'>[
+    [-3, 2], // the first node is influenced by itself with -3 and with the second node with 2
+    [-2, 0] // the second node is influenced by the first with -2 and not with itself (0).
+]</textarea>
+<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Array of Arrays</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-outs' href='./../Overviews/Methods.html#outs'>outs</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-outs' href='./../Overviews/Methods.html#outs'>outs</a> = value</h3>
+<div class='method'>
+<p>Set or get the current outputs, an array of indices. If set to <code>nil</code>, the module returns all node values.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Array of Integers</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-next' href='./../Overviews/Methods.html#next'>next</a>(<span class='argstr'>inval</span>)</h3>
+<div class='method'>
+<p>Calculate the next state. A neuromodule is a stream, see: <a href="./../Classes/AbstractFunction.html">AbstractFunction</a> and <a href="./../Classes/Stream.html">Stream</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>inval<td class='argumentdesc'>
+<p>This argument is passed to <code>theta</code> and <code>weight</code>.<textarea class='editor'>// a neuromodule is a stream.
+a = Neuromodule([0.1, 0.12], [2, -1], [[-3, 2], [-2, 0]]);
+x = a * 100 + 300;
+x.next;
+x.next;
+
+// passing in values for each calculation step
+a = Neuromodule([0.1, 0.12], [{ |in| in[\theta0] }, { |in| in[\theta1] }], [[-3, 2], [-2, 0]]);
+x = a * 100 + 300;
+x.next((theta0:-1, theta1:1));
+x.next((theta0:-1.3, theta1:-0.3));</textarea>
+</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Array of values</div></div><h3><a class='anchor' name='Combining%20and%20modifying%20modules'>Combining and modifying modules</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fillMissing' href='./../Overviews/Methods.html#fillMissing'>fillMissing</a></h3>
+<div class='method'>
+<p>Fill up any missing weights and thetas.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addAll' href='./../Overviews/Methods.html#addAll'>addAll</a>(<span class='argstr'>neuromodule</span>)</h3>
+<div class='method'>
+<p>Add all nodes (cells) from another neuromodule to this.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>neuromodule<td class='argumentdesc'>
+<p>Another Neuromodule.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>this</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-merge' href='./../Overviews/Methods.html#merge'>merge</a>(<span class='argstr'>neuromodule</span>)</h3>
+<div class='method'>
+<p>Merge this with another neuromodule and create a new one.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>neuromodule<td class='argumentdesc'>
+<p>Another Neuromodule.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>A new Neuromodule.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rewire' href='./../Overviews/Methods.html#rewire'>rewire</a>(<span class='argstr'>triples</span>, <span class='argstr'>func</span>, <span class='argstr'>postWarnings: true</span>)</h3>
+<div class='method'>
+<p>Make connections between the existing nodes by changing their respective weights.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>triples<td class='argumentdesc'>
+<p>An array that specifies <code>[from-node-index, to-node-index, new-weight]</code>
+<p><strong>CHECK AGAIN THE ORDER!!</strong><tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>If given, it will be called to produce the weight for the node, taking as arguments: <code>old-value, new-value, from-index, to-index</code>.<tr><td class='argumentname'>postWarnings<td class='argumentdesc'>
+<p>If set to true, post warnings if inidces don't match weights dimensions.</table></div><h3><a class='anchor' name='Visualization'>Visualization</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dotStructure' href='./../Overviews/Methods.html#dotStructure'>dotStructure</a></h3>
+<div class='method'>
+<p>Returns a string with a dot-language graph (which can then be rendered with graphViz).<textarea class='editor'>a = Neuromodule([0, 0], [2, -1], [[-3, 2], [-2, 0]]);
+a.dotStructure</textarea>
+</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-copy' href='./../Overviews/Methods.html#copy'>copy</a></h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>// create a new module
+(
+~module = Neuromodule(
+    x: [0.1, 0],
+    theta: [0.1, 0.3],
+    weights: [[-3, 2], [-2, 0]],
+    outs: 0
+);
+)
+
+// forward time
+~module.next;
+~module.next;
+~module.next;
+
+// or (this is implemented in a superclass)
+~module.nextN(8); // 8 values
+~module.nextN(128).plot;
+
+
+// sonification: interactive, rewrite while running ...
+
+// synthdef
+(
+SynthDef(\gabor, { |out, freq=440, sustain=0.1, amp = 0.1, width = 0.1|
+    var sig, env;
+    env = LFGauss.ar(sustain, width, loop:0, doneAction: 2);
+    sig = SinOsc.ar(freq, 0.5pi) * env * amp;
+    OffsetOut.ar(out, sig);
+}).add;
+)
+
+(
+Tdef(\x, {
+    loop {
+        var dt = 0.1;
+        (
+            instrument: \gabor,
+            note: ~module.next * 4,
+            sustain: dt * 1.5, // 50% overlap
+            width: 0.3
+        ).play;
+
+        dt.wait;
+    };
+}).play
+)
+
+// play with the parameters
+
+
+
+// fig. 82
+~module.theta = [2, -1]; ~module.weights = [[-3, 2], [-2, 0]];
+~module.weights = ~module.weights + [0.2, -0.1];
+~module.weights = ~module.weights + [-0.2, 0.1];
+
+// different scaling
+~module.outs = [0, 1]; //  two dimensions
+
+(
+Tdef(\x, {
+    loop {
+        var dt = 0.001; // maximum is about 1 ms. more will be problematic...
+        (
+            instrument: \gabor,
+            freq: ~module.next.linexp(-2, 2, 300, 10000),
+            sustain: dt * 1.5, // 50% overlap
+            width: 0.6,
+            out: [0, 1] // map to two audio channels
+        ).play;
+
+        dt.wait;
+    };
+}).play
+)
+
+
+
+
+
+// a GUI:
+
+(
+~makeWindow = { |module|
+
+    var w = Window("module", Rect(200, 300, 400, 30 * module.numCells + 100));
+    var l = VLayout();
+    var h = HLayout(l);
+    var xsl = Set[], ysl = Set[];
+    var sliders, twod;
+    var update = { |index, val|
+        sliders[index].value = val;
+        module.theta[index] = val * 2 - 1;
+        module.theta.postln;
+    };
+    w.layout = h;
+    w.front;
+
+    h.add(
+        twod = Slider2D().action_({ |v|
+            xsl.do { |i| update.(i, v.x) };
+            ysl.do { |i| update.(i, v.y) };
+        });
+    );
+
+    sliders = module.theta.collect { |x, i|
+        var sl = Slider();
+        sl.action = { |v|
+            update.(i, v.value);
+            if(xsl.includes(i)) { twod.x = v.value };
+            if(ysl.includes(i)) { twod.y = v.value };
+        };
+        sl.value = x + 1 / 2;
+        sl.orientation = \vertical;
+
+        sl
+    };
+
+    sliders.do { |sl, i|
+        var ll = VLayout();
+
+        ll.add(
+            Button().states_([["x"], ["y"], [" "]]).action_({ |b|
+                if(b.value == 0) { ysl.remove(i);xsl.add(i); sl.value = twod.x; };
+                if(b.value == 1) { xsl.remove(i); ysl.add(i); sl.value = twod.y; };
+                if(b.value == 2) { xsl.remove(i); ysl.remove(i) };
+            })
+            .valueAction_(2);
+
+        );
+        ll.add(sl);
+        h.add(ll);
+    };
+
+
+};
+~makeWindow.(~module);
+)
+
+// modules are streams (see Stream help)
+
+~m1 = Neuromodule([0.1, 0],  [0.1, 0.3], [[-3, 2], [-2, 0]], 0);
+~m2 = Neuromodule([0.1, 0],  [0.5, -0.1], [[-3, 2], [2, 0]], 0);
+
+~z = ~m1.sin + ~m2.squared;
+~z.nextN(8);
+
+
+// merging two modules:
+~m1 = Neuromodule([0.1, 0],  [0.1, 0.3], [[-3, 2], [-2, 0]], 0);
+~m2 = Neuromodule([0.1, 0],  [0.5, -0.3], [[-3, 2], [2, 0]], 0);
+~m3 = merge(~m1, ~m2);
+
+
+
+~module.addAll(~m3); // combine with the one further up
+~makeWindow.(~module);
+
+
+// rewiring:
+
+~m = Neuromodule(0 ! 4).fillMissing; // simplest empty module
+~m.rewire([[0, 0, -1], [1, 0, 2]]);
+~m.rewire([[0, 0, 0.1 ], [1, 0,  0.1]], { |prev, new| prev.neg + new }); // passing in a function
+
+
+
+// combining modules in one way direction works like this:
+~m1 = Neuromodule([0.1, 0],  [0.1, 0.3], [[-3, 2], [-2, 0]], 0);
+~m2 = Neuromodule([0.1, 0],  [~m1, 0.3], [[-3, 2], [-2, 0]], 0);
+
+
+~m2.nextN(8);
+
+
+// combining modules in a concurrent way
+~m1 = Neuromodule([0.1, 0],  [{ ~m2.x[1] }, 0.3], [[-3, 2], [-2, 0]], 0);
+~m2 = Neuromodule([0.1, 0],  [0.1, { ~m2.x[0] }], [[-3, 2], [-2, 0]], 0);
+
+Tdef(\x, { loop { 0.1.wait; "m1: ".post; ~m1.next.postln; } }).play;
+Tdef(\y, { loop { 0.15.wait; "m2: ".post; ~m2.next.postln; } }).play;
+
+// sonifying them in stereo
+(
+Tdef(\x, {
+    var dt = 0.1;
+    loop { dt.wait; (
+            instrument: \gabor,
+            freq: ~m1.next.linexp(-2, 2, 300, 10000),
+            sustain: dt * 1.5, // 50% overlap
+            width: 0.6,
+            out: 0 // left
+        ).play; }
+}).play;
+Tdef(\y, {
+    var dt = 0.14;
+    loop {
+        dt.wait; (
+            instrument: \gabor,
+            freq: ~m2.next.linexp(-2, 2, 300, 3000),
+            sustain: dt * 1.5, // 50% overlap
+            width: 0.6,
+            out: 1 // right
+        ).play; }
+}).play;
+)
+
+~m1.theta[1] = -1; ~m1.weights = [[-3, 2], [-2, 0]];
+~m2.theta[0] = 1; ~m1.weights = [[3, -2], [0, 2]];</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/Neuromodule/HelpSource/Classes/Neuromodule.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/Neuromodule/HelpSource/Classes/Neuromodule.schelp</a><br>link::Classes/Neuromodule::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

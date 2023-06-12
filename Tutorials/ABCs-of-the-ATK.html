@@ -1,0 +1,605 @@
+<!doctype html><html lang='en'><head><title>ABCs of the ATK | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'ABCs of the ATK';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>ABCs of the ATK:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#Introduction'>Introduction</a></li>
+<ul class='toc'><li class='toc2'><a href='#Two%20toolsets%20in%20one'>Two toolsets in one</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Theory%20&%20practice'>Theory &amp; practice</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Learning'>Learning</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#The%20paradigm'>The paradigm</a></li>
+<ul class='toc'><li class='toc2'><a href='#Features'>Features</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Installation'>Installation</a></li>
+<ul class='toc'><li class='toc2'><a href='#Components'>Components</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Suggested%20extensions'>Suggested extensions</a></li>
+<ul class='toc'><li class='toc2'><a href='#ADT'>ADT</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#AmbiVerbSC'>AmbiVerbSC</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Related%20packages'>Related packages</a></li>
+<ul class='toc'><li class='toc2'><a href='#SuperCollider'>SuperCollider</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#JoshUGens'>JoshUGens</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#AmbIEM'>AmbIEM</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#3Dj'>3Dj</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#SC-HOA'>SC-HOA</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Ambisonic%20formats'>Ambisonic formats</a></li>
+<ul class='toc'><li class='toc2'><a href='#Encoding%20formats'>Encoding formats</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Domain%20formats'>Domain formats</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Library%20architecture'>Library architecture</a></li>
+<ul class='toc'><li class='toc2'><a href='#Getting%20Help'>Getting Help</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ambisonic%20UGen%20types'>Ambisonic UGen types</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Matrix%20&%20Kernel%20operations'>Matrix &amp; Kernel operations</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Kinds%20of%20operations'>Kinds of operations</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Static%20&%20dynamic%20operations'>Static &amp; dynamic operations</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Toolset%20namespaces'>Toolset namespaces</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#What%20next?'>What next?</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Tutorials (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit'>Ambisonic Toolkit</a></span>
+</div><h1>ABCs of the ATK<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Ambisonic Toolkit, a library for soundfield research, analysis, synthesis and composition</div>
+</div>
+<div class='subheader'>
+</div>
+<a class='anchor' name='kw_Atk'>&nbsp;</a><h2><a class='anchor' name='Introduction'>Introduction</a></h2>
+
+<p>The Ambisonic Toolkit (ATK) aspires to offer a robust and well documented research grade library of tools for the SuperCollider user.<h3><a class='anchor' name='Two%20toolsets%20in%20one'>Two toolsets in one</a></h3>
+
+<p>These tools are organized into two sets.
+<p>The first of these is modelled after the hardware<a class='footnote anchor' name='footnote_org_1' href='#footnote_1'><sup>1</sup></a>  and software tools offered in the world of classic, aka Gerzonic, <em>First Order Ambisonics</em> (FOA), <a class='footnote anchor' name='footnote_org_2' href='#footnote_2'><sup>2</sup></a>  while the second is framed as a modern <em>Near-Field Controlled Higher Order Ambisonic</em> (NFC-HOA) solution.
+<p>Moving between these sets is facilited through parallel tools for both FOA and HOA, and documentation on <a href="#Exchanging%20formats">exchanging Ambisonic signals</a> between these two <a href="#Encoding%20formats">Ambisonic encoding conventions</a>.
+<p>The tools are provided as open building blocks for Ambisonic workflows, signal synthesis and processing. The HOA toolset, in particular, is weighted towards providing <em>resources</em> for implementations and <em>design patterns</em> rather than multiple, closed black box solutions.<a class='footnote anchor' name='footnote_org_3' href='#footnote_3'><sup>3</sup></a> <h3><a class='anchor' name='Theory%20&%20practice'>Theory &amp; practice</a></h3>
+
+<p>The ATK is solidly built upon a firm foundation of direct calculation of Ambisonic encoding coefficients. Since the inclusion<a class='footnote anchor' name='footnote_org_4' href='#footnote_4'><sup>4</sup></a>  of <a href="./../Guides/Tour-of-Special-Functions.html">Special Functions</a> from the <a href="https://www.boost.org/">Boost library</a>, fast coefficient calucations are available in both sclang and on the sound synthesis server.
+<p>In library solutions for a complete Ambisonic workflow are available either directly, or are otherwise documented.<a class='footnote anchor' name='footnote_org_5' href='#footnote_5'><sup>5</sup></a> <h3><a class='anchor' name='Learning'>Learning</a></h3>
+
+<p>An expanding collection of <a href="./../Overviews/ABCs-Guides-Toots.html">verbose guides and tutorial</a> is provided to facilitate learning Ambisonic and ATK <em>use patterns</em>. Users are invited to help expand this documention through both <a href="./../Guides/ATK-FAQs.html#How%20do%20I%20request%20a%20guide%20or%20tutorial?">requesting</a> and <a href="./../Guides/ATK-FAQs.html#How%20do%20I%20submit%20a%20guide%20or%20tutorial?">submitting</a> guides and tutorials.<h2><a class='anchor' name='The%20paradigm'>The paradigm</a></h2>
+
+<p>The ATK brings together a number of classic and novel tools and transforms for the artist working with Ambisonic surround sound and makes these available to the SuperCollider user. The toolset in intended to be both ergonomic and comprehensive, and is framed so that the user is encouraged to <em>think Ambisonically</em>. By this, it is meant the ATK addresses the holistic problem of creatively controlling a complete soundfield, allowing and encouraging the artist to think beyond the placement of sounds in a sound-space (sound-scene paradigm). Instead the artist is encouraged to attend to the impression and imaging of a soundfield, therefore taking advantage of the native soundfield-kernel paradigm the Ambisonic technique presents.
+<p>The ATK's production model is illustrated below:<div class='image'><img src='atknetwork.png'/><br><b>ATK paradigm</b></div>
+
+<p>Here you'll see that the ATK breaks down the task of working with Ambisonics into three separate elements:<dl>
+<dt>Author<dd>Capture or synthesise an Ambisonic soundfield.<dt>Image<dd>Spatially filter an Ambisonic soundfield.<dt>Monitor<dd>Playback or render an Ambisonic soundfield.</dl>
+<h3><a class='anchor' name='Features'>Features</a></h3>
+
+<p>Some notable features of the ATK include:<ul>
+<li>Integrated support for classic <em>First Order Ambisonics (FOA)</em> and modern <em>Higher Order Ambisonics (HOA)</em>.<li>Implements the <em>Near-Field Controlled</em>, aka <em>Near-Field Compensated</em>, form of higher order Ambisonics (NFC-HOA).<li>Ambisonic order is merely limited by system speed, channel capacity and numerical precision rather than by design.<a class='footnote anchor' name='footnote_org_6' href='#footnote_6'><sup>6</sup></a> <li>Control and synthesis of the near-field effect (NFE) of finite distance sources in both FOA and HOA, including radial beamforming.<li>Soundfield feature sensing &amp; analysis in instantaneous and time averaged forms.<li>Ambisonic coefficients and matrices are available for inspection and manipulation in the interperter.<li>Angular domain soundfield decomposition and recomposition.<li>Analysis of transformer and decoder matrices.</ul>
+<h2><a class='anchor' name='Installation'>Installation</a></h2>
+
+<p><strong>Instructions</strong> for installing the complete system are found <a href="https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#installing">HERE</a>. &lt;-- click link!
+<p>If you're reading this document at least <em>one</em> part of the ATK, the <a href="https://github.com/ambisonictoolkit/atk-sc3">atk-sc3 quark</a> has most likely been corectly installed.<div class='note'><span class='notelabel'>NOTE:</span> If the <a href="./../Classes/HelpBrowser.html">HelpBrowser</a> doesn't navigate to the section of the quark README titled <strong>Installing</strong>, just search <a href="https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#installing">the page</a> to find.</div><h3><a class='anchor' name='Components'>Components</a></h3>
+
+<p>The complete ATK library is built of a number of components. These are:<ul>
+<li><a href="./../Guides/WritingUGens.html#Pseudo-UGens">pseudo-UGens</a>, classes, extension methods and documentation found in the <a href="https://github.com/ambisonictoolkit/atk-sc3">atk-sc3 quark</a><li>ATK UGens found in <a href="https://github.com/supercollider/sc3-plugins/releases">sc3-plugins</a><li><a href="http://www.ambisonictoolkit.net/download/kernels/">kernels</a>, <a href="http://www.ambisonictoolkit.net/download/matrices/">matrices</a> &amp; <a href="http://www.ambisonictoolkit.net/download/recordings/">soundfiles</a> found in the <a href="https://github.com/ambisonictoolkit">ATK repository</a></ul>
+<div class='note'><span class='notelabel'>NOTE:</span> Except for the <a href="http://www.ambisonictoolkit.net/download/recordings/">soundfiles</a>, all of these components are required!</div>
+<p>If you've successfully completed the steps described <a href="#Installation">above</a>, you should have a working installation of the ATK. Let's review each of these:<dl>
+<dt>quark<dd>We can easily inspect the <strong>quark</strong> and installed quark dependencies via the <a href="./../Classes/QuarksGui.html">QuarksGui</a>:<textarea class='editor'>QuarksGui.new</textarea>
+
+<p>Though we already know the answer, we can also run this test:<textarea class='editor'>(
+("The ATK quark component % installed!").format(
+    Quarks.isInstalled("atk-sc3").if({
+        "is"
+    }, {
+        "isn't"
+    })
+).postln
+)</textarea>
+
+<p>If the <strong>quark</strong> has been installed in <code>Quarks.folder</code>, we can poke about:<textarea class='editor'>(Quarks.folder +/+ "atk-sc3").openOS</textarea>
+<dt>sc3-plugins<dd>Similarly, if the UGens found in <strong>sc3-plugins</strong> have been installed in <code>Platform.userExtensionDir</code>:<textarea class='editor'>(Platform.userExtensionDir +/+ "SC3plugins/ATK").openOS</textarea>
+<dt>kernel, matrices &amp; soundfiles<dd>And, if the <strong>kernels</strong>, <strong>matrices</strong> and <strong>soundfiles</strong> have been installed in each related user directories, we can inspect:<textarea class='editor'>(
+Atk.userKernelDir.openOS;
+Atk.userMatrixDir.openOS;
+Atk.userSoundsDir.openOS;
+)</textarea>
+</dl>
+<h2><a class='anchor' name='Suggested%20extensions'>Suggested extensions</a></h2>
+
+<p>Users can expand the functionality of the ATK by adding additional extensions. The following are suggested.<h3><a class='anchor' name='ADT'>ADT</a></h3>
+
+<p>The <a href="https://gitlab.com/dxarts/projects/adt.quark">ADT quark</a> offers a convenient interface to the <a href="https://bitbucket.org/ambidecodertoolbox/adt/src/master/">Ambisonic Decoder Toolbox</a>, a collection functions for creating Ambisonic decoders. The interface supplied by the quark has been designed to facilitate use with the ATK.
+<p>At the time of this writing, the <a href="https://gitlab.com/dxarts/projects/adt.quark">ADT quark</a> has not yet been included the SuperCollider <a href="https://github.com/supercollider-quarks/quarks/blob/master/directory.txt">Quark directory</a>, meaning that the <a href="./../Classes/QuarksGui.html">QuarksGui</a> cannot be used to install.
+<p>You can install the quark:<textarea class='editor'>Quarks.install("https://gitlab.com/dxarts/projects/adt.quark")</textarea>
+
+<p>You'll then need to complete the installation by installing <a href="https://bitbucket.org/ambidecodertoolbox/adt/src/master/">Ambisonic Decoder Toolbox</a> library and <a href="https://www.gnu.org/software/octave/">Octave</a>.
+<p>Follow the instructions found <a href="https://gitlab.com/dxarts/projects/adt.quark#adt">here</a>.<h3><a class='anchor' name='AmbiVerbSC'>AmbiVerbSC</a></h3>
+
+<p>Everyone loves reverb! Built with the ATK, the <a href="https://github.com/JamesWenlock/AmbiVerbSC">AmbiVerbSC quark</a> provides a native first order Ambisonic tank style reverb algorithm.
+<p>As with the <a href="https://gitlab.com/dxarts/projects/adt.quark">ADT quark</a>, the <a href="https://github.com/JamesWenlock/AmbiVerbSC">AmbiVerbSC quark</a> has not yet been included the SuperCollider <a href="https://github.com/supercollider-quarks/quarks/blob/master/directory.txt">Quark directory</a>.
+<p>To install the quark:<textarea class='editor'>Quarks.install("https://github.com/JamesWenlock/AmbiVerbSC")</textarea>
+<h2><a class='anchor' name='Related%20packages'>Related packages</a></h2>
+
+<p>Support for Ambisonics within SuperCollider has existed in a variety of forms over the years. The principal form of this support has been via <a href="./../Guides/UGens-and-Synths.html">unit generators</a> supplied for <em>monophonic source</em> encoding<a class='footnote anchor' name='footnote_org_7' href='#footnote_7'><sup>7</sup></a>  and two dimensional, aka <em>pantophonic</em>, decoding.
+<p>Over the years, a number of related but different <em>Ambisonic encoding formats</em> have been used. (These formats are discussed in more detail, <a href="#Encoding%20formats">below</a>.) For now, the thing to keep in mind is that when we use tools from multiple packages, we need to be sure to correctly exchange Ambisonic encoding formats where these differ.
+<p>When you've fully completed the <a href="#Installation">installation</a> of the ATK, you'll automagically also have two other packages installed, the <a href="#SuperCollider">SuperCollider builtins</a><a class='footnote anchor' name='footnote_org_8' href='#footnote_8'><sup>8</sup></a>  and those found in <a href="#JoshUGens">JoshUGens</a>. The other two, <a href="#AmbIEM">AmbIEM</a> and <a href="#SC-HOA">SC-HOA</a> require additional steps.
+<p>For ease of comparison, the UGens supplied by each package are listed according to the ATK's <a href="#Ambisonic%20UGen%20types">UGen classification convention</a>. (In this text we'll refer to a particular Ambisonic UGen as a <strong>type</strong> of Ambisonic UGen.)
+<p>Any additional utitilities or functionality supplied by these packages are not discussed here.<div class='note'><span class='notelabel'>NOTE:</span> At the time of this writing, ATK namespace collisions with the four packages listed here <em>have not</em> been observed. As a result, it <em>should</em> be possible to configure a system with all the below installed.
+<p>If at some point you find a collision with the below packages (or any other), please let us know: <a href="./../Tutorials/ATK-FAQs#How%20do%20I%20report%20a%20bug?">How do I report a bug?</a></div><h3><a class='anchor' name='SuperCollider'>SuperCollider</a></h3>
+
+<p>The original author of SuperCollider has provided basic support for First Order Ambisonics (FOA) via the following unit generators:<dl>
+<dt>Encoder<dd><a href="./../Classes/PanB.html">PanB</a>, <a href="./../Classes/PanB2.html">PanB2</a>, <a href="./../Classes/BiPanB2.html">BiPanB2</a><a class='footnote anchor' name='footnote_org_9' href='#footnote_9'><sup>9</sup></a> <dt>Transformer<dd><a href="./../Classes/Rotate2.html">Rotate2</a><dt>Decoder<dd><a href="./../Classes/DecodeB2.html">DecodeB2</a></dl>
+
+<p>Many SuperCollider users have been introduced to Ambisonics through experimentation with these UGens.
+<p>(Follow <a href="#SCEncodingFormat">this link</a> to review SuperCollider's encoding format.)<h3><a class='anchor' name='JoshUGens'>JoshUGens</a></h3>
+
+<p>As with the ATK, the <a href="https://github.com/supercollider/sc3-plugins/tree/master/source/JoshUGens">JoshUGens</a> collection is also distributed via <a href="https://github.com/supercollider/sc3-plugins/releases">sc3-plugins</a>, and offers further implementations in first and second order Ambisonic forms.
+<p>The following unit generators are supplied:<dl>
+<dt>Encoder<dd><a href="./../Classes/BFEncode.html">BFEncode</a>, <a href="./../Classes/BFEncode1.html">BFEncode1</a>, <a href="./../Classes/BFEncode2.html">BFEncode2</a>, <a href="./../Classes/BFEncodeSter.html">BFEncodeSter</a>, <a href="./../Classes/FMHEncode0.html">FMHEncode0</a>, <a href="./../Classes/FMHEncode1.html">FMHEncode1</a>, <a href="./../Classes/FMHEncode2.html">FMHEncode2</a>, <a href="./../Classes/A2B.html">A2B</a>, <a href="./../Classes/UHJ2B.html">UHJ2B</a>, <a href="./../Classes/UHJtoB.html">UHJtoB</a><dt>Transformer<dd><a href="./../Classes/BFManipulate.html">BFManipulate</a>, <a href="./../Classes/Rotate.html">Rotate</a>, <a href="./../Classes/Tilt.html">Tilt</a>, <a href="./../Classes/Tumble.html">Tumble</a>, <a href="./../Classes/BFFreeVerb.html">BFFreeVerb</a>, <a href="./../Classes/BFGVerb.html">BFGVerb</a><a class='footnote anchor' name='footnote_org_10' href='#footnote_10'><sup>10</sup></a> <dt>Decoder<dd><a href="./../Classes/BFDecode.html">BFDecode</a>, <a href="./../Classes/BFDecode1.html">BFDecode1</a>, <a href="./../Classes/FMHDecode1.html">FMHDecode1</a>, <a href="./../Classes/B2Ster.html">B2Ster</a>, <a href="./../Classes/B2A.html">B2A</a>, <a href="./../Classes/B2UHJ.html">B2UHJ</a>, <a href="./../Classes/BtoUHJ.html">BtoUHJ</a></dl>
+
+<p>One of the authors of the <a href="https://github.com/supercollider/sc3-plugins/tree/master/source/JoshUGens">JoshUGens</a> package is a significant contributor to the ATK.
+<p>(Follow <a href="#JoshUGensEncodingFormat">this link</a> to review JoshUGens's encoding format.)<div class='note'><span class='notelabel'>NOTE:</span> The authors consider it appropriate to regard the functionality provided by corresponding <a href="./../Guides/WritingUGens.html#Pseudo-UGens">pseudo-UGens</a> and UGens found in <strong>JoshUGens</strong> to be superceeded by that provided by the ATK.
+<p>E.g., rather than using <strong>JoshUGens</strong> <a href="./../Classes/B2UHJ.html">B2UHJ</a> (or <a href="./../Classes/BtoUHJ.html">BtoUHJ</a>), users should employ the ATK's UHJ implementation: <a href="./../Classes/FoaDecoderKernel.html#*newUHJ">FoaDecoderKernel: *newUHJ</a>.</div><h3><a class='anchor' name='AmbIEM'>AmbIEM</a></h3>
+
+<p>The <a href="https://sonenvir.at/downloads/sc3/ambiem/">AmbIEM library</a> is distributed via the <a href="https://github.com/supercollider-quarks/AmbIEM">AmbIEM quark</a>, and offers support for first, second and third order Ambisonic tools.
+<p>If you've installed this quark you can search for the <a href="./../search#AmbIEM">AmbIEM</a> overview page, or navigate to the library's distributed <a href="./../Browse.html#Libraries>AmbIEM">Help</a>.
+<p>AmbIEM supplies the following unit generators:<dl>
+<dt>Encoder<dd>PanAmbi1O, PanAmbi2O, PanAmbi3O<dt>Transformer<dd>RotateAmbi1O, RotateAmbi2O, RotateAmbi3O<dt>Decoder<dd>DecodeAmbi2O, DecodeAmbi3O, BinAmbi3O</dl>
+
+<p>(Follow <a href="#AmbIEMEncodingFormat">this link</a> to review AmbIEM's encoding format.)<div class='note'><span class='notelabel'>NOTE:</span> The kernels required for binaural decoding via BinAmbi30 are not distributed via the <a href="https://github.com/supercollider-quarks/AmbIEM">AmbIEM quark</a>.
+<p>At the time of this writing, the suggested <a href="https://github.com/supercollider-quarks/AmbIEM/blob/master/Classes/Binaural.sc#L115">link found in the source code</a> appears to be broken.
+<p>Instead, the currently live link to this dependency, <code>full.tar.Z</code>, appears to be <a href="https://sound.media.mit.edu/resources/KEMAR.html">here</a>.</div><h3><a class='anchor' name='3Dj'>3Dj</a></h3>
+
+<p>Developed in collaboration with <a href="http://www.barcelonamedia.org/">Barcelona Media</a>, the 3Dj library is distributed via the <a href="https://github.com/supercollider-quarks/3Dj">3Dj quark</a>.<a class='footnote anchor' name='footnote_org_11' href='#footnote_11'><sup>11</sup></a>  Support is offered for first, second and third order Ambisonics.
+<p>If you've installed this quark you can search for the <a href="./../search#Introducing%203Dj">3Dj</a> overview page, or navigate to the library's distributed <a href="./../Browse.html#Libraries>3Dj">Help</a>.
+<p>3Dj supplies the following unit generators:<dl>
+<dt>Encoder<dd>AmbEnc1, AmbEnc2, AmbEnc3, AmbMEnc1, AmbMEnc2, AmbMEnc3, AmbMrEnc1, AmbMrEnc2, AmbMrEnc3, AmbREnc1, AmbREnc2, AmbREnc3, AmbSMEnc1, AmbSMEnc2, AmbSMEnc3, AmbSMrEnc1, AmbSMrEnc2, AmbSMrEnc3, AmbXEnc1, AmbXEnc2, AmbXEnc3</dl>
+
+<p>(Follow <a href="#3DjEncodingFormat">this link</a> to review 3Dj's encoding format.)<h3><a class='anchor' name='SC-HOA'>SC-HOA</a></h3>
+
+<p>Like the ATK and JoshUGens, the SC-HOA library, aka HOA for SuperCollider, has components distributed via <a href="https://github.com/supercollider/sc3-plugins/tree/master/source/HOAUGens">sc3-plugins</a>. Additionally, for a full installation, the <a href="https://github.com/florian-grond/SC-HOA">SC-HOA quark</a>, which includes kernel assets, must also be installed. This library, built on <a href="http://www.sekisushai.net/ambitools/">ambitools</a>, provides comprehensive support for first through fifth<a class='footnote anchor' name='footnote_org_12' href='#footnote_12'><sup>12</sup></a>  order Ambisonics.
+<p>If you've installed this quark you can search for the <a href="./../search#HOA%20Guide">HOA Guide</a> overview page, or navigate to the library's distributed <a href="./../Browse.html#Libraries>HOA">Help</a>. SC-HOA includes tutorials, too, which will be <a href="./../search#HOA%20Tutorial">found here</a> if installed.
+<p>SC-HOA provides the following<a class='footnote anchor' name='footnote_org_13' href='#footnote_13'><sup>13</sup></a>  user facing unit generators:<dl>
+<dt>Encoder<dd>HOAEncoder, HOAmbiPanner, HOALibEnc3D, HOAEncLebedev06, HOAEncLebedev26, HOAEncLebedev50, HOAEncEigenMike, HOAConvert<dt>Transformer<dd>HOATransRotateAz, HOATransRotateXYZ, HOATransMirror, HOABeamHCard2Hoa, HOABeamDirac2Hoa, HOALibOptim<dt>Decoder<dd>HOADec5_0, HOABeamHCard2Mono, HOABinaural, Lebedev50BinauralDecoder, HOADecLebedev06, HOADecLebedev26, HOADecLebedev50, HOAConvert</dl>
+
+<p>(Follow <a href="#SC-HOAEncodingFormat">this link</a> to review SC-HOA's encoding format.)<h2><a class='anchor' name='Ambisonic%20formats'>Ambisonic formats</a></h2>
+
+<p>For users new to the world of Ambisonics, perhaps one of the most confusing aspects is the use of the term <em>format</em>. This confusion is understandable, given how this word has been used differently over time and in different contexts.
+<p>One way this word is used is to describe the <em>Ambisonic encoding format</em>, aka the <em>encoding convention</em>, of an Ambisonic signal. Another use of the word is to describe the <em>spatial domain</em> of an Ambisonic signal.
+<p>We'll consider each of these uses in the following two sub-sections.<h3><a class='anchor' name='Encoding%20formats'>Encoding formats</a></h3>
+
+<p>Here we'll briefly review the <em>flavors of Ambisonics</em>.
+<p>If you haven't already, a great place to start with understanding encoding formats is to review:<ul>
+<li><a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats">Ambisonic data exchange formats</a></ul>
+
+<p>Given an Ambisonic signal, there are four things we need to know for the <em>encoding format</em> (or convention) to be completely specified and unambiguous. These are:<dl>
+<dt>Ambisonic order<dd>An integer describing the spatial resolution. Specifies the maximum <em>Associated Legendre</em> degree, ℓ, of a given signal or coefficient set. We can think of <em>Ambisonic order</em> as a <em>spatial sampling rate</em>.<dt>Ambisonic component ordering<dd>Sorting or ordering convention applied to arrange spherical harmonic encoding coefficients and resulting signal sets. E.g., Furse-Malham (FuMa), Ambisonic Channel Number (ACN), Single Index Designation (SID). See <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#Component_ordering">ordering</a>.<dt>Ambisonic component normalisation<dd><em>Spherical harmonic</em> coefficient normalisation convention. E.g., maxN, N3D, SN3D. See <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#Normalisation">normalisation</a>.<dt>Ambisonic reference radius<dd>Encoding radius where all modal components are real. We can think of this as the radius at which the associated <em>virtual loudspeakers</em> are found.</dl>
+<div class='note'><span class='notelabel'>NOTE:</span> Of these four quantities, many user facing Ambisonic software packages omit specifying a reference radius. If we would like to successfully synthesize soundfields with controlled near-field effects (NFE), this value must be specified and known.
+<p>The ATK measures this parameter in meters.</div>
+<p>The ATK will report these details for the FOA implementation:<textarea class='editor'>AtkFoa.defaultOrder.postln;  // -&gt; 1
+AtkFoa.ordering.postln;  // -&gt; fuma
+AtkFoa.normalisation.postln;  // -&gt; fuma
+AtkFoa.refRadius.postln;  // -&gt; inf</textarea>
+
+<p>The ATK uses the normalisation indicator <strong>FuMa</strong> as a synonym for <strong>MaxN</strong> to indicate Furse-Malham normalisation in the form compatable with classic Gerzonic Ambisonic encoding.
+<p>And the HOA implementation:<textarea class='editor'>AtkHoa.defaultOrder.postln;  // -&gt; 3
+AtkHoa.ordering.postln;  // -&gt; acn
+AtkHoa.normalisation.postln;  // -&gt; n3d
+AtkHoa.refRadius.postln;  // -&gt; 1.5</textarea>
+
+<p>The very first, Ambisonic order, directly indicates the number of channels (or coefficients) and encoded signal will have. Order specifies the spatial resolution of the soundfield.
+<p>Here's the math to report the number of channels or coefficients:<textarea class='editor'>~order = AtkFoa.defaultOrder;
+// ~order = AtkHoa.defaultOrder;
+
+(~order + 1).squared.postln;</textarea>
+
+<p>The ATK's HOA toolset offers another way of reporting the number of channels, through a method for <a href="./../Classes/HoaOrder.html">HoaOrder</a>:<textarea class='editor'>~myOrder = 5;  // greater than the default!
+
+~hoaOrder = HoaOrder.new(~myOrder);
+~hoaOrder.size.postln;  // -&gt; 36</textarea>
+
+<p>Clearly, more channels means more spatial information, which means a soundfield with more spatial resolution.
+<p>________________
+<p>For convenience, the ATK uses the keyword <strong>format</strong> to indicate component ordering and component normalisation, grouped together:<textarea class='editor'>AtkFoa.format.postln;  // -&gt; [ fuma, fuma ]
+AtkHoa.format.postln;  // -&gt; [ acn, n3d ]</textarea>
+
+<p>This use of the word format, to specify both ordering and normalisation, is the most common in the era of modern Ambisonics. Another modern practice is to use the word flavors and to speak of <em>flavors of Ambisonics</em>.
+<p>So, users often speak of a signal being encoded as ACN-N3D or ACN-SN3D, the latter being known as <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#AmbiX">AmbiX</a>.
+<p>We can also look up common encoding convention formats:<textarea class='editor'>~myOtherFormat = \ambix;  // AmbiX (Ambisonics exchangeable)
+// ~myOtherFormat = \fuma;  // Furse-Malham
+
+AtkHoa.formatDict[~myOtherFormat].postln;</textarea>
+
+<p>________________
+<p><a class='anchor' name='set'>&nbsp;</a>
+<p>The ATK uses another designation, <strong>set</strong>, to group all these features together. This can refer to an Ambisonic <strong>signal</strong> or a <strong>tool set</strong>.
+<p>For instance a signal described as <strong>HOA5</strong> is specified as: <a class='anchor' name='HOA5'>&nbsp;</a><dl>
+<dt><strong>HOA5</strong><dd><ul>
+<li><strong>order</strong> : 5<li><strong>ordering</strong> : <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#ACN">ACN</a><li><strong>normalisation</strong> : <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#N3D">N3D</a><li><strong>reference radius</strong> : 1.5 meters</ul>
+</dl>
+
+<p>________________
+<p>Let's now consider the <em>toolsets</em> and <em>Ambisonic encoding formats</em> provided by the above <a href="#Related%20packages">related packages</a> (package names link to UGen lists, above): <a class='anchor' name='SCEncodingFormat'>&nbsp;</a><dl>
+<dt><a href="#SuperCollider">SuperCollider</a><dd><ul>
+<li><strong>order</strong> : 1<li><strong>ordering</strong> : <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#Furse-Malham">FuMa</a><li><strong>normalisation</strong> : FuMa (aka <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#maxN">MaxN</a>)<a class='footnote anchor' name='footnote_org_14' href='#footnote_14'><sup>14</sup></a> <li><strong>reference radius</strong> : inf<a class='footnote anchor' name='footnote_org_15' href='#footnote_15'><sup>15</sup></a> </ul>
+</dl>
+
+<p><a class='anchor' name='JoshUGensEncodingFormat'>&nbsp;</a><dl>
+<dt><a href="#JoshUGens">JoshUGens</a><dd><ul>
+<li><strong>order</strong> : 1, 2<li><strong>ordering</strong> : <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#Furse-Malham">FuMa</a><li><strong>normalisation</strong> : FuMa (aka <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#maxN">MaxN</a>)<li><strong>reference radius</strong> : inf</ul>
+</dl>
+
+<p><a class='anchor' name='AmbIEMEncodingFormat'>&nbsp;</a><dl>
+<dt><a href="#AmbIEM">AmbIEM</a><dd><ul>
+<li><strong>order</strong> : 1, 2, 3<li><strong>ordering</strong> : <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#SID">SID</a><li><strong>normalisation</strong> : <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#SN3D">SN3D</a><li><strong>reference radius</strong> : inf<a class='footnote anchor' name='footnote_org_16' href='#footnote_16'><sup>16</sup></a> </ul>
+</dl>
+
+<p><a class='anchor' name='3DjEncodingFormat'>&nbsp;</a><dl>
+<dt><a href="#3Dj">3Dj</a><dd><ul>
+<li><strong>order</strong> : 1, 2, 3<li><strong>ordering</strong> : <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#ACN">ACN</a><li><strong>normalisation</strong> : <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#N3D">N3D</a><li><strong>reference radius</strong> : inf<a class='footnote anchor' name='footnote_org_17' href='#footnote_17'><sup>17</sup></a> </ul>
+</dl>
+
+<p><a class='anchor' name='SC-HOAEncodingFormat'>&nbsp;</a><dl>
+<dt><a href="#SC-HOA">SC-HOA</a><dd><ul>
+<li><strong>order</strong> : 1, 2, 3, 4, 5<li><strong>ordering</strong> : <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#ACN">ACN</a><li><strong>normalisation</strong> : <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#N3D">N3D</a><li><strong>reference radius</strong> : 1.0 meters<a class='footnote anchor' name='footnote_org_18' href='#footnote_18'><sup>18</sup></a> </ul>
+</dl>
+
+<p>________________
+<p>In reviewing the above, we can note:<dl>
+<dt>SuperCollider<dd>Encodes in the ATK's FOA encoding format, aka classic Gerzonic Ambisonics<dt>JoshUGens<dd>Encodes first order in the ATK's FOA encoding format, but does not encode in the ATK's HOA encoding format<dt>AmbIEM<dd>Does not encode in the ATK's HOA encoding format<dt>3Dj<dd>Nearly encodes in the ATK's HOA encoding format<dt>SC-HOA<dd>Nearly encodes in the ATK's HOA encoding format</dl>
+
+<p>________________
+<p><a class='anchor' name='Exchanging%20formats'>&nbsp;</a>
+<p><strong>Exchanging formats</strong>
+<p>As you would expect, the ATK does facilitate <em>exchanging</em> signals encoded with different conventions, so we can use all these libraries together if we'd like. We just need to take care to translate signals correctly for the given library.
+<p>Because the ATK uses the <a href="#Ambisonic%20UGen%20types">below convention</a> to designate Ambisonic operations, we can consider the conversion of an <strong>FOA</strong> signal to <strong>HOA1</strong> in two different, but equivalent, ways:<ul>
+<li><em>decode</em> <strong>FOA</strong> to <strong>HOA1</strong><li><em>encode</em> <strong>HOA1</strong> from <strong>FOA</strong></ul>
+
+<p>This operation is known as <em>format exchange</em>.
+<p>Review the practical examples found here: <a href="./../Guides/Format-Exchange.html">Ambisonic Format Exchange</a><h3><a class='anchor' name='Domain%20formats'>Domain formats</a></h3>
+
+<p>In this section we'll discuss <em>Ambisonic spatial domain formats</em>.
+<p>We'll start by reviewing the <a href="https://en.wikipedia.org/wiki/Oxford_University_Tape_Recording_Society">Oxford University Tape Recording Society (OUTRS)</a> tetrahedral recording experiment of 1971, briefly list the various <em>letter</em> named Ambisonic domain formats found in the wild, and finish with the conventions the ATK has adopted to address this part of the Ambisonic puzzle.
+<p>________________
+<p><a class='anchor' name='Tetrahedral%20Recording'>&nbsp;</a><strong>Tetrahedral Recording</strong>
+<p>We could suggest that Ambisonics began in 1971 with a series of articles entitled "Experimental Tetrahedral Recording". These were prepared by Michael Gerzon for the British magazine <a href="https://worldradiohistory.com/Archive-All-Audio/Studio-Sound.htm">Studio Sound</a>, <a class='footnote anchor' name='footnote_org_19' href='#footnote_19'><sup>19</sup></a> and detailed an experimental recording made by Gerzon and the OUTRS. We can separate the constituent parts of this experiment into: <strong>capture</strong> and then <strong>reconstruct</strong> a soundfield, along with another problem to consider: <strong>archiving</strong>.
+<p>Let's open part one of the series:<textarea class='editor'>(
+/*
+Turn to page 2 &amp; find
+
+Figure 1: SKEW-TETRAHEDRAL LOUDSPEAKER LAYOUT
+Figure 2: BASIC EXPERIMENTAL SET-UP
+*/
+"https://intothesoundfield.music.ox.ac.uk/sites/default/files/intothesoundfield/documents/media/tetrahedral_1.pdf".openOS
+)</textarea>
+
+<p>Figure 1, illustrates the arrangement of the loudspeakers, and the directions in which the cardioid microphones are pointed, the microphone <em>look directions</em>.
+<p>In figure 2, if we follow the bottom path of the network from FOUR MIKES through to TETRAHEDRAL SPEAKER LAYOUT, we see the complete pathway for <strong>capture</strong> to <strong>reconstruct</strong>.
+<p>The four microphones feed the four associated loudspeakers, but are filtered by a block labelled COMMON MODE REDUCTION MATRIX. Gerzon explains:
+<p>"In the experiment, hypercardioids were simulated by using a common mode reduction circuit to reduce the common mode (i.e. omnidirectional) component of the four cardioid signals."
+<p>Rather than feeding the loudspeakers directly, the microphone polar responses are modified from cardioid to another, variable pattern. The matrix makes each microphone's spatial response more selective. (Look directions stay the same.) Also note, though not yet named so, the "common mode" to be reduced is B-format's W.
+<p>Here's a matrix corresponding to setting the variable resistor parameter, <code>VR = 0.183 R</code>, which corresponds to a null in the synthesized microphone response pattern at approximately 125 degrees:<a class='footnote anchor' name='footnote_org_20' href='#footnote_20'><sup>20</sup></a> <textarea class='editor'>// Figure 3:
+// FOUR-CHANNEL COMMON MODE REDUCTION MATRIX
+// VR = 0.183 R
+Matrix[
+    [ 1.13, -0.13, -0.13, -0.13 ],
+    [ -0.13, 1.13, -0.13, -0.13 ],
+    [ -0.13, -0.13, 1.13, -0.13 ],
+    [ -0.13, -0.13, -0.13, 1.13 ]
+]</textarea>
+
+<p>We can view this matrix as a mixer where each loudspeaker is fed by a mix from all the microphones. For instance, the buss feeding the loudspeaker in the front-left-up position consists of a mix of the named microphones:<a class='footnote anchor' name='footnote_org_21' href='#footnote_21'><sup>21</sup></a> <ol>
+<li>front-left-up: rescale by +1.09 dB<li>back-right-up: rescale by -17.46 dB &amp; invert polarity<li>front-right-down: rescale by -17.46 dB &amp; invert polarity<li>back-left-down: rescale by -17.46 dB &amp; invert polarity</ol>
+
+<p><a href="https://intothesoundfield.music.ox.ac.uk/sites/default/files/intothesoundfield/images/page/3_calrec-4-plus-ric-good-gray_web.jpg">Here's a photo</a> of OUTRS member Richard Cowderoy with the microphone array.<a class='footnote anchor' name='footnote_org_22' href='#footnote_22'><sup>22</sup></a>  And <a href="https://intothesoundfield.music.ox.ac.uk/sites/default/files/intothesoundfield/images/media/18_31_guests_2-g-web.jpg">here's a photo</a> of a listening session. (The upper two loudspeakers of the loudspeaker array are visible on the two ladders.)
+<p>For <strong>archiving</strong>, the four microphone signals are just directly recorded.
+<p>Regarding the microphones and associated matrixing, in part two Gerzon observes:
+<p>"A high degree of coincidence is desirable, as only then is it possible to obtain by a suitable matrixing of the four output signals <em>any</em> possible cardioid or hypercardioid output pointing in <em>any</em> possible direction."
+<p>Suggesting the <em>world of Ambisonics</em> to come, Gerzon is observing that given a tetrahedral recording in the form described, alternate, virtual microphones with any (first order) pattern and look direction can be synthesized.<div class='note'><span class='notelabel'>NOTE:</span> If we can synthesize virtual microphones pointing in new look directions, we can also generate feeds for loudspeakers placed in positions that <em>don't match</em> the original microphone look directions!</div>
+<p>________________
+<p><a class='anchor' name='Leter-formats'>&nbsp;</a><strong>Letter-formats</strong><a class='footnote anchor' name='footnote_org_23' href='#footnote_23'><sup>23</sup></a> 
+<p>A significant amount of confusion regarding Ambisonic <em>domain formats</em> arises from the fact that historically a variety of what we might call <em>letter-formats</em> have arisen over time.<a class='footnote anchor' name='footnote_org_24' href='#footnote_24'><sup>24</sup></a> 
+<p>The list below describes what most practitioners would expect to find a soundfield in the form of:<dl>
+<dt>A-format<dd>microphone capsule signals<dt>B-format<dd>Ambisonic <a href="#Encoding%20formats">encoding format</a><dt>C-format<dd>consumer distribution form<dt>D-format<dd>loudspeaker feeds<dt>E-format<dd>never in wide use, related to <strong>C-format</strong><dt>G-format<dd>loudspeaker feeds: ITU 5.1<dt>P-format<dd>angular domain decomposition</dl>
+
+<p>Ideally, the complete, full 3D soundfield is available for retrieval, and each letter is <em>just</em> a different <em>domain encoding</em>.
+<p>Referring back to the <a href="#Tetrahedral%20Recording">OUTRS experiment</a> and Gerzon's figure 2, we can only find two complete soundfield forms. These correspond to <em>A-format</em>, and are noted as being recorded as gain and EQ corrected microphone capsule feeds by FOUR-CHANNEL TAPE RECORDERS. The other format we see is <em>D-format</em>, the collection of the actual loudspeaker feeds.
+<p>If we're interested in exchanging tetrahedral recordings, however, we immediately have problems. Doh!
+<p>In part two, Gerzon states, "The four capsules should certainly lie within a sphere of 5 cm diameter, and preferably less, in order to ensure that phase effects do not upset the matrixing." Beginning with Gerzon's comment on capsule spacing, here's a short list of interrelated factors that must be either specified or compensate for to have a truely <em>exchangeable A-format</em>:<ol>
+<li>number of microphone capsules<a class='footnote anchor' name='footnote_org_25' href='#footnote_25'><sup>25</sup></a> <li>capsule offset(s) from true coincidence<li>capsule look directions<a class='footnote anchor' name='footnote_org_26' href='#footnote_26'><sup>26</sup></a> <li>capsule polar response pattern(s)<a class='footnote anchor' name='footnote_org_27' href='#footnote_27'><sup>27</sup></a> <li>capsule frequency response(s)</ol>
+
+<p>Assuming we have a D-format intended to <em>directly feed</em> loudspeakers given no further signal processing,<a class='footnote anchor' name='footnote_org_28' href='#footnote_28'><sup>28</sup></a>  to have an <em>exchangable D-format</em> we need to know:<ol>
+<li>number of loudspeakers<li>loudspeaker distance(s) from array origin<li>loudspeaker look directions<a class='footnote anchor' name='footnote_org_29' href='#footnote_29'><sup>29</sup></a> <li>capsule polar response pattern(s) used to create loudspeaker feeds<a class='footnote anchor' name='footnote_org_30' href='#footnote_30'><sup>30</sup></a> <li>loudspeaker frequency response(s)<a class='footnote anchor' name='footnote_org_31' href='#footnote_31'><sup>31</sup></a> </ol>
+
+<p>The remedy to these high demands for <strong>capturing</strong>, <strong>reconstructing</strong> and <strong>archiving</strong> tetrahedral recordings is <strong>B-format</strong>.
+<p>________________
+<p><a class='anchor' name='Spatial%20Domains'>&nbsp;</a><strong>Spatial Domains</strong>
+<p>For the sake of a managable and simplied workflow, the ATK considers (complete) Ambisonic soundfields as existing in only two domain forms.<a class='footnote anchor' name='footnote_org_32' href='#footnote_32'><sup>32</sup></a>  Spatial information is represented in terms of:<dl>
+<dt>angular domain<dd><em>angular basis functions</em><dt>spherical domain<dd><em>spherical basis functions</em></dl>
+
+<p>The <em>angular basis functions</em> have an unambiguous <em>look direction</em> and are are described as having a <em>beam shape</em>.<a class='footnote anchor' name='footnote_org_33' href='#footnote_33'><sup>33</sup></a> 
+<p>When we are encoding, or measuring, a soundfield in either of these domains, we are measureing how much the soundfield is <em>like</em> a particular basis function.
+<p>The ATK uses the following convention to associate these domains with <em>letter-formats</em>:<dl>
+<dt>A-format<dd>Component or signal set in the <em>angular domain</em>, evenly distributed across the surface of the sphere in a <em>spherical design</em>. Within the context of the Ambisonic Toolkit, any required equalisation or radial filtering is expected to have been applied. In other words, the Ambisonic Toolkit views <em>A-format</em> as a uniform spherical decomposition of the soundfield.<dt>B-format<dd>Component or signal set in the <em>spherical domain</em>. In classic <em>first order Ambisonics</em>, aka Gerzonic, B-format indicates a signal encoded where Ambisonic order n = 1, and components are ordered and normalised by the (now named) Furse-Malham and MaxN conventions. <em>B-format</em> is often used to indicate any Ambisonic signal set, without regard to Ambisonic order, component ordering or normalisation.</dl>
+
+<p>As discussed earlier and to facilitate workflows, the ATK prefers to refer to signals and tools as being part of a signal or tool <a href="#set">set</a>, as this designation completely disambiguates the problem.
+<p>Furthur updating the meaning of <strong>HOA5</strong>: <a class='anchor' name='HOA5_domain'>&nbsp;</a><dl>
+<dt><strong>HOA5</strong><dd><ul>
+<li><strong>spatial domain</strong> : spherical<li><strong>order</strong> : 5<li><strong>ordering</strong> : <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#ACN">ACN</a><li><strong>normalisation</strong> : <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#N3D">N3D</a><li><strong>reference radius</strong> : 1.5 meters</ul>
+</dl>
+
+<p>To be encoded in the <em>spherical domain</em> in the ATK workflow, an Ambisonic signal is <em>completely specified</em>. There are no ambiguities.<div class='note'><span class='notelabel'>NOTE:</span> Although many authors use the term <em>B-format</em> as a shorthand to mean any signal in the <em>spherical domain</em> regardless of <a href="#Encoding%20formats">Ambisonic encoding convention</a>, we feel this practice should be discouraged, as it is partly responsible for much of the confusion surrounding the word <em>format</em>.</div>
+<p>In the ATK, <em>B-format</em> is completely specified and means <strong>FOA</strong>: <a class='anchor' name='FOA_domain'>&nbsp;</a><dl>
+<dt><strong>FOA</strong><dd><ul>
+<li><strong>spatial domain</strong> : spherical<li><strong>order</strong> : 1<li><strong>ordering</strong> : <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#Furse-Malham">FuMa</a><li><strong>normalisation</strong> : FuMa (aka <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#maxN">MaxN</a>)<li><strong>reference radius</strong> : inf</ul>
+</dl>
+
+<p>________________
+<p><a class='anchor' name='sphericalDecomp'>&nbsp;</a><strong>Spherical decomposition &amp; recomposition</strong>
+<p>We can characterize the task of moving from the <em>spherical domain</em> to the <em>angular domain</em> as one of uniform <em>spherical decomposition</em>. Moving in the opposite direction is <em>spherical recomposition</em>.<a class='footnote anchor' name='footnote_org_34' href='#footnote_34'><sup>34</sup></a> 
+<p>As you would expect, to be completely disambiguated, any exchangable decomposition must have all <a href="#set">set</a> features known and specified.
+<p>There are three more aspects that must be known. A <em>beam</em> is a <em>window</em> in the <em>spatial domain</em>. We can understand a single beam as a virtual microphone and/or a virtual loudspeaker. (Think of <a href="#Tetrahedral%20Recording">Gerzon's experiment</a>.)
+<p>Reviewing <a href="#Spatial%20Domains">the above</a>, beams of the same shape, but with differing look directions are collected as <em>angular basis functions</em> to describe the soundfield in the <em>angular domain</em>, while <em>spherical harmonics</em> are the collection used to describe the soundfield in the <em>spherical domain</em>.
+<p>We're representing the same information, but just in another way. This different <em>way of expression</em> is the difference between these two spatial domains: two different sets of <em>spatial basis functions</em>.
+<p>So, to specify a collection of <em>angular basis functions</em>, we need to choose:<a class='footnote anchor' name='footnote_org_35' href='#footnote_35'><sup>35</sup></a> <ol>
+<li><strong>number of beams</strong><li><strong>beam look directions</strong><li><strong>beam shape</strong></ol>
+
+<p>For HOA, the ATK uses <a href="./../Classes/TDesign.html">TDesign</a> to help us specify the first two features. Here we will find a <a href="https://en.wikipedia.org/wiki/Spherical_design">spherical t-design</a> given some criteria:<textarea class='editor'>(
+~order = 3;
+~numChans = 24;
+~tdesign = TDesign.newHoa(~numChans, order: ~order);
+)</textarea>
+
+<p>And... we can view!<textarea class='editor'>~tdesign.visualize;</textarea>
+
+<p>We can directly associate the minimum <em>number of beams</em> for a given Ambisonic order with a kind of angular spatial sampling rate. For instance, we get an error if we ask for too few beams:<textarea class='editor'>(
+~order = 3;
+~numChans = 16;
+~tdesignFAIL = TDesign.newHoa(~numChans, order: ~order);
+)</textarea>
+
+<p>If this happens, we can easily find what designs are available:<textarea class='editor'>(
+~order = 3;
+~optimize = \energy;
+// ~optimize = \spreadE;
+
+~numPoints = TDesignLib.getHoaDesigns(~optimize, ~order).collect({ |des| des[\numPoints] });
+)</textarea>
+
+<p>The ATK's use pattern for decomposition looks like this:<textarea class='editor'>// design a matrix _decoder_
+~beamShape = \basic;
+~decoder = HoaMatrixDecoder.newSphericalDesign(~tdesign, ~beamShape, ~order);</textarea>
+
+<p>And, recomposition is re-encoding:<textarea class='editor'>// design a matrix _encoder_
+~encoder = HoaMatrixEncoder.newSphericalDesign(~tdesign, ~beamShape, ~order);</textarea>
+
+<p>We can check:<textarea class='editor'>// create a decode-reencode matrix
+~decodeEncode = ~decoder.matrix.mul(~encoder.matrix);
+
+// test whether it is a diagonal
+~decodeEncode.thresh2(-190.dbamp).isDiagonal.postln;
+
+// view the diagonal coeffs (should be ones!)
+~decodeEncode.getDiagonal.postln;
+
+// check the number of inputs and outputs match the number of harmonics
+~numCoeffs = ~order.asHoaOrder.size;
+~decodeEncode.shape == [ ~numCoeffs, ~numCoeffs ];</textarea>
+
+<p>You'll find further discission here: <a href="./../Guides/HOA-Spherical.html">Spherical Decomposition</a>.<h2><a class='anchor' name='Library%20architecture'>Library architecture</a></h2>
+
+<p>The help browsing hierarchy is formatted to illustrate the structure of the ATK from a user perspective.<h3><a class='anchor' name='Getting%20Help'>Getting Help</a></h3>
+
+<p>Let's briefly explore the presented categories. Following the links below will navigate the browser to places to find relevent documentation on the listed topic. Some of these links land on splash page overviews which include a brief description of help to be found in that section.
+<p>Casually explore the structure of the ATK by taking some time to navigate these links. (Use the browser back button to return to this page.)<dl>
+<dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit">Ambisonic Toolkit</a><dd><dl>
+<dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>ATK%20Platform%20&%20Configuration">ATK Platform &amp; Configuration</a><dd>various ATK system settings and configurations<dt><a href="./../Overviews/ABCs-ATK-Coeffs.html">Coefficients &amp; Theory</a><dd>foundational ambisonic coefficients &amp;c<dt><a href="./../Overviews/ABCs-Guides-Toots.html">Guides &amp; Tutorials</a><dd>documents exploring how to use the ATK<dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>Licensing">Licensing</a><dd>licensing documents and notices<dt>Matrix &amp; Kernel<dd>classes returning matrices and kernels for use with corresponding <a href="./../Guides/WritingUGens.html#Pseudo-UGens">pseudo-UGens</a><dl>
+<dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>Matrix%20&%20Kernel>FOA">FOA</a><dd><em>user facing</em> classes for FOA<dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>Matrix%20&%20Kernel>HOA">HOA</a><dd><em>user facing</em> classes for HOA<dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>Matrix%20&%20Kernel>Internals">Internals</a><dd>base classes and other utilities<div class='note'><span class='notelabel'>NOTE:</span> only for the curious!</div></dl>
+
+<p><dt>UGens<dd>UGens and <a href="./../Guides/WritingUGens.html#Pseudo-UGens">pseudo-UGens</a><dl>
+<dt>FOA<dd><em>user facing</em> FOA UGens and <a href="./../Guides/WritingUGens.html#Pseudo-UGens">pseudo-UGens</a><dl>
+<dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>UGens>FOA>Analyzer">Analyzer</a><dd><dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>UGens>FOA>Decoder">Decoder</a><dd><dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>UGens>FOA>Encoder">Encoder</a><dd><dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>UGens>FOA>Transformer">Transformer</a><dd></dl>
+<dt>HOA<dd><em>user facing</em> HOA UGens and <a href="./../Guides/WritingUGens.html#Pseudo-UGens">pseudo-UGens</a><dl>
+<dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>UGens>HOA>Decoder">Decoder</a><dd><dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>UGens>HOA>Encoder">Encoder</a><dd><dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>UGens>HOA>Transformer">Transformer</a><dd></dl>
+<dt>Internals<dd>base classes and other utilities<div class='note'><span class='notelabel'>NOTE:</span> only for the curious!</div>
+<p><dl>
+<dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>UGens>Internals>FOA">FOA</a><dd><dt><a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>UGens>Internals>HOA">HOA</a><dd></dl>
+</dl>
+<dt><a href="./../Overviews/ABCs-ATK-Utils.html">Utilities</a><dd><em>user facing</em> high level utilities<dl>
+<dt>FOA<dd></dl>
+</dl>
+</dl>
+________________
+<p>To make finding the ATK's <em>help overviews</em> convenient, the titles of these pages all begin with <code>ABCs</code>.
+<p>Try this: <a href="./../Search.html#abcs">Search: abcs</a><h3><a class='anchor' name='Ambisonic%20UGen%20types'>Ambisonic UGen types</a></h3>
+
+<p>The ATK uses the keyword <strong>type</strong> to designate Ambisonic <em>soundfield operations</em>.
+<p>UGens are classified:<dl>
+<dt>Encoder<dd><strong>receive</strong>: <em>some</em> signal
+<p><strong>return</strong>: <em>spherical domain</em> signal<dt>Transformer<dd><strong>receive</strong>: <em>spherical domain</em> signal
+<p><strong>return</strong>: <em>spherical domain</em> signal<dt>Decoder<dd><strong>receive</strong>: <em>spherical domain</em> signal
+<p><strong>return</strong>: <em>some</em> signal</dl>
+<div class='note'><span class='notelabel'>NOTE:</span> To be regarded as <em>encoded</em> in the <em>spherical domain</em>, the signal and tools <em>must</em> be in the same <a href="#set">set</a>.
+<p>In otherwords, an FOA signal <em>is not</em> an HOA1 signal. See the discussion on <a href="#Exchanging%20formats">exchanging encoding formats</a>.</div>
+<p>The ATK classifies UGens and related functions returning <em>soundfield operations</em> in terms of expected <em>inputs</em> and <em>outputs</em>. As a result we <em>only</em> have three <strong>types</strong>.
+<p>________________
+<p><a class='anchor' name='ATKscope'>&nbsp;</a>
+<p>As an aside, UGens offering Ambisonic <em>digital audio effects</em> are outside the scope of the Ambisonic Toolkit.
+<p>E.g., the ATK <em>does not</em> supply Ambisonic reverberators and granulators. Instead, the ATK supplies the <em>tools and infrastructure</em> necessary to design and build Ambisonic reverberators and granulators. See, for instance <a href="#AmbiVerbSC">AmbiVerbSC</a>.<h3><a class='anchor' name='Matrix%20&%20Kernel%20operations'>Matrix &amp; Kernel operations</a></h3>
+
+<p>As we've seen above, for a complete install the ATK requires the successful installation of all <a href="#Components">components</a>, which include <strong>matrix</strong> and <strong>kernel</strong> assests.
+<p>In the abstract mathy sense, Ambisonic <em>soundfield operations</em> can be described as <em>Ambisonic soundfield kernel convolutions</em>. Sounds difficult!
+<p>It also sounds like the implementation of these <strong>operations</strong> will require <em>convolution</em>. If you've been poking around the <a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>UGens>Internals">UGen internals</a>, you'll have spotted: <a href="./../Classes/AtkKernelConv.html">AtkKernelConv</a>. This is the little workhorse handling any required convolution.
+<p>The observant reader will also have noticed another UGen found in this location: <a href="./../Classes/AtkMatrixMix.html">AtkMatrixMix</a>.<a class='footnote anchor' name='footnote_org_36' href='#footnote_36'><sup>36</sup></a> 
+<p>________________
+<p>Thankfully, Ambisonic operations can be simplified given two conditions:<ol>
+<li>the operation <em>does not</em> require complex coefficients<a class='footnote anchor' name='footnote_org_37' href='#footnote_37'><sup>37</sup></a> <li>the operation <em>is not</em> frequency dependent</ol>
+
+<p>If these two are met, the operation can be simplied as multiply and add, or <em>matrix mixing</em>. In other words, the operation can be represented as a matrix of real numbers.
+<p>This makes life much easier!<a class='footnote anchor' name='footnote_org_38' href='#footnote_38'><sup>38</sup></a> 
+<p>If an ATK Ambisonic operation is implemented as a <strong>kernel</strong> operation, we can expect this:<ol>
+<li><em>may</em> require complex coefficients<li><em>may</em> be frequency dependent<li><em>will</em> require more CPU resources</ol>
+
+<p>A related implication:<ul>
+<li><em>expect</em> a <strong>kernel</strong> operation to return a more complex sounding outcome than a <strong>matrix</strong> operation</ul>
+
+<p>For example, <a href="./../Classes/FoaEncoderKernel.html#*newSuper">FoaEncoderKernel: *newSuper</a>, the ATK's <a href="https://en.wikipedia.org/wiki/Ambisonic_UHJ_format#Super_stereo">Ambisonic Super Stereo</a> <strong>kernel</strong> encoder is usually preferred over <a href="./../Classes/FoaEncoderMatrix.html#*newStereo">FoaEncoderMatrix: *newStereo</a>, the much more simple <strong>matrix</strong> encoder.
+<p>________________
+<p>Aside from structuring the architecture, the ATK also uses the <strong>matrix</strong> and <strong>kernel</strong> keywords to:<ol>
+<li>designate Ambisonic UGens and associated classes<li>answer <strong>operation</strong> assets, i.e., the matrix or kernel<li>answer the <strong>operation</strong></ol>
+
+<p>Here are a few examples:<textarea class='editor'>// 1) names
+HoaDecodeMatrix.postln;  // given an HOA signal and an HoaMatrixDecoder instance, decode
+HoaMatrixDecoder.postln;  // answer HoaMatrixDecoder instance required for the above</textarea>
+
+<p><textarea class='editor'>// 2) assets
+HoaMatrixDecoder.newPanto(4).matrix.postln;  // return the matrix</textarea>
+
+<p><textarea class='editor'>// 3) operation
+HoaMatrixDecoder.newPanto(4).op.postln;  // the -op message returns...</textarea>
+<h3><a class='anchor' name='Kinds%20of%20operations'>Kinds of operations</a></h3>
+
+<p>The keyword <strong>kind</strong> is used to identify individual named operations, which is where we find the problem specific elements of the ATK.
+<p>As an example, let's review a specific class: <a href="./../Classes/HoaMatrixDecoder.html">HoaMatrixDecoder</a>. We can return a list of implemented HOA matrix decoders, listing the <strong>kinds</strong> of decoders this class will design:<textarea class='editor'>~decoderClass = HoaMatrixDecoder;  // hoa matrix decoder designer
+
+"% class implements:".format(~decoderClass).postln;
+~decoderClass.class.dumpInterface;</textarea>
+
+<p>The class methods listed here <em>are</em> HOA matrix decoder design methods. When we instantiate an instance with one of these methods, we <em>design</em> a matrix to be used for decoding.
+<p>Given an instance, we see that <strong>kind</strong> returns the name of the design method used:<textarea class='editor'>(
+~myMatrixDecoder = HoaMatrixDecoder.newPanto(4);  // 4 channel 3rd order decoder
+
+"instance var: %".format("~myMatrixDecoder").postln;
+"tool &amp; signal set: %".format(~myMatrixDecoder.set).postln;
+"soundfield operation: %".format(~myMatrixDecoder.op).postln;
+"soundfield operation type: %".format(~myMatrixDecoder.type).postln;
+"soundfield operation kind: %".format(~myMatrixDecoder.kind).postln;
+)</textarea>
+
+<p>Or, this and a bit more information, but in natural language:<textarea class='editor'>(
+"% is an % instance, and is a % channel % % % designed with the % design method.".format(
+    "~myMatrixDecoder",
+    ~myMatrixDecoder.class,
+    ~myMatrixDecoder.numChannels,
+    ~myMatrixDecoder.set,
+    ~myMatrixDecoder.op,
+    ~myMatrixDecoder.type,
+    ~myMatrixDecoder.kind,
+).postln
+)</textarea>
+
+<p>Of course, if we'd like to review the <strong>kinds</strong> of design methods available, we can also just visit the help page: <a href="./../Classes/HoaMatrixDecoder.html">HoaMatrixDecoder</a>.<h3><a class='anchor' name='Static%20&%20dynamic%20operations'>Static &amp; dynamic operations</a></h3>
+
+<p>In finishing up our review of the structure of the ATK, we'll note that numerous soundfield operations are available in both <em>static</em> and <em>dynamic</em> forms. This is a direct result of <a href="./../Reference/ServerPluginAPI.html#Input%20rates%20">SuperCollider's implementation as a Music V language</a>, and the requirement to provide direct access to operation coefficients for inspection.
+<p>Let's review a specific case: HOA beam decoding. A <em>beam decoder</em>, or <a href="https://en.wikipedia.org/wiki/Beamforming">beamformer</a>, extracts a single <em>beam</em> from a soundfield. This soundfield operation is equivalant to sampling a soundfield with a single virtual microphone and returning the result.
+<p>If we <a href="./../Browse.html#Libraries>Ambisonic%20Toolkit>UGens>HOA>Decoder">browse</a> to review the UGens for HOA decoding, we'll see two decoders listed:<dl>
+<dt><a href="./../Classes/HoaDecodeDirection.html">HoaDecodeDirection</a><dd>Higher Order Ambisonic (HOA) beam decoder<dt><a href="./../Classes/HoaDecodeMatrix.html">HoaDecodeMatrix</a><dd>Matrix renderer from the Ambisonic Toolkit (ATK)</dl>
+
+<p>The first of these, <a href="./../Classes/HoaDecodeDirection.html">HoaDecodeDirection</a>, is the ATK's dynamic continuous rate HOA <em>beamformer</em> :<textarea class='editor'>HoaDecodeDirection.ar(in, theta, phi, radius, beamShape: 'basic', order)</textarea>
+
+<p>Reviewing the argument list, <strong>theta</strong>, <strong>phi</strong> and <strong>radius</strong> may all be varied continuously.
+<p>Turning to <a href="./../Classes/HoaDecodeMatrix.html">HoaDecodeMatrix</a>, we see:<textarea class='editor'>HoaDecodeMatrix.ar(in, hoaMatrix)</textarea>
+
+<p>The matrix required as an argument <em>is not</em> continuously variable. We design the matrix once with <a href="./../Classes/HoaMatrixDecoder.html">HoaMatrixDecoder</a>:<textarea class='editor'>HoaMatrixDecoder.newDirection(theta, phi, beamShape, order)</textarea>
+
+<p>and then pass it to <a href="./../Classes/HoaDecodeMatrix.html">HoaDecodeMatrix</a>.
+<p>Putting this together, the equivalent beamforming use pattern looks like this:<textarea class='editor'>hoaMatrix = HoaMatrixDecoder.newDirection(theta, phi, beamShape, order);
+HoaDecodeMatrix.ar(in, hoaMatrix)</textarea>
+
+<p>and differs from the dynamic beamformer, <a href="./../Classes/HoaDecodeDirection.html">HoaDecodeDirection</a>, in that <strong>theta</strong> and <strong>phi</strong> are static and fixed at initial design time, and we're missing <strong>radius</strong>.
+<p>________________
+<p>With a little bit of effort, we could construct a network that <em>would</em> allow us to modulate <strong>theta</strong> and <strong>phi</strong>. And we <em>could</em> regain the radial functionality, too.<a class='footnote anchor' name='footnote_org_39' href='#footnote_39'><sup>39</sup></a>  However, given the ATK already supplies a dynamic HOA beamer, there's no point in doing so.
+<p>Well then, what is the point of working with <a href="./../Classes/HoaMatrix.html">HoaMatrix</a> subclass instances?
+<p>In many cases, we don't actually want our matrix to be changing. When decoding for a real loudspeaker array we'll design the decoder just once.<a class='footnote anchor' name='footnote_org_40' href='#footnote_40'><sup>40</sup></a>  Another advantage is that we have access to quite a bit of further details for inspection:<ul>
+<li><a href="./../Classes/HoaMatrixDecoder.html#Information">HoaMatrixDecoder: Information</a><li><a href="./../Classes/HoaMatrixDecoder.html#Matrix">HoaMatrixDecoder: Matrix</a><li><a href="./../Classes/HoaMatrixDecoder.html#Analysis">HoaMatrixDecoder: Analysis</a></ul>
+
+<p>In other words, the static <strong>matrix</strong> and <strong>kernel</strong> <em>soundfield operation</em> implementations offer an open framework rather than the closed UGen blackboxes found with most composer facing Ambisonic libraries.<div class='note'><span class='notelabel'>NOTE:</span> This is one of the aspects of the ATK that sets it apart from the above <a href="#Related%20packages">related packages</a>. The ATK seeks to offer an open world, appropriate for both high and low level research into the analysis and synthesis of ambisonic soundfields and related topics.</div><h3><a class='anchor' name='Toolset%20namespaces'>Toolset namespaces</a></h3>
+
+<p>As you'll have observed, the ATK uses a namespace convention to help navigate the component library classes. ScIDE's <a href="./../Guides/SCIde.html#Automatic%20completion">autocompletion</a> is able help us find what we're looking for when we type in the <a href="./../Guides/SCIde.html#Code%20editor">code editor</a>.
+<p>Create a new document, and type each of the following, observing the choices offered by the autocompletion menu:<textarea class='editor'>Atk</textarea>
+
+<p><textarea class='editor'>Foa</textarea>
+
+<p><textarea class='editor'>Hoa</textarea>
+
+<p>Rather than navigating the Help browsing structure, this is the way experienced users often find classes of interest.
+<p>Typing <code>Foa</code> quickly brings up classes in the FOA toolset whle <code>Hoa</code> returns parallel HOA classes. The <code>Atk</code> namespace organizes library level environment settings and base classes that serve both <code>Foa</code> and <code>Hoa</code> namespaces.
+<p><a class='anchor' name='FvHdynamic'>&nbsp;</a>
+<p><strong>Foa vs Hoa: dynamic UGens</strong>
+<p>The FOA toolset includes a <a href="./../Guides/WritingUGens.html#Pseudo-UGens">pseudo-UGen</a> wrapper, <a href="./../Classes/FoaTransform.html">FoaTransform</a>, which is intended to offer an interface for <em>dynamic</em> transform operations, and parallels the interface for <em>static</em> transform operations, <a href="./../Classes/FoaXform.html">FoaXform</a>.
+<p>In the development of the HOA toolset, we found <a href="./../Classes/FoaTransform.html">FoaTransform</a> to be rarely used. As a result, there is no <code>HoaTransform</code>. Instead, UGens are accessed individually, by name:<textarea class='editor'>HoaRotate</textarea>
+
+<p><a class='anchor' name='FvHstatic'>&nbsp;</a>
+<p><strong>Foa vs Hoa: static UGens</strong>
+<p>The FOA toolset's static UGens for encoding and decoding are:<ul>
+<li><a href="./../Classes/FoaEncode.html">FoaEncode</a><li><a href="./../Classes/FoaDecode.html">FoaDecode</a></ul>
+
+<p>These receive <em>both</em> FOA <strong>matrix</strong> and <strong>kernel</strong> instances.
+<p>The corresponding HOA UGens are:<a class='footnote anchor' name='footnote_org_41' href='#footnote_41'><sup>41</sup></a> <ul>
+<li><a href="./../Classes/HoaEncodeMatrix.html">HoaEncodeMatrix</a><li><a href="./../Classes/HoaDecodeMatrix.html">HoaDecodeMatrix</a></ul>
+
+<p>As you would expect from the names, these <em>only</em> receive HOA <strong>matrix</strong> instances.<a class='footnote anchor' name='footnote_org_42' href='#footnote_42'><sup>42</sup></a> 
+<p><a class='anchor' name='FvHmatrix'>&nbsp;</a>
+<p><strong>Foa vs Hoa: matrix classes</strong>
+<p>The naming pattern for equivalent matrix designers is swapped:<ul>
+<li><strong>SetTypeOperation</strong> for Foa<li><strong>SetOperationType</strong> for Hoa</ul>
+
+<p>For example:<ul>
+<li><a href="./../Classes/FoaDecoderMatrix.html">FoaDecoderMatrix</a><li><a href="./../Classes/HoaMatrixDecoder.html">HoaMatrixDecoder</a></ul>
+
+<p>This difference exists to more easily facilite the design of matrices for HOA. When we're designing an HOA matrix, we can think in natural language word order and the <a href="./../Guides/SCIde.html">IDE</a> will quickly answer.<h2><a class='anchor' name='What%20next?'>What next?</a></h2>
+
+<p>Try:<ul>
+<li><a href="./../Guides/ATK-FAQs.html">ATK FAQs</a><li><a href="./../Tutorials/ATK-Enlightenment.html">Ambisonic Enlightenment</a><li><a href="./../Guides/ATK-Glossary.html">ATK Glossary</a><li><a href="./../Overviews/ABCs-Guides-Toots.html">ABCs of ATK Guides &amp; Tutorials</a><li>Have fun!</ul>
+
+<p><div class='footnotes'>
+<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - See: <a href="https://en.wikipedia.org/wiki/List_of_Ambisonic_hardware">List of Ambisonic hardware</a></div><a class='anchor' name='footnote_2'/><div class='footnote'>[<a href='#footnote_org_2'>2</a>] - Some authors use the acronym POA, for <em>plain old Ambisonics</em>.</div><a class='anchor' name='footnote_3'/><div class='footnote'>[<a href='#footnote_org_3'>3</a>] - For example, given a design for a stereo reverb, the ATK provides the pieces necessary to <em>Ambisonic-ize</em> that design.</div><a class='anchor' name='footnote_4'/><div class='footnote'>[<a href='#footnote_org_4'>4</a>] - <a href="https://github.com/supercollider/supercollider/releases/tag/Version-3.10.0">https://github.com/supercollider/supercollider/releases/tag/Version-3.10.0</a></div><a class='anchor' name='footnote_5'/><div class='footnote'>[<a href='#footnote_org_5'>5</a>] - Are we missing something? <a href="./../Guides/ATK-FAQs.html#How%20do%20I%20request%20a%20guide%20or%20tutorial?">Let us know!</a></div><a class='anchor' name='footnote_6'/><div class='footnote'>[<a href='#footnote_org_6'>6</a>] - Caveat: <a href="./../Tutorials/ATK-FAQs#What%20is%20the%20highest%20order%20supported%20for%20spherical%20decomposition?">What is the highest order supported for spherical decomposition?</a></div><a class='anchor' name='footnote_7'/><div class='footnote'>[<a href='#footnote_org_7'>7</a>] - I would describe this as panning, or <em>basic</em> encoding.</div><a class='anchor' name='footnote_8'/><div class='footnote'>[<a href='#footnote_org_8'>8</a>] - Actually, already include as part of SuperCollider.</div><a class='anchor' name='footnote_9'/><div class='footnote'>[<a href='#footnote_org_9'>9</a>] - <a href="./../Classes/BiPanB2.html">BiPanB2</a> doesn't synthesize the z-axis component.</div><a class='anchor' name='footnote_10'/><div class='footnote'>[<a href='#footnote_org_10'>10</a>] - Supplied reverbs are listed as <strong>transformers</strong>, with the intention of bringing them to the reader's attention. Strictly speaking, the ATK's <a href="#Ambisonic%20UGen%20types">classification convention</a> regards Ambisonic in Ambisonic out reverb and other effects as beyond the scope of the ATK.</div><a class='anchor' name='footnote_11'/><div class='footnote'>[<a href='#footnote_org_11'>11</a>] - See also: <a href="https://github.com/andresperezlopez/rt-spatialization">https://github.com/andresperezlopez/rt-spatialization</a></div><a class='anchor' name='footnote_12'/><div class='footnote'>[<a href='#footnote_org_12'>12</a>] - HOABinaural supports up to seventh order.</div><a class='anchor' name='footnote_13'/><div class='footnote'>[<a href='#footnote_org_13'>13</a>] - documented or otherwise mentioned in tutorials</div><a class='anchor' name='footnote_14'/><div class='footnote'>[<a href='#footnote_org_14'>14</a>] - MaxN indicates scaling is the same as classic, aka Gerzonic, first order Ambisonics. From <a href="https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats#maxN">Wikipedia</a>:<div class='note'><span class='notelabel'>NOTE:</span> MaxN is used in the Furse-Malham format (with the exception of a -3dB correction factor for W, which makes it directly compatible with traditional B-Format).</div></div><a class='anchor' name='footnote_15'/><div class='footnote'>[<a href='#footnote_org_15'>15</a>] - For classic, aka Gerzonic, the reference radius is infinity.</div><a class='anchor' name='footnote_16'/><div class='footnote'>[<a href='#footnote_org_16'>16</a>] - Unspecified, presume <em>basic encoding</em> is <em>planewave encoding</em>. This would mean the reference radius is infinity. On the other hand, the reference radius for the MIT KEMAR HRTF measurements this library uses for binaural decoding is 1.4 meters. Review <a href="https://sound.media.mit.edu/resources/KEMAR.html">this discussion</a>.</div><a class='anchor' name='footnote_17'/><div class='footnote'>[<a href='#footnote_org_17'>17</a>] - Unspecified, presume <em>basic encoding</em> is <em>planewave encoding</em>. This would mean the reference radius is infinity.<div class='note'><span class='notelabel'>NOTE:</span> 3Dj's use of the ATK's FOA binaural decoders supports this view.</div></div><a class='anchor' name='footnote_18'/><div class='footnote'>[<a href='#footnote_org_18'>18</a>] - SC-HOA is a SuperCollider wrapper for <a href="http://www.sekisushai.net/ambitools/">ambitools</a>.
+<p>From the documentation for ambitools (link: TBD):
+<p>"In the current implementation, these [encoding] filters are stabilized with near field compensation filter at radius r_spk = 1 m."
+<p>The value listed as the default <strong>speaker_radius</strong> for the UGen HOAEncoder is 1.07 meters, however. (If the SC-HOA quark is installed installed, see Help document. Or, <a href="https://github.com/florian-grond/SC-HOA/blob/master/classes/HOAEncoder.sc#L2">source code</a>.)
+<p>In a personal communication to Joseph Anderson (cc: Florian Grond), dated Tuesday, 1 December 2020, Pierre Lecomte writes:
+<p>"I confirm that the near field and near field compensation filters are implemented in ambitools. The default near field compensation distance was set to r_spk=1.07 m, as it was the radius of the Lebedev spherical loudspeaker array I've built during my PhD."<div class='note'><span class='notelabel'>NOTE:</span> For our purposes, using either 1.0 or 1.07 meters will be fine for a one-way <a href="./../Guides/Format-Exchange.html#SC-HOA">format exchange</a>.</div>
+<p><div class='warning'><span class='warninglabel'>WARNING:</span> If, however, we are planning to pass signals back and forth between SC-HOA (ambitools), it is best to use 1.07 meters. Otherwise there is the possibility of continually adding (or subtracting) proximity, which could easilty result in overflow. (That would be bad!)</div></div><a class='anchor' name='footnote_19'/><div class='footnote'>[<a href='#footnote_org_19'>19</a>] - The extracted articles can be <a href="https://intothesoundfield.music.ox.ac.uk/technical-papers">found here</a>, while scans of Studio Sound, Vol. 13 can be found here:<ul>
+<li>No. 8, pp 396-398 (August 1971): <a href="https://worldradiohistory.com/Archive-All-Audio/Archive-Studio-Sound/70s/Studio-Sound-1971-08.pdf">https://worldradiohistory.com/Archive-All-Audio/Archive-Studio-Sound/70s/Studio-Sound-1971-08.pdf</a><li>No. 9, pp 472, 473 &amp; 475 (September 1971): <a href="https://worldradiohistory.com/Archive-All-Audio/Archive-Studio-Sound/70s/Studio-Sound-1971-09.pdf">https://worldradiohistory.com/Archive-All-Audio/Archive-Studio-Sound/70s/Studio-Sound-1971-09.pdf</a><li>No. 10, pp 510, 511, 513 &amp; 515 (October 1971): <a href="https://worldradiohistory.com/Archive-All-Audio/Archive-Studio-Sound/70s/Studio-Sound-1971-10.pdf">https://worldradiohistory.com/Archive-All-Audio/Archive-Studio-Sound/70s/Studio-Sound-1971-10.pdf</a></ul>
+</div><a class='anchor' name='footnote_20'/><div class='footnote'>[<a href='#footnote_org_20'>20</a>] - <textarea class='editor'>/*
+check beaming corresponding to Gerzon's discussion (page 4):
+
+https://intothesoundfield.music.ox.ac.uk/sites/default/files/intothesoundfield/documents/media/tetrahedral_1.pdf
+*/
+// single beam decoder to check approximate null angle
+~energy = HoaMatrixDecoder.newDirection(0, 0, \energy, 1)  // VR = 0.183 R (125.3deg null);
+~energy.analyzeDirections([[ 0, 0 ], [ 0, 125.3.degrad ]]).energy.ampdb.postln;  // &lt; --
+
+
+// spherical design
+~tdesign = TDesign.new(4, 2, 3);  // tetrahedron
+
+// encoder
+~cardToHoa1 = HoaMatrixEncoder.newSphericalDesign(
+    ~tdesign,
+    \controlled,  // cardioid
+    1
+).matrix;
+
+// decoder
+~hoa1ToSuper = HoaMatrixDecoder.newSphericalDesign(
+    ~tdesign,
+    \energy, // super-cardioid (VR = 0.183 R)
+    1
+).matrix;
+
+// convert
+~cardToSuper = ~cardToHoa1.mul(~hoa1ToSuper);  // VR = 0.183 R (125.3deg null)
+~cardToSuper.round(0.01);  // round</textarea>
+</div><a class='anchor' name='footnote_21'/><div class='footnote'>[<a href='#footnote_org_21'>21</a>] - I'm using the ATK's naming convention. These names correspond to Gerzon's:<ul>
+<li>front-left-up: Lf (left-front-ceiling)<li>back-right-up: Rr (rear-right-ceiling)<li>front-right-down: Rf (right-front-floor)<li>back-left-down: Lr (left-rear-floor)</ul>
+</div><a class='anchor' name='footnote_22'/><div class='footnote'>[<a href='#footnote_org_22'>22</a>] - These images are from a page titled: <a href="https://intothesoundfield.music.ox.ac.uk/tetrahedral-recording-session-images">Tetrahedral Recording Session Images</a>. You can review Thornton's review of the session, <a href="https://intothesoundfield.music.ox.ac.uk/tetrahedral-recording">here</a></div><a class='anchor' name='footnote_23'/><div class='footnote'>[<a href='#footnote_org_23'>23</a>] - More properly described as <a href="https://en.wikipedia.org/wiki/Grapheme">grapheme</a>-formats.</div><a class='anchor' name='footnote_24'/><div class='footnote'>[<a href='#footnote_org_24'>24</a>] - Hodges offers a <a href="https://ambisonic.info/ambisonics/channels.html">very brief review</a>.</div><a class='anchor' name='footnote_25'/><div class='footnote'>[<a href='#footnote_org_25'>25</a>] - With a tetrahedron we have four, so this is known.</div><a class='anchor' name='footnote_26'/><div class='footnote'>[<a href='#footnote_org_26'>26</a>] - Gerzon appears to order these as: back-left-down, front-left-up, front-right-down, back-right-up.</div><a class='anchor' name='footnote_27'/><div class='footnote'>[<a href='#footnote_org_27'>27</a>] - Cardioid. In practice polar response may be frequency dependent!</div><a class='anchor' name='footnote_28'/><div class='footnote'>[<a href='#footnote_org_28'>28</a>] - A high bar, indeed!</div><a class='anchor' name='footnote_29'/><div class='footnote'>[<a href='#footnote_org_29'>29</a>] - Look from perspective of listener at the loudspeaker array origin.</div><a class='anchor' name='footnote_30'/><div class='footnote'>[<a href='#footnote_org_30'>30</a>] - Recall Gerzon uses the COMMON MODE REDUCTION MATRIX to change the polar patterns.</div><a class='anchor' name='footnote_31'/><div class='footnote'>[<a href='#footnote_org_31'>31</a>] - If this has been corrected for.</div><a class='anchor' name='footnote_32'/><div class='footnote'>[<a href='#footnote_org_32'>32</a>] - See also: <a href="./../Guides/ATK-Glossary.html">ATK Glossary</a>.</div><a class='anchor' name='footnote_33'/><div class='footnote'>[<a href='#footnote_org_33'>33</a>] - These are virtual microphone response patterns!</div><a class='anchor' name='footnote_34'/><div class='footnote'>[<a href='#footnote_org_34'>34</a>] - Obviously, we can start with signals from scratch and use these to <em>compose</em> a new soundfield. This is a common part of the soundfield synthesis workflow.</div><a class='anchor' name='footnote_35'/><div class='footnote'>[<a href='#footnote_org_35'>35</a>] - Beams are formed at the reference radius. By including <a href="./../Classes/HoaNFCtrl.html">HoaNFCtrl</a> in the graph, beams may be formed at <em>any</em> radius.</div><a class='anchor' name='footnote_36'/><div class='footnote'>[<a href='#footnote_org_36'>36</a>] - The HOA toolset uses <a href="./../Classes/HoaRenderMatrix.html">HoaRenderMatrix</a>, instead.</div><a class='anchor' name='footnote_37'/><div class='footnote'>[<a href='#footnote_org_37'>37</a>] - No imaginary numbers!</div><a class='anchor' name='footnote_38'/><div class='footnote'>[<a href='#footnote_org_38'>38</a>] - Given a hardware mixer with enough channels (and sends and returns), these more simple matrix Ambisonic <em>soundfield operations</em> can be implemented. Not necessarily convenient, but possible.</div><a class='anchor' name='footnote_39'/><div class='footnote'>[<a href='#footnote_org_39'>39</a>] - We'd need to throw in <a href="./../Classes/HoaRTT.html">HoaRTT</a> (or <a href="./../Classes/HoaYPR.html">HoaYPR</a>) and <a href="./../Classes/HoaNFCtrl.html">HoaNFCtrl</a>.</div><a class='anchor' name='footnote_40'/><div class='footnote'>[<a href='#footnote_org_40'>40</a>] - Our fixed single beam example is a special, degenerate, case.</div><a class='anchor' name='footnote_41'/><div class='footnote'>[<a href='#footnote_org_41'>41</a>] - Both of these are synonyms for <a href="./../Classes/HoaRenderMatrix.html">HoaRenderMatrix</a>.</div><a class='anchor' name='footnote_42'/><div class='footnote'>[<a href='#footnote_org_42'>42</a>] - Why? Convolution in HOA is very easily high cost! In adopting a naming convention where the designed operation instance is in the name, the user is kept well aware of whether an inexpensive matrix or an expensive kernel operation is demanded.</div></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/HelpSource/Tutorials/ABCs-of-the-ATK.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/HelpSource/Tutorials/ABCs-of-the-ATK.schelp</a><br>link::Tutorials/ABCs-of-the-ATK::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,0 +1,163 @@
+<!doctype html><html lang='en'><head><title>AdCVerb | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'AdCVerb';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>AdCVerb:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*verbose'>verbose</a> </li>
+<li class='toc3'><a href='#*maxTime'>maxTime</a> </li>
+<li class='toc3'><a href='#*defaultCombTimes'>defaultCombTimes</a> </li>
+<li class='toc3'><a href='#*ar'>ar</a> </li>
+<li class='toc3'><a href='#*makeMonoIn'>makeMonoIn</a>  <a href='#*makeCombTimes'>makeCombTimes</a>  <a href='#*makeCombs'>makeCombs</a>  <a href='#*makeAllpasses'>makeAllpasses</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#UGens'>UGens</a></span>
+</div><h1>AdCVerb<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>basic reverb based on Schroeder and Moorer-Loy</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/UGens/AdCVerb.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/UGens/AdCVerb.sc'>AdCVerb.sc</a></div><div id='subclasses'>Subclasses: <a href="../Classes/AdCVerb2.html">AdCVerb2</a></div>
+<div id='related'>See also: <a href="./../Classes/DelayN.html">DelayN</a>, <a href="./../Classes/CombL.html">CombL</a>, <a href="./../Classes/AllPassN">AllPassN</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>AdCVerb is a bank of comb filters going through a bank of allpass filters, with optional predelay. Basic input filtering is provided (high rolloff, DC removal), and it is easy and efficient to use for multichannel systems.
+<p>The overall structure is:<textarea class='editor'>     |||||   in (number of channels of input array, e.g. 5)
+     \\|//    summed to
+       |        mono
+    /// \\\    fanning out to &lt;numCombs&gt; (e.g. 6 here)
+    ||| |||   comb filters
+     \\ //
+       |        summed to mono
+     //|\\    fanned to &lt;nOuts&gt; allpass chain channels for decorrelation/diffuseness;
+     |||||    for each channel, a chain of &lt;numAllpasses&gt; allPasses,
+     |||||    e.g. 3 here.
+     |||||
+_____________
+    |||||    &lt;nOuts&gt; output channels.
+
+// a basic sound example:
+(
+x = {
+    var src, verb;
+    src = Decay2.ar(Impulse.ar(0.5, 0.99), 0.001, 0.03, PinkNoise.ar(1));
+    verb = AdCVerb.ar(src * 0.1);
+    src + verb;
+}.play;
+)
+x.free;</textarea>
+
+<p>There is no specific design of first reflections; if there are no particular demands on the early reflections, those created by AdCVerb are often fully sufficient. One can easily add first reflections, e.g. based on room geometry, by adding higher predelays, and creating a special purpose set of first reflections; in this usage context AdCVerb works well for global reverb tails.
+<p>The combTimes are hardcoded to be coloration-free (based on prime numbers), and they can be scaled. The allpassTimes are generated randomly based on prime number ratios, but can also be passed in if desired.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>AdCVerb.</span><a class='method-name' name='*verbose' href='./../Overviews/Methods.html#verbose'>verbose</a></h3>
+<h3 class='method-code'><span class='method-prefix'>AdCVerb.</span><a class='method-name' name='*verbose' href='./../Overviews/Methods.html#verbose'>verbose</a> = value</h3>
+<div class='method'>
+<p>if true, post the random-generated allpass times for precise rebuilding of specific times.</div><h3 class='method-code'><span class='method-prefix'>AdCVerb.</span><a class='method-name' name='*maxTime' href='./../Overviews/Methods.html#maxTime'>maxTime</a></h3>
+<h3 class='method-code'><span class='method-prefix'>AdCVerb.</span><a class='method-name' name='*maxTime' href='./../Overviews/Methods.html#maxTime'>maxTime</a> = value</h3>
+<div class='method'>
+<p>get and set the maximum delay time for predelay, combs and allpasses. When maxTime is changed, the next instance of AdCVerb will have this maxdelaytime for combs, allpasses and predelay. Default value is 0.2.</div><h3 class='method-code'><span class='method-prefix'>AdCVerb.</span><a class='method-name' name='*defaultCombTimes' href='./../Overviews/Methods.html#defaultCombTimes'>defaultCombTimes</a></h3>
+<div class='method'>
+<p>get the default delay times for the comb filters</div><h3 class='method-code'><span class='method-prefix'>AdCVerb.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>in</span>, <span class='argstr'>revTime: 3</span>, <span class='argstr'>hfDamping: 0.1</span>, <span class='argstr'>nOuts: 2</span>, <span class='argstr'>predelay: 0.02</span>, <span class='argstr'>numCombs: 8</span>, <span class='argstr'>numAllpasses: 4</span>, <span class='argstr'>inFilter: 0.6</span>, <span class='argstr'>leakCoeff: 0.995</span>, <span class='argstr'>combScale: 1</span>, <span class='argstr'>apScale: 1</span>, <span class='argstr'>allpassPrimes</span>)</h3>
+<div class='method'>
+<p>create an ar instance of AdCVerb.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>in<td class='argumentdesc'>
+<p>the audio inputs or inputs, which are converted to mono.<tr><td class='argumentname'>revTime<td class='argumentdesc'>
+<p>reverb time for -60 db decay of the comb filters<tr><td class='argumentname'>hfDamping<td class='argumentdesc'>
+<p>higher frequencies can be rolled of in the combs: 0.0 is no damping, 1.0 means high frequencies roll off significantly faster. (This uses the mild rolloff introduced by linear interpolation in CombL.)<tr><td class='argumentname'>nOuts<td class='argumentdesc'>
+<p>number of output channels; each output gets its own group of allpass filters for density and decorrelation<tr><td class='argumentname'>predelay<td class='argumentdesc'>
+<p>predelay before reverb tail begins, in seconds<tr><td class='argumentname'>numCombs<td class='argumentdesc'>
+<p>number of combs used in reverb tail<tr><td class='argumentname'>numAllpasses<td class='argumentdesc'>
+<p>number of allpasses used for decorrelating each out channel<tr><td class='argumentname'>inFilter<td class='argumentdesc'>
+<p>a coefficient for reverb input filtering (OnePole); 0.0 is no filtering, 0.99 is very dark.<tr><td class='argumentname'>leakCoeff<td class='argumentdesc'>
+<p>coefficient for a LeakDC which filters DC in the input sum, in order to avoid DC drift. default of 0.995 introduces rather little LF rolloff.<tr><td class='argumentname'>combScale<td class='argumentdesc'>
+<p>scales all combTimes up to maxTime; can be used to adjust room size. default = 1.0<tr><td class='argumentname'>apScale<td class='argumentdesc'>
+<p>scales all allpassTimes up to maxTime; can be used to adjust room size. default = 1.0<tr><td class='argumentname'>allpassPrimes<td class='argumentdesc'>
+<p>an optional list of prime numbers for the allpass filters; providing them overrides numAllpasses and nOuts.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an instance of AdCVerb</div></div><h3 class='method-code'><span class='method-prefix'>AdCVerb.</span><a class='method-name' name='*makeMonoIn' href='./../Overviews/Methods.html#makeMonoIn'>makeMonoIn</a>(<span class='argstr'>in</span>, <span class='argstr'>inFilter</span>, <span class='argstr'>leakCoeff</span>, <span class='argstr'>predelay</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>AdCVerb.</span><a class='method-name' name='*makeCombTimes' href='./../Overviews/Methods.html#makeCombTimes'>makeCombTimes</a>(<span class='argstr'>numCombs</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>AdCVerb.</span><a class='method-name' name='*makeCombs' href='./../Overviews/Methods.html#makeCombs'>makeCombs</a>(<span class='argstr'>monoIn</span>, <span class='argstr'>combTimes</span>, <span class='argstr'>revTime</span>, <span class='argstr'>hfDamping</span>, <span class='argstr'>numCombs</span>, <span class='argstr'>combScale</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>AdCVerb.</span><a class='method-name' name='*makeAllpasses' href='./../Overviews/Methods.html#makeAllpasses'>makeAllpasses</a>(<span class='argstr'>combsIn</span>, <span class='argstr'>revTime</span>, <span class='argstr'>nOuts</span>, <span class='argstr'>numAllpasses</span>, <span class='argstr'>apScale</span>, <span class='argstr'>allpassPrimes</span>)</h3>
+<div class='method'>
+<p>Internal methods to create all components of the verb, factored to allow building variants like AdCVerb2.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>    // simple use:
+(
+Ndef(\adcverb_help).play;
+Ndef(\adcverb_help, {
+    var src, verb;
+    src = Decay2.ar(Impulse.ar(0.5, 0.99), 0.001, 0.03, PinkNoise.ar(1));
+    verb = AdCVerb.ar(src * 0.1);
+    src + verb;
+});
+)
+
+    // tune all params:
+Ndef(\adcverb_help).play;
+Ndef(\adcverb_help).gui;
+
+(    // all params open for tuning:
+Spec.add(\revTime, [0.01, 100, \exp]);
+Spec.add(\hfDamping, [0, 1]);
+Spec.add(\predelay, [0.0, 0.2, \amp]);
+Spec.add(\revTime, [0.01, 100, \exp]);
+Spec.add(\inFilter, [-0.99, 0.99]);
+Spec.add(\leakCoeff, [0.8, 1.0]);
+Spec.add(\combScale, [0.1, 2, \exp]);
+Spec.add(\apScale, [0.1, 2, \exp]);
+
+Ndef(\adcverb_help, { |revTime = 3, hfDamping = 0.1, predelay = 0.02,
+        inFilter = 0.6, leakCoeff = 0.995, combScale = 1, apScale = 1|
+
+    var src, verb;
+
+    // replace with any sources you like
+    src = Decay2.ar(Impulse.ar(0.5), 0.001, 0.03, PinkNoise.ar(1));
+
+    verb = AdCVerb.ar(src * 0.1,
+        revTime: revTime.lag(0.5),
+        hfDamping: hfDamping.lag(0.5),
+        nOuts: 2,         // fixed number of decorrelated output channels
+        predelay: predelay.lag(0.5),
+        numCombs:     8,     // fixed number - increase for more density
+        numAllpasses: 4,     // fixed number - increase for more diffuseness
+        inFilter: inFilter,
+        leakCoeff: leakCoeff,
+        combScale: combScale.lag(0.5), // lagged to
+        apScale: apScale.lag(0.5)
+    );
+    src + verb;
+});
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/AdCVerb.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/AdCVerb.schelp</a><br>link::Classes/AdCVerb::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,0 +1,97 @@
+<!doctype html><html lang='en'><head><title>AudioSpec | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'AudioSpec';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>AudioSpec:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-numChannels'>numChannels</a> </li>
+<li class='toc3'><a href='#-defaultControl'>defaultControl</a> </li>
+<li class='toc3'><a href='#-storeArgs'>storeArgs</a> </li>
+<li class='toc3'><a href='#-rate'>rate</a> </li>
+<li class='toc3'><a href='#-canAccept'>canAccept</a> </li>
+<li class='toc3'><a href='#-constrain'>constrain</a> </li>
+<li class='toc3'><a href='#-color'>color</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-default'>default</a> </li>
+</ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Spec'>Spec</a> | <a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>crucial'>crucial</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>crucial>Spec'>Spec</a></span>
+</div><h1>AudioSpec<span id='superclasses'> : <a href="../Classes/Spec.html">Spec</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>datatype expressing an 'audio' rate object</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/MoreSpecs.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/MoreSpecs.sc'>MoreSpecs.sc</a></div><div id='subclasses'>Subclasses: <a href="../Classes/AudioEventSpec.html">AudioEventSpec</a>, <a href="../Classes/BFormatSpec.html">BFormatSpec</a>, <a href="../Classes/EffectSpec.html">EffectSpec</a>, <a href="../Classes/MultiTrackAudioSpec.html">MultiTrackAudioSpec</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>An audio spec specifies that the input should be an audio signal, or that an output will be an audio signal. Inputs with an AudioSpec are expecting an audio rate player. eg. filters and effects that take an audio input.
+<p>Here is an effect patch that specifies that it takes a stereo input (for the 'input' arg) and produces a stereo output.<textarea class='editor'>Patch({ arg input,ffreq;
+
+    RLPF.ar(input,ffreq)
+
+},[
+    AudioSpec(2), // input
+    ControlSpec(200,13000,\exp,default:10000)
+],
+    AudioSpec(2) // output
+);</textarea>
+
+<p>Its default control is a PlayerInputProxy which is a placeholder. It will play silently, but it will also allow you to compile the patch's synth def and will create an audio input.
+<p>Note: this should be changed as the Specs should not be attached to Player, they should be neutral datatypes. The defaultControl system should just go away. see <a href="./../Classes/ControlPrototypes.html">ControlPrototypes</a><textarea class='editor'>// inline example
+g = AudioSpec(2).defaultControl;
+g.numChannels.postln;
+g.spec.postln;</textarea>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>AudioSpec.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>numChannels</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>numChannels<td class='argumentdesc'>
+<p>The number of channels your input requires. Default value is 1. This can also be nil which expresses that your Instr will multi-channel expand if given more than one channel. ie. its mono-stereo compatible</table></div><h3 class='method-code'><span class='method-prefix'>AudioSpec.</span><a class='method-name' name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a></h3>
+<div class='method'></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numChannels' href='./../Overviews/Methods.html#numChannels'>numChannels</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numChannels' href='./../Overviews/Methods.html#numChannels'>numChannels</a> = value</h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defaultControl' href='./../Overviews/Methods.html#defaultControl'>defaultControl</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-storeArgs' href='./../Overviews/Methods.html#storeArgs'>storeArgs</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rate' href='./../Overviews/Methods.html#rate'>rate</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-canAccept' href='./../Overviews/Methods.html#canAccept'>canAccept</a>(<span class='argstr'>thing</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>thing<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-constrain' href='./../Overviews/Methods.html#constrain'>constrain</a>( <span class='argstr'>... args</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... args<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-color' href='./../Overviews/Methods.html#color'>color</a></h3>
+<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/instrSupport.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/instrSupport.sc</a></div>
+<div class='method'></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-default' href='./../Overviews/Methods.html#default'>default</a></h3>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/AudioSpec.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/AudioSpec.schelp</a><br>link::Classes/AudioSpec::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

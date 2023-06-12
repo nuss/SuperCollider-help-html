@@ -1,0 +1,188 @@
+<!doctype html><html lang='en'><head><title>Atk | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Atk';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Atk:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*sets'>sets</a> </li>
+<li class='toc2'><a href='#Installation%20of%20ATK%20dependencies'>Installation of ATK dependencies</a></li>
+<ul class='toc'><li class='toc3'><a href='#*downloadKernels'>downloadKernels</a> </li>
+<li class='toc3'><a href='#*downloadMatrices'>downloadMatrices</a> </li>
+<li class='toc3'><a href='#*downloadSounds'>downloadSounds</a> </li>
+</ul><li class='toc2'><a href='#ATK's%20default%20asset%20directories'>ATK's default asset directories</a></li>
+<ul class='toc'><li class='toc3'><a href='#*userSupportDir'>userSupportDir</a> </li>
+<li class='toc3'><a href='#*userSupportDir'>userSupportDir</a> </li>
+<li class='toc3'><a href='#*userSoundsDir'>userSoundsDir</a> </li>
+<li class='toc3'><a href='#*userMatrixDir'>userMatrixDir</a> </li>
+<li class='toc3'><a href='#*userKernelDir'>userKernelDir</a> </li>
+<li class='toc3'><a href='#*openUserSupportDir'>openUserSupportDir</a> </li>
+<li class='toc3'><a href='#*createUserSupportDir'>createUserSupportDir</a> </li>
+<li class='toc3'><a href='#*systemSupportDir'>systemSupportDir</a> </li>
+<li class='toc3'><a href='#*systemSoundsDir'>systemSoundsDir</a> </li>
+<li class='toc3'><a href='#*systemMatrixDir'>systemMatrixDir</a> </li>
+<li class='toc3'><a href='#*systemKernelDir'>systemKernelDir</a> </li>
+<li class='toc3'><a href='#*openSystemSupportDir'>openSystemSupportDir</a> </li>
+<li class='toc3'><a href='#*createSystemSupportDir'>createSystemSupportDir</a> </li>
+</ul><li class='toc2'><a href='#User%20asset%20/extensions%20directory'>User asset /extensions directory</a></li>
+<ul class='toc'><li class='toc3'><a href='#*userExtensionsDir'>userExtensionsDir</a> </li>
+<li class='toc3'><a href='#*systemExtensionsDir'>systemExtensionsDir</a> </li>
+<li class='toc3'><a href='#*postMyMatrices'>postMyMatrices</a> </li>
+<li class='toc3'><a href='#*createExtensionsDir'>createExtensionsDir</a> </li>
+</ul><li class='toc2'><a href='#Convenience%20methods%20for%20accessing%20subdirectories'>Convenience methods for accessing subdirectories</a></li>
+<ul class='toc'><li class='toc3'><a href='#*getAtkOpPath'>getAtkOpPath</a> </li>
+<li class='toc3'><a href='#*getAtkOpSubPath'>getAtkOpSubPath</a> </li>
+<li class='toc3'><a href='#*getAtkMatrixSubPath'>getAtkMatrixSubPath</a> </li>
+<li class='toc3'><a href='#*getAtkKernelSubPath'>getAtkKernelSubPath</a> </li>
+<li class='toc3'><a href='#*getExtensionSubPath'>getExtensionSubPath</a> </li>
+<li class='toc3'><a href='#*getMatrixExtensionSubPath'>getMatrixExtensionSubPath</a> </li>
+<li class='toc3'><a href='#*getKernelExtensionSubPath'>getKernelExtensionSubPath</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit'>Ambisonic Toolkit</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>Ambisonic Toolkit>ATK Platform & Configuration'>ATK Platform & Configuration</a></span>
+</div><h1>Atk<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>a class that stores some global variables for the Ambisonic Toolkit</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/Classes/ATK.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/Classes/ATK.sc'>ATK.sc</a></div><div id='related'>See also: <a href="./../Classes/AtkFoa.html">AtkFoa</a>, <a href="./../Classes/AtkHoa.html">AtkHoa</a>, <a href="./../Tutorials/ABCs-of-the-ATK.html">ABCs of the ATK</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>The Atk class defines variables that may be used by the rest of the ATK library, including resources for kernel encoding and decoding and sample soundfile paths.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*sets' href='./../Overviews/Methods.html#sets'>sets</a></h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an Array listing valid ATK sets.</div></div><h3><a class='anchor' name='Installation%20of%20ATK%20dependencies'>Installation of ATK dependencies</a></h3>
+
+<p>Kernels, Matrices, and Soundfiles can be installed using following methods:<textarea class='editor'>Atk.downloadKernels;
+Atk.downloadMatrices;
+Atk.downloadSounds;</textarea>
+<div class='note'><span class='notelabel'>NOTE:</span> On <code>Windows</code> there is no feedback on download progress. Please wait until the message confirming decompressing of the downloaded archive is posted.</div>
+<p>In case the automatic installation fails, please see the Ambisonic Toolkit webpage to proceed with manual installation:<textarea class='editor'>"http://ambisonictoolkit.net/download/kernels/".openOS; //kernels
+"http://ambisonictoolkit.net/download/matrices/".openOS; //matrices
+"http://ambisonictoolkit.net/download/recordings/".openOS; //soundfiles</textarea>
+<h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*downloadKernels' href='./../Overviews/Methods.html#downloadKernels'>downloadKernels</a>(<span class='argstr'>useSystemLocation: false</span>, <span class='argstr'>action</span>)</h3>
+<div class='method'>
+<p>Download Atk Kernels, required by kernel encoders/decoders</div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*downloadMatrices' href='./../Overviews/Methods.html#downloadMatrices'>downloadMatrices</a>(<span class='argstr'>useSystemLocation: false</span>, <span class='argstr'>action</span>)</h3>
+<div class='method'>
+<p>Download Atk Matrices, required by matrix encoders/decoders/transformers</div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*downloadSounds' href='./../Overviews/Methods.html#downloadSounds'>downloadSounds</a>(<span class='argstr'>useSystemLocation: false</span>, <span class='argstr'>action</span>)</h3>
+<div class='method'>
+<p>Download Atk Example Soundfiles</div><h3><a class='anchor' name='ATK's%20default%20asset%20directories'>ATK's default asset directories</a></h3>
+<div class='note'><span class='notelabel'>NOTE:</span> The following methods have both <strong>user</strong> and <strong>system</strong> versions. Which version you should use will depend on whether you have the ATK assets installed at the user level:<textarea class='editor'>Platform.userAppSupportDir</textarea>
+
+<p>or the system level:<textarea class='editor'>Platform.systemAppSupportDir</textarea>
+</div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*userSupportDir' href='./../Overviews/Methods.html#userSupportDir'>userSupportDir</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*userSupportDir' href='./../Overviews/Methods.html#userSupportDir'>userSupportDir</a> = <span class='argstr'>userSupportDirIn</span></h3>
+<div class='method'>
+<p>set the user support dir where ATK resources are located<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>userSupportDirIn<td class='argumentdesc'>
+<p>the path to the ATK folder containing your ATK support files</table></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*userSupportDir' href='./../Overviews/Methods.html#userSupportDir'>userSupportDir</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*userSupportDir' href='./../Overviews/Methods.html#userSupportDir'>userSupportDir</a> = <span class='argstr'>userSupportDirIn</span></h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the path to the ATK support dir. Defaults to: <code>Platform.userAppSupportDir.dirname ++ "/ATK";</code></div></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*userSoundsDir' href='./../Overviews/Methods.html#userSoundsDir'>userSoundsDir</a></h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a path to the 'sounds' dir inside the ATK support dir</div></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*userMatrixDir' href='./../Overviews/Methods.html#userMatrixDir'>userMatrixDir</a></h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a path to the 'matrices' dir inside the ATK support dir</div></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*userKernelDir' href='./../Overviews/Methods.html#userKernelDir'>userKernelDir</a></h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a path to the 'kernel' dir inside the ATK support dir</div></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*openUserSupportDir' href='./../Overviews/Methods.html#openUserSupportDir'>openUserSupportDir</a></h3>
+<div class='method'>
+<p>runs a <a href="./../Classes/String.html#-unixCmd">String: -unixCmd</a> to open the userAppSupport dir. Uses 'open' (OS X only)</div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*createUserSupportDir' href='./../Overviews/Methods.html#createUserSupportDir'>createUserSupportDir</a></h3>
+<div class='method'>
+<p>runs a unix command to create the user support dir for ATK</div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*systemSupportDir' href='./../Overviews/Methods.html#systemSupportDir'>systemSupportDir</a></h3>
+<h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*systemSupportDir' href='./../Overviews/Methods.html#systemSupportDir'>systemSupportDir</a> = <span class='argstr'>systemSupportDurIn</span></h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>the path to the ATK support dir. Defaults to: <code>Platform.systemAppSupportDir.dirname ++ "/ATK";</code></div></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*systemSoundsDir' href='./../Overviews/Methods.html#systemSoundsDir'>systemSoundsDir</a></h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a path to the 'sounds' dir inside the ATK system support dir</div></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*systemMatrixDir' href='./../Overviews/Methods.html#systemMatrixDir'>systemMatrixDir</a></h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a path to the 'matrices' dir inside the ATK system support dir</div></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*systemKernelDir' href='./../Overviews/Methods.html#systemKernelDir'>systemKernelDir</a></h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a path to the 'kernel' dir inside the ATK system support dir</div></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*openSystemSupportDir' href='./../Overviews/Methods.html#openSystemSupportDir'>openSystemSupportDir</a></h3>
+<div class='method'>
+<p>runs a <a href="./../Classes/String.html#-unixCmd">String: -unixCmd</a> to open the systemAppSupport dir. Uses 'open' (OS X only)</div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*createSystemSupportDir' href='./../Overviews/Methods.html#createSystemSupportDir'>createSystemSupportDir</a></h3>
+<div class='method'>
+<p>runs a unix command to create the system support dir for ATK</div><h3><a class='anchor' name='User%20asset%20/extensions%20directory'>User asset /extensions directory</a></h3>
+
+<p>The <code>extensions</code> directory is where the ATK looks for assets generated or added by you, such as your own matrices or kernels. It is located in<textarea class='editor'>Atk.userExtensionsDir</textarea>
+
+<p>or if the ATK assets are installed system-wide, in:<textarea class='editor'>Atk.systemExtensionsDir</textarea>
+
+<p>It is <strong>not installed by default</strong>. It can be created by running<textarea class='editor'>Atk.createExtensionsDir</textarea>
+
+<p>You can find out more about the directory structure in the <a href="./../Guides/Guide-to-ATK-Matrix-Files.html">Guide to ATK Matrix Files</a>.<h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*userExtensionsDir' href='./../Overviews/Methods.html#userExtensionsDir'>userExtensionsDir</a></h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a path to the 'extensions' dir inside the ATK support dir. This is where user-generated matrices and kernels are stored to and rerieved from by default.</div></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*systemExtensionsDir' href='./../Overviews/Methods.html#systemExtensionsDir'>systemExtensionsDir</a></h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a path to the 'extensions' dir inside the ATK support dir. This is where user-generated matrices and kernels are stored to and rerieved from by default.</div></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*postMyMatrices' href='./../Overviews/Methods.html#postMyMatrices'>postMyMatrices</a>(<span class='argstr'>set</span>, <span class='argstr'>type</span>)</h3>
+<div class='method'>
+<p>Displays a formatted list the matrices stored in your <code>ATK/extensions/matrices</code> directory. The <strong>set</strong> and <strong>type</strong> arguments are optional filters to display only matrices of a the specified <strong>set</strong> and <strong>type</strong>.<div class='note'><span class='notelabel'>NOTE:</span> This method first searches the <code>Atk.userExtensionsDir</code> and if no directory is found, it proceeds to check for a system-wide installation in <code>Atk.systemExtensionsDir</code>.</div></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*createExtensionsDir' href='./../Overviews/Methods.html#createExtensionsDir'>createExtensionsDir</a></h3>
+<div class='method'>
+<p>Creates the <code>extensions</code> folder, along with numerous subdirectories in a pre-defined structure, in your ATK assets folder. This is where the ATK looks for assets generated or added by you, such as your own matrices or kernels. You can find out more about the directory structure and its use in the <a href="./../Guides/Guide-to-ATK-Matrix-Files.html">Guide to ATK Matrix Files</a>.</div><h3><a class='anchor' name='Convenience%20methods%20for%20accessing%20subdirectories'>Convenience methods for accessing subdirectories</a></h3>
+
+<p>The following methods are used by ATK internally but listed here in the case you find them useful.<h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*getAtkOpPath' href='./../Overviews/Methods.html#getAtkOpPath'>getAtkOpPath</a>(<span class='argstr'>op</span>, <span class='argstr'>isExtension: false</span>)</h3>
+<div class='method'>
+<p>Get the <a href="./../Classes/PathName.html">PathName</a> of the <strong>op</strong> directory (<code>'kernels'</code> or <code>'matrices'</code>), in either the "built-in" ATK support directory or the user <code>extension</code> subdirectory (<strong>isExtension</strong> = true).</div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*getAtkOpSubPath' href='./../Overviews/Methods.html#getAtkOpSubPath'>getAtkOpSubPath</a>(<span class='argstr'>set</span>, <span class='argstr'>type</span>, <span class='argstr'>op</span>)</h3>
+<div class='method'>
+<p>Get the <a href="./../Classes/PathName.html">PathName</a> of the subdirectory within the <code>ATK/'op'/'set'/'type'</code> folder.<div class='note'><span class='notelabel'>NOTE:</span> This method first searches the <code>Atk.userExtensionsDir</code> and if no directory is found, it proceeds to check the <code>Atk.systemExtensionsDir</code>.</div></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*getAtkMatrixSubPath' href='./../Overviews/Methods.html#getAtkMatrixSubPath'>getAtkMatrixSubPath</a>(<span class='argstr'>set</span>, <span class='argstr'>type</span>)</h3>
+<div class='method'>
+<p>A shortcut for <code>Atk.getAtkOpSubPath(set, op, 'matrices')</code></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*getAtkKernelSubPath' href='./../Overviews/Methods.html#getAtkKernelSubPath'>getAtkKernelSubPath</a>(<span class='argstr'>set</span>, <span class='argstr'>type</span>)</h3>
+<div class='method'>
+<p>A shortcut for <code>Atk.getAtkOpSubPath(set, op, 'kernels')</code></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*getExtensionSubPath' href='./../Overviews/Methods.html#getExtensionSubPath'>getExtensionSubPath</a>(<span class='argstr'>set</span>, <span class='argstr'>type</span>, <span class='argstr'>op</span>)</h3>
+<div class='method'>
+<p>Get the <a href="./../Classes/PathName.html">PathName</a> of the subdirectory within the <code>ATK/extensions/'op'/'set'/'type'</code> folder.<div class='note'><span class='notelabel'>NOTE:</span> This method first searches the <code>Atk.userExtensionsDir</code> and if no directory is found, it proceeds to check the <code>Atk.systemExtensionsDir</code>.</div></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*getMatrixExtensionSubPath' href='./../Overviews/Methods.html#getMatrixExtensionSubPath'>getMatrixExtensionSubPath</a>(<span class='argstr'>set</span>, <span class='argstr'>type</span>)</h3>
+<div class='method'>
+<p>A shortcut for <code>Atk.getExtensionSubPath(set, op, 'matrices')</code></div><h3 class='method-code'><span class='method-prefix'>Atk.</span><a class='method-name' name='*getKernelExtensionSubPath' href='./../Overviews/Methods.html#getKernelExtensionSubPath'>getKernelExtensionSubPath</a>(<span class='argstr'>set</span>, <span class='argstr'>type</span>)</h3>
+<div class='method'>
+<p>A shortcut for <code>Atk.getExtensionSubPath(set, op, 'kernels')</code></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/HelpSource/Classes/Atk.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/HelpSource/Classes/Atk.schelp</a><br>link::Classes/Atk::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

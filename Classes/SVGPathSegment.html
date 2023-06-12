@@ -1,0 +1,277 @@
+<!doctype html><html lang='en'><head><title>SVGPathSegment | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'SVGPathSegment';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>SVGPathSegment:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*curveRes'>curveRes</a> </li>
+<li class='toc3'><a href='#*getPropertiesFor'>getPropertiesFor</a> </li>
+<li class='toc3'><a href='#*getType'>getType</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*propertiesDict'>propertiesDict</a> </li>
+<li class='toc3'><a href='#*typeDict'>typeDict</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-allPoints'>allPoints</a> </li>
+<li class='toc3'><a href='#-args'>args</a> </li>
+<li class='toc3'><a href='#-asAbsolute'>asAbsolute</a> </li>
+<li class='toc3'><a href='#-asArray'>asArray</a> </li>
+<li class='toc3'><a href='#-asEvent'>asEvent</a> </li>
+<li class='toc3'><a href='#-asPenFunction'>asPenFunction</a> </li>
+<li class='toc3'><a href='#-asPoint'>asPoint</a> </li>
+<li class='toc3'><a href='#-asRelative'>asRelative</a> </li>
+<li class='toc3'><a href='#-asSVGPathSegment'>asSVGPathSegment</a> </li>
+<li class='toc3'><a href='#-asTypeCharArray'>asTypeCharArray</a> </li>
+<li class='toc3'><a href='#-c2'>c2</a> </li>
+<li class='toc3'><a href='#-copy'>copy</a> </li>
+<li class='toc3'><a href='#-doesNotUnderstand'>doesNotUnderstand</a> </li>
+<li class='toc3'><a href='#-event'>event</a> </li>
+<li class='toc3'><a href='#-getProperty'>getProperty</a> </li>
+<li class='toc3'><a href='#-getType'>getType</a> </li>
+<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-isAbsolute'>isAbsolute</a> </li>
+<li class='toc3'><a href='#-isRelative'>isRelative</a> </li>
+<li class='toc3'><a href='#-isSVGPathSegment'>isSVGPathSegment</a> </li>
+<li class='toc3'><a href='#-makeAbsolute'>makeAbsolute</a> </li>
+<li class='toc3'><a href='#-makeRelative'>makeRelative</a> </li>
+<li class='toc3'><a href='#-point'>point</a> </li>
+<li class='toc3'><a href='#-printOn'>printOn</a> </li>
+<li class='toc3'><a href='#-properties'>properties</a> </li>
+<li class='toc3'><a href='#-propertyArray'>propertyArray</a> </li>
+<li class='toc3'><a href='#-setProperty'>setProperty</a> </li>
+<li class='toc3'><a href='#-type'>type</a> </li>
+<li class='toc3'><a href='#-typeChar'>typeChar</a> </li>
+<li class='toc3'><a href='#-x'>x</a> </li>
+<li class='toc3'><a href='#-xy'>xy</a> </li>
+<li class='toc3'><a href='#-xyProperties'>xyProperties</a> </li>
+<li class='toc3'><a href='#-y'>y</a> </li>
+</ul></ul><li class='toc1'><a href='#Help%20template'>Help template</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></span>
+</div><h1>SVGPathSegment<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>(Undocumented class)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SVGFile/SVGFile.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SVGFile/SVGFile.sc'>SVGFile.sc</a></div></div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>SVGPathSegment.</span><a class='method-name' name='*curveRes' href='./../Overviews/Methods.html#curveRes'>curveRes</a></h3>
+<h3 class='method-code'><span class='method-prefix'>SVGPathSegment.</span><a class='method-name' name='*curveRes' href='./../Overviews/Methods.html#curveRes'>curveRes</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>SVGPathSegment.</span><a class='method-name' name='*getPropertiesFor' href='./../Overviews/Methods.html#getPropertiesFor'>getPropertiesFor</a>(<span class='argstr'>type</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>SVGPathSegment.</span><a class='method-name' name='*getType' href='./../Overviews/Methods.html#getType'>getType</a>(<span class='argstr'>type</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>SVGPathSegment.</span><a class='method-name' name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a></h3>
+<h3 class='method-code'><span class='method-prefix'>SVGPathSegment.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>type</span> <span class='argstr'>... args</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>SVGPathSegment.</span><a class='method-name' name='*propertiesDict' href='./../Overviews/Methods.html#propertiesDict'>propertiesDict</a></h3>
+<h3 class='method-code'><span class='method-prefix'>SVGPathSegment.</span><a class='method-name' name='*typeDict' href='./../Overviews/Methods.html#typeDict'>typeDict</a></h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-allPoints' href='./../Overviews/Methods.html#allPoints'>allPoints</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-allPoints' href='./../Overviews/Methods.html#allPoints'>allPoints</a> = <span class='argstr'>newPoints</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-args' href='./../Overviews/Methods.html#args'>args</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-args' href='./../Overviews/Methods.html#args'>args</a> = <span class='argstr'>newArgs</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asAbsolute' href='./../Overviews/Methods.html#asAbsolute'>asAbsolute</a>(<span class='argstr'>prev</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asArray' href='./../Overviews/Methods.html#asArray'>asArray</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asEvent' href='./../Overviews/Methods.html#asEvent'>asEvent</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asPenFunction' href='./../Overviews/Methods.html#asPenFunction'>asPenFunction</a>(<span class='argstr'>prev</span>, <span class='argstr'>first</span>, <span class='argstr'>parent</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asPoint' href='./../Overviews/Methods.html#asPoint'>asPoint</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asRelative' href='./../Overviews/Methods.html#asRelative'>asRelative</a>(<span class='argstr'>prev</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asSVGPathSegment' href='./../Overviews/Methods.html#asSVGPathSegment'>asSVGPathSegment</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asTypeCharArray' href='./../Overviews/Methods.html#asTypeCharArray'>asTypeCharArray</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-c2' href='./../Overviews/Methods.html#c2'>c2</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-copy' href='./../Overviews/Methods.html#copy'>copy</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doesNotUnderstand' href='./../Overviews/Methods.html#doesNotUnderstand'>doesNotUnderstand</a>(<span class='argstr'>selector</span> <span class='argstr'>... args</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-event' href='./../Overviews/Methods.html#event'>event</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getProperty' href='./../Overviews/Methods.html#getProperty'>getProperty</a>(<span class='argstr'>pr: 'x'</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getType' href='./../Overviews/Methods.html#getType'>getType</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-init' href='./../Overviews/Methods.html#init'>init</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isAbsolute' href='./../Overviews/Methods.html#isAbsolute'>isAbsolute</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isRelative' href='./../Overviews/Methods.html#isRelative'>isRelative</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isSVGPathSegment' href='./../Overviews/Methods.html#isSVGPathSegment'>isSVGPathSegment</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-makeAbsolute' href='./../Overviews/Methods.html#makeAbsolute'>makeAbsolute</a>(<span class='argstr'>prevSegment</span>, <span class='argstr'>warn: false</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-makeRelative' href='./../Overviews/Methods.html#makeRelative'>makeRelative</a>(<span class='argstr'>prevSegment</span>, <span class='argstr'>warn: false</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-point' href='./../Overviews/Methods.html#point'>point</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-point' href='./../Overviews/Methods.html#point'>point</a> = <span class='argstr'>point</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-printOn' href='./../Overviews/Methods.html#printOn'>printOn</a>(<span class='argstr'>stream</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-properties' href='./../Overviews/Methods.html#properties'>properties</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-propertyArray' href='./../Overviews/Methods.html#propertyArray'>propertyArray</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setProperty' href='./../Overviews/Methods.html#setProperty'>setProperty</a>(<span class='argstr'>pr: 'x'</span>, <span class='argstr'>value</span>, <span class='argstr'>acceptNil: false</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-type' href='./../Overviews/Methods.html#type'>type</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-type' href='./../Overviews/Methods.html#type'>type</a> = <span class='argstr'>newType</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-typeChar' href='./../Overviews/Methods.html#typeChar'>typeChar</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-x' href='./../Overviews/Methods.html#x'>x</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-x' href='./../Overviews/Methods.html#x'>x</a> = <span class='argstr'>newX</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-xy' href='./../Overviews/Methods.html#xy'>xy</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-xy' href='./../Overviews/Methods.html#xy'>xy</a> = <span class='argstr'>xy</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-xyProperties' href='./../Overviews/Methods.html#xyProperties'>xyProperties</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-y' href='./../Overviews/Methods.html#y'>y</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-y' href='./../Overviews/Methods.html#y'>y</a> = <span class='argstr'>newY</span></h3>
+<h2><a class='anchor' name='Help%20template'>Help template</a></h2>
+
+<p>Copy and paste the text below and save to HelpSource/Classes/SVGPathSegment.schelp<textarea class='editor'>TITLE:: SVGPathSegment
+summary:: _short_description_here_
+categories:: Undocumented classes
+related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff
+
+DESCRIPTION::
+_put_long_description_here_
+
+
+First code examples: 
+
+code::
+_some_example_code_
+::
+
+CLASSMETHODS::
+
+METHOD:: curveRes
+
+METHOD:: typeDict
+
+METHOD:: propertiesDict
+
+METHOD:: initClass
+
+METHOD:: getPropertiesFor
+argument:: type
+
+METHOD:: new
+argument:: type
+argument::  ... args
+
+METHOD:: getType
+argument:: type
+
+
+INSTANCEMETHODS::
+
+METHOD:: makeAbsolute
+argument:: prevSegment
+argument:: warn
+
+METHOD:: doesNotUnderstand
+argument:: selector
+argument::  ... args
+
+METHOD:: event
+
+METHOD:: init
+
+METHOD:: asAbsolute
+argument:: prev
+
+METHOD:: setProperty
+argument:: pr
+argument:: value
+argument:: acceptNil
+
+METHOD:: isRelative
+
+METHOD:: asEvent
+
+METHOD:: args
+argument:: newArgs
+
+METHOD:: isAbsolute
+
+METHOD:: xyProperties
+
+METHOD:: type
+argument:: newType
+
+METHOD:: getType
+
+METHOD:: asRelative
+argument:: prev
+
+METHOD:: printOn
+argument:: stream
+
+METHOD:: copy
+
+METHOD:: xy
+argument:: xy
+
+METHOD:: getProperty
+argument:: pr
+
+METHOD:: asArray
+
+METHOD:: isSVGPathSegment
+
+METHOD:: asTypeCharArray
+
+METHOD:: c2
+
+METHOD:: propertyArray
+
+METHOD:: allPoints
+argument:: newPoints
+
+METHOD:: y
+argument:: newY
+
+METHOD:: asPenFunction
+argument:: prev
+argument:: first
+argument:: parent
+
+METHOD:: asSVGPathSegment
+
+METHOD:: properties
+
+METHOD:: point
+argument:: point
+
+METHOD:: makeRelative
+argument:: prevSegment
+argument:: warn
+
+METHOD:: x
+argument:: newX
+
+METHOD:: typeChar
+
+METHOD:: asPoint
+
+
+EXAMPLES::
+
+code::
+_some_example_code_
+::
+</textarea>
+<div class='doclink'>link::Classes/SVGPathSegment::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

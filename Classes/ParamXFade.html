@@ -1,0 +1,187 @@
+<!doctype html><html lang='en'><head><title>ParamXFade | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'ParamXFade';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>ParamXFade:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*getSetDict'>getSetDict</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-obj'>obj</a> </li>
+<li class='toc3'><a href='#-fadeTime'>fadeTime</a> </li>
+<li class='toc3'><a href='#-dt'>dt</a> </li>
+<li class='toc3'><a href='#-dest'>dest</a> </li>
+<li class='toc3'><a href='#-fadeTo'>fadeTo</a> </li>
+<li class='toc2'><a href='#internal%20fade%20variables'>internal fade variables</a></li>
+<ul class='toc'><li class='toc3'><a href='#-destNames'>destNames</a> </li>
+<li class='toc3'><a href='#-destVals'>destVals</a> </li>
+<li class='toc3'><a href='#-currVals'>currVals</a> </li>
+<li class='toc3'><a href='#-remainTime'>remainTime</a> </li>
+<li class='toc3'><a href='#-fadeIndex'>fadeIndex</a> </li>
+</ul><li class='toc2'><a href='#internal%20variables'>internal variables</a></li>
+<ul class='toc'><li class='toc3'><a href='#-task'>task</a> </li>
+<li class='toc3'><a href='#-getSetType'>getSetType</a> </li>
+<li class='toc3'><a href='#-getFunc'>getFunc</a>  <a href='#-setFunc'>setFunc</a> </li>
+<li class='toc3'><a href='#-startFunc'>startFunc</a>  <a href='#-endFunc'>endFunc</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Control'>Control</a></span>
+</div><h1>ParamXFade<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>crossfade between parameter settings</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/Control/ParamXFade.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/Control/ParamXFade.sc'>ParamXFade.sc</a></div><div id='related'>See also: <a href="./../Classes/Tdef.html">Tdef</a>, <a href="./../Classes/Ndef.html">Ndef</a>, <a href="./../Overviews/JITLib.html">JITLib</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>ParamXFade can crossfade a set of parameters of a process (e.g. an Ndef or a Tdef) from their current values to a destination over a fadeTime.
+<p>This is useful for morphing between presets flexibly.
+<p>First code example:<textarea class='editor'>// try with an Ndef first
+Ndef(\a, { |freq = 400, reso = 5, amp=0.2, pan|
+    Pan2.ar(RLPF.ar(Pulse.ar(12), freq, 1/reso, amp), pan);
+}).play;
+
+Ndef(\a).set(\freq, 400, \reso, 5, \amp, 0.2, \pan, 0.2);
+// add specs for params so they are known
+Ndef(\a).addSpec(\reso, [2, 32, \exp]);
+// make a gui for the Ndef
+Ndef(\a).gui;
+// now make a ParamXFade
+x = ParamXFade(Ndef(\a));
+
+Ndef(\a).set(\freq, 300, \reso, 5, \amp, 0.2, \pan, -1);
+x.fadeTo([\freq, 0.9, \reso, 0.75], 10);
+
+// set freq while fading - pxf will continue fade from there
+Ndef(\a).set(\freq, 300);
+
+Ndef(\a).end;</textarea>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>ParamXFade.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>obj</span>, <span class='argstr'>fadeTime: 5</span>, <span class='argstr'>dt</span>, <span class='argstr'>getSetType: 'uni'</span>)</h3>
+<div class='method'>
+<p>create a new ParamXFade for ...<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>obj<td class='argumentdesc'>
+<p>a specific object<tr><td class='argumentname'>fadeTime<td class='argumentdesc'>
+<p>optional - initial time to crossfade<tr><td class='argumentname'>dt<td class='argumentdesc'>
+<p>optional initial timestep<tr><td class='argumentname'>getSetType<td class='argumentdesc'>
+<p>select which methods to use for getting/setting: default value \uni uses methods given in getSetDict:<textarea class='editor'>ParamXFade.getSetDict[\uni].cs;</textarea>
+
+<p></table></div><h3 class='method-code'><span class='method-prefix'>ParamXFade.</span><a class='method-name' name='*getSetDict' href='./../Overviews/Methods.html#getSetDict'>getSetDict</a></h3>
+<div class='method'>
+<p>a dictinonary of getFuncs and setFuncs. currently only \uni (as used by Tdef, Ndef, Pdef), others to follow.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-obj' href='./../Overviews/Methods.html#obj'>obj</a></h3>
+<div class='method'>
+<p>the object whose params will be faded</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fadeTime' href='./../Overviews/Methods.html#fadeTime'>fadeTime</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fadeTime' href='./../Overviews/Methods.html#fadeTime'>fadeTime</a> = value</h3>
+<div class='method'>
+<p>get and set fadeTime for the fading task</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dt' href='./../Overviews/Methods.html#dt'>dt</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dt' href='./../Overviews/Methods.html#dt'>dt</a> = value</h3>
+<div class='method'>
+<p>get and set timestep for the fading task</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dest' href='./../Overviews/Methods.html#dest'>dest</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-dest' href='./../Overviews/Methods.html#dest'>dest</a> = <span class='argstr'>indest</span></h3>
+<div class='method'>
+<p>get and set destination for the fade; can be set while crossfading.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fadeTo' href='./../Overviews/Methods.html#fadeTo'>fadeTo</a>(<span class='argstr'>indest</span>, <span class='argstr'>time</span>)</h3>
+<div class='method'>
+<p>set destination and optionally fadeTime, start fading task</div><h3><a class='anchor' name='internal%20fade%20variables'>internal fade variables</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-destNames' href='./../Overviews/Methods.html#destNames'>destNames</a></h3>
+<div class='method'>
+<p>the param names in the current destination</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-destVals' href='./../Overviews/Methods.html#destVals'>destVals</a></h3>
+<div class='method'>
+<p>the param values in the current destination</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-currVals' href='./../Overviews/Methods.html#currVals'>currVals</a></h3>
+<div class='method'>
+<p>the current param values the object is set to</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remainTime' href='./../Overviews/Methods.html#remainTime'>remainTime</a></h3>
+<div class='method'>
+<p>the remaining time to crossfade</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fadeIndex' href='./../Overviews/Methods.html#fadeIndex'>fadeIndex</a></h3>
+<div class='method'>
+<p>the index from 1.0 to 0.0 how far the crossfade has progressed</div><h3><a class='anchor' name='internal%20variables'>internal variables</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-task' href='./../Overviews/Methods.html#task'>task</a></h3>
+<div class='method'>
+<p>the task that does the crossfade</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getSetType' href='./../Overviews/Methods.html#getSetType'>getSetType</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getSetType' href='./../Overviews/Methods.html#getSetType'>getSetType</a> = value</h3>
+<div class='method'>
+<p>the type of get and set functions used</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getFunc' href='./../Overviews/Methods.html#getFunc'>getFunc</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getFunc' href='./../Overviews/Methods.html#getFunc'>getFunc</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setFunc' href='./../Overviews/Methods.html#setFunc'>setFunc</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setFunc' href='./../Overviews/Methods.html#setFunc'>setFunc</a> = value</h3>
+<div class='method'>
+<p>the get and set functions used</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-startFunc' href='./../Overviews/Methods.html#startFunc'>startFunc</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-startFunc' href='./../Overviews/Methods.html#startFunc'>startFunc</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-endFunc' href='./../Overviews/Methods.html#endFunc'>endFunc</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-endFunc' href='./../Overviews/Methods.html#endFunc'>endFunc</a> = value</h3>
+<div class='method'>
+<p>functions to run when crossfade task starts and ends</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>// same test for PatternProxy
+Tdef(\a).set(\freq, 100, \reso, 5, \amp, 0.2, \pan, -1);
+Tdef(\a).addSpec(\reso, [2, 32, \exp]).gui;
+y = ParamXFade(Tdef(\a));
+
+Tdef(\a).set(\freq, 100, \reso, 5, \amp, 0.2, \pan, -1);
+y.fadeTo([\freq, 0.9, \reso, 0.75], 10);
+
+// set freq while fading - will continue fade from there
+Tdef(\a).set(\freq, 20000);
+
+// change dest while running:
+y.fadeTo([\freq, 0.9, \reso, 0.75], 10);
+// should aim here now:
+y.dest_([\freq, 0.1, \reso, 0.25]);
+
+// can also change while params to fade
+y.dest_([\amp, 1, \pan, 1]);
+
+
+//
+y.obj;
+y.fadeTime;
+y.dt;
+
+// the functions
+y.getSetType;
+y.getFunc.cs;
+y.setFunc.cs;
+y.startFunc.value;
+y.endFunc.value;
+
+// the crossfade task
+y.task;
+// the destination to fade to
+y.dest;
+// split for speed
+y.destNames;
+y.destVals;
+
+// these change during fading:
+y.remainTime;
+y.fadeIndex;
+y.currVals;</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/ParamXFade.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/ParamXFade.schelp</a><br>link::Classes/ParamXFade::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,0 +1,275 @@
+<!doctype html><html lang='en'><head><title>MasterFX | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'MasterFX';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>MasterFX:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*all'>all</a> </li>
+<li class='toc3'><a href='#*default'>default</a> </li>
+<li class='toc3'><a href='#*maxNumChans'>maxNumChans</a> </li>
+<li class='toc3'><a href='#*clear'>clear</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-key'>key</a> </li>
+<li class='toc3'><a href='#-proxyChain'>proxyChain</a> </li>
+<li class='toc3'><a href='#-proxy'>proxy</a> </li>
+<li class='toc2'><a href='#Methods%20that%20get%20forwarded%20to%20proxyChain/proxy:'>Methods that get forwarded to proxyChain/proxy:</a></li>
+<ul class='toc'><li class='toc3'><a href='#-add'>add</a> </li>
+<li class='toc3'><a href='#-remove'>remove</a> </li>
+<li class='toc3'><a href='#-set'>set</a> </li>
+<li class='toc3'><a href='#-slotsInUse'>slotsInUse</a> </li>
+<li class='toc3'><a href='#-slotNames'>slotNames</a> </li>
+<li class='toc3'><a href='#-server'>server</a> </li>
+<li class='toc3'><a href='#-numChannels'>numChannels</a> </li>
+<li class='toc3'><a href='#-busIndex'>busIndex</a> </li>
+<li class='toc3'><a href='#-group'>group</a> </li>
+<li class='toc3'><a href='#-checkingBadValues'>checkingBadValues</a> </li>
+<li class='toc3'><a href='#-checkBad'>checkBad</a> </li>
+<li class='toc3'><a href='#-badSynth'>badSynth</a> </li>
+<li class='toc3'><a href='#-wakeUp'>wakeUp</a> </li>
+<li class='toc3'><a href='#-clear'>clear</a> </li>
+<li class='toc3'><a href='#-pxChain'>pxChain</a> </li>
+<li class='toc3'><a href='#-show'>show</a>  <a href='#-hide'>hide</a> </li>
+<li class='toc3'><a href='#-gui'>gui</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Control'>Control</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Control>Effects'>Effects</a></span>
+</div><h1>MasterFX<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>a configurable chain of effects on the main outputs of a server</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/classes/ProxyChain/MasterFX.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/classes/ProxyChain/MasterFX.sc'>MasterFX.sc</a></div><div id='related'>See also: <a href="./../Classes/ProxyChain.html">ProxyChain</a>, <a href="./../Classes/ProxyChainGui.html">ProxyChainGui</a>, <a href="./../Classes/MasterFXGui.html">MasterFXGui</a>, <a href="./../Classes/ProxyChainPreset.html">ProxyChainPreset</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A MasterFX can apply effects to the main output channels of a server. One can only make a single MasterFX for each server. Each masterFX contains a <a href="./../Classes/ProxyChain.html">ProxyChain</a> which handles the named effects slots and their state.
+<p>Note that MasterFX can be used with ProxyChainPreset, see <a href="./../Classes/ProxyChainPreset.html">ProxyChainPreset</a>, in the bottom examples.
+<p>First examples:<textarea class='editor'>(
+s.boot;
+
+// define which FX are going to be used.
+// As MasterFX is based on ProxyChain, these FX are the same as in ProxyChain.
+ProxyChain.add3(
+    \leakDC,  \filter -&gt; { |in, leak=0.99| LeakDC.ar(in, leak) },
+    1,
+    (\leak: [0.5, 0.999, \exp])
+);
+ProxyChain.add3(
+    \rollClip, \filter -&gt; { |in, clip=0.99, pole=0.2|
+        OnePole.ar(in.clip2(clip), pole ** 0.7);
+    },
+    1,
+    (
+        \clip: [0.0, 1, \amp],
+        \pole: [0, 0.95, \lin]
+    )
+);
+ProxyChain.add3(
+    \krush, \filter -&gt; { |in, bits=16, downsamp=2|
+        var krushed = in.round(0.5 ** bits);
+        var down = Latch.ar(in, Impulse.ar(SampleRate.ir / downsamp.max(2)));
+        // below 1/2 downsamp, do xfade:
+        blend(in, down, (downsamp - 1).clip(0, 1));
+    },
+    1,
+    (
+        \bits: [16, 1],
+        \downsamp: [1, 100, \exp]
+    )
+);
+
+ProxyChain.add3(
+    \comb, \filterIn -&gt; { |in, decay = 3| CombL.ar(in * 0.3, 0.02, [0.03, 0.042], decay) },
+    0.2,
+    (decay: [0.2, 200, \exp])
+);
+
+
+ProxyChain.add3(
+    \ampFin, \filter -&gt; { |in, drive=1, ampLimit=0.8 |
+        Limiter.ar(in * drive, ampLimit);
+    },
+    1,
+    (
+        \drive: [1, 10, \exp],
+        \ampLimit: \amp
+    )
+);
+);
+
+
+(
+// An 8-channel MasterFX on server s.
+// The order in slotNames determines order of execution of the efx.
+m = MasterFX.new(server: s,
+    numChannels: 8,
+    slotNames: [\leakDC, \krush, \rollClip, \ampFin],
+    busIndex: 0
+);
+
+g = m.gui; // a GUI
+s.scope(8);
+)
+
+// a test signal
+x = { PinkNoise.ar(0.5) + SinOsc.ar([220, 330]) * LFNoise2.kr([5, 8, 13, 21]).max(0); }.play;
+
+// all MasterFX live here:
+MasterFX.all;
+
+// kick in predefined effects (at full wet level)
+m.add(\leakDC, 1);
+m.set(\leak, 0.8); // filter lows
+
+m.add(\krush, 1);  // bitcrush, downsample
+m.set(\bits, 5, \downsamp, 6);
+
+m.add(\ampFin, 1);  // limit output
+m.set(\drive, 10, 0.3);
+
+// kick out predefined effects (at full wet level)
+m.remove(\leakDC);
+m.remove(\rollClip);
+m.remove(\krush);
+m.remove(\ampFin);
+
+// remove currently unused settings
+m.proxy.cleanNodeMap;
+
+// change slotNames - only while slots are off :
+m.slotNames;
+// this is -&gt; Order[\leakDC, \krush, \rollClip, \ampFin]
+
+// drop rollClip from the list:
+m.slotNames = [\leakDC, \krush, \ampFin];
+
+
+(
+// make a more specific GUI - see ProxyChainGui for details
+g = m.gui(\Mestre, 20, [
+    [\leakDC, \slotCtl, 1],
+    [\rollClip, \slotCtl, 1],
+    [\krush, \slotCtl, 1],
+    [\ampFin, \slotCtl, 1],
+    [\RESET, \extra, { m.pxChain.add(\leakDC, 1).add(\ampFin, 1) }],
+])
+)
+
+// remove a MasterFX by server name
+MasterFX.clear(\localhost); // clear one specific masterfx
+
+// or simply by
+m.clear
+
+// or clear all MasterFX
+MasterFX.clear;
+
+MasterFX.all;</textarea>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>MasterFX.</span><a class='method-name' name='*all' href='./../Overviews/Methods.html#all'>all</a></h3>
+<div class='method'>
+<p>dictionary for all masterFX, one per server.</div><h3 class='method-code'><span class='method-prefix'>MasterFX.</span><a class='method-name' name='*default' href='./../Overviews/Methods.html#default'>default</a></h3>
+<div class='method'>
+<p>the MasterFX instance for the default server.</div><h3 class='method-code'><span class='method-prefix'>MasterFX.</span><a class='method-name' name='*maxNumChans' href='./../Overviews/Methods.html#maxNumChans'>maxNumChans</a></h3>
+<div class='method'>
+<p>the maximum number of channels supported. (currently unused)</div><h3 class='method-code'><span class='method-prefix'>MasterFX.</span><a class='method-name' name='*clear' href='./../Overviews/Methods.html#clear'>clear</a>(<span class='argstr'>name</span>)</h3>
+<div class='method'>
+<p>clear the masterfx at name<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>MasterFX.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>server</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>slotNames</span>, <span class='argstr'>busIndex</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>the server on which the MasterFX chain will run; default is server.numOutputBusChannels<tr><td class='argumentname'>numChannels<td class='argumentdesc'>
+<p>the number of channels it will work on<tr><td class='argumentname'>slotNames<td class='argumentdesc'>
+<p>the names of the filters/functions to be used, in order of execution;<tr><td class='argumentname'>busIndex<td class='argumentdesc'>
+<p>the bus index where it will process audio.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-key' href='./../Overviews/Methods.html#key'>key</a></h3>
+<div class='method'>
+<p>the key at which the MasterFx is stored; usually this is the server name.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-proxyChain' href='./../Overviews/Methods.html#proxyChain'>proxyChain</a></h3>
+<div class='method'>
+<p>the <a href="./../Classes/ProxyChain.html">ProxyChain</a> that has the order of the effects that can be used</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-proxy' href='./../Overviews/Methods.html#proxy'>proxy</a></h3>
+<div class='method'>
+<p>the <a href="./../Classes/NodeProxy.html">NodeProxy</a> inside the the proxyChain.</div><h3><a class='anchor' name='Methods%20that%20get%20forwarded%20to%20proxyChain/proxy:'>Methods that get forwarded to proxyChain/proxy:</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-add' href='./../Overviews/Methods.html#add'>add</a>(<span class='argstr'>key</span>, <span class='argstr'>wet</span>, <span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>kick in effect<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>name of effect<tr><td class='argumentname'>wet<td class='argumentdesc'>
+<p>wet-level of effect<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>an optional func that can locally replace the global func with that name.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remove' href='./../Overviews/Methods.html#remove'>remove</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>kick out effect<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>name of effect</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-set' href='./../Overviews/Methods.html#set'>set</a>( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>set named parameters of the active slots</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-slotsInUse' href='./../Overviews/Methods.html#slotsInUse'>slotsInUse</a></h3>
+<div class='method'>
+<p>get the currently used slots of the proxyChain</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-slotNames' href='./../Overviews/Methods.html#slotNames'>slotNames</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-slotNames' href='./../Overviews/Methods.html#slotNames'>slotNames</a> = <span class='argstr'>argSlotNames</span></h3>
+<div class='method'>
+<p>get and set the slotNames of the proxyChain</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-server' href='./../Overviews/Methods.html#server'>server</a></h3>
+<div class='method'>
+<p>the server on which this MasterFX operates</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numChannels' href='./../Overviews/Methods.html#numChannels'>numChannels</a></h3>
+<div class='method'>
+<p>the number of output channels of the MasterFX</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-busIndex' href='./../Overviews/Methods.html#busIndex'>busIndex</a></h3>
+<div class='method'>
+<p>the index of the bus on which the MasterFX operates</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-group' href='./../Overviews/Methods.html#group'>group</a></h3>
+<div class='method'>
+<p>the group in which this masterfx proxy runs. this is after the default group.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-checkingBadValues' href='./../Overviews/Methods.html#checkingBadValues'>checkingBadValues</a></h3>
+<div class='method'>
+<p>flag whether the masterFX is checking the final output for bad values. see also <a href="./../Classes/CheckBadValues.html">CheckBadValues</a></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-checkBad' href='./../Overviews/Methods.html#checkBad'>checkBad</a>(<span class='argstr'>flag: true</span>)</h3>
+<div class='method'>
+<p>set flag whether to check final output, and if needed start the synth</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-badSynth' href='./../Overviews/Methods.html#badSynth'>badSynth</a></h3>
+<div class='method'>
+<p>the synth that does the bad value checking.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-wakeUp' href='./../Overviews/Methods.html#wakeUp'>wakeUp</a></h3>
+<div class='method'>
+<p>Wake up the MasterFX proxy. This happens automatically after CmdPeriod.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a></h3>
+<div class='method'>
+<p>clear this MasterFX; usually so one can remake it.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pxChain' href='./../Overviews/Methods.html#pxChain'>pxChain</a></h3>
+<div class='method'>
+<p>alias for the proxyChain (the proxyChain inst var was called pxChain earlier).</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-show' href='./../Overviews/Methods.html#show'>show</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-hide' href='./../Overviews/Methods.html#hide'>hide</a></h3>
+<div class='method'>
+<p>show or hide the MasterFX proxy in Ndef.all for that server. the proxy is hidden by default.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gui' href='./../Overviews/Methods.html#gui'>gui</a>(<span class='argstr'>name</span>, <span class='argstr'>numItems</span>, <span class='argstr'>buttonList</span>, <span class='argstr'>parent</span>, <span class='argstr'>bounds</span>, <span class='argstr'>makeSkip: true</span>)</h3>
+<div class='method'>
+<p>make a MasterFXGui for the MasterFX.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>the name the gui will show<tr><td class='argumentname'>numItems<td class='argumentdesc'>
+<p>the number of buttons / sliders for parameters the gui will have<tr><td class='argumentname'>buttonList<td class='argumentdesc'>
+<p>an optional list of buttons. by default, this is the list of slotNames.<tr><td class='argumentname'>parent<td class='argumentdesc'>
+<p>the parent view or window on which to place the gui<tr><td class='argumentname'>bounds<td class='argumentdesc'>
+<p>the bounds of the gui<tr><td class='argumentname'>makeSkip<td class='argumentdesc'>
+<p>a flag whether to make and start a skipjack for the gui update mechanism.</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/MasterFX.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/MasterFX.schelp</a><br>link::Classes/MasterFX::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

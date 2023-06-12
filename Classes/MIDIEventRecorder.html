@@ -1,0 +1,292 @@
+<!doctype html><html lang='en'><head><title>MIDIEventRecorder | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'MIDIEventRecorder';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>MIDIEventRecorder:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*arm'>arm</a> </li>
+<li class='toc3'><a href='#*global'>global</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*with'>with</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-add'>add</a> </li>
+<li class='toc3'><a href='#-addAll'>addAll</a> </li>
+<li class='toc3'><a href='#-addEvent'>addEvent</a> </li>
+<li class='toc3'><a href='#-addNote'>addNote</a> </li>
+<li class='toc3'><a href='#-addNoteOff'>addNoteOff</a> </li>
+<li class='toc3'><a href='#-addNoteOn'>addNoteOn</a> </li>
+<li class='toc3'><a href='#-addType'>addType</a> </li>
+<li class='toc3'><a href='#-analyzeCC'>analyzeCC</a> </li>
+<li class='toc3'><a href='#-analyzeChannels'>analyzeChannels</a> </li>
+<li class='toc3'><a href='#-analyzeTypes'>analyzeTypes</a> </li>
+<li class='toc3'><a href='#-armed'>armed</a> </li>
+<li class='toc3'><a href='#-asSimpleMIDIFile'>asSimpleMIDIFile</a> </li>
+<li class='toc3'><a href='#-asSimpleMIDIFileTrack'>asSimpleMIDIFileTrack</a> </li>
+<li class='toc3'><a href='#-collectEventsAt'>collectEventsAt</a> </li>
+<li class='toc3'><a href='#-currentTime'>currentTime</a> </li>
+<li class='toc3'><a href='#-events'>events</a> </li>
+<li class='toc3'><a href='#-isRunning'>isRunning</a> </li>
+<li class='toc3'><a href='#-makeGlobal'>makeGlobal</a> </li>
+<li class='toc3'><a href='#-maxEvents'>maxEvents</a> </li>
+<li class='toc3'><a href='#-notPaused'>notPaused</a> </li>
+<li class='toc3'><a href='#-pause'>pause</a> </li>
+<li class='toc3'><a href='#-paused'>paused</a> </li>
+<li class='toc3'><a href='#-plot'>plot</a> </li>
+<li class='toc3'><a href='#-printOn'>printOn</a> </li>
+<li class='toc3'><a href='#-reset'>reset</a> </li>
+<li class='toc3'><a href='#-resetArm'>resetArm</a> </li>
+<li class='toc3'><a href='#-resetGlobal'>resetGlobal</a> </li>
+<li class='toc3'><a href='#-setPaused'>setPaused</a> </li>
+<li class='toc3'><a href='#-shiftTime'>shiftTime</a> </li>
+<li class='toc3'><a href='#-size'>size</a> </li>
+<li class='toc3'><a href='#-sort'>sort</a> </li>
+<li class='toc3'><a href='#-start'>start</a> </li>
+<li class='toc3'><a href='#-startTime'>startTime</a> </li>
+<li class='toc3'><a href='#-stop'>stop</a> </li>
+<li class='toc3'><a href='#-storeArgs'>storeArgs</a> </li>
+<li class='toc3'><a href='#-timeLine'>timeLine</a> </li>
+<li class='toc3'><a href='#-unPause'>unPause</a> </li>
+</ul></ul><li class='toc1'><a href='#Help%20template'>Help template</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></span>
+</div><h1>MIDIEventRecorder<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>(Undocumented class)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SimpleMIDIFile/MIDIEventRecorder.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/SimpleMIDIFile/MIDIEventRecorder.sc'>MIDIEventRecorder.sc</a></div></div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>MIDIEventRecorder.</span><a class='method-name' name='*arm' href='./../Overviews/Methods.html#arm'>arm</a>(<span class='argstr'>maxEvents</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>MIDIEventRecorder.</span><a class='method-name' name='*global' href='./../Overviews/Methods.html#global'>global</a></h3>
+<h3 class='method-code'><span class='method-prefix'>MIDIEventRecorder.</span><a class='method-name' name='*global' href='./../Overviews/Methods.html#global'>global</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>MIDIEventRecorder.</span><a class='method-name' name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a></h3>
+<h3 class='method-code'><span class='method-prefix'>MIDIEventRecorder.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>maxEvents</span>, <span class='argstr'>startTime</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>MIDIEventRecorder.</span><a class='method-name' name='*with' href='./../Overviews/Methods.html#with'>with</a>( <span class='argstr'>... events</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-add' href='./../Overviews/Methods.html#add'>add</a>(<span class='argstr'>eventArray</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addAll' href='./../Overviews/Methods.html#addAll'>addAll</a>(<span class='argstr'>arrayOfEventArrays</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addEvent' href='./../Overviews/Methods.html#addEvent'>addEvent</a>(<span class='argstr'>eventArray</span>, <span class='argstr'>timeOffset: 0</span>, <span class='argstr'>absTime</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addNote' href='./../Overviews/Methods.html#addNote'>addNote</a>(<span class='argstr'>channel: 0</span>, <span class='argstr'>noteNr: 64</span>, <span class='argstr'>velo: 64</span>, <span class='argstr'>dur: 1</span>, <span class='argstr'>upVelo</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addNoteOff' href='./../Overviews/Methods.html#addNoteOff'>addNoteOff</a>(<span class='argstr'>channel: 0</span>, <span class='argstr'>noteNr: 64</span>, <span class='argstr'>velo: 64</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addNoteOn' href='./../Overviews/Methods.html#addNoteOn'>addNoteOn</a>(<span class='argstr'>channel: 0</span>, <span class='argstr'>noteNr: 64</span>, <span class='argstr'>velo: 64</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addType' href='./../Overviews/Methods.html#addType'>addType</a>(<span class='argstr'>type: 'noteOn'</span>, <span class='argstr'>channel: 0</span> <span class='argstr'>... values</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-analyzeCC' href='./../Overviews/Methods.html#analyzeCC'>analyzeCC</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-analyzeChannels' href='./../Overviews/Methods.html#analyzeChannels'>analyzeChannels</a>(<span class='argstr'>type</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-analyzeTypes' href='./../Overviews/Methods.html#analyzeTypes'>analyzeTypes</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-armed' href='./../Overviews/Methods.html#armed'>armed</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asSimpleMIDIFile' href='./../Overviews/Methods.html#asSimpleMIDIFile'>asSimpleMIDIFile</a>(<span class='argstr'>pathName</span>, <span class='argstr'>pitchBendMode: 'int8'</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asSimpleMIDIFileTrack' href='./../Overviews/Methods.html#asSimpleMIDIFileTrack'>asSimpleMIDIFileTrack</a>(<span class='argstr'>trackNumber: 0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-collectEventsAt' href='./../Overviews/Methods.html#collectEventsAt'>collectEventsAt</a>(<span class='argstr'>index: 3</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-currentTime' href='./../Overviews/Methods.html#currentTime'>currentTime</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-events' href='./../Overviews/Methods.html#events'>events</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isRunning' href='./../Overviews/Methods.html#isRunning'>isRunning</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isRunning' href='./../Overviews/Methods.html#isRunning'>isRunning</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-makeGlobal' href='./../Overviews/Methods.html#makeGlobal'>makeGlobal</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-maxEvents' href='./../Overviews/Methods.html#maxEvents'>maxEvents</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-maxEvents' href='./../Overviews/Methods.html#maxEvents'>maxEvents</a> = <span class='argstr'>newMax: inf</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-notPaused' href='./../Overviews/Methods.html#notPaused'>notPaused</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pause' href='./../Overviews/Methods.html#pause'>pause</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-paused' href='./../Overviews/Methods.html#paused'>paused</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-paused' href='./../Overviews/Methods.html#paused'>paused</a> = <span class='argstr'>bool: true</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-plot' href='./../Overviews/Methods.html#plot'>plot</a>(<span class='argstr'>index: 3</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-printOn' href='./../Overviews/Methods.html#printOn'>printOn</a>(<span class='argstr'>stream</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reset' href='./../Overviews/Methods.html#reset'>reset</a>(<span class='argstr'>newmaxEvents</span>, <span class='argstr'>newStartTime</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resetArm' href='./../Overviews/Methods.html#resetArm'>resetArm</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resetGlobal' href='./../Overviews/Methods.html#resetGlobal'>resetGlobal</a>(<span class='argstr'>maxEvents: 256</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setPaused' href='./../Overviews/Methods.html#setPaused'>setPaused</a>(<span class='argstr'>bool: true</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-shiftTime' href='./../Overviews/Methods.html#shiftTime'>shiftTime</a>(<span class='argstr'>deltaTime</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-size' href='./../Overviews/Methods.html#size'>size</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sort' href='./../Overviews/Methods.html#sort'>sort</a>(<span class='argstr'>function</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-start' href='./../Overviews/Methods.html#start'>start</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-startTime' href='./../Overviews/Methods.html#startTime'>startTime</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stop' href='./../Overviews/Methods.html#stop'>stop</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-storeArgs' href='./../Overviews/Methods.html#storeArgs'>storeArgs</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-timeLine' href='./../Overviews/Methods.html#timeLine'>timeLine</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-unPause' href='./../Overviews/Methods.html#unPause'>unPause</a></h3>
+<h2><a class='anchor' name='Help%20template'>Help template</a></h2>
+
+<p>Copy and paste the text below and save to HelpSource/Classes/MIDIEventRecorder.schelp<textarea class='editor'>TITLE:: MIDIEventRecorder
+summary:: _short_description_here_
+categories:: Undocumented classes
+related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff
+
+DESCRIPTION::
+_put_long_description_here_
+
+
+First code examples: 
+
+code::
+_some_example_code_
+::
+
+CLASSMETHODS::
+
+METHOD:: global
+
+METHOD:: with
+argument::  ... events
+
+METHOD:: initClass
+
+METHOD:: new
+argument:: maxEvents
+argument:: startTime
+
+METHOD:: arm
+argument:: maxEvents
+
+
+INSTANCEMETHODS::
+
+METHOD:: setPaused
+argument:: bool
+
+METHOD:: pause
+
+METHOD:: unPause
+
+METHOD:: collectEventsAt
+argument:: index
+
+METHOD:: size
+
+METHOD:: addNoteOff
+argument:: channel
+argument:: noteNr
+argument:: velo
+
+METHOD:: paused
+argument:: bool
+
+METHOD:: shiftTime
+argument:: deltaTime
+
+METHOD:: addNoteOn
+argument:: channel
+argument:: noteNr
+argument:: velo
+
+METHOD:: events
+
+METHOD:: startTime
+
+METHOD:: addType
+argument:: type
+argument:: channel
+argument::  ... values
+
+METHOD:: plot
+argument:: index
+
+METHOD:: addAll
+argument:: arrayOfEventArrays
+
+METHOD:: maxEvents
+argument:: newMax
+
+METHOD:: add
+argument:: eventArray
+
+METHOD:: analyzeTypes
+
+METHOD:: printOn
+argument:: stream
+
+METHOD:: makeGlobal
+
+METHOD:: addNote
+argument:: channel
+argument:: noteNr
+argument:: velo
+argument:: dur
+argument:: upVelo
+
+METHOD:: sort
+argument:: function
+
+METHOD:: armed
+
+METHOD:: isRunning
+
+METHOD:: resetGlobal
+argument:: maxEvents
+
+METHOD:: asSimpleMIDIFileTrack
+argument:: trackNumber
+
+METHOD:: currentTime
+
+METHOD:: notPaused
+
+METHOD:: analyzeChannels
+argument:: type
+
+METHOD:: start
+
+METHOD:: asSimpleMIDIFile
+argument:: pathName
+argument:: pitchBendMode
+
+METHOD:: analyzeCC
+
+METHOD:: addEvent
+argument:: eventArray
+argument:: timeOffset
+argument:: absTime
+
+METHOD:: stop
+
+METHOD:: resetArm
+
+METHOD:: timeLine
+
+METHOD:: storeArgs
+
+METHOD:: reset
+argument:: newmaxEvents
+argument:: newStartTime
+
+
+EXAMPLES::
+
+code::
+_some_example_code_
+::
+</textarea>
+<div class='doclink'>link::Classes/MIDIEventRecorder::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

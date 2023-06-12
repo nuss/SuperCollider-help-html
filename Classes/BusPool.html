@@ -1,0 +1,93 @@
+<!doctype html><html lang='en'><head><title>BusPool | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'BusPool';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>BusPool:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*counts'>counts</a> </li>
+<li class='toc3'><a href='#*annotations'>annotations</a> </li>
+<li class='toc3'><a href='#*alloc'>alloc</a> </li>
+<li class='toc3'><a href='#*retain'>retain</a> </li>
+<li class='toc3'><a href='#*release'>release</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*reset'>reset</a> </li>
+<li class='toc3'><a href='#*watchServer'>watchServer</a> </li>
+<li class='toc3'><a href='#*itemCount'>itemCount</a> </li>
+<li class='toc3'><a href='#*busses'>busses</a> </li>
+<li class='toc3'><a href='#*gui'>gui</a> </li>
+<li class='toc3'><a href='#*getAnnotations'>getAnnotations</a> </li>
+<li class='toc3'><a href='#*findBus'>findBus</a> </li>
+<li class='toc3'><a href='#*makeBusFromSpec'>makeBusFromSpec</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>crucial'>crucial</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>crucial>internals'>internals</a></span>
+</div><h1>BusPool<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>bus allocator with retain/release counting for shared busses</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/ServerTools/BusPool.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/ServerTools/BusPool.sc'>BusPool.sc</a></div><div id='related'>See also: <a href="./../Classes/Bus.html">Bus</a>, <a href="./../Classes/SharedBus.html">SharedBus</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Iin the style of Objective-C retain/release memory management.  this is useful for situations where many clients may use the same  bus, handing it to each other. each one retains, each one releases.  when the bus is released for the last time it is freed<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>BusPool.</span><a class='method-name' name='*counts' href='./../Overviews/Methods.html#counts'>counts</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>BusPool.</span><a class='method-name' name='*annotations' href='./../Overviews/Methods.html#annotations'>annotations</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>BusPool.</span><a class='method-name' name='*alloc' href='./../Overviews/Methods.html#alloc'>alloc</a>(<span class='argstr'>rate: 'audio'</span>, <span class='argstr'>server</span>, <span class='argstr'>numChannels: 1</span>, <span class='argstr'>client</span>, <span class='argstr'>name</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>rate<td class='argumentdesc'><tr><td class='argumentname'>server<td class='argumentdesc'><tr><td class='argumentname'>numChannels<td class='argumentdesc'><tr><td class='argumentname'>client<td class='argumentdesc'><tr><td class='argumentname'>name<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>BusPool.</span><a class='method-name' name='*retain' href='./../Overviews/Methods.html#retain'>retain</a>(<span class='argstr'>bus</span>, <span class='argstr'>client</span>, <span class='argstr'>name</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bus<td class='argumentdesc'><tr><td class='argumentname'>client<td class='argumentdesc'><tr><td class='argumentname'>name<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>BusPool.</span><a class='method-name' name='*release' href='./../Overviews/Methods.html#release'>release</a>(<span class='argstr'>bus</span>, <span class='argstr'>client</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bus<td class='argumentdesc'><tr><td class='argumentname'>client<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>BusPool.</span><a class='method-name' name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>BusPool.</span><a class='method-name' name='*reset' href='./../Overviews/Methods.html#reset'>reset</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>BusPool.</span><a class='method-name' name='*watchServer' href='./../Overviews/Methods.html#watchServer'>watchServer</a>(<span class='argstr'>server</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>BusPool.</span><a class='method-name' name='*itemCount' href='./../Overviews/Methods.html#itemCount'>itemCount</a>(<span class='argstr'>bus</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bus<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>BusPool.</span><a class='method-name' name='*busses' href='./../Overviews/Methods.html#busses'>busses</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>BusPool.</span><a class='method-name' name='*gui' href='./../Overviews/Methods.html#gui'>gui</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>BusPool.</span><a class='method-name' name='*getAnnotations' href='./../Overviews/Methods.html#getAnnotations'>getAnnotations</a>(<span class='argstr'>bus</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bus<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>BusPool.</span><a class='method-name' name='*findBus' href='./../Overviews/Methods.html#findBus'>findBus</a>(<span class='argstr'>server</span>, <span class='argstr'>index</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>server<td class='argumentdesc'><tr><td class='argumentname'>index<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>BusPool.</span><a class='method-name' name='*makeBusFromSpec' href='./../Overviews/Methods.html#makeBusFromSpec'>makeBusFromSpec</a>(<span class='argstr'>busSpec</span>, <span class='argstr'>server</span>, <span class='argstr'>client</span>, <span class='argstr'>name</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>busSpec<td class='argumentdesc'><tr><td class='argumentname'>server<td class='argumentdesc'><tr><td class='argumentname'>client<td class='argumentdesc'><tr><td class='argumentname'>name<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/BusPool.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/BusPool.schelp</a><br>link::Classes/BusPool::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

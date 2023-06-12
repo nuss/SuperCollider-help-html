@@ -1,0 +1,603 @@
+<!doctype html><html lang='en'><head><title>PSloop | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'PSloop';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>PSloop:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-psPat'>psPat</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-doSkip'>doSkip</a> </li>
+<li class='toc3'><a href='#-embedInStream'>embedInStream</a> </li>
+<li class='toc3'><a href='#-goFunc'>goFunc</a> </li>
+<li class='toc3'><a href='#-indices'>indices</a> </li>
+<li class='toc3'><a href='#-lookBack'>lookBack</a> </li>
+<li class='toc3'><a href='#-loopFunc'>loopFunc</a> </li>
+<li class='toc3'><a href='#-loopFuncAsGoFunc'>loopFuncAsGoFunc</a> </li>
+<li class='toc3'><a href='#-loopFuncPerItem'>loopFuncPerItem</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'><li class='toc2'><a href='#Ex.1a:%20PSloop%20used%20as%20value%20pattern'>Ex.1a: PSloop used as value pattern</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.1b:%20PSloop%20used%20as%20event%20pattern'>Ex.1b: PSloop used as event pattern</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.2a:%20PSloop%20used%20as%20value%20pattern,%20lookBack%20given%20as%20pattern'>Ex.2a: PSloop used as value pattern, lookBack given as pattern</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.2b:%20PSloop%20used%20as%20event%20pattern,%20lookBack%20given%20as%20pattern'>Ex.2b: PSloop used as event pattern, lookBack given as pattern</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.3a:%20lookBack%20indices%20given%20as%20array'>Ex.3a: lookBack indices given as array</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.3b:%20lookBack%20indices%20given%20as%20Function'>Ex.3b: lookBack indices given as Function</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.3c:%20lookBack%20indices%20given%20as%20Pattern'>Ex.3c: lookBack indices given as Pattern</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.4a:%20loopFunc%20given%20as%20Function'>Ex.4a: loopFunc given as Function</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.4b:%20loopFunc%20given%20as%20Pattern'>Ex.4b: loopFunc given as Pattern</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.4c:%20loopFunc%20vs.%20goFunc'>Ex.4c: loopFunc vs. goFunc</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.4d:%20Turning%20loopFunc%20and%20goFunc%20on%20and%20off'>Ex.4d: Turning loopFunc and goFunc on and off</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.5:%20PSloops%20controlling%20different%20sound%20params'>Ex.5: PSloops controlling different sound params</a></li>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>PSx stream patterns'>PSx stream patterns</a> | <a href='./../Browse.html#Streams-Patterns-Events'>Streams-Patterns-Events</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Streams-Patterns-Events>PSx stream patterns'>PSx stream patterns</a></span>
+</div><h1>PSloop<span id='superclasses'> : <a href="../Classes/Pattern.html">Pattern</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Pattern to derive loops from a given Pattern</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/OtherPatterns.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/OtherPatterns.sc'>OtherPatterns.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Tutorials/PSx_stream_patterns.html">PSx stream patterns</a>, <a href="./../Classes/MemoRoutine.html">MemoRoutine</a>, <a href="./../Classes/PS.html">PS</a>, <a href="./../Classes/PSdup.html">PSdup</a>, <a href="./../Classes/PSrecur.html">PSrecur</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Although PSloop is not a subclass of PStream, instances of PSloop have a state by storing a PStream of the source pattern in an instance variable. So the specific characteristics of PSx patterns are indirectly inherited by PSloop. This especially concerns the way to generate new, fresh PSloop streams, see examples in <a href="./../Tutorials/PSx_stream_patterns.html">PSx stream patterns</a>.
+<p>Note that impossible lookBack and indices values will be clipped, see descriptions of args <strong>bufSize</strong>, <strong>lookBack</strong> and <strong>indices</strong>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>PSloop.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>srcPat</span>, <span class='argstr'>length: inf</span>, <span class='argstr'>bufSize: 1</span>, <span class='argstr'>lookBack: 0</span>, <span class='argstr'>doSkip: 0</span>, <span class='argstr'>loopFunc</span>, <span class='argstr'>loopFuncPerItem: 0</span>, <span class='argstr'>loopFuncAsGoFunc: 0</span>, <span class='argstr'>goFunc</span>, <span class='argstr'>indices</span>, <span class='argstr'>copyItems: 0</span>, <span class='argstr'>copySets: 1</span>)</h3>
+<div class='method'>
+<p>Creates a new PSloop object.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>srcPat<td class='argumentdesc'>
+<p>Source pattern for looping, can be value or event pattern.<tr><td class='argumentname'>length<td class='argumentdesc'>
+<p>Number of output items, may be Pattern or Stream, defaults to inf.<tr><td class='argumentname'>bufSize<td class='argumentdesc'>
+<p>Integer size of buffer to store last values. Determines and clips the maximum <strong>lookBack</strong> index. Defaults to 1.<tr><td class='argumentname'>lookBack<td class='argumentdesc'>
+<p>Non-negative Integer determining the depth of looking backwards when looping, may be Pattern or Function also. Default 0 means going on with the Stream of the source pattern <strong>srcPat</strong>. If no <strong>indices</strong> is given, a positive Integer <strong>lookBack</strong> = n causes straight looping from the nth item in the past up to the last item of the Stream. If <strong>indices</strong> is given, an index array is produced by this function applied to <strong>lookBack</strong> = n. The array refers to the nth item in the past by array index 0. If <strong>lookBack</strong> values are derived from a Pattern or Function, they might be polled at the end of the loops or with every item, this is determined by the current value of <strong>doSkip</strong>. <strong>lookBack</strong> will be clipped by <strong>bufSize</strong> if it is greater than the latter.<tr><td class='argumentname'>doSkip<td class='argumentdesc'>
+<p>Integer or Boolean or: Function or Stream returning such. Determines if <strong>lookBack</strong> values are polled at the end of loops (0, false) or within loops (1, true) also. In the latter case a new <strong>lookBack</strong> value will stop the current loop and start a new one. Defaults to 1.<tr><td class='argumentname'>loopFunc<td class='argumentdesc'>
+<p>Function or Pattern returning Functions, to be applied to items of the loops. If Functions are streamed by passing a Function-generating Pattern <strong>loopFuncPerItem</strong> determines if a Function will be applied per item (1, true) or to all items of a loop (0, false). When loopFunc is nil or the <strong>loopFunc</strong> stream returns nil, no Function is applied.<tr><td class='argumentname'>loopFuncPerItem<td class='argumentdesc'>
+<p>Integer or Boolean or: Function or Stream returning such. If <strong>loopFunc</strong> is given, <strong>loopFuncPerItem</strong> determines if a Function will be applied per item (1, true) or to all items of a loop (0, false).<tr><td class='argumentname'>loopFuncAsGoFunc<td class='argumentdesc'>
+<p>Integer or Boolean or: Function or Stream returning such. Determines if <strong>loopFunc</strong> will be used for new items outside loops too (1, true). In this case <strong>goFunc</strong> is ignored (resp. nothing is polled from a goFunc stream) and nil values from the loopFunc stream are also taken over (no Function is applied outside loops then).<tr><td class='argumentname'>goFunc<td class='argumentdesc'>
+<p>Function or Pattern returning Functions, to be applied to new items outside loops. When <strong>goFunc</strong> is nil or the <strong>goFunc</strong> stream returns nil, no Function is applied. Note that goFunc has no effect when <strong>loopFuncAsGoFunc</strong> determines to use <strong>loopFunc</strong> generally.<tr><td class='argumentname'>indices<td class='argumentdesc'>
+<p>SequenceableCollection, Function, or Pattern returning SequenceableCollections or Functions. If no <strong>indices</strong> is passed (default nil) a positive Integer <strong>lookBack</strong> = n causes straight looping from the nth item in the past up to the last item of the Stream. A SequenceableCollection passed via <strong>indices</strong> is taken as array of indices and determines the items of the buffer, identifying the nth item in the past with array index 0. A Function passed via <strong>indices</strong> takes <strong>lookBack</strong> = n as argument and must return an index array which also determines the items of the buffer, identifying the nth item in the past with array index 0. A Pattern passed via <strong>indices</strong> should be defined to generate Functions or SequenceableCollections, which are interpreted in the same way as above. In case of a Pattern a new <strong>indices</strong> value is polled within a loop if current <strong>doSkip</strong> equals 1 or true. <strong>indices</strong> will be clipped by <strong>lookBack</strong> - 1, <strong>lookBack</strong> itself might be clipped by <strong>bufSize</strong>.<tr><td class='argumentname'>copyItems<td class='argumentdesc'>
+<p>Argument passed to the PS wrapper of <strong>srcPat</strong>. See <a href="./../Classes/PS.html">PS</a>. Determines if and how to copy items which are either non-Sets or member of Sets. Takes Integer 0 (or false or Symbol \false), 1 (or true or Symbol \true) or 2 (or Symbol \deep). Other values are interpreted as 0. Defaults to 0.
+<p>0: original item
+<p>1: copy item
+<p>2: deepCopy item<tr><td class='argumentname'>copySets<td class='argumentdesc'>
+<p>Argument passed to the PS wrapper of <strong>srcPat</strong>. See <a href="./../Classes/PS.html">PS</a>. Determines if and how to copy Sets (and hence Events). Takes Integer 0 (or false or Symbol \false), 1 (or true or Symbol \true). Other values are interpreted as 0. Defaults to 1.
+<p>0: original Set
+<p>1: copy Set<div class='note'><span class='notelabel'>NOTE:</span> The distinction of copying items and sets makes sense in the case of event streams. Per default Events are copied (<strong>copySets</strong> == 1), not their values (<strong>copyItems</strong> == 0). By playing Events those are used to store additional data (synth ids, msgFuncs …) which is mostly not of interest when refering to the event stream, e.g. with PSx patterns which use MemoRoutine - copied Events will not contain this additional data. If values of Events or values returned directly by the stream (being no kind of Sets) are unstructured then copying makes no sense, this is the normal case, so copyItems defaults to 0. When going to alter the ouput, you might want to set <strong>copyItems</strong> to 1 for a PSx returning simple arrays or 2 for nested arrays (deepCopy). For deepCopying Events you'd have to set <strong>copySets</strong> to 1 and <strong>copyItems</strong> to 2 (an option <strong>copySets</strong> == 2 doesn't exist as it would be contradictory in combination with <strong>copyItems</strong> &lt; 2).</div><div class='note'><span class='notelabel'>NOTE:</span> Copy options concern copying into PSrecur's buffer as well as the output of a Stream derived from the PSrecur. When such a Stream is outputting copies this prevents unintended altering of items stored in the buffer of PSrecur. On the other hand storing copies in PSrecur's buffer prevents these from being altered unintendedly.</div></table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-psPat' href='./../Overviews/Methods.html#psPat'>psPat</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-psPat' href='./../Overviews/Methods.html#psPat'>psPat</a> = value</h3>
+<div class='method'>
+<p>Instance variable getter and setter methods. <strong>psPat</strong> holds a Pstream with args <strong>srcPat</strong>, <strong>length</strong>, <strong>bufSize</strong>, <strong>copyItems</strong>, <strong>copySets</strong>.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doSkip' href='./../Overviews/Methods.html#doSkip'>doSkip</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doSkip' href='./../Overviews/Methods.html#doSkip'>doSkip</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-embedInStream' href='./../Overviews/Methods.html#embedInStream'>embedInStream</a>(<span class='argstr'>inval</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-goFunc' href='./../Overviews/Methods.html#goFunc'>goFunc</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-goFunc' href='./../Overviews/Methods.html#goFunc'>goFunc</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-indices' href='./../Overviews/Methods.html#indices'>indices</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-indices' href='./../Overviews/Methods.html#indices'>indices</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lookBack' href='./../Overviews/Methods.html#lookBack'>lookBack</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lookBack' href='./../Overviews/Methods.html#lookBack'>lookBack</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loopFunc' href='./../Overviews/Methods.html#loopFunc'>loopFunc</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loopFunc' href='./../Overviews/Methods.html#loopFunc'>loopFunc</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loopFuncAsGoFunc' href='./../Overviews/Methods.html#loopFuncAsGoFunc'>loopFuncAsGoFunc</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loopFuncAsGoFunc' href='./../Overviews/Methods.html#loopFuncAsGoFunc'>loopFuncAsGoFunc</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loopFuncPerItem' href='./../Overviews/Methods.html#loopFuncPerItem'>loopFuncPerItem</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loopFuncPerItem' href='./../Overviews/Methods.html#loopFuncPerItem'>loopFuncPerItem</a> = value</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>(
+s = Server.local;
+Server.default = s;
+s.boot;
+)</textarea>
+
+<p><a class='anchor' name='Ex.1a'>&nbsp;</a><h3><a class='anchor' name='Ex.1a:%20PSloop%20used%20as%20value%20pattern'>Ex.1a: PSloop used as value pattern</a></h3>
+<textarea class='editor'>// straight usage as value pattern for midinotes
+
+(
+// lookBack determines number of items to loop, must start with 0 (no loop),
+// doSkip determines if loops should be completed or not with new lookBack values.
+
+// Passing both via Functions enables to set on the fly,
+// enable immediate loop change by setting doSkip to 1
+
+~lookBack = 0;
+~doSkip = true;
+
+p = Pbind(
+    \dur, 1/5,
+    \midinote, PSloop(
+        Prand((60..80), inf),
+        bufSize: 10,
+        lookBack: { ~lookBack },
+        doSkip: { ~doSkip }
+    )
+).play
+)
+
+// wait a bit to fill buffer
+// keep running, set loop lengths immediately
+
+~lookBack = 4
+
+~lookBack = 2
+
+~lookBack = 7
+
+
+// change to skip per loop (default)
+
+~doSkip = false
+
+~lookBack = 3
+
+~lookBack = 5
+
+~lookBack = 9
+
+
+// go on
+
+~lookBack = 0
+
+p.stop;</textarea>
+
+<p><a class='anchor' name='Ex.1b'>&nbsp;</a><h3><a class='anchor' name='Ex.1b:%20PSloop%20used%20as%20event%20pattern'>Ex.1b: PSloop used as event pattern</a></h3>
+<textarea class='editor'>// rhythms are looped too
+
+(
+~lookBack = 0;
+~doSkip= 1;
+
+p = PSloop(
+    Pbind(
+        \dur, Pn(Pshuf([1, 1, 2, Pseq(2!3/3)]/5)),
+        \midinote, Prand((60..80), inf)
+    ),
+    bufSize: 10,
+    lookBack: { ~lookBack },
+    doSkip: { ~doSkip}
+).play
+)
+
+// wait a bit to fill buffer
+// keep running, set loop lengths immediately
+
+~lookBack = 6
+
+~lookBack = 5
+
+
+// go on and loop again
+
+~lookBack = 0
+
+~lookBack = 7
+
+
+p.stop;</textarea>
+
+<p><a class='anchor' name='Ex.2a'>&nbsp;</a><h3><a class='anchor' name='Ex.2a:%20PSloop%20used%20as%20value%20pattern,%20lookBack%20given%20as%20pattern'>Ex.2a: PSloop used as value pattern, lookBack given as pattern</a></h3>
+<textarea class='editor'>// lookBack passed as pattern,
+// lookBack pattern must start with zeros,
+// otherwise it will immediately stop with buffer values = nil
+
+// PSloop as value pattern: in general rhythms aren't looped
+
+(
+p = Pbind(
+    \dur, Pn(Pshuf([1, 1, 2]/6)),
+    \midinote, PSloop(
+        Prand((60..80), inf),
+        bufSize: 10,
+        lookBack: Pseq([0, 0, 0, 2, 2, 3, 3], inf)
+    )
+).play
+)
+
+p.stop</textarea>
+
+<p><a class='anchor' name='Ex.2b'>&nbsp;</a><h3><a class='anchor' name='Ex.2b:%20PSloop%20used%20as%20event%20pattern,%20lookBack%20given%20as%20pattern'>Ex.2b: PSloop used as event pattern, lookBack given as pattern</a></h3>
+<textarea class='editor'>// rhythms looped too
+
+(
+p = PSloop(
+    Pbind(
+        \dur, Pn(Pshuf([1, 1, 2]/6)),
+        \midinote, Prand((60..80), inf)
+    ),
+    bufSize: 10,
+    lookBack: Pseq([0, 0, 0, 2, 2, 3, 3], inf)
+).play
+)
+
+p.stop</textarea>
+
+<p><a class='anchor' name='Ex.3a'>&nbsp;</a><h3><a class='anchor' name='Ex.3a:%20lookBack%20indices%20given%20as%20array'>Ex.3a: lookBack indices given as array</a></h3>
+<textarea class='editor'>// With the indices arg arbitrary series from the buffer can be played.
+// Passing an array we define an index sequence which doesn't depend on lookBack
+
+(
+~lookBack = 0;
+
+p = PSloop(
+    Pbind(
+        \dur, Pn(Pshuf([1, 1, 2]/6)),
+        \midinote, Pseq((60..80), inf)
+    ),
+    bufSize: 10,
+    lookBack: { ~lookBack },
+    indices: [0, 1, 0, 1, 2, 0, 1, 2, 3]
+).trace.play
+)
+
+// wait a bit to fill buffer
+// start loop with useful lookBack (here &gt; 3)
+
+~lookBack = 4
+
+~lookBack = 6
+
+
+// go on and loop again
+
+~lookBack = 0;
+
+~lookBack = 5
+
+
+p.stop</textarea>
+
+<p><a class='anchor' name='Ex.3b'>&nbsp;</a><h3><a class='anchor' name='Ex.3b:%20lookBack%20indices%20given%20as%20Function'>Ex.3b: lookBack indices given as Function</a></h3>
+<textarea class='editor'>// If a Function is passed to indices it takes the current lookBack arg as argument.
+
+// mirroring the full lookBack size
+// start without loop
+
+(
+~lookBack = 0;
+
+p = PSloop(
+    Pbind(
+        \dur, Pn(Pshuf([1, 1, 2]/6)),
+        \midinote, Prand((60..80), inf)
+    ),
+    bufSize: 10,
+    lookBack: { ~lookBack },
+    indices: { |l| (0..l-1).mirror }
+).trace.play
+)
+
+// wait a bit to fill buffer
+// mirrored loop i.e. loop with added retrograde
+
+~lookBack = 3
+
+
+// go on and loop again
+
+~lookBack = 0
+
+~lookBack = 3
+
+p.stop</textarea>
+
+<p><a class='anchor' name='Ex.3c'>&nbsp;</a><h3><a class='anchor' name='Ex.3c:%20lookBack%20indices%20given%20as%20Pattern'>Ex.3c: lookBack indices given as Pattern</a></h3>
+<textarea class='editor'>// The indices arg might get a pattern which can generate Functions as well as arrays.
+// Start with sufficient number of zeros as lookBack to fill buffer.
+
+(
+p = PSloop(
+    Pbind(
+        \dur, Pn(Pshuf([1, 1, 2]/6)),
+        \midinote, Prand((60..80), inf)
+    ),
+    bufSize: 10,
+    lookBack: Pseq([Pn(0, 7), Pstutter(4, Pwhite(3, 5, 1))], inf).trace,
+    indices: Pseq([1!2, { |l| (l-1..0).postln }], inf).trace
+).trace.play
+)
+
+p.stop</textarea>
+
+<p><a class='anchor' name='Ex.4a'>&nbsp;</a><h3><a class='anchor' name='Ex.4a:%20loopFunc%20given%20as%20Function'>Ex.4a: loopFunc given as Function</a></h3>
+<textarea class='editor'>// a Function passed to loopFunc is applied to all items of the looping
+
+(
+~lookBack = 0;
+
+p = Pbind(
+    \dur, Pn(Pshuf([1, 1, 2]/6)),
+    \midinote, PSloop(
+        Prand((60..80), inf),
+        bufSize: 10,
+        lookBack: { ~lookBack },
+        loopFunc: { |x| x + [0, 5] }
+    )
+).play
+)
+
+// wait a bit to fill buffer
+// loop with Function applied
+
+~lookBack = 3
+
+~lookBack = 6
+
+
+// go on and stop
+
+~lookBack = 0
+
+p.stop</textarea>
+
+<p><a class='anchor' name='Ex.4b'>&nbsp;</a><h3><a class='anchor' name='Ex.4b:%20loopFunc%20given%20as%20Pattern'>Ex.4b: loopFunc given as Pattern</a></h3>
+<textarea class='editor'>// loopFunc also takes a pattern of Functions, in this case
+// the arg loopFuncPerItem decides if next Functions are polled per item or per loop.
+
+(
+~lookBack = 0;
+~loopFuncPerItem = true;  // or 1
+
+p = Pbind(
+    \dur, Pn(Pshuf([1, 1, 2]/6)),
+    \midinote, PSloop(
+        Prand((60..80), inf),
+        bufSize: 10,
+        lookBack: { ~lookBack },
+        // every number gets a Function that adds an interval of that size
+        loopFunc: Pxrand((3..11), inf).collect { |x| { |y| y - [0, x].postln } },
+        loopFuncPerItem: { ~loopFuncPerItem }
+    )
+).trace.play
+)
+
+// wait a bit to fill buffer
+// start looping with Functions polled per item
+
+~lookBack = 3
+
+~lookBack = 6
+
+
+// one interval per loop
+
+~loopFuncPerItem = false   // or 0
+
+~lookBack = 9
+
+
+// switch back to new interval per item
+
+~loopFuncPerItem = 1
+
+
+// go on and stop
+
+~lookBack = 0
+
+p.stop</textarea>
+
+<p><a class='anchor' name='Ex.4c'>&nbsp;</a><h3><a class='anchor' name='Ex.4c:%20loopFunc%20vs.%20goFunc'>Ex.4c: loopFunc vs. goFunc</a></h3>
+<textarea class='editor'>// Besides loopFunc a separate Function (or Pattern of Functions) can be defined for
+// application outside loops via the goFunc arg.
+// The arg loopFuncAsGoFunc decides if loopFunc should be taken for that task
+// (and goFunc should be ignored in that case).
+
+(
+~lookBack = 0;
+~loopFuncPerItem = false;  // one func per loop
+~loopFuncAsGoFunc = false;  // start with dedicated goFunc
+
+p = Pbind(
+    \dur, Pn(Pshuf([1, 1, 2]/6)),
+    \midinote, PSloop(
+        Prand((60..80), inf),
+        bufSize: 10,
+        lookBack: { ~lookBack },
+        // every number gets a Function that adds an interval of that size
+        loopFunc: Pxrand((3..11), inf).collect { |x| { |y| y - [0, x].postln } },
+        loopFuncPerItem: { ~loopFuncPerItem },
+        goFunc: { |x| [x, x + 2] },
+        loopFuncAsGoFunc: { ~loopFuncAsGoFunc }
+    )
+).trace.play
+)
+
+// wait a bit to fill buffer
+// start looping with Functions polled per loop
+
+~lookBack = 3
+
+~lookBack = 6
+
+
+// loop per item
+
+~loopFuncPerItem = true
+
+
+// prepare to use loopFunc when going on
+
+~loopFuncAsGoFunc = true
+
+
+// go on
+
+~lookBack = 0
+
+
+// switch to dedicated goFunc and stop
+
+~loopFuncAsGoFunc = false
+
+p.stop</textarea>
+
+<p><a class='anchor' name='Ex.4d'>&nbsp;</a><h3><a class='anchor' name='Ex.4d:%20Turning%20loopFunc%20and%20goFunc%20on%20and%20off'>Ex.4d: Turning loopFunc and goFunc on and off</a></h3>
+<textarea class='editor'>// There are no separate PSloop flags needed for that:
+// If loopFunc or goFunc return nil, no Function is applied,
+// so suited Patterns using flags can be passed as loopFunc / goFunc args.
+
+(
+~lookBack = 0;
+~loopFuncPerItem = false;  // one func per loop
+~loopFuncAsGoFunc = false;  // start with dedicated goFunc
+
+~turnOnLoopFunc = true;
+~turnOnGoFunc = true;
+
+p = Pbind(
+    \dur, Pn(Pshuf([1, 1, 2]/6)),
+    \midinote, PSloop(
+        Prand((60..80), inf),
+        bufSize: 10,
+        lookBack: { ~lookBack },
+        // every number gets a Function that adds an interval of that size,
+        // if ~turnOnLoopFunc evaluates to false the stream returns nil instead of a Function
+        loopFunc: Pxrand((3..11), inf).collect { |x| ~turnOnLoopFunc.if { { |y| y - [0, x].postln } } },
+        loopFuncPerItem: { ~loopFuncPerItem },
+        goFunc: Pfunc { ~turnOnGoFunc.if { { |x| [x, x + 2] } } },
+        loopFuncAsGoFunc: { ~loopFuncAsGoFunc }
+    )
+).trace.play
+)
+
+// wait a bit to fill buffer
+// start looping with Functions polled per loop
+
+~lookBack = 3
+
+~lookBack = 6
+
+
+// when Functions are polled per loop, turning loopFunc off also works per loop
+
+~turnOnLoopFunc = false
+
+
+// use loopFunc again, namely per item
+
+~turnOnLoopFunc = true
+
+~loopFuncPerItem = true
+
+
+// now turning it off works immediately
+
+~turnOnLoopFunc = false
+
+
+
+// go on
+
+~lookBack = 0
+
+
+// as loopFunc is now turned off, this applies also when used for new values
+
+~loopFuncAsGoFunc = true
+
+
+// switch to goFunc again
+
+~loopFuncAsGoFunc = false
+
+
+// silently turn loopFunc on
+
+~turnOnLoopFunc = true
+
+
+// turn goFunc off and again use loopFunc as goFunc
+
+~turnOnGoFunc = false
+
+~loopFuncAsGoFunc = true
+
+
+
+// loop, again with loopFunc per item
+
+~lookBack = 5
+
+
+p.stop</textarea>
+
+<p><a class='anchor' name='Ex.5'>&nbsp;</a><h3><a class='anchor' name='Ex.5:%20PSloops%20controlling%20different%20sound%20params'>Ex.5: PSloops controlling different sound params</a></h3>
+<textarea class='editor'>// Overlapping of loops on different sound params can give interesting polyrhythmic structures
+
+(
+SynthDef(\psloop_1, { |out = 0, freq = 440, centDif = 5, rq = 0.1, cutoff = 1000, amp = 0.1
+    att = 0.01, sus = 0.0, rel = 0.01|
+    var sig = Saw.ar(freq * [1, (centDif * 0.01).midiratio], amp);
+    Out.ar(0, BPF.ar(sig, cutoff.clip(30, 8000)) * EnvGen.ar(Env.linen(att, sus, rel), doneAction: 2));
+}, 0.01!6).add
+)
+
+(
+// Function to generate a standard PSloop with lookBack arg to by controlled by env variable with suffix LB
+// Pfunc could also be written as: PL((name ++ \LB).asSymbol)
+
+~psLoop = { |src, name| PSloop(src, bufSize: 10, lookBack: Pfunc { currentEnvironment[(name ++ \LB).asSymbol] }) };
+
+p = Pbind(
+    \instrument, \psloop_1,
+    \att, 0.01,
+    \amp, Pfunc { ~amp },
+    \sus, ~psLoop.(Prand([0.1, 0.2], inf), \sus),
+    \rel, ~psLoop.(Prand([0.01, 0.1, 1], inf), \rel),
+    \dur, ~psLoop.(Pn(Pshuf([1, 1, 2]/5)), \dur),
+    \centDif, Pshuf([5, -20, 40], inf),
+    \midinote, ~psLoop.(Pxrand((30..50), inf), \midinote),
+    \cutoff, ~psLoop.(Pshuf([500, 1500, 5000], inf), \cutoff)
+);
+
+q = Pbindf(p, \midinote, ~psLoop.(Pxrand((50..70), inf), \midinote));
+r = Pbindf(p, \midinote, ~psLoop.(Pxrand((75..95), inf), \midinote));
+
+
+// VarGui for control of lookBack params of 3 parallel streams
+// zero values for args with suffix LB mean: no looping
+
+// play loops by setting several params to non-zero values,
+// you can grab params of different voices by using the alt key while
+// moving a slider
+
+VarGui({ |i| [
+    \susLB, [0, 7, \lin, 1, 0],
+    \relLB, [0, 7, \lin, 1, 0],
+    \durLB, [0, 7, \lin, 1, 0],
+    \midinoteLB, [0, 7, \lin, 1, 0],
+    \cutoffLB, [0, 7, \lin, 1, 0],
+    \amp, [0, 1, \lin, 0, 0.2 + (i * 0.1)]
+] }!3, stream: [r, q, p], quant: 1/5
+).gui(labelWidth: 80)
+)</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PSloop.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PSloop.schelp</a><br>link::Classes/PSloop::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,0 +1,381 @@
+<!doctype html><html lang='en'><head><title>ScaledUserView | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'ScaledUserView';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>ScaledUserView:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*defaultGridColor'>defaultGridColor</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*window'>window</a> </li>
+<li class='toc3'><a href='#*withSliders'>withSliders</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-autoRefresh'>autoRefresh</a> </li>
+<li class='toc3'><a href='#-autoRefreshMouseActions'>autoRefreshMouseActions</a> </li>
+<li class='toc3'><a href='#-background'>background</a> </li>
+<li class='toc3'><a href='#-beforeDrawFunc'>beforeDrawFunc</a> </li>
+<li class='toc3'><a href='#-bounds'>bounds</a> </li>
+<li class='toc3'><a href='#-clearDrawFuncs'>clearDrawFuncs</a> </li>
+<li class='toc3'><a href='#-clip'>clip</a> </li>
+<li class='toc3'><a href='#-clipScaled'>clipScaled</a> </li>
+<li class='toc3'><a href='#-clipUnscaled'>clipUnscaled</a> </li>
+<li class='toc3'><a href='#-convertBwd'>convertBwd</a> </li>
+<li class='toc3'><a href='#-convertFwd'>convertFwd</a> </li>
+<li class='toc3'><a href='#-convertMove'>convertMove</a> </li>
+<li class='toc3'><a href='#-convertScale'>convertScale</a> </li>
+<li class='toc3'><a href='#-drawBounds'>drawBounds</a> </li>
+<li class='toc3'><a href='#-drawFunc'>drawFunc</a> </li>
+<li class='toc3'><a href='#-fromBounds'>fromBounds</a> </li>
+<li class='toc3'><a href='#-gridColor'>gridColor</a> </li>
+<li class='toc3'><a href='#-gridLines'>gridLines</a> </li>
+<li class='toc3'><a href='#-gridMode'>gridMode</a> </li>
+<li class='toc3'><a href='#-gridSpacingH'>gridSpacingH</a> </li>
+<li class='toc3'><a href='#-gridSpacingV'>gridSpacingV</a> </li>
+<li class='toc3'><a href='#-init'>init</a> </li>
+<li class='toc3'><a href='#-keepRatio'>keepRatio</a> </li>
+<li class='toc3'><a href='#-keyDownAction'>keyDownAction</a> </li>
+<li class='toc3'><a href='#-mouseDownAction'>mouseDownAction</a> </li>
+<li class='toc3'><a href='#-mouseMoveAction'>mouseMoveAction</a> </li>
+<li class='toc3'><a href='#-mouseOutOfBoundsAction'>mouseOutOfBoundsAction</a> </li>
+<li class='toc3'><a href='#-mouseUpAction'>mouseUpAction</a> </li>
+<li class='toc3'><a href='#-move'>move</a> </li>
+<li class='toc3'><a href='#-moveAmt'>moveAmt</a> </li>
+<li class='toc3'><a href='#-moveH'>moveH</a> </li>
+<li class='toc3'><a href='#-movePixels'>movePixels</a> </li>
+<li class='toc3'><a href='#-moveV'>moveV</a> </li>
+<li class='toc3'><a href='#-pixelScale'>pixelScale</a> </li>
+<li class='toc3'><a href='#-refresh'>refresh</a> </li>
+<li class='toc3'><a href='#-refreshAction'>refreshAction</a> </li>
+<li class='toc3'><a href='#-reset'>reset</a> </li>
+<li class='toc3'><a href='#-scale'>scale</a> </li>
+<li class='toc3'><a href='#-scaleAmt'>scaleAmt</a> </li>
+<li class='toc3'><a href='#-scaleH'>scaleH</a> </li>
+<li class='toc3'><a href='#-scaleV'>scaleV</a> </li>
+<li class='toc3'><a href='#-translateScale'>translateScale</a> </li>
+<li class='toc3'><a href='#-unclippedUnscaledDrawFunc'>unclippedUnscaledDrawFunc</a> </li>
+<li class='toc3'><a href='#-unscaledDrawFunc'>unscaledDrawFunc</a> </li>
+<li class='toc3'><a href='#-view'>view</a> </li>
+<li class='toc3'><a href='#-viewRect'>viewRect</a> </li>
+</ul></ul><li class='toc1'><a href='#Help%20template'>Help template</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></span>
+</div><h1>ScaledUserView<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>(Undocumented class)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/ScaledUserView/ScaledUserView.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/GUI/ScaledUserView/ScaledUserView.sc'>ScaledUserView.sc</a></div></div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>ScaledUserView.</span><a class='method-name' name='*defaultGridColor' href='./../Overviews/Methods.html#defaultGridColor'>defaultGridColor</a></h3>
+<h3 class='method-code'><span class='method-prefix'>ScaledUserView.</span><a class='method-name' name='*defaultGridColor' href='./../Overviews/Methods.html#defaultGridColor'>defaultGridColor</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>ScaledUserView.</span><a class='method-name' name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a></h3>
+<h3 class='method-code'><span class='method-prefix'>ScaledUserView.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>window</span>, <span class='argstr'>bounds</span>, <span class='argstr'>fromBounds</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>ScaledUserView.</span><a class='method-name' name='*window' href='./../Overviews/Methods.html#window'>window</a>(<span class='argstr'>name</span>, <span class='argstr'>bounds</span>, <span class='argstr'>fromBounds</span>, <span class='argstr'>viewOffset</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>ScaledUserView.</span><a class='method-name' name='*withSliders' href='./../Overviews/Methods.html#withSliders'>withSliders</a>(<span class='argstr'>window</span>, <span class='argstr'>bounds</span>, <span class='argstr'>fromBounds</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-autoRefresh' href='./../Overviews/Methods.html#autoRefresh'>autoRefresh</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-autoRefresh' href='./../Overviews/Methods.html#autoRefresh'>autoRefresh</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-autoRefreshMouseActions' href='./../Overviews/Methods.html#autoRefreshMouseActions'>autoRefreshMouseActions</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-autoRefreshMouseActions' href='./../Overviews/Methods.html#autoRefreshMouseActions'>autoRefreshMouseActions</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-background' href='./../Overviews/Methods.html#background'>background</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-background' href='./../Overviews/Methods.html#background'>background</a>_(<span class='argstr'>color</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-beforeDrawFunc' href='./../Overviews/Methods.html#beforeDrawFunc'>beforeDrawFunc</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-beforeDrawFunc' href='./../Overviews/Methods.html#beforeDrawFunc'>beforeDrawFunc</a>_(<span class='argstr'>newDrawFunc</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bounds' href='./../Overviews/Methods.html#bounds'>bounds</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bounds' href='./../Overviews/Methods.html#bounds'>bounds</a> = <span class='argstr'>newBounds</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clearDrawFuncs' href='./../Overviews/Methods.html#clearDrawFuncs'>clearDrawFuncs</a>(<span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clip' href='./../Overviews/Methods.html#clip'>clip</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clip' href='./../Overviews/Methods.html#clip'>clip</a>_(<span class='argstr'>newBool</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clipScaled' href='./../Overviews/Methods.html#clipScaled'>clipScaled</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clipScaled' href='./../Overviews/Methods.html#clipScaled'>clipScaled</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clipUnscaled' href='./../Overviews/Methods.html#clipUnscaled'>clipUnscaled</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clipUnscaled' href='./../Overviews/Methods.html#clipUnscaled'>clipUnscaled</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-convertBwd' href='./../Overviews/Methods.html#convertBwd'>convertBwd</a>(<span class='argstr'>x: 0</span>, <span class='argstr'>y: 0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-convertFwd' href='./../Overviews/Methods.html#convertFwd'>convertFwd</a>(<span class='argstr'>x: 0</span>, <span class='argstr'>y: 0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-convertMove' href='./../Overviews/Methods.html#convertMove'>convertMove</a>(<span class='argstr'>inRect</span>, <span class='argstr'>mh: 0</span>, <span class='argstr'>mv: 0</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-convertScale' href='./../Overviews/Methods.html#convertScale'>convertScale</a>(<span class='argstr'>inRect</span>, <span class='argstr'>outRect</span>, <span class='argstr'>sh: 1</span>, <span class='argstr'>sv: 1</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-drawBounds' href='./../Overviews/Methods.html#drawBounds'>drawBounds</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-drawFunc' href='./../Overviews/Methods.html#drawFunc'>drawFunc</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-drawFunc' href='./../Overviews/Methods.html#drawFunc'>drawFunc</a>_(<span class='argstr'>newDrawFunc</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fromBounds' href='./../Overviews/Methods.html#fromBounds'>fromBounds</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fromBounds' href='./../Overviews/Methods.html#fromBounds'>fromBounds</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gridColor' href='./../Overviews/Methods.html#gridColor'>gridColor</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gridColor' href='./../Overviews/Methods.html#gridColor'>gridColor</a>_(<span class='argstr'>color</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gridLines' href='./../Overviews/Methods.html#gridLines'>gridLines</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gridLines' href='./../Overviews/Methods.html#gridLines'>gridLines</a>_(<span class='argstr'>newGridLines</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gridMode' href='./../Overviews/Methods.html#gridMode'>gridMode</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gridMode' href='./../Overviews/Methods.html#gridMode'>gridMode</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gridSpacingH' href='./../Overviews/Methods.html#gridSpacingH'>gridSpacingH</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gridSpacingH' href='./../Overviews/Methods.html#gridSpacingH'>gridSpacingH</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gridSpacingV' href='./../Overviews/Methods.html#gridSpacingV'>gridSpacingV</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gridSpacingV' href='./../Overviews/Methods.html#gridSpacingV'>gridSpacingV</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-init' href='./../Overviews/Methods.html#init'>init</a>(<span class='argstr'>window</span>, <span class='argstr'>bounds</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keepRatio' href='./../Overviews/Methods.html#keepRatio'>keepRatio</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keepRatio' href='./../Overviews/Methods.html#keepRatio'>keepRatio</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keyDownAction' href='./../Overviews/Methods.html#keyDownAction'>keyDownAction</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keyDownAction' href='./../Overviews/Methods.html#keyDownAction'>keyDownAction</a> = <span class='argstr'>newAction</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mouseDownAction' href='./../Overviews/Methods.html#mouseDownAction'>mouseDownAction</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mouseDownAction' href='./../Overviews/Methods.html#mouseDownAction'>mouseDownAction</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mouseMoveAction' href='./../Overviews/Methods.html#mouseMoveAction'>mouseMoveAction</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mouseMoveAction' href='./../Overviews/Methods.html#mouseMoveAction'>mouseMoveAction</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mouseOutOfBoundsAction' href='./../Overviews/Methods.html#mouseOutOfBoundsAction'>mouseOutOfBoundsAction</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mouseOutOfBoundsAction' href='./../Overviews/Methods.html#mouseOutOfBoundsAction'>mouseOutOfBoundsAction</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mouseUpAction' href='./../Overviews/Methods.html#mouseUpAction'>mouseUpAction</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mouseUpAction' href='./../Overviews/Methods.html#mouseUpAction'>mouseUpAction</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-move' href='./../Overviews/Methods.html#move'>move</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-move' href='./../Overviews/Methods.html#move'>move</a>_(<span class='argstr'>newMoveArray</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-moveAmt' href='./../Overviews/Methods.html#moveAmt'>moveAmt</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-moveH' href='./../Overviews/Methods.html#moveH'>moveH</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-moveH' href='./../Overviews/Methods.html#moveH'>moveH</a>_(<span class='argstr'>newMoveH</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-movePixels' href='./../Overviews/Methods.html#movePixels'>movePixels</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-movePixels' href='./../Overviews/Methods.html#movePixels'>movePixels</a>_(<span class='argstr'>newPixelsArray</span>, <span class='argstr'>limit</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-moveV' href='./../Overviews/Methods.html#moveV'>moveV</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-moveV' href='./../Overviews/Methods.html#moveV'>moveV</a>_(<span class='argstr'>newMoveV</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-pixelScale' href='./../Overviews/Methods.html#pixelScale'>pixelScale</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-refresh' href='./../Overviews/Methods.html#refresh'>refresh</a>(<span class='argstr'>flag: true</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-refreshAction' href='./../Overviews/Methods.html#refreshAction'>refreshAction</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-refreshAction' href='./../Overviews/Methods.html#refreshAction'>refreshAction</a> = value</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reset' href='./../Overviews/Methods.html#reset'>reset</a>(<span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scale' href='./../Overviews/Methods.html#scale'>scale</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scale' href='./../Overviews/Methods.html#scale'>scale</a>_(<span class='argstr'>newScaleArray</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scaleAmt' href='./../Overviews/Methods.html#scaleAmt'>scaleAmt</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scaleH' href='./../Overviews/Methods.html#scaleH'>scaleH</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scaleH' href='./../Overviews/Methods.html#scaleH'>scaleH</a>_(<span class='argstr'>newScaleH</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scaleV' href='./../Overviews/Methods.html#scaleV'>scaleV</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scaleV' href='./../Overviews/Methods.html#scaleV'>scaleV</a>_(<span class='argstr'>newScaleV</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-translateScale' href='./../Overviews/Methods.html#translateScale'>translateScale</a>(<span class='argstr'>item</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-unclippedUnscaledDrawFunc' href='./../Overviews/Methods.html#unclippedUnscaledDrawFunc'>unclippedUnscaledDrawFunc</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-unclippedUnscaledDrawFunc' href='./../Overviews/Methods.html#unclippedUnscaledDrawFunc'>unclippedUnscaledDrawFunc</a>_(<span class='argstr'>newDrawFunc</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-unscaledDrawFunc' href='./../Overviews/Methods.html#unscaledDrawFunc'>unscaledDrawFunc</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-unscaledDrawFunc' href='./../Overviews/Methods.html#unscaledDrawFunc'>unscaledDrawFunc</a>_(<span class='argstr'>newDrawFunc</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-view' href='./../Overviews/Methods.html#view'>view</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-viewRect' href='./../Overviews/Methods.html#viewRect'>viewRect</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-viewRect' href='./../Overviews/Methods.html#viewRect'>viewRect</a>_(<span class='argstr'>rect</span>, <span class='argstr'>refreshFlag</span>)</h3>
+<h2><a class='anchor' name='Help%20template'>Help template</a></h2>
+
+<p>Copy and paste the text below and save to HelpSource/Classes/ScaledUserView.schelp<textarea class='editor'>TITLE:: ScaledUserView
+summary:: _short_description_here_
+categories:: Undocumented classes
+related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff
+
+DESCRIPTION::
+_put_long_description_here_
+
+
+First code examples: 
+
+code::
+_some_example_code_
+::
+
+CLASSMETHODS::
+
+METHOD:: initClass
+
+METHOD:: defaultGridColor
+
+METHOD:: new
+argument:: window
+argument:: bounds
+argument:: fromBounds
+
+METHOD:: withSliders
+argument:: window
+argument:: bounds
+argument:: fromBounds
+
+METHOD:: window
+argument:: name
+argument:: bounds
+argument:: fromBounds
+argument:: viewOffset
+
+
+INSTANCEMETHODS::
+
+METHOD:: background
+argument:: color
+argument:: refreshFlag
+
+METHOD:: scaleV
+argument:: newScaleV
+argument:: refreshFlag
+
+METHOD:: unscaledDrawFunc
+argument:: newDrawFunc
+argument:: refreshFlag
+
+METHOD:: keepRatio
+
+METHOD:: fromBounds
+
+METHOD:: unclippedUnscaledDrawFunc
+argument:: newDrawFunc
+argument:: refreshFlag
+
+METHOD:: refreshAction
+
+METHOD:: pixelScale
+
+METHOD:: gridSpacingV
+
+METHOD:: clip
+argument:: newBool
+argument:: refreshFlag
+
+METHOD:: move
+argument:: newMoveArray
+argument:: refreshFlag
+
+METHOD:: gridSpacingH
+
+METHOD:: refresh
+argument:: flag
+
+METHOD:: autoRefreshMouseActions
+
+METHOD:: bounds
+argument:: newBounds
+
+METHOD:: init
+argument:: window
+argument:: bounds
+
+METHOD:: mouseOutOfBoundsAction
+
+METHOD:: moveAmt
+
+METHOD:: mouseDownAction
+
+METHOD:: convertMove
+argument:: inRect
+argument:: mh
+argument:: mv
+
+METHOD:: gridLines
+argument:: newGridLines
+argument:: refreshFlag
+
+METHOD:: clearDrawFuncs
+argument:: refreshFlag
+
+METHOD:: drawBounds
+
+METHOD:: translateScale
+argument:: item
+
+METHOD:: keyDownAction
+argument:: newAction
+
+METHOD:: view
+
+METHOD:: moveH
+argument:: newMoveH
+argument:: refreshFlag
+
+METHOD:: reset
+argument:: refreshFlag
+
+METHOD:: drawFunc
+argument:: newDrawFunc
+argument:: refreshFlag
+
+METHOD:: scaleH
+argument:: newScaleH
+argument:: refreshFlag
+
+METHOD:: convertScale
+argument:: inRect
+argument:: outRect
+argument:: sh
+argument:: sv
+
+METHOD:: convertBwd
+argument:: x
+argument:: y
+
+METHOD:: movePixels
+argument:: newPixelsArray
+argument:: limit
+argument:: refreshFlag
+
+METHOD:: autoRefresh
+
+METHOD:: moveV
+argument:: newMoveV
+argument:: refreshFlag
+
+METHOD:: scaleAmt
+
+METHOD:: clipScaled
+
+METHOD:: gridColor
+argument:: color
+argument:: refreshFlag
+
+METHOD:: mouseUpAction
+
+METHOD:: scale
+argument:: newScaleArray
+argument:: refreshFlag
+
+METHOD:: clipUnscaled
+
+METHOD:: convertFwd
+argument:: x
+argument:: y
+
+METHOD:: gridMode
+
+METHOD:: beforeDrawFunc
+argument:: newDrawFunc
+argument:: refreshFlag
+
+METHOD:: mouseMoveAction
+
+METHOD:: viewRect
+argument:: rect
+argument:: refreshFlag
+
+
+EXAMPLES::
+
+code::
+_some_example_code_
+::
+</textarea>
+<div class='doclink'>link::Classes/ScaledUserView::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

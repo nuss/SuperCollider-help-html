@@ -1,0 +1,306 @@
+<!doctype html><html lang='en'><head><title>BufEnvir | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'BufEnvir';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>BufEnvir:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-put'>put</a> </li>
+<li class='toc3'><a href='#-at'>at</a> </li>
+<li class='toc3'><a href='#-putAll'>putAll</a> </li>
+<li class='toc3'><a href='#-putSeries'>putSeries</a> </li>
+<li class='toc3'><a href='#-atAll'>atAll</a>  <a href='#-getAll'>getAll</a> </li>
+<li class='toc3'><a href='#-alloc'>alloc</a> </li>
+<li class='toc3'><a href='#-read'>read</a>  <a href='#-cue'>cue</a> </li>
+<li class='toc3'><a href='#-readAll'>readAll</a>  <a href='#-cueAll'>cueAll</a> </li>
+<li class='toc3'><a href='#-fft'>fft</a> </li>
+<li class='toc3'><a href='#-fftsize'>fftsize</a> </li>
+<li class='toc3'><a href='#-zero'>zero</a> </li>
+<li class='toc3'><a href='#-bufnum'>bufnum</a> </li>
+<li class='toc3'><a href='#-bufDur'>bufDur</a> </li>
+<li class='toc3'><a href='#-bufFrames'>bufFrames</a> </li>
+<li class='toc3'><a href='#-bufFrames'>bufFrames</a> </li>
+<li class='toc3'><a href='#-rateScale'>rateScale</a> </li>
+<li class='toc3'><a href='#-server'>server</a> </li>
+<li class='toc3'><a href='#-clear'>clear</a> </li>
+<li class='toc3'><a href='#-doWithUpdate'>doWithUpdate</a> </li>
+<li class='toc3'><a href='#-playBuf'>playBuf</a> </li>
+<li class='toc3'><a href='#-rec'>rec</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Live Coding'>Live Coding</a></span>
+</div><h1>BufEnvir<span id='superclasses'> : <a href="../Classes/EnvironmentRedirect.html">EnvironmentRedirect</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>referentially transparent buffer environment</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/classes/BufEnvir.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/classes/BufEnvir.sc'>BufEnvir.sc</a></div><div id='related'>See also: <a href="./../Classes/Buffer.html">Buffer</a>, <a href="./../Overviews/JITLib.html">JITLib</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>an environment for keeping buffers by name.<textarea class='editor'>q = q ? (); // a general storage place
+q.b = BufEnvir(s.boot); // add a buf envir
+
+q.b[\x] = [0, 2, 3.2, 5, 7, 8, 10];
+q.b[\x].bufnum
+
+
+// buffers are created transparently (wherever you look there are buffers..)
+q.b[\y];
+q.b[\y].bufnum;
+q.b[\y].numChannels;
+q.b[\z].bufnum;
+q.b[\c] = [1, 2, 3];
+q.b[\c].bufnum;
+q.b[\y].numChannels;
+q.b[\y] = nil; // deallocate
+q.b[\c] = nil;
+q.b[\z] = nil;
+q.b[[\y, \c, \z]]; // equivalent
+q.b[[\y, \c, \z]] = [nil];// equivalent
+
+
+// example with a soundfile:
+(
+SynthDef("help_PlayBuf", { arg out=0, bufnum=0, sustain=1, amp=0.1, rate=1, offset=0;
+    Out.ar(out,
+        EnvGen.kr(Env.linen(0, sustain, 0.02), doneAction:2) *
+        PlayBuf.ar(1, bufnum, rate * BufRateScale.kr(bufnum),
+            startPos: offset * BufFrames.kr(bufnum)
+        ) * (10 * amp)
+    )
+}).store
+);
+)
+
+// start a process
+(
+q.rout = Routine {
+    var dt;
+    loop {
+        dt = exprand(0.01, 1.2);
+        Synth(\help_PlayBuf, [
+            \bufnum, q.b[\apollo],
+            \rate, 0.06 * [1, 2, 3, -1, -2, -3].choose + 1,
+            \offset, 1.0.rand,
+            \sustain, dt * rrand(1.0, 1.3);
+        ]);
+        dt.wait;
+    }
+}.play;
+)
+
+// read a sample later
+q.b.read(\apollo, "sounds/a11wlk01.wav");
+q.b.zero(\apollo); // make empty.</textarea>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>BufEnvir.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>server</span>)</h3>
+<div class='method'>
+<p>return a new instance. server has to be running.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-put' href='./../Overviews/Methods.html#put'>put</a>(<span class='argstr'>key</span>, <span class='argstr'>obj</span>)</h3>
+<div class='method'>
+<p>put an object into the environment that can be converted to buffer values. The buffer on the server is updated immediately, the buffer number is kept. Currently supported are Arrays and Nil (nil deallocates the buffer).</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>return the buffer at a certain key. If none exist, allocate a buffer number.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-putAll' href='./../Overviews/Methods.html#putAll'>putAll</a>(<span class='argstr'>keys</span>, <span class='argstr'>objects</span>)</h3>
+<div class='method'>
+<p>put the objects into the environment at the given keys.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-putSeries' href='./../Overviews/Methods.html#putSeries'>putSeries</a>(<span class='argstr'>first</span>, <span class='argstr'>second</span>, <span class='argstr'>last</span>, <span class='argstr'>value</span>)</h3>
+<div class='method'>
+<p>put a series of objects in the bufenvir. to be tested.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-atAll' href='./../Overviews/Methods.html#atAll'>atAll</a>(<span class='argstr'>keys</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-getAll' href='./../Overviews/Methods.html#getAll'>getAll</a>(<span class='argstr'>keys</span>)</h3>
+<div class='method'>
+<p>return the buffers at the given keys. If none exist, allocate buffer numbers.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-alloc' href='./../Overviews/Methods.html#alloc'>alloc</a>(<span class='argstr'>key</span>, <span class='argstr'>numFrames: 2048</span>, <span class='argstr'>numChannels: 1</span>)</h3>
+<div class='method'>
+<p>allocate a buffer at the given key. If a bufnum exists for that key, it is kept.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-read' href='./../Overviews/Methods.html#read'>read</a>(<span class='argstr'>key</span>, <span class='argstr'>path</span>, <span class='argstr'>startFrame: 0</span>, <span class='argstr'>numFrames: -1</span>, <span class='argstr'>completionMessage</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cue' href='./../Overviews/Methods.html#cue'>cue</a>(<span class='argstr'>key</span>, <span class='argstr'>path</span>, <span class='argstr'>startFrame: 0</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>bufferSize</span>, <span class='argstr'>completionMessage</span>)</h3>
+<div class='method'>
+<p>read or cue a file to buffer</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-readAll' href='./../Overviews/Methods.html#readAll'>readAll</a>(<span class='argstr'>commonPath</span>, <span class='argstr'>fileExtension</span>, <span class='argstr'>startFrame: 0</span>, <span class='argstr'>numFrames: -1</span>, <span class='argstr'>completionMessage</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cueAll' href='./../Overviews/Methods.html#cueAll'>cueAll</a>(<span class='argstr'>commonPath</span>, <span class='argstr'>fileExtension</span>, <span class='argstr'>startFrame: 0</span>, <span class='argstr'>numChannels</span>, <span class='argstr'>bufferSize</span>)</h3>
+<div class='method'>
+<p>reads or cues all files within a given path. The key is the difference between commonPath and filePath, e.g. if the common path is "/sounds/" and the file is "/sounds/samp1.aif", the key will be 'samp1'.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fft' href='./../Overviews/Methods.html#fft'>fft</a>(<span class='argstr'>key</span>, <span class='argstr'>size</span>, <span class='argstr'>numChannels: 1</span>)</h3>
+<div class='method'>
+<p>create a buffer for FFT use.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fftsize' href='./../Overviews/Methods.html#fftsize'>fftsize</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-fftsize' href='./../Overviews/Methods.html#fftsize'>fftsize</a> = value</h3>
+<div class='method'>
+<p>get and set the default size for fft buffers</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-zero' href='./../Overviews/Methods.html#zero'>zero</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>overwrite the buffer at key with zeroes.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bufnum' href='./../Overviews/Methods.html#bufnum'>bufnum</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>return the buffer number at the given key</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bufDur' href='./../Overviews/Methods.html#bufDur'>bufDur</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>return the duration of the buffer at the given key</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bufFrames' href='./../Overviews/Methods.html#bufFrames'>bufFrames</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>return the numFrames of the buffer at the given key</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bufFrames' href='./../Overviews/Methods.html#bufFrames'>bufFrames</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>return the numFrames of the buffer at the given key</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rateScale' href='./../Overviews/Methods.html#rateScale'>rateScale</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>return the rateScale factor of the buffer at the given key</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-server' href='./../Overviews/Methods.html#server'>server</a></h3>
+<div class='method'>
+<p>the server on which the buffers live</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a>(<span class='argstr'>removeReferences: false</span>)</h3>
+<div class='method'>
+<p>clear all buffers.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doWithUpdate' href='./../Overviews/Methods.html#doWithUpdate'>doWithUpdate</a>(<span class='argstr'>key</span>, <span class='argstr'>func</span>)</h3>
+<div class='method'>
+<p>eval function with buffer at key and call updateInfo on buffer.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-playBuf' href='./../Overviews/Methods.html#playBuf'>playBuf</a>(<span class='argstr'>key</span>, <span class='argstr'>rate: 1</span>, <span class='argstr'>trigger: 0</span>, <span class='argstr'>startPos: 0</span>, <span class='argstr'>loop: 0</span>, <span class='argstr'>doneAction: 0</span>)</h3>
+<div class='method'>
+<p>return a PlayBuf ugen wired up for the buffer at key.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rec' href='./../Overviews/Methods.html#rec'>rec</a>(<span class='argstr'>in</span>, <span class='argstr'>key</span>, <span class='argstr'>dur: 1.0</span>, <span class='argstr'>offset: 0.0</span>, <span class='argstr'>recLevel: 1.0</span>, <span class='argstr'>preLevel: 0.0</span>, <span class='argstr'>run: 1.0</span>, <span class='argstr'>loop: 1.0</span>, <span class='argstr'>trigger: 1.0</span>, <span class='argstr'>doneAction: 0</span>)</h3>
+<div class='method'>
+<p>return a RecordBuf ugen wired up for the buffer at key.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>// examples
+
+q = q ? (); // a general storage place
+q.b = q.b ?? { BufEnvir(s.boot) }; // add a buf envir
+
+// proxyspace examples:
+
+p = ProxySpace.push(s);
+~out.play;
+
+
+q.b[\x] = [0, 2, 3.2, 5, 7, 8, 10];
+
+//____
+(
+~out = {
+    SinOsc.ar(
+        DegreeToKey.kr(q.b[\x], MouseX.kr(0, 15), 12, 1, 72).midicps
+        *
+        LFNoise1.kr([4,4], 0.01, 0.5)
+) * 0.1 ! 2
+};
+)
+
+
+//____
+(
+~out = {
+    var index = Duty.kr(0.16, 0, Dbufrd(q.b[\z], Dseries(0, 1, inf)));
+    RLPF.ar(
+        LFTri.ar(
+            DegreeToKey.kr(q.b[\x], index, 12, 1, 60).midicps
+        ),
+        [1000, 9000]
+    ).sum
+    * 0.1 ! 2
+};
+)
+
+q.b[\z] = [0, 3, 2, 8, 2, 2];
+q.b[\z] = [0, 3, 2, 8, 2, 2].curdle(0.5).scramble.flat;
+q.b[\z] = [0, 3, 2, 7, 2, 2] ++ [0, 3, 2, 8, 2, 2].curdle(0.5).scramble.flat;
+
+q.b[\x] = [0, 1, 4, 5, 7, 9, 10];
+q.b[\z] = nil;
+q.b[\z] = Pseq([Prand([3, 4, 5], 3), Pseq([1, 2, 5, 1, 3], 3)], inf).asStream.nextN(128);
+
+
+//____
+~out.fadeTime = 30;
+(
+~out = {
+    var dt = 0.16;
+    var index = Duty.kr(dt, 0, Dbufrd(q.b[\z], Dseries(0, -1, inf)));
+    RLPF.ar(
+        LFTri.ar(
+            DegreeToKey.kr(q.b[\x], index, 12, 1, 42).midicps
+        ),
+        [1000, 9000],
+        0.1
+    ).sum * Decay.kr(Impulse.kr(1 / dt), 0.5)
+    * 0.3 ! 2
+};
+)
+
+
+// play an empty buffer
+(
+~out = {
+    var n = q.b[\y];
+    PlayBuf.ar(q.b[\y].numChannels ? 1, n, BufRateScale.kr(n), loop:1)
+};
+
+)
+
+// read a sample later
+q.b.read(\y, "sounds/a11wlk01.wav");
+
+(
+~out = {
+    var n = q.b[\y];
+    var rate = DegreeToKey.kr(q.b[\x], MouseX.kr(0, 15), 12).midicps;
+    PlayBuf.ar(1, n, BufRateScale.kr(n) * (rate * 0.1), loop:1) * 0.1 ! 2
+};
+
+)
+
+
+// fft buffers
+(
+~out = { arg out=0,bufnum=0;
+    var in, chain;
+    in = SinOsc.ar(SinOsc.kr(SinOsc.kr(0.08,0,6,6.2).squared, 0, 100,800));
+    //in = WhiteNoise.ar(0.2);
+    chain = FFT(q.b.fft(\fft1), in, in.numChannels);
+    chain = PV_MagAbove(chain, 310);
+    Out.ar(out, 0.5 * IFFT(chain));
+};
+)
+
+
+// read all sounds in the sounds folder
+(
+var i = 0, path;
+path = "sounds";
+pathMatch(path ++ "/*").do {|p| protect { q.b.read(i, p) } { i = i + 1; i.postln } }
+)
+
+
+q.b.envir.collect(_.numChannels)
+q.b.envir.do(_.updateInfo)
+
+// play them
+(
+~out = {
+    var i = 2;
+    var n = q.b[i];
+    PlayBuf.ar(q.b[i].numChannels ? 1, n, BufRateScale.kr(n), loop:1)
+};
+)
+
+~out.play;
+
+~out.stop;
+
+
+
+// clear all, free memory.
+
+q.b.clear;</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/BufEnvir.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions/HelpSource/Classes/BufEnvir.schelp</a><br>link::Classes/BufEnvir::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

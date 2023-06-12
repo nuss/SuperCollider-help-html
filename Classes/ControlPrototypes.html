@@ -1,0 +1,100 @@
+<!doctype html><html lang='en'><head><title>ControlPrototypes | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'ControlPrototypes';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>ControlPrototypes:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*registery'>registery</a> </li>
+<li class='toc3'><a href='#*initClass'>initClass</a> </li>
+<li class='toc3'><a href='#*define'>define</a> </li>
+<li class='toc3'><a href='#*at'>at</a> </li>
+<li class='toc3'><a href='#*forSpec'>forSpec</a> </li>
+<li class='toc3'><a href='#*firstAt'>firstAt</a> </li>
+<li class='toc3'><a href='#*chooseAt'>chooseAt</a> </li>
+<li class='toc3'><a href='#*chooseForSpec'>chooseForSpec</a> </li>
+<li class='toc3'><a href='#*listForSpec'>listForSpec</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>crucial'>crucial</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>crucial>Instr'>Instr</a></span>
+</div><h1>ControlPrototypes<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>creates default objects for Spec / argName combinations</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/ControlPrototypes.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/ControlPrototypes.sc'>ControlPrototypes.sc</a></div><div id='related'>See also: <a href="./../Classes/Spec.html">Spec</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This is a registery of controls, cataloged by the Spec of their output. It was used by Patch to procure suitable control objects to satisfy an argument to a function.
+<p>In other words: you give it a Spec, it gives you some suitable Player object to use as an input.
+<p>In the current version or Patch this is not used, no special controls are registered for specific specs. You could use this to customise your "auto input creation" in any number of ways.
+<p>Its probably perferable to Spec-defaultControl<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>ControlPrototypes.</span><a class='method-name' name='*registery' href='./../Overviews/Methods.html#registery'>registery</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>ControlPrototypes.</span><a class='method-name' name='*initClass' href='./../Overviews/Methods.html#initClass'>initClass</a></h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>ControlPrototypes.</span><a class='method-name' name='*define' href='./../Overviews/Methods.html#define'>define</a>( <span class='argstr'>... assns</span>)</h3>
+<div class='method'>
+<p>Keys are either symbols or classes, the values are functions that return arrays of prototypes. Patch simply selects the first in the list. Other methods of ControlPrototypes use the full list.
+<p>The function is valued each time so that the control is a unique instance.
+<p>You may freely change or redefine control protypes while working/composing without recompiling.
+<p>This class also serves to decouple Spec from knowing of the various controls, gadgets and widgets.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>... assns<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>ControlPrototypes.</span><a class='method-name' name='*at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>key</span>, <span class='argstr'>spec</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'><tr><td class='argumentname'>spec<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>ControlPrototypes.</span><a class='method-name' name='*forSpec' href='./../Overviews/Methods.html#forSpec'>forSpec</a>(<span class='argstr'>argName</span>, <span class='argstr'>spec</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>argName<td class='argumentdesc'><tr><td class='argumentname'>spec<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>ControlPrototypes.</span><a class='method-name' name='*firstAt' href='./../Overviews/Methods.html#firstAt'>firstAt</a>(<span class='argstr'>argName</span>, <span class='argstr'>spec</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>argName<td class='argumentdesc'><tr><td class='argumentname'>spec<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>ControlPrototypes.</span><a class='method-name' name='*chooseAt' href='./../Overviews/Methods.html#chooseAt'>chooseAt</a>(<span class='argstr'>argName</span>, <span class='argstr'>spec</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>argName<td class='argumentdesc'><tr><td class='argumentname'>spec<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>ControlPrototypes.</span><a class='method-name' name='*chooseForSpec' href='./../Overviews/Methods.html#chooseForSpec'>chooseForSpec</a>(<span class='argstr'>argName</span>, <span class='argstr'>spec</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>argName<td class='argumentdesc'><tr><td class='argumentname'>spec<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>ControlPrototypes.</span><a class='method-name' name='*listForSpec' href='./../Overviews/Methods.html#listForSpec'>listForSpec</a>(<span class='argstr'>argName</span>, <span class='argstr'>spec</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>argName<td class='argumentdesc'><tr><td class='argumentname'>spec<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+
+<p>In your Main-startUp method:<textarea class='editor'>ControlPrototypes.define(
+
+    \trig -&gt; {[
+                StreamKrDur(Pseq(Array.fill(
+            ]},
+    EnvSpec -&gt; {[
+                EnvEditor.new(Env.adsr)
+            ]}
+);</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/ControlPrototypes.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/ControlPrototypes.schelp</a><br>link::Classes/ControlPrototypes::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

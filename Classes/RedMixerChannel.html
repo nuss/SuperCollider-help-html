@@ -1,0 +1,328 @@
+<!doctype html><html lang='en'><head><title>RedMixerChannel | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'RedMixerChannel';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>RedMixerChannel:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*restoreFile'>restoreFile</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+<li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*restoreArchive'>restoreArchive</a> </li>
+</ul></ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-group'>group</a> </li>
+<li class='toc3'><a href='#-out'>out</a> </li>
+<li class='toc3'><a href='#-interp'>interp</a> </li>
+<li class='toc3'><a href='#-insertClass'>insertClass</a> </li>
+<li class='toc3'><a href='#-insert'>insert</a> </li>
+<li class='toc3'><a href='#-inserts'>inserts</a> </li>
+<li class='toc3'><a href='#-removeClass'>removeClass</a> </li>
+<li class='toc3'><a href='#-remove'>remove</a> </li>
+<li class='toc3'><a href='#-removeAll'>removeAll</a> </li>
+<li class='toc3'><a href='#-gui'>gui</a> </li>
+<li class='toc3'><a href='#-free'>free</a> </li>
+<li class='toc3'><a href='#-lag'>lag</a> </li>
+<li class='toc3'><a href='#-mute'>mute</a> </li>
+<li class='toc3'><a href='#-def'>def</a> </li>
+<li class='toc3'><a href='#-defEq'>defEq</a> </li>
+<li class='toc3'><a href='#-store'>store</a> </li>
+<li class='toc3'><a href='#-peaks'>peaks</a> </li>
+<li class='toc3'><a href='#-peaks'>peaks</a> </li>
+<li class='toc3'><a href='#-resetPeaks'>resetPeaks</a> </li>
+<li class='toc3'><a href='#-cvs'>cvs</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-archive'>archive</a> </li>
+<li class='toc3'><a href='#-bal'>bal</a> </li>
+<li class='toc3'><a href='#-eqHi'>eqHi</a> </li>
+<li class='toc3'><a href='#-eqLo'>eqLo</a> </li>
+<li class='toc3'><a href='#-eqMi'>eqMi</a> </li>
+<li class='toc3'><a href='#-hiBand'>hiBand</a> </li>
+<li class='toc3'><a href='#-hiFreq'>hiFreq</a> </li>
+<li class='toc3'><a href='#-hiGain'>hiGain</a> </li>
+<li class='toc3'><a href='#-levels'>levels</a> </li>
+<li class='toc3'><a href='#-loBand'>loBand</a> </li>
+<li class='toc3'><a href='#-loFreq'>loFreq</a> </li>
+<li class='toc3'><a href='#-loGain'>loGain</a> </li>
+<li class='toc3'><a href='#-miBand'>miBand</a> </li>
+<li class='toc3'><a href='#-miFreq'>miFreq</a> </li>
+<li class='toc3'><a href='#-miGain'>miGain</a> </li>
+<li class='toc3'><a href='#-restore'>restore</a> </li>
+<li class='toc3'><a href='#-vol'>vol</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Red'>Red</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Red>redMixer'>redMixer</a></span>
+</div><h1>RedMixerChannel<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>channel strip</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redMixer/RedMixerChannel.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/redMixer/RedMixerChannel.sc'>RedMixerChannel.sc</a></div><div id='related'>See also: <a href="./../Classes/RedMixerChannelGUI.html">RedMixerChannelGUI</a>, <a href="./../Classes/RedMixer.html">RedMixer</a>, <a href="./../Classes/RedMixerGUI.html">RedMixerGUI</a>, <a href="./../Classes/RedEffectModule.html">RedEffectModule</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Represents a channel on a mixing desk. volume, panning, eq, mute, inserts, level meters etc. Can be used on its own but more often inside of a <a href="./../Classes/RedMixer.html">RedMixer</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>RedMixerChannel.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>out: 0</span>, <span class='argstr'>group</span>, <span class='argstr'>lag: 0.05</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>out<td class='argumentdesc'>
+<p>Channel index for stereo bus.<tr><td class='argumentname'>group<td class='argumentdesc'>
+<p>If <code>nil</code> then <code>Server.default.defaultGroup</code> will be used.<tr><td class='argumentname'>lag<td class='argumentdesc'>
+<p>For eq settings, balance and volume. In seconds.</table></div><h3 class='method-code'><span class='method-prefix'>RedMixerChannel.</span><a class='method-name' name='*restoreFile' href='./../Overviews/Methods.html#restoreFile'>restoreFile</a>(<span class='argstr'>path</span>)</h3>
+<div class='method'>
+<p>Reads back a redMixerChannel with all settings from an archived instance. Also see <a href="#-store">-store</a>.<div class='note'><span class='notelabel'>NOTE:</span> Call <code>.init</code> after this to initialize server side objects.</div><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>A file path as a string.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>RedMixerChannel.</span><a class='method-name' name='*restoreArchive' href='./../Overviews/Methods.html#restoreArchive'>restoreArchive</a>(<span class='argstr'>archive</span>)</h3>
+<h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-group' href='./../Overviews/Methods.html#group'>group</a></h3>
+<div class='method'>
+<p>The <a href="./../Classes/Group.html">Group</a> in use.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-out' href='./../Overviews/Methods.html#out'>out</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-out' href='./../Overviews/Methods.html#out'>out</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>Get or set current bus.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-interp' href='./../Overviews/Methods.html#interp'>interp</a>(<span class='argstr'>other</span>, <span class='argstr'>val: 0</span>)</h3>
+<div class='method'>
+<p>Blend in values from another channel. Ignores out, mute, peaks and levels.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>other<td class='argumentdesc'>
+<p>Another <a href="./../Classes/RedMixerChannel.html">RedMixerChannel</a> instance.<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>Blend fraction 0.0-1.0</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-insertClass' href='./../Overviews/Methods.html#insertClass'>insertClass</a>(<span class='argstr'>redEfxClass</span>, <span class='argstr'>addAction: 'addToHead'</span>)</h3>
+<div class='method'>
+<p>Creates a new <a href="./../Classes/RedEffectModule.html">RedEffectModule</a> before the equalizer.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>redEfxClass<td class='argumentdesc'>
+<p>A class or an array of classes.<tr><td class='argumentname'>addAction<td class='argumentdesc'>
+<p>Local to the inserts. The default <code>\addToHead</code> will put it first in the chain of inserts.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-insert' href='./../Overviews/Methods.html#insert'>insert</a>(<span class='argstr'>redEfx</span>, <span class='argstr'>addAction: 'addToHead'</span>)</h3>
+<div class='method'>
+<p>Adds a <a href="./../Classes/RedEffectModule.html">RedEffectModule</a> instance before the equalizer.<div class='note'><span class='notelabel'>NOTE:</span> You can not do <code>.insert(RedEfxRing.new)</code> without a fork.</div><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>redEfx<td class='argumentdesc'>
+<p>An instance or an array of instances.<tr><td class='argumentname'>addAction<td class='argumentdesc'>
+<p>Local to the inserts. The default <code>\addToHead</code> will put it first in the chain of inserts.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-inserts' href='./../Overviews/Methods.html#inserts'>inserts</a></h3>
+<div class='method'>
+<p>List of current inserts.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeClass' href='./../Overviews/Methods.html#removeClass'>removeClass</a>(<span class='argstr'>redEfxClass</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>redEfxClass<td class='argumentdesc'>
+<p>Free and remove all instances of this <a href="./../Classes/RedEffectModule.html">RedEffectModule</a> class. Can also be an array.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remove' href='./../Overviews/Methods.html#remove'>remove</a>(<span class='argstr'>redEfx</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>redEfx<td class='argumentdesc'>
+<p>Free and remove this <a href="./../Classes/RedEffectModule.html">RedEffectModule</a>. Can also be an array.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeAll' href='./../Overviews/Methods.html#removeAll'>removeAll</a></h3>
+<div class='method'>
+<p>Free and remove all effects in one go.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-gui' href='./../Overviews/Methods.html#gui'>gui</a>(<span class='argstr'>parent</span>, <span class='argstr'>position</span>)</h3>
+<div class='method'>
+<p>Create a <a href="./../Classes/RedMixerChannelGUI.html">RedMixerChannelGUI</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-free' href='./../Overviews/Methods.html#free'>free</a></h3>
+<div class='method'>
+<p>Free synth, equalizer and inserts.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lag' href='./../Overviews/Methods.html#lag'>lag</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lag' href='./../Overviews/Methods.html#lag'>lag</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>Lag for this channel. Also for any equalizer parameters.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>Time in seconds.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mute' href='./../Overviews/Methods.html#mute'>mute</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mute' href='./../Overviews/Methods.html#mute'>mute</a> = <span class='argstr'>val</span></h3>
+<div class='method'>
+<p>Mute the input sound. Post level meter.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>val<td class='argumentdesc'>
+<p>An <a href="./../Classes/Integer.html">Integer</a> where 1 is muted and 0 unmuted.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-def' href='./../Overviews/Methods.html#def'>def</a>(<span class='argstr'>channels: 2</span>)</h3>
+<div class='method'>
+<p>Returns the mixer channel <a href="./../Classes/SynthDef.html">SynthDef</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defEq' href='./../Overviews/Methods.html#defEq'>defEq</a>(<span class='argstr'>channels: 2</span>)</h3>
+<div class='method'>
+<p>Returns the equalizer <a href="./../Classes/SynthDef.html">SynthDef</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-store' href='./../Overviews/Methods.html#store'>store</a>(<span class='argstr'>path</span>)</h3>
+<div class='method'>
+<p>Saves an instance as an archive to disk. All settings and effect inserts are stored. Also see <a href="#*restoreFile">*restoreFile</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>path<td class='argumentdesc'>
+<p>A file path as a string.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-peaks' href='./../Overviews/Methods.html#peaks'>peaks</a></h3>
+<div class='method'>
+<p>Array of current amplitudes.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-peaks' href='./../Overviews/Methods.html#peaks'>peaks</a></h3>
+<div class='method'>
+<p>Array with maximum amplitudes. Clear with <a href="#-resetPeaks">-resetPeaks</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resetPeaks' href='./../Overviews/Methods.html#resetPeaks'>resetPeaks</a></h3>
+<div class='method'>
+<p>Set the all values in <code>peaks</code> to 0.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-cvs' href='./../Overviews/Methods.html#cvs'>cvs</a></h3>
+<div class='method'>
+<p>Dictionary with all <a href="./../Classes/Ref.html">Ref</a> objects. (used to be CV objects)<table>
+<tr><td>levels<td>array of amplitudes<tr><td>peaks<td>array of max amplitudes<tr><td>out<td>output bus offset<tr><td>lag<td>ramp time in seconds for eq settings, balance and volume<tr><td>mute<td>silence output<tr><td>amp<td>volume<tr><td>bal<td>stereo balance -1 to 1<tr><td>eqHi<td>enable highpass 0 / 1<tr><td>eqMi<td>enable bandpass 0 / 1<tr><td>eqLo<td>enable lowpass 0 / 1<tr><td>hiFreq<td><tr><td>hiBand<td><tr><td>hiGain<td><tr><td>miFreq<td><tr><td>miBand<td><tr><td>miGain<td><tr><td>loFreq<td><tr><td>loBand<td><tr><td>loGain<td></table>
+</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-archive' href='./../Overviews/Methods.html#archive'>archive</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bal' href='./../Overviews/Methods.html#bal'>bal</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bal' href='./../Overviews/Methods.html#bal'>bal</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-eqHi' href='./../Overviews/Methods.html#eqHi'>eqHi</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-eqHi' href='./../Overviews/Methods.html#eqHi'>eqHi</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-eqLo' href='./../Overviews/Methods.html#eqLo'>eqLo</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-eqLo' href='./../Overviews/Methods.html#eqLo'>eqLo</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-eqMi' href='./../Overviews/Methods.html#eqMi'>eqMi</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-eqMi' href='./../Overviews/Methods.html#eqMi'>eqMi</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-hiBand' href='./../Overviews/Methods.html#hiBand'>hiBand</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-hiBand' href='./../Overviews/Methods.html#hiBand'>hiBand</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-hiFreq' href='./../Overviews/Methods.html#hiFreq'>hiFreq</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-hiFreq' href='./../Overviews/Methods.html#hiFreq'>hiFreq</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-hiGain' href='./../Overviews/Methods.html#hiGain'>hiGain</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-hiGain' href='./../Overviews/Methods.html#hiGain'>hiGain</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-levels' href='./../Overviews/Methods.html#levels'>levels</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loBand' href='./../Overviews/Methods.html#loBand'>loBand</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loBand' href='./../Overviews/Methods.html#loBand'>loBand</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loFreq' href='./../Overviews/Methods.html#loFreq'>loFreq</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loFreq' href='./../Overviews/Methods.html#loFreq'>loFreq</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loGain' href='./../Overviews/Methods.html#loGain'>loGain</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loGain' href='./../Overviews/Methods.html#loGain'>loGain</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-miBand' href='./../Overviews/Methods.html#miBand'>miBand</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-miBand' href='./../Overviews/Methods.html#miBand'>miBand</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-miFreq' href='./../Overviews/Methods.html#miFreq'>miFreq</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-miFreq' href='./../Overviews/Methods.html#miFreq'>miFreq</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-miGain' href='./../Overviews/Methods.html#miGain'>miGain</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-miGain' href='./../Overviews/Methods.html#miGain'>miGain</a> = <span class='argstr'>val</span></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-restore' href='./../Overviews/Methods.html#restore'>restore</a>(<span class='argstr'>archive</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-vol' href='./../Overviews/Methods.html#vol'>vol</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-vol' href='./../Overviews/Methods.html#vol'>vol</a> = <span class='argstr'>val</span></h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>s.boot;
+s.meter;
+s.plotTree;
+
+a= RedMixerChannel(0);
+b= Pbind(\pan, Pseq([-1, 1], inf), \dur, 0.5, \amp, 0.5).play;
+a.vol= -9
+a.out= 20    //this will move and the (internal ReplaceOut) the mixerchannel to bus 20
+a.out= 0    //move it back
+a.lag= 1    //fade time in seconds (applies to volume, balance and all eq settings)
+a.vol= 0
+a.bal= -0.9
+a.bal= 0.9
+a.bal= 0
+a.levels    //current amplitudes
+a.peaks    //max amplitudes
+a.resetPeaks    //reset max amplitudes to 0
+a.mute= 1
+a.mute= 0
+a.free
+b.stop
+
+//--equalizer
+a= RedMixerChannel();
+a.vol= -9
+b= {Pan2.ar(WhiteNoise.ar(0.5), 0)}.play;
+a.eqHi= 1
+a.hiFreq= 9000
+a.hiBand= 0.5
+a.hiGain= -20    //-20db
+a.lag= 3
+a.hiGain= 0    //slowly fade back to 0db
+a.eqHi= 0    //as no eq active the synth will be removed
+a.eqMi= 1    //recreates the eq synth
+a.miFreq= 2000
+a.miBand= 0.2
+a.miGain= 20
+a.eqLo= 1
+a.loFreq= 300
+a.loBand= 0.1
+a.loGain= 6
+a.eqMi= 0
+a.eqLo= 0
+a.free    //remove the channel and play sound straight though (loud)
+b.free
+
+//--inserts
+s.plotTree;
+g= Group(s);
+a= RedMixerChannel(0, g);
+b= {Pan2.ar(WhiteNoise.ar(LFNoise1.kr(4)*0.5), LFNoise1.kr(2))}.play;
+c= RedEfxTank.new;
+a.insert(c);
+a.inserts[0].tankMix= 0;
+a.insertClass([RedEfxBitc, RedEfxDist]);
+a.inserts;
+a.out= 1;
+a.inserts[0].out;
+a.out= 0
+a.remove(c);
+a.inserts;
+a.insertClass(RedEfxRing, \addToHead);
+a.insertClass(RedEfxVerb, \addToTail);
+a.inserts.last.verbMix= 0.5;
+a.inserts.first.ringMix= 1;
+a.inserts.first.ringFreq= 0.5;
+a.inserts;
+a.removeClass(RedEfxVerb);
+a.inserts;
+a.removeAll;
+a.inserts;
+a.free;
+b.free;
+g.free;
+
+//--interpolate
+s.options.numOutputBusChannels= 8; s.reboot;
+s.meter
+a= RedMixerChannel(0);
+b= RedMixerChannel(2);
+c= Pbind(\degree, Pseq([0, 1], inf), \dur, 0.5, \amp, 0.5, \out, Pseq([0, 2], inf)).play;
+b.bal= -0.75
+b.lag= 0.8
+b.vol= -30
+a.interp(b, 0.5)
+a.bal
+a.lag
+a.vol
+a.free
+b.free
+c.stop
+
+//--archive
+a= RedMixerChannel();
+b= {Pan2.ar(WhiteNoise.ar(0.5), 0)}.play;
+a.lag= 2;
+a.vol= -9;
+a.eqMi= 1;
+a.miGain= -20;
+a.insertClass(RedEfxRing);
+a.insertClass(RedEfxVerb, \addToTail);
+a.inserts[0].ringMix= 1;
+a.inserts[0].ringFreq= 20;
+a.store("~/Desktop/redMixerChannel-test.txt".standardizePath)    //same as .writeArchive, ignore the warnings
+//recompile
+a= RedMixerChannel.restoreFile("~/Desktop/redMixerChannel-test.txt".standardizePath);
+a.init
+a.lag    //should be 2
+a.vol    //shoud be -9
+a.eqMi    //should be 1
+a.miGain    //should be -20
+a.inserts[0].ringMix
+a.inserts[0].ringFreq
+b= {Pan2.ar(WhiteNoise.ar(0.5), 0)}.play;    //get the same sound back
+a.inserts    //should contain a RedEfxRing
+a.free    //remove the channel and play sound straight though (loud)
+b.free</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedMixerChannel.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/redSys/HelpSource/Classes/RedMixerChannel.schelp</a><br>link::Classes/RedMixerChannel::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

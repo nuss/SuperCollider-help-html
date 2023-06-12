@@ -1,0 +1,188 @@
+<!doctype html><html lang='en'><head><title>TestNodeProxy_Server | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'TestNodeProxy_Server';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>TestNodeProxy_Server:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-setUp'>setUp</a> </li>
+<li class='toc3'><a href='#-tearDown'>tearDown</a> </li>
+<li class='toc3'><a href='#-test_clear_fadeTime'>test_clear_fadeTime</a> </li>
+<li class='toc3'><a href='#-test_control_fade'>test_control_fade</a> </li>
+<li class='toc3'><a href='#-test_loaded_after_quit'>test_loaded_after_quit</a> </li>
+<li class='toc3'><a href='#-test_rebuild'>test_rebuild</a> </li>
+<li class='toc3'><a href='#-test_rebuild_after_quit'>test_rebuild_after_quit</a> </li>
+<li class='toc3'><a href='#-test_rebuild_loaded'>test_rebuild_loaded</a> </li>
+<li class='toc3'><a href='#-test_reshaping_elastic_numChannels_contraction'>test_reshaping_elastic_numChannels_contraction</a> </li>
+<li class='toc3'><a href='#-test_reshaping_elastic_numChannels_expansion'>test_reshaping_elastic_numChannels_expansion</a> </li>
+<li class='toc3'><a href='#-test_reshaping_expanding_numChannels_contraction'>test_reshaping_expanding_numChannels_contraction</a> </li>
+<li class='toc3'><a href='#-test_reshaping_expanding_numChannels_expansion'>test_reshaping_expanding_numChannels_expansion</a> </li>
+<li class='toc3'><a href='#-test_reshaping_freeOldBus_after_fadeTime'>test_reshaping_freeOldBus_after_fadeTime</a> </li>
+<li class='toc3'><a href='#-test_reshaping_freeOldBus_after_fadeTime_quant'>test_reshaping_freeOldBus_after_fadeTime_quant</a> </li>
+<li class='toc3'><a href='#-test_reshaping_nil_numChannels_contraction'>test_reshaping_nil_numChannels_contraction</a> </li>
+<li class='toc3'><a href='#-test_reshaping_nil_numChannels_expansion'>test_reshaping_nil_numChannels_expansion</a> </li>
+<li class='toc3'><a href='#-test_schedAfterFade_afterQuant'>test_schedAfterFade_afterQuant</a> </li>
+<li class='toc3'><a href='#-test_schedAfterFade_cmdPeriod'>test_schedAfterFade_cmdPeriod</a> </li>
+<li class='toc3'><a href='#-test_schedAfterFade_cmdPeriod_removed'>test_schedAfterFade_cmdPeriod_removed</a> </li>
+<li class='toc3'><a href='#-test_schedAfterFade_notBeforeQuant'>test_schedAfterFade_notBeforeQuant</a> </li>
+<li class='toc3'><a href='#-test_send_after_quit'>test_send_after_quit</a> </li>
+<li class='toc3'><a href='#-test_send_isPlaying'>test_send_isPlaying</a> </li>
+<li class='toc3'><a href='#-test_send_loaded'>test_send_loaded</a> </li>
+<li class='toc3'><a href='#-test_send_synthDef_rebuild'>test_send_synthDef_rebuild</a> </li>
+<li class='toc3'><a href='#-test_stop_object_should_cancel_old_bundle'>test_stop_object_should_cancel_old_bundle</a> </li>
+<li class='toc3'><a href='#-test_synthDefControl_build'>test_synthDefControl_build</a> </li>
+<li class='toc3'><a href='#-test_synthDef_isReleased_afterFree'>test_synthDef_isReleased_afterFree</a> </li>
+</ul></ul><li class='toc1'><a href='#Help%20template'>Help template</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Undocumented classes'>Undocumented classes</a></span>
+</div><h1>TestNodeProxy_Server<span id='superclasses'> : <a href="../Classes/UnitTest.html">UnitTest</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>(Undocumented class)</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/Sources/supercollider/testsuite/classlibrary/TestNodeProxy_Server.sc' title='/home/stefan/Sources/supercollider/testsuite/classlibrary/TestNodeProxy_Server.sc'>TestNodeProxy_Server.sc</a></div></div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This class is missing documentation.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setUp' href='./../Overviews/Methods.html#setUp'>setUp</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-tearDown' href='./../Overviews/Methods.html#tearDown'>tearDown</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_clear_fadeTime' href='./../Overviews/Methods.html#test_clear_fadeTime'>test_clear_fadeTime</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_control_fade' href='./../Overviews/Methods.html#test_control_fade'>test_control_fade</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_loaded_after_quit' href='./../Overviews/Methods.html#test_loaded_after_quit'>test_loaded_after_quit</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_rebuild' href='./../Overviews/Methods.html#test_rebuild'>test_rebuild</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_rebuild_after_quit' href='./../Overviews/Methods.html#test_rebuild_after_quit'>test_rebuild_after_quit</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_rebuild_loaded' href='./../Overviews/Methods.html#test_rebuild_loaded'>test_rebuild_loaded</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_reshaping_elastic_numChannels_contraction' href='./../Overviews/Methods.html#test_reshaping_elastic_numChannels_contraction'>test_reshaping_elastic_numChannels_contraction</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_reshaping_elastic_numChannels_expansion' href='./../Overviews/Methods.html#test_reshaping_elastic_numChannels_expansion'>test_reshaping_elastic_numChannels_expansion</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_reshaping_expanding_numChannels_contraction' href='./../Overviews/Methods.html#test_reshaping_expanding_numChannels_contraction'>test_reshaping_expanding_numChannels_contraction</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_reshaping_expanding_numChannels_expansion' href='./../Overviews/Methods.html#test_reshaping_expanding_numChannels_expansion'>test_reshaping_expanding_numChannels_expansion</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_reshaping_freeOldBus_after_fadeTime' href='./../Overviews/Methods.html#test_reshaping_freeOldBus_after_fadeTime'>test_reshaping_freeOldBus_after_fadeTime</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_reshaping_freeOldBus_after_fadeTime_quant' href='./../Overviews/Methods.html#test_reshaping_freeOldBus_after_fadeTime_quant'>test_reshaping_freeOldBus_after_fadeTime_quant</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_reshaping_nil_numChannels_contraction' href='./../Overviews/Methods.html#test_reshaping_nil_numChannels_contraction'>test_reshaping_nil_numChannels_contraction</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_reshaping_nil_numChannels_expansion' href='./../Overviews/Methods.html#test_reshaping_nil_numChannels_expansion'>test_reshaping_nil_numChannels_expansion</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_schedAfterFade_afterQuant' href='./../Overviews/Methods.html#test_schedAfterFade_afterQuant'>test_schedAfterFade_afterQuant</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_schedAfterFade_cmdPeriod' href='./../Overviews/Methods.html#test_schedAfterFade_cmdPeriod'>test_schedAfterFade_cmdPeriod</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_schedAfterFade_cmdPeriod_removed' href='./../Overviews/Methods.html#test_schedAfterFade_cmdPeriod_removed'>test_schedAfterFade_cmdPeriod_removed</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_schedAfterFade_notBeforeQuant' href='./../Overviews/Methods.html#test_schedAfterFade_notBeforeQuant'>test_schedAfterFade_notBeforeQuant</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_send_after_quit' href='./../Overviews/Methods.html#test_send_after_quit'>test_send_after_quit</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_send_isPlaying' href='./../Overviews/Methods.html#test_send_isPlaying'>test_send_isPlaying</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_send_loaded' href='./../Overviews/Methods.html#test_send_loaded'>test_send_loaded</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_send_synthDef_rebuild' href='./../Overviews/Methods.html#test_send_synthDef_rebuild'>test_send_synthDef_rebuild</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_stop_object_should_cancel_old_bundle' href='./../Overviews/Methods.html#test_stop_object_should_cancel_old_bundle'>test_stop_object_should_cancel_old_bundle</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_synthDefControl_build' href='./../Overviews/Methods.html#test_synthDefControl_build'>test_synthDefControl_build</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-test_synthDef_isReleased_afterFree' href='./../Overviews/Methods.html#test_synthDef_isReleased_afterFree'>test_synthDef_isReleased_afterFree</a></h3>
+<h2><a class='anchor' name='Help%20template'>Help template</a></h2>
+
+<p>Copy and paste the text below and save to HelpSource/Classes/TestNodeProxy_Server.schelp<textarea class='editor'>TITLE:: TestNodeProxy_Server
+summary:: _short_description_here_
+categories:: Undocumented classes
+related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff
+
+DESCRIPTION::
+_put_long_description_here_
+
+
+First code examples: 
+
+code::
+_some_example_code_
+::
+
+CLASSMETHODS::
+
+
+INSTANCEMETHODS::
+
+METHOD:: setUp
+
+METHOD:: test_reshaping_freeOldBus_after_fadeTime_quant
+
+METHOD:: test_reshaping_nil_numChannels_expansion
+
+METHOD:: test_reshaping_expanding_numChannels_contraction
+
+METHOD:: test_reshaping_elastic_numChannels_expansion
+
+METHOD:: test_stop_object_should_cancel_old_bundle
+
+METHOD:: test_reshaping_elastic_numChannels_contraction
+
+METHOD:: test_rebuild_loaded
+
+METHOD:: test_reshaping_expanding_numChannels_expansion
+
+METHOD:: test_send_after_quit
+
+METHOD:: test_synthDefControl_build
+
+METHOD:: test_send_loaded
+
+METHOD:: test_control_fade
+
+METHOD:: test_reshaping_freeOldBus_after_fadeTime
+
+METHOD:: test_schedAfterFade_afterQuant
+
+METHOD:: test_synthDef_isReleased_afterFree
+
+METHOD:: test_schedAfterFade_notBeforeQuant
+
+METHOD:: test_schedAfterFade_cmdPeriod
+
+METHOD:: test_clear_fadeTime
+
+METHOD:: test_reshaping_nil_numChannels_contraction
+
+METHOD:: test_schedAfterFade_cmdPeriod_removed
+
+METHOD:: test_rebuild_after_quit
+
+METHOD:: test_send_isPlaying
+
+METHOD:: tearDown
+
+METHOD:: test_rebuild
+
+METHOD:: test_send_synthDef_rebuild
+
+METHOD:: test_loaded_after_quit
+
+
+EXAMPLES::
+
+code::
+_some_example_code_
+::
+</textarea>
+<div class='doclink'>link::Classes/TestNodeProxy_Server::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

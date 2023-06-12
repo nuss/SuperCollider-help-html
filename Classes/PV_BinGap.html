@@ -1,0 +1,128 @@
+<!doctype html><html lang='en'><head><title>PV_BinGap | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'PV_BinGap';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>PV_BinGap:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>PV pseudo ugens'>PV pseudo ugens</a></span>
+</div><h1>PV_BinGap<span id='superclasses'> : <a href="../Classes/PV_ChainUGen.html">PV_ChainUGen</a> : <a href="../Classes/WidthFirstUGen.html">WidthFirstUGen</a> : <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>pseudo ugen keeping the complement of a spectral range</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/FFT/PV_UGens.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/FFT/PV_UGens.sc'>PV_UGens.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Classes/PV_BinRange.html">PV_BinRange</a>, <a href="./../Guides/FFT-Overview.html">FFT Overview</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Based on <a href="./../Classes/PV_BrickWall.html">PV_BrickWall</a>, but instead of wipe parameters it takes two bin numbers.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>PV_BinGap.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>buffer</span>, <span class='argstr'>loBin</span>, <span class='argstr'>hiBin</span>)</h3>
+<div class='method'>
+<p>Creates a new PV_BinGap object.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>buffer<td class='argumentdesc'>
+<p>FFT buffer.<tr><td class='argumentname'>loBin<td class='argumentdesc'>
+<p>low bin index of excluded range.<tr><td class='argumentname'>hiBin<td class='argumentdesc'>
+<p>high bin index of excluded range.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>(
+s = Server.local;
+Server.default = s;
+s.boot;
+)
+
+
+// frequencies are rounded to nearest bins
+
+(
+f = { |loFreq = 800, hiFreq = 1500, fundFreq = 50, amp = 0.1|
+    var bufSize = 1024, binRange, loBin, hiBin, sig, chain;
+
+    sig = Saw.ar(fundFreq, amp);
+
+    binRange = s.sampleRate / bufSize;
+    loBin = (loFreq / binRange).round;
+    hiBin = (hiFreq / binRange).round;
+
+    chain = FFT(LocalBuf(bufSize), sig);
+    chain = PV_BinGap(chain, loBin, hiBin);
+    IFFT(chain) ! 2;
+};
+
+x = f.play;
+
+s.freqscope;
+)
+
+x.set(\loFreq, 300);
+
+x.set(\hiFreq, 3000);
+
+x.release;
+
+
+
+// for multichannel expansion an array of mono buffers must be provided
+
+(
+g = { |loFreq = 800, hiFreq = #[1500, 1500] fundFreq = 50, amp = 0.1|
+    var bufSize = 1024, binRange, loBin, hiBin, sig, chain;
+
+    sig = Saw.ar(fundFreq, amp);
+
+    binRange = s.sampleRate / bufSize;
+    loBin = (loFreq / binRange).round;
+    hiBin = (hiFreq / binRange).round;
+
+    chain = FFT({ LocalBuf(bufSize) } ! 2, sig);
+    chain = PV_BinGap(chain, loBin, hiBin);
+    IFFT(chain);
+};
+
+x = g.play;
+
+s.freqscope;
+)
+
+x.set(\loFreq, 300);
+
+x.set(\hiFreq, [1200, 1200]);
+
+x.set(\hiFreq, [800, 2000]);
+
+x.set(\hiFreq, [2000, 800]);
+
+x.release;</textarea>
+
+<p> <div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PV_BinGap.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PV_BinGap.schelp</a><br>link::Classes/PV_BinGap::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

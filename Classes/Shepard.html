@@ -1,0 +1,148 @@
+<!doctype html><html lang='en'><head><title>Shepard | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Shepard';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Shepard:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*kr'>kr</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#UGens'>UGens</a></span>
+</div><h1>Shepard<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>create interval and amplitude values for Shepard pitch illusions</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/UGens/Shepard.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/UGens/Shepard.sc'>Shepard.sc</a></div><div id='subclasses'>Subclasses: <a href="../Classes/ShepardG.html">ShepardG</a></div>
+<div id='related'>See also: <a href="./../Classes/ShepardG.html">ShepardG</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>The Shepard effect is the illusion of freely changing the chroma of a tone (the octave-independent notion of its pitch; in equal temperament, also called the pitch class), while keeping its perceived tone height apparently constant, or even moving it in the opposite direction. It is named after Roger Shepard, who first presented a discrete pitch scale with this effect - see <a href="http://en.wikipedia.org/wiki/Shepard_tone.">http://en.wikipedia.org/wiki/Shepard_tone.</a>Jean-Claude Risset famously created a glissando variant of this scale which he used in several pieces.
+<p>This effect relies on the perceptual fusion of pitches at octave distances into a single pitch of rather ambiguous octave 'height', and manipulating the amplitudes of the individual components such that the overall balance of the different octaves creates the desired average pitch height perception.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>Shepard.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>num: 5</span>, <span class='argstr'>interval: 12</span>, <span class='argstr'>shift: 0</span>, <span class='argstr'>ampExp: 2</span>, <span class='argstr'>masterPhase: 0</span>)</h3>
+<div class='method'>
+<p>create values for the intervals to be used in Shepard-based sounds, along with the corresponding amplitude levels for the sound's components.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>num<td class='argumentdesc'>
+<p>the number of interval and amplitude controls to generate. Default value is 5.<tr><td class='argumentname'>interval<td class='argumentdesc'>
+<p>the interval between two adjacent interval controls. Default value is 12 for pitch fusion at the octave interval, as in the classic Shepard experiment. (Other values will create less fusion, but may be interesting to experiment with.)<tr><td class='argumentname'>shift<td class='argumentdesc'>
+<p>the amount by which pitch height is shifted up or down without changing pitch class. Can be used to glide up in octaves without apparent glissando. Best understood by trying.<tr><td class='argumentname'>ampExp<td class='argumentdesc'>
+<p>the amplitude function is a cosine function, with an exponent to change window width.<textarea class='editor'>// different ampExp values: exponents of 1, 2, and 4
+(0, 0.01 .. 2pi).collect { |x| 1 - cos(x) ** 1 }.plot
+(0, 0.01 .. 2pi).collect { |x| 1 - cos(x) ** 2 }.plot
+(0, 0.01 .. 2pi).collect { |x| 1 - cos(x) ** 4 }.plot</textarea>
+<tr><td class='argumentname'>masterPhase<td class='argumentdesc'>
+<p>for which position in the rotating loop to create values.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>interval and amplitude values based on Shepard formula.<textarea class='editor'>// intervals and volume levels for a static Shepard-like sound
+Shepard(5, 12, 0).round(0.001).postln;
+Shepard(5, 12, 0).round(0.001).postln;
+
+// a static shepard sound
+(
+{     var intvs, amps;
+    #intvs, amps = Shepard(5, 12, 0);
+    (SinOsc.ar((intvs + 60).midicps) * amps).mean
+}.scope;
+)
+
+// changing masterphase: going from full left to full right moves thru the cycle num times.
+(
+{     var intvs, amps;
+    #intvs, amps = Shepard(5, 12, 0, masterPhase: MouseX.kr(0, 1));
+    (SinOsc.ar((intvs + 60).midicps) * amps).mean
+}.scope;
+)</textarea>
+</div></div><h3 class='method-code'><span class='method-prefix'>Shepard.</span><a class='method-name' name='*kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>num: 5</span>, <span class='argstr'>slope: 0.02</span>, <span class='argstr'>interval: 12</span>, <span class='argstr'>shift: 0</span>, <span class='argstr'>ampExp: 2</span>)</h3>
+<div class='method'>
+<p> create controls for the intervals to be used in Shepard-driven sounds,  along with the corresponding amplitude controls for the sound's layers.  num, interval, shift, ampExp work as in new;<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>num<td class='argumentdesc'>
+<p>as above, the number of interval and amplitude controls. Default is 5.<tr><td class='argumentname'>slope<td class='argumentdesc'>
+<p>the slope by which the Shepard controls rise or fall. E.g. 0 is constant pitch class; 0.1 means once thru the cycle of &lt;num&gt; values in 10 seconds, rising; -0.2 is once thru the cycle of &lt;num&gt; controls falling in 5 seconds. Default value is 0.02.<tr><td class='argumentname'>interval<td class='argumentdesc'>
+<p>as above, the interval between two adjacent interval controls. Default is 12.<tr><td class='argumentname'>shift<td class='argumentdesc'>
+<p>as above, the amount by which pitch height is shifted up or down without changing pitch class.<tr><td class='argumentname'>ampExp<td class='argumentdesc'>
+<p>the amplitude function is a cosine function, with an exponent to change window width.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>Array of [num, num] kr signals for interval and amplitude values.</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>// forever rising pitch
+(
+{     var intervals, amps; #intervals, amps = Shepard.kr;
+    (SinOsc.ar( (intervals + 60).midicps) * amps).sum * 0.2 ! 2
+}.scope;
+)
+
+// control slope (rising or falling pitch tendency)
+// and pitch height independently by mouse x, y
+(
+{
+    var slope =  MouseX.kr(-0.1, 0.1);
+    var shift = MouseY.kr(2, -2);
+
+    var intvs, amps;
+    #intvs, amps = Shepard.kr(5, slope, 12, shift);
+    SinOsc.ar( (intvs + 60).midicps, 0, amps).sum * 0.2 ! 2
+}.scope;
+)
+
+// control chroma from left to right,
+// and pitch height independently by mouse x, y
+(
+{
+    var chroma =  MouseX.kr(-6, 6);
+    var shift = MouseY.kr(2, -2) - (chroma / 12);
+
+    var intvs, amps;
+    #intvs, amps = Shepard(5, 12, shift);
+    SinOsc.ar( (intvs + 60 + chroma).midicps, 0, amps).sum * 0.2 ! 2
+}.scope;
+)
+
+// try it with a drum loop - (Hello Dan ;-)
+b = Buffer.read(s, "/sounds/adc_sounds/breaks/FUNKYDRUM.wav");
+(
+{
+    var slope =  MouseX.kr(-0.1, 0.1);
+    var shift = MouseY.kr(2, -2);
+
+    var intvs, amps;
+    #intvs, amps = Shepard.kr(5, slope, 12, shift);
+    (PlayBuf.ar(b.numChannels, b, intvs.midiratio, loop: 1) * amps).sum * 0.2 ! 2
+}.scope;
+)
+
+// to do - SynthDef and pattern example...</textarea>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/Shepard.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/Shepard.schelp</a><br>link::Classes/Shepard::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

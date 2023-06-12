@@ -1,0 +1,374 @@
+<!doctype html><html lang='en'><head><title>MFunc | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'MFunc';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>MFunc:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-activeNames'>activeNames</a> </li>
+<li class='toc3'><a href='#-mode'>mode</a> </li>
+<li class='toc3'><a href='#-modes'>modes</a> </li>
+<li class='toc3'><a href='#-modeLists'>modeLists</a> </li>
+<li class='toc3'><a href='#-funcDict'>funcDict</a> </li>
+<li class='toc3'><a href='#-orderedNames'>orderedNames</a> </li>
+<li class='toc3'><a href='#-activeFuncs'>activeFuncs</a> </li>
+<li class='toc3'><a href='#-value'>value</a> </li>
+<li class='toc3'><a href='#-enable'>enable</a>  <a href='#-disable'>disable</a> </li>
+<li class='toc3'><a href='#-add'>add</a> </li>
+<li class='toc3'><a href='#-remove'>remove</a> </li>
+<li class='toc3'><a href='#-addFirst'>addFirst</a>  <a href='#-addLast'>addLast</a>  <a href='#-replace'>replace</a> </li>
+<li class='toc3'><a href='#-addBefore'>addBefore</a>  <a href='#-addAfter'>addAfter</a> </li>
+<li class='toc3'><a href='#-useTry'>useTry</a> </li>
+<li class='toc3'><a href='#-tryValue'>tryValue</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-at'>at</a> </li>
+<li class='toc3'><a href='#-doOnServerTree'>doOnServerTree</a> </li>
+<li class='toc3'><a href='#-makeExclusiveModes'>makeExclusiveModes</a> </li>
+<li class='toc3'><a href='#-tryValueAt'>tryValueAt</a> </li>
+<li class='toc3'><a href='#-valueAt'>valueAt</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Modality'>Modality</a></span>
+</div><h1>MFunc<span id='superclasses'> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>MFunc is a proxy for multiple, modal functions.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/MFunc.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/Classes/MFunc.sc'>MFunc.sc</a></div><div id='subclasses'>Subclasses: <a href="../Classes/MFdef.html">MFdef</a></div>
+<div id='related'>See also: <a href="./../Classes/MFdef.html">MFdef</a>, <a href="./../Classes/JITView.html">JITView</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>MFunc is a proxy for multiple, modal functions which can replace a single function with easily configurable flexible behavior.
+<p>It contains a dictionary of named functions (i.e. a behavior repertoire), an ordered list of the function names, lists of combinations of functions, and lists of the currently active functions and names.
+<p>The MFunc's behavior can be reconfigured at any time:<ul>
+<li>functions can be added to or removed from the repertoire<li>known functions can be enabled and disabled individually by name<li>combinations of functions can be stored as named modes, both<ul>
+<li>additively/polyphonically,  i.e. the list of function names is activated in addition to any active functions,<li>or exclusively/modally,  i.e. a mode knows which other functions to turn off when activated.</ul>
+</ul>
+
+<p>MFunc is intended for use in modal interfaces, so for example, when a single slider has an MFunc as its action, it can have functions that<ul>
+<li>record control values for looping,<li>log control values in a file,<li>send control values to any number of destinations, in parallel or exclusively<li>send control values by network<li>or whatever other behavior is desired.</ul>
+
+<p>This is intended to replace complicated cascades of if-statements (which easily accumulate when coding modal user interface functions). Instead of setting flags for modes and reading them in control structure logic, one can use MFuncs to switch between modes by a. enabling the functions desired in the new mode, b. disabling the ones that should be off in the new mode, and c. keeping all other functions independent by leaving them untouched.<textarea class='editor'>// first a real example with a modal slider /////////////
+
+// make an empty MFunc
+m = MFunc();
+
+// slider uses the MFunc:
+e = EZSlider(nil, 300@30, "MFunc test", nil, m, 0.5);
+
+// basic tests posts slider values
+m.add(\test, { |sl| "test: %\n".postf(sl.value) });
+
+// now slider also sets Ndef(\a), using a global spec
+Ndef(\a, { |freq = 200| LFPulse.ar(freq * [1, 0.1, 0.01]).product * 0.1 }).play;
+m.add(\set_a, { |sl| Ndef(\a).set(\freq, \freq.asSpec.map(sl.value)) });
+
+// stop the posting, keep \set_a
+m.disable(\test);
+
+// slider also sets Ndef(\b)
+Ndef(\b, { |freq = 200| SinOsc.ar(freq * [1, 0.1, 0.01]).product * 0.3 }).play(1);
+// use setUni to let Ndef(\b) decide on mapping
+m.add(\set_b, { |sl| Ndef(\b).setUni(\freq, sl.value) });
+
+// change Ndef(\b)'s spec for freq - this requires JITLibExtensions
+Ndef(\b).addSpec(\freq, [200, 2000, \exp]);
+
+// turn off setting a
+m.disable(\set_a);
+
+// slider now also sets Ndef(\c)
+Ndef(\c, { |freq = 200| LFSaw.ar(freq * [1, 0.1, 0.01]).product * 0.1 }).play(0);
+m.addFirst(\set_c, { |sl| Ndef(\c).setUni(\freq, sl.value) });
+
+// range is reversed here
+Ndef(\c).addSpec(\freq, [2000, 20, \exp]);
+
+// slider movement could be recorded like this
+// (see KtlLoop quark for actual recording)
+m.addFirst(\record, { |sl| "fake rec/log: ['test', %]\n".postf(sl.value.round(0.001)) });
+// or could be sent via network
+m.addFirst(\netSend, { |sl| "fake netSend/broadcast: [\sl1, %]\n".postf(sl.value.round(0.001)) });
+
+// prepare for modal use with modeLists:
+
+// define the three set functions as a modeList.
+// this can be used for mutually turning the others off,
+m.modeLists.put(\abc, [\set_a, \set_b, \set_c]);
+
+// like this by hand:
+m.modes.put(\a_only, (on: \set_a, off: \abc));
+m.modes.put(\b_only, (on: \set_b, off: \abc));
+m.modes.put(\c_only, (on: \set_c, off: \abc));
+
+// or use the shorthand method for it:
+m.makeExclusiveModes(\abc_exc, [\set_a, \set_b, \set_c]);
+
+
+// prepare a polyphonic mode too, where a b and c are controlled
+m.modes.put(\abc, (on: \abc_exc));
+
+// now switch betwee single control destinations ...
+m.mode_(\a_only);
+m.mode_(\b_only);
+m.mode_(\c_only);
+
+// ... and polyphonic control for all three
+m.mode_(\abc);
+
+
+For more discussion of details, removing/adding variants etc. see examples below!</textarea>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>MFunc.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>pairs</span>, <span class='argstr'>modes</span>, <span class='argstr'>initMode</span>, <span class='argstr'>modeLists</span>)</h3>
+<div class='method'>
+<p>make a new MFunc, like this:<textarea class='editor'>(
+m = MFunc([
+        \ada, { "ada".postln },
+        \bob, { "bob".postln },
+        \dada, { "dada".postln },
+        \ede, { "ede".postln }
+    ],
+    modes: (
+        ada: (on: \ada, off: [\bob, \ede]),
+        bob: (on: \bob, off: \triplet)
+    ),
+    initMode: \ada,
+    modeLists: (\triplet: [\ada, \bob, \ede])
+)
+)</textarea>
+</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-activeNames' href='./../Overviews/Methods.html#activeNames'>activeNames</a></h3>
+<div class='method'>
+<p>the names of the currently active funcs</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mode' href='./../Overviews/Methods.html#mode'>mode</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-mode' href='./../Overviews/Methods.html#mode'>mode</a> = <span class='argstr'>name</span></h3>
+<div class='method'>
+<p>get name of the currently active mode, set currently active mode by name.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-modes' href='./../Overviews/Methods.html#modes'>modes</a></h3>
+<div class='method'>
+<p>the available modes</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-modeLists' href='./../Overviews/Methods.html#modeLists'>modeLists</a></h3>
+<div class='method'>
+<p>the modeLists</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-funcDict' href='./../Overviews/Methods.html#funcDict'>funcDict</a></h3>
+<div class='method'>
+<p>the repertoire of all functions</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-orderedNames' href='./../Overviews/Methods.html#orderedNames'>orderedNames</a></h3>
+<div class='method'>
+<p>the ordered names of all available functions</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-activeFuncs' href='./../Overviews/Methods.html#activeFuncs'>activeFuncs</a></h3>
+<div class='method'>
+<p>the currently active functions</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-value' href='./../Overviews/Methods.html#value'>value</a>( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>calls .value on the activeFuncs, returns a list of the return values.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-enable' href='./../Overviews/Methods.html#enable'>enable</a>(<span class='argstr'>names</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-disable' href='./../Overviews/Methods.html#disable'>disable</a>(<span class='argstr'>names</span>)</h3>
+<div class='method'>
+<p>enable and disable functions by name(s)</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-add' href='./../Overviews/Methods.html#add'>add</a>(<span class='argstr'>name</span>, <span class='argstr'>func</span>, <span class='argstr'>active: true</span>, <span class='argstr'>addAction: 'replace'</span>, <span class='argstr'>otherName</span>)</h3>
+<div class='method'>
+<p>add or replace a function by name, optionally relative to another name.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>name by which to store func<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>the func to store<tr><td class='argumentname'>active<td class='argumentdesc'>
+<p>flag whether the func should become active<tr><td class='argumentname'>addAction<td class='argumentdesc'>
+<p>optional addAction, default is \addLast<tr><td class='argumentname'>otherName<td class='argumentdesc'>
+<p>addActions \addBefore, \addAfter need a name relative to which to add.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-remove' href='./../Overviews/Methods.html#remove'>remove</a>(<span class='argstr'>name</span>)</h3>
+<div class='method'>
+<p>fully remove functions by name or names</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addFirst' href='./../Overviews/Methods.html#addFirst'>addFirst</a>(<span class='argstr'>name</span>, <span class='argstr'>func</span>, <span class='argstr'>active: true</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addLast' href='./../Overviews/Methods.html#addLast'>addLast</a>(<span class='argstr'>name</span>, <span class='argstr'>func</span>, <span class='argstr'>active: true</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-replace' href='./../Overviews/Methods.html#replace'>replace</a>(<span class='argstr'>name</span>, <span class='argstr'>func</span>, <span class='argstr'>active: true</span>)</h3>
+<div class='method'>
+<p>short methods indicating where to add or replace</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addBefore' href='./../Overviews/Methods.html#addBefore'>addBefore</a>(<span class='argstr'>name</span>, <span class='argstr'>func</span>, <span class='argstr'>active: true</span>, <span class='argstr'>otherName</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addAfter' href='./../Overviews/Methods.html#addAfter'>addAfter</a>(<span class='argstr'>name</span>, <span class='argstr'>func</span>, <span class='argstr'>active: true</span>, <span class='argstr'>otherName</span>)</h3>
+<div class='method'>
+<p>short methods for adding relative to another name<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>the name for the new func<tr><td class='argumentname'>func<td class='argumentdesc'>
+<p>the new func to add<tr><td class='argumentname'>active<td class='argumentdesc'>
+<p>flag whether active<tr><td class='argumentname'>otherName<td class='argumentdesc'>
+<p>the name relative to which to add</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-useTry' href='./../Overviews/Methods.html#useTry'>useTry</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-useTry' href='./../Overviews/Methods.html#useTry'>useTry</a> = value</h3>
+<div class='method'>
+<p>get and set flag whether to use .tryValue istead of .value</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-tryValue' href='./../Overviews/Methods.html#tryValue'>tryValue</a>( <span class='argstr'>... args</span>)</h3>
+<div class='method'>
+<p>wrap all function evaluations in try { }, so that if one fails, it posts good info, and all later functions in the list will still be evaluated.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>key</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doOnServerTree' href='./../Overviews/Methods.html#doOnServerTree'>doOnServerTree</a>(<span class='argstr'>server</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-makeExclusiveModes' href='./../Overviews/Methods.html#makeExclusiveModes'>makeExclusiveModes</a>(<span class='argstr'>name</span>, <span class='argstr'>modeList</span>, <span class='argstr'>modeNames</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-tryValueAt' href='./../Overviews/Methods.html#tryValueAt'>tryValueAt</a>(<span class='argstr'>keys</span> <span class='argstr'>... args</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-valueAt' href='./../Overviews/Methods.html#valueAt'>valueAt</a>(<span class='argstr'>keys</span> <span class='argstr'>... args</span>)</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>// make an MFunc
+(
+m = MFunc([
+    \ada, { "ada".postln },
+    \bob, { "bob".postln },
+    \dada, { "dada".postln },
+    \ede, { "ede".postln },
+])
+);
+)
+
+// its internals
+m.funcDict;                   // the repertoire
+m.orderedNames;               // the order of evaluation of all funcs
+m.activeNames.postcs;        // currently active names
+m.activeFuncs.postcs;"";    // currently active funcs
+m.modes;                    // modes to select from - see below
+
+// evaluates all activeFuncs,
+// returns a list of return values collected from each active function.
+m.value;
+m.disable(\ada);
+m.value;
+m.enable(\ada);
+m.value;
+
+// useTry mode handles errors nicely:
+// only the broken function fails,
+// but it posts its name and code,
+// and all other functions are still evaluated.
+// It is less efficient than regular mode,
+// but useful for debugging.
+
+// replace a func so that it fails
+m.add(\bob, { \fail.becauseOfError });
+m.value;        // fails with a loud error
+m.tryValue;        // just says what the error is,
+                // and still does the other functions!
+m.useTry;        // flag for useTry mode
+m.useTry = true; // turn useTry mode on ...
+m.value.cs;        // and now .value uses try
+
+
+// add and remove functions, always by name
+m.add(\cicely, { "cicely".postln }); // adds to tail
+m.orderedNames;
+m.value;
+
+m.remove(\ada);
+m.orderedNames;
+m.value;
+
+// adding at existing names keeps the name order
+m.add(\ada, {"ada*ada".postln });
+// bob remains at index 1
+m.add(\bob, {"bob*eve".postln });
+m.value;
+
+
+m.addFirst(\abacus, { "abacus" });
+m.orderedNames;            // the order of evaluation
+m.activeNames.postcs;""; // cuurently active names
+m.activeFuncs.postcs;"";    // cuurently active funcs
+m.value;
+
+m.addAfter(\alaska, { "alaska" }, true, \cicely);
+m.orderedNames;
+m.activeNames;
+m.value;
+
+m.add(\abacus, { "abacus".postln }).orderedNames;
+
+// cant enable missing functions
+m.enable(\cicada);
+
+// USING MODES:
+
+// define a mode to be used :
+m.modes.put(\ada, (on: [\ada], off: [\bob, \dada]))
+
+// mode ada switches off bob and dada,
+// leaves rest untouched
+m.mode_(\ada);
+m.activeNames
+
+// select a combination - all is there by default
+m.mode_(\all);
+m.activeNames;
+
+// bob excludes three others, abacus and cicely are untouched
+m.modes.put(\bobOnly, (on: [\bob], off: [\ada, \dada, \ede]));
+
+//
+m.mode_(\bobOnly);
+m.activeFuncs.postcs;
+m.activeNames;
+m.value;
+
+m.modes[\all];
+m.modes[\all].on; // always the full list
+
+// exclude all others, only keep \cicely
+m.modes.put(\cicelyOnly, (on: [\cicely], off: \all));
+m.mode_(\cicelyOnly);
+m.activeNames;
+m.value;
+
+// define a set of mutually exclusive functions
+m.modeLists.put(\triplet, [\ada, \bob, \dada]);
+// and exclusive modes
+m.modes.put(\ada3, (on: \ada, off: \triplet));
+m.modes.put(\bob3, (on: \bob, off: \triplet));
+m.modes.put(\dada3, (on: \dada, off: \triplet));
+
+// or do the same thing in short:
+
+m.makeExclusiveModes(
+    \triplet, // name of exclusive List
+    [\ada, \bob, \dada],  // names of the funcs
+    [\ada3, \bob3, \dada3]); // names of the modes if different from the funcs
+
+// see which funcs are on in which mode
+
+m.mode_(\all).activeNames;
+m.mode_(\ada3).activeNames;
+m.mode_(\bob3).activeNames;
+m.mode_(\dada3).activeNames;
+
+
+
+///////// MFdef is a named MFunc. /////
+
+(
+MFdef(\m,
+        [
+            \ada, { "ada".postln },
+            \bob, { "bob".postln },
+            \dada, { "dada".postln },
+            \ede, { "ede".postln },
+]);
+)
+
+MFdef(\m) === MFdef(\m);
+MFdef(\m).value;
+
+// can't set an MFdef with new args after its creation for now;
+// maybe this should be supported later?
+MFdef(\m, []);</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/MFunc.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/adclib/HelpSource/Classes/MFunc.schelp</a><br>link::Classes/MFunc::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

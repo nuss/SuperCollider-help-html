@@ -1,0 +1,147 @@
+<!doctype html><html lang='en'><head><title>Fb1_ODEintdef | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Fb1_ODEintdef';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Fb1_ODEintdef:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'><li class='toc2'><a href='#References'>References</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*at'>at</a> </li>
+<li class='toc3'><a href='#*keys'>keys</a> </li>
+<li class='toc3'><a href='#*postAll'>postAll</a> </li>
+<li class='toc3'><a href='#*remove'>remove</a> </li>
+<li class='toc3'><a href='#*reset'>reset</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-name'>name</a> </li>
+<li class='toc3'><a href='#-function'>function</a> </li>
+<li class='toc3'><a href='#-stepDepth'>stepDepth</a> </li>
+<li class='toc3'><a href='#-sizeFactor'>sizeFactor</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#Examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>Nonlinear'>Nonlinear</a></span>
+</div><h1>Fb1_ODEintdef<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>container for ordinary differential equation numeric integrators</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Nonlinear/Fb1_ODEintdef.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Nonlinear/Fb1_ODEintdef.sc'>Fb1_ODEintdef.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Guides/Introduction_to_miSCellaneous.html">Introduction to miSCellaneous</a>, <a href="./../Classes/Fb1.html">Fb1</a>, <a href="./../Classes/GFIS.html">GFIS</a>, <a href="./../Classes/Fb1_ODE.html">Fb1_ODE</a>, <a href="./../Classes/Fb1_ODEdef.html">Fb1_ODEdef</a>, <a href="./../Classes/Fb1_MSD.html">Fb1_MSD</a>, <a href="./../Classes/Fb1_SD.html">Fb1_SD</a>, <a href="./../Classes/Fb1_Lorenz.html">Fb1_Lorenz</a>, <a href="./../Classes/Fb1_Hopf.html">Fb1_Hopf</a>, <a href="./../Classes/Fb1_HopfA.html">Fb1_HopfA</a>, <a href="./../Classes/Fb1_HopfAFDC.html">Fb1_HopfAFDC</a>, <a href="./../Classes/Fb1_VanDerPol.html">Fb1_VanDerPol</a>, <a href="./../Classes/Fb1_Duffing.html">Fb1_Duffing</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>For the optional definition of ODE integration procedures that can then be used with Fb1_ODE. This is an advanced feature, the built-in symplectic procedures should suffice for most use cases. See the source code in Fb1_ODEintdef.sc for the way integrators are defined and <a href="./../Classes/Fb1_ODE.html">Fb1_ODE</a> for general information about Fb1 ODE integrator UGens.
+<p><strong>HISTORY AND CREDITS:</strong> Big credit to David Pirrò from IEM Graz for pointing me to the symplectic integration methods, which are essential for audifying ODEs, as they help to ensure numeric stability in the long run (e.g. to avoid drifts of oscillations that are mathematically expected to be regular). See the chapter on integration in his dissertation <a href="#[2]">[2]</a>, pp 135-146. You might also want check David Pirròs optimized ODE compiler named Henri <a href="#[3]">[3]</a>. Big credit also to Nathaniel Virgo who brought up the buffering strategy used in Fb1, which is Fb1_ODE's working horse.<div class='warning'><span class='warninglabel'>WARNING:</span> Especially with self-defined ODEs the usage of this class is – inherently – highly experimental. Be careful with amplitudes, as always with feedback it can become loud! Sudden blowups might result form the mathematical characteristics of the ODE systems or they might come from parameter changes on which ODEs can react extremely sensitive to, they can also stem from numerical accumulation effects. It is highly recommended to take precautionary measures, e.g. by limiting/distorting operators (tanh, clip, softclip, distort) with the compose option (See <a href="./../Classes/Fb1_ODE.html#Examples%205">Fb1_ODE Examples 5</a>) and/or external limiting and/or using MasterFX from the JITLibExtensions quark.</div><div class='note'><span class='notelabel'>NOTE:</span> Fb1_ODE in its plain form (without <strong>tMul</strong> modulation, use of <strong>compose</strong> etc.) produces audio data as a numerical integration of an ODE initial value problem, defined by Fb1_ODEdef and a numerical procedure, defined by Fb1_ODEintdef. This of course supposes well-defined ODE systems and it should be kept in mind that the Fb1_ODE framework doesn't perform any mathematical checks regarding the principal existence and uniqueness of a solution of a given Fb1_ODEdef.</div><div class='note'><span class='notelabel'>NOTE:</span> The convenience of direct definition of the ODE relation comes with the price of a large number of UGens involved. You might want to allow a higher number of UGens with the server option numWireBufs. For a nice workflow I'd recommended to take reduced blockSizes (e.g. 1, 2, 4, 8, 16) while experimenting as compile time is shorter, but once you have finished the design of a SynthDef it might pay going back to blocksize 32 or 64 for runtime efficiency, especially if many kr UGens are involved.</div>
+<p><a class='anchor' name='[1]'>&nbsp;</a><a class='anchor' name='[2]'>&nbsp;</a><a class='anchor' name='[3]'>&nbsp;</a><h3><a class='anchor' name='References'>References</a></h3>
+<ol>
+<li>Trefethen, Lloyd N.; Birkisson Ásgeir; Driscoll, Tobin A. (2017): Exploring ODEs. SIAM - Society for Industrial and Applied Mathematics. Free download from: <a href="https://people.maths.ox.ac.uk/trefethen/Exploring.pdf">https://people.maths.ox.ac.uk/trefethen/Exploring.pdf</a><li>Pirrò, David (2017). Composing Interactions. Dissertation. Institute of Electronic Music and Acoustics, University of Music and Performing Arts Graz. Free download from: <a href="https://pirro.mur.at/media/pirro_david_composing_interactions_print.pdf">https://pirro.mur.at/media/pirro_david_composing_interactions_print.pdf</a><li><a href="https://git.iem.at/davidpirro/henri">https://git.iem.at/davidpirro/henri</a></ol>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>Fb1_ODEintdef.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>name</span>, <span class='argstr'>function</span>, <span class='argstr'>stepDepth: 1</span>, <span class='argstr'>sizeFactor: 1</span>)</h3>
+<div class='method'>
+<p>Creates a new Fb1_ODEintdef object and stores it in a Dictionary for further usage with Fb1_ODE.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>The name of the integration procedure, expects a Symbol. Default Fb1_ODEintdefs cannot be overwritten.<tr><td class='argumentname'>function<td class='argumentdesc'>
+<p>The implementation of the Function ("stepper") which describes the numeric procedure. It must take the arguments odeDef, t, y, dt and ... args for further ODE args and must return the new integration value(s). For evaluating the ODE function the method Fb1_ODEdef.value is used which performs the evaluation depending on its first argument.<tr><td class='argumentname'>stepDepth<td class='argumentdesc'>
+<p>Integer. Values greater than one are for multi-step procedures. Defaults to 1.<tr><td class='argumentname'>sizeFactor<td class='argumentdesc'>
+<p>Integer. 1 means that the procedure buffers only integration values, 2 means that the differential is buffered too. Defaults to 1. </table></div><h3 class='method-code'><span class='method-prefix'>Fb1_ODEintdef.</span><a class='method-name' name='*at' href='./../Overviews/Methods.html#at'>at</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>Returns the Fb1_ODEintdef instance of the Symbol <strong>key</strong> if it exists.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>Symbol. </table></div><h3 class='method-code'><span class='method-prefix'>Fb1_ODEintdef.</span><a class='method-name' name='*keys' href='./../Overviews/Methods.html#keys'>keys</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>Returns an array of all keys of currently stored Fb1_ODEintdefs.</div><h3 class='method-code'><span class='method-prefix'>Fb1_ODEintdef.</span><a class='method-name' name='*postAll' href='./../Overviews/Methods.html#postAll'>postAll</a></h3>
+<div class='method'>
+<p>Posts all keys of currently stored Fb1_ODEintdefs.</div><h3 class='method-code'><span class='method-prefix'>Fb1_ODEintdef.</span><a class='method-name' name='*remove' href='./../Overviews/Methods.html#remove'>remove</a>(<span class='argstr'>key</span>)</h3>
+<div class='method'>
+<p>Removes the Fb1_ODEintdef of the Symbol <strong>key</strong> from the Dictionary.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>key<td class='argumentdesc'>
+<p>Symbol. </table></div><h3 class='method-code'><span class='method-prefix'>Fb1_ODEintdef.</span><a class='method-name' name='*reset' href='./../Overviews/Methods.html#reset'>reset</a></h3>
+<div class='method'>
+<p>Removes all Fb1_ODEintdefs other than the predefined ones from the Dictionary.</div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
+<div class='method'>
+<p>Getter for the Fb1_ODEintdef's name.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-function' href='./../Overviews/Methods.html#function'>function</a></h3>
+<div class='method'>
+<p>Getter for the Fb1_ODEintdef's function.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-stepDepth' href='./../Overviews/Methods.html#stepDepth'>stepDepth</a></h3>
+<div class='method'>
+<p>Getter for the Fb1_ODEintdef's stepDepth.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sizeFactor' href='./../Overviews/Methods.html#sizeFactor'>sizeFactor</a></h3>
+<div class='method'>
+<p>Getter for the Fb1_ODEintdef's sizeFactor.</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='Examples'>Examples</a></h2>
+<textarea class='editor'>// This shows how the classical 4-step Runge-Kutta is implemented,
+// quite straight it follows its mathematical definition.
+
+// t: old time
+// y: old state (array)
+// dt: integration step
+// size: size of the ODE (not used here, but needs to be there)
+// ... args is for further args of the ODE
+
+// The odeDef argument expects the Fb1_ODEdef object.
+// The evaluation of the ODE function is implemented by odeDef::value.
+// This method takes a first argument i which determines the kind of evaluation:
+// For i == nil it returns the evaluation value(s) as Array,
+// for a number it only returns the ith component.
+// The distinction is necessary as the symplectic procedures refer to
+// the single components of the ODE system.
+
+// There exist also symplectic Runge-Kutta procedures which I didn't test so far.
+// they would probably also need that option.
+
+Fb1_ODEintdef(\rk4,
+    { |odeDef, t, y, dt, size ... args|
+        var k1 = odeDef.(nil, t, y, *args);
+        var k2 = odeDef.(nil, dt * 0.5 + t, k1 * dt * 0.5 + y, *args);
+        var k3 = odeDef.(nil, dt * 0.5 + t, k2 * dt * 0.5 + y, *args);
+        var k4 = odeDef.(nil, dt + t, k3 * dt + y, *args);
+        ((k2 + k3) * 2 + k1 + k4) * dt / 6 + y
+    }, 1, 1);
+
+
+// The same procedure as '_d' variant which stores the differential
+// The argument y is now passed an array of doubled size with the
+// last differential values in the second half of it.
+// Finally the new differential value is calculated and appended to the integration.
+
+Fb1_ODEintdef(\rk4_d,
+    { |odeDef, t, y, dt, size ... args|
+        var k1, k2, k3, k4, yy, ff, yNew, fNew;
+        yy = y[0..size-1];
+        ff = y[size..2*size-1];
+        k1 = ff;
+        k2 = odeDef.(nil, dt * 0.5 + t, k1 * dt * 0.5 + yy, *args);
+        k3 = odeDef.(nil, dt * 0.5 + t, k2 * dt * 0.5 + yy, *args);
+        k4 = odeDef.(nil, dt + t, k3 * dt + yy, *args);
+        yNew = ((k2 + k3) * 2 + k1 + k4) * dt / 6 + yy;
+        fNew = odeDef.(nil, t + dt, yNew, *args);
+        yNew ++ fNew
+    }, 1, 2);</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/Fb1_ODEintdef.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/Fb1_ODEintdef.schelp</a><br>link::Classes/Fb1_ODEintdef::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,0 +1,177 @@
+<!doctype html><html lang='en'><head><title>Fb1_Duffing | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'Fb1_Duffing';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>Fb1_Duffing:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'><li class='toc2'><a href='#References'>References</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*ar'>ar</a> </li>
+<li class='toc3'><a href='#*kr'>kr</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#Examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>Nonlinear'>Nonlinear</a></span>
+</div><h1>Fb1_Duffing<span id='superclasses'> : <a href="../Classes/UGen.html">UGen</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Duffing pseudo ugen</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Nonlinear/Fb1_ODE.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Nonlinear/Fb1_ODE.sc'>Fb1_ODE.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Guides/Introduction_to_miSCellaneous.html">Introduction to miSCellaneous</a>, <a href="./../Classes/Fb1.html">Fb1</a>, <a href="./../Classes/GFIS.html">GFIS</a>, <a href="./../Classes/Fb1_ODE.html">Fb1_ODE</a>, <a href="./../Classes/Fb1_ODEdef.html">Fb1_ODEdef</a>, <a href="./../Classes/Fb1_ODEintdef.html">Fb1_ODEintdef</a>, <a href="./../Classes/Fb1_MSD.html">Fb1_MSD</a>, <a href="./../Classes/Fb1_SD.html">Fb1_SD</a>, <a href="./../Classes/Fb1_Lorenz.html">Fb1_Lorenz</a>, <a href="./../Classes/Fb1_Hopf.html">Fb1_Hopf</a>, <a href="./../Classes/Fb1_HopfA.html">Fb1_HopfA</a>, <a href="./../Classes/Fb1_HopfAFDC.html">Fb1_HopfAFDC</a>, <a href="./../Classes/Fb1_VanDerPol.html">Fb1_VanDerPol</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Fb1_ODE wrapper for the Duffing ODE system with external f:
+<p>y'(t) = w(t)
+<p>w'(t) = f(t) + (gamma * cos(omega * t)) - (delta * w(t)) - (beta * y(t)^3) - (alpha * y(t)) 
+<p>coming from the 2nd order equation
+<p>y''(t) + (delta * y'(t)) + (alpha * y(t)) + (beta * y(t)^3) = (gamma * cos(omega * t)) + f(t)
+<p>It returns a 2-channel signal. See <a href="./../Classes/Fb1_ODE.html">Fb1_ODE</a> for general information about Fb1 ODE integrator UGens. 
+<p><strong>HISTORY AND CREDITS:</strong> Big credit to David Pirrò from IEM Graz for pointing me to the symplectic integration methods, which are essential for audifying ODEs, as they help to ensure numeric stability in the long run (e.g. to avoid drifts of oscillations that are mathematically expected to be regular). See the chapter on integration in his dissertation <a href="#[2]">[2]</a>, pp 135-146. You might also want check David Pirròs optimized ODE compiler named Henri <a href="#[3]">[3]</a>. Big credit also to Nathaniel Virgo who brought up the buffering strategy used in Fb1, which is Fb1_ODE's working horse.<div class='warning'><span class='warninglabel'>WARNING:</span> Especially with self-defined ODEs the usage of this class is – inherently – highly experimental. Be careful with amplitudes, as always with feedback it can become loud! Sudden blowups might result form the mathematical characteristics of the ODE systems or they might come from parameter changes on which ODEs can react extremely sensitive to, they can also stem from numerical accumulation effects. It is highly recommended to take precautionary measures, e.g. by limiting/distorting operators (tanh, clip, softclip, distort) with the compose option (See <a href="./../Classes/Fb1_ODE.html#Examples%205">Fb1_ODE Examples 5</a>) and/or external limiting and/or using MasterFX from the JITLibExtensions quark.</div><div class='note'><span class='notelabel'>NOTE:</span> The convenience of direct definition of the ODE relation comes with the price of a large number of UGens involved. You might want to allow a higher number of UGens with the server option numWireBufs. For a nice workflow I'd recommended to take reduced blockSizes (e.g. 1, 2, 4, 8, 16) while experimenting as compile time is shorter, but once you have finished the design of a SynthDef it might pay going back to blocksize 32 or 64 for runtime efficiency, especially if many kr UGens are involved.</div>
+<p><a class='anchor' name='[1]'>&nbsp;</a><a class='anchor' name='[2]'>&nbsp;</a><a class='anchor' name='[3]'>&nbsp;</a><h3><a class='anchor' name='References'>References</a></h3>
+<ol>
+<li>Trefethen, Lloyd N.; Birkisson Ásgeir; Driscoll, Tobin A. (2017): Exploring ODEs. SIAM - Society for Industrial and Applied Mathematics. Free download from: <a href="https://people.maths.ox.ac.uk/trefethen/Exploring.pdf">https://people.maths.ox.ac.uk/trefethen/Exploring.pdf</a><li>Pirrò, David (2017). Composing Interactions. Dissertation. Institute of Electronic Music and Acoustics, University of Music and Performing Arts Graz. Free download from: <a href="https://pirro.mur.at/media/pirro_david_composing_interactions_print.pdf">https://pirro.mur.at/media/pirro_david_composing_interactions_print.pdf</a><li><a href="https://git.iem.at/davidpirro/henri">https://git.iem.at/davidpirro/henri</a></ol>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>Fb1_Duffing.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>f: 0</span>, <span class='argstr'>alpha: 0</span>, <span class='argstr'>beta: 1</span>, <span class='argstr'>gamma: 1</span>, <span class='argstr'>delta: 1</span>, <span class='argstr'>omega: 1</span>, <span class='argstr'>tMul: 1</span>, <span class='argstr'>t0: 0</span>, <span class='argstr'>y0: [ 1, 0 ]</span>, <span class='argstr'>intType: 'sym2'</span>, <span class='argstr'>compose</span>, <span class='argstr'>composeArIn</span>, <span class='argstr'>dt0</span>, <span class='argstr'>argList0</span>, <span class='argstr'>init_intType: 'sym8'</span>, <span class='argstr'>withDiffChannels: false</span>, <span class='argstr'>withTimeChannel: false</span>, <span class='argstr'>blockSize</span>, <span class='argstr'>graphOrderType: 1</span>, <span class='argstr'>leakDC: true</span>, <span class='argstr'>leakCoef: 0.995</span>)</h3>
+<div class='method'>
+<p>Creates a new Fb1_Duffing ar object.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>f<td class='argumentdesc'>
+<p>Defaults to 0.<tr><td class='argumentname'>alpha<td class='argumentdesc'>
+<p>Defaults to 0.<tr><td class='argumentname'>beta<td class='argumentdesc'>
+<p>Defaults to 1.<tr><td class='argumentname'>gamma<td class='argumentdesc'>
+<p>Defaults to 1.<tr><td class='argumentname'>delta<td class='argumentdesc'>
+<p>Defaults to 1.<tr><td class='argumentname'>omega<td class='argumentdesc'>
+<p>Defaults to 1.<tr><td class='argumentname'>tMul<td class='argumentdesc'>
+<p>Time multiplier, which determines velocity of proceeding in the dynamic system. The default value 1 means that the step delta of time equals 1 / sample duration. For getting audible oscillations you might, depending on the ODE definition, have to pass much higher values. Can also be a kr / ar UGen and might also be negative.<tr><td class='argumentname'>t0<td class='argumentdesc'>
+<p>Initial time. Expects Number. Defaults to 0.<tr><td class='argumentname'>y0<td class='argumentdesc'>
+<p>Initial value of the ODE. Expects array of size 2. Defaults to #[1, 0].<tr><td class='argumentname'>intType<td class='argumentdesc'>
+<p>Integration type. Expects one of the Symbols, for which procedures are stored with Fb1_ODEintdef. The use of symplectic procedures (with prefix 'sym') is highly recommended. Defaults to \sym2. For more accurate integration you can try symplectic procedures of higher order like \sym4, \sym8 etc. Families of integration procedures: <ul>
+<li>Symplectic: \sym2, \sym2_d, \sym4, \sym4_d, \sym6, \sym6_d, \sym8, \sym8_d, \sym12, \sym12_d, \sym16, \sym16_d, \sym32, \sym32_d, \sym64, \sym64_d<li>Euler: \eu, \eu_d, \eum, \eum_d, \eui, \eui_d<li>Prediction-Evaluation-Correction: \pec, \pece, \pecec, \pecece<li>Runge-Kutta: \rk3, \rk3_d, \rk3h, \rk3h_d, \rk4, \rk4_d<li>Adams-Bashforth: \ab2, \ab3, \ab4, \ab5, \ab6<li>Adams-Bashforth-Moulton: \abm21, \abm22, \abm32, \abm33, \abm43, \abm44, \abm54, \abm55, \abm65, \abm66</ul>
+<tr><td class='argumentname'>compose<td class='argumentdesc'>
+<p>Operator(s) / Function(s) to be applied to the system value on a per-sample base. This of course blurs the numeric procedure but can be used for containing or in a creative way. Can be an operator Symbol, a Function or an arbitrarily mixed SequenceableCollection thereof. The Functions are in any case expected to take an array (the system state) as first argument. If only one Function is given it must output an array of same (system) size. Within a SequenceableCollection a Function must output a value of size 0. Within a SequenceableCollection an operator Symbol is applied only to the corresponding component. A Function can optionally take a second argument which is for ar UGens passed via <strong>composeArIn</strong>.<tr><td class='argumentname'>composeArIn<td class='argumentdesc'>
+<p>ar UGen or SequenceableCollection thereof or a SequenceableCollection that can contain both. This is the way to use ar UGens within a Function passed to compose. UGens are passed to the Function's second argument.<tr><td class='argumentname'>dt0<td class='argumentdesc'>
+<p>First time delta in seconds to be used for the language-side calculation of first values of a multi-step <strong>intType</strong> procedure. This will mostly be irrelevant as (single-step) symplectic procedures are to be preferred. In case of a multi-step procedure a dt0 value will be derived from the default server's properties (sample duration * <strong>tMul</strong>).<tr><td class='argumentname'>argList0<td class='argumentdesc'>
+<p>Initial argList value(s) to be used for the language-side calculation of first values of a multi-step <strong>intType</strong> procedure. This will mostly be irrelevant as (single-step) symplectic procedures are to be preferred. If no UGens are passed to <strong>argList</strong>, values will be assumed from passed <strong>argList</strong> Numbers.<tr><td class='argumentname'>init_intType<td class='argumentdesc'>
+<p>Integration type for language-side calculation of first values of a multi-step <strong>intType</strong> procedure. This will mostly be irrelevant as (single-step) symplectic procedures are to be preferred. Defaults to \sym8.<tr><td class='argumentname'>withDiffChannels<td class='argumentdesc'>
+<p>Boolean. Determines if channel(s) with differential value(s) should be returned. This is only applicable with integration types with a sizeFactor == 2, which means that for every sample the values of the differential are buffered. As by default this is not the case for all predefined numeric procedures, there exist variants with appendix '_d', e.g. \sym2_d. Defaults to false.<tr><td class='argumentname'>withTimeChannel<td class='argumentdesc'>
+<p>Boolean. Determines if accumulated time is output in an additional channel. <div class='warning'><span class='warninglabel'>WARNING:</span> with constant <strong>tMul</strong> it produces an ascending DC which is not affected by <strong>leakDC</strong> if this is set to true. Might especially be of interest if time is modulated. Defaults to false.</div><tr><td class='argumentname'>blockSize<td class='argumentdesc'>
+<p>Integer, this should be the server blockSize. If no Integer is passed, the current default server's blockSize is assumed (in contrast to Fb1). So explicitely passing a blockSize should only be necessary in special cases, e.g. when compiling before booting. However for a pleasant workflow for ar usage it's recommended to use Fb1_ODE with a reduced server blockSize in order to reduce SynthDef compile time.<tr><td class='argumentname'>graphOrderType<td class='argumentdesc'>
+<p>0, 1 or 2. Determines if topological order of generated BufRd and BufWr instances in the SynthDef graph is forced by additional UGens.<ul>
+<li>Type 0: forced graph order is turned off.<li>Type 1 (default): graph order is forced by summation and &lt;!.<li>Type 2: graph order is forced by &lt;! operators only.</ul>
+
+<p>Default 1 is recommended, but with CPU-intense SynthDefs it might be worth trying it with the value 0. This saves a lot of UGens though there might be exceptional cases with different results. Type 2 can shorten the SynthDef compilation time for certain graphs with a large number of UGens, which can be lengthy with type 1. However, CPU usage doesn't directly correspond to the number of UGens.<tr><td class='argumentname'>leakDC<td class='argumentdesc'>
+<p>Boolean. Determines if a LeakDC is applied to the output (except time channel). Defaults to true.<tr><td class='argumentname'>leakCoef<td class='argumentdesc'>
+<p>Number, the <strong>leakDC</strong> coefficient. Defaults to 0.995.</table></div><h3 class='method-code'><span class='method-prefix'>Fb1_Duffing.</span><a class='method-name' name='*ar' href='./../Overviews/Methods.html#ar'>ar</a>(<span class='argstr'>f: 0</span>, <span class='argstr'>alpha: 0</span>, <span class='argstr'>beta: 1</span>, <span class='argstr'>gamma: 1</span>, <span class='argstr'>delta: 1</span>, <span class='argstr'>omega: 1</span>, <span class='argstr'>tMul: 1</span>, <span class='argstr'>t0: 0</span>, <span class='argstr'>y0: [ 1, 0 ]</span>, <span class='argstr'>intType: 'sym2'</span>, <span class='argstr'>compose</span>, <span class='argstr'>composeArIn</span>, <span class='argstr'>dt0</span>, <span class='argstr'>argList0</span>, <span class='argstr'>init_intType: 'sym8'</span>, <span class='argstr'>withDiffChannels: false</span>, <span class='argstr'>withTimeChannel: false</span>, <span class='argstr'>blockSize</span>, <span class='argstr'>graphOrderType: 1</span>, <span class='argstr'>leakDC: true</span>, <span class='argstr'>leakCoef: 0.995</span>)</h3>
+<div class='method'>
+<p>Equivalent to <a href="#*new">*new</a>.</div><h3 class='method-code'><span class='method-prefix'>Fb1_Duffing.</span><a class='method-name' name='*kr' href='./../Overviews/Methods.html#kr'>kr</a>(<span class='argstr'>f: 0</span>, <span class='argstr'>alpha: 0</span>, <span class='argstr'>beta: 1</span>, <span class='argstr'>gamma: 1</span>, <span class='argstr'>delta: 1</span>, <span class='argstr'>omega: 1</span>, <span class='argstr'>tMul: 1</span>, <span class='argstr'>t0: 0</span>, <span class='argstr'>y0: [ 1, 0 ]</span>, <span class='argstr'>intType: 'sym4'</span>, <span class='argstr'>compose</span>, <span class='argstr'>dt0</span>, <span class='argstr'>argList0</span>, <span class='argstr'>init_intType: 'sym8'</span>, <span class='argstr'>withDiffChannels: false</span>, <span class='argstr'>withTimeChannel: false</span>, <span class='argstr'>graphOrderType: 1</span>, <span class='argstr'>leakDC: true</span>, <span class='argstr'>leakCoef: 0.995</span>)</h3>
+<div class='method'>
+<p>Creates a new Fb1_Duffing kr object.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>f<td class='argumentdesc'>
+<p>Defaults to 0.<tr><td class='argumentname'>alpha<td class='argumentdesc'>
+<p>Defaults to 0.<tr><td class='argumentname'>beta<td class='argumentdesc'>
+<p>Defaults to 1.<tr><td class='argumentname'>gamma<td class='argumentdesc'>
+<p>Defaults to 1.<tr><td class='argumentname'>delta<td class='argumentdesc'>
+<p>Defaults to 1.<tr><td class='argumentname'>omega<td class='argumentdesc'>
+<p>Defaults to 1.<tr><td class='argumentname'>tMul<td class='argumentdesc'>
+<p>Time multiplier, which determines velocity of proceeding in the dynamic system. The default value 1 means that the step delta of time equals 1 / control duration. For getting audible oscillations you might, depending on the ODE definition, have to pass much higher values. Can also be a kr UGen and might also be negative.<tr><td class='argumentname'>t0<td class='argumentdesc'>
+<p>Initial time. Expects Number. Defaults to 0.<tr><td class='argumentname'>y0<td class='argumentdesc'>
+<p>Initial value of the ODE. Expects array of size 2. Defaults to #[1, 0].<tr><td class='argumentname'>intType<td class='argumentdesc'>
+<p>Integration type. Expects one of the Symbols, for which procedures are stored with Fb1_ODEintdef. The use of symplectic procedures (with prefix 'sym') is highly recommended. Defaults to \sym4. For more accurate integration you can try symplectic procedures of higher order like \sym6, \sym8 etc. Families of integration procedures: <ul>
+<li>Symplectic: \sym2, \sym2_d, \sym4, \sym4_d, \sym6, \sym6_d, \sym8, \sym8_d, \sym12, \sym12_d, \sym16, \sym16_d, \sym32, \sym32_d, \sym64, \sym64_d<li>Euler: \eu, \eu_d, \eum, \eum_d, \eui, \eui_d<li>Prediction-Evaluation-Correction: \pec, \pece, \pecec, \pecece<li>Runge-Kutta: \rk3, \rk3_d, \rk3h, \rk3h_d, \rk4, \rk4_d<li>Adams-Bashforth: \ab2, \ab3, \ab4, \ab5, \ab6<li>Adams-Bashforth-Moulton: \abm21, \abm22, \abm32, \abm33, \abm43, \abm44, \abm54, \abm55, \abm65, \abm66</ul>
+<tr><td class='argumentname'>compose<td class='argumentdesc'>
+<p>Operator(s) / Function(s) to be applied to the system value on a per-control-block base. This of course blurs the numeric procedure but can be used for containing or in a creative way. Can be an operator Symbol, a Function or an arbitrarily mixed SequenceableCollection thereof. The Functions are in any case expected to take an array (the system state) as first argument. If only one Function is given it must output an array of same (system) size. Within a SequenceableCollection a Function must output a value of size 0. Within a SequenceableCollection an operator Symbol is applied only to the corresponding component. <tr><td class='argumentname'>dt0<td class='argumentdesc'>
+<p>First time delta in seconds to be used for the language-side calculation of first values of a multi-step <strong>intType</strong> procedure. This will mostly be irrelevant as (single-step) symplectic procedures are to be preferred. In case of a multi-step procedure a dt0 value will be derived from the default server's properties (control duration * <strong>tMul</strong>).<tr><td class='argumentname'>argList0<td class='argumentdesc'>
+<p>Initial argList value(s) to be used for the language-side calculation of first values of a multi-step <strong>intType</strong> procedure. This will mostly be irrelevant as (single-step) symplectic procedures are to be preferred. If no UGens are passed to <strong>argList</strong>, values will be assumed from passed <strong>argList</strong> Numbers.<tr><td class='argumentname'>init_intType<td class='argumentdesc'>
+<p>Integration type for language-side calculation of first values of a multi-step <strong>intType</strong> procedure. This will mostly be irrelevant as (single-step) symplectic procedures are to be preferred. Defaults to \sym8.<tr><td class='argumentname'>withDiffChannels<td class='argumentdesc'>
+<p>Boolean. Determines if channel(s) with differential value(s) should be returned. This is only applicable with integration types with a sizeFactor == 2, which means that for every sample the values of the differential are buffered. As by default this is not the case for all predefined numeric procedures, there exist variants with appendix '_d', e.g. \sym2_d. Defaults to false.<tr><td class='argumentname'>withTimeChannel<td class='argumentdesc'>
+<p>Boolean. Determines if accumulated time is output in an additional channel. <div class='warning'><span class='warninglabel'>WARNING:</span> with constant <strong>tMul</strong> it produces an ascending DC which is not affected by <strong>leakDC</strong> if this is set to true. Might especially be of interest if time is modulated. Defaults to false.</div><tr><td class='argumentname'>graphOrderType<td class='argumentdesc'>
+<p>0, 1 or 2. Determines if topological order of generated BufRd and BufWr instances in the SynthDef graph is forced by additional UGens.<ul>
+<li>Type 0: forced graph order is turned off.<li>Type 1 (default): graph order is forced by summation and &lt;!.<li>Type 2: graph order is forced by &lt;! operators only.</ul>
+
+<p>Default 1 is recommended, but with CPU-intense SynthDefs it might be worth trying it with the value 0. This saves a lot of UGens though there might be exceptional cases with different results. Type 2 can shorten the SynthDef compilation time for certain graphs with a large number of UGens, which can be lengthy with type 1. However, CPU usage doesn't directly correspond to the number of UGens.<tr><td class='argumentname'>leakDC<td class='argumentdesc'>
+<p>Boolean. Determines if a LeakDC is applied to the output (except time channel). Defaults to true.<tr><td class='argumentname'>leakCoef<td class='argumentdesc'>
+<p>Number, the <strong>leakDC</strong> coefficient. Defaults to 0.995.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='Examples'>Examples</a></h2>
+<textarea class='editor'>// reboot with reduced blockSize
+
+(
+s = Server.local;
+Server.default = s;
+s.options.blockSize = 8;
+s.reboot;
+)
+
+// In the source code of Fb1_ODEdef.sc the corresponding Fb1_ODEdef looks like this:
+// the Function brackets within the array are not absolutely necessary, 
+// but compile process is faster.
+
+// don't evaluate, already stored
+
+Fb1_ODEdef(\Duffing, { |t, y, f = 0, alpha = 0, beta = 1, gamma = 1, delta = 1,
+    omega = 1|
+    [
+        { y[1] },
+        { gamma * cos(omega * t) + f - (delta * y[1]) -
+            ((beta * y[0] * y[0] - alpha) * y[0]) }
+    ]
+}, 0, [1, 0], 1, 1);
+
+
+
+// steady external force, play alpha and beta
+
+(
+x = {
+    var sig = Fb1_Duffing.ar(
+        0.7, MouseX.kr(1, 3), MouseY.kr(1, 3), 2, 0, 0.8, tMul: 650);
+    Limiter.ar(sig[0..1], 0.3) * EnvGen.ar(Env.asr(0.1, curve: 3))
+}.play
+)
+
+x.release
+
+
+// oscillating force, modulate tMul
+
+(
+x = {
+    var sig = Fb1_Duffing.ar(
+        SinOsc.ar(3).range(1, 5), 1, 1, 2, 0, 0.8,
+        tMul: LFDNoise0.kr(1).range(700, 2000).lag(0.2)
+    );
+    Limiter.ar(sig[0..1], 0.2) * EnvGen.ar(Env.asr(0.1, curve: 3))
+}.play
+)
+
+x.release</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/Fb1_Duffing.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/Fb1_Duffing.schelp</a><br>link::Classes/Fb1_Duffing::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

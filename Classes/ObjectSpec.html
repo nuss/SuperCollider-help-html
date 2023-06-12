@@ -1,0 +1,125 @@
+<!doctype html><html lang='en'><head><title>ObjectSpec | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'ObjectSpec';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>ObjectSpec:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-defaultControl'>defaultControl</a> </li>
+<li class='toc3'><a href='#-storeArgs'>storeArgs</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Spec'>Spec</a> | <a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>crucial'>crucial</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>crucial>Spec'>Spec</a></span>
+</div><h1>ObjectSpec<span id='superclasses'> : <a href="../Classes/Spec.html">Spec</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>datatype for specifying untyped, unrestricted inputs</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/MoreSpecs.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/Instr/MoreSpecs.sc'>MoreSpecs.sc</a></div><div id='related'>See also: <a href="./../Classes/Object.html">Object</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>This can be used for situations where a function (such as an Instr) returns an object (since obviously everything is an object, it most certainly is an object) but the class of that object could be many possible things.
+<p>Supercollider is an untyped language and the Spec system is a very rough system for specifying types.
+<p>The original purpose of ObjectSpec is to be a datatype for unhandled cases.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>ObjectSpec.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>defaultControl</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>defaultControl<td class='argumentdesc'>
+<p>This can be a function that will create a defaultControl as the other Spec classes do.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defaultControl' href='./../Overviews/Methods.html#defaultControl'>defaultControl</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-defaultControl' href='./../Overviews/Methods.html#defaultControl'>defaultControl</a> = value</h3>
+<div class='method'></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-storeArgs' href='./../Overviews/Methods.html#storeArgs'>storeArgs</a>(<span class='argstr'>stream</span>)</h3>
+<div class='method'><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>stream<td class='argumentdesc'></table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+
+<p>This example is by James Harkins. He's using the defaultControl function as a way to deliver what is needed for this particular piece. I'm not so fond of that approach, but it works.
+<p>In this patch, the Instr defines a filter structure, but leaves the choice of exciter up to the user. If the user doesn't provide an exciter, a default will be used.
+<p>Since the Formlet filter's impulse response is a sine wave, formHarmRatios and formHarmAmps accept arrays that create an additive array of Formlets. Formlet is a very efficient UGen, so the Patch is still CPU cheap!
+<p>The result resembles CHANT (IRCA/M, 1979).<textarea class='editor'>(
+// define the Instr
+Instr([\analog, \voxlet], { |freq, gate, exciterFunc, detune, formfreq, ffreq, env, formfreqenv, attacktime, decaytime, vsens, fenvsens, formHarmRatios, formHarmAmps|
+    var amp, sig;
+    formfreq = formfreq * ((EnvGen.kr(formfreqenv, gate) * fenvsens) + 1);
+    amp = (Latch.kr(gate, gate)-1) * vsens + 1;
+    sig = exciterFunc.value(freq, detune);    // this func is user supplied
+    sig = Formlet.ar(sig,
+        formHarmRatios.notNil.if({ formfreq * formHarmRatios }, { formfreq }),
+        attacktime, decaytime, mul: formHarmAmps ?? { 1 });
+    // formlet is a bit volatile, so limit its amplitude
+    (Limiter.ar(LPF.ar(Mix.ar(sig), ffreq), 0.9, 0.06)
+        * EnvGen.kr(env, gate, doneAction:2)) ! 2
+}, [
+    \freq,
+    \amp,
+        // default func is an audio-rate impulse to provide the base frequency
+        // override this with a func for a different exciter
+        // your func may have a frequency and detune argument
+        // it should output 1 channel only
+    ObjectSpec({ |fr| Impulse.ar(fr) }),
+    \mydetune,
+    \freq,
+    #[20, 20000, \exp, 0, 1200],
+    EnvSpec(Env.adsr(0.07, 0.2, 0.8, 0.11)),
+    EnvSpec(Env(#[0, 0], [1])),
+    #[0.0001, 1, \exp, 0, 0.01],
+    #[0.0001, 1, \exp, 0, 0.1],
+    \amp,
+    \amp,
+    ObjectSpec(nil),    // arrays by default are nil -- ugenfunc fills in the true default here
+    ObjectSpec(nil)
+]);
+)
+
+// use the default exciter
+p = Patch([\analog, \voxlet], [Patch({ MouseX.kr(20, 20000, 1, 0.1) }), 0.5, nil, nil, Patch({ MouseY.kr(20, 20000, 1, 0.1) }), nil, nil, nil, nil, nil, 1, 0]);
+p.play;
+// move the mouse to control base freq and formant freq
+// watch the volume--amplitude can spike at times in this patch
+
+// when done:
+p.free;
+
+
+// free the patch ("free" button) and try this to change the exciter
+p = Patch([\analog, \voxlet], [Patch({ MouseX.kr(20, 20000, 1, 0.1) }), 0.25, { |fr, detune| Mix.ar(Saw.ar([fr, fr*detune])) }, nil, Patch({ MouseY.kr(20, 20000, 1, 0.1) }), nil, nil, nil, nil, nil, 1, 0]);
+p.play;
+
+p.free;
+
+// now let's add some additiveness to the filters
+p = Patch([\analog, \voxlet], [Patch({ MouseX.kr(20, 20000, 1, 0.1) }), 0.25, { |fr, detune| Mix.ar(Saw.ar([fr, fr*detune])) }, nil, Patch({ MouseY.kr(20, 20000, 1, 0.1) }), nil, nil, nil, nil, nil, 1, 0, (1..6), (1..6).reciprocal]);
+p.play;
+
+p.free;</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/ObjectSpec.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/crucial-library/HelpSource/Classes/ObjectSpec.schelp</a><br>link::Classes/ObjectSpec::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

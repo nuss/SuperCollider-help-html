@@ -1,0 +1,103 @@
+<!doctype html><html lang='en'><head><title>MarkovSetN | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'MarkovSetN';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>MarkovSetN:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*fill'>fill</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+<li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-embedInStream'>embedInStream</a> </li>
+<li class='toc3'><a href='#-embedSpyInStream'>embedSpyInStream</a> </li>
+<li class='toc3'><a href='#-order'>order</a> </li>
+<li class='toc3'><a href='#-registerAsNext'>registerAsNext</a> </li>
+</ul></ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'><li class='toc2'><a href='#direct%20node%20definition'>direct node definition</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#training%20by%20a%20stream'>training by a stream</a></li>
+<ul class='toc'></ul></ul><li class='toc1'><a href='#Authors'>Authors</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Collections'>Collections</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Collections>Unordered'>Unordered</a> | <a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>MathLib'>MathLib</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>MathLib>Markov & Fuzzy'>Markov & Fuzzy</a></span>
+</div><h1>MarkovSetN<span id='superclasses'> : <a href="../Classes/LookupMarkovSet.html">LookupMarkovSet</a> : <a href="../Classes/IdentityMarkovSet.html">IdentityMarkovSet</a> : <a href="../Classes/MarkovSet.html">MarkovSet</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>nth order markov set</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/MarkovSet/MarkovSet.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/MarkovSet/MarkovSet.sc'>MarkovSet.sc</a></div><div id='related'>See also: <a href="./../Classes/MarkovSet.html">MarkovSet</a>, <a href="./../Classes/ShannonMarkovSet.html">ShannonMarkovSet</a>, <a href="./../Classes/ShannonFinger.html">ShannonFinger</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>Constant order set. For variable order see <a href="./../Classes/ShannonFinger.html">ShannonFinger</a>. Uses an optimized identity lookup in which arrays of elements are stored internally as symbols.
+<p>Part of <a href="./../Guides/MathLib.html">MathLib</a>, a diverse library of mathematical functions.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>MarkovSetN.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>args</span>, <span class='argstr'>order: 1</span>, <span class='argstr'>updateSeeds: false</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>args<td class='argumentdesc'>
+<p>A list of arrays that each represent one node in the set:
+<p><strong>[[array_of_elements], [next_elements], [weigths]]</strong><table>
+<tr><td><strong>array_of_elements</strong><td>Should be of size <strong>order</strong><tr><td><strong>next_elements</strong><td>The next node is searched by simple equality. If <code>nil</code>, this is a terminator node<tr><td><strong>weights</strong><td>The array is normalized. If weigths is <code>nil</code>, equal weight is used.</table>
+
+<p>If args is <code>nil</code>, the set is created and may be trained by the other methods.<tr><td class='argumentname'>order<td class='argumentdesc'>
+<p>The order of the set.<tr><td class='argumentname'>updateSeeds<td class='argumentdesc'>
+<p>If set to <code>true</code>, each element is always added to the seeds</table></div><h3 class='method-code'><span class='method-prefix'>MarkovSetN.</span><a class='method-name' name='*fill' href='./../Overviews/Methods.html#fill'>fill</a>(<span class='argstr'>n</span>, <span class='argstr'>stream</span>, <span class='argstr'>order: 1</span>)</h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>n<td class='argumentdesc'>
+<p>Number of items to read.<tr><td class='argumentname'>stream<td class='argumentdesc'>
+<p>A function or stream that returns items to read.<tr><td class='argumentname'>order<td class='argumentdesc'>
+<p>Order of the new set.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-embedInStream' href='./../Overviews/Methods.html#embedInStream'>embedInStream</a>(<span class='argstr'>inval</span>, <span class='argstr'>repeats: inf</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-embedSpyInStream' href='./../Overviews/Methods.html#embedSpyInStream'>embedSpyInStream</a>(<span class='argstr'>pattern</span>, <span class='argstr'>repeats: inf</span>, <span class='argstr'>inval</span>)</h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-order' href='./../Overviews/Methods.html#order'>order</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-registerAsNext' href='./../Overviews/Methods.html#registerAsNext'>registerAsNext</a>(<span class='argstr'>obj</span>)</h3>
+<h2><a class='anchor' name='examples'>Examples</a></h2>
+<h3><a class='anchor' name='direct%20node%20definition'>direct node definition</a></h3>
+<textarea class='editor'>(
+m = MarkovSetN([
+    [[100, 120], [120, 130]],
+    [[120, 100], [100, 1900]]
+], 2);
+)
+
+8.do { m.next([100, 120]).postln };
+8.do { m.next([120, 100]).postln };</textarea>
+<h3><a class='anchor' name='training%20by%20a%20stream'>training by a stream</a></h3>
+<textarea class='editor'>m = MarkovSetN.fill(100, Pseq([1, 2, 3, 4, Prand([5, 55, 555])], inf).asStream, 2);
+
+8.do { m.next([1,2]).postln };
+8.do { m.next([3,4]).postln };
+8.do { m.next([4,5]).postln };</textarea>
+<h2><a class='anchor' name='Authors'>Authors</a></h2>
+
+<p>Julian Rohrhuber, 2004, 2007.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Classes/MarkovSetN.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/HelpSource/Classes/MarkovSetN.schelp</a><br>link::Classes/MarkovSetN::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,0 +1,480 @@
+<!doctype html><html lang='en'><head><title>PSPdiv | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'PSPdiv';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>PSPdiv:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#Examples'>Examples</a></li>
+<ul class='toc'><li class='toc2'><a href='#Ex.%201:%20Basic%20functionality%20with%20one%20layer'>Ex. 1: Basic functionality with one layer</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%202:%20Parallel%20embedding%20with%20one%20layer'>Ex. 2: Parallel embedding with one layer</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%203:%20Ornamenting%20a%20line%20with%20a%20second%20layer'>Ex. 3: Ornamenting a line with a second layer</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%204:%20Polyrhythmics%20of%20several%20layers'>Ex. 4: Polyrhythmics of several layers</a></li>
+<ul class='toc'></ul><li class='toc2'><a href='#Ex.%205:%20Granulation,%20control%20of%20many%20layers'>Ex. 5: Granulation, control of many layers</a></li>
+<ul class='toc'></ul></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#Libraries'>Libraries</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous'>miSCellaneous</a>&#8201;&gt;&#8201;<a href='./../Browse.html#Libraries>miSCellaneous>Other patterns'>Other patterns</a></span>
+</div><h1>PSPdiv<span id='superclasses'> : <a href="../Classes/Pspawner.html">Pspawner</a> : <a href="../Classes/Prout.html">Prout</a> : <a href="../Classes/Pattern.html">Pattern</a> : <a href="../Classes/AbstractFunction.html">AbstractFunction</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>dynamic multi-layer pulse divider</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/PSPdiv.sc' title='/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/PSPdiv.sc'>PSPdiv.sc</a></div><div id='related'>See also: <a href="./../Overviews/miSCellaneous.html">miSCellaneous</a>, <a href="./../Guides/Introduction_to_miSCellaneous.html">Introduction to miSCellaneous</a>, <a href="./../Classes/Pspawner.html">Pspawner</a>, <a href="./../Tutorials/Sieves_and_Psieve_patterns.html">Sieves and Psieve patterns</a>, <a href="./../Tutorials/Buffer_Granulation.html">Buffer Granulation</a>, <a href="./../Tutorials/Live_Granulation.html">Live Granulation</a></div>
+</div>
+
+<p><h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>PSPdiv controls the timing of one or several layers of event patterns by a single pulse pattern. In every layer single pulse durations or integer multiples ('division bases') of pulse durations can be divided by Integers or proportionally. For every layer the event pattern data can be given as event pattern or a function, which is generating an event pattern for every divisional operation. Division bases and divisions as well as the pulse itself can be controlled by patterns. 
+<p>PSPdiv is built on Pspawner and therefore allows sequential or parallel spawning: the type of embedding can be sequenced by a pattern for every divisional operation. So a single layer alone can produce a number of overlapping sequences.
+<p>Time division in space notation scheme with two layers and embedding of sequential type:<div class='image'><img src='attachments/PSPdiv/PSPdiv_graph_1.png'/></div>
+
+<p>A sequence of regular or irregular <strong>pulses</strong> is given as pattern of floats, these durations are marked as proportional spaces in the graphic. The sequence of <strong>divBases</strong> collects groups of <strong>pulses</strong> and divides them according to the sequence of <strong>divs</strong>. The resulting durations of each layer are again marked by proportional spacing, common entry points of layers are marked by emphasized vertical lines.
+<p>Special thanks to Ron Kuivila for developing Pspawner, it's such a versatile class !<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>PSPdiv.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>pulse</span>, <span class='argstr'>evPat</span>, <span class='argstr'>div: 1</span>, <span class='argstr'>divBase: 1</span>, <span class='argstr'>divType: 'seq'</span>)</h3>
+<div class='method'>
+<p>Creates a new PSPdiv object.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>pulse<td class='argumentdesc'>
+<p>Duration or pattern of durations, given as beats. Defaults to 1.<tr><td class='argumentname'>evPat<td class='argumentdesc'>
+<p>An event pattern, a Function generating event patterns or: a SequenceableCollection thereof. If an event pattern is given, the durations of the current division, calculated from current values of <strong>pulse</strong>, <strong>div</strong> and <strong>divBase</strong>, are inserted with the 'dur' key. If a Function is given, it will be passed 4 arguments:<ul>
+<li>an array of durations of the current division, based on the following arguments<li>the current division number <strong>div</strong><li>the current division base number <strong>divBase</strong><li>the current division type <strong>divType</strong> ('seq' or 'par')</ul>
+
+<p>The Function should return the event pattern to be scheduled for this division. The typical application would be using the array of durations in a Pseq with repeats = 1 as 'dur' value, though you are free to let it return any kind of event pattern. Layers are slightly shifted, so that the event from a pattern of lower index is calculated before an event from a pattern of higher index, if events are scheduled to happen at the same time.<tr><td class='argumentname'>div<td class='argumentdesc'>
+<p>Integer or array of array of numbers, determining a division of <strong>divBase</strong> * <strong>pulse</strong> beats or a pattern returning such or: a SequenceableCollection thereof. Defaults to 1. A single array of numbers is interpreted as indicator for several layers (see note below), hence the doubled array is necessary for a proportional division.<tr><td class='argumentname'>divBase<td class='argumentdesc'>
+<p>Integer determining the number of multiples of <strong>pulse</strong> to be used as base of division or a pattern returning such or: a SequenceableCollection thereof. Defaults to 1.<tr><td class='argumentname'>divType<td class='argumentdesc'>
+<p>Symbol 'seq' or 'par' or or a pattern returning such or: a SequenceableCollection thereof. Defaults to 'seq'. Determines the type of embedding according to Pspawner's convention.<div class='note'><span class='notelabel'>NOTE:</span> If one of the arguments <strong>evPat</strong>, <strong>div</strong>, <strong>divBase</strong> and <strong>divType</strong> is passed as SequenceableCollection of size &gt; 1, a multitude of layers is assumed and the other args are interpreted accordingly. To avoid ambiguities only one size &gt; 1 is allowed at maximum amongst these args (but more than one of them can be a SequenceableCollection of this size). Consequently a proportional <strong>div</strong> arg for one layer must be passed in double brackets.</div></table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='Examples'>Examples</a></h2>
+<textarea class='editor'>(
+s = Server.local;
+Server.default = s;
+s.boot;
+)</textarea>
+
+<p><a class='anchor' name='Ex.1'>&nbsp;</a><h3><a class='anchor' name='Ex.%201:%20Basic%20functionality%20with%20one%20layer'>Ex. 1: Basic functionality with one layer</a></h3>
+<textarea class='editor'>// test SynthDef
+
+(
+SynthDef(\varKlank, { |freq = 500, att = 0.01, rel = 0.1, sourceType = 0,
+    ringtime = 1, pan = 0, amp = 0.1|
+    var sig, source = Select.ar(sourceType, [
+        BrownNoise.ar(0.05),
+        Impulse.ar(0)
+    ]);
+    sig = DynKlank.ar(`[freq * (1..8), amp * (8..1)/8, ringtime * (1!8)], source);
+    sig = Splay.ar(sig);
+    OffsetOut.ar(0, Balance2.ar(sig[0], sig[1], pan) *
+        EnvGen.ar(Env.perc(att, rel), doneAction: 2))
+}).add;
+)
+
+
+(
+// base pattern
+p = Pbind(
+    \instrument, \varKlank,
+    \midinote, Pwhite(65, 90),
+    \amp, 0.1,
+    \att, Pwhite(0.005, 0.02),
+    \rel, 2,
+    \sourceType, 1,
+    \ringtime, 2,
+    \pan, Pwhite(-0.3, 0.3)
+);
+)
+
+
+
+// div = 1, pulse not divided
+
+x = PSPdiv(0.8, p, 1).play;
+
+x.stop
+
+
+// div as array of two items leads to expansion into two layers
+
+x = PSPdiv(0.8, p, [2, 1]).play;
+
+x.stop
+
+
+// here div is interpreted as proportion for one layer
+
+x = PSPdiv(0.8, p, [[3, 1]] ).play;
+
+x.stop
+
+
+// specifying per layer
+
+x = PSPdiv(0.8, [p, Pbindf(p, \rel, 0.1)], [1, [3, 2, 1]] ).play;
+
+x.stop
+
+
+
+// use with PL proxies
+
+(
+// defaults, want to replace later on
+~pulse = 0.8;
+~div = 1;
+~divBase = 1;
+~divType = \seq;
+
+q = PSPdiv(PL(\pulse), p, PL(\div), PL(\divBase), PL(\divType));
+)
+
+
+
+// start playing
+
+x = q.play
+
+
+// replace on the fly:
+// alternating tuplets
+
+~div = PLseq([2, 3]);
+
+
+// "dotted" notes, now we don't need double brackets as above as it's the source of the PL,
+// not the PSPdiv arg
+
+~div = [3, 1];
+
+
+// acceleration and deceleration by pulse pattern control
+
+~pulse = Pseg(PLseq([0.8, 0.3]), 10)
+
+
+(
+// use divBase for base length control of tuplets
+// here this could be written with div sequencing only also
+
+~pulse = 1;
+
+~div = PLseq([2, 6]);
+
+~divBase = PLseq([1, 1, 2]);
+)
+
+
+x.stop</textarea>
+
+<p><a class='anchor' name='Ex.2'>&nbsp;</a><h3><a class='anchor' name='Ex.%202:%20Parallel%20embedding%20with%20one%20layer'>Ex. 2: Parallel embedding with one layer</a></h3>
+
+<p>SynthDef from <a href="#Ex.1">Ex.1</a><textarea class='editor'>(
+// default values for proxies
+
+~pulse = 0.5;
+~div = PLseq([6, 4]);
+~divBase = 2;
+~divType = \par;
+
+
+// evPat argument now given as Function
+// this especially makes sense in combination with parallel embedding
+// otherwise parallel patterns would poll event data from a single event stream
+
+
+p = { |durs|
+    // use durs calculated from pulse, div and divBase
+    var size = durs.size;
+    Pbind(
+        \dur, Pseq(durs),
+        \instrument, \varKlank,
+        \midinote, Pseq(~baseStream.next + rrand(0, 7) + (0..size)),
+        \amp, 0.1,
+        \att, Pwhite(0.005, 0.02),
+        \rel, ~releaseStream.next,            
+        \ringtime, 2,
+        \sourceType, 1,
+        \pan, ~panStream.next
+    )
+};
+
+// these streams deliver items for each embedding
+
+~baseStream = PLseq([60, 70, 80]).iter;
+~releaseStream = Pn(Pshuf([2, 0.6, 0.2])).iter;
+~panStream = Pwhite(-0.8, 0.8).iter;
+
+
+// we still have only one layer, but it will overlap
+
+q = PSPdiv(PL(\pulse), p, PL(\div), PL(\divBase), PL(\divType));
+)
+
+
+// start
+
+x = q.play
+
+
+// change to sequential embedding
+
+~divType = \seq;
+
+
+// type of embedding can be sequenced too
+
+~divType = PLrand([\seq, \par, \par]);
+
+
+// default divBase was 2, allow shorter division bases
+
+~divBase = PLrand([1, 2]);
+
+
+x.stop</textarea>
+
+<p><a class='anchor' name='Ex.3'>&nbsp;</a><h3><a class='anchor' name='Ex.%203:%20Ornamenting%20a%20line%20with%20a%20second%20layer'>Ex. 3: Ornamenting a line with a second layer</a></h3>
+
+<p>SynthDef from <a href="#Ex.1">Ex.1</a><textarea class='editor'>(
+p = Pbind(
+    \instrument, \varKlank,
+    // basic melodic line, data stored in variable for use by ornamentation
+    \midinote, (Pn(Pshuf([72, 74, 76, 79, 81])).collect { |x| ~m = x; }) +
+        // random broadening of line        
+        PLrand([[-14, 0], [0, 14]]),
+    \amp, 0.15,
+    \att, Pwhite(0.01, 0.02),
+    \rel, 3,
+    \sourceType, 1,
+    \ringtime, 3,
+    \pan, Pwhite(-0.3, 0.3)
+);
+
+~releaseStream = Pn(Pshuf([2, 0.5, 0.2])).iter;
+~panStream = Pwhite(-0.8, 0.8).iter;
+~dirStream = PLseq([1, -1]).iter;
+
+// defines trill pattern for every event from melodic line
+
+q = { |durs|
+    // use durs calculated from pulse, div and divBase
+    var size = durs.size, midibase = ~m;
+    Pbind(
+        \dur, Pseq(durs),
+        \instrument, \varKlank,
+        // define trill alternating above and below basic melodic line
+        \midinote, Pn(rrand(4, 9) * ~dirStream.next, size) + PLseq([0, 1]) + midibase,
+        \amp, 0.1,
+        \att, Pwhite(0.005, 0.02),
+        \rel, ~releaseStream.next,
+        \ringtime, 2,
+        \sourceType, 1,
+        \pan, ~panStream.next
+    )
+};
+
+// default values for PL proxies, want to replace later on
+
+~pulse = PLshufn([1, 1, 2]/2);
+~div = PLrand([4, 6, 8]);
+~divBase = 1;
+~divType = \seq;
+
+r = PSPdiv(
+    PL(\pulse),
+    [p, q],
+    [1, PL(\div)],
+    [1, PL(\divBase)],
+    [1, PL(\divType)]
+);
+)
+
+
+// start with sequential embedding: trill on every note, variuos divisions
+
+x = r.play
+
+
+// change to parallel embedding of trills, overlapping
+
+(
+~divBase = 2;
+~div = PLrand([8, 12, 16]);
+~divType = \par;
+)
+
+x.stop</textarea>
+
+<p><a class='anchor' name='Ex.4'>&nbsp;</a><h3><a class='anchor' name='Ex.%204:%20Polyrhythmics%20of%20several%20layers'>Ex. 4: Polyrhythmics of several layers</a></h3>
+
+<p>SynthDef from <a href="#Ex.1">Ex.1</a><textarea class='editor'>// three layers using varying pentatonic scales shifted by sixth tones
+
+(
+// staccato layer
+p = Pbind(
+    \instrument, \varKlank,
+    \midinote, PLshufn([0, 2, 4, 7, 9]) + Pn(Pstutter(15, Pwhite(80, 100, 1))) +
+        0.6 + [0, -14],
+    // use some rests
+    \amp, 0.06,
+    \att, Pwhite(0.01, 0.02),
+    \rel, 0.15,
+    \sourceType, 1,
+    \ringtime, 3,
+    \pan, Pwhite(-0.3, 0.3)
+);
+
+// long release layer
+q = Pbind(
+    \instrument, \varKlank,
+    \midinote, PLshufn([0, 2, 4, 7, 9]) + Pn(Pstutter(20, Pwhite(60, 80, 1))) +
+        PLrand([[-14, 0]]) + PLrand([0, 12]),
+    \amp, 0.08,
+    \att, Pwhite(0.01, 0.02),
+    \rel, 2,
+    \sourceType, 1,
+    \ringtime, 2,
+    \pan, Pwhite(-0.3, 0.3)
+);
+
+// "drum" layer
+r = Pbind(
+    \instrument, \varKlank,
+    \midinote, PLshufn([0, 2, 4, 7, 9]) + Pn(Pstutter(25, Pwhite(35, 50, 1))) +
+        0.3 + [-12, 0],
+    \amp, 0.02,
+    \att, Pwhite(0.01, 0.02),
+    \rel, 0.35,
+    \sourceType, 0,
+    \ringtime, 1,
+    \pan, Pwhite(-0.3, 0.3)
+);
+
+// default values for PL proxies, want to replace later on
+
+~pulse = PLshufn([1, 1, 2] * 5/9);
+
+~div0 = PLshufn([4, 8]);
+~div1 = PLshufn([2, 3, 4]);
+~div2 = PLshufn([2, 4]);
+~divBase = 1;
+~divType = \seq;
+
+u = PSPdiv(
+    PL(\pulse),
+    [p, q, r],
+    [PL(\div0), PL(\div1), PL(\div2)],
+    // will be exapanded to array of 3 PLs with same symbol reference
+    PL(\divBase),
+    PL(\divType)
+);
+)
+
+
+// start
+
+x = u.play
+
+
+// vary pulse
+
+~pulse = PLshufn([1, 1.5, 2.5, 3] * 5/9);
+
+~pulse = 1;
+
+~div0 = PLshufn([4, 6, 8]);
+
+~div2 = PLshufn([2, 4, 6]);
+
+~pulse = PLshufn([1, 1, 9/8]);
+
+x.stop;</textarea>
+
+<p><a class='anchor' name='Ex.5'>&nbsp;</a><h3><a class='anchor' name='Ex.%205:%20Granulation,%20control%20of%20many%20layers'>Ex. 5: Granulation, control of many layers</a></h3>
+
+<p>SynthDef from <a href="#Ex.1">Ex.1</a><textarea class='editor'>(
+~amp = 0.05;
+~att = 0.005;
+~rel = 0.05;
+~sourceType = 0;
+~ringtime = 1;
+
+~pan = PLseq([0.8, -0.8]);
+
+// Pbind generator, patterns will stick to midinotes
+p = { |midinote| Pbind(
+    \instrument, \varKlank,
+    \midinote, midinote,
+    \amp, PL(\amp),
+    \att, PL(\att),
+    \rel, PL(\rel),
+    \sourceType, PL(\sourceType),
+    \ringtime, PL(\ringtime),
+    \pan, PL(\pan)
+) };
+
+// produce an array of Pbinds, covering a whole tone cluster 
+q = ((1, 3..51) + 40).collect(p.(_));
+
+~size = q.size;
+
+// same pattern source for each PL, 
+// but for each midinote divisions per pulse can vary
+
+~div = Pfunc { (2 ** (1..4)).choose.asInteger };
+~divBase = 1;
+
+~pulse = 1;
+~rel = 0.015;
+~sourceType = 1;
+
+// as q is an array the args 'div' and 'divBase' will be expanded to arrays
+u = PSPdiv(PL(\pulse), q, PL(\div), PL(\divBase));
+)
+
+
+
+x = u.play
+
+// this setting exchanges the source of all PL patterns expanded as 'div' arg
+
+~div = Pfunc { (2 ** (1..6)).choose.asInteger }
+
+
+// also with divBase, layers are decorrelated as each stream from this pattern acts differently
+
+
+~divBase = PLrand([1, 2])
+
+~divBase = PLrand([1, 2, 3])
+
+
+~pulse = 1/4
+
+x.stop</textarea>
+<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PSPdiv.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/HelpSource/Classes/PSPdiv.schelp</a><br>link::Classes/PSPdiv::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

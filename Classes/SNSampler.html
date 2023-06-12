@@ -1,0 +1,218 @@
+<!doctype html><html lang='en'><head><title>SNSampler | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./../editor.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./../lib/jquery.min.js'></script>
+<script src='./../lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./../lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = './..';
+var scdoc_title = 'SNSampler';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>SNSampler:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*all'>all</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-setupSampler'>setupSampler</a> </li>
+<li class='toc3'><a href='#-recBufnum'>recBufnum</a> </li>
+<li class='toc3'><a href='#-inBus'>inBus</a> </li>
+<li class='toc3'><a href='#-sample'>sample</a> </li>
+<li class='toc3'><a href='#-scope'>scope</a> </li>
+<li class='toc3'><a href='#-reset'>reset</a> </li>
+<li class='toc3'><a href='#-quit'>quit</a> </li>
+<li class='toc2'><a href='#Instance%20variables%20-%20getters%20and%20setters'>Instance variables - getters and setters</a></li>
+<ul class='toc'><li class='toc3'><a href='#-doneAction'>doneAction</a> </li>
+<li class='toc3'><a href='#-touchOSC'>touchOSC</a> </li>
+<li class='toc3'><a href='#-touchOSCPanel'>touchOSCPanel</a> </li>
+<li class='toc3'><a href='#-buffersPanel'>buffersPanel</a> </li>
+<li class='toc3'><a href='#-randomBufferSelect'>randomBufferSelect</a> </li>
+</ul><li class='toc2'><a href='#Introspection'>Introspection</a></li>
+<ul class='toc'><li class='toc3'><a href='#-recorder'>recorder</a> </li>
+<li class='toc3'><a href='#-loopLengths'>loopLengths</a> </li>
+<li class='toc3'><a href='#-usedBuffers'>usedBuffers</a> </li>
+<li class='toc3'><a href='#-lastBufnum'>lastBufnum</a> </li>
+<li class='toc3'><a href='#-numChannels'>numChannels</a> </li>
+<li class='toc3'><a href='#-buffers'>buffers</a> </li>
+<li class='toc3'><a href='#-backupBuffers'>backupBuffers</a> </li>
+<li class='toc3'><a href='#-name'>name</a> </li>
+<li class='toc3'><a href='#-isSampling'>isSampling</a> </li>
+<li class='toc3'><a href='#-bufLength'>bufLength</a> </li>
+<li class='toc3'><a href='#-server'>server</a> </li>
+<li class='toc3'><a href='#-isSetUp'>isSetUp</a> </li>
+</ul><li class='toc2'><a href='#Helpers'>Helpers</a></li>
+<ul class='toc'><li class='toc3'><a href='#-setInputCompressor'>setInputCompressor</a> </li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#SNSampler'>SNSampler</a></span>
+</div><h1>SNSampler<span id='superclasses'> : <a href="../Classes/AbstractSNSampler.html">AbstractSNSampler</a> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>A classic sampler that lets you sample sequences of sounds up to a specified length.</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/SNSampler/SNSampler.sc' title='/home/stefan/.local/share/SuperCollider/Extensions/SNSampler/SNSampler.sc'>SNSampler.sc</a></div><div id='related'>See also: <a href="./../Classes/SNSamplePlayer.html">SNSamplePlayer</a>, <a href="./../Classes/AbstractSNSampler.html">AbstractSNSampler</a>, <a href="./../Classes/CVCenter.html">CVCenter</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>An SNSampler lets you record sequences of sound up to a specified length. When you instantiate a new SNSampler an array of consecutive empty buffers of equal length will be created. The length of these buffers determines how long the sequences <em>can</em> be. The actual sampling is started be executing the <a href="#-sample">-sample</a> method with a boolean argument <code>true</code>. Again executing the same method with an argument <code>false</code>. The length of the recorde sound will be stored in a variable <a href="#-loopLengths">-loopLengths</a> which stores the lengths of of all currently recorded sequences in values between <code>0</code> and <code>1</code> (<code>1</code> represents the longest possible sequence).<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>SNSampler.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>name: 'Sampler'</span>, <span class='argstr'>numBuffers: 5</span>, <span class='argstr'>bufLength: 60</span>, <span class='argstr'>numChannels: 1</span>, <span class='argstr'>server</span>, <span class='argstr'>touchOSC</span>, <span class='argstr'>touchOSCPanel: 1</span>, <span class='argstr'>buffersPanel: 4</span>)</h3>
+<div class='method'>
+<p>Create a new SNSampler instance.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>Optional - a <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a> denoting the name for the new instance. If not given this will default to <code>\sampler</code>.<tr><td class='argumentname'>numBuffers<td class='argumentdesc'>
+<p>Optional - a <a href="./../Classes/Integer.html">Integer</a> denoting the number of consecutive buffers to be allocated. If not given this will default to <code>5</code>.<tr><td class='argumentname'>bufLength<td class='argumentdesc'>
+<p>Optional - the lengths of the allocated (audio) <a href="./../Classes/Buffer.html">Buffer</a>s in seconds. If not given this will default to <code>60</code>.<tr><td class='argumentname'>numChannels<td class='argumentdesc'>
+<p>Optional - the number of channels for each buffer. If not given this will default to <code>1</code>.<tr><td class='argumentname'>server<td class='argumentdesc'>
+<p>Optional - the <a href="./../Classes/Server.html">Server</a> on which to allocate the audio buffers. If not given this buffers will be allocated on <code>Server.default</code>.<tr><td class='argumentname'>touchOSC<td class='argumentdesc'>
+<p>Optional - a <a href="./../Classes/NetAddr.html">NetAddr</a> under which an installation of the popular TouchOSC OSC controller is running.<div class='note'><span class='notelabel'>NOTE:</span> The address will be used to send feedback to TouchOSC, so you <em>must</em> provide the port under which TouchOSC expects to <em>receive</em> OSC messages! Also, some of the widgets in CVCenter will automatically be connected, based on the IP address provided with the NetAddress. For this to work properly all elements in the TouchOSC interface (provided as layout file with SNSampler) need to be normalized, i.e. their output range must be 0.0-1.0.</div><tr><td class='argumentname'>touchOSCPanel<td class='argumentdesc'>
+<p>Optional - TouchOSC's user interface can be organized in a number of panels. Panels are numbered, beginning from 1. This is also reflected in TouchOSC's commandname structure. E.g. <code>/1/toggle</code> could be a toggle button on TouchOSC's first panel. If not given this will default to <code>1</code>.</table><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an SNSampler</div></div><h3 class='method-code'><span class='method-prefix'>SNSampler.</span><a class='method-name' name='*all' href='./../Overviews/Methods.html#all'>all</a></h3>
+<div class='method'>
+<p><h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Event.html">Event</a>, holding all current SNSampler instances.</div></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setupSampler' href='./../Overviews/Methods.html#setupSampler'>setupSampler</a>(<span class='argstr'>in: 0</span>, <span class='argstr'>doneAction</span>)</h3>
+<div class='method'>
+<p>Before you can actually use the SNSampler instance you must specify the input bus and (probably) a procedure to be executed when sampling is done. Usually you will want to play the buffer that you've just recorded. This procedure should go into <code>doneAction</code>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>in<td class='argumentdesc'>
+<p>An <a href="./../Classes/Integer.html">Integer</a>, denoting the input bus. If not given this will default to <code>0</code>.<tr><td class='argumentname'>doneAction<td class='argumentdesc'>
+<p>A <a href="./../Classes/Function.html">Function</a> denoting the action that should be taken after sampling has been finished.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-recBufnum' href='./../Overviews/Methods.html#recBufnum'>recBufnum</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-recBufnum' href='./../Overviews/Methods.html#recBufnum'>recBufnum</a> = <span class='argstr'>bufnum: 0</span></h3>
+<div class='method'>
+<p>Set the <a href="./../Classes/Buffer.html#-bufnum">buffer number</a> for the next sample or get the current one (respectively, the one used for the last recording). Incoming sound will be recorded to the buffer denoted by this value. It usually should not be necessary to set the buffer number explicitly - the sampler knows which buffers audio has already been written to and will, as long as empty buffers are still available, automatically choose an empty buffer.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bufnum<td class='argumentdesc'>
+<p>An <a href="./../Classes/Integer.html">Integer</a> denoting the bufnum.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-inBus' href='./../Overviews/Methods.html#inBus'>inBus</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-inBus' href='./../Overviews/Methods.html#inBus'>inBus</a> = <span class='argstr'>in: 0</span></h3>
+<div class='method'>
+<p>Set or get the input bus for the sampler. This expects an <a href="./../Classes/Integer.html">Integer</a> or a whole-numbered <a href="./../Classes/Float.html">Float</a>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>in<td class='argumentdesc'>
+<p>An <a href="./../Classes/Integer.html">Integer</a>, denoting the bus from which to read incoming audio.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sample' href='./../Overviews/Methods.html#sample'>sample</a>(<span class='argstr'>bool</span>, <span class='argstr'>bufnum</span>)</h3>
+<div class='method'>
+<p>Start or stop sampling. The buffer to which the sampled audio will be written to is either determined by <a href="#-setBufnum">-setBufnum</a> or, if that method has not been called in advance, the next buffer number. Sampling will usually start at the lowest buffer number in the array of consecutive buffers that have been allocated in <a href="#-setupSampler">-setupSampler</a> or, if <a href="#-randomBufferSelect">-randomBufferSelect</a> has been set to <code>true</code>, at a random buffer number.<div class='note'><span class='notelabel'>NOTE:</span> Calling <code>sample(false)</code> will automatically advance the buffer number for the next recording. Hence, if you want to play back the recorded audio after calling <code>sample(false)</code>, rather use <a href="#-lastBufnum">-lastBufnum</a> than <a href="#-recBufnum">-recBufnum</a>. (see example at the bottom for a minimal playback setup).</div><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>bool<td class='argumentdesc'>
+<p>A <a href="./../Classes/Boolean.html">Boolean</a> determining whether sampling should be started or stopped.<tr><td class='argumentname'>bufnum<td class='argumentdesc'>
+<p>A <a href="./../Classes/Integer.html">Integer</a>, denoting the <a href="./../Classes/Buffer.html#-bufnum">bufnum</a> to which audio shall be recorded. If not provided the sampler will either write to the next available bufnum or use a random bufnum if <a href="#-randomBufferSelect">-randomBufferSelect</a> has been set to <code>true</code>.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-scope' href='./../Overviews/Methods.html#scope'>scope</a></h3>
+<div class='method'>
+<p>Open a <a href="./../Classes/Stethoscope.html">Stethoscope</a>, displaying the currently recorded audio. This method will be called automatically when calling <a href="./../-setupSampler">-setupSampler</a> but can be called anytime to recreate the stethoscope e.g. if it has been closed accidently.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-reset' href='./../Overviews/Methods.html#reset'>reset</a>(<span class='argstr'>index</span>, <span class='argstr'>doneAction</span>)</h3>
+<div class='method'>
+<p>Reset one or all buffers. Recorded audio will be reset to zero, the <a href="#-loopLengths">-loopLengths</a> will be reset and, if given, <code>doneAction</code> will be executed.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>index<td class='argumentdesc'>
+<p>An <a href="./../Classes/Integer.html">Integer</a>, denoting the buffer number that should be reset.<tr><td class='argumentname'>doneAction<td class='argumentdesc'>
+<p>A <a href="./../Classes/Function.html">Function</a> that will be executed upon reseting the buffer(s)</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-quit' href='./../Overviews/Methods.html#quit'>quit</a></h3>
+<div class='method'>
+<p>Quit the sampler and free all resources except CVWidgets. After calling this method a new SNSampler of the same name can be initialized. CVWidgets created for the old SNSampler will still work with the new one.</div><h3><a class='anchor' name='Instance%20variables%20-%20getters%20and%20setters'>Instance variables - getters and setters</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doneAction' href='./../Overviews/Methods.html#doneAction'>doneAction</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-doneAction' href='./../Overviews/Methods.html#doneAction'>doneAction</a> = value</h3>
+<div class='method'>
+<p>An action to be executed immediately after recording audio has been finished. This could e.g. be some synth that plays back the recorded audio but can be anything. The <code>doneAction</code> must be given as a <a href="./../Classes/Function.html">Function</a>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-touchOSC' href='./../Overviews/Methods.html#touchOSC'>touchOSC</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-touchOSC' href='./../Overviews/Methods.html#touchOSC'>touchOSC</a> = value</h3>
+<div class='method'>
+<p>Set the <a href="./../Classes/NetAddr.html">NetAddr</a> under which an installation of TouchOSC will be communicating with the sampler.<div class='note'><span class='notelabel'>NOTE:</span> The port given in the NetAddr will be the port under which TouchOSC is <em>listening</em> to OSC messages coming from SuperCollider!</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-touchOSCPanel' href='./../Overviews/Methods.html#touchOSCPanel'>touchOSCPanel</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-touchOSCPanel' href='./../Overviews/Methods.html#touchOSCPanel'>touchOSCPanel</a> = value</h3>
+<div class='method'>
+<p>TouchOSC's graphical user interface is typically organized in panels. A toggle button on the first panel may be addressed through the following command name: <code>/1/toggle1</code>. The <code>touchOSCPanel</code> should allow you to specify the panel under which buttons connected to the SNSampler live.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-buffersPanel' href='./../Overviews/Methods.html#buffersPanel'>buffersPanel</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-buffersPanel' href='./../Overviews/Methods.html#buffersPanel'>buffersPanel</a> = value</h3>
+<div class='method'>
+<p>A page in a TouchOSC GUI that is used select pre-recorded soundfiles. Default: <code>4</code></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-randomBufferSelect' href='./../Overviews/Methods.html#randomBufferSelect'>randomBufferSelect</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-randomBufferSelect' href='./../Overviews/Methods.html#randomBufferSelect'>randomBufferSelect</a> = value</h3>
+<div class='method'>
+<p>Determine whether the next buffer for audio recording should be selected randomly. Even if this is set to <code>true</code> SNSampler will always try to select a buffer that has not yet been used for recording (only if all buffers have already been filled it will start overwriting already recorded audio).</div><h3><a class='anchor' name='Introspection'>Introspection</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-recorder' href='./../Overviews/Methods.html#recorder'>recorder</a></h3>
+<div class='method'>
+<p>The internal <a href="./../Classes/NodeProxy.html">NodeProxy</a> that is used to read and record incoming audio.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a <a href="./../Classes/NodeProxy.html">NodeProxy</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-loopLengths' href='./../Overviews/Methods.html#loopLengths'>loopLengths</a></h3>
+<div class='method'>
+<p>As already described buffers within SNSampler have a fixed maximum length. That means, if you write audio to them, buffers will likely not be filled completely. However SNSampler keeps track of the actual length of audio data within each buffer. A length of <code>0</code> means no audio has been written to the buffer (the whole buffer is filled with zeros) whereas <code>1</code> means the buffer is filled completely. <code>0.5</code> means exactly half of the buffer is filled (starting at the beginning of the buffer). The value is simply the ratio of the total buffer length by the length of the recorded audio.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Float.html">Float</a>s, resembling to the number of buffers</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-usedBuffers' href='./../Overviews/Methods.html#usedBuffers'>usedBuffers</a></h3>
+<div class='method'>
+<p>The buffers that have already been written audio to.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Array.html">Array</a> of integers, denoting the buffer numbers that already contain recorded audio data</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-lastBufnum' href='./../Overviews/Methods.html#lastBufnum'>lastBufnum</a></h3>
+<div class='method'>
+<p>When recording is stopped by calling <a href="#-sample">-sample</a><code>(false)</code> bufnum will automatically be advanced to the next usable bufnum. The variable <code>lastBufnum</code> will automatically return the last used bufnum, so the buffer can be played back easily (see example at the bottom).</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-numChannels' href='./../Overviews/Methods.html#numChannels'>numChannels</a></h3>
+<div class='method'>
+<p>The number of channels for each Buffer allocated when initializing a new SNSampler. Allocating the buffers is done by calling <a href="./../Classes/Buffer.html#*allocConsecutive">Buffer: *allocConsecutive</a> which only allows setting the same number of channels for all allocated buffers. By default this will be <code>1</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-buffers' href='./../Overviews/Methods.html#buffers'>buffers</a></h3>
+<div class='method'>
+<p>Returns the array of consecutive buffers, allocated when the SNSampler was initialized.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-backupBuffers' href='./../Overviews/Methods.html#backupBuffers'>backupBuffers</a></h3>
+<div class='method'>
+<p>In an <a href="./../Classes/SNSamplePlayer.html">SNSamplePlayer</a> not only sounds sampled live within SNSampler can be used but also prerecorded soundfiles. If a prerecorded sound is used a buffer in the <a href="./../-buffers">-buffers</a> array will be replaced by that sound. The replaced buffer will be backed up in <code>backupBuffers</code> along with the length of the actually recorded audio in seconds under the same index as in the <code>buffers</code> array. Contrary to the <code>buffers</code> array, <code>backupBuffers</code> is an array of events:<textarea class='editor'>[
+    (buffer:&lt;buffer 1&gt;, length:&lt;length of recorded audio in buffer 1&gt;),
+    (buffer:&lt;buffer 2&gt;, length:&lt;length of recorded audio in buffer 2&gt;),
+    ...
+    (buffer:&lt;buffer N&gt;, length:&lt;length of recorded audio in buffer N&gt;),
+]</textarea>
+
+<p>Keeping the extra information on the length of the recorded audio allows for recreating the correct specs again, if the backed up buffer is used again.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-name' href='./../Overviews/Methods.html#name'>name</a></h3>
+<div class='method'>
+<p>The name of the SNSampler. By default this will be <code>'Sampler'</code>.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isSampling' href='./../Overviews/Methods.html#isSampling'>isSampling</a></h3>
+<div class='method'>
+<p>Either <code>true</code> or <code>false</code>, depending on whether the sampler is currently recording audio.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-bufLength' href='./../Overviews/Methods.html#bufLength'>bufLength</a></h3>
+<div class='method'>
+<p>The length of each buffer in the array of consecutive buffers in seconds.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-server' href='./../Overviews/Methods.html#server'>server</a></h3>
+<div class='method'>
+<p>The <a href="./../Classes/Server.html">Server</a> on which the biffer have been allocated.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isSetUp' href='./../Overviews/Methods.html#isSetUp'>isSetUp</a></h3>
+<div class='method'>
+<p>Return whether the sampler has been fully set up.</div><h3><a class='anchor' name='Helpers'>Helpers</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setInputCompressor' href='./../Overviews/Methods.html#setInputCompressor'>setInputCompressor</a>(<span class='argstr'>thresh: 0.5</span>, <span class='argstr'>slopeBelow: 0.03</span>, <span class='argstr'>slopeAbove: 0.15</span>, <span class='argstr'>clampTime: 0.01</span>, <span class='argstr'>relaxTime: 0.23</span>)</h3>
+<div class='method'>
+<p>The input of the sampler may be sent through a comressor before recording it - probably not necessary in many cases but it may help amplifying a very low level signal. Note that this may also create noising. The arguments follow the arguments to a <a href="./../Classes/Compander.html">Compander</a> ugen, except for <code>in</code>, <code>control</code>, <code>mul</code>, <code>add</code> which are omitted here.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>thresh<td class='argumentdesc'>
+<p>Ampplitude threshold. Default: <code>0.5</code>.<tr><td class='argumentname'>slopeBelow<td class='argumentdesc'>
+<p>Slope of applied amplitude curve if control signal amplitude is below thresh. If &gt; 1.0, the amplitude drops off more quickly the softer the control signal gets; when the control signal is close to 0 amplitude, the output should be exactly zero -- hence, noise gating. Values &lt; 1.0 are possible, but it means that a very low-level control signal will cause the input signal to be amplified, which would raise the noise floor. Default: <code>0.03</code>.<tr><td class='argumentname'>slopeAbove<td class='argumentdesc'>
+<p>Slope of applied amplitude curve if control signal amplitude is above thresh. Values &lt; 1.0 achieve compression (louder signals are attenuated) whereas values &gt; 1.0 expand (louder signals are made even louder). A value of 1/3 achieves a 3:1 compression. Default: <code>0.15</code>.<tr><td class='argumentname'>clampTime<td class='argumentdesc'>
+<p>Time (in seconds) it takes for the amplitude adjustment to kick in fully after the control signal is above thresh. Usually a small value around 10ms (0.01), often set as low as 2ms (0.002). Default: <code>0.01</code>.<tr><td class='argumentname'>relaxTime<td class='argumentdesc'>
+<p>Time (in seconds) for the amplitude adjustment to be released (control signal below thresh). Usually longer than clampTime; depending on the input and control signal, setting both times too short results in (possibly unwanted) artifacts. Default: <code>0.23</code></table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>// create a new sampler with default parameters
+~sampler = SNSampler.new;
+
+// set up sampler: boot server, create widgets in CVCenter
+// doneAction can be set within setupSampler or later
+(
+~sampler.setupSampler(doneAction: {{
+    PlayBuf.ar(
+        ~sampler.numChannels,
+        ~sampler.lastBufnum,
+        doneAction: Done.freeSelf
+    )
+}.play });
+)
+
+// record some audio
+~sampler.sample(true);
+
+// stop recording
+// recorded audio should be played back immediately
+~sampler.sample(false);</textarea>
+
+<p>For a more complex example have a look at <a href="./../Classes/SNSamplePlayer.html">SNSamplePlayer</a>.<div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/SNSampler/HelpSource/Classes/SNSampler.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/SNSampler/HelpSource/Classes/SNSampler.schelp</a><br>link::Classes/SNSampler::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+</body></html>

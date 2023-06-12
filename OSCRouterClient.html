@@ -1,0 +1,177 @@
+<!doctype html><html lang='en'><head><title>OSCRouterClient | SuperCollider 3.13.0 Help</title>
+<link rel='stylesheet' href='./scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./editor.css' type='text/css' />
+<link rel='stylesheet' href='./frontend.css' type='text/css' />
+<link rel='stylesheet' href='./custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./lib/jquery.min.js'></script>
+<script src='./lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = '.';
+var scdoc_title = 'OSCRouterClient';
+var scdoc_sc_version = '3.13.0';
+</script>
+<script src='./scdoc.js' type='text/javascript'></script>
+<script src='./docmap.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>OSCRouterClient:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*exists'>exists</a> </li>
+<li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc3'><a href='#*groups'>groups</a> </li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-serverAddr'>serverAddr</a>  <a href='#-userName'>userName</a>  <a href='#-userPassword'>userPassword</a>  <a href='#-groupName'>groupName</a>  <a href='#-groupPassword'>groupPassword</a>  <a href='#-serverport'>serverport</a> </li>
+<li class='toc3'><a href='#-onJoined'>onJoined</a> </li>
+<li class='toc3'><a href='#-join'>join</a> </li>
+<li class='toc3'><a href='#-close'>close</a> </li>
+<li class='toc3'><a href='#-isConnected'>isConnected</a> </li>
+<li class='toc3'><a href='#-hasJoined'>hasJoined</a> </li>
+<li class='toc3'><a href='#-peers'>peers</a> </li>
+<li class='toc3'><a href='#-sendMsg'>sendMsg</a> </li>
+<li class='toc3'><a href='#-sendMsgArray'>sendMsgArray</a> </li>
+<li class='toc3'><a href='#-addResp'>addResp</a> </li>
+<li class='toc3'><a href='#-removeResp'>removeResp</a> </li>
+<li class='toc3'><a href='#-responderFuncs'>responderFuncs</a> </li>
+<li class='toc3'><a href='#-responders'>responders</a> </li>
+<li class='toc3'><a href='#-sendMsgToUser'>sendMsgToUser</a> </li>
+<li class='toc3'><a href='#-addPrivateResp'>addPrivateResp</a> </li>
+<li class='toc3'><a href='#-removePrivateResp'>removePrivateResp</a> </li>
+<li class='toc3'><a href='#-privateResponderFuncs'>privateResponderFuncs</a> </li>
+<li class='toc3'><a href='#-netAddr'>netAddr</a> </li>
+<li class='toc3'><a href='#-tcpRecvPort'>tcpRecvPort</a> </li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'> (extension)</span>
+<span id='categories'><a href='./Browse.html#Networking'>Networking</a></span>
+</div><h1>OSCRouterClient<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Connecting sclang across the internet</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./Classes/SyncText.html">SyncText</a>, <a href="./Reference/OpenSoundControl">OpenSoundControl</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>OSCRouterClient is an interface to connect by TCP to an instance of tcposcrouter by Bruno Gola, see <a href="https://github.com/bgola/tcposcrouter">https://github.com/bgola/tcposcrouter</a>.
+<p>Like OSCgroups, it forwards incoming messages to all connected clients except the sender. It also sends a current userlist whenever logins change.
+<p>running on a webserver, e.g. on "bgo.la"
+<p>First code examples:<textarea class='editor'>(
+// make a client that joins the default group on bgola's server:
+~ex1 = OSCRouterClient(\ex1, serverAddr: "bgo.la", userPassword: \ex1);
+//// add a responder before joining
+~ex1.addResp(\test, { |msg| [~ex1.userName, msg].postcs });
+~ex1.join;
+)
+// shows up in the current groups now:
+OSCRouterClient.groups;
+
+//// add a second client with a different name:
+~ex2  = OSCRouterClient(\ex2a, serverAddr: "bgo.la");
+// add responder after joining
+~ex2.join({ ~ex2.addResp(\test, { |msg| [~ex2.userName, msg].postcs }) });
+
+~ex1.sendMsg(\test, "yoohoo!");
+~ex2.sendMsg(\test, "who yoo?");
+
+// update the responders:
+~ex1.addResp(\test, { |msg| "~ex1 got: %\n".postf(msg) });
+~ex2.addResp(\test, { |msg| "~ex2 got: %\n".postf(msg) });
+
+~ex1.sendMsg(\test, "yoohoo!");
+~ex2.sendMsg(\test, "who yoo?");
+
+// private messages:
+~ex1.addPrivateResp(\whispa, { |name, msg| "~ex1 pssss from %: %\n".postf(name, msg.drop(1)) });
+~ex2.addPrivateResp(\whispa, { |name, msg| "~ex2 pssss from %: %\n".postf(name, msg.drop(1)) });
+
+~ex1.sendPrivate(~ex1.userName, \whispa, "whisper to myself???");
+~ex1.sendPrivate(~ex2.userName, \whispa, "hey ex2, dont tell anyone, but...");
+~ex2.sendPrivate(~ex1.userName, \whispa, "wow ex1, I heard that this is not just a rumor ...");</textarea>
+<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*exists' href='./Overviews/Methods.html#exists'>exists</a></h3>
+<div class='method'>
+<p>Check whether a client with these args already exists. This is used to prevent multiple identical clients.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>serverAddr<td class='argumentdesc'><tr><td class='argumentname'>userName<td class='argumentdesc'><tr><td class='argumentname'>groupName<td class='argumentdesc'></table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*new' href='./Overviews/Methods.html#new'>new</a></h3>
+<div class='method'>
+<p>create a new client with:<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>userName<td class='argumentdesc'>
+<p>the userName with which to login<tr><td class='argumentname'>groupName<td class='argumentdesc'>
+<p>name of the group to join. default is 'oscrouter'<tr><td class='argumentname'>serverAddr<td class='argumentdesc'>
+<p>the address of the server where tcposcrouter runs<tr><td class='argumentname'>userPassword<td class='argumentdesc'>
+<p>userPassword for that userName<tr><td class='argumentname'>groupPassword<td class='argumentdesc'>
+<p>password for the group to join. default is 'oscrouter'<tr><td class='argumentname'>serverport<td class='argumentdesc'>
+<p>optional: on which port to log into the server<tr><td class='argumentname'>onJoined<td class='argumentdesc'>
+<p>function to do when joined</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*groups' href='./Overviews/Methods.html#groups'>groups</a></h3>
+<div class='method'>
+<p>Dictionary of known groups</div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-serverAddr' href='./Overviews/Methods.html#serverAddr'>serverAddr</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-userName' href='./Overviews/Methods.html#userName'>userName</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-userPassword' href='./Overviews/Methods.html#userPassword'>userPassword</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-groupName' href='./Overviews/Methods.html#groupName'>groupName</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-groupPassword' href='./Overviews/Methods.html#groupPassword'>groupPassword</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-serverport' href='./Overviews/Methods.html#serverport'>serverport</a></h3>
+<div class='method'>
+<p>instance variables set on creation</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-onJoined' href='./Overviews/Methods.html#onJoined'>onJoined</a></h3>
+<div class='method'>
+<p>action to run after join succeeded</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-join' href='./Overviews/Methods.html#join'>join</a></h3>
+<div class='method'>
+<p>join the group on the server<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>onSuccess<td class='argumentdesc'>
+<p>function to run when joining succeeded<tr><td class='argumentname'>onFailure<td class='argumentdesc'>
+<p>... or failed</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-close' href='./Overviews/Methods.html#close'>close</a></h3>
+<div class='method'>
+<p>close connection to the server</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-isConnected' href='./Overviews/Methods.html#isConnected'>isConnected</a></h3>
+<div class='method'>
+<p>test whether netAddr is currently connected</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-hasJoined' href='./Overviews/Methods.html#hasJoined'>hasJoined</a></h3>
+<div class='method'>
+<p>test whether client is currently joined group</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-peers' href='./Overviews/Methods.html#peers'>peers</a></h3>
+<div class='method'>
+<p>names of all peers currently in the group</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sendMsg' href='./Overviews/Methods.html#sendMsg'>sendMsg</a></h3>
+<div class='method'>
+<p>send a message to the group</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sendMsgArray' href='./Overviews/Methods.html#sendMsgArray'>sendMsgArray</a></h3>
+<div class='method'>
+<p>expand an array of args to a message and send to the group<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>symbol<td class='argumentdesc'>
+<p>message name<tr><td class='argumentname'>array<td class='argumentdesc'>
+<p>arguments</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addResp' href='./Overviews/Methods.html#addResp'>addResp</a></h3>
+<div class='method'>
+<p>add a responder func by id/message name</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removeResp' href='./Overviews/Methods.html#removeResp'>removeResp</a></h3>
+<div class='method'>
+<p>remove a responder func by id</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-responderFuncs' href='./Overviews/Methods.html#responderFuncs'>responderFuncs</a></h3>
+<div class='method'>
+<p>all current responderFuncs</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-responders' href='./Overviews/Methods.html#responders'>responders</a></h3>
+<div class='method'>
+<p>all currently active OSCFuncs</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-sendMsgToUser' href='./Overviews/Methods.html#sendMsgToUser'>sendMsgToUser</a></h3>
+<div class='method'>
+<p>send a private message to a user in the group<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>name<td class='argumentdesc'>
+<p>name of the user to send to<tr><td class='argumentname'>args<td class='argumentdesc'>
+<p>message name and args to send</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-addPrivateResp' href='./Overviews/Methods.html#addPrivateResp'>addPrivateResp</a></h3>
+<div class='method'>
+<p>add a private responder func by id/message name</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-removePrivateResp' href='./Overviews/Methods.html#removePrivateResp'>removePrivateResp</a></h3>
+<div class='method'>
+<p>remove a private responder func by id/message name</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-privateResponderFuncs' href='./Overviews/Methods.html#privateResponderFuncs'>privateResponderFuncs</a></h3>
+<div class='method'>
+<p>dict of the private responder funcs</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-netAddr' href='./Overviews/Methods.html#netAddr'>netAddr</a></h3>
+<div class='method'>
+<p>the netAddr of the server</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-tcpRecvPort' href='./Overviews/Methods.html#tcpRecvPort'>tcpRecvPort</a></h3>
+<div class='method'>
+<p>the tcp receive port of the server.</div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>_some_example_code_</textarea>
+
+<p><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/HyperDisCo/HelpSource/OSCRouterClient.schelp'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/HyperDisCo/HelpSource/OSCRouterClient.schelp</a><br>link::OSCRouterClient::<br></div></div><script src='./editor.js' type='text/javascript'></script>
+</body></html>
