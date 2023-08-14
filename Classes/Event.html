@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Event | SuperCollider 3.13.0 Help</title>
+<!doctype html><html lang='en'><head><title>Event | SuperCollider 3.14.0-dev Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,10 +12,11 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Event';
-var scdoc_sc_version = '3.13.0';
+var scdoc_sc_version = '3.14.0-dev';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../frontend.js' type='text/javascript'></script>
 <script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
 <body onload='fixTOC()'>
@@ -58,11 +59,7 @@ var scdoc_sc_version = '3.13.0';
 <li class='toc3'><a href='#-resume'>resume</a> </li>
 <li class='toc3'><a href='#-release'>release</a> </li>
 <li class='toc3'><a href='#-set'>set</a> </li>
-</ul><li class='toc3'><a href='#-asESP'>asESP</a> </li>
-<li class='toc3'><a href='#-on'>on</a> </li>
-<li class='toc3'><a href='#-off'>off</a> </li>
-<li class='toc3'><a href='#-eventShortcuts'>eventShortcuts</a> </li>
-<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
 <li class='toc2'><a href='#Undocumented%20instance%20methods'>Undocumented instance methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#-asEvent'>asEvent</a> </li>
 <li class='toc3'><a href='#-asEventStreamPlayer'>asEventStreamPlayer</a> </li>
@@ -103,8 +100,7 @@ var scdoc_sc_version = '3.13.0';
 <div class='subheader'>
 <div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/Event.sc' title='/usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/Event.sc'>Event.sc</a></div><div id='related'>See also: <a href="./../Classes/Pattern.html">Pattern</a>, <a href="./../Classes/Environment.html">Environment</a>, <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a></div>
 </div>
-
-<p><h2><a class='anchor' name='description'>Description</a></h2>
+<h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>An Event specifies an action to be taken in response to a <a href="#-play">-play</a> message. Its key/value pairs specify the parameters of that action. Event inherits most of its methods from its superclasses, especially from <a href="./../Classes/Dictionary.html">Dictionary</a>. For the usage and meaning of the <code>parent</code> and <code>proto</code> events, see <a href="./../Classes/IdentityDictionary.html">IdentityDictionary</a>.<textarea class='editor'>a = (x: 6, y: 7, play: { (~x * ~y).postln });
 a.play; // returns 6 * 7</textarea>
@@ -303,22 +299,7 @@ d.rout.(());</textarea>
 <p>Set a control value in the <a href="./../Classes/Synth.html">Synth</a> or <a href="./../Classes/Group.html">Group</a>. (key1, val1, ....)<textarea class='editor'>a = (note: 2).play;
 a.set(\freq, 700);
 a.release;</textarea>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asESP' href='./../Overviews/Methods.html#asESP'>asESP</a></h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/extOther.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/VarGui/extOther.sc</a></div>
-<div class='method'>
-<p>Abbreviation for asEventStreamPlayer</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-on' href='./../Overviews/Methods.html#on'>on</a></h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/extEvent.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/extEvent.sc</a></div>
-<div class='method'>
-<p>See <a href="./../Tutorials/Other_event_and_pattern_shortcuts.html">Other event and patterns shortcuts</a>. Plays an Event. If <strong>dur</strong> isn't specified it is set to inf.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-off' href='./../Overviews/Methods.html#off'>off</a>(<span class='argstr'>releaseTime</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/extEvent.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib/Classes/Patterns/extEvent.sc</a></div>
-<div class='method'>
-<p>See <a href="./../Tutorials/Other_event_and_pattern_shortcuts.html">Other event and patterns shortcuts</a>. Releases the Event's node. <h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>releaseTime<td class='argumentdesc'>
-<p>SimpleNumber for release time. Defaults to nil (default release time of event mechanism).</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-eventShortcuts' href='./../Overviews/Methods.html#eventShortcuts'>eventShortcuts</a></h3>
-<div class='supmethod'>From superclass: <a href='./../Classes/IdentityDictionary.html'>IdentityDictionary</a></div>
-<div class='method'>
-<p>Wraps the receiver into a Pcollect with a Function that replaces according to EventShortcuts if it's turned on. This can be useful in cases where a pattern's method embedInStream changes keys of Events before applying the event type function, that employs the normal replacement mechanism of EventShortcuts. Then the mapping can be done inside/before. Normally you wouldn't need to call that method explicitely. See also <a href="./../Classes/EventShortcuts.html">EventShortcuts</a>, <a href="./../Classes/Event.html#-eventShortcuts">Event: -eventShortcuts</a>, <a href="./../Classes/SequenceableCollection.html#-eventShortcuts">SequenceableCollection: -eventShortcuts</a> and <a href="./../Tutorials/PLx_and_live_coding_with_Strings.html">PLx and live coding with Strings</a></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+</div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
 <div id='inheritedinstmets'></div><h3><a class='anchor' name='Undocumented%20instance%20methods'>Undocumented instance methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asEvent' href='./../Overviews/Methods.html#asEvent'>asEvent</a></h3>
 <div class='extmethod'>From extension in <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Streams/Rest.sc'>/usr/local/share/SuperCollider/SCClassLibrary/Common/Streams/Rest.sc</a></div>

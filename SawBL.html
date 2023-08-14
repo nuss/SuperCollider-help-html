@@ -1,0 +1,84 @@
+<!doctype html><html lang='en'><head><title>SawBL | SuperCollider 3.14.0-dev Help</title>
+<link rel='stylesheet' href='./scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./editor.css' type='text/css' />
+<link rel='stylesheet' href='./frontend.css' type='text/css' />
+<link rel='stylesheet' href='./custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./lib/jquery.min.js'></script>
+<script src='./lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = '.';
+var scdoc_title = 'SawBL';
+var scdoc_sc_version = '3.14.0-dev';
+</script>
+<script src='./scdoc.js' type='text/javascript'></script>
+<script src='./docmap.js' type='text/javascript'></script>
+<script src='./frontend.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>SawBL:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*ar'>ar</a> </li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'> (extension)</span>
+<span id='categories'><a href='./Browse.html#UGens'>UGens</a>&#8201;&gt;&#8201;<a href='./Browse.html#UGens>Oscillator'>Oscillator</a></span>
+</div><h1>SawBL<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Polynomial Bandlimited Sawtooth</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./SawBL.html">SawBL</a>, <a href="./SquareBL.html">SquareBL</a>, <a href="./TriBL.html">TriBL</a>, <a href="./ImpulseBL.html">ImpulseBL</a>, <a href="./SinOscOS.html">SinOscOS</a>, <a href="./TriOS.html">TriOS</a>, <a href="./SawOS.html">SawOS</a>, <a href="./SquareOS.html">SquareOS</a>, <a href="./VarSawOS.html">VarSawOS</a>, <a href="./PMOscOS.html">PMOscOS</a>, <a href="./PM7OS.html">PM7OS</a>, <a href="./FM7OS.html">FM7OS</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>A Bandlimited Sawtooth wave oscillator based on Julius Smith's PolySaw oscillator in the Faust source. It expands on that algorithm by applying a 4th order polynomial transition to higher frequencies, a 2nd order polynomial to the lower frequencies, and uses a non-bandlimited sawtooth below 1hz.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*ar' href='./Overviews/Methods.html#ar'>ar</a></h3>
+<div class='method'>
+<p><h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>freq<td class='argumentdesc'>
+<p>frequency - FM is possible<tr><td class='argumentname'>iphase<td class='argumentdesc'>
+<p>initial phase<tr><td class='argumentname'>mul<td class='argumentdesc'>
+<p>mul<tr><td class='argumentname'>add<td class='argumentdesc'>
+<p>add</table></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<textarea class='editor'>{SawBL.ar(K2A.ar(MouseX.kr(-1000,10000)), 0, 0.1)}.scope;
+
+//Unlike Saw, phase offset works, but there will be a mulit-sample fade in:
+{SawBL.ar(100, 0.5)}.plot(0.001);
+{SawBL.ar(100, 0.5)}.plot(5/s.sampleRate);
+
+//Frequency modulation is possible
+({SawBL.ar(MouseX.kr(200,4000)+
+    (LFSaw.ar(MouseY.kr(200,4000))*3000)).dup*0.2
+}.play)
+
+//SawOS, the oversampled Saw, might be preferable
+({SawOS.ar(MouseX.kr(200,4000)+
+    (LFSaw.ar(MouseY.kr(200,4000))*3000), 0, 4).dup*0.2
+}.play)
+
+//Extreme Modulation is possible.
+
+({
+    var locIn=LocalIn.ar(1);
+    var feedbackMul = 5000;
+    var mod = feedbackMul*SawBL.ar((MouseY.kr(0, 8000)+(locIn*2000)));
+
+    var car = SawBL.ar(
+        (MouseX.kr(1, 8000)
+            +(mod)), 0,1);
+    LocalOut.ar(car);
+    car.dup*0.2
+}.scope)</textarea>
+
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/OversamplingOscillators/HelpSource/SawBL.schelp'>/usr/local/share/SuperCollider/Extensions/OversamplingOscillators/HelpSource/SawBL.schelp</a><br>link::SawBL::<br></div></div><script src='./editor.js' type='text/javascript'></script>
+</body></html>

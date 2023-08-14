@@ -1,0 +1,200 @@
+<!doctype html><html lang='en'><head><title>PM7OS | SuperCollider 3.14.0-dev Help</title>
+<link rel='stylesheet' href='./scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./codemirror.css' type='text/css' />
+<link rel='stylesheet' href='./editor.css' type='text/css' />
+<link rel='stylesheet' href='./frontend.css' type='text/css' />
+<link rel='stylesheet' href='./custom.css' type='text/css' />
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script src='./lib/jquery.min.js'></script>
+<script src='./lib/codemirror-5.39.2.min.js' type='text/javascript'></script>
+<script src='./lib/codemirror-addon-simple-5.39.2.min.js' type='text/javascript'></script>
+<script>
+var helpRoot = '.';
+var scdoc_title = 'PM7OS';
+var scdoc_sc_version = '3.14.0-dev';
+</script>
+<script src='./scdoc.js' type='text/javascript'></script>
+<script src='./docmap.js' type='text/javascript'></script>
+<script src='./frontend.js' type='text/javascript'></script>
+<script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC()'>
+<div id='toc'>
+<div id='toctitle'>PM7OS:</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*ar'>ar</a> </li>
+<li class='toc3'><a href='#*arAlgo'>arAlgo</a> </li>
+</ul><li class='toc1'><a href='#Examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div id='menubar'></div>
+<div class='contents'>
+<div class='header'>
+<div id='label'>
+<span id='folder'> (extension)</span>
+<span id='categories'><a href='./Browse.html#UGens'>UGens</a>&#8201;&gt;&#8201;<a href='./Browse.html#UGens>Oscillator'>Oscillator</a></span>
+</div><h1>PM7OS<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>Oversampled phase modulation oscillator matrix.</div>
+</div>
+<div class='subheader'>
+<div id='related'>See also: <a href="./SawBL.html">SawBL</a>, <a href="./SquareBL.html">SquareBL</a>, <a href="./TriBL.html">TriBL</a>, <a href="./ImpulseBL.html">ImpulseBL</a>, <a href="./SinOscOS.html">SinOscOS</a>, <a href="./TriOS.html">TriOS</a>, <a href="./SawOS.html">SawOS</a>, <a href="./SquareOS.html">SquareOS</a>, <a href="./VarSawOS.html">VarSawOS</a>, <a href="./PMOscOS.html">PMOscOS</a>, <a href="./PM7OS.html">PM7OS</a>, <a href="./FM7OS.html">FM7OS</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>PM7OS implements a 6x6 oscillator matrix, where each oscillator's phase can be modulated by any of the other oscillators' output. This is the same circuit as Stefan Kersten's classic FM7, but now with oversampling to encourage extreme settings. This UGen is overly luxurious and not at all efficient as all inputs are audio rate at all times.
+<p>While fully functional, some outcomes are different from FM7, so I would say this is still a work in progress.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*ar' href='./Overviews/Methods.html#ar'>ar</a></h3>
+<div class='method'>
+<p>The UGen expects two matrices: one for oscillator parameter control, one for phase modulation. It outputs six channels, one for each oscillator. To select specific outputs, you can use array methods like <code>at(indices)</code> or <code>slice(indices)</code>.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>ctlMatrix<td class='argumentdesc'>
+<p>specifies the three parameters <strong>frequency</strong> (can be modulated at control rate), <strong>phase</strong> (set at initialization only) and <strong>amplitude</strong>.(control rate):<textarea class='editor'>// freq, phase, amp
+[ [ 300, 0,    1   ],
+  [ 400, pi/2, 1   ],
+  [ 730, 0,    0.5 ],
+  [ 0,   0,    0   ],
+  [ 0,   0,    0   ],
+  [ 0,   0,    0   ] ]</textarea>
+<tr><td class='argumentname'>modMatrix<td class='argumentdesc'>
+<p>The modulation matrix specifies the amount of modulation each oscillator output has on another oscillator's phase. Row i in the matrix refer to oscillator i's phase input and the columns denote the amount of phase modulation in radians. NOTE THAT THE PHASE VALUES ARE BETWEEN 0 AND 2 INSTEAD OF 0 AND 2pi, SO FM7 MOD MADRIX NEEDS TO BE DIVIDED BY PI TO GET SIMILAR RESULTS TO FM7.
+<p>The UGen outputs the six individual oscillator signals.<textarea class='editor'>(
+{
+    var ctls, mods, chans;
+    ctls = [
+        // freq, phase, amp
+        [LFNoise1.kr(0.5).range(300, 310), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 310), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 100), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 100), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 100), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 100), 0, 1]
+    ];
+    mods = [
+        [Line.kr(0, 0.001, 2), Line.kr(0.1, 0, 4), 0, MouseY.kr(0, 6), 0, 0],
+        [MouseX.kr(0, 6), 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+    ];
+    chans = [0, 1];
+    PM7OS.ar(ctls, mods, 4).slice(chans) * -12.dbamp; // using "slice" to select specific channels
+}.play;
+)</textarea>
+</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='*arAlgo' href='./Overviews/Methods.html#arAlgo'>arAlgo</a></h3>
+<div class='method'>
+<p>Provided a number for a wiring (called 'algorithm' in the FM-world), returns an instance that has this setup. All 32 algorithms from the DX7 are implemented.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>algo<td class='argumentdesc'>
+<p>The id of the algorithms [0..31]
+<p>the algo argument chooses the algorithm when the ugen is instantiated. It cannot be modulated.<tr><td class='argumentname'>ctlMatrix<td class='argumentdesc'>
+<p>See above.<tr><td class='argumentname'>feedback<td class='argumentdesc'>
+<p>One global parameter used in all places where the interconnections result in feedback.<textarea class='editor'>(
+{
+    var ctls = [
+        // freq, phase, amp
+        [LFNoise1.kr(0.5).range(300, 310), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 310), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 100), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 100), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 100), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 100), 0, 1]
+    ];
+    PM7OS.arAlgo(1, ctls, MouseX.kr(0, 2)/pi, 4)*0.2
+}.play
+
+)
+
+//pretty close to the original
+(
+{
+    var ctls = [
+        // freq, phase, amp
+        [LFNoise1.kr(0.5).range(300, 310), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 310), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 100), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 100), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 100), 0, 1],
+        [LFNoise1.kr(0.5).exprange(3, 100), 0, 1]
+    ];
+    FM7.arAlgo(1, ctls, MouseX.kr(0, 2), 4)*0.2
+}.play
+
+)</textarea>
+</table></div><h2><a class='anchor' name='Examples'>Examples</a></h2>
+<textarea class='editor'>(
+{
+    var ctls, mods, chans, freq;
+    freq = LFNoise0.kr(3).exprange(200, 310);
+    ctls = [
+        // freq, phase, amp
+        [freq, 0, 1],
+        [freq, 0, 1],
+        [LFNoise2.kr(0.5).exprange(3, 80), 0, 1],
+        [LFNoise2.kr(0.5).exprange(3, 800), 0, 1],
+        [LFNoise2.kr(0.5).exprange(3, 800), 0, 1],
+        [LFNoise2.kr(0.5).exprange(0.3, 10), 0, 1]
+    ];
+    mods = [
+        { LFNoise1.kr(0.5).max(0) } ! 6 * MouseX.kr(0, 3),
+        { LFNoise1.kr(0.5).max(0) } ! 6 * MouseY.kr(0, 3),
+        { LFNoise1.kr(0.5).max(0) } ! 6 * MouseY.kr(0, 3),
+        { LFNoise1.kr(0.5).max(0) } ! 6 * MouseX.kr(0, 3),
+        { LFNoise1.kr(0.5).max(0) } ! 6 * MouseY.kr(0, 3),
+        { LFNoise1.kr(0.5).max(0) } ! 6 * MouseY.kr(0, 3)
+    ];
+    chans = PM7OS.ar(ctls, mods/pi, 4).slice([0, 1]) * -12.dbamp;
+}.play;
+)
+
+
+(
+// Courtesy Fredrik Olofsson (2008)
+Routine.run{
+    var syn, time = 3; // Allow each patch to run for 3 secs
+    inf.do{|i|
+        ("// FM7 patch"+i).post;
+        syn= ("
+            (
+            var x= #"++({{{ |i| rrand(0.5, 1.5).round(0.5)}!4}!3}!6).asCompileString++";
+            var y= #"++({{{ |i| rrand(0.2, 1.6).round(0.5)}!4}!6}!6).asCompileString++";
+            {
+                var ctls= x.collect{|a| a.collect{|b| LFSaw.ar(*b)}};
+                var mods= y.collect{|a| a.collect{|b| LFPulse.kr(*b)}};
+                var chans= #[0, 1];
+                PM7OS.ar(ctls, mods/(1pi), 1).slice(chans)*0.8;
+            }.play)").postln.interpret;
+        time.wait;
+        syn.free;
+    };
+};
+)
+
+//audio rate inputs can be used in all input parameters
+(
+{
+    var ctls, mods, chans;
+    ctls = [
+        // freq, phase, amp
+        [MouseX.kr(2, 2000), 0, LFPulse.ar(LFNoise2.ar(1).range(10,100)).lag(0.02)],
+        [MouseY.kr(2, 2000), 0, LFPulse.ar(LFNoise2.ar(1).range(10,100)).lag(0.02)],
+        [LFNoise2.ar(100).range(800,1000), 0, 1],
+        [300+SinOsc.ar(301,0,1000), 0, 1],
+        [10, 0, 1],
+        [LFNoise0.ar(20).range(300,1000), 0, 1]
+    ];
+    mods = [
+        [0.1, 0, LFNoise2.ar(0.3).range(0.1,0.5), 0, 0, 0],
+        [LFNoise2.ar(0.34).range(0,1), 0, 0, 0, 0, 0],
+        [0, 0, 0, 0.02, 0, 1],
+        [0, 0, 0, 0, WhiteNoise.ar(1), 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+    ];
+    chans = [0,1];
+    PM7OS.ar(ctls, mods*2, 4).slice(chans) * 0.3;
+}.scope;
+)</textarea>
+
+<p><div class='doclink'>helpfile source: <a href='file:///usr/local/share/SuperCollider/Extensions/OversamplingOscillators/HelpSource/PM7OS.schelp'>/usr/local/share/SuperCollider/Extensions/OversamplingOscillators/HelpSource/PM7OS.schelp</a><br>link::PM7OS::<br></div></div><script src='./editor.js' type='text/javascript'></script>
+</body></html>

@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><title>Array | SuperCollider 3.13.0 Help</title>
+<!doctype html><html lang='en'><head><title>Array | SuperCollider 3.14.0-dev Help</title>
 <link rel='stylesheet' href='./../scdoc.css' type='text/css' />
 <link rel='stylesheet' href='./../codemirror.css' type='text/css' />
 <link rel='stylesheet' href='./../editor.css' type='text/css' />
@@ -12,10 +12,11 @@
 <script>
 var helpRoot = './..';
 var scdoc_title = 'Array';
-var scdoc_sc_version = '3.13.0';
+var scdoc_sc_version = '3.14.0-dev';
 </script>
 <script src='./../scdoc.js' type='text/javascript'></script>
 <script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../frontend.js' type='text/javascript'></script>
 <script src='qrc:///qtwebchannel/qwebchannel.js' type='text/javascript'></script>
 </head>
 <body onload='fixTOC()'>
@@ -39,8 +40,6 @@ var scdoc_sc_version = '3.13.0';
 <li class='toc3'><a href='#*linrand'>linrand</a> </li>
 <li class='toc3'><a href='#*exprand'>exprand</a> </li>
 <li class='toc3'><a href='#*fib'>fib</a> </li>
-<li class='toc3'><a href='#*zeroFill'>zeroFill</a> </li>
-<li class='toc3'><a href='#*regularPolygon'>regularPolygon</a> </li>
 <li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
 <li class='toc2'><a href='#Undocumented%20class%20methods'>Undocumented class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*fillNoteNames'>fillNoteNames</a> </li>
@@ -121,7 +120,6 @@ var scdoc_sc_version = '3.13.0';
 <li class='toc3'><a href='#-asAudioRateInput'>asAudioRateInput</a> </li>
 <li class='toc3'><a href='#-asControlInput'>asControlInput</a> </li>
 <li class='toc3'><a href='#-asNote'>asNote</a> </li>
-<li class='toc3'><a href='#-asRewritingRule'>asRewritingRule</a> </li>
 <li class='toc3'><a href='#-asSpec'>asSpec</a> </li>
 <li class='toc3'><a href='#-asUGenInput'>asUGenInput</a> </li>
 <li class='toc3'><a href='#-atB'>atB</a> </li>
@@ -142,7 +140,6 @@ var scdoc_sc_version = '3.13.0';
 <li class='toc3'><a href='#-cvWidgetDisconnect'>cvWidgetDisconnect</a> </li>
 <li class='toc3'><a href='#-deinterlace'>deinterlace</a> </li>
 <li class='toc3'><a href='#-disconnect'>disconnect</a> </li>
-<li class='toc3'><a href='#-eliminateMatrix'>eliminateMatrix</a> </li>
 <li class='toc3'><a href='#-envAt'>envAt</a> </li>
 <li class='toc3'><a href='#-envirPairsWithIndex'>envirPairsWithIndex</a> </li>
 <li class='toc3'><a href='#-fastAtL'>fastAtL</a> </li>
@@ -155,7 +152,6 @@ var scdoc_sc_version = '3.13.0';
 <li class='toc3'><a href='#-interpolate'>interpolate</a> </li>
 <li class='toc3'><a href='#-linearInt'>linearInt</a> </li>
 <li class='toc3'><a href='#-madd'>madd</a> </li>
-<li class='toc3'><a href='#-matchForRewriting'>matchForRewriting</a> </li>
 <li class='toc3'><a href='#-midiname'>midiname</a> </li>
 <li class='toc3'><a href='#-modeAt'>modeAt</a> </li>
 <li class='toc3'><a href='#-namecps'>namecps</a> </li>
@@ -169,8 +165,6 @@ var scdoc_sc_version = '3.13.0';
 <li class='toc3'><a href='#-quadIntControl'>quadIntControl</a> </li>
 <li class='toc3'><a href='#-quadIntFunction'>quadIntFunction</a> </li>
 <li class='toc3'><a href='#-resize'>resize</a> </li>
-<li class='toc3'><a href='#-rewritingContextFree'>rewritingContextFree</a> </li>
-<li class='toc3'><a href='#-rewritingRuleSize'>rewritingRuleSize</a> </li>
 <li class='toc3'><a href='#-rotateL'>rotateL</a> </li>
 <li class='toc3'><a href='#-rotateN'>rotateN</a> </li>
 <li class='toc3'><a href='#-rotateS'>rotateS</a> </li>
@@ -196,11 +190,9 @@ var scdoc_sc_version = '3.13.0';
 <div id='summary'>fixed size collection</div>
 </div>
 <div class='subheader'>
-<div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/Array.sc' title='/usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/Array.sc'>Array.sc</a></div><div id='subclasses'>Subclasses: <a href="../Classes/Matrix.html">Matrix</a>, <a href="../Classes/NFunc.html">NFunc</a>, <a href="../Classes/PeerGroup.html">PeerGroup</a>, <a href="../Classes/SystemNFunc.html">SystemNFunc</a></div>
-<div id='related'>See also: <a href="./../Reference/Literals.html">Literals</a>, <a href="./../Classes/List.html">List</a></div>
+<div id='filename'>Source: <a href='file:///usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/Array.sc' title='/usr/local/share/SuperCollider/SCClassLibrary/Common/Collections/Array.sc'>Array.sc</a></div><div id='related'>See also: <a href="./../Reference/Literals.html">Literals</a>, <a href="./../Classes/List.html">List</a></div>
 </div>
-
-<p><h2><a class='anchor' name='description'>Description</a></h2>
+<h2><a class='anchor' name='description'>Description</a></h2>
 
 <p>Arrays are ArrayedCollections whose slots may contain any object. Arrays have a fixed maximum size beyond which they cannot grow. For expandable arrays, use the <a href="./../Classes/List.html">List</a> class.
 <p><strong>Literal Arrays</strong> can be created at compile time, and are very efficient. See <a href="./../Reference/Literals.html">Literals</a> for information.
@@ -298,23 +290,7 @@ Array.fib(5, 2, 32); // start from 32 with step 2.</textarea>
 <tr><td class='argumentname'>size<td class='argumentdesc'>
 <p>the number of values in the collection<tr><td class='argumentname'>a<td class='argumentdesc'>
 <p>the starting step value<tr><td class='argumentname'>b<td class='argumentdesc'>
-<p>the starting value</table></div><h3 class='method-code'><span class='method-prefix'>Array.</span><a class='method-name' name='*zeroFill' href='./../Overviews/Methods.html#zeroFill'>zeroFill</a>(<span class='argstr'>size</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extArray.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/SignalBox/Classes/extArray.sc</a></div>
-<div class='method'>
-<p>Create a new array with all slots filled with 0.0.<textarea class='editor'>Array.zeroFill(8)</textarea>
-
-<p></div><h3 class='method-code'><span class='method-prefix'>Array.</span><a class='method-name' name='*regularPolygon' href='./../Overviews/Methods.html#regularPolygon'>regularPolygon</a>(<span class='argstr'>size: 3</span>, <span class='argstr'>orientation: 0.0</span>, <span class='argstr'>wrap: 6.2831853071796</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/Classes/extArray.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/atk-sc3/Classes/extArray.sc</a></div>
-<div class='method'>
-<p>Fill an array with radian values representing the vertices of a <a href="https://en.wikipedia.org/wiki/Regular_polygon">regular convex polygon</a>.<textarea class='editor'>Array.regularPolygon(5, wrap: pi).raddeg</textarea>
-<h4>Arguments:</h4>
-<table class='arguments'>
-<tr><td class='argumentname'>size<td class='argumentdesc'>
-<p>The number of vertices.<tr><td class='argumentname'>orientation<td class='argumentdesc'>
-<p>A value in radians specifying the first vertex. Or, by keyword:<table>
-<tr><td><code>\vertex</code><td><code>0.0</code><tr><td><code>\side</code><td><code>pi /</code> <strong>size</strong><tr><td><code>\point</code><td>Synonym for <code>\vertex</code><tr><td><code>\flat</code><td>Synonym for <code>\side</code></table>
-<tr><td class='argumentname'>wrap<td class='argumentdesc'>
-<p>Angle wrap, in radians.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<p>the starting value</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
 <div id='inheritedclassmets'></div><h3><a class='anchor' name='Undocumented%20class%20methods'>Undocumented class methods</a></h3>
 <h3 class='method-code'><span class='method-prefix'>Array.</span><a class='method-name' name='*fillNoteNames' href='./../Overviews/Methods.html#fillNoteNames'>fillNoteNames</a>(<span class='argstr'>startNote: "C3"</span>, <span class='argstr'>endNote: "B3"</span>, <span class='argstr'>step: 1</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
@@ -729,8 +705,6 @@ x.free</textarea>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asControlInput' href='./../Overviews/Methods.html#asControlInput'>asControlInput</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asNote' href='./../Overviews/Methods.html#asNote'>asNote</a>(<span class='argstr'>cents</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-asNote.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-asNote.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asRewritingRule' href='./../Overviews/Methods.html#asRewritingRule'>asRewritingRule</a></h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/LazyLindenmayer/extStringRewrite.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/LazyLindenmayer/extStringRewrite.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asSpec' href='./../Overviews/Methods.html#asSpec'>asSpec</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-asUGenInput' href='./../Overviews/Methods.html#asUGenInput'>asUGenInput</a>(<span class='argstr'>for</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-atB' href='./../Overviews/Methods.html#atB'>atB</a>(<span class='argstr'>index</span>, <span class='argstr'>loop: true</span>, <span class='argstr'>extra</span>)</h3>
@@ -768,8 +742,6 @@ x.free</textarea>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-deinterlace' href='./../Overviews/Methods.html#deinterlace'>deinterlace</a>(<span class='argstr'>clumpSize: 2</span>, <span class='argstr'>numChan: 1</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-disconnect' href='./../Overviews/Methods.html#disconnect'>disconnect</a>(<span class='argstr'>view</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVmin/classes/ConnectCVToNodes.sc'>/home/stefan/.local/share/SuperCollider/Extensions/CVmin/classes/ConnectCVToNodes.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-eliminateMatrix' href='./../Overviews/Methods.html#eliminateMatrix'>eliminateMatrix</a></h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/matrix_elimination.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/various/matrix_elimination.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-envAt' href='./../Overviews/Methods.html#envAt'>envAt</a>(<span class='argstr'>time</span>)</h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-envirPairsWithIndex' href='./../Overviews/Methods.html#envirPairsWithIndex'>envirPairsWithIndex</a>(<span class='argstr'>index</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/extArrayEnvirPairsWithIndex.sc'>/home/stefan/.local/share/SuperCollider/Extensions/extArrayEnvirPairsWithIndex.sc</a></div>
@@ -791,8 +763,6 @@ x.free</textarea>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-linearInt' href='./../Overviews/Methods.html#linearInt'>linearInt</a>(<span class='argstr'>i</span>, <span class='argstr'>step: 0</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Interpolation/extArray-interpolation.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Interpolation/extArray-interpolation.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-madd' href='./../Overviews/Methods.html#madd'>madd</a>(<span class='argstr'>mul: 1.0</span>, <span class='argstr'>add: 0.0</span>)</h3>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-matchForRewriting' href='./../Overviews/Methods.html#matchForRewriting'>matchForRewriting</a>(<span class='argstr'>string</span>, <span class='argstr'>value</span>, <span class='argstr'>args</span>)</h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/LazyLindenmayer/extStringRewrite.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/LazyLindenmayer/extStringRewrite.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-midiname' href='./../Overviews/Methods.html#midiname'>midiname</a>(<span class='argstr'>sign</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Note/extVarious-midiname.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-modeAt' href='./../Overviews/Methods.html#modeAt'>modeAt</a>(<span class='argstr'>index</span>, <span class='argstr'>mode: 'wrap'</span>)</h3>
@@ -816,10 +786,6 @@ x.free</textarea>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Interpolation/extArray-interpolation.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Interpolation/extArray-interpolation.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resize' href='./../Overviews/Methods.html#resize'>resize</a>(<span class='argstr'>newSize: 10</span>, <span class='argstr'>type: 'linear'</span>, <span class='argstr'>loop: false</span>, <span class='argstr'>extra</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Interpolation/extArray-interpolation.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Main Features/Interpolation/extArray-interpolation.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rewritingContextFree' href='./../Overviews/Methods.html#rewritingContextFree'>rewritingContextFree</a></h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/LazyLindenmayer/extStringRewrite.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/LazyLindenmayer/extStringRewrite.sc</a></div>
-<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rewritingRuleSize' href='./../Overviews/Methods.html#rewritingRuleSize'>rewritingRuleSize</a></h3>
-<div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/LazyLindenmayer/extStringRewrite.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/MathLib/classes/LazyLindenmayer/extStringRewrite.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rotateL' href='./../Overviews/Methods.html#rotateL'>rotateL</a>(<span class='argstr'>n: 0</span>)</h3>
 <div class='extmethod'>From extension in <a href='file:///home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/UGens/extArray-Rotation.sc'>/home/stefan/.local/share/SuperCollider/downloaded-quarks/wslib/wslib-classes/Extensions/UGens/extArray-Rotation.sc</a></div>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-rotateN' href='./../Overviews/Methods.html#rotateN'>rotateN</a>(<span class='argstr'>n: 0</span>)</h3>
