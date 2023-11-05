@@ -26,6 +26,7 @@ var scdoc_sc_version = '3.14.0-dev';
 <ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
 <ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
 <li class='toc3'><a href='#*all'>all</a> </li>
+<li class='toc3'><a href='#*trackNums'>trackNums</a> </li>
 <li class='toc2'><a href='#Predefined%20OSC%20commands'>Predefined OSC commands</a></li>
 <ul class='toc'><li class='toc3'><a href='#*seqAmpCmds'>seqAmpCmds</a> </li>
 <li class='toc3'><a href='#*seqPauseResumeCmds'>seqPauseResumeCmds</a> </li>
@@ -92,14 +93,19 @@ SynthDef(\oscTest, {
 <p>A <a href="./../Classes/NetAddr.html">NetAddr</a> referring to the IP address of the external OSC device or application and the <strong>listening</strong> port of the device or application.</table></div><h3 class='method-code'><span class='method-prefix'>CVCenterKeyboardTouchOSC.</span><a class='method-name' name='*all' href='./../Overviews/Methods.html#all'>all</a></h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>An <a href="./../Classes/Event.html">Event</a> holding all current CVCenterTouchOSC instances.</div></div><h3><a class='anchor' name='Predefined%20OSC%20commands'>Predefined OSC commands</a></h3>
+<p>An <a href="./../Classes/Event.html">Event</a> holding all current CVCenterTouchOSC instances.</div></div><h3 class='method-code'><span class='method-prefix'>CVCenterKeyboardTouchOSC.</span><a class='method-name' name='*trackNums' href='./../Overviews/Methods.html#trackNums'>trackNums</a></h3>
+<h3 class='method-code'><span class='method-prefix'>CVCenterKeyboardTouchOSC.</span><a class='method-name' name='*trackNums' href='./../Overviews/Methods.html#trackNums'>trackNums</a> = value</h3>
+<div class='method'>
+<p>An <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Integer.html">Integer</a>s reflecting the number of tracks (= sequences) in the TouchOSC interface - by default 24. Trck numbering should always start at <code>0</code>. <code>CVCenterKeyboardTouchOSC.trackNums</code> is used internally for bookkeeping of currently used tracks in the TouchOSC interface. Basiscally you can record as many sequences as you like using <a href="./../Classes/CVCenterKeyboardRecorder.html">CVCenterKeyboardRecorder</a>. However, the TouchOSC interface can only display as many tracks as determined by the size of <code>CVCenterKeyboardTouchOSC.trackNums</code>. Nevertheless, as long as you don't exceed that limit it should be guaranteed that the TouchOSC interface will display a recorded sequence and let you control it via its touch interface.</div><h3><a class='anchor' name='Predefined%20OSC%20commands'>Predefined OSC commands</a></h3>
 
-<p>The included TouchOSC layout will work with a few predefined OSC commands that are also reflected in this class' classvars. Each of the following are getters and setters, meaning you may adapt them according to your needs. E.g. the commands stored in <code>CVCenterKeyboardTouchOSC.seqAmpCmds</code> will allow you to set the amplitude of sequences recorded by a <a href="./../Classes/CVCenterKeyboardRecorder.html">CVCenterKeyboardRecorder</a>. By default there are 24 for up to 24 different sequences defined. You may wish to in- or decrease that number or change the commands itself:<textarea class='editor'>// return an array of 24 commands ranging from "/seq_1_amp" to "/seq_24_amp"
+<p>The included TouchOSC layout will work with a few predefined OSC commands that are also reflected in this class' classvars. Each of the following are getters and setters, meaning you may adapt them according to your needs. E.g. the commands stored in <code>CVCenterKeyboardTouchOSC.seqAmpCmds</code> will allow you to set the amplitude of sequences recorded by a <a href="./../Classes/CVCenterKeyboardRecorder.html">CVCenterKeyboardRecorder</a>. By default there are 24 for up to 24 different sequences defined. You may wish to in- or decrease that number or change the commands itself:<textarea class='editor'>// return an array of 24 commands ranging from "/seq_0_amp" to "/seq_23_amp"
 CVCenterKeyboardTouchOSC.seqAmpCmds;
-// reduce number of commands to 10 and change name to "/seq/amp/1" to "/seq/amp/10"
-CVCenterKeyboardTouchOSC.seqAmpCmds_((1..10).collect({ |i| "/seq/amp/" ++ i }));</textarea>
+// change number of tracks to 10
+CVCenterKeyboardTouchOSC.trackNums_((0..9));
+// reduce number of commands to 10 and change name to "/seq/amp/0" to "/seq/amp/9"
+CVCenterKeyboardTouchOSC.seqAmpCmds_(CVCenterKeyboardTouchOSC.trackNums.collect({ |i| "/seq/amp/" ++ i }));</textarea>
 
-<p>The above described calls can also be place in the startup file to make changes permanent.<h3 class='method-code'><span class='method-prefix'>CVCenterKeyboardTouchOSC.</span><a class='method-name' name='*seqAmpCmds' href='./../Overviews/Methods.html#seqAmpCmds'>seqAmpCmds</a></h3>
+<p>The above described calls can also be placed in the startup file to make changes permanent.<h3 class='method-code'><span class='method-prefix'>CVCenterKeyboardTouchOSC.</span><a class='method-name' name='*seqAmpCmds' href='./../Overviews/Methods.html#seqAmpCmds'>seqAmpCmds</a></h3>
 <h3 class='method-code'><span class='method-prefix'>CVCenterKeyboardTouchOSC.</span><a class='method-name' name='*seqAmpCmds' href='./../Overviews/Methods.html#seqAmpCmds'>seqAmpCmds</a> = value</h3>
 <div class='method'>
 <p>Set or get the class-wide commands for setting the amplitudes of sequences recorded by a <a href="./../Classes/CVCenterKeyboardRecorder.html">CVCenterKeyboardRecorder</a> instance.</div><h3 class='method-code'><span class='method-prefix'>CVCenterKeyboardTouchOSC.</span><a class='method-name' name='*seqPauseResumeCmds' href='./../Overviews/Methods.html#seqPauseResumeCmds'>seqPauseResumeCmds</a></h3>
@@ -124,7 +130,7 @@ CVCenterKeyboardTouchOSC.seqAmpCmds_((1..10).collect({ |i| "/seq/amp/" ++ i }));
 <div class='returnvalue'>
 <p>The instance's <a href="./../Classes/NetAddr.html">NetAddr</a>, referring to the IP address of the external OSC device or application.</div></div><h3><a class='anchor' name='Predefined%20OSC%20commands%20in%20instances'>Predefined OSC commands in instances</a></h3>
 
-<p>The following instance vars (all of the are getters <strong>and</strong> setters) work analog to their equivalent classvars. You may have more than one <a href="./../Classes/CVCenterKeyboard.html">CVCenterKeyboard</a> instance defined, for which you need different OSC command names (or namespaces).<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-seqNameCmds' href='./../Overviews/Methods.html#seqNameCmds'>seqNameCmds</a></h3>
+<p>The following instance vars (all of them are getters <strong>and</strong> setters) work analog to their equivalent classvars. You may have more than one <a href="./../Classes/CVCenterKeyboard.html">CVCenterKeyboard</a> instance defined, for which you need different OSC command names (or namespaces).<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-seqNameCmds' href='./../Overviews/Methods.html#seqNameCmds'>seqNameCmds</a></h3>
 <h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-seqNameCmds' href='./../Overviews/Methods.html#seqNameCmds'>seqNameCmds</a> = <span class='argstr'>cmdsList</span></h3>
 <div class='method'><h4>Arguments:</h4>
 <table class='arguments'>

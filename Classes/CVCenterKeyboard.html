@@ -34,11 +34,15 @@ var scdoc_sc_version = '3.14.0-dev';
 <li class='toc3'><a href='#-removeSynthDef'>removeSynthDef</a> </li>
 <li class='toc3'><a href='#-setUpControls'>setUpControls</a> </li>
 <li class='toc3'><a href='#-setSynthDef'>setSynthDef</a> </li>
-<li class='toc3'><a href='#-clear'>clear</a> </li>
+<li class='toc2'><a href='#Using%20multiple%20SynthDefs%20on%20one%20keyboard'>Using multiple SynthDefs on one keyboard</a></li>
+<ul class='toc'><li class='toc3'><a href='#-keysBlockSize'>keysBlockSize</a> </li>
+<li class='toc3'><a href='#-keysDistribution'>keysDistribution</a> </li>
+</ul><li class='toc2'><a href='#Other%20utility%20methods'>Other utility methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-clear'>clear</a> </li>
 <li class='toc3'><a href='#-free'>free</a> </li>
 <li class='toc3'><a href='#-freeHangingNodes'>freeHangingNodes</a> </li>
 <li class='toc3'><a href='#-addTouchOSC'>addTouchOSC</a> </li>
-<li class='toc2'><a href='#MIDI%20related%20Instance%20variables'>MIDI related Instance variables</a></li>
+</ul><li class='toc2'><a href='#MIDI%20related%20Instance%20variables'>MIDI related Instance variables</a></li>
 <ul class='toc'><li class='toc3'><a href='#-on'>on</a> </li>
 <li class='toc3'><a href='#-off'>off</a> </li>
 <li class='toc3'><a href='#-bend'>bend</a> </li>
@@ -142,9 +146,9 @@ MIDIClient.sources.do { |source| [source, source.uid].postln };</textarea>
 <p>Remove a <a href="./../Classes/SynthDef.html">SynthDef</a> to an existing CVCenterKeyboard instance.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>synthDefName<td class='argumentdesc'>
-<p>A <a href="./../Classes/String.html">String</a> or an <a href="./../Classes/Symbol.html">Symbol</a>, denoting the name of the SynthDef.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setUpControls' href='./../Overviews/Methods.html#setUpControls'>setUpControls</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>prefix</span>, <span class='argstr'>pitchControl: 'freq'</span>, <span class='argstr'>velocControl: 'veloc'</span>, <span class='argstr'>bendControl: 'bend'</span>, <span class='argstr'>outControl: 'out'</span>, <span class='argstr'>includeInCVCenter: [  ]</span>, <span class='argstr'>theServer</span>, <span class='argstr'>outbus: 0</span>, <span class='argstr'>deactivateDefaultWidgetActions: true</span>, <span class='argstr'>tab</span>, <span class='argstr'>setSynthDef: false</span>)</h3>
+<p>A <a href="./../Classes/String.html">String</a> or an <a href="./../Classes/Symbol.html">Symbol</a>, denoting the name of the SynthDef.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setUpControls' href='./../Overviews/Methods.html#setUpControls'>setUpControls</a>(<span class='argstr'>synthDefName</span>, <span class='argstr'>prefix</span>, <span class='argstr'>pitchControl: 'freq'</span>, <span class='argstr'>velocControl: 'veloc'</span>, <span class='argstr'>bendControl: 'bend'</span>, <span class='argstr'>outControl: 'out'</span>, <span class='argstr'>tuning</span>, <span class='argstr'>theServer</span>, <span class='argstr'>outbus: 0</span>, <span class='argstr'>deactivateDefaultWidgetActions: true</span>, <span class='argstr'>tab</span>, <span class='argstr'>setSynthDef: false</span>)</h3>
 <div class='method'>
-<p>Whenever a new <a href="./../Classe/SynthDef">SynthDef</a> is added, either by creating a new instance by calling <a href="#*newSynthDef">*newSynthDef</a> or adding a <a href="./../Classe/SynthDef">SynthDef</a> with <a href="#-addSynthDef">-addSynthDef</a>, the CVCenterKeyboard instance must be set up for the new <a href="./../Classe/SynthDef">SynthDef</a>. This will configure <code>outControl</code>, <code>keyboardControl</code>, <code>velocControl</code> and <code>bendControl</code> as well as it will create <a href="./../Classes/CVWidget.html">CVWidget</a>s for all other controls in the <a href="./../Classe/SynthDef">SynthDef</a>. It should be possible to call this method repeatedly, so you can update an existing <a href="./../Classe/SynthDef">SynthDef</a> while it's already being used.<h4>Arguments:</h4>
+<p>Whenever a new <a href="./../Classes/SynthDef.html">SynthDef</a> is added, either by creating a new instance by calling <a href="#*newSynthDef">*newSynthDef</a> or adding a <a href="./../Classes/SynthDef.html">SynthDef</a> with <a href="#-addSynthDef">-addSynthDef</a>, the CVCenterKeyboard instance must be set up for the new <a href="./../Classes/SynthDef.html">SynthDef</a>. This will configure <code>outControl</code>, <code>keyboardControl</code>, <code>velocControl</code> and <code>bendControl</code> as well as it will create <a href="./../Classes/CVWidget.html">CVWidget</a>s for all other controls in the <a href="./../Classes/SynthDef.html">SynthDef</a>. It should be possible to call this method repeatedly, so you can update an existing <a href="./../Classes/SynthDef.html">SynthDef</a> while it's already being used.<h4>Arguments:</h4>
 <table class='arguments'>
 <tr><td class='argumentname'>synthDefName<td class='argumentdesc'>
 <p>The <a href="./../Classes/SynthDef.html">SynthDef</a>'s name, given as <a href="./../Classes/Symbol.html">Symbol</a> or <a href="./../Classes/String.html">String</a><tr><td class='argumentname'>prefix<td class='argumentdesc'>
@@ -152,8 +156,8 @@ MIDIClient.sources.do { |source| [source, source.uid].postln };</textarea>
 <p>A <a href="./../Classes/Symbol.html">Symbol</a> or <a href="./../Classes/String.html">String</a> referencing the keyboard key, incoming note. Default: <code>\freq</code>.<tr><td class='argumentname'>velocControl<td class='argumentdesc'>
 <p>A <a href="./../Classes/Symbol.html">Symbol</a> or <a href="./../Classes/String.html">String</a> referencing velocity (the physical pressure on a keyboard key) coming with the note. Default: <code>\veloc</code>.<tr><td class='argumentname'>bendControl<td class='argumentdesc'>
 <p>A <a href="./../Classes/Symbol.html">Symbol</a> or <a href="./../Classes/String.html">String</a> referencing the control to be set by the pitch bend wheel. Default: <code>\bend</code>.<tr><td class='argumentname'>outControl<td class='argumentdesc'>
-<p>A <a href="./../Classes/Symbol.html">Symbol</a> or <a href="./../Classes/String.html">String</a> referencing the output bus. Default: <code>\out</code>.<tr><td class='argumentname'>includeInCVCenter<td class='argumentdesc'>
-<p>An <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Symbol.html">Symbol</a>s or <a href="./../Classes/String.html">String</a>s, denoting those of the before described arguments which <em>should</em> appear in <a href="./../Classes/CVCenter.html">CVCenter</a> though they have already been assigned to the keyboard.<tr><td class='argumentname'>theServer<td class='argumentdesc'>
+<p>A <a href="./../Classes/Symbol.html">Symbol</a> or <a href="./../Classes/String.html">String</a> referencing the output bus. Default: <code>\out</code>.<tr><td class='argumentname'>tuning<td class='argumentdesc'>
+<p>An <a href="./../Classes/ControlSpec.html">ControlSpec</a>. If set the given SynthDef may be 'tuned' using an extra <a href="./../Classes/CVWidget.html">CVWidget</a>. The given ControlSpec determines the range of possible tuning.<tr><td class='argumentname'>theServer<td class='argumentdesc'>
 <p>Optional - the <a href="./../Classes/Server.html">Server</a> to run the <a href="./../Classes/Synth.html">Synth</a>s on produced with every keystroke.<tr><td class='argumentname'>outbus<td class='argumentdesc'>
 <p>Optional - an <a href="./../Classes/Integer.html">Integer</a> denoting a default output bus (can be set in the SynthDef beforehand as well).<tr><td class='argumentname'>deactivateDefaultWidgetActions<td class='argumentdesc'>
 <p>When <a href="./../Classes/CVWidget.html">CVWidget</a>s are created from a running <code>Classes/Synth</code> these widgets will be added default actions to set the regarding controls in the Synth, which is not desirable in this case. However, actions will just get deactivated and can get re-activated at any time. Default: <code>true</code>.<tr><td class='argumentname'>tab<td class='argumentdesc'>
@@ -207,12 +211,12 @@ Spec.add(\which, #[0, 2]);
 )
 
 // play some notes on your keyboard *after* having confirmed the CVCenter specs dialog</textarea>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setSynthDef' href='./../Overviews/Methods.html#setSynthDef'>setSynthDef</a>(<span class='argstr'>synthDefName</span>)</h3>
+</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-setSynthDef' href='./../Overviews/Methods.html#setSynthDef'>setSynthDef</a>( <span class='argstr'>... synthDefName</span>)</h3>
 <div class='method'>
-<p>This method may be called <em>implicitly</em> for every new <a href="./../Classes/SynthDef.html">SynthDef</a> in <a href="#-setUpControls">-setUpControls</a> by adding an argument <code>setSynthDef</code> set to <code>true</code> or it may be called <em>explicitly</em> to switch between currently stored SynthDefs within the CVCenterKeyboard instance.<h4>Arguments:</h4>
+<p>This method may be called <em>implicitly</em> for every new <a href="./../Classes/SynthDef.html">SynthDef</a> in <a href="#-setUpControls">-setUpControls</a> by adding an argument <code>setSynthDef</code> set to <code>true</code> or it may be called <em>explicitly</em> to switch between currently stored SynthDefs or to play more than one SynthDef at the same time within the CVCenterKeyboard instance.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>synthDefName<td class='argumentdesc'>
-<p>A <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a>, denoting the <a href="./../Classes/SynthDef.html">SynthDef</a> to be selected.</table><h4>Discussion:</h4>
+<tr><td class='argumentname'>... synthDefName<td class='argumentdesc'>
+<p>One or more <a href="./../Classes/String.html">String</a>s or a <a href="./../Classes/Symbol.html">Symbol</a>s, denoting the <a href="./../Classes/SynthDef.html">SynthDef</a>(s) to be selected. If more than one SynthDef is given the keys triggering one of the SynthDefs will be equally distributed over the <a href="#-keysBlockSize">-keysBlockSize</a>. I.e. by default the <a href="#-keysBlockSize">-keysBlockSize</a> will extend over 24 keys on the keyboard (two octaves). The keys triggering one of the given SynthDefs will (more or less) be equally distributed over the given block (the <code>keysBlockSize</code> may not be divisible by the number of SynthDefs and therefore the number of keys for each SynthDef may not be exactly equal). Note that the order of arguments matters: The first argument (SynthDef) will take the lowest keys, the next one the keys to the right of the first one and the last one the highest keys in the block.</table><h4>Discussion:</h4>
 <textarea class='editor'>// define another SynthDef
 (
 SynthDef(\syncSaw, {
@@ -246,19 +250,46 @@ SynthDef(\syncSaw, {
 )
 )
 
-// switch to the just added new SynthDef
+// switch to the just added new SynthDef and play...
 ~kb.setSynthDef(\syncSaw)
 
-// play...
+// play two different SynthDefs on the same keyboard
+~kb.setSynthDef(\syncSaw, \multi)
 
-// switch back to the other SynthDef
-~kb.setSynthDef(\multi)</textarea>
-</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a>(<span class='argstr'>synthDefName</span>)</h3>
+// switch back to a single SynthDef
+~kb.setSynthDef(\multi)
+
+// swap order of the SynthDefs on the keyboard
+~kb.setSynthDef(\multi, \syncSaw)</textarea>
+</div><h3><a class='anchor' name='Using%20multiple%20SynthDefs%20on%20one%20keyboard'>Using multiple SynthDefs on one keyboard</a></h3>
+
+<p>As you may already have recognized you can use more than one SynthDef on one physical keyboard. When doing so by calling <a href="#-setSynthDef">-setSynthDef</a> with more than one SynthDef the keys are being equally distributed over a predefined block of keys (by default 24 keys or two octaves). The blocks will repeat over the full range of 128 MIDI notes, beginning at MIDI note <code>0</code>. Here are some schematic examples using two SynthDefs on a three-octaves keyboard<a class='footnote anchor' name='footnote_org_1' href='#footnote_1'><sup>1</sup></a> :<div class='image'><img src='3-octaves-2-synths-blocksize-24-ratio-12-12.png'/></div>
+
+<p><div class='image'><img src='3-octaves-2-synths-blocksize-24-ratio-8-16.png'/></div>
+
+<p><div class='image'><img src='3-octaves-2-synths-blocksize-12-ratio-6-6.png'/></div>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keysBlockSize' href='./../Overviews/Methods.html#keysBlockSize'>keysBlockSize</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keysBlockSize' href='./../Overviews/Methods.html#keysBlockSize'>keysBlockSize</a> = <span class='argstr'>size</span></h3>
 <div class='method'>
-<p>Clear <a href="./../Classes/SynthDef.html">SynthDef</a> from a CVCenterKeyboard instance but don't remove it from the keyboard. This is used internally by <a href="#-setSynthDef">-setSynthDef</a> before switching to a new SynthDef. You will usually not call this method directly.<h4>Arguments:</h4>
+<p>This method lets you either read or set the number of keys over which two or more <a href="./../Classes/SynthDef.html">SynthDef</a>s are being distributed that have been set by calling <a href="#-setSynthDef">-setSynthDef</a>. By default it will be 24 (two octaves). You can set a new value at any time and the CVCenterKeyboard instance should pick up the new value immediately.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Integer.html">Integer</a></div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keysDistribution' href='./../Overviews/Methods.html#keysDistribution'>keysDistribution</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-keysDistribution' href='./../Overviews/Methods.html#keysDistribution'>keysDistribution</a> = <span class='argstr'>ratios</span></h3>
+<div class='method'>
+<p>By default keys for different <a href="./../Classes/SynthDef.html">SynthDef</a>s in a CVCenterKeyboard instance that has been set to more than one SynthDef by calling <a href="#-setSynthDef">-setSynthDef</a> will be distributed (more or less) equally over the given <a href="#-keysBlockSize">-keysBlockSize</a>. This method, however, allows you to set the number of keys for the SynthDefs unequally. If you e.g. have two SynthDefs distributed over 24 keys each of them will occupy twelve keys within that <a href="#-keysBlockSize">-keysBlockSize</a>. You can change that by executing
+<p><code>~kb.keysDistribution_([8, 16])</code>
+<p>to eight keys for the first SynthDef and 16 keys for the second SynthDef. If the given array sums to the <a href="#-keysBlockSize">-keysBlockSize</a> it should be guaranteed that the number of keys playing one of the SynthDefs is exactly equal to the number given in the array <code>ratios</code>. If you change the <a href="#-keysBlockSize">-keysBlockSize</a> later, however, <em>the ratio of the keys should be kept</em>. I.e. executing the following to line will first change the <a href="#-keysBlockSize">-keysBlockSize</a> and subsequently change the number of keys for the first SynthDef to 4 and the number of keys for the second SynthDef to 8.<textarea class='editor'>// should result in 4 keys for the first SynthDef and 8 keys for the second
+~kb.keysBlockSize_(12)</textarea>
+
+<p>If <code>ratios</code> sums up to an even number and <a href="#-keysBlockSize">-keysBlockSize</a> is set to an odd number, the ratio of the number of keys will be approximated.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Integer.html">Integer</a>s</div></div><h3><a class='anchor' name='Other%20utility%20methods'>Other utility methods</a></h3>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-clear' href='./../Overviews/Methods.html#clear'>clear</a>( <span class='argstr'>... synthDefName</span>)</h3>
+<div class='method'>
+<p>Clear one or more <a href="./../Classes/SynthDef.html">SynthDef</a>(s) from a CVCenterKeyboard instance but don't remove it from the keyboard. This is used internally by <a href="#-setSynthDef">-setSynthDef</a> before switching to a new SynthDef. You will usually not call this method directly.<h4>Arguments:</h4>
 <table class='arguments'>
-<tr><td class='argumentname'>synthDefName<td class='argumentdesc'>
-<p>A <a href="./../Classes/String.html">String</a> or a <a href="./../Classes/Symbol.html">Symbol</a>, denoting the <a href="./../Classes/SynthDef.html">SynthDef</a> to be cleared.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-free' href='./../Overviews/Methods.html#free'>free</a></h3>
+<tr><td class='argumentname'>... synthDefName<td class='argumentdesc'>
+<p>One or more <a href="./../Classes/String.html">String</a>s or a <a href="./../Classes/Symbol.html">Symbol</a>s, denoting the <a href="./../Classes/SynthDef.html">SynthDef</a>(s) to be cleared.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-free' href='./../Overviews/Methods.html#free'>free</a></h3>
 <div class='method'>
 <p>Free the CVCenterKeyboard instance. You will not be able to use the CVCenterKeyboard instance any longer after calling this method.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-freeHangingNodes' href='./../Overviews/Methods.html#freeHangingNodes'>freeHangingNodes</a></h3>
 <div class='method'>
@@ -295,7 +326,7 @@ SynthDef(\syncSaw, {
 <p>Acttivate or deactivate debugging. If set to <code>true</code> various output from <code>noteOn</code>, <code>noteOff</code> and <code>bend</code> events will be posted.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-currentSynthDef' href='./../Overviews/Methods.html#currentSynthDef'>currentSynthDef</a></h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
-<p>The name of the currently used SynthDef as <a href="./../Classes/Symbol.html">Symbol</a>.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-synthParams' href='./../Overviews/Methods.html#synthParams'>synthParams</a></h3>
+<p>The name(s) of the currently used SynthDef(s) as an <a href="./../Classes/Array.html">Array</a> of <a href="./../Classes/Symbol.html">Symbol</a>s.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-synthParams' href='./../Overviews/Methods.html#synthParams'>synthParams</a></h3>
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>An <a href="./../Classes/Event.html">Event</a> holding all <a href="./../Classes/ControlName.html">ControlName</a>s of all currently stored <a href="./../Classes/SynthDef.html">SynthDef</a>s within a CVCenterKeyboard instance.</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-synthDefNames' href='./../Overviews/Methods.html#synthDefNames'>synthDefNames</a></h3>
@@ -387,5 +418,6 @@ Ndef(\sawFreq, {
 <div class='method'><h4>Returns:</h4>
 <div class='returnvalue'>
 <p>An <a href="./../Classes/Event.html">Event</a> holding all currently mapped busses. The keys will be <a href="./../Classes/ControlName.html">ControlName</a>s that get set by the bus(ses) referenced by the assigned bus indexes.</div></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
-<div id='inheritedinstmets'></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenterKeyboard/HelpSource/Classes/CVCenterKeyboard.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenterKeyboard/HelpSource/Classes/CVCenterKeyboard.schelp</a><br>link::Classes/CVCenterKeyboard::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
+<div id='inheritedinstmets'></div><div class='footnotes'>
+<a class='anchor' name='footnote_1'/><div class='footnote'>[<a href='#footnote_org_1'>1</a>] - Original illustration by Tobias R., licensed under <a href="https://creativecommons.org/licenses/by-sa/2.5">CC BY-SA 2.5</a>, <a href="https://en.wikipedia.org/wiki/Musical_keyboard#/media/File:Klaviatur-3-en.svg">https://en.wikipedia.org/wiki/Musical_keyboard#/media/File:Klaviatur-3-en.svg</a></div></div><div class='doclink'>helpfile source: <a href='file:///home/stefan/.local/share/SuperCollider/Extensions/CVCenterKeyboard/HelpSource/Classes/CVCenterKeyboard.schelp'>/home/stefan/.local/share/SuperCollider/Extensions/CVCenterKeyboard/HelpSource/Classes/CVCenterKeyboard.schelp</a><br>link::Classes/CVCenterKeyboard::<br></div></div><script src='./../editor.js' type='text/javascript'></script>
 </body></html>
