@@ -279,7 +279,8 @@ SynthDef(\syncSaw, {
 <p>By default keys for different <a href="./../Classes/SynthDef.html">SynthDef</a>s in a CVCenterKeyboard instance that has been set to more than one SynthDef by calling <a href="#-setSynthDef">-setSynthDef</a> will be distributed (more or less) equally over the given <a href="#-keysBlockSize">-keysBlockSize</a>. This method, however, allows you to set the number of keys for the SynthDefs unequally. If you e.g. have two SynthDefs distributed over 24 keys each of them will occupy twelve keys within that <a href="#-keysBlockSize">-keysBlockSize</a>. You can change that by executing
 <p><code>~kb.keysDistribution_([8, 16])</code>
 <p>to eight keys for the first SynthDef and 16 keys for the second SynthDef. If the given array sums to the <a href="#-keysBlockSize">-keysBlockSize</a> it should be guaranteed that the number of keys playing one of the SynthDefs is exactly equal to the number given in the array <code>ratios</code>. If you change the <a href="#-keysBlockSize">-keysBlockSize</a> later, however, <em>the ratio of the keys should be kept</em>. I.e. executing the following to line will first change the <a href="#-keysBlockSize">-keysBlockSize</a> and subsequently change the number of keys for the first SynthDef to 4 and the number of keys for the second SynthDef to 8.<textarea class='editor'>// should result in 4 keys for the first SynthDef and 8 keys for the second
-~kb.keysBlockSize_(12)</textarea>
+~kb.keysBlockSize_(12)
+~kb.keysDistribution // [4.0, 8.0] - adapted automatically</textarea>
 
 <p>If <code>ratios</code> sums up to an even number and <a href="#-keysBlockSize">-keysBlockSize</a> is set to an odd number, the ratio of the number of keys will be approximated.<h4>Returns:</h4>
 <div class='returnvalue'>
